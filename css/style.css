@@ -1,0 +1,52 @@
+@font-face { font-family: gurmukhi_heavy; src: url('../fonts/gurmukhi_heavy.ttf'); }
+  
+body {
+  font-size: 18px;
+}
+.top-bar-logo-small {
+  width: 3em;
+}
+.logo-long {
+  height: 5em;
+  margin: 1em;
+}
+.search-results {
+  margin: 1em 3em;
+}
+
+.search-result {
+  list-style: none;
+  margin: 1em 0;
+}
+.search-result a {
+  text-decoration: none;
+  color: black;
+}
+
+.search-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.search-form {
+  margin: 5em;
+}
+.dropdown.menu li a {
+  display: none;
+}
+.dropdown.menu li a:first-child {
+  display: block;
+}
+
+.space-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.gurbani-font {
+  font-family: gurmukhi_heavy !important;
+  font-size: 1.8em;
+}
