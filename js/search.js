@@ -28,12 +28,12 @@ function getParameterByName(name, url = window.location.href) {
 
 
 function addSearchResult(shabad, q) {
-  const { Gurmukhi, English, ID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;
-  const getURL = ID =>  `${window.location.origin + window.location.pathname.replace('search.html', 'shabad.html')}?id=${ID}`;
+  const { Gurmukhi, English, ShabadID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;
+  const url = `${window.location.origin + window.location.pathname.replace('search.html', 'shabad.html')}?id=${ShabadID}`;
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
-      h('a', { href: `shabad.html?id=${ID}&q=${q}`, class: 'gurbani-font' }, Gurmukhi),
-      h('a', { href: `shabad.html?id=${ID}`, class: 'url', }, getURL(ID)),
+      h('a', { href: `shabad.html?id=${ShabadID}&q=${q}`, class: 'gurbani-font' }, Gurmukhi),
+      h('a', { href: `shabad.html?id=${ShabadID}`, class: 'url', }, url),
       h('p', { }, English),
       h('div', { class: 'meta flex wrap'} , [
         h('a', { href: '#', }, `${SOURCES[SourceID]} - ${PageNo}`),
