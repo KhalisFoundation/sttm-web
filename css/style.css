@@ -1,4 +1,4 @@
-@font-face { font-family: gurmukhi_heavy; src: url('../fonts/gurmukhi_heavy.ttf'); }
+@font-face { font-family: gurmukhi_heavy; src: url('../fonts/GurbaniAkharHeavyTrue.ttf'); }
   
 body {
   font-size: 18px;
@@ -28,6 +28,9 @@ body {
 .flex.space-around {
   justify-content: space-around;
 }
+.flex.space-between {
+  justify-content: space-between;
+}
 
 /**********
  * Nav bar
@@ -50,7 +53,15 @@ body {
 }
 .search-result a {
   text-decoration: none;
-  color: black;
+  color: #00669B;
+}
+.search-result .url {
+  color: green;
+  display: block;
+}
+.search-result .meta a {
+  color: grey;
+  padding: 0 5px;
 }
 
 /**************

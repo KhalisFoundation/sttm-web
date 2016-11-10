@@ -1,16 +1,19 @@
 'use strict';
-const API_URL = `https://api.gurbaninow.com`;
 const $searchResults = document.querySelector('.search-results');
 
 window.onload = () => {
   const q = getParameterByName('q');
   document.querySelector(`[name=q]`).value = q;
-  fetch(`${API_URL}/search/${q}`)
+
+  $searchResults.innerHTML = 'Loading...';
+  fetch(buildApiUrl({ q }))
     .then(r => r.json())
-    .then(result => result.count != 0 
-      ? result.shabads.forEach(({ shabad }) => addSearchResult(shabad, q))
-      : noResults()
-    )
+    .then(result => {
+      $searchResults.innerHTML = '';
+      result.count != 0 
+        ? result.shabads.forEach(({ shabad }) => addSearchResult(shabad, q))
+        : noResults();
+    })
     .catch(error => showError(error));
 }
 
@@ -25,11 +28,18 @@ function getParameterByName(name, url = window.location.href) {
 
 
 function addSearchResult(shabad, q) {
-  const { Gurmukhi, English, ID } = shabad;
+  const { Gurmukhi, English, ID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;
+  const getURL = ID =>  `${window.location.origin + window.location.pathname.replace('search.html', 'shabad.html')}?id=${ID}`;
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
       h('a', { href: `shabad.html?id=${ID}&q=${q}`, class: 'gurbani-font' }, Gurmukhi),
+      h('a', { href: `shabad.html?id=${ID}`, class: 'url', }, getURL(ID)),
       h('p', { }, English),
+      h('div', { class: 'meta flex wrap'} , [
+        h('a', { href: '#', }, `${SOURCES[SourceID]} - ${PageNo}`),
+        h('a', { href: '#', }, `${WriterEnglish}`),
+        h('a', { href: '#', }, `${RaagEnglish}`),
+      ]),
     ])
   );
 }
