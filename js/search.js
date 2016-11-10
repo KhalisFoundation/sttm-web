@@ -1,3 +1,4 @@
+'use strict';
 const API_URL = `https://api.gurbaninow.com`;
 const $searchResults = document.querySelector('.search-results');
 
@@ -7,34 +8,10 @@ window.onload = () => {
   fetch(`${API_URL}/search/${q}`)
     .then(r => r.json())
     .then(result => result.count != 0 
-      ? result.shabads.forEach(({ shabad }) => addSearchResult(shabad))
+      ? result.shabads.forEach(({ shabad }) => addSearchResult(shabad, q))
       : noResults()
     )
     .catch(error => showError(error));
-}
-
-
-function h(type = 'div', attributes = { }, children = '') {
-  let el = document.createElement(type);
-
-  Object.keys(attributes).forEach(key => {
-    let value = attributes[key];
-    if (typeof value === 'function') {
-      el.addEventListener(key, e => value(e), false);
-    } else {
-      el.setAttribute(key, value);
-    }
-  });
-
-  if (children instanceof Array) {
-    children.forEach(child => el.appendChild(child));
-  } else if (children instanceof HTMLElement) {
-    el.appendChild(children);
-  } else if (typeof children === 'string') {
-    el.textContent = children;
-  }
-
-  return el;
 }
 
 function getParameterByName(name, url = window.location.href) {
@@ -47,11 +24,11 @@ function getParameterByName(name, url = window.location.href) {
 }
 
 
-function addSearchResult(shabad) {
-  const { Gurmukhi, English } = shabad;
+function addSearchResult(shabad, q) {
+  const { Gurmukhi, English, ID } = shabad;
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
-      h('a', { href: '#', class: 'gurbani-font' }, Gurmukhi),
+      h('a', { href: `shabad.html?id=${ID}&q=${q}`, class: 'gurbani-font' }, Gurmukhi),
       h('p', { }, English),
     ])
   );

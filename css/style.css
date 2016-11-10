@@ -3,6 +3,35 @@
 body {
   font-size: 18px;
 }
+/* Global Helper Classes */
+.gurbani-font {
+  font-family: gurmukhi_heavy !important;
+  font-size: 1.8em;
+}
+.hidden {
+  display: none;
+}
+
+/* Flex Helper Classes */
+.flex {
+  display: flex;
+}
+.flex.justify-center {
+  justify-content: center;
+}
+.flex.align-center {
+  align-items: center;
+}
+.flex.wrap {
+  flex-wrap: wrap;
+}
+.flex.space-around {
+  justify-content: space-around;
+}
+
+/**********
+ * Nav bar
+ **********/
 .top-bar-logo-small {
   width: 3em;
 }
@@ -10,10 +39,11 @@ body {
   height: 5em;
   margin: 1em;
 }
+
+/* Search Results */
 .search-results {
   margin: 1em 3em;
 }
-
 .search-result {
   list-style: none;
   margin: 1em 0;
@@ -23,6 +53,9 @@ body {
   color: black;
 }
 
+/**************
+ * Search Page
+ **************/
 .search-page {
   display: flex;
   justify-content: center;
@@ -40,13 +73,23 @@ body {
   display: block;
 }
 
-.space-around {
+/**************
+ * Shabad Page
+ **************/
+.shabad {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
 }
-
-.gurbani-font {
-  font-family: gurmukhi_heavy !important;
-  font-size: 1.8em;
+.shabad .buttons {
+  background-color: darkgrey;
+}
+.shabad .buttons label {
+  color: white;
+  font-size: 1.2em;
+}
+.shabad-content {
+  width: 90vw;
+}
+.shabad .transliteration {
+  text-tranform: capitalize;
 }
