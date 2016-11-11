@@ -13,29 +13,29 @@ function renderShabad(gurbani) {
       id: 'unicode-toggle',
       text: 'Unicode',
       click: e => {
-        $shabad.querySelectorAll('.unicode').forEach(el => el.classList.toggle('hidden'));
-        $shabad.querySelectorAll('.gurlipi').forEach(el => el.classList.toggle('hidden'));
+        [...$shabad.querySelectorAll('.unicode')].forEach(el => el.classList.toggle('hidden'));
+        [...$shabad.querySelectorAll('.gurlipi')].forEach(el => el.classList.toggle('hidden'));
       },
     }),
     renderCheckbox({
       id: 'transliteration.english-toggle',
       text: 'English Transliteration',
-      click: e => $shabad.querySelectorAll('.transliteration.english').forEach(el => el.classList.toggle('hidden'))
+      click: e => [...$shabad.querySelectorAll('.transliteration.english')].forEach(el => el.classList.toggle('hidden'))
     }),
     renderCheckbox({
       id: 'translation.punjabi-toggle',
       text: 'Punjabi Translation',
-      click: e => $shabad.querySelectorAll('.translation.punjabi').forEach(el => el.classList.toggle('hidden'))
+      click: e => [...$shabad.querySelectorAll('.translation.punjabi')].forEach(el => el.classList.toggle('hidden'))
     }),
     renderCheckbox({
       id: 'translation.english-toggle',
       text: 'English Translation',
-      click: e => $shabad.querySelectorAll('.translation.english').forEach(el => el.classList.toggle('hidden'))
+      click: e => [...$shabad.querySelectorAll('.translation.english')].forEach(el => el.classList.toggle('hidden'))
     }),
     renderCheckbox({
       id: 'translation.spanish-toggle',
       text: 'Spanish Translation',
-      click: e => $shabad.querySelectorAll('.translation.spanish').forEach(el => el.classList.toggle('hidden'))
+      click: e => [...$shabad.querySelectorAll('.translation.spanish')].forEach(el => el.classList.toggle('hidden'))
     }),
   ]);
 
