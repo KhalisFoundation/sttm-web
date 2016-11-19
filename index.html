@@ -14,23 +14,27 @@
         <form class="search-form" action="search.html">
           <img class="logo-long" src="images/sttm_long_logo.png" alt="Sikhi To The Max Logo" />
           <input name="q" class="gurbani-font" type="search" placeholder="Koj">
-          <ul class="dropdown menu" data-dropdown-menu>
-            <li>
-              <a href="#">First Letter Beginning</a>
-              <a href="#">First Letter Anywhere</a>
-              <a href="#">Gurmukhi Word</a>
-              <a href="#">English Word</a>
-            </li>
-            <li>
-              <a href="#">All Gurbani</a>
-              <a href="#">Sri Guru Granth Sahib</a>
-              <a href="#">Dasave Padsah Ka Granth</a>
-              <a href="#">Bhai Gurdaas Vaaran</a>
-              <a href="#">Bhai Nand Lal Vaaran</a>
-              <a href="#">Amrit Keertan</a>
-              <a href="#">Uggardanti</a>
-            </li>
-          </ul>
+          <div class="row">
+            <div class="small-6 columns">
+              <select name="type">
+                <option value="0">Initials from beginning (Gurmukhi)</option>
+                <option value="1">Initials from anywhere (Gurmukhi)</option>
+                <option value="2">Full word (Gurmukhi)</option>
+                <option value="3">Full Word (English)</option>
+              </select>
+            </div>
+            <div class="small-6 columns">
+              <select name="source">
+                <option value="all">All Sources</option>
+                <option value="G">Guru Granth Sahib Ji</option>
+                <option value="D">Dasam Granth Sahib</option>
+                <option value="B">Bhai Gurdas Ji Vaaran</option>
+                <option value="N">Bhai Nand Lal Ji Vaaran</option>
+                <option value="A">Amrit Keertan</option>
+                <option value="U">Uggardanti</option>
+              </select>
+            </div>
+          </div>
           <div class="flex space-around">
             <input type="submit" class="button hollow" value="Search" />
             <a href="hukamnama.html" type="button" class="button hollow">Hukamnama</a>

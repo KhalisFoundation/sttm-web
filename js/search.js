@@ -2,11 +2,11 @@
 const $searchResults = document.querySelector('.search-results');
 
 window.onload = () => {
-  const q = getParameterByName('q');
+  const [type, source, q] = ['type', 'source', 'q'].map(v => getParameterByName(v))
   document.querySelector(`[name=q]`).value = q;
 
   $searchResults.innerHTML = 'Loading...';
-  fetch(buildApiUrl({ q }))
+  fetch(buildApiUrl({ q, type, source }))
     .then(r => r.json())
     .then(result => {
       $searchResults.innerHTML = '';
