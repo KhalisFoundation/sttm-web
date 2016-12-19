@@ -67,7 +67,7 @@ body {
   width: 3em;
 }
 .logo-long {
-  height: 5em;
+  max-height: 125px;
   margin: 1em;
 }
 
