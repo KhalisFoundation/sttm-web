@@ -34,7 +34,7 @@ body {
 .flex.justify-center {
   justify-content: center;
 }
-.flex.flex-start {
+.flex.justify-start {
   justify-content: flex-start;
 }
 .flex.flex-end {
@@ -42,6 +42,9 @@ body {
 }
 .flex.align-center {
   align-items: center;
+}
+.flex.align-start {
+  align-items: flex-start;
 }
 .flex.wrap {
   flex-wrap: wrap;
@@ -116,21 +119,22 @@ body {
   justify-content: center;
 }
 .shabad .buttons {
-  background-color: #e6e6e6;
   padding: 0 5px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid grey;
-  margin-bottom: 5px;
+  margin: 10px;
+}
+.shabad .buttons > div {
+  margin: 0 10px;
 }
 .shabad .buttons input[type="checkbox"] {
   opacity: 0;
 }
 .shabad .buttons label {
-  font-size: 1em;
-  border: 1px solid;
+  font-size: 1rem;
+  border: 1px solid #cacaca;
   border-radius: 2px;
-  padding: 0 10px;
+  padding: 4px 10px;
   transition: all .25s;
+  margin-right: 0px;
 }
 .shabad .buttons input[type="checkbox"]:checked + label {
   border-color: #1583cc;
