@@ -1,11 +1,26 @@
 'use strict';
 const $searchResults = document.querySelector('.search-results');
 
+const sampleQueries = ['mnke', 'kqqkqh', 'enhh'];
+
+const randomArrayValue = arr => arr[parseInt(Math.random(arr.length))];
+
+const H3 = children => h('h3', { class: 'text-center' }, children);
+
 window.onload = () => {
   const [type, source, q] = ['type', 'source', 'q'].map(v => getParameterByName(v))
   document.querySelector(`[name=q]`).value = q;
 
-  $searchResults.innerHTML = 'Loading...';
+  if (q === '') {
+    const randomQuery = randomArrayValue(sampleQueries);
+    $searchResults.appendChild(H3([
+      h('span', {}, 'Write a query like '),
+      h('a', { href: `?q=${randomQuery}`, class: 'gurbani-font-normal' }, randomQuery),
+    ]));
+    return;
+  }
+
+  $searchResults.appendChild(H3('Loading...'));
   fetch(buildApiUrl({ q, type, source }))
     .then(r => r.json())
     .then(result => {
@@ -45,7 +60,7 @@ function addSearchResult(shabad, q) {
 }
 
 function noResults() {
-  $searchResults.appendChild(h('h2', { }, 'No results found'));
+  $searchResults.appendChild(H3('No results found'));
 }
 
 function showError(error) {

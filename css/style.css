@@ -8,8 +8,14 @@ body {
   font-family: gurmukhi_heavy !important;
   font-size: 1.8em;
 }
+.gurbani-font-normal {
+  font-family: gurmukhi_heavy !important;
+}
 .hidden {
   display: none;
+}
+.text-center {
+  text-align: center;
 }
 
 /* Flex Helper Classes */
@@ -30,6 +36,10 @@ body {
 }
 .flex.space-between {
   justify-content: space-between;
+}
+
+.text-center {
+
 }
 
 /**********
