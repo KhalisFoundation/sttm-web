@@ -17,6 +17,15 @@ body {
 .text-center {
   text-align: center;
 }
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+  not supported by any browser */
+}
 
 /* Flex Helper Classes */
 .flex {
@@ -24,6 +33,12 @@ body {
 }
 .flex.justify-center {
   justify-content: center;
+}
+.flex.flex-start {
+  justify-content: flex-start;
+}
+.flex.flex-end {
+  justify-content: flex-end;
 }
 .flex.align-center {
   align-items: center;
@@ -83,7 +98,6 @@ body {
   align-items: center;
   height: 80vh;
 }
-
 .search-form {
   margin: 5em;
 }
@@ -102,14 +116,32 @@ body {
   justify-content: center;
 }
 .shabad .buttons {
-  background-color: darkgrey;
+  background-color: #e6e6e6;
+  padding: 0 5px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid grey;
+  margin-bottom: 5px;
+}
+.shabad .buttons input[type="checkbox"] {
+  opacity: 0;
 }
 .shabad .buttons label {
+  font-size: 1em;
+  border: 1px solid;
+  border-radius: 2px;
+  padding: 0 10px;
+  transition: all .25s;
+}
+.shabad .buttons input[type="checkbox"]:checked + label {
+  border-color: #1583cc;
+  background-color: #1583cc;
   color: white;
-  font-size: 1.2em;
+}
+.shabad-container {
+  width: 100vw;
 }
 .shabad-content {
-  width: 90vw;
+  padding: 0 5vw;
 }
 .shabad .transliteration {
   text-tranform: capitalize;

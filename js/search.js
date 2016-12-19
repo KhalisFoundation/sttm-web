@@ -7,8 +7,9 @@ const randomArrayValue = arr => arr[parseInt(Math.random(arr.length))];
 
 const H3 = children => h('h3', { class: 'text-center' }, children);
 
+const [type, source, q] = ['type', 'source', 'q'].map(v => getParameterByName(v));
+
 window.onload = () => {
-  const [type, source, q] = ['type', 'source', 'q'].map(v => getParameterByName(v))
   document.querySelector(`[name=q]`).value = q;
 
   if (q === '') {
@@ -32,23 +33,16 @@ window.onload = () => {
     .catch(error => showError(error));
 }
 
-function getParameterByName(name, url = window.location.href) {
-  name = name.replace(/[\[\]]/g, "\\$&");
-  let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-    results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-
 function addSearchResult(shabad, q) {
   const { Gurmukhi, English, ShabadID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;
   const url = `${window.location.origin + window.location.pathname.replace('search.html', 'shabad.html')}?id=${ShabadID}`;
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
-      h('a', { href: `shabad.html?id=${ShabadID}&q=${q}`, class: 'gurbani-font' }, Gurmukhi),
-      h('a', { href: `shabad.html?id=${ShabadID}`, class: 'url', }, url),
+      h('a', {
+        href: `shabad.html?id=${ShabadID}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
+        class: 'gurbani-font',
+      }, Gurmukhi),
+      h('a', { href: `shabad.html?id=${ShabadID}$q=${q}&type=${type}&source=${source}`, class: 'url', }, url),
       h('p', { }, English),
       h('div', { class: 'meta flex wrap'} , [
         h('a', { href: '#', }, `${SOURCES[SourceID]} - ${PageNo}`),
@@ -64,6 +58,7 @@ function noResults() {
 }
 
 function showError(error) {
+  console.error(error);
   $searchResults.appendChild(h('h2', { }, [
     h('h3', { class: 'text-center' }, 'Facing some issues'),
     h('code', {}, JSON.stringify(error, null, 2))

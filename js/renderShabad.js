@@ -3,12 +3,12 @@ function renderShabad(gurbani) {
     h('p', { class: 'gurlipi gurbani-font' }, shabad.Gurmukhi),
     h('p', { class: 'unicode gurbani-font hidden' }, shabad.GurmukhiUni),
     h('p', { class: 'transliteration english hidden' }, shabad.Transliteration),
-    h('blockquote', { class: 'translation punjabi gurbani-font hidden' }, shabad.Punjabi),
+    h('blockquote', { class: 'translation punjabi gurbani-font-normal hidden' }, shabad.Punjabi),
     h('blockquote', { class: 'translation english hidden' }, shabad.English),
     h('blockquote', { class: 'translation spanish hidden' }, shabad.Spanish),
   ])));
 
-  const buttons = h('div', { class: 'buttons flex wrap justify-center align-center' }, [
+  const buttons = h('div', { class: 'buttons flex wrap flex-start align-center no-select' }, [
     renderCheckbox({
       id: 'unicode-toggle',
       text: 'Unicode',
@@ -39,14 +39,15 @@ function renderShabad(gurbani) {
     }),
   ]);
 
-  $shabad.appendChild(h('div', {  }, [ buttons, baani, ]));
+  $shabad.appendChild(h('div', { class: 'shabad-container' }, [
+    buttons,
+    baani,
+  ]));
 }
 
 function renderCheckbox({ id, text, click }) {
   return h('div', {  }, [
-    h('input', { id, type: 'checkbox', click }),
-    h('label', { 'for': id, }, text),
+    h('input', { id, type: 'checkbox', click, class: 'no-select' }),
+    h('label', { 'for': id, class: 'no-select' }, text),
   ]);
 }
-
-
