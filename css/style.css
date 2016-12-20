@@ -83,13 +83,16 @@ body {
   text-decoration: none;
   color: #00669B;
 }
+.search-result p {
+  margin-bottom: 0;
+}
 .search-result .url {
   color: green;
   display: block;
 }
 .search-result .meta a {
   color: grey;
-  padding: 0 5px;
+  padding-right: 5px;
 }
 
 /**************
