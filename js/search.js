@@ -7,10 +7,14 @@ const randomArrayValue = arr => arr[parseInt(Math.random(arr.length))];
 
 const H3 = children => h('h3', { class: 'text-center' }, children);
 
-const [type, source, q] = ['type', 'source', 'q'].map(v => getParameterByName(v));
+const params = ['type', 'source', 'q'];
+
+const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
 
 window.onload = () => {
   document.querySelector(`[name=q]`).value = q;
+  document.querySelector(`[name=type]`).value = type;
+  document.querySelector(`[name=source]`).value = source;
 
   if (q === '') {
     const randomQuery = randomArrayValue(sampleQueries);
