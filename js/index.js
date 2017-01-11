@@ -1,1 +1,4 @@
-window.onload = () => document.querySelector('input').focus();
+window.onload = () => {
+  $search.focus();
+  updateSearchLang();
+}

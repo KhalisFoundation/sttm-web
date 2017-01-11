@@ -1,11 +1,12 @@
 'use strict';
-const API_URL = `https://api.gurbaninow.com/`;
+const API_URL = `https://devapi.khajana.org/`;
 
 const TYPES = [
   'Initials from beginning (Gurmukhi)',
   'Initials from anywhere (Gurmukhi)',
   'Full word (Gurakhar)',
   'Full word (English)',
+  'Romanized (English)',
 ];
 
 const SOURCES = {
@@ -43,7 +44,7 @@ const buildApiUrl = options => {
     if (raag) url += `raag=${raag}&`;
     if (ang) url += `ang=${ang}&`;
     if (results) url += `results=${results}&`;
-  } else if (id !== false) { 
+  } else if (id !== false) {
     url += `shabad/${id}`;
   } else if (ang !== false) {
     url += `ang/${ang}/`;

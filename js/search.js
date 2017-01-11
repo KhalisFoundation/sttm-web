@@ -12,6 +12,7 @@ const params = ['type', 'source', 'q'];
 const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
 
 window.onload = () => {
+  updateSearchLang(type);
   document.querySelector(`[name=q]`).value = q;
   document.querySelector(`[name=type]`).value = type;
   document.querySelector(`[name=source]`).value = source;
@@ -30,7 +31,7 @@ window.onload = () => {
     .then(r => r.json())
     .then(result => {
       $searchResults.innerHTML = '';
-      result.count != 0 
+      result.count != 0
         ? result.shabads.forEach(({ shabad }) => addSearchResult(shabad, q))
         : noResults();
     })
