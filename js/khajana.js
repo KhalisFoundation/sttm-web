@@ -2,10 +2,10 @@
 const API_URL = `https://devapi.khajana.org/`;
 
 const TYPES = [
-  'Initials from beginning (Gurmukhi)',
-  'Initials from anywhere (Gurmukhi)',
-  'Full word (Gurakhar)',
-  'Full word (English)',
+  'First Letter Start (Gurmukhi)',
+  'First Letter Anywhere (Gurmukhi)',
+  'Full Word (Gurakhar)',
+  'Full Word (English)',
   'Romanized (English)',
 ];
 

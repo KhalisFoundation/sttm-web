@@ -5,7 +5,7 @@ const $searchType = document.getElementById("searchType");
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 
 function updateSearchLang(set_search_type) {
-  var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type !== "undefined" ? parseInt(set_search_type) : 0));
+  var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type !== "undefined" ? parseInt(set_search_type) : 1));
   switch (searchType) {
     case 3:
     case 4:

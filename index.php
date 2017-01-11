@@ -15,10 +15,10 @@ require_once('inc/head.php');
           <div class="row">
             <div class="small-6 columns">
               <select name="type" id="searchType">
-                <option value="0">Initials from beginning (Gurmukhi)</option>
-                <option value="1">Initials from anywhere (Gurmukhi)</option>
-                <option value="2">Full word (Gurmukhi)</option>
-                <option value="3">Full word (English)</option>
+                <option value="0">First Letter Start (Gurmukhi)</option>
+                <option value="1" selected>First Letter Anywhere (Gurmukhi)</option>
+                <option value="2">Full Word (Gurmukhi)</option>
+                <option value="3">Full Word (English)</option>
                 <option value="4">Romanized (English)</option>
               </select>
             </div>
