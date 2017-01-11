@@ -70,10 +70,21 @@ body {
   max-height: 125px;
   margin: 1em;
 }
+#responsive-menu {
+  float: left;
+  width: calc(100% - 70px); /* Logo - 54px + 1rem(16px) margin */
+}
+.top-bar .top-bar-left {
+  height: 54px;
+  padding-top: 7px;
+}
+.top-bar-right .menu > li > a {
+  margin: 7px 0;
+}
 
 /* Search Results */
 .search-results {
-  margin: 1em 3em;
+  margin: 0.7rem;
 }
 .search-result {
   list-style: none;
@@ -89,10 +100,16 @@ body {
 .search-result .url {
   color: green;
   display: block;
+  word-wrap: break-word;
 }
 .search-result .meta a {
   color: grey;
   padding-right: 5px;
+}
+@media screen and (min-width: 40em) {
+  .search-results {
+    margin: 1em 3em;
+  }
 }
 
 /**************
