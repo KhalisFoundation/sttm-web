@@ -14,5 +14,6 @@ require_once('inc/top-bar.php');
 <?php
 
 $scripts[] = 'js/shabad.js';
+$scripts[] = 'js/renderShabad.js';
 
 require_once('inc/footer.php');
