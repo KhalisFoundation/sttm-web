@@ -40,14 +40,14 @@ window.onload = () => {
 
 function addSearchResult(shabad, q) {
   const { Gurmukhi, English, ShabadID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;
-  const url = `${window.location.origin + window.location.pathname.replace('search.html', 'shabad.html')}?id=${ShabadID}`;
+  const url = `${window.location.origin + window.location.pathname.replace('search.php', 'shabad.php')}?id=${ShabadID}`;
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
       h('a', {
-        href: `shabad.html?id=${ShabadID}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
+        href: `shabad.php?id=${ShabadID}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
         class: 'gurbani-font',
       }, Gurmukhi),
-      h('a', { href: `shabad.html?id=${ShabadID}$q=${q}&type=${type}&source=${source}`, class: 'url', }, url),
+      h('a', { href: `shabad.php?id=${ShabadID}$q=${q}&type=${type}&source=${source}`, class: 'url', }, url),
       h('p', { }, English),
       h('div', { class: 'meta flex wrap'} , [
         h('a', { href: '#', }, `${SOURCES[SourceID]} - ${PageNo}`),

@@ -11,7 +11,7 @@
 
     <div class="row">
       <div class="search-page">
-        <form class="search-form" action="search.html">
+        <form class="search-form" action="search.php">
           <div class="flex justify-center align-center">
             <div>
               <img class="logo-long" src="images/sttm_long_logo.png" alt="SikhiToTheMax Logo" />
@@ -42,7 +42,7 @@
           </div>
           <div class="flex space-around">
             <input type="submit" class="button hollow" value="Search" />
-            <a href="hukamnama.html" type="button" class="button hollow">Hukamnama</a>
+            <a href="hukamnama.php" type="button" class="button hollow">Hukamnama</a>
           </div>
         </form>
       </div>
