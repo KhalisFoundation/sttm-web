@@ -167,6 +167,12 @@ body {
 .shabad-content {
   padding: 0 5vw;
 }
+.shabad-content > div {
+  margin-bottom: 1rem;
+}
+.shabad-content p {
+  margin-bottom: 0;
+}
 .shabad .transliteration {
   text-tranform: capitalize;
 }
