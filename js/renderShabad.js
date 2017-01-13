@@ -1,5 +1,6 @@
 function renderShabad(gurbani) {
   $shabad.appendChild(h('div', { class: 'shabad-container' }, [ buttons(), baani(gurbani), ]));
+  document.querySelector('select[name=translations]').value = '.translation.english';
 }
 
 function baani(gurbani) {
@@ -8,7 +9,7 @@ function baani(gurbani) {
     h('p', { class: 'unicode gurbani-font hidden' }, shabad.GurmukhiUni),
     h('p', { class: 'transliteration english hidden' }, shabad.Transliteration),
     h('blockquote', { class: 'translation punjabi gurbani-font-normal hidden' }, shabad.Punjabi),
-    h('blockquote', { class: 'translation english hidden' }, shabad.English),
+    h('blockquote', { class: 'translation english' }, shabad.English),
     h('blockquote', { class: 'translation spanish hidden' }, shabad.Spanish),
   ])));
 }
