@@ -50,7 +50,7 @@ const buildApiUrl = options => {
     url += `ang/${ang}/`;
     if (source) url += `source=${source}`;
   } else if (hukam !== false) {
-    url += `hukamnama`;
+    url += `hukamnama/today`;
   } else if (akhar !== false && lipi !== false) {
     url += `akhar/${lipi}`;
   } else {
