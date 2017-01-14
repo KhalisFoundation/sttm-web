@@ -4,10 +4,11 @@ $title = 'Hukamnama';
 
 require_once('inc/head.php');
 require_once('inc/top-bar.php');
+require_once('inc/controls.php');
 
 ?>
     <div>
-      <div class="shabad">
+      <div id="shabad" class="shabad">
       </div>
     </div>
 

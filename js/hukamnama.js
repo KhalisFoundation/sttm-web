@@ -1,5 +1,4 @@
 'use strict';
-const $shabad = document.querySelector('.shabad');
 
 window.onload = () => {
   const q = getParameterByName('q');

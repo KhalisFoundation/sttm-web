@@ -134,21 +134,20 @@ body {
 /**************
  * Shabad Page
  **************/
-.shabad {
-  display: flex;
-  justify-content: center;
+#controls.hidden {
+  display: none;
 }
-.shabad .buttons {
+#controls {
   padding: 0 5px;
   margin: 10px;
 }
-.shabad .buttons > div {
+#controls > div {
   margin: 0 10px;
 }
-.shabad .buttons input[type="checkbox"] {
-  opacity: 0;
+#controls input[type="checkbox"] {
+  display: none;
 }
-.shabad .buttons label {
+#controls label {
   font-size: 1rem;
   border: 1px solid #cacaca;
   border-radius: 2px;
@@ -156,10 +155,14 @@ body {
   transition: all .25s;
   margin-right: 0px;
 }
-.shabad .buttons input[type="checkbox"]:checked + label {
+#controls input[type="checkbox"]:checked + label {
   border-color: #1583cc;
   background-color: #1583cc;
   color: white;
+}
+.shabad {
+  display: flex;
+  justify-content: center;
 }
 .shabad-container {
   width: 100vw;

@@ -1,6 +1,4 @@
 'use strict';
-const $shabad = document.querySelector('.shabad');
-
 const H3 = children => h('h3', { class: 'text-center' }, children);
 
 window.onload = () => {

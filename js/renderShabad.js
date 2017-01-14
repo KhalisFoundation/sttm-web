@@ -1,6 +1,6 @@
 function renderShabad(gurbani) {
-  $shabad.appendChild(h('div', { class: 'shabad-container' }, [ buttons(), baani(gurbani), ]));
-  document.querySelector('select[name=translations]').value = '.translation.english';
+  $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), ]));
+  $controls.classList.remove('hidden');
 }
 
 function baani(gurbani) {
@@ -52,11 +52,5 @@ function buttons () {
       h('select', { name, change, }, Object.keys(data).map(key => h('option', { value: data[key] }, key)))
     ]);
   }
-
-  return h('div', { class: 'buttons flex wrap justify-start align-start no-select' }, [
-    renderCheckbox({ id: 'unicode-toggle', text: 'Unicode', }),
-    renderDropdown({ name: 'transliterations', data: transliterations }),
-    renderDropdown({ name: 'translations', data: translations }),
-  ]);
 }
 

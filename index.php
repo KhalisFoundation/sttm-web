@@ -1,6 +1,7 @@
 <?php
 
 require_once('inc/head.php');
+require_once('inc/controls.php');
 
 ?>
     <div class="row">
