@@ -9,9 +9,9 @@ if (!$hide_search_bar) {
         <div class="top-bar-left">
           <form action="search.php">
             <ul class="menu">
-              <li><div id="search-container"><input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj"><button type="submit"><i class="fa fa-search"></i></button></div></li>
-              <li><input name="type" class="hidden" hidden /></li>
-              <li><input name="source" class="hidden" hidden /></li>
+              <li><div id="search-container"><input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" value="<?= $search_q_display ?>"><button type="submit"><i class="fa fa-search"></i></button></div></li>
+              <li><input name="type" class="hidden" value="<?= $search_type ?>" hidden /></li>
+              <li><input name="source" class="hidden" value="<?= $search_source ?>" hidden /></li>
             </ul>
           </form>
         </div>

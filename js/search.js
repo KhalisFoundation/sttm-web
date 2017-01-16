@@ -1,10 +1,6 @@
 'use strict';
 const $searchResults = document.querySelector('.search-results');
 
-const sampleQueries = ['mnke', 'kqqkqh', 'enhh'];
-
-const randomArrayValue = arr => arr[parseInt(Math.random(arr.length))];
-
 const H3 = children => h('h3', { class: 'text-center' }, children);
 
 const params = ['type', 'source', 'q'];
@@ -13,19 +9,7 @@ const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v)
 
 window.onload = () => {
   updateSearchLang(type);
-  document.querySelector(`[name=q]`).value = q;
-  document.querySelector(`[name=type]`).value = type;
-  document.querySelector(`[name=source]`).value = source;
-
-  if (q === '') {
-    const randomQuery = randomArrayValue(sampleQueries);
-    $searchResults.appendChild(H3([
-      h('span', {}, 'Write a query like '),
-      h('a', { href: `?q=${randomQuery}`, class: 'gurbani-font' }, randomQuery),
-    ]));
-    return;
-  }
-
+  
   $searchResults.appendChild(H3('Loading...'));
   fetch(buildApiUrl({ q, type, source }))
     .then(r => r.json())

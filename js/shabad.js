@@ -4,7 +4,6 @@ const H3 = children => h('h3', { class: 'text-center' }, children);
 window.onload = () => {
   const [id, q, type] = ['id', 'q', 'type'].map(v => getParameterByName(v))
   updateSearchLang(type);
-  document.querySelector(`[name=q]`).value = q;
 
   $shabad.appendChild(H3('Loading...'));
   fetch(buildApiUrl({ id }))

@@ -2,6 +2,7 @@
 
 $title = 'Search Results';
 
+require_once('inc/globals.php');
 require_once('inc/head.php');
 require_once('inc/top-bar.php');
 

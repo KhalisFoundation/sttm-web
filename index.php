@@ -3,6 +3,7 @@
 $body_classes[]   = 'home';
 $hide_search_bar  = true;
 
+require_once('inc/globals.php');
 require_once('inc/head.php');
 require_once('inc/controls.php');
 require_once('inc/top-bar.php');
@@ -23,22 +24,24 @@ require_once('inc/top-bar.php');
           <div class="row">
             <div class="small-6 columns">
               <select name="type" id="searchType">
-                <option value="0">First Letter Start (Gurmukhi)</option>
-                <option value="1" selected>First Letter Anywhere (Gurmukhi)</option>
-                <option value="2">Full Word (Gurmukhi)</option>
-                <option value="3">Full Word (English)</option>
-                <option value="4">Romanized (English)</option>
+<?php
+  foreach ($search_types as $search_type_key => $search_type_val) {
+?>
+                <option value="<?= $search_type_key ?>"<?= $search_type_key == $search_type ? ' selected' : '' ?>><?= $search_type_val ?></option>
+<?php
+  }
+?>
               </select>
             </div>
             <div class="small-6 columns">
               <select name="source">
-                <option value="all">All Sources</option>
-                <option value="G">Guru Granth Sahib Ji</option>
-                <option value="D">Dasam Granth Sahib</option>
-                <option value="B">Bhai Gurdas Ji Vaaran</option>
-                <option value="N">Bhai Nand Lal Ji Vaaran</option>
-                <option value="A">Amrit Keertan</option>
-                <option value="U">Uggardanti</option>
+<?php
+  foreach ($search_sources as $search_source_key => $search_source_val) {
+?>
+                <option value="<?= $search_source_key ?>"<?= $search_source_key == $search_source ? ' selected' : '' ?>><?= $search_source_val ?></option>
+<?php
+  }
+?>
               </select>
             </div>
           </div>
