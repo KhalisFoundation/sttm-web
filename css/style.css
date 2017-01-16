@@ -247,6 +247,9 @@ body {
   .top-bar {
     height: 120px;
   }
+  .home .top-bar {
+    height: auto;
+  }
   .top-bar .top-bar-left {
     left: calc(0.5rem + 3px);
     position: absolute;
