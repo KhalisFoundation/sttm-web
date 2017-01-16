@@ -1,20 +1,23 @@
 'use strict';
 
-window.onload = () => {
+$(function() {
   const q = getParameterByName('q');
-  document.querySelector(`[name=q]`).value = q;
 
   $shabad.innerHTML = 'Loading...';
-  fetch(buildApiUrl({ hukam: true }))
-    .then(r => r.json())
-    .then(({ gurbani }) => { $shabad.innerHTML = ''; renderShabad(gurbani); })
-    .catch(error => showError(error));
-}
+  $.ajax({
+    url: buildApiUrl({ hukam: true }),
+    dataType: "json",
+    success: function(data) {
+      $shabad.innerHTML = '';
+      renderShabad(data.gurbani);
+    },
+    error: showError
+  });
+});
 
 function showError(error) {
   $shabad.appendChild(h('h2', { }, [
-    h('h3', { class: 'text-center' }, 'Facing some issues'),
-    h('code', {}, JSON.stringify(error, null, 2))
+    h('h3', { class: 'text-center' }, 'Facing some issues')
   ]));
 }
 

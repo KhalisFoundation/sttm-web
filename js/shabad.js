@@ -1,20 +1,24 @@
 'use strict';
 const H3 = children => h('h3', { class: 'text-center' }, children);
 
-window.onload = () => {
+$(function() {
   const [id, q, type] = ['id', 'q', 'type'].map(v => getParameterByName(v))
   updateSearchLang(type);
 
   $shabad.appendChild(H3('Loading...'));
-  fetch(buildApiUrl({ id }))
-    .then(r => r.json())
-    .then(({ gurbani }) => { $shabad.innerHTML = ''; renderShabad(gurbani); })
-    .catch(error => showError(error));
-}
+  $.ajax({
+    url: buildApiUrl({ id }),
+    dataType: "json",
+    success: function(data) {
+      $shabad.innerHTML = '';
+      renderShabad(data.gurbani);
+    },
+    error: showError
+  });
+});
 
 function showError(error) {
   $shabad.appendChild(h('h2', { }, [
-    h('h3', { class: 'text-center' }, 'Facing some issues'),
-    h('code', {}, JSON.stringify(error, null, 2))
+    h('h3', { class: 'text-center' }, 'Facing some issues')
   ]));
 }

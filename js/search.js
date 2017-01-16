@@ -7,20 +7,26 @@ const params = ['type', 'source', 'q'];
 
 const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
 
-window.onload = () => {
+$(function() {
   updateSearchLang(type);
   
   $searchResults.appendChild(H3('Loading...'));
-  fetch(buildApiUrl({ q, type, source }))
-    .then(r => r.json())
-    .then(result => {
+  $.ajax({
+    url: buildApiUrl({ q, type, source }),
+    dataType: "json",
+    success: function(data) {
       $searchResults.innerHTML = '';
-      result.count != 0
-        ? result.shabads.forEach(({ shabad }) => addSearchResult(shabad, q))
-        : noResults();
-    })
-    .catch(error => showError(error));
-}
+      if (data.count != 0) {
+        $.each(data.shabads, function(key, val) {
+          addSearchResult(val.shabad, q);
+        });
+      } else {
+        noResults();
+      }
+    },
+    error: showError
+  });
+});
 
 function addSearchResult(shabad, q) {
   const { Gurmukhi, English, ShabadID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;
@@ -46,9 +52,7 @@ function noResults() {
 }
 
 function showError(error) {
-  console.error(error);
   $searchResults.appendChild(h('h2', { }, [
-    h('h3', { class: 'text-center' }, 'Facing some issues'),
-    h('code', {}, JSON.stringify(error, null, 2))
+    h('h3', { class: 'text-center' }, 'Facing some issues')
   ]));
 }
