@@ -47,7 +47,6 @@ function addSearchResult(shabad, q) {
         href: `shabad.php?id=${ShabadID}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
         class: 'gurbani-font gurbani-display',
       }, Gurmukhi),
-      h('a', { href: `shabad.php?id=${ShabadID}$q=${q}&type=${type}&source=${source}`, class: 'url', }, url),
       h('p', { }, English),
       h('div', { class: 'meta flex wrap'} , [
         h('a', { href: '#', }, `${SOURCES[SourceID]} - ${PageNo}`),
