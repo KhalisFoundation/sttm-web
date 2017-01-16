@@ -69,12 +69,13 @@ body {
 .top-bar {
   border-bottom: 1px solid #ebebeb;
 }
+.home .top-bar,
+.home .top-bar ul {
+  background: transparent;
+  border: none;
+}
 .top-bar-logo-small {
   width: 3em;
-}
-.logo-long {
-  max-height: 125px;
-  margin: 1em;
 }
 #responsive-menu {
   float: left;
@@ -83,6 +84,9 @@ body {
 .top-bar .top-bar-left {
   height: 54px;
   padding-top: 7px;
+}
+.top-bar-right {
+  position: relative;
 }
 .top-bar-right .menu > li {
   display: inline-block;
@@ -105,12 +109,15 @@ body {
   border: none;
   box-shadow: none;
   display: inline-block;
+  float: left;
   height: 44px;
   margin: 0;
+  width: calc(100% - 44px);
 }
 #search-container button {
   background-color: #01669b;
   color: #fff;
+  display: inline-block;
   height: 44px;
   padding: 0.5rem;
   width: 44px;
@@ -119,6 +126,21 @@ body {
 #search:focus {
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }*/
+
+#open_mobile_menu {
+  background-color: #fff;
+  border: 1px solid #f39c1d;
+  border-radius: 2px;
+  color: #f39c1d;
+  font-size: 1rem;
+  height: 48px;
+  line-height: 18px;
+  margin: 3px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 48px;
+}
 
 
 /* Search Results */
@@ -161,13 +183,15 @@ body {
   height: 80vh;
 }
 .search-form {
-  margin: 5em;
+  max-width: calc(320px - 2rem);
 }
-.dropdown.menu li a {
-  display: none;
+
+.logo-long {
+  max-height: 125px;
+  margin: 1rem 0;
 }
-.dropdown.menu li a:first-child {
-  display: block;
+.home #search {
+  margin-bottom: 1rem;
 }
 
 /**************
@@ -217,4 +241,43 @@ body {
 }
 .shabad .transliteration {
   text-tranform: capitalize;
+}
+
+@media screen and (max-width: 767px) {
+  .top-bar-right ul.menu {
+    background-color: #fff;
+    border-bottom: 1px solid #f39c1d;
+    height: 0;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    top: -1px;
+    transition: height 400ms ease-out;
+    width: 100%;
+  }
+  body.menu-open .top-bar-right ul.menu {
+    height: calc(100% + 1px);
+    top: 0;
+  }
+  .top-bar-right .menu li {
+    border-bottom: 1px solid #f39c1d;
+    display: block;
+    text-align: center;
+  }
+  .top-bar-right .menu li a {
+    height: 4rem;
+    line-height: 2.6rem;
+    margin: 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  /* ***** NAV BAR ***** */
+  #open_mobile_menu,
+  .top-bar-right .menu .close {
+    display: none;
+  }
+  /* ***** SEARCH PAGE ***** */
+  .search-form {
+    max-width: 100%;
+  }
 }

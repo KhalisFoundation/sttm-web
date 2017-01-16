@@ -8,6 +8,12 @@ const $shabad     = document.getElementById("shabad");
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 [].forEach.call($toggles, toggle => toggle.addEventListener("click", shabadToggle));
 [].forEach.call($dropdowns, dropdown => dropdown.addEventListener("change", shabadDropdown));
+$("#open_mobile_menu").on("click", function() {
+  document.body.classList.toggle("menu-open");
+})
+$(".top-bar-right .close a").on("click", function() {
+  document.body.classList.remove("menu-open");
+})
 
 function updateSearchLang(set_search_type) {
   var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type == "string" ? parseInt(set_search_type) : 1));

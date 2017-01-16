@@ -3,6 +3,9 @@
         <a href="/"><img class="top-bar-logo-small" src="images/sttm_icon.png" alt="Sikhi To The Max" /></a>
       </div>
       <div id="responsive-menu">
+<?php
+if (!$hide_search_bar) {
+?>
         <div class="top-bar-left">
           <form action="search.php">
             <ul class="menu">
@@ -12,11 +15,16 @@
             </ul>
           </form>
         </div>
+<?php
+}
+?>
         <div class="top-bar-right">
-          <ul class="dropdown menu" data-dropdown-menu>
-            <li><a href="/">Home</a></li>
+          <a href="#" class="button" id="open_mobile_menu"><i class="fa fa-bars"></i></a>
+          <ul class="menu">
+            <li><a href="/">Search</a></li>
             <li><a href="/hukamnama.php">Hukamnama</a></li>
             <li><a href="/amritkeertan.php">Amrit Keertan</a></li>
+            <li class="close"><a href="#">Close</a></li>
           </ul>
         </div>
       </div>

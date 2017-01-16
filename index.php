@@ -1,7 +1,11 @@
 <?php
 
+$body_classes[]   = 'home';
+$hide_search_bar  = true;
+
 require_once('inc/head.php');
 require_once('inc/controls.php');
+require_once('inc/top-bar.php');
 
 ?>
     <div class="row">
@@ -12,7 +16,10 @@ require_once('inc/controls.php');
               <img class="logo-long" src="images/sttm_long_logo.png" alt="SikhiToTheMax Logo" />
             </div>
           </div>
-          <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj">
+          <div id="search-container">
+            <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj">
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </div>
           <div class="row">
             <div class="small-6 columns">
               <select name="type" id="searchType">
@@ -34,10 +41,6 @@ require_once('inc/controls.php');
                 <option value="U">Uggardanti</option>
               </select>
             </div>
-          </div>
-          <div class="flex space-around">
-            <input type="submit" class="button hollow" value="Search" />
-            <a href="hukamnama.php" type="button" class="button hollow">Hukamnama</a>
           </div>
         </form>
       </div>
