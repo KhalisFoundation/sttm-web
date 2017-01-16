@@ -74,6 +74,9 @@ body {
   background: transparent;
   border: none;
 }
+.home .top-bar-title {
+  visibility: hidden;
+}
 .top-bar-logo-small {
   width: 3em;
 }
