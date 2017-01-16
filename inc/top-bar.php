@@ -6,17 +6,17 @@
         <div class="top-bar-left">
           <form action="search.php">
             <ul class="menu">
-              <li><input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj"></li>
+              <li><div id="search-container"><input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj"><button type="submit"><i class="fa fa-search"></i></button></div></li>
               <li><input name="type" class="hidden" hidden /></li>
               <li><input name="source" class="hidden" hidden /></li>
-              <li><input type="submit" class="button" value="Search" /></li>
             </ul>
           </form>
         </div>
         <div class="top-bar-right">
           <ul class="dropdown menu" data-dropdown-menu>
-            <li>
-              <a href="/">Home</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/hukamnama.php">Hukamnama</a></li>
+            <li><a href="/amritkeertan.php">Amrit Keertan</a></li>
           </ul>
         </div>
       </div>

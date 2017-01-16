@@ -6,10 +6,9 @@ body {
 /* Global Helper Classes */
 .gurbani-font {
   font-family: gurmukhi_heavy !important;
-  font-size: 1.8em;
 }
-.gurbani-font-normal {
-  font-family: gurmukhi_heavy !important;
+.gurbani-display {
+  font-size: 1.8em;
 }
 .hidden {
   display: none;
@@ -63,6 +62,13 @@ body {
 /**********
  * Nav bar
  **********/
+.top-bar,
+.top-bar ul {
+  background-color: #fafafa;
+}
+.top-bar {
+  border-bottom: 1px solid #ebebeb;
+}
 .top-bar-logo-small {
   width: 3em;
 }
@@ -78,9 +84,42 @@ body {
   height: 54px;
   padding-top: 7px;
 }
+.top-bar-right .menu > li {
+  display: inline-block;
+}
 .top-bar-right .menu > li > a {
+  color: #252525;
+  font-size: 0.9em;
   margin: 7px 0;
 }
+#search-container {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  height: 44px;
+  margin: 0;
+  transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+#search {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  display: inline-block;
+  height: 44px;
+  margin: 0;
+}
+#search-container button {
+  background-color: #01669b;
+  color: #fff;
+  height: 44px;
+  padding: 0.5rem;
+  width: 44px;
+}
+/*#search:hover,
+#search:focus {
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}*/
+
 
 /* Search Results */
 .search-results {

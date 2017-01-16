@@ -21,7 +21,7 @@ window.onload = () => {
     const randomQuery = randomArrayValue(sampleQueries);
     $searchResults.appendChild(H3([
       h('span', {}, 'Write a query like '),
-      h('a', { href: `?q=${randomQuery}`, class: 'gurbani-font-normal' }, randomQuery),
+      h('a', { href: `?q=${randomQuery}`, class: 'gurbani-font' }, randomQuery),
     ]));
     return;
   }
@@ -45,7 +45,7 @@ function addSearchResult(shabad, q) {
     h('li', { class: 'search-result' }, [
       h('a', {
         href: `shabad.php?id=${ShabadID}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
-        class: 'gurbani-font',
+        class: 'gurbani-font gurbani-display',
       }, Gurmukhi),
       h('a', { href: `shabad.php?id=${ShabadID}$q=${q}&type=${type}&source=${source}`, class: 'url', }, url),
       h('p', { }, English),
