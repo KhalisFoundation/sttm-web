@@ -8,7 +8,7 @@ body {
   font-family: gurmukhi_heavy !important;
 }
 .gurbani-display {
-  font-size: 1.8em;
+  font-size: 1.4em;
 }
 .hidden {
   display: none;
@@ -243,6 +243,31 @@ body {
   text-tranform: capitalize;
 }
 
+@media screen and (max-width: 400px) {
+  .top-bar {
+    height: 120px;
+  }
+  .top-bar .top-bar-left {
+    left: calc(0.5rem + 3px);
+    position: absolute;
+    top: 60px;
+    width: calc(100% - 1rem - 6px);
+  }
+  .top-bar .top-bar-left .menu li {
+    display: block;
+  }
+  #search {
+    max-width: none;
+  }
+}
+
+@media screen and (min-width: 401px) {
+  .top-bar .top-bar-left,
+  .top-bar .top-bar-right {
+    width: auto;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .top-bar-right ul.menu {
     background-color: #fff;
@@ -271,6 +296,9 @@ body {
   }
 }
 @media screen and (min-width: 768px) {
+  .gurbani-display {
+    font-size: 1.6em;
+  }
   /* ***** NAV BAR ***** */
   #open_mobile_menu,
   .top-bar-right .menu .close {
