@@ -315,3 +315,9 @@ body {
     max-width: 100%;
   }
 }
+@media screen and (min-width: 1024px) {
+  .top-bar #search {
+    max-width: 400px;
+    width: 400px;
+  }
+}
