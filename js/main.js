@@ -5,10 +5,6 @@ const $toggles    = $controls.find("input[type=checkbox]");
 const $dropdowns  = $controls.find("select");
 const $shabad     = document.getElementById("shabad");
 
-$(".search-options-toggle").on("click", function(e) {
-  $(".top-bar").toggleClass("open-search-options");
-});
-
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 $toggles.on("click", shabadToggle);
 $dropdowns.on("change", shabadDropdown);
