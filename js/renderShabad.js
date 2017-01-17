@@ -1,6 +1,6 @@
 function renderShabad(gurbani) {
   $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), ]));
-  $controls.classList.remove('hidden');
+  $controls.removeClass('hidden');
 }
 
 function baani(gurbani) {
