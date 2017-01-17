@@ -48,7 +48,7 @@ const buildApiUrl = options => {
     url += `shabad/${id}`;
   } else if (ang !== false) {
     url += `ang/${ang}/`;
-    if (source) url += `source=${source}`;
+    if (source) url += source;
   } else if (hukam !== false) {
     url += `hukamnama/today`;
   } else if (akhar !== false && lipi !== false) {
