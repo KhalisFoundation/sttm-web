@@ -1,6 +1,7 @@
 <?php
 
-$title = 'Search Results';
+$body_classes[] = 'not-home';
+$title          = 'Search Results';
 
 require_once('inc/globals.php');
 require_once('inc/head.php');

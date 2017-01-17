@@ -5,7 +5,6 @@ $hide_search_bar  = true;
 
 require_once('inc/globals.php');
 require_once('inc/head.php');
-require_once('inc/controls.php');
 require_once('inc/top-bar.php');
 
 ?>

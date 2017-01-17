@@ -1,6 +1,7 @@
 <?php
 
-$title = 'Shabad';
+$body_classes[] = 'not-home';
+$title          = 'Shabad';
 
 require_once('inc/globals.php');
 require_once('inc/head.php');

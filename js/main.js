@@ -1,19 +1,28 @@
 const $search     = document.getElementById("search");
 const $searchType = document.getElementById("searchType");
-const $controls   = document.getElementById("controls");
-const $toggles    = $controls.querySelectorAll("input[type=checkbox]");
-const $dropdowns  = $controls.querySelectorAll("select");
+const $controls   = $("#controls");
+const $toggles    = $controls.find("input[type=checkbox]");
+const $dropdowns  = $controls.find("select");
 const $shabad     = document.getElementById("shabad");
 
+$(".search-options-toggle").on("click", function(e) {
+  $(".top-bar").toggleClass("open-search-options");
+});
+
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
-[].forEach.call($toggles, toggle => toggle.addEventListener("click", shabadToggle));
-[].forEach.call($dropdowns, dropdown => dropdown.addEventListener("change", shabadDropdown));
+$toggles.on("click", shabadToggle);
+$dropdowns.on("change", shabadDropdown);
 $("#open_mobile_menu").on("click", function() {
   document.body.classList.toggle("menu-open");
 })
 $(".top-bar-right .close a").on("click", function() {
   document.body.classList.remove("menu-open");
 })
+
+$("#search-options select").on("change", function() {
+  var update = $(this).data("update");
+  $("#" + update).val($(this).val());
+});
 
 function updateSearchLang(set_search_type) {
   var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type == "string" ? parseInt(set_search_type) : 1));
