@@ -1,6 +1,6 @@
     <div class="top-bar no-select">
       <div class="top-bar-title">
-        <a href="/"><img class="top-bar-logo-small" src="images/sttm_icon.png" alt="Sikhi To The Max" /></a>
+        <a href="/"></a>
       </div>
       <div id="responsive-menu">
 <?php
@@ -28,6 +28,9 @@ if (!$hide_search_bar) {
           </ul>
         </div>
       </div>
+<?php
+if (!$hide_search_bar) {
+?>
       <div id="search-options">
         <select name="type" id="searchType" data-update="search-type-value">
 <?php
@@ -47,4 +50,7 @@ if (!$hide_search_bar) {
 ?>
         </select>
       </div>
+<?php
+}
+?>
     </div>

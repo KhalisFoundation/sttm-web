@@ -68,6 +68,7 @@ body {
 }
 .top-bar {
   border-bottom: 1px solid #ebebeb;
+  position: relative;
 }
 .home .top-bar,
 .home .top-bar ul {
@@ -75,21 +76,24 @@ body {
   border: none;
 }
 .home .top-bar-title {
+  margin: 0;
   visibility: hidden;
+}
+.top-bar-title a {
+  background-image: url(../images/sttm_long_logo.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 54px;
+  width: 100%;
 }
 .top-bar-logo-small {
   width: 3em;
 }
-#responsive-menu {
-  float: left;
-  width: calc(100% - 70px); /* Logo - 54px + 1rem(16px) margin */
-}
 .top-bar .top-bar-left {
   height: 54px;
   padding-top: 7px;
-}
-.top-bar-right {
-  position: relative;
 }
 .top-bar-right .menu > li {
   display: inline-block;
@@ -143,10 +147,10 @@ body {
   font-size: 1rem;
   height: 48px;
   line-height: 18px;
-  margin: 3px;
+  margin: 0;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 0.5rem;
+  top: 0.5rem;
   width: 48px;
 }
 #search-options {
@@ -268,18 +272,12 @@ body {
   text-tranform: capitalize;
 }
 
-@media screen and (max-width: 400px) {
-  .home .top-bar {
-    height: auto;
-  }
-  .not-home #responsive-menu {
-    height: 104px;
-  }
-  .top-bar .top-bar-left {
-    left: calc(0.5rem + 3px);
-    position: absolute;
-    top: 60px;
-    width: calc(100% - 1rem - 6px);
+@media screen and (max-width: 39.999999em) {
+  .top-bar-title {
+    float: none;
+    margin: 50px 0 0;
+    text-align: center;
+    width: 100%;
   }
   .top-bar .top-bar-left .menu li {
     display: block;
@@ -292,19 +290,6 @@ body {
     padding: 0.5rem 3px 0;
     width: 100%;
   }
-}
-
-@media screen and (min-width: 401px) {
-  .top-bar .top-bar-left,
-  .top-bar .top-bar-right {
-    width: auto;
-  }
-  .top-bar #search-container {
-    max-width: 248px;
-  }
-}
-
-@media screen and (max-width: 767px) {
   .top-bar-right ul.menu {
     background-color: #fff;
     border-bottom: 1px solid #f39c1d;
@@ -331,13 +316,28 @@ body {
     margin: 0;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 40em) {
   .gurbani-display {
     font-size: 1.6em;
   }
   /* ***** NAV BAR ***** */
+  .top-bar-title a {
+    background-image: url(../images/sttm_icon.png);
+    width: 54px;
+  }
+  .top-bar .top-bar-left,
+  .top-bar .top-bar-right {
+    width: auto;
+  }
+  .top-bar #search-container {
+    max-width: 248px;
+  }
   .top-bar #search-container {
     max-width: 288px;
+  }
+  #responsive-menu {
+    float: left;
+    width: calc(100% - 70px); /* Logo - 54px + 1rem(16px) margin */
   }
   #open_mobile_menu,
   .top-bar-right .menu .close {
@@ -348,7 +348,7 @@ body {
     max-width: 100%;
   }
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 64em) {
   .top-bar #search-container {
     max-width: 444px;
   }
