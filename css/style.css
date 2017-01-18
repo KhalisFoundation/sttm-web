@@ -226,20 +226,20 @@ body {
 /**************
  * Shabad Page
  **************/
-#controls.hidden {
+#controls-wrapper.hidden {
   display: none;
 }
-#controls {
+#controls-wrapper {
   padding: 0 5px;
-  margin: 10px;
+  margin: 1rem;
 }
-#controls > div {
+#controls-wrapper > div {
   margin: 0 10px;
 }
-#controls input[type="checkbox"] {
+#controls-wrapper input[type="checkbox"] {
   display: none;
 }
-#controls label {
+#controls-wrapper label {
   font-size: 1rem;
   border: 1px solid #cacaca;
   border-radius: 2px;
@@ -247,7 +247,7 @@ body {
   transition: all .25s;
   margin: 0 0 1rem;
 }
-#controls input[type="checkbox"]:checked + label {
+#controls-wrapper input[type="checkbox"]:checked + label {
   border-color: #1583cc;
   background-color: #1583cc;
   color: white;
@@ -270,6 +270,23 @@ body {
 }
 .shabad .transliteration {
   text-tranform: capitalize;
+}
+.shabad .unicode,
+.shabad .translation,
+.shabad .transliteration {
+  display: none;
+}
+.shabad.unicode .unicode {
+  display: block;
+}
+.shabad.unicode .gurlipi {
+  display: none;
+}
+.shabad.translation-english .translation.english,
+.shabad.translation-punjabi .translation.punjabi,
+.shabad.translation-spanish .translation.spanish,
+.shabad.transliteration-english .transliteration.english {
+  display: block;
 }
 
 @media screen and (max-width: 39.999999em) {

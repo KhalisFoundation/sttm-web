@@ -10,7 +10,7 @@ require_once('inc/controls.php');
 
 ?>
     <div>
-      <div class="shabad" id="shabad">
+      <div class="shabad translation-english" id="shabad">
       </div>
     </div>
 

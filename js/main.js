@@ -1,13 +1,16 @@
 const $search     = document.getElementById("search");
 const $searchType = document.getElementById("searchType");
-const $controls   = $("#controls");
-const $toggles    = $controls.find("input[type=checkbox]");
-const $dropdowns  = $controls.find("select");
+const $controls   = $("#controls-wrapper");
 const $shabad     = document.getElementById("shabad");
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
-$toggles.on("click", shabadToggle);
-$dropdowns.on("change", shabadDropdown);
+
+//Shabad controller toggles
+$(".shabad-controller-toggle").on("click", shabadToggle);
+
+//Shabad display option toggles
+$(".display-option-toggle").on("click", displayOptionToggle);
+
 $("#open_mobile_menu").on("click", function() {
   document.body.classList.toggle("menu-open");
 })
@@ -37,18 +40,14 @@ function updateSearchLang(set_search_type) {
 
 function shabadToggle(e) {
   switch(e.target.id) {
+    case "display-options-toggle":
+      $("#display-options").toggleClass("hidden");
+      break;
     case "unicode-toggle":
-      Array.from($shabad.querySelectorAll('.unicode')).forEach(el => el.classList.toggle('hidden'));
-      Array.from($shabad.querySelectorAll('.gurlipi')).forEach(el => el.classList.toggle('hidden'));
+      $(".shabad").toggleClass("unicode");
       break;
   }
 }
-function shabadDropdown({ target: { value, options } }) {
-  Array.from(options)
-    .map(e => Array.from($shabad.querySelectorAll(e.value)))
-    .forEach(els => els.forEach(el => el.classList.add('hidden')));
-
-  if (value)
-    Array.from($shabad.querySelectorAll(value))
-      .forEach(el => el && el.classList.remove('hidden'));
+function displayOptionToggle(e) {
+  $(".shabad").toggleClass(e.target.id);
 }
