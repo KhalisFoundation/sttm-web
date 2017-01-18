@@ -7,7 +7,7 @@
 if (!$hide_search_bar) {
 ?>
         <div class="top-bar-left">
-          <form action="search.php">
+          <form action="search.php" id="top-bar-search-form">
             <ul class="menu">
               <li><div id="search-container"><input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" value="<?= $search_q_display ?>"><button type="submit"><i class="fa fa-search"></i></button></div></li>
               <li><input name="type" class="hidden" value="<?= $search_type ?>" id="search-type-value" hidden /></li>
@@ -32,7 +32,7 @@ if (!$hide_search_bar) {
 if (!$hide_search_bar) {
 ?>
       <div id="search-options">
-        <select name="type" id="searchType" data-update="search-type-value">
+        <select id="searchType" data-update="search-type-value">
 <?php
   foreach ($search_types as $search_type_key => $search_type_val) {
 ?>
@@ -40,7 +40,7 @@ if (!$hide_search_bar) {
 <?php
   }
 ?>
-        </select><select name="source" data-update="search-source-value">
+        </select><select id="searchSource" data-update="search-source-value">
 <?php
   foreach ($search_sources as $search_source_key => $search_source_val) {
 ?>

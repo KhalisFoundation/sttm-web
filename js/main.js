@@ -21,6 +21,9 @@ $(".top-bar-right .close a").on("click", function() {
 $("#search-options select").on("change", function() {
   var update = $(this).data("update");
   $("#" + update).val($(this).val());
+  if ($(this).attr("id") == "searchSource") {
+    $("#top-bar-search-form").submit();
+  }
 });
 
 function updateSearchLang(set_search_type) {
