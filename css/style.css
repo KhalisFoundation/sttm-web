@@ -208,11 +208,14 @@ body {
 
 /* Search Results */
 .search-results {
-  margin: 1rem;
+  margin: 0.5rem;
 }
 .search-result {
   list-style: none;
-  margin: 1em 0;
+  padding: 0.5rem;
+}
+.search-result:nth-child(2n) {
+  background-color: #eee;
 }
 .search-result a {
   text-decoration: none;
@@ -232,7 +235,7 @@ body {
 }
 @media screen and (min-width: 40em) {
   .search-results {
-    margin: 1em 3em;
+    margin: 1rem 2.5rem;
   }
 }
 
