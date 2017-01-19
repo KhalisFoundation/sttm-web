@@ -396,10 +396,10 @@ body {
   }
   /* ***** SEARCH RESULTS ****** */
   .search-results {
-    margin: 1rem 0;
+    margin: 1rem 2rem 1rem 3rem;
   }
   .search-result {
-    padding: 0.5rem 3rem;
+    padding: 1rem 1rem 1rem 0;
   }
 }
 @media screen and (min-width: 64em) {
