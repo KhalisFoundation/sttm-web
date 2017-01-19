@@ -16,7 +16,6 @@ const SOURCES = {
   B: 'Bhai Gurdas Ji Vaaran',
   N: 'Bhai Nand Lal Ji Vaaran',
   A: 'Amrit Keertan',
-  U: 'Uggardanti',
 };
 
 const buildApiUrl = options => {

@@ -20,7 +20,6 @@ $search_sources = array(
   'B' => 'Bhai Gurdas Ji Vaaran',
   'N' => 'Bhai Nand Lal Ji Vaaran',
   'A' => 'Amrit Keertan',
-  'U' => 'Uggardanti',
 );
 
 //If the search type doesn't exist, set our default
