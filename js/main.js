@@ -26,6 +26,30 @@ $("#search-options select").on("change", function() {
   }
 });
 
+$(".gurmukhi-keyboard-toggle").on("click", function() {
+  $(".gurmukhi-keyboard").toggle();
+});
+$(".gurmukhi-keyboard button").on("click", function() {
+  if ($(this).data("action")) {
+    var action = $(this).data("action");
+    if (action == 'bksp') {
+      $("#search").val(function() {
+        return this.value.substring(0, this.value.length-1);
+      });
+    } else if (action == "close") {
+      $(".gurmukhi-keyboard").hide();
+    } else if (action.includes('page')) {
+      $(".gurmukhi-keyboard .page").hide();
+      $("#gurmukhi-keyboard-" + action).show();
+    }
+  } else {
+    var char = $(this).data("value") || $(this).text();
+    $("#search").val(function() {
+      return this.value + char;
+    });
+  }
+});
+
 function updateSearchLang(set_search_type) {
   var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type == "string" ? parseInt(set_search_type) : 1));
   switch (searchType) {

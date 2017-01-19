@@ -6,7 +6,7 @@ function renderShabad(gurbani) {
 function baani(gurbani) {
   return h('div', { class: 'shabad-content' } , gurbani.map(({ shabad }) => h('div', {  }, [
     h('p', { class: 'gurlipi gurbani-display gurbani-font' }, shabad.Gurmukhi),
-    h('p', { class: 'unicode gurbani-display' }, shabad.GurmukhiUni),
+    h('p', { class: 'unicode gurbani-display gurbani-font' }, shabad.GurmukhiUni),
     h('p', { class: 'transliteration english' }, shabad.Transliteration),
     h('blockquote', { class: 'translation punjabi gurbani-font' }, shabad.Punjabi),
     h('blockquote', { class: 'translation english' }, shabad.English),

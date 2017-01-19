@@ -119,9 +119,10 @@ body {
   float: left;
   height: 44px;
   margin: 0;
-  width: calc(100% - 44px);
+  position: relative;
+  width: calc(100% - 88px);
 }
-#search-container button {
+#search-container > button {
   color: #fff;
   display: inline-block;
   height: 44px;
@@ -131,9 +132,42 @@ body {
 #search-container button[type=submit] {
   background-color: #01669b;
 }
-#search-container .search-options-toggle {
-  background-color: #f39c1d;
+#search-container .gurmukhi-keyboard-toggle {
+  background-color: #fff;
+  color: #999;
 }
+#search-container .gurmukhi-keyboard {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  display: none;
+  font-size: 0;
+  position: absolute;
+  overflow: hidden;
+  width: 288px;
+}
+.gurmukhi-keyboard .page {
+  display: none;
+}
+.gurmukhi-keyboard .keyboard-row {
+  border-bottom: 2px solid #999;
+}
+.gurmukhi-keyboard .keyboard-row-set {
+  display: inline-block;
+  width: 50%;
+}
+.gurmukhi-keyboard .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1),
+.gurmukhi-keyboard .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
+  background-color: #ccc;
+}
+.gurmukhi-keyboard button {
+  color: #333;
+  font-size: 1rem;
+  line-height: 2;
+  text-align: center;
+  width: 20%;
+}
+
 /*#search:hover,
 #search:focus {
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
