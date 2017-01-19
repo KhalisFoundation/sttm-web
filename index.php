@@ -13,7 +13,7 @@ require_once('inc/top-bar.php');
         <form class="search-form" action="search.php">
           <div class="flex justify-center align-center">
             <div>
-              <img class="logo-long" src="images/sttm_long_logo.png" alt="SikhiToTheMax Logo" />
+              <img class="logo-long" src="images/sttm_logo_beta.png" alt="SikhiToTheMax Logo" />
             </div>
           </div>
           <div id="search-container">

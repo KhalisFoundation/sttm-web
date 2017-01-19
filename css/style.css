@@ -80,7 +80,7 @@ body {
   visibility: hidden;
 }
 .top-bar-title a {
-  background-image: url(../images/sttm_long_logo.png);
+  background-image: url(../images/sttm_logo_beta.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -376,7 +376,7 @@ body {
   }
   /* ***** NAV BAR ***** */
   .top-bar-title a {
-    background-image: url(../images/sttm_icon.png);
+    background-image: url(../images/sttm_icon_beta.png);
     width: 54px;
   }
   .top-bar .top-bar-left,
