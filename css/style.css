@@ -208,14 +208,12 @@ body {
 
 /* Search Results */
 .search-results {
-  margin: 0.5rem;
+  margin: 0.5rem 0;
 }
 .search-result {
+  border-bottom: 1px solid #ddd;
   list-style: none;
-  padding: 0.5rem;
-}
-.search-result:nth-child(2n) {
-  background-color: #eee;
+  padding: 0.5rem 1rem;
 }
 .search-result a {
   text-decoration: none;
@@ -232,11 +230,6 @@ body {
 .search-result .meta a {
   color: grey;
   padding-right: 5px;
-}
-@media screen and (min-width: 40em) {
-  .search-results {
-    margin: 1rem 2.5rem;
-  }
 }
 
 /**************
@@ -400,6 +393,13 @@ body {
   /* ***** SEARCH PAGE ***** */
   .search-form {
     max-width: 100%;
+  }
+  /* ***** SEARCH RESULTS ****** */
+  .search-results {
+    margin: 1rem 0;
+  }
+  .search-result {
+    padding: 0.5rem 3rem;
   }
 }
 @media screen and (min-width: 64em) {
