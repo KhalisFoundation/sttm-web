@@ -2,7 +2,7 @@
     <footer>
       <div class="row">
         <ul class="menu">
-          <li><a href="/about">About</a></li>
+          <li><a href="/about.php">About</a></li>
         </ul>
       </div>
     </footer>
