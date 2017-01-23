@@ -267,8 +267,7 @@ footer {
 .search-page {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 80vh;
+  padding-top: 10vh;
 }
 .search-form {
   max-width: calc(320px - 2rem);
