@@ -1,6 +1,6 @@
 <?php
 
-$asset_version    = '1701191103';
+$asset_version    = '1701230120';
 $search_q         = $_GET['q'];
 $search_q_display = htmlspecialchars($search_q, ENT_QUOTES);
 $search_type      = is_numeric($_GET['type']) ? (int) $_GET['type'] : 1;
