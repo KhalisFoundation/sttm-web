@@ -10,6 +10,13 @@ const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v)
 $(function() {
   updateSearchLang(type);
   
+  if (q === '') {
+    $searchResults.appendChild(H3([
+      h('span', {}, 'Please enter your query in the search bar above'),
+    ]));
+    return;
+  }
+
   $searchResults.appendChild(H3('Loading...'));
   $.ajax({
     url: buildApiUrl({ q, type, source }),
