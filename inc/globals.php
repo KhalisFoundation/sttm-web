@@ -11,6 +11,21 @@ if ($results = $mysqli->query($query)) {
   }
 }
 
+//Get all the pages
+$query = "SELECT id, slug, link_name, location, link, menu_order FROM pages";
+if ($results = $mysqli->query($query)) {
+  while ($result = $results->fetch_assoc()) {
+    $pages[] = $result['slug'];
+    if (is_numeric($result['menu_order'])) {
+      $menus[$result['location']][$result['menu_order']] = array(
+        'slug' => $result['slug'],
+        'link_name' => $result['link_name'],
+        'link' => $result['link']
+      );
+    }
+  }
+}
+
 $search_q         = $_GET['q'];
 $search_q_display = htmlspecialchars($search_q, ENT_QUOTES);
 $search_type      = is_numeric($_GET['type']) ? (int) $_GET['type'] : 1;

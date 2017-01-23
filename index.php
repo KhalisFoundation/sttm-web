@@ -1,55 +1,35 @@
 <?php
 
-$body_classes[]   = 'home';
-$hide_search_bar  = true;
-
 require_once('inc/globals.php');
+
+//Get the current page
+$path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+$path = explode('?', $path);
+$path = explode('/', $path[0]);
+$page = @in_array($path[0], $pages) ? $path[0] : 'home';
+
+//Get the information for the current page
+$query      = "SELECT use_include, title, content FROM pages WHERE slug = '$page'";
+$result     = $mysqli->query($query);
+$page_info  = $result->fetch_assoc();
+$title      = $page_info['title'];
+
+//Add 'not-home' class to body for relevant pages
+if ($page != 'home') {
+  $body_classes[] = 'not-home';
+}
+
+//Include the file that will output the contents of the page
+$include = ((bool) $page_info['use_include']) ? $page : 'default';
+ob_start();
+include "pages/{$include}.php";
+$content = ob_get_contents();
+ob_end_clean();
+
+//Template files
 require_once('inc/head.php');
 require_once('inc/top-bar.php');
 
-?>
-      <div class="search-page">
-        <form class="search-form" action="search.php">
-          <div class="flex justify-center align-center">
-            <div>
-              <img class="logo-long" src="images/sttm_logo_beta.png" alt="SikhiToTheMax Logo" />
-            </div>
-          </div>
-          <div id="search-container">
-            <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj"><button type="button" class="gurmukhi-keyboard-toggle"><i class="fa fa-keyboard-o"></i></button><button type="submit"><i class="fa fa-search"></i></button>
-<?php
-include 'inc/gurmukhi-keyboard.php';
-?>
-          </div>
-          <div class="row">
-            <div class="small-6 columns">
-              <select name="type" id="searchType">
-<?php
-  foreach ($search_types as $search_type_key => $search_type_val) {
-?>
-                <option value="<?= $search_type_key ?>"<?= $search_type_key == $search_type ? ' selected' : '' ?>><?= $search_type_val ?></option>
-<?php
-  }
-?>
-              </select>
-            </div>
-            <div class="small-6 columns">
-              <select name="source">
-<?php
-  foreach ($search_sources as $search_source_key => $search_source_val) {
-?>
-                <option value="<?= $search_source_key ?>"<?= $search_source_key == $search_source ? ' selected' : '' ?>><?= $search_source_val ?></option>
-<?php
-  }
-?>
-              </select>
-            </div>
-          </div>
-        </form>
-      </div>
-
-<?php
-
-$scripts[] = 'js/index.js';
+echo $content;
 
 require_once('inc/footer.php');

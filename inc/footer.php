@@ -2,7 +2,13 @@
     <footer>
       <div class="row">
         <ul class="menu">
-          <li><a href="/about.php">About</a></li>
+<?php
+foreach ($menus['footer'] as $menu_item) :
+?>
+          <li><a href="<?= $menu_item['link'] ? $menu_item['link'] : "/{$menu_item['slug']}" ?>"><?= $menu_item['link_name'] ?></a></li>
+<?php
+endforeach;
+?>
         </ul>
       </div>
     </footer>

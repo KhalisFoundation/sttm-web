@@ -37,11 +37,11 @@ $(function() {
 
 function addSearchResult(shabad, q) {
   const { Gurmukhi, English, ShabadID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;
-  const url = `${window.location.origin + window.location.pathname.replace('search.php', 'shabad.php')}?id=${ShabadID}`;
+  const url = `${window.location.origin + window.location.pathname.replace('/search', '/shabad')}?id=${ShabadID}`;
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
       h('a', {
-        href: `shabad.php?id=${ShabadID}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
+        href: `/shabad?id=${ShabadID}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
         class: 'gurbani-font gurbani-display',
       }, Gurmukhi),
       h('p', { }, English),
