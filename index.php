@@ -8,7 +8,6 @@ require_once('inc/head.php');
 require_once('inc/top-bar.php');
 
 ?>
-    <div class="row">
       <div class="search-page">
         <form class="search-form" action="search.php">
           <div class="flex justify-center align-center">
@@ -48,7 +47,6 @@ include 'inc/gurmukhi-keyboard.php';
           </div>
         </form>
       </div>
-    </div>
 
 <?php
 
