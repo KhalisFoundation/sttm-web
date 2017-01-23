@@ -1,27 +1,24 @@
 <?php
 
-$asset_version    = '1701230120';
+require_once('inc/mysql.php');
+
+//Get site settings
+$query = "SELECT id, setting_name, setting_value FROM settings";
+
+if ($results = $mysqli->query($query)) {
+  while ($result = $results->fetch_assoc()) {
+    $$result['setting_name'] = $result['setting_value'];
+  }
+}
+
 $search_q         = $_GET['q'];
 $search_q_display = htmlspecialchars($search_q, ENT_QUOTES);
 $search_type      = is_numeric($_GET['type']) ? (int) $_GET['type'] : 1;
 $search_source    = $_GET['source'];
 
-$search_types = array(
-  0 => 'First Letter Start (Gurmukhi)',
-  1 => 'First Letter Anywhere (Gurmukhi)',
-  2 => 'Full Word (Gurakhar)',
-  3 => 'Full Word (English)',
-  4 => 'Romanized (English)',
-);
-
-$search_sources = array(
-  'all' => 'All Sources',
-  'G' => 'Guru Granth Sahib Ji',
-  'D' => 'Dasam Granth Sahib',
-  'B' => 'Bhai Gurdas Ji Vaaran',
-  'N' => 'Bhai Nand Lal Ji Vaaran',
-  'A' => 'Amrit Keertan',
-);
+//Decode JSON into objects for relevant settings
+$search_types   = json_decode($search_types);
+$search_sources = json_decode($search_sources);
 
 //If the search type doesn't exist, set our default
 if (!array_key_exists($search_type, $search_types)) {
