@@ -15,7 +15,9 @@ if ($results = $mysqli->query($query)) {
 $query = "SELECT id, slug, link_name, location, link, menu_order FROM pages";
 if ($results = $mysqli->query($query)) {
   while ($result = $results->fetch_assoc()) {
-    $pages[] = $result['slug'];
+    if ($result['slug']) {
+      $pages[] = $result['slug'];
+    }
     if (is_numeric($result['menu_order'])) {
       $menus[$result['location']][$result['menu_order']] = array(
         'slug' => $result['slug'],
