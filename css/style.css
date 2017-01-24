@@ -294,6 +294,10 @@ footer {
 #controls-wrapper > div {
   margin: 0 10px;
 }
+#shabad-controllers {
+  overflow-x: auto;
+  white-space: nowrap;
+}
 #controls-wrapper input[type="checkbox"] {
   display: none;
 }
