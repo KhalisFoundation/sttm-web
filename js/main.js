@@ -50,6 +50,26 @@ $(".gurmukhi-keyboard button").on("click", function() {
   }
 });
 
+$("#shabad").on("click", ".share .copy", function() {
+  let el = $(this).parents(".line").children("textarea");
+  el.show().select();
+  document.execCommand("copy");
+  el.blur().hide();
+});
+$("#shabad").on("click", ".share .twitter", function() {
+  let tweet = $(this).parents(".line").children("textarea").val();
+  if (tweet.length > 134) {
+    tweet = tweet.substring(0,131) + ".. ";
+  }
+  tweet += " #sttm";
+  window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweet), "_blank");
+});
+/*$("#shabad").on("click", ".share .facebook", function() {
+  let post = $(this).parents(".line").children("textarea").val();
+  post += " #sttm";
+  window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("http://www.sikhitothemax.org") + "&t=" + encodeURIComponent(post), "_blank");
+});*/
+
 function updateSearchLang(set_search_type) {
   var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type == "string" ? parseInt(set_search_type) : 1));
   switch (searchType) {
@@ -80,4 +100,20 @@ function shabadToggle(e) {
 }
 function displayOptionToggle(e) {
   $(".shabad").toggleClass(e.target.id);
+  //Update the textarea for copy/social sharing
+  $(".shabad .line").each(function() {
+    let line_share_text = [];
+    $(this).children("p:visible, blockquote:visible").each(function() {
+      let text = '';
+      if ($(this).children('div.unicode').length > 0) {
+        text = $(this).children('div.unicode').text();
+      } else {
+        text = $(this).text();
+      }
+      if (text) {
+        line_share_text.push(text);
+      }
+    });
+    $(this).find("textarea").val(line_share_text.join("\n"));
+  });
 }

@@ -16,6 +16,15 @@ function baani(gurbani) {
     ]),
     h('blockquote', { class: 'translation english' }, shabad.English),
     h('blockquote', { class: 'translation spanish' }, shabad.Spanish),
+    h('div', { class: 'share' }, [
+      h('a', { class: 'copy' },
+        h('i', { class: 'fa fa-fw fa-clipboard' })),
+      h('a', { class: 'twitter' },
+        h('i', { class: 'fa fa-fw fa-twitter' }))/*,
+      h('a', { class: 'facebook' },
+        h('i', { class: 'fa fa-fw fa-facebook' }))*/
+    ]),
+    h('textarea', {}, shabad.GurmukhiUni + "\n" + shabad.English)
   ])));
 }
 

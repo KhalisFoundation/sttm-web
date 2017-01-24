@@ -331,6 +331,9 @@ footer {
 .shabad-content > div {
   margin-bottom: 1rem;
 }
+.shabad .line {
+  position: relative;
+}
 .shabad-content p {
   clear: both;
   margin-bottom: 0;
@@ -371,6 +374,34 @@ footer {
 .shabad.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
 .shabad.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
   color: #F39C1D;
+}
+.shabad .line .share {
+  background-color: rgba(255, 255, 255, 0.85);
+  display: none;
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.shabad .line:hover .share {
+  display: block;
+}
+.shabad .share a {
+  color: #000;
+  margin-left: 5px;
+  padding: .5rem;
+}
+.shabad .share .copy:hover {
+  color: #f39c1d;
+}
+.shabad .share .twitter:hover {
+  color: #00aced;
+}
+.shabad .share .facebook:hover {
+  color: #3b5998;
+}
+.shabad textarea {
+  display: none;
 }
 
 @media screen and (max-width: 39.999999em) {
