@@ -29,7 +29,7 @@ endif;
 <?php
 foreach ($menus['header'] as $menu_item) :
 ?>
-          <li><a href="<?= $menu_item['link'] ? $menu_item['link'] : "/{$menu_item['slug']}" ?>"><?= $menu_item['link_name'] ?></a></li>
+          <li><a href="<?= $menu_item['link'] ? $menu_item['link'] : "/{$menu_item['slug']}" ?>" <?= stripos($menu_item['link'], 'http') > -1 ? ' target="_blank"' : '' ?>><?= $menu_item['link_name'] ?></a></li>
 <?php
 endforeach;
 ?>
