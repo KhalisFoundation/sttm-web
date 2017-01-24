@@ -306,8 +306,8 @@ footer {
   margin: 0 0 1rem;
 }
 #controls-wrapper input[type="checkbox"]:checked + label {
-  border-color: #1583cc;
-  background-color: #1583cc;
+  border-color: #01669b;
+  background-color: #01669b;
   color: white;
 }
 .shabad {
