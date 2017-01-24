@@ -288,11 +288,16 @@ footer {
   display: none;
 }
 #controls-wrapper {
-  padding: 0 5px;
-  margin: 1rem;
+  background-color: #fff;
+  margin: 1rem 0;
+  padding-top: 0.5rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 99;
 }
 #controls-wrapper > div {
-  margin: 0 10px;
+  padding: 0 1rem;
 }
 #shabad-controllers {
   overflow-x: auto;
@@ -321,12 +326,7 @@ footer {
 .shabad {
   display: flex;
   justify-content: center;
-}
-.shabad-container {
-  width: 100vw;
-}
-.shabad-content {
-  padding: 0 5vw;
+  margin: 0 1rem;
 }
 .shabad-content > div {
   margin-bottom: 1rem;
@@ -457,6 +457,13 @@ footer {
   }
   .search-result {
     padding: 1rem 1rem 1rem 0;
+  }
+  /* ***** SHABAD PAGE ***** */
+  #controls-wrapper > div {
+    padding: 0 2rem 0 3rem;
+  }
+  .shabad {
+    margin: 0 2rem 0 3rem;
   }
 }
 @media screen and (min-width: 64em) {
