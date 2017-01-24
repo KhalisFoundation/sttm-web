@@ -5,6 +5,12 @@
 
     <input id="unicode-toggle" type="checkbox" class="shabad-controller-toggle">
     <label for="unicode-toggle" class="no-select">Unicode</label>
+
+    <input id="larivaar-toggle" type="checkbox" class="shabad-controller-toggle">
+    <label for="larivaar-toggle" class="no-select">Larivaar</label>
+
+    <input id="larivaar_assist-toggle" type="checkbox" class="shabad-controller-toggle">
+    <label for="larivaar_assist-toggle" class="no-select">Larivaar Assist</label>
   </div>
   <div id="display-options" class="hidden">
     <div class="display-option-type">

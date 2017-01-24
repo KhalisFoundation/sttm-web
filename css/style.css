@@ -314,6 +314,10 @@ footer {
   background-color: #01669b;
   color: white;
 }
+/* Hide Larivaar Assist if Larivaar is not checked */
+#larivaar-toggle:not(:checked) + label + input + label {
+  display: none;
+}
 .shabad {
   display: flex;
   justify-content: center;
@@ -328,7 +332,11 @@ footer {
   margin-bottom: 1rem;
 }
 .shabad-content p {
+  clear: both;
   margin-bottom: 0;
+}
+.shabad-content blockquote {
+  clear: both;
 }
 .shabad .transliteration {
   text-tranform: capitalize;
@@ -349,6 +357,20 @@ footer {
 .shabad.translation-spanish .translation.spanish,
 .shabad.transliteration-english .transliteration.english {
   display: block;
+}
+.shabad .gurlipi i,
+.shabad .unicode i {
+  font-style: normal;
+}
+.shabad.larivaar .gurlipi span,
+.shabad.larivaar .gurlipi i,
+.shabad.larivaar .unicode span,
+.shabad.larivaar .unicode i {
+  float: left;
+}
+.shabad.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
+.shabad.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
+  color: #F39C1D;
 }
 
 @media screen and (max-width: 39.999999em) {

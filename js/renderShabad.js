@@ -4,14 +4,28 @@ function renderShabad(gurbani) {
 }
 
 function baani(gurbani) {
-  return h('div', { class: 'shabad-content' } , gurbani.map(({ shabad }) => h('div', {  }, [
-    h('p', { class: 'gurlipi gurbani-display gurbani-font' }, shabad.Gurmukhi),
-    h('p', { class: 'unicode gurbani-display gurbani-font' }, shabad.GurmukhiUni),
+  return h('div', { class: 'shabad-content' } , gurbani.map(({ shabad }) => h('div', { id: 'line-' + shabad.ID, class: 'line' }, [
+    h('p', { class: 'gurlipi gurbani-display gurbani-font' }, prepareLarivaar(shabad.Gurmukhi)),
+    h('p', { class: 'unicode gurbani-display gurbani-font' }, prepareLarivaar(shabad.GurmukhiUni)),
     h('p', { class: 'transliteration english' }, shabad.Transliteration),
     h('blockquote', { class: 'translation punjabi gurbani-font' }, shabad.Punjabi),
     h('blockquote', { class: 'translation english' }, shabad.English),
     h('blockquote', { class: 'translation spanish' }, shabad.Spanish),
   ])));
+}
+
+function prepareLarivaar(padChhed) {
+  let shabads = padChhed.split(' ');
+  let newLine = '';
+  Array.from(shabads).forEach(val => {
+    if(val.indexOf('॥') !== -1 || val.indexOf(']') !== -1) {
+      tag = "i";
+    } else {
+      tag = "span";
+    }
+    newLine += "<" + tag + ">" + val + (tag == "i" ? " " : "") + "</" + tag + "> ";
+  });
+  return newLine;
 }
 
 function buttons () {

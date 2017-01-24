@@ -71,7 +71,10 @@ function shabadToggle(e) {
       $("#display-options").toggleClass("hidden");
       break;
     case "unicode-toggle":
-      $(".shabad").toggleClass("unicode");
+    case "larivaar-toggle":
+    case "larivaar_assist-toggle":
+      let toggle = e.target.id.split("-")[0];
+      $(".shabad").toggleClass(toggle);
       break;
   }
 }
