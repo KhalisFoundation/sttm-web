@@ -15,7 +15,7 @@ function h(type = 'div', attributes = { }, children = '') {
   } else if (children instanceof HTMLElement) {
     el.appendChild(children);
   } else if (typeof children === 'string') {
-    el.textContent = children;
+    el.innerHTML = children;
   }
 
   return el;
