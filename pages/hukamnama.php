@@ -10,6 +10,7 @@ $scripts[] = 'js/renderShabad.js';
 
 <?php require_once('inc/controls.php'); ?>
 
+    <div class="hidden" id="metadata"></div>
     <div>
       <div id="shabad" class="shabad translation-english">
       </div>

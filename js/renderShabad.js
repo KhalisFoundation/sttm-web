@@ -3,6 +3,31 @@ function renderShabad(gurbani) {
   $controls.classList.remove('hidden');
 }
 
+function metaData(data) {
+  let page_type_gurmukhi  = data.source.id == 'G' ? 'AMg' : 'pMnw';
+  let page_type_english   = data.source.id == 'G' ? 'Ang' : 'Pannaa';
+  let gurmukhi_meta       = [];
+  let english_meta        = [];
+  if (data.raag.gurmukhi && data.raag.gurmukhi != "null") {
+    gurmukhi_meta.push(data.raag.gurmukhi);
+    english_meta.push(data.raag.english);
+  }
+  if (data.writer) {
+    gurmukhi_meta.push(data.writer.gurmukhi);
+    english_meta.push(data.writer.english);
+  }
+  gurmukhi_meta.push(data.source.gurmukhi);
+  english_meta.push(data.source.english);
+
+  gurmukhi_meta.push(page_type_gurmukhi + ' ' + data.source.pageno);
+  english_meta.push(page_type_english + ' ' + data.source.pageno);
+
+  $meta.appendChild(h('h4', { class: 'gurbani-font' }, gurmukhi_meta.join(' - ')));
+  $meta.appendChild(h('h4', {}, english_meta.join(' - ')));
+
+  $meta.classList.remove('hidden');
+}
+
 function baani(gurbani) {
   return h('div', { class: 'shabad-content' } , gurbani.map(({ shabad }) => h('div', { id: 'line-' + shabad.id, class: 'line' }, [
     h('p', { class: 'gurmukhi gurbani-display gurbani-font' }, [

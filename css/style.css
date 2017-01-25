@@ -323,6 +323,13 @@ footer {
 #larivaar-toggle:not(:checked) + label + input + label {
   display: none;
 }
+#metadata {
+  border: 1px solid #cacaca;
+  border-radius: 2px;
+  margin: 1rem;
+  padding: 1rem;
+  text-align: center;
+}
 .shabad {
   display: flex;
   justify-content: center;
@@ -495,6 +502,9 @@ footer {
   /* ***** SHABAD PAGE ***** */
   #controls-wrapper > div {
     padding: 0 2rem 0 3rem;
+  }
+  #metadata {
+    margin: 1rem 2rem 1rem 3rem;
   }
   .shabad {
     margin: 0 2rem 0 3rem;

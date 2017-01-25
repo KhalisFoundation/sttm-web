@@ -9,6 +9,7 @@ $(function() {
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
+      metaData(data.shabadinfo);
       renderShabad(data.gurbani);
     },
     error: showError

@@ -2,6 +2,7 @@ const $search     = document.getElementById("search");
 const $searchType = document.getElementById("searchType");
 const $controls   = document.getElementById("controls-wrapper");
 const $shabad     = document.getElementById("shabad");
+const $meta       = document.getElementById("metadata");
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 
