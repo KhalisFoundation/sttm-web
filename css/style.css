@@ -328,6 +328,9 @@ footer {
   justify-content: center;
   margin: 0 1rem;
 }
+.shabad-container {
+  width: 100%;
+}
 .shabad-content > div {
   margin-bottom: 1rem;
 }
