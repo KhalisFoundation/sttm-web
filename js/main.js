@@ -1,6 +1,6 @@
 const $search     = document.getElementById("search");
 const $searchType = document.getElementById("searchType");
-const $controls   = $("#controls-wrapper");
+const $controls   = document.getElementById("controls-wrapper");
 const $shabad     = document.getElementById("shabad");
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);

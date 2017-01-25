@@ -1,21 +1,21 @@
 function renderShabad(gurbani) {
   $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), ]));
-  $controls.removeClass('hidden');
+  $controls.classList.remove('hidden');
 }
 
 function baani(gurbani) {
-  return h('div', { class: 'shabad-content' } , gurbani.map(({ shabad }) => h('div', { id: 'line-' + shabad.ID, class: 'line' }, [
+  return h('div', { class: 'shabad-content' } , gurbani.map(({ shabad }) => h('div', { id: 'line-' + shabad.id, class: 'line' }, [
     h('p', { class: 'gurmukhi gurbani-display gurbani-font' }, [
-      h('div', { class: 'gurlipi' }, prepareLarivaar(shabad.Gurmukhi)),
-      h('div', { class: 'unicode' }, prepareLarivaar(shabad.GurmukhiUni))
+      h('div', { class: 'gurlipi' }, prepareLarivaar(shabad.gurbani.gurmukhi)),
+      h('div', { class: 'unicode' }, prepareLarivaar(shabad.gurbani.unicode))
     ]),
-    h('p', { class: 'transliteration english' }, shabad.Transliteration),
+    h('p', { class: 'transliteration english' }, shabad.transliteration),
     h('blockquote', { class: 'translation punjabi gurbani-font' }, [
-      h('div', { class: 'gurlipi' }, shabad.Punjabi),
-      h('div', { class: 'unicode' }, shabad.PunjabiUni)
+      h('div', { class: 'gurlipi' }, shabad.translation.punjabi.bms.gurmukhi),
+      h('div', { class: 'unicode' }, shabad.translation.punjabi.bms.unicode)
     ]),
-    h('blockquote', { class: 'translation english' }, shabad.English),
-    h('blockquote', { class: 'translation spanish' }, shabad.Spanish),
+    h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
+    h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
     h('div', { class: 'share' }, [
       h('a', { class: 'copy' },
         h('i', { class: 'fa fa-fw fa-clipboard' })),
