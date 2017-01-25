@@ -19,8 +19,8 @@ function metaData(data) {
   gurmukhi_meta.push(data.source.gurmukhi);
   english_meta.push(data.source.english);
 
-  gurmukhi_meta.push(page_type_gurmukhi + ' ' + data.source.pageno);
-  english_meta.push(page_type_english + ' ' + data.source.pageno);
+  gurmukhi_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_gurmukhi + ' ' + data.source.pageno + '</a>');
+  english_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_english + ' ' + data.source.pageno + '</a>');
 
   $meta.appendChild(h('h4', { class: 'gurbani-font' }, gurmukhi_meta.join(' - ')));
   $meta.appendChild(h('h4', {}, english_meta.join(' - ')));
@@ -66,44 +66,3 @@ function prepareLarivaar(padChhed) {
   });
   return newLine;
 }
-
-function buttons () {
-  const transliterations = {
-    'Transliteration': null,
-    'English Transliteration': '.transliteration.english'
-  };
-
-  const translations = {
-    'Translation': null,
-    'Punjabi Translation': '.translation.punjabi',
-    'English Translation': '.translation.english',
-    'Spanish Translation': '.translation.spanish',
-  };
-
-  function renderCheckbox({ id, text }) {
-    function click () {
-      Array.from($shabad.querySelectorAll('.unicode')).forEach(el => el.classList.toggle('hidden'));
-      Array.from($shabad.querySelectorAll('.gurlipi')).forEach(el => el.classList.toggle('hidden'));
-    }
-    return h('div', { }, [
-      h('input', { id, type: 'checkbox', click, class: 'no-select' }),
-      h('label', { 'for': id, class: 'no-select' }, text),
-    ]);
-  }
-
-  function renderDropdown({ name, data }) {
-    function change({ target: { value, options } }) {
-      Array.from(options)
-        .map(e => Array.from($shabad.querySelectorAll(e.value)))
-        .forEach(els => els.forEach(el => el.classList.add('hidden')));
-
-      if (value)
-        Array.from($shabad.querySelectorAll(value))
-          .forEach(el => el && el.classList.remove('hidden'));
-    }
-    return h('div', { }, [
-      h('select', { name, change, }, Object.keys(data).map(key => h('option', { value: data[key] }, key)))
-    ]);
-  }
-}
-
