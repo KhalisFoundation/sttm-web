@@ -23,8 +23,8 @@ endforeach;
 
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.4/foundation.min.js"></script>
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="/js/foundation.min.js"></script>
     <script src="/js/main.js?v=<?= $asset_version ?>"></script>
     <script src="/js/h.js?v=1"></script>
     <script src="/js/getParameterByName.js"></script>
