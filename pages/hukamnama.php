@@ -12,6 +12,6 @@ $scripts[] = 'js/renderShabad.js';
 
     <div class="hidden" id="metadata"></div>
     <div>
-      <div id="shabad" class="shabad translation-english">
+      <div id="shabad" class="shabad">
       </div>
     </div>

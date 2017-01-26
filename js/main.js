@@ -1,8 +1,15 @@
-const $search     = document.getElementById("search");
-const $searchType = document.getElementById("searchType");
-const $controls   = document.getElementById("controls-wrapper");
-const $shabad     = document.getElementById("shabad");
-const $meta       = document.getElementById("metadata");
+const $search       = document.getElementById("search");
+const $searchType   = document.getElementById("searchType");
+const $controls     = document.getElementById("controls-wrapper");
+const $shabad       = document.getElementById("shabad");
+const $meta         = document.getElementById("metadata");
+const prefs         = {};
+const default_prefs = {
+  'displayOptions': ['translation-english'],
+  'shabadToggles': []
+};
+
+getPrefs();
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 
@@ -98,6 +105,7 @@ function shabadToggle(e) {
     case "larivaar_assist-toggle":
       let toggle = e.target.id.split("-")[0];
       $(".shabad").toggleClass(toggle);
+      checkboxPref(e, 'shabadToggles', option);
       break;
   }
 }
@@ -105,6 +113,8 @@ function displayOptionToggle(e) {
   e.target.classList.toggle('active');
   let option = e.target.id;
   $(".shabad").toggleClass(option);
+  checkboxPref(e, 'displayOptions', option);
+
   //Update the textarea for copy/social sharing
   $(".shabad .line").each(function() {
     let line_share_text = [];
@@ -121,4 +131,24 @@ function displayOptionToggle(e) {
     });
     $(this).find("textarea").val(line_share_text.join("\n"));
   });
+}
+
+function getPrefs() {
+  $.each(default_prefs, function(key, defaults) {
+    prefs[key] = window.localStorage[key] ? JSON.parse(window.localStorage[key]) : defaults;
+  });
+}
+function setPref(key, val) {
+  window.localStorage[key] = JSON.stringify(val);
+}
+function checkboxPref(e, key, option) {
+  if (e.target.classList.contains('active')) {
+    if (prefs[key].indexOf(option) < 0) {
+      prefs[key].push(option);
+    }
+  } else {
+    let index = prefs[key].indexOf(option);
+    prefs[key].splice(index, 1);
+  }
+  setPref(key, prefs[key]);
 }
