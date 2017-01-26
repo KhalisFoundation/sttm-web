@@ -33,7 +33,7 @@ endforeach;
 <?php
   if (is_array($scripts)) {
     foreach ($scripts as $script) {
-      echo "    <script src=\"{$script}?v=<?= $asset_version ?>\"></script>\n";
+      echo "    <script src=\"{$script}?v={$asset_version}\"></script>\n";
     }
   }
 ?>
