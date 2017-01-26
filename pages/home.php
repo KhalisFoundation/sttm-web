@@ -9,7 +9,7 @@ $scripts[]        = '/js/index.js';
         <form class="search-form" action="/search">
           <div class="flex justify-center align-center">
             <div>
-              <img class="logo-long" src="images/sttm_logo_beta.png" alt="SikhiToTheMax Logo" />
+              <img class="logo-long" src="/images/sttm_logo_beta.png" alt="SikhiToTheMax Logo" />
             </div>
           </div>
           <div id="search-container">
