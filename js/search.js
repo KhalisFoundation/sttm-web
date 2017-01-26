@@ -7,6 +7,10 @@ const params = ['type', 'source', 'q'];
 
 const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
 
+$($searchResults).on("click", "a.load", function() {
+  loadResults(this.dataset.nextpage);
+});
+
 $(function() {
   updateSearchLang(type);
   
@@ -17,23 +21,34 @@ $(function() {
     return;
   }
 
-  $searchResults.appendChild(H3('Loading...'));
+  $searchResults.appendChild(h('h3', { class: 'loading text-center' }, 'Loading...'));
+  loadResults();
+});
+
+function loadResults(offset) {
   $.ajax({
-    url: buildApiUrl({ q, type, source }),
+    url: buildApiUrl({ q, type, source, offset }),
     dataType: "json",
     success: function(data) {
-      $searchResults.innerHTML = '';
-      if (data.count != 0) {
+      $("h3.loading, li.load-more").remove();
+      if (data.pageinfo.pageresults > 0) {
         $.each(data.shabads, function(key, val) {
           addSearchResult(val.shabad, q);
         });
+        if (data.pageinfo.nextpageoffset) {
+          $searchResults.appendChild(
+            h('li', { class: 'load-more' },
+              h('a', { class: 'load button', 'data-nextpage': data.pageinfo.nextpageoffset }, 'Load More')
+            )
+          );
+        }
       } else {
         noResults();
       }
     },
     error: showError
   });
-});
+}
 
 function addSearchResult(shabad, q) {
   const { Gurmukhi, English, ShabadID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;

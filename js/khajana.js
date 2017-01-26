@@ -27,6 +27,7 @@ const buildApiUrl = options => {
     raag = false,
     ang = false,
     results = false,
+    offset = false,
     id = false,
     hukam = false,
     akhar = false,
@@ -43,6 +44,7 @@ const buildApiUrl = options => {
     if (raag) url += `raag=${raag}&`;
     if (ang) url += `ang=${ang}&`;
     if (results) url += `results=${results}&`;
+    if (offset) url += `offset=${offset}&`;
   } else if (id !== false) {
     url += `shabad/${id}`;
   } else if (ang !== false) {
