@@ -446,6 +446,7 @@ footer {
   body.menu-open .top-bar-right ul.menu {
     height: calc(100% + 1px);
     top: 0;
+    z-index: 10;
   }
   .top-bar-right .menu li {
     border-bottom: 1px solid #f39c1d;
