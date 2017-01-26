@@ -1,6 +1,6 @@
 <?php
 
-$scripts[] = 'js/search.js';
+$scripts[] = '/js/search.js';
 
 ?>
     <div>

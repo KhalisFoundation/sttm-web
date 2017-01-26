@@ -1,7 +1,7 @@
 <?php
 
-$scripts[] = 'js/ang.js';
-$scripts[] = 'js/renderShabad.js';
+$scripts[] = '/js/ang.js';
+$scripts[] = '/js/renderShabad.js';
 include 'inc/controls.php';
 
 ?>

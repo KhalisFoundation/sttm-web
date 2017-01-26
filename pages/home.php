@@ -2,7 +2,7 @@
 
 $body_classes[]   = 'home';
 $hide_search_bar  = true;
-$scripts[]        = 'js/index.js';
+$scripts[]        = '/js/index.js';
 
 ?>
       <div class="search-page">
