@@ -310,24 +310,35 @@ footer {
   overflow-x: auto;
   white-space: nowrap;
 }
-#controls-wrapper input[type="checkbox"] {
-  display: none;
-}
-#controls-wrapper label {
-  font-size: 1rem;
+.shabad-controller-toggle,
+.display-option-toggle {
   border: 1px solid #cacaca;
   border-radius: 2px;
+  color: #000;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1.8;
+  margin: 0;
   padding: 4px 10px;
   transition: all .25s;
-  margin: 0;
+  vertical-align: baseline;
 }
-#controls-wrapper input[type="checkbox"]:checked + label {
+.shabad-controller-toggle:hover,
+.display-option-toggle:hover {
+  border-color: #01669b;
+  color: #01669b;
+}
+.shabad-controller-toggle.active,
+.shabad-controller-toggle.active:hover,
+.display-option-toggle.active,
+.display-option-toggle.active:hover
+ {
   border-color: #01669b;
   background-color: #01669b;
   color: white;
 }
 /* Hide Larivaar Assist if Larivaar is not checked */
-#larivaar-toggle:not(:checked) + label + input + label {
+#larivaar-toggle:not(.active) + a {
   display: none;
 }
 .display-option-type {

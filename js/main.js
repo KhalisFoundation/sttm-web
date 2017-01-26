@@ -87,7 +87,9 @@ function updateSearchLang(set_search_type) {
 }
 
 function shabadToggle(e) {
-  switch(e.target.id) {
+  e.target.classList.toggle('active');
+  let option = e.target.id
+  switch(option) {
     case "display-options-toggle":
       $("#display-options").toggleClass("hidden");
       break;
@@ -100,7 +102,9 @@ function shabadToggle(e) {
   }
 }
 function displayOptionToggle(e) {
-  $(".shabad").toggleClass(e.target.id);
+  e.target.classList.toggle('active');
+  let option = e.target.id;
+  $(".shabad").toggleClass(option);
   //Update the textarea for copy/social sharing
   $(".shabad .line").each(function() {
     let line_share_text = [];

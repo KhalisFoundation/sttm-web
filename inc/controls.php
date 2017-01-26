@@ -1,33 +1,20 @@
 <div id="controls-wrapper" class="no-select hidden">
   <div id="shabad-controllers">
-    <input id="display-options-toggle" type="checkbox" class="shabad-controller-toggle">
-    <label for="display-options-toggle"><i class="fa fa-sliders"></i> Display Options</label>
-
-    <input id="unicode-toggle" type="checkbox" class="shabad-controller-toggle">
-    <label for="unicode-toggle" class="no-select">Unicode</label>
-
-    <input id="larivaar-toggle" type="checkbox" class="shabad-controller-toggle">
-    <label for="larivaar-toggle" class="no-select">Larivaar</label>
-
-    <input id="larivaar_assist-toggle" type="checkbox" class="shabad-controller-toggle">
-    <label for="larivaar_assist-toggle" class="no-select">Larivaar Assist</label>
+    <a id="display-options-toggle" class="shabad-controller-toggle"><i class="fa fa-sliders"></i> Display Options</a>
+    <a id="unicode-toggle" class="shabad-controller-toggle">Unicode</a>
+    <a id="larivaar-toggle" class="shabad-controller-toggle">Larivaar</a>
+    <a id="larivaar_assist-toggle" class="shabad-controller-toggle">Larivaar Assist</a>
   </div>
   <div id="display-options" class="hidden">
     <div class="display-option-type">
       <div class="display-option-header">Transliteration</div>
-      <input type="checkbox" name="transliteration" id="transliteration-english" value="Transliteration" class="display-option-toggle">
-      <label for="transliteration-english" class="no-select">English</label>
+      <a id="transliteration-english" class="display-option-toggle">English</a>
     </div>
     <div class="display-option-type">
       <div class="display-option-header">Translation</div>
-      <input type="checkbox" name="translation" id="translation-punjabi" value="Punjabi" class="display-option-toggle">
-      <label for="translation-punjabi" class="no-select">Punjabi</label>
-
-      <input type="checkbox" name="translation" id="translation-english" value="English" class="display-option-toggle" checked>
-      <label for="translation-english" class="no-select">English</label>
-
-      <input type="checkbox" name="translation" id="translation-spanish" value="Spanish" class="display-option-toggle">
-      <label for="translation-spanish">Spanish</label>
+      <a id="translation-punjabi" class="display-option-toggle">Punjabi</a>
+      <a id="translation-english" class="display-option-toggle">English</a>
+      <a id="translation-spanish" class="display-option-toggle">Spanish</a>
     </div>
   </div>
 </div>
