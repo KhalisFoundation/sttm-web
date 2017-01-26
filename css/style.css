@@ -297,6 +297,7 @@ footer {
   z-index: 99;
 }
 #controls-wrapper > div {
+  margin-bottom: 0.5rem;
   padding: 0 1rem;
 }
 #shabad-controllers {
@@ -312,7 +313,7 @@ footer {
   border-radius: 2px;
   padding: 4px 10px;
   transition: all .25s;
-  margin: 0 0 1rem;
+  margin: 0;
 }
 #controls-wrapper input[type="checkbox"]:checked + label {
   border-color: #01669b;
@@ -322,6 +323,9 @@ footer {
 /* Hide Larivaar Assist if Larivaar is not checked */
 #larivaar-toggle:not(:checked) + label + input + label {
   display: none;
+}
+.display-option-type {
+  margin-bottom: 1rem;
 }
 #metadata {
   border: 1px solid #cacaca;
