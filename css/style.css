@@ -29,6 +29,9 @@ body {
   user-select: none; /* Non-prefixed version, currently
   not supported by any browser */
 }
+.button {
+  margin: 0;
+}
 
 /* Flex Helper Classes */
 .flex {
@@ -191,7 +194,6 @@ footer .menu li a:hover {
   font-size: 1rem;
   height: 48px;
   line-height: 18px;
-  margin: 0;
   position: absolute;
   right: 0.5rem;
   top: 0.5rem;
