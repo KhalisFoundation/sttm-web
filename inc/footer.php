@@ -24,7 +24,7 @@ endforeach;
     </script>
 
     <script src="/js/jquery-3.1.1.min.js"></script>
-    <script src="/js/foundation.min.js"></script>
+    <script src="/js/foundation.min.js?v=6.2.4"></script>
     <script src="/js/main.js?v=<?= $asset_version ?>"></script>
     <script src="/js/h.js?v=1"></script>
     <script src="/js/getParameterByName.js"></script>

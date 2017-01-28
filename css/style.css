@@ -1,4 +1,4 @@
-@font-face { font-family: gurmukhi_heavy; src: url('/fonts/GurbaniAkharHeavyTrue.ttf'); }
+@font-face { font-family: gurmukhi_heavy; src: url('/fonts/GurbaniAkharHeavyTrue.ttf?v=1'); }
 
 body {
   font-size: 18px;
