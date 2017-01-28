@@ -51,19 +51,17 @@ function loadResults(offset) {
 }
 
 function addSearchResult(shabad, q) {
-  const { Gurmukhi, English, ShabadID, SourceID, PageNo, RaagEnglish, WriterEnglish } = shabad;
-  const url = `${window.location.origin + window.location.pathname.replace('/search', '/shabad')}?id=${ShabadID}`;
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
       h('a', {
-        href: `/shabad?id=${ShabadID}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
+        href: `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
         class: 'gurbani-font gurbani-display',
-      }, Gurmukhi),
-      h('p', { }, English),
+      }, shabad.gurbani.gurmukhi),
+      h('p', { }, shabad.translation.english.ssk),
       h('div', { class: 'meta flex wrap'} , [
-        h('a', { href: '#', }, `${SOURCES[SourceID]} - ${PageNo}`),
-        h('a', { href: '#', }, `${WriterEnglish}`),
-        h('a', { href: '#', }, `${RaagEnglish}`),
+        h('a', { href: '#', }, `${SOURCES[shabad.source.id]} - ${shabad.pageno}`),
+        h('a', { href: '#', }, `${shabad.writer.english}`),
+        h('a', { href: '#', }, `${shabad.raag.english}`),
       ]),
     ])
   );
