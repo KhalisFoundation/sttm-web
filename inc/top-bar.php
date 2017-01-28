@@ -8,7 +8,7 @@
 if (!$hide_search_bar) :
 ?>
           <div class="top-bar-left">
-            <form action="/search" id="top-bar-search-form">
+            <form action="/search" id="top-bar-search-form" class="search-form">
               <ul class="menu">
                 <li><div id="search-container"><input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" value="<?= $search_q_display ?>"><button class="gurmukhi-keyboard-toggle" type="button"><i class="fa fa-keyboard-o"></i></button><button type="submit"><i class="fa fa-search"></i></button>
 <?php

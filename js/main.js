@@ -13,6 +13,14 @@ getPrefs();
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 
+$(".search-form").on("submit", function(e) {
+  if ($search.value.length <= 2) {
+    alert("Please enter at least 3 characters");
+    e.preventDefault();
+    return false;
+  }
+});
+
 //Shabad controller toggles
 $(".shabad-controller-toggle").on("click", shabadToggle);
 
