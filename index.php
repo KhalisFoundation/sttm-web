@@ -6,7 +6,7 @@ require_once('inc/globals.php');
 $path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 $path = explode('?', $path);
 $path = explode('/', $path[0]);
-$page = @in_array($path[0], $pages) ? $path[0] : 'home';
+$page = $path[0] ? (@in_array($path[0], $pages) ? $path[0] : '404') : 'home';
 
 //Get the information for the current page
 $query      = "SELECT use_include, title, content FROM pages WHERE slug = '$page'";

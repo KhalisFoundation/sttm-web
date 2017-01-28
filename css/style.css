@@ -62,8 +62,19 @@ body {
   justify-content: space-between;
 }
 
-.text-center {
-
+/* ***** ERROR ***** */
+#error-code {
+  color: #01669b;
+  font-family: cursive, sans-serif;
+  font-size: 7rem;
+  font-weight: bold;
+}
+#error-msg {
+  color: #f39c1d;
+  font-weight: bold;
+}
+#error-desc {
+  margin-top: 3rem;
 }
 
 /**********
