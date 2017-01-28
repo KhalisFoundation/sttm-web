@@ -32,6 +32,7 @@ const buildApiUrl = options => {
     hukam = false,
     akhar = false,
     lipi = false,
+    random = false
   } = options;
 
   let url = API_URL;
@@ -54,6 +55,8 @@ const buildApiUrl = options => {
     url += `hukamnama/today`;
   } else if (akhar !== false && lipi !== false) {
     url += `akhar/${lipi}`;
+  } else if (random !== false) {
+    url += `random`;
   } else {
     throw new Error('Invalid options sent');
   }
