@@ -1,5 +1,8 @@
 <?php
 
+//sikhitothemax.com URL structure -> sikhitothemax.org 
+require_once('inc/redirects.php');
+
 require_once('inc/mysql.php');
 
 //Get site settings
