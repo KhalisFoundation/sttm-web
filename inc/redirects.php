@@ -9,9 +9,11 @@ if ($_SERVER['REDIRECT_URL'] == "/page.asp") {
   } else if ($query_string['random']) {
     $redirect_url = "/random";
   }
-  if ($redirect_url) {
-    header("HTTP/1.1 301 Moved Permanently");
-    header("location: $redirect_url");
-    exit;
-  }
+} else if ($_SERVER['REDIRECT_URL'] == '/search.asp') {
+  $redirect_url = "/";
+}
+if ($redirect_url) {
+  header("HTTP/1.1 301 Moved Permanently");
+  header("location: $redirect_url");
+  exit;
 }
