@@ -6,6 +6,8 @@ if ($_SERVER['REDIRECT_URL'] == "/page.asp") {
     $redirect_url = "/ang?ang={$query_string['PageNo']}&source={$query_string['SourceID']}";
   } else if ($query_string['ShabadID']) {
     $redirect_url = "/shabad?id={$query_string['ShabadID']}";
+  } else if ($query_string['random']) {
+    $redirect_url = "/random";
   }
   if ($redirect_url) {
     header("HTTP/1.1 301 Moved Permanently");
