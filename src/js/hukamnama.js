@@ -1,13 +1,13 @@
 'use strict';
 
-$(function () {
-  var q = getParameterByName('q');
+$(function() {
+  const q = getParameterByName('q');
 
   $shabad.innerHTML = 'Loading...';
   $.ajax({
     url: buildApiUrl({ hukam: true }),
     dataType: "json",
-    success: function success(data) {
+    success: function(data) {
       $shabad.innerHTML = '';
       metaData(data.shabadinfo);
       renderShabad(data.gurbani);
@@ -17,5 +17,8 @@ $(function () {
 });
 
 function showError(error) {
-  $shabad.appendChild(h('h2', {}, [h('h3', { class: 'text-center' }, 'Facing some issues')]));
+  $shabad.appendChild(h('h2', { }, [
+    h('h3', { class: 'text-center' }, 'Facing some issues')
+  ]));
 }
+

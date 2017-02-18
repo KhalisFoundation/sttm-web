@@ -1,12 +1,10 @@
-"use strict";
-
-var $search = document.getElementById("search");
-var $searchType = document.getElementById("searchType");
-var $controls = document.getElementById("controls-wrapper");
-var $shabad = document.getElementById("shabad");
-var $meta = document.getElementById("metadata");
-var prefs = {};
-var default_prefs = {
+const $search       = document.getElementById("search");
+const $searchType   = document.getElementById("searchType");
+const $controls     = document.getElementById("controls-wrapper");
+const $shabad       = document.getElementById("shabad");
+const $meta         = document.getElementById("metadata");
+const prefs         = {};
+const default_prefs = {
   'displayOptions': ['translation-english'],
   'shabadToggles': []
 };
@@ -15,7 +13,7 @@ getPrefs();
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 
-$(".search-form").on("submit", function (e) {
+$(".search-form").on("submit", function(e) {
   if ($search.value.length <= 2) {
     alert("Please enter at least 3 characters");
     e.preventDefault();
@@ -29,14 +27,14 @@ $(".shabad-controller-toggle").on("click", shabadToggle);
 //Shabad display option toggles
 $(".display-option-toggle").on("click", displayOptionToggle);
 
-$("#open_mobile_menu").on("click", function () {
+$("#open_mobile_menu").on("click", function() {
   document.body.classList.toggle("menu-open");
-});
-$(".top-bar-right .close a").on("click", function () {
+})
+$(".top-bar-right .close a").on("click", function() {
   document.body.classList.remove("menu-open");
-});
+})
 
-$("#search-options select").on("change", function () {
+$("#search-options select").on("change", function() {
   var update = $(this).data("update");
   $("#" + update).val($(this).val());
   if ($(this).attr("id") == "searchSource") {
@@ -44,15 +42,15 @@ $("#search-options select").on("change", function () {
   }
 });
 
-$(".gurmukhi-keyboard-toggle").on("click", function () {
+$(".gurmukhi-keyboard-toggle").on("click", function() {
   $(".gurmukhi-keyboard").toggle();
 });
-$(".gurmukhi-keyboard button").on("click", function () {
+$(".gurmukhi-keyboard button").on("click", function() {
   if ($(this).data("action")) {
     var action = $(this).data("action");
     if (action == 'bksp') {
-      $("#search").val(function () {
-        return this.value.substring(0, this.value.length - 1);
+      $("#search").val(function() {
+        return this.value.substring(0, this.value.length-1);
       });
     } else if (action == "close") {
       $(".gurmukhi-keyboard").hide();
@@ -62,22 +60,22 @@ $(".gurmukhi-keyboard button").on("click", function () {
     }
   } else {
     var char = $(this).data("value") || $(this).text();
-    $("#search").val(function () {
+    $("#search").val(function() {
       return this.value + char;
     });
   }
 });
 
-$("#shabad").on("click", ".share .copy", function () {
-  var el = $(this).parents(".line").children("textarea");
+$("#shabad").on("click", ".share .copy", function() {
+  let el = $(this).parents(".line").children("textarea");
   el.show().select();
   document.execCommand("copy");
   el.blur().hide();
 });
-$("#shabad").on("click", ".share .twitter", function () {
-  var tweet = $(this).parents(".line").children("textarea").val();
+$("#shabad").on("click", ".share .twitter", function() {
+  let tweet = $(this).parents(".line").children("textarea").val();
   if (tweet.length > 134) {
-    tweet = tweet.substring(0, 131) + ".. ";
+    tweet = tweet.substring(0,131) + ".. ";
   }
   tweet += " #sttm";
   window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweet), "_blank");
@@ -89,7 +87,7 @@ $("#shabad").on("click", ".share .twitter", function () {
 });*/
 
 function updateSearchLang(set_search_type) {
-  var searchType = $searchType ? parseInt($searchType.value) : typeof set_search_type == "string" ? parseInt(set_search_type) : 1;
+  var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type == "string" ? parseInt(set_search_type) : 1));
   switch (searchType) {
     case 3:
     case 4:
@@ -105,15 +103,15 @@ function updateSearchLang(set_search_type) {
 
 function shabadToggle(e) {
   e.target.classList.toggle('active');
-  var option = e.target.id;
-  switch (option) {
+  let option = e.target.id
+  switch(option) {
     case "display-options-toggle":
       $("#display-options").toggleClass("hidden");
       break;
     case "unicode-toggle":
     case "larivaar-toggle":
     case "larivaar_assist-toggle":
-      var toggle = e.target.id.split("-")[0];
+      let toggle = e.target.id.split("-")[0];
       $(".shabad").toggleClass(toggle);
       checkboxPref(e, 'shabadToggles', option);
       break;
@@ -121,15 +119,15 @@ function shabadToggle(e) {
 }
 function displayOptionToggle(e) {
   e.target.classList.toggle('active');
-  var option = e.target.id;
+  let option = e.target.id;
   $(".shabad").toggleClass(option);
   checkboxPref(e, 'displayOptions', option);
 
   //Update the textarea for copy/social sharing
-  $(".shabad .line").each(function () {
-    var line_share_text = [];
-    $(this).children("p:visible, blockquote:visible").each(function () {
-      var text = '';
+  $(".shabad .line").each(function() {
+    let line_share_text = [];
+    $(this).children("p:visible, blockquote:visible").each(function() {
+      let text = '';
       if ($(this).children('div.unicode').length > 0) {
         text = $(this).children('div.unicode').text();
       } else {
@@ -144,7 +142,7 @@ function displayOptionToggle(e) {
 }
 
 function getPrefs() {
-  $.each(default_prefs, function (key, defaults) {
+  $.each(default_prefs, function(key, defaults) {
     prefs[key] = window.localStorage[key] ? JSON.parse(window.localStorage[key]) : defaults;
   });
 }
@@ -157,7 +155,7 @@ function checkboxPref(e, key, option) {
       prefs[key].push(option);
     }
   } else {
-    var index = prefs[key].indexOf(option);
+    let index = prefs[key].indexOf(option);
     prefs[key].splice(index, 1);
   }
   setPref(key, prefs[key]);

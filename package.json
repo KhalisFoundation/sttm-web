@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "php -S localhost:8000 router.php"
+    "start": "php -S localhost:8000 router.php",
+    "babel": "babel src/js --out-dir js",
+    "build": "npm run babel"
   },
   "repository": {
     "type": "git",
@@ -17,5 +19,26 @@
   "bugs": {
     "url": "https://github.com/KhalisFoundation/SikhiToTheMax-Web/issues"
   },
-  "homepage": "https://github.com/KhalisFoundation/SikhiToTheMax-Web#readme"
+  "homepage": "https://github.com/KhalisFoundation/SikhiToTheMax-Web#readme",
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-preset-env": "^1.1.8"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "> 1%",
+              "ie 11",
+              "safari 9"
+            ]
+          }
+        }
+      ]
+    ]
+  }
 }
