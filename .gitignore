@@ -1,3 +1,4 @@
 .DS_Store
 /inc/mysql.php
 node_modules/
+js/
