@@ -1,0 +1,21 @@
+{
+  "name": "SikhiToTheMax-Web",
+  "version": "1.0.0",
+  "description": "Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "php -S localhost:8000 router.php"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KhalisFoundation/SikhiToTheMax-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KhalisFoundation/SikhiToTheMax-Web/issues"
+  },
+  "homepage": "https://github.com/KhalisFoundation/SikhiToTheMax-Web#readme"
+}
