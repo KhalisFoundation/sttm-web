@@ -1,7 +1,7 @@
 <?php
 
-$scripts[] = '/js/random.js';
-$scripts[] = '/js/renderShabad.js';
+$scripts[] = '/assets/js/random.js';
+$scripts[] = '/assets/js/renderShabad.js';
 
 ?>
     <div class="body_text">

@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "php -S localhost:8000 router.php"
+    "start": "php -S localhost:8000 router.php",
+    "babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
+    "build": "npm run babel",
+    "build:prod": "BABEL_ENV=production npm run babel",
+    "deploy": "git checkout dev && git pull origin && git push web"
   },
   "repository": {
     "type": "git",
@@ -13,9 +17,39 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GSL",
   "bugs": {
     "url": "https://github.com/KhalisFoundation/SikhiToTheMax-Web/issues"
   },
-  "homepage": "https://github.com/KhalisFoundation/SikhiToTheMax-Web#readme"
+  "homepage": "https://github.com/KhalisFoundation/SikhiToTheMax-Web#readme",
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-preset-env": "^1.1.8",
+    "babili": "0.0.11"
+  },
+  "babel": {
+    "env": {
+      "production": {
+        "presets": [
+          "babili"
+        ]
+      }
+    },
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "> 1%",
+              "ie 11",
+              "safari 9"
+            ]
+          },
+          "modules": false
+        }
+      ]
+    ]
+  }
 }
