@@ -1,4 +1,4 @@
 .DS_Store
 /inc/mysql.php
 node_modules/
-js/
+/assets/js/*.js

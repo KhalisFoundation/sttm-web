@@ -1,7 +1,7 @@
 <?php
 
-$scripts[] = '/js/hukamnama.js';
-$scripts[] = '/js/renderShabad.js';
+$scripts[] = '/assets/js/hukamnama.js';
+$scripts[] = '/assets/js/renderShabad.js';
 
 ?>
     <div class="body_text">

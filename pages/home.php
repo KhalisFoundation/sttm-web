@@ -2,14 +2,14 @@
 
 $body_classes[]   = 'home';
 $hide_search_bar  = true;
-$scripts[]        = '/js/index.js';
+$scripts[]        = '/assets/js/index.js';
 
 ?>
       <div class="search-page">
         <form class="search-form" action="/search">
           <div class="flex justify-center align-center">
             <div>
-              <img class="logo-long" src="/images/sttm_logo_beta.png" alt="SikhiToTheMax Logo" />
+              <img class="logo-long" src="/assets/images/sttm_logo_beta.png" alt="SikhiToTheMax Logo" />
             </div>
           </div>
           <div id="search-container">
