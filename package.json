@@ -9,7 +9,8 @@
     "babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
     "build": "npm run babel",
     "build:prod": "BABEL_ENV=production npm run babel",
-    "deploy": "git checkout dev && git pull origin && git push web"
+    "deploy": "git checkout dev && git pull origin && git push web",
+    "deploy:server": "npm run build:prod && rm -rf node_modules src LICENSE package.json README.md router.php"
   },
   "repository": {
     "type": "git",
