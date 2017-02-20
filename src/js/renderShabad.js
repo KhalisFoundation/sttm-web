@@ -62,7 +62,7 @@ function baani(gurbani) {
 function prepareLarivaar(padChhed) {
   let shabads = padChhed.split(' ');
   let newLine = '';
-  Array.from(shabads).forEach(val => {
+  [...shabads].forEach(val => {
     if(val.indexOf('॥') !== -1 || val.indexOf(']') !== -1) {
       tag = "i";
     } else {
