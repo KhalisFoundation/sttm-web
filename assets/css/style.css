@@ -1,4 +1,4 @@
-@font-face { font-family: gurmukhi_heavy; src: url('/fonts/GurbaniAkharHeavyTrue.ttf?v=1'); }
+@font-face { font-family: gurmukhi_heavy; src: url('/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1'); }
 
 body {
   font-size: 18px;
@@ -98,7 +98,7 @@ body {
   visibility: hidden;
 }
 .top-bar-title a {
-  background-image: url(/images/sttm_logo_beta.png);
+  background-image: url(/assets/images/sttm_logo_beta.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -497,7 +497,7 @@ footer {
   }
   /* ***** NAV BAR ***** */
   .top-bar-title a {
-    background-image: url(/images/sttm_icon_beta.png);
+    background-image: url(/assets/images/sttm_icon_beta.png);
     width: 54px;
   }
   .top-bar .top-bar-left,

@@ -5,6 +5,6 @@
         <div id="error-desc">The requested URL '/<?= implode("/", $path) ?>' was not found on this server.</div>
       </div>
       <div class="small-12 medium-5 columns">
-        <img src="/images/404.png">
+        <img src="/assets/images/404.png">
       </div>
     </div>
