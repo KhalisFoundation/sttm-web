@@ -87,7 +87,7 @@ $("#shabad").on("click", ".share .twitter", function() {
 });*/
 
 function updateSearchLang(set_search_type) {
-  var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type == "string" ? parseInt(set_search_type) : 1));
+  var searchType = typeof set_search_type == "string" ? parseInt(set_search_type) : parseInt($searchType.value);
   switch (searchType) {
     case 3:
     case 4:
@@ -99,6 +99,7 @@ function updateSearchLang(set_search_type) {
       $search.placeholder = "Koj";
       break;
   }
+  $searchType.value = searchType;
 }
 
 function shabadToggle(e) {
