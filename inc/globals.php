@@ -42,7 +42,7 @@ $search_sources = json_decode($search_sources);
 
 //If the search type doesn't exist, set our default
 if (!array_key_exists($search_type, $search_types)) {
-  $search_type = 1;
+  $search_type = 0;
 }
 
 //If the search source doesn't exist, set our default
