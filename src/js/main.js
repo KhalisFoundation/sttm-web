@@ -12,9 +12,16 @@ const default_prefs = {
 getPrefs();
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
+if ($searchType) $searchType.addEventListener("change", updateSearchAction);
+
+$('#search').keyup(function () {
+    if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
+       this.value = this.value.replace(/[^0-9]/g, '');
+    }
+});
 
 $(".search-form").on("submit", function(e) {
-  if ($search.value.length <= 2) {
+  if ($search.value.length <= 2 && $searchType.value != 5) {
     alert("Please enter at least 3 characters");
     e.preventDefault();
     return false;
@@ -91,12 +98,28 @@ function updateSearchLang(set_search_type) {
   switch (searchType) {
     case 3:
     case 4:
+    case 5:
       $search.classList.remove("gurbani-font");
       $search.placeholder = "Khoj";
       break;
     default:
       $search.classList.add("gurbani-font");
       $search.placeholder = "Koj";
+      break;
+  }
+  $searchType.value = searchType;
+}
+
+function updateSearchAction(set_search_type) {
+  var searchType = typeof set_search_type == "string" ? parseInt(set_search_type) : parseInt($searchType.value);
+  switch (searchType) {
+    case 5:
+      $(".search-form").attr('action','/ang');
+      $search.attr('name','ang');
+      break;
+    default:
+      $(".search-form").attr('action','/search');
+      $search.attr('name','q');
       break;
   }
   $searchType.value = searchType;

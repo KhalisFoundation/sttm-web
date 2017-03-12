@@ -13,6 +13,7 @@ $($searchResults).on("click", "a.load", function() {
 
 $(function() {
   updateSearchLang(type);
+  updateSearchAction(type);
   
   if (q === '') {
     $searchResults.appendChild(H3([

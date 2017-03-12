@@ -4,6 +4,7 @@ const H3 = children => h('h3', { class: 'text-center' }, children);
 $(function() {
   const [id, q, type] = ['id', 'q', 'type'].map(v => getParameterByName(v))
   updateSearchLang(type);
+  updateSearchAction(type);
 
   $shabad.appendChild(H3('Loading...'));
   $.ajax({
