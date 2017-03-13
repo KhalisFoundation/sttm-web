@@ -13,7 +13,7 @@ $scripts[]        = '/assets/js/index.js';
             </div>
           </div>
           <div id="search-container">
-            <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" autocapitalize="none"><button type="button" class="gurmukhi-keyboard-toggle"><i class="fa fa-keyboard-o"></i></button><button type="submit"><i class="fa fa-search"></i></button>
+            <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false"><button type="button" class="gurmukhi-keyboard-toggle"><i class="fa fa-keyboard-o"></i></button><button type="submit"><i class="fa fa-search"></i></button>
 <?php
 include 'inc/gurmukhi-keyboard.php';
 ?>
