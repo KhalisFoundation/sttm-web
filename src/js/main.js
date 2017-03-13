@@ -115,11 +115,11 @@ function updateSearchAction(set_search_type) {
   switch (searchType) {
     case 5:
       $(".search-form").attr('action','/ang');
-      $search.attr('name','ang');
+      $('#search').attr('name','ang');
       break;
     default:
       $(".search-form").attr('action','/search');
-      $search.attr('name','q');
+      $('#search').attr('name','q');
       break;
   }
   $searchType.value = searchType;
