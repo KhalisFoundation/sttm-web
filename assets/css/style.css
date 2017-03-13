@@ -210,6 +210,7 @@ footer .menu li a:hover {
   top: 0.5rem;
   width: 48px;
 }
+
 #search-options {
   clear: both;
   margin-left: 70px;
@@ -446,7 +447,11 @@ footer {
   display: none;
 }
 
-@media screen and (max-width: 39.999999em) {
+.show-on-mobile {
+  display:none!important;
+}
+
+@media screen and (max-width: 45.999999em) {
   .top-bar-title {
     float: none;
     margin: 50px 0 0;
@@ -475,6 +480,26 @@ footer {
     transition: height 400ms ease-out;
     width: 100%;
   }
+  .share-buttons {
+    width:0;
+    overflow:hidden;
+    transition: width 400ms ease-out;
+  }
+  #open_share_menu {
+    margin: -5px auto;
+  }
+  body.share-open .share-buttons,
+  body.share-open #share-menu {
+    background-color: #FAFAFA;
+    width: 100%;
+  }
+  body.share-open .share-buttons {
+    z-index:-1;
+  }
+  body.share-open #open_share_menu {
+      float:right;
+      z-index:9999;
+  }
   body.menu-open .top-bar-right ul.menu {
     height: calc(100% + 1px);
     top: 0;
@@ -490,8 +515,11 @@ footer {
     line-height: 2.6rem;
     margin: 0;
   }
+  .show-on-mobile {
+    display:inline!important;
+  }
 }
-@media screen and (min-width: 40em) {
+@media screen and (min-width: 46em) {
   .gurbani-display {
     font-size: 1.6em;
   }
@@ -515,6 +543,7 @@ footer {
     width: calc(100% - 70px); /* Logo - 54px + 1rem(16px) margin */
   }
   #open_mobile_menu,
+  #open_share_menu,
   .top-bar-right .menu .close {
     display: none;
   }
@@ -543,6 +572,9 @@ footer {
   .shabad {
     margin: 0 2rem 0 3rem;
   }
+  #share-menu {
+    background-color: #FAFAFA;
+  }
 }
 @media screen and (min-width: 64em) {
   .top-bar #search-container {
@@ -555,4 +587,54 @@ footer {
   #search-options {
     width: 444px;
   }
+}
+
+
+/* ***** Sharing Buttons ***** 
+https://simplesharingbuttons.com/#code
+*/
+#share-menu {
+  float: right;
+  padding: 0 35px!important;
+  border-radius: 2px;
+  height: calc(10px + 2em);margin-right: 35px;
+}
+
+ul.share-buttons{
+  list-style: none;
+  padding: 5px 0;
+  float:right;
+  margin: auto -20px;
+}
+
+ul.share-buttons li{
+  display: inline;
+}
+
+ul.share-buttons .sr-only {
+  position: absolute;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+#share-menu a {
+  background-color:transparent!important;
+  color: #F99D1B;
+}
+
+#open_share_menu {
+  right:0;
+  position:absolute;
+}
+
+/*ul.share-buttons */
+.fa {
+  font-size: 1.5em;
+  padding:5px;
+  color: #F99D1B;
 }

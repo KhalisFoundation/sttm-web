@@ -41,6 +41,10 @@ $(".top-bar-right .close a").on("click", function() {
   document.body.classList.remove("menu-open");
 })
 
+$("#open_share_menu").on("click", function() {
+  document.body.classList.toggle("share-open");
+})
+
 $("#search-options select").on("change", function() {
   var update = $(this).data("update");
   $("#" + update).val($(this).val());
