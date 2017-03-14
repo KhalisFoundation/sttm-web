@@ -632,8 +632,8 @@ ul.share-buttons .sr-only {
   position:absolute;
 }
 
-/*ul.share-buttons */
-.fa {
+ul.share-buttons .fa,
+.share .fa {
   font-size: 1.5em;
   padding:5px;
   color: #F99D1B;
