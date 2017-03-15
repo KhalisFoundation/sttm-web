@@ -85,9 +85,11 @@ $("#shabad").on("click", ".share .copy", function() {
 });
 $("#shabad").on("click", ".share .twitter", function() {
   let tweet = $(this).parents(".line").children("textarea").val();
-  if (tweet.length > 134) {
-    tweet = tweet.substring(0,131) + ".. ";
+  let shortURL = '\n'+shortenURL();
+  if (tweet.length + shortURL.length > 134) {
+    tweet = tweet.substring(0,132-shortURL.length) + "..";
   }
+  tweet += shortURL
   tweet += " #sttm";
   window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweet), "_blank");
 });
@@ -187,4 +189,26 @@ function checkboxPref(e, key, option) {
     prefs[key].splice(index, 1);
   }
   setPref(key, prefs[key]);
+}
+
+function shortenURL(url = window.location.href) {
+  var path = window.location.pathname;
+  var shortdomain = 'sttm.ws';
+
+  var r = 'http://'+shortdomain;
+
+  switch(path) {
+    case '/shabad':
+      return r+'/s/'+getParameterByName('id');
+      break;
+    case '/ang':
+      return r+'/a/'+getParameterByName('ang');
+      break;
+    case '/hukamnama':
+      return r+'/h';
+      break;
+    default:
+      return url.replace(window.location.hostname,shortdomain);
+      break;
+  }
 }

@@ -84,7 +84,7 @@ body {
 .spinner {
   position: absolute;
   background-image: url(/assets/images/spinner-mandala.png);
-  top: 30%;
+  top: 50%;
   left: 50%;
   background-size:200px 200px;
   width: 200px;
@@ -497,8 +497,6 @@ blockquote {
 @media screen and (max-width: 45.999999em) {
 
   .spinner {
-    top: 40%;
-    left: 50%;
     background-size:100px 100px;
     height:100px;
     width:100px;
@@ -514,8 +512,8 @@ blockquote {
   }
   .search-form {
     max-width: none;
-    width: calc(100%-12px);
-    padding: 0 6px;
+    width: calc(100%-16px);
+    padding: 0 8px;
   }
   #search-container {
     width: 100%;
