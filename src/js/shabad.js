@@ -6,7 +6,7 @@ $(function() {
   updateSearchLang(type);
   updateSearchAction(type);
 
-  $shabad.appendChild(H3('Loading...'));
+  document.body.classList.toggle("loading");
   $.ajax({
     url: buildApiUrl({ id }),
     dataType: "json",

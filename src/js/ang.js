@@ -4,7 +4,7 @@ const H3 = children => h('h3', { class: 'text-center' }, children);
 $(function() {
   const [ang, source] = ['ang', 'source'].map(v => getParameterByName(v))
 
-  $shabad.appendChild(H3('Loading...'));
+  document.body.classList.toggle("loading");
   $.ajax({
     url: buildApiUrl({ ang, source }),
     dataType: "json",

@@ -3,7 +3,7 @@
 $(function() {
   const q = getParameterByName('q');
 
-  $shabad.innerHTML = 'Loading...';
+  document.body.classList.toggle("loading");
   $.ajax({
     url: buildApiUrl({ hukam: true }),
     dataType: "json",

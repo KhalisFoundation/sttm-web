@@ -22,7 +22,7 @@ $(function() {
     return;
   }
 
-  $searchResults.appendChild(h('h3', { class: 'loading text-center' }, 'Loading...'));
+  document.body.classList.toggle("loading");
   loadResults();
 });
 
@@ -33,6 +33,7 @@ function loadResults(offset) {
     success: function(data) {
       $("h3.loading, li.load-more").remove();
       if (data.pageinfo.pageresults > 0) {
+        document.body.classList.remove("loading");
         $.each(data.shabads, function(key, val) {
           addSearchResult(val.shabad, q);
         });
@@ -69,6 +70,8 @@ function addSearchResult(shabad, q) {
 }
 
 function noResults() {
+
+          document.body.classList.remove("loading");
   $searchResults.appendChild(H3('No results found'));
 }
 

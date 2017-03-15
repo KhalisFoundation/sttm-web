@@ -11,3 +11,4 @@
     <link rel="manifest" href="manifest.json"> 
   </head>
   <body class="<?= @implode(' ', $body_classes) ?>">
+  <div class="spinner"></div>

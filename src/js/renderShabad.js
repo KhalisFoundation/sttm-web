@@ -1,4 +1,5 @@
 function renderShabad(gurbani) {
+  document.body.classList.remove("loading");
   $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), ]));
   $.each(prefs.displayOptions, function(index, option) {
     $("#" + option).click();

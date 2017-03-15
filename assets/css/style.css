@@ -1,4 +1,5 @@
 @font-face { font-family: gurmukhi_heavy; src: url('/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1'); }
+@font-face { font-family: anmol_lipi; src: url('/assets/fonts/AnmolLipiSG.ttf?v=1'); }
 
 body {
   font-size: 18px;
@@ -10,6 +11,9 @@ body {
 /* Global Helper Classes */
 .gurbani-font {
   font-family: gurmukhi_heavy !important;
+}
+#search.gurbani-font {
+  font-family: anmol_lipi !important;
 }
 .gurbani-display {
   font-size: 1.4em;
@@ -77,6 +81,28 @@ body {
   margin-top: 3rem;
 }
 
+.spinner {
+  position: absolute;
+  background-image: url(/assets/images/spinner-mandala.png);
+  top: 40%;
+  left: 40%;
+  width: 300px;
+  height: 300px;
+  margin:-60px 0 0 -60px;
+  z-index:999999;
+  display: none;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+body.loading .spinner {
+  display:block;
+}
+
 /**********
  * Nav bar
  **********/
@@ -118,8 +144,9 @@ body {
 }
 .top-bar-right .menu > li > a,
 footer .menu li a {
-  color: #252525;
+  color: #3c3c3c;
   font-size: 0.9em;
+  font-weight:500;
   margin: 0;
   padding: 1rem;
 }
@@ -140,10 +167,12 @@ footer .menu li a:hover {
   border: none;
   box-shadow: none;
   display: inline-block;
+  font-weight:300;
   float: left;
   height: 44px;
   margin: 0;
   position: relative;
+  font-size: 1.2em;
   width: calc(100% - 88px);
 }
 #search-container > button {
@@ -199,9 +228,9 @@ footer .menu li a:hover {
 
 #open_mobile_menu {
   background-color: #fff;
-  border: 1px solid #f39c1d;
+  border: 1px solid #00669B;
   border-radius: 2px;
-  color: #f39c1d;
+  color: #00669B;
   font-size: 1rem;
   height: 48px;
   line-height: 18px;
@@ -326,9 +355,10 @@ footer {
 .display-option-toggle {
   border: 1px solid #cacaca;
   border-radius: 2px;
-  color: #000;
+  color: #3c3c3c;
   display: inline-block;
   font-size: 1rem;
+  font-weight: 500;
   line-height: 1.8;
   margin: 0;
   padding: 4px 10px;
@@ -358,6 +388,18 @@ footer {
 }
 #metadata {
   border: 1px solid #cacaca;
+  border-width: 20px;
+  -moz-border-image: url(/assets/images/border1.png) 182 192 192 189 round;
+  -webkit-border-image: url(/assets/images/border1.png) 182 192 192 189 round;
+  -o-border-image: url(/assets/images/border1.png) 182 192 192 189 round;
+  border-image: url(/assets/images/border1.png) 182 192 192 189 fill round;
+
+  border-width: 20px;
+  -moz-border-image: url(/assets/images/border1.png) 146 153 151 151 round;
+  -webkit-border-image: url(/assets/images/border1.png) 146 153 151 151 round;
+  -o-border-image: url(/assets/images/border1.png) 146 153 151 151 round;
+  border-image: url(/assets/images/border1.png) 146 153 151 151 round;
+  
   border-radius: 2px;
   margin: 1rem;
   padding: 1rem;
@@ -451,7 +493,16 @@ footer {
   display:none!important;
 }
 
+/* ****** Mobile ******* */
 @media screen and (max-width: 45.999999em) {
+
+  .spinner {
+    top: 50%;
+    left: 50%;
+    background-size:175px 175px;
+    height:175px;
+    width:175px;
+  }
   .top-bar-title {
     float: none;
     margin: 50px 0 0;
@@ -471,7 +522,7 @@ footer {
   }
   .top-bar-right ul.menu {
     background-color: #fff;
-    border-bottom: 1px solid #f39c1d;
+    border-bottom: 1px solid #00669B;
     height: 0;
     left: 0;
     overflow: hidden;
@@ -503,10 +554,10 @@ footer {
   body.menu-open .top-bar-right ul.menu {
     height: calc(100% + 1px);
     top: 0;
-    z-index: 10;
+    z-index: 99999;
   }
   .top-bar-right .menu li {
-    border-bottom: 1px solid #f39c1d;
+    border-bottom: 1px solid #00669B;
     display: block;
     text-align: center;
   }
@@ -624,7 +675,7 @@ ul.share-buttons .sr-only {
 
 #share-menu a {
   background-color:transparent!important;
-  color: #F99D1B;
+  color: #00669B;
 }
 
 #open_share_menu {
@@ -636,5 +687,5 @@ ul.share-buttons .fa,
 .share .fa {
   font-size: 1.5em;
   padding:5px;
-  color: #F99D1B;
+  color: #00669B;
 }
