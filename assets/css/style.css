@@ -84,10 +84,11 @@ body {
 .spinner {
   position: absolute;
   background-image: url(/assets/images/spinner-mandala.png);
-  top: 40%;
-  left: 40%;
-  width: 300px;
-  height: 300px;
+  top: 30%;
+  left: 50%;
+  background-size:200px 200px;
+  width: 200px;
+  height: 200px;
   margin:-60px 0 0 -60px;
   z-index:999999;
   display: none;
@@ -331,6 +332,9 @@ footer {
 /**************
  * Shabad Page
  **************/
+blockquote {
+  border: none;
+}
 #controls-wrapper.hidden {
   display: none;
 }
@@ -387,18 +391,14 @@ footer {
   margin-bottom: 1rem;
 }
 #metadata {
-  border: 1px solid #cacaca;
-  border-width: 20px;
-  -moz-border-image: url(/assets/images/border1.png) 182 192 192 189 round;
-  -webkit-border-image: url(/assets/images/border1.png) 182 192 192 189 round;
-  -o-border-image: url(/assets/images/border1.png) 182 192 192 189 round;
-  border-image: url(/assets/images/border1.png) 182 192 192 189 fill round;
+  border: 1px solid #fff;
 
-  border-width: 20px;
-  -moz-border-image: url(/assets/images/border1.png) 146 153 151 151 round;
-  -webkit-border-image: url(/assets/images/border1.png) 146 153 151 151 round;
-  -o-border-image: url(/assets/images/border1.png) 146 153 151 151 round;
-  border-image: url(/assets/images/border1.png) 146 153 151 151 round;
+  /* border-image.com */
+  border-width: 15px;
+  -moz-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
+  -webkit-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
+  -o-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
+  border-image: url(/assets/images/border1.png) 73 76 77 75 round;
   
   border-radius: 2px;
   margin: 1rem;
@@ -497,11 +497,11 @@ footer {
 @media screen and (max-width: 45.999999em) {
 
   .spinner {
-    top: 50%;
+    top: 40%;
     left: 50%;
-    background-size:175px 175px;
-    height:175px;
-    width:175px;
+    background-size:100px 100px;
+    height:100px;
+    width:100px;
   }
   .top-bar-title {
     float: none;
@@ -511,6 +511,14 @@ footer {
   }
   .top-bar .top-bar-left .menu li {
     display: block;
+  }
+  .search-form {
+    max-width: none;
+    width: calc(100%-12px);
+    padding: 0 6px;
+  }
+  #search-container {
+    width: 100%;
   }
   #search {
     max-width: none;
