@@ -199,6 +199,7 @@ footer .menu li a:hover {
   position: absolute;
   overflow: hidden;
   width: 288px;
+  z-index: 10000;
 }
 .gurmukhi-keyboard .page {
   display: none;
