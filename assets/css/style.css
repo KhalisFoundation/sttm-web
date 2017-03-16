@@ -552,11 +552,16 @@ blockquote {
   .share-buttons {
     z-index:-1;
     float:none!important;
-    text-align: right;
+    text-align: center;
+    margin: auto!important;
   }
   #share-menu {
     margin-right:0px!important;
     padding:0!important;
+  }
+  ul.share-buttons .fa,
+  .share .fa {
+    font-size: 1.1em!important;
   }
   body.menu-open .top-bar-right ul.menu {
     height: calc(100% + 1px);
@@ -692,5 +697,5 @@ ul.share-buttons .fa,
 .share .fa {
   font-size: 1.5em;
   padding:5px;
-  color: #00669B;
+  color: #868383;
 }
