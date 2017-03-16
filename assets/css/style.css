@@ -552,6 +552,7 @@ blockquote {
   .share-buttons {
     z-index:-1;
     float:none!important;
+    text-align: right;
   }
   #share-menu {
     margin-right:0px!important;
@@ -574,6 +575,10 @@ blockquote {
   }
   .show-on-mobile {
     display:inline!important;
+  }
+  #controls-wrapper {
+    position: sticky;
+    top: calc(-16px - 2em);
   }
 }
 @media screen and (min-width: 46em) {
