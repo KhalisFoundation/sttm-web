@@ -395,7 +395,7 @@ blockquote {
   border: 1px solid #fff;
 
   /* border-image.com */
-  border-width: 15px;
+  border-width: 20px;
   -moz-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
   -webkit-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
   -o-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
