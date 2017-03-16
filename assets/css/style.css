@@ -335,6 +335,12 @@ footer {
  **************/
 blockquote {
   border: none;
+  padding: 0 1.25rem 0 1.1875rem;
+  margin: 0 0 .1rem;
+}
+.search-results blockquote {
+  font-size: .85em;
+  margin: 0 auto;
 }
 #controls-wrapper.hidden {
   display: none;
@@ -420,7 +426,8 @@ blockquote {
 .shabad .line {
   position: relative;
 }
-.shabad-content p {
+.shabad-content p,
+.clear {
   clear: both;
   margin-bottom: 0;
 }

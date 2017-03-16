@@ -47,6 +47,14 @@ function loadResults(offset) {
       } else {
         noResults();
       }
+    
+      $.each(prefs.displayOptions, function(index, option) {
+        $("#" + option).click();
+      });
+      $.each(prefs.shabadToggles, function(index, option) {
+        $("#" + option).click();
+      })
+      $controls.classList.remove('hidden');
     },
     error: showError
   });
@@ -62,6 +70,7 @@ function addSearchResult(shabad, q) {
       h('div', { class: 'gurlipi' }, prepareLarivaar(shabad.gurbani.gurmukhi)),
       h('div', { class: 'unicode' }, prepareLarivaar(shabad.gurbani.unicode))
     ]),
+    h('div', { class: 'clear'}, ''),
     h('p', { class: 'transliteration english' }, shabad.transliteration),
     h('blockquote', { class: 'translation punjabi gurbani-font' }, [
       h('div', { class: 'gurlipi' }, shabad.translation.punjabi.bms.gurmukhi),
@@ -76,13 +85,6 @@ function addSearchResult(shabad, q) {
       ])
     ])
   );
-  $.each(prefs.displayOptions, function(index, option) {
-    $("#" + option).click();
-  });
-  $.each(prefs.shabadToggles, function(index, option) {
-    $("#" + option).click();
-  })
-  $controls.classList.remove('hidden');
 }
 
 function noResults() {
