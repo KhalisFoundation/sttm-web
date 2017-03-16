@@ -7,6 +7,6 @@ include 'inc/controls.php';
 ?>
     <div class="hidden" id="metadata"></div>
     <div>
-      <div class="shabad" id="shabad">
+      <div class="shabad display" id="shabad">
       </div>
     </div>

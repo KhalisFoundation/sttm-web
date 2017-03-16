@@ -142,7 +142,7 @@ function shabadToggle(e) {
     case "larivaar-toggle":
     case "larivaar_assist-toggle":
       let toggle = e.target.id.split("-")[0];
-      $(".shabad").toggleClass(toggle);
+      $(".display").toggleClass(toggle);
       checkboxPref(e, 'shabadToggles', option);
       break;
   }
@@ -150,11 +150,11 @@ function shabadToggle(e) {
 function displayOptionToggle(e) {
   e.target.classList.toggle('active');
   let option = e.target.id;
-  $(".shabad").toggleClass(option);
+  $(".display").toggleClass(option);
   checkboxPref(e, 'displayOptions', option);
 
   //Update the textarea for copy/social sharing
-  $(".shabad .line").each(function() {
+  $(".display .line").each(function() {
     let line_share_text = [];
     $(this).children("p:visible, blockquote:visible").each(function() {
       let text = '';
