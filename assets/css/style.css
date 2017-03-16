@@ -398,14 +398,7 @@ blockquote {
   margin-bottom: 1rem;
 }
 #metadata {
-  border: 1px solid #fff;
-
-  /* border-image.com */
-  border-width: 15px;
-  -moz-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
-  -webkit-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
-  -o-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
-  border-image: url(/assets/images/border1.png) 73 76 77 75 round;
+  border: 1px solid #cacaca;
   
   border-radius: 2px;
   margin: 1rem;
@@ -551,22 +544,19 @@ blockquote {
   .share-buttons {
     width:0;
     overflow:hidden;
-    transition: width 400ms ease-out;
   }
-  #open_share_menu {
-    margin: -5px auto;
-  }
-  body.share-open .share-buttons,
-  body.share-open #share-menu {
+  .share-buttons,
+  #share-menu {
     background-color: #FAFAFA;
-    width: 100%;
+    width: 100%!important;
   }
-  body.share-open .share-buttons {
+  .share-buttons {
     z-index:-1;
+    float:none!important;
   }
-  body.share-open #open_share_menu {
-      float:right;
-      z-index:9999;
+  #share-menu {
+    margin-right:0px!important;
+    padding:0!important;
   }
   body.menu-open .top-bar-right ul.menu {
     height: calc(100% + 1px);
@@ -611,7 +601,6 @@ blockquote {
     width: calc(100% - 70px); /* Logo - 54px + 1rem(16px) margin */
   }
   #open_mobile_menu,
-  #open_share_menu,
   .top-bar-right .menu .close {
     display: none;
   }
@@ -693,11 +682,6 @@ ul.share-buttons .sr-only {
 #share-menu a {
   background-color:transparent!important;
   color: #00669B;
-}
-
-#open_share_menu {
-  right:0;
-  position:absolute;
 }
 
 ul.share-buttons .fa,

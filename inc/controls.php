@@ -1,6 +1,5 @@
 <div id="controls-wrapper" class="no-select hidden">
   <div id="share-menu">
-    <a href="#" class="button" id="open_share_menu"><i class="fa fa-share-alt-square fa-2x"></i></a>
     <ul class="share-buttons">
       <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.sikhitothemax.org&t=" target="_blank" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shortenURL()) + '&t=' + encodeURIComponent(shortenURL())); return false;"><i class="fa fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a></li>
       <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fsttm.ws&text=:%20http%3A%2F%2Fsttm.ws&via=khalisfound" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20' + encodeURIComponent(shortenURL())); return false;"><i class="fa fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a></li>
