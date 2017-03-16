@@ -347,7 +347,7 @@ blockquote {
 }
 #controls-wrapper {
   background-color: #fff;
-  margin: 1rem 0;
+  margin: 0;
   padding-top: 0.5rem;
   position: -webkit-sticky;
   position: sticky;
