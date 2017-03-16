@@ -395,7 +395,7 @@ blockquote {
   border: 1px solid #fff;
 
   /* border-image.com */
-  border-width: 20px;
+  border-width: 15px;
   -moz-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
   -webkit-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
   -o-border-image: url(/assets/images/border1.png) 73 76 77 75 round;
@@ -427,38 +427,38 @@ blockquote {
 .shabad-content blockquote {
   clear: both;
 }
-.shabad .transliteration {
+.display .transliteration {
   text-tranform: capitalize;
 }
-.shabad .unicode,
-.shabad .translation,
-.shabad .transliteration {
+.display .unicode,
+.display .translation,
+.display .transliteration {
   display: none;
 }
-.shabad.unicode .unicode {
+.display.unicode .unicode {
   display: block;
 }
-.shabad.unicode .gurlipi {
+.display.unicode .gurlipi {
   display: none;
 }
-.shabad.translation-english .translation.english,
-.shabad.translation-punjabi .translation.punjabi,
-.shabad.translation-spanish .translation.spanish,
-.shabad.transliteration-english .transliteration.english {
+.display.translation-english .translation.english,
+.display.translation-punjabi .translation.punjabi,
+.display.translation-spanish .translation.spanish,
+.display.transliteration-english .transliteration.english {
   display: block;
 }
-.shabad .gurlipi i,
-.shabad .unicode i {
+.display .gurlipi i,
+.display .unicode i {
   font-style: normal;
 }
-.shabad.larivaar .gurlipi span,
-.shabad.larivaar .gurlipi i,
-.shabad.larivaar .unicode span,
-.shabad.larivaar .unicode i {
+.display.larivaar .gurlipi span,
+.display.larivaar .gurlipi i,
+.display.larivaar .unicode span,
+.display.larivaar .unicode i {
   float: left;
 }
-.shabad.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
-.shabad.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
+.display.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
+.display.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
   color: #F39C1D;
 }
 .shabad .line .share {

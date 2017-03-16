@@ -58,15 +58,31 @@ function addSearchResult(shabad, q) {
       h('a', {
         href: `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
         class: 'gurbani-font gurbani-display',
-      }, shabad.gurbani.gurmukhi),
-      h('p', { }, shabad.translation.english.ssk),
+      }, [
+      h('div', { class: 'gurlipi' }, prepareLarivaar(shabad.gurbani.gurmukhi)),
+      h('div', { class: 'unicode' }, prepareLarivaar(shabad.gurbani.unicode))
+    ]),
+    h('p', { class: 'transliteration english' }, shabad.transliteration),
+    h('blockquote', { class: 'translation punjabi gurbani-font' }, [
+      h('div', { class: 'gurlipi' }, shabad.translation.punjabi.bms.gurmukhi),
+      h('div', { class: 'unicode' }, shabad.translation.punjabi.bms.unicode)
+    ]),
+    h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
+    h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
       h('div', { class: 'meta flex wrap'} , [
         h('a', { href: '#', }, `${SOURCES[shabad.source.id]} - ${shabad.pageno}`),
         h('a', { href: '#', }, `${shabad.writer.english}`),
         h('a', { href: '#', }, `${shabad.raag.english}`),
-      ]),
+      ])
     ])
   );
+  $.each(prefs.displayOptions, function(index, option) {
+    $("#" + option).click();
+  });
+  $.each(prefs.shabadToggles, function(index, option) {
+    $("#" + option).click();
+  })
+  $controls.classList.remove('hidden');
 }
 
 function noResults() {
