@@ -142,12 +142,12 @@ body.loading .spinner {
 }
 .top-bar-right .menu > li {
   display: inline-block;
+  font-weight:500;
 }
 .top-bar-right .menu > li > a,
 footer .menu li a {
   color: #3c3c3c;
   font-size: 0.9em;
-  font-weight:500;
   margin: 0;
   padding: 1rem;
 }
@@ -369,8 +369,7 @@ blockquote {
   color: #3c3c3c;
   display: inline-block;
   font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.8;
+  line-height: 1.4;
   margin: 0;
   padding: 4px 10px;
   transition: all .25s;
