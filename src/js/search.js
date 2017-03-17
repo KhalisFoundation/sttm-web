@@ -89,7 +89,7 @@ function addSearchResult(shabad, q) {
 
 function noResults() {
 
-          document.body.classList.remove("loading");
+  document.body.classList.remove("loading");
   $searchResults.appendChild(H3('No results found'));
 }
 

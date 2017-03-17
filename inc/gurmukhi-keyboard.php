@@ -50,7 +50,7 @@
                     </div>
                     <div class="keyboard-row">
                       <div class="keyboard-row-set">
-                        <button type="button">x</button>
+                        <button type="button">X</button>
                         <button type="button">r</button>
                         <button type="button">l</button>
                         <button type="button">v</button>
