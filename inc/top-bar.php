@@ -64,4 +64,5 @@ endif;
 ?>
       </div>
     </div>
+    <div class="spinner"></div>
     <div class="row">
