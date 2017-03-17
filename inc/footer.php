@@ -37,19 +37,5 @@ if (is_array($scripts)) {
   }
 }
 ?>
-<!-- preloader -->
-<div class="hidden">
-  <script type="text/javascript">
-    <!--//--><![CDATA[//><!--
-
-      if (document.images) {
-        preborder1 = new Image();
-
-        preborder1.src = "/assets/images/border1.png";
-      }
-
-    //--><!]]>
-  </script>
-</div>
   </body>
 </html>
