@@ -1,4 +1,5 @@
 @font-face { font-family: gurmukhi_heavy; src: url('/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1'); }
+@font-face { font-family: anmol_lipi; src: url('/assets/fonts/AnmolLipiSG.ttf?v=1'); }
 
 body {
   font-size: 18px;
@@ -10,6 +11,9 @@ body {
 /* Global Helper Classes */
 .gurbani-font {
   font-family: gurmukhi_heavy !important;
+}
+#search.gurbani-font {
+  font-family: anmol_lipi !important;
 }
 .gurbani-display {
   font-size: 1.4em;
@@ -77,6 +81,28 @@ body {
   margin-top: 3rem;
 }
 
+.spinner {
+  background-image: url(/assets/images/spinner-mandala.png);
+  left: 50%;
+  background-size: 200px 200px;
+  width: 200px;
+  height: 200px;
+  margin: 10% 0 0 -60px;
+  position: relative;
+  z-index: 999999;
+  display: none;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+body.loading .spinner {
+  display:block;
+}
+
 /**********
  * Nav bar
  **********/
@@ -115,10 +141,11 @@ body {
 }
 .top-bar-right .menu > li {
   display: inline-block;
+  font-weight:500;
 }
 .top-bar-right .menu > li > a,
 footer .menu li a {
-  color: #252525;
+  color: #3c3c3c;
   font-size: 0.9em;
   margin: 0;
   padding: 1rem;
@@ -140,10 +167,12 @@ footer .menu li a:hover {
   border: none;
   box-shadow: none;
   display: inline-block;
+  font-weight:300;
   float: left;
   height: 44px;
   margin: 0;
   position: relative;
+  font-size: 1.2em;
   width: calc(100% - 88px);
 }
 #search-container > button {
@@ -169,6 +198,7 @@ footer .menu li a:hover {
   position: absolute;
   overflow: hidden;
   width: 288px;
+  z-index: 10000;
 }
 .gurmukhi-keyboard .page {
   display: none;
@@ -199,9 +229,9 @@ footer .menu li a:hover {
 
 #open_mobile_menu {
   background-color: #fff;
-  border: 1px solid #f39c1d;
+  border: 1px solid #00669B;
   border-radius: 2px;
-  color: #f39c1d;
+  color: #00669B;
   font-size: 1rem;
   height: 48px;
   line-height: 18px;
@@ -210,6 +240,7 @@ footer .menu li a:hover {
   top: 0.5rem;
   width: 48px;
 }
+
 #search-options {
   clear: both;
   margin-left: 70px;
@@ -301,12 +332,21 @@ footer {
 /**************
  * Shabad Page
  **************/
+blockquote {
+  border: none;
+  padding: 0 1.25rem 0 0;
+  margin: 0 0 .1rem;
+}
+.search-results blockquote {
+  font-size: .85em;
+  margin: 0 auto;
+}
 #controls-wrapper.hidden {
   display: none;
 }
 #controls-wrapper {
   background-color: #fff;
-  margin: 1rem 0;
+  margin: 0;
   padding-top: 0.5rem;
   position: -webkit-sticky;
   position: sticky;
@@ -325,10 +365,10 @@ footer {
 .display-option-toggle {
   border: 1px solid #cacaca;
   border-radius: 2px;
-  color: #000;
+  color: #3c3c3c;
   display: inline-block;
   font-size: 1rem;
-  line-height: 1.8;
+  line-height: 1.4;
   margin: 0;
   padding: 4px 10px;
   transition: all .25s;
@@ -376,45 +416,49 @@ footer {
 .shabad .line {
   position: relative;
 }
-.shabad-content p {
+.shabad-content p,
+.clear {
   clear: both;
   margin-bottom: 0;
 }
 .shabad-content blockquote {
   clear: both;
 }
-.shabad .transliteration {
+.display .gurbani-display div {
+  margin-bottom: -.25rem;
+}
+.display .transliteration {
   text-tranform: capitalize;
 }
-.shabad .unicode,
-.shabad .translation,
-.shabad .transliteration {
+.display .unicode,
+.display .translation,
+.display .transliteration {
   display: none;
 }
-.shabad.unicode .unicode {
+.display.unicode .unicode {
   display: block;
 }
-.shabad.unicode .gurlipi {
+.display.unicode .gurlipi {
   display: none;
 }
-.shabad.translation-english .translation.english,
-.shabad.translation-punjabi .translation.punjabi,
-.shabad.translation-spanish .translation.spanish,
-.shabad.transliteration-english .transliteration.english {
+.display.translation-english .translation.english,
+.display.translation-punjabi .translation.punjabi,
+.display.translation-spanish .translation.spanish,
+.display.transliteration-english .transliteration.english {
   display: block;
 }
-.shabad .gurlipi i,
-.shabad .unicode i {
+.display .gurlipi i,
+.display .unicode i {
   font-style: normal;
 }
-.shabad.larivaar .gurlipi span,
-.shabad.larivaar .gurlipi i,
-.shabad.larivaar .unicode span,
-.shabad.larivaar .unicode i {
+.display.larivaar .gurlipi span,
+.display.larivaar .gurlipi i,
+.display.larivaar .unicode span,
+.display.larivaar .unicode i {
   float: left;
 }
-.shabad.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
-.shabad.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
+.display.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
+.display.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
   color: #F39C1D;
 }
 .shabad .line .share {
@@ -446,7 +490,18 @@ footer {
   display: none;
 }
 
-@media screen and (max-width: 39.999999em) {
+.show-on-mobile {
+  display:none!important;
+}
+
+/* ****** Mobile ******* */
+@media screen and (max-width: 45.999999em) {
+
+  .spinner {
+    background-size:100px 100px;
+    height:100px;
+    width:100px;
+  }
   .top-bar-title {
     float: none;
     margin: 50px 0 0;
@@ -455,6 +510,14 @@ footer {
   }
   .top-bar .top-bar-left .menu li {
     display: block;
+  }
+  .search-form {
+    max-width: none;
+    width: calc(100%-16px);
+    padding: 0 8px;
+  }
+  #search-container {
+    width: 100%;
   }
   #search {
     max-width: none;
@@ -466,7 +529,7 @@ footer {
   }
   .top-bar-right ul.menu {
     background-color: #fff;
-    border-bottom: 1px solid #f39c1d;
+    border-bottom: 1px solid #00669B;
     height: 0;
     left: 0;
     overflow: hidden;
@@ -475,13 +538,36 @@ footer {
     transition: height 400ms ease-out;
     width: 100%;
   }
+  .share-buttons {
+    width:0;
+    overflow:hidden;
+  }
+  .share-buttons,
+  #share-menu {
+    background-color: #FAFAFA;
+    width: 100%!important;
+  }
+  .share-buttons {
+    z-index:-1;
+    float:none!important;
+    text-align: center;
+    margin: auto!important;
+  }
+  #share-menu {
+    margin-right:0px!important;
+    padding:0!important;
+  }
+  ul.share-buttons .fa,
+  .share .fa {
+    font-size: 1.1em!important;
+  }
   body.menu-open .top-bar-right ul.menu {
     height: calc(100% + 1px);
     top: 0;
-    z-index: 10;
+    z-index: 99999;
   }
   .top-bar-right .menu li {
-    border-bottom: 1px solid #f39c1d;
+    border-bottom: 1px solid #00669B;
     display: block;
     text-align: center;
   }
@@ -490,8 +576,15 @@ footer {
     line-height: 2.6rem;
     margin: 0;
   }
+  .show-on-mobile {
+    display:inline!important;
+  }
+  #controls-wrapper {
+    position: sticky;
+    top: calc(-16px - 2em);
+  }
 }
-@media screen and (min-width: 40em) {
+@media screen and (min-width: 46em) {
   .gurbani-display {
     font-size: 1.6em;
   }
@@ -543,6 +636,9 @@ footer {
   .shabad {
     margin: 0 2rem 0 3rem;
   }
+  #share-menu {
+    background-color: #FAFAFA;
+  }
 }
 @media screen and (min-width: 64em) {
   .top-bar #search-container {
@@ -555,4 +651,48 @@ footer {
   #search-options {
     width: 444px;
   }
+}
+
+/* ***** Sharing Buttons ***** 
+https://simplesharingbuttons.com/#code
+*/
+#share-menu {
+  float: right;
+  padding: 0 35px!important;
+  border-radius: 2px;
+  height: calc(10px + 2em);margin-right: 35px;
+}
+
+ul.share-buttons{
+  list-style: none;
+  padding: 5px 0;
+  float:right;
+  margin: auto -20px;
+}
+
+ul.share-buttons li{
+  display: inline;
+}
+
+ul.share-buttons .sr-only {
+  position: absolute;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+#share-menu a {
+  background-color:transparent!important;
+  color: #00669B;
+}
+
+ul.share-buttons .fa,
+.share .fa {
+  font-size: 1.5em;
+  padding:5px;
+  color: #868383;
 }

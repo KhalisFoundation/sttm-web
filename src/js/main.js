@@ -12,9 +12,16 @@ const default_prefs = {
 getPrefs();
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
+if ($searchType) $searchType.addEventListener("change", updateSearchAction);
+
+$('#search').keyup(function () {
+    if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
+       this.value = this.value.replace(/[^0-9]/g, '');
+    }
+});
 
 $(".search-form").on("submit", function(e) {
-  if ($search.value.length <= 2) {
+  if ($search.value.length <= 2 && $searchType.value != 5) {
     alert("Please enter at least 3 characters");
     e.preventDefault();
     return false;
@@ -32,6 +39,10 @@ $("#open_mobile_menu").on("click", function() {
 })
 $(".top-bar-right .close a").on("click", function() {
   document.body.classList.remove("menu-open");
+})
+
+$("#open_share_menu").on("click", function() {
+  document.body.classList.toggle("share-open");
 })
 
 $("#search-options select").on("change", function() {
@@ -74,9 +85,11 @@ $("#shabad").on("click", ".share .copy", function() {
 });
 $("#shabad").on("click", ".share .twitter", function() {
   let tweet = $(this).parents(".line").children("textarea").val();
-  if (tweet.length > 134) {
-    tweet = tweet.substring(0,131) + ".. ";
+  let shortURL = '\n'+shortenURL();
+  if (tweet.length + shortURL.length > 134) {
+    tweet = tweet.substring(0,132-shortURL.length) + "..";
   }
+  tweet += shortURL
   tweet += " #sttm";
   window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweet), "_blank");
 });
@@ -87,10 +100,11 @@ $("#shabad").on("click", ".share .twitter", function() {
 });*/
 
 function updateSearchLang(set_search_type) {
-  var searchType = ($searchType ? parseInt($searchType.value) : (typeof set_search_type == "string" ? parseInt(set_search_type) : 1));
+  var searchType = typeof set_search_type == "string" ? parseInt(set_search_type) : parseInt($searchType.value);
   switch (searchType) {
     case 3:
     case 4:
+    case 5:
       $search.classList.remove("gurbani-font");
       $search.placeholder = "Khoj";
       break;
@@ -99,6 +113,22 @@ function updateSearchLang(set_search_type) {
       $search.placeholder = "Koj";
       break;
   }
+  $searchType.value = searchType;
+}
+
+function updateSearchAction(set_search_type) {
+  var searchType = typeof set_search_type == "string" ? parseInt(set_search_type) : parseInt($searchType.value);
+  switch (searchType) {
+    case 5:
+      $(".search-form").attr('action','/ang');
+      $('#search').attr('name','ang');
+      break;
+    default:
+      $(".search-form").attr('action','/search');
+      $('#search').attr('name','q');
+      break;
+  }
+  $searchType.value = searchType;
 }
 
 function shabadToggle(e) {
@@ -112,7 +142,7 @@ function shabadToggle(e) {
     case "larivaar-toggle":
     case "larivaar_assist-toggle":
       let toggle = e.target.id.split("-")[0];
-      $(".shabad").toggleClass(toggle);
+      $(".display").toggleClass(toggle);
       checkboxPref(e, 'shabadToggles', option);
       break;
   }
@@ -120,11 +150,11 @@ function shabadToggle(e) {
 function displayOptionToggle(e) {
   e.target.classList.toggle('active');
   let option = e.target.id;
-  $(".shabad").toggleClass(option);
+  $(".display").toggleClass(option);
   checkboxPref(e, 'displayOptions', option);
 
   //Update the textarea for copy/social sharing
-  $(".shabad .line").each(function() {
+  $(".display .line").each(function() {
     let line_share_text = [];
     $(this).children("p:visible, blockquote:visible").each(function() {
       let text = '';
@@ -159,4 +189,26 @@ function checkboxPref(e, key, option) {
     prefs[key].splice(index, 1);
   }
   setPref(key, prefs[key]);
+}
+
+function shortenURL(url = window.location.href) {
+  var path = window.location.pathname;
+  var shortdomain = 'sttm.ws';
+
+  var r = 'http://'+shortdomain;
+
+  switch(path) {
+    case '/shabad':
+      return r+'/s/'+getParameterByName('id');
+      break;
+    case '/ang':
+      return r+'/a/'+getParameterByName('ang');
+      break;
+    case '/hukamnama':
+      return r+'/h';
+      break;
+    default:
+      return url.replace(window.location.hostname,shortdomain);
+      break;
+  }
 }

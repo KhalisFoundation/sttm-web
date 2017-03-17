@@ -37,6 +37,5 @@ if (is_array($scripts)) {
   }
 }
 ?>
-
   </body>
 </html>

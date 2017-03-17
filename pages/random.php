@@ -12,6 +12,6 @@ $scripts[] = '/assets/js/renderShabad.js';
 
     <div class="hidden" id="metadata"></div>
     <div>
-      <div id="shabad" class="shabad">
+      <div id="shabad" class="shabad display">
       </div>
     </div>
