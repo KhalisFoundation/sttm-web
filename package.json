@@ -4,7 +4,7 @@
   "description": "Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "standard --verbose | snazzy",
     "start": "php -S localhost:8000 router.php",
     "babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
     "build": "npm run babel",
@@ -27,7 +27,9 @@
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-preset-env": "^1.1.8",
-    "babili": "0.0.11"
+    "babili": "0.0.11",
+    "snazzy": "^6.0.0",
+    "standard": "^9.0.1"
   },
   "babel": {
     "env": {
@@ -51,6 +53,11 @@
           "modules": false
         }
       ]
+    ]
+  },
+  "standard": {
+    "ignore": [
+      "assets/js"
     ]
   }
 }
