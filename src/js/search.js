@@ -1,8 +1,6 @@
 'use strict';
 const $searchResults = document.querySelector('.search-results');
 
-const H3 = children => h('h3', { class: 'text-center' }, children);
-
 const params = ['type', 'source', 'q'];
 
 const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
@@ -95,6 +93,6 @@ function noResults() {
 
 function showError(error) {
   $searchResults.appendChild(h('h2', { }, [
-    h('h3', { class: 'text-center' }, 'Facing some issues')
+    H3('Facing some issues'),
   ]));
 }
