@@ -2,13 +2,14 @@
 const H3 = children => h('h3', { class: 'text-center' }, children);
 
 $(function() {
-  const [id, q, type] = ['id', 'q', 'type'].map(v => getParameterByName(v))
+  const [random, id, q, type] = ['random', 'id', 'q', 'type'].map(v => getParameterByName(v))
+
   updateSearchLang(type);
   updateSearchAction(type);
 
   document.body.classList.toggle("loading");
   $.ajax({
-    url: buildApiUrl({ id }),
+    url: random ? buildApiUrl({ random: true }) : buildApiUrl({ id }),
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
