@@ -7,7 +7,7 @@ $(function() {
 
   document.body.classList.toggle("loading");
   $.ajax({
-    url: random ? buildApiUrl({ random: true }) : buildApiUrl({ id }),
+    url: buildApiUrl(typeof random !== 'undefined' ? { random: true } : { id }),
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
