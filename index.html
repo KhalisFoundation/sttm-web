@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- TODO: Get title from JS -->
     <title>SikhiToTheMax</title>
     <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
     <link rel="stylesheet" href="/assets/css/vendor/font-awesome.min.css?v=4.7.0">
@@ -27,7 +26,6 @@
 
                   <div id="search-container">
 
-                    <!-- TODO: Search Q Display -->
                     <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" />
 
                     <button class="gurmukhi-keyboard-toggle" type="button">
@@ -36,17 +34,14 @@
 
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </li>
-                <!-- TODO: Search Value -->
                 <li><input name="type" class="hidden" id="search-type-value" hidden /></li>
-                <!-- TODO: Search Source -->
                 <li><input name="source" class="hidden" id="search-source-value" hidden /></li>
               </ul>
             </form>
                   </div>
                   <div class="top-bar-right">
                     <a href="#" class="button" id="open_mobile_menu"><i class="fa fa-bars"></i></a>
-                    <ul class="menu">
-                      <!-- TODO: Header Menu Items -->
+                    <ul class="menu header-menu">
                       <li><a href="/hukamnama">Hukamnama</a></li>
                       <li><a href="/shabad?random">Random Shabad</a></li>
                       <li class="close"><a href="#">Close</a></li>
@@ -68,12 +63,11 @@
       <footer>
 
         <div class="row">
-          <ul class="menu">
-            <!-- TODO: Footer Links -->
-            <li><a href="#">Footer Link 1</a></li>
-            <li><a href="#">Footer Link 2</a></li>
-            <li><a href="#">Footer Link 3</a></li>
-            <li><a href="#">Footer Link 4</a></li>
+          <ul class="menu footer-menu">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="https://goo.gl/plk23h" target="_blank">Feedback</a></li>
+            <li><a href="/terms-of-service">Terms of Service</a></li>
+            <li><a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank">Desktop App</a></li>
           </ul>
         </div>
       </footer>
@@ -98,6 +92,8 @@ ga('send', 'pageview');
       <script src="/assets/js/renderControls.js"></script>
       <script src="/assets/js/renderGurmukhiKeyboard.js"></script>
       <!-- App -->
+      <!-- Stuff of about and terms-of-service -->
+      <script src="/assets/js/content.js"></script>
       <script src="/assets/js/router.js"></script>
   </body>
 </html>

@@ -48,6 +48,8 @@ const routes = {
     document.querySelector('#search-container').appendChild(gurmukhiKeyboard);
   },
   ['404'] ($target) {
+    document.title = 'Page not found - SikhiToTheMax';
+
     document.body.classList.remove('home');
     $target.innerHTML = `
         <div class="body_text row">
@@ -63,6 +65,8 @@ const routes = {
       `;
   },
   ang ($target, $scriptTarget) {
+    document.title = 'Ang/Page Viewer - SikhiToTheMax';
+
     document.body.classList.remove('home');
 
     this._initForm();
@@ -82,12 +86,21 @@ const routes = {
       h('div', { }, [ $shabad ]),
     ]));
   },
-  default ($target, $scriptTarget) {
+  default ($target, $scriptTarget, { title = 'Title', content = 'Default content template' } = {}) {
+    this._initForm();
+
+    document.title = `${title} - SikhiToTheMax`;
+
     document.body.classList.remove('home');
-    $target.innerHTML = `Default page`;
-    document.body.insertBefore(createScript('/src/js/default.js'), $scriptTarget);
+
+    replaceChild($target, h('div', { class: 'body_text' }, [
+      h('h2', {}, title),
+      h('div', {}, content),
+    ]));
   },
   home ($target, $scriptTarget) {
+    document.title = `SikhiToTheMax`;
+
     document.body.classList.add('home', 'hide-search-bar');
 
     const entries = obj => Object.keys(obj).map(key => [key, obj[key]]);
@@ -154,6 +167,8 @@ const routes = {
     ]));
   },
   hukamnama ($target, $scriptTarget) {
+    document.title = 'Hukamnama - SikhiToTheMax';
+
     document.body.classList.remove('home');
 
     this._initForm();
@@ -175,6 +190,8 @@ const routes = {
       .forEach(e => document.body.insertBefore(e, $scriptTarget));
   },
   search ($target, $scriptTarget) {
+    document.title = 'Search Results - SikhiToTheMax';
+
     document.body.classList.remove('home');
 
     this._initForm();
@@ -190,6 +207,8 @@ const routes = {
     ]));
   },
   shabad ($target, $scriptTarget) {
+    document.title = 'Shabad - SikhiToTheMax';
+
     document.body.classList.remove('home');
 
     this._initForm();
@@ -211,27 +230,36 @@ const routes = {
   },
 };
 
-const { pathname } = location;
-const $contentRoot = document.querySelector('#content-root');
-const $lastScriptTag = document.querySelector('script:last-child');
-const redirectTo = path => location.href = path;
+function router () {
+  const { pathname } = location;
+  const $contentRoot = document.querySelector('#content-root');
+  const $lastScriptTag = document.querySelector('script:last-child');
+  const redirectTo = path => location.href = path;
 
-switch (pathname) {
-  case '/': {
-    routes.home($contentRoot, $lastScriptTag);
-    break;
-  }
-  case '/ang': case '/default': case '/hukamnama': case '/search': case '/shabad': case '/404': {
-    const currentRoute = pathname.split('/')[1];
-    routes[currentRoute]($contentRoot, $lastScriptTag);
-    break;
-  }
-  case '/random': {
-    redirectTo('/shabad?random');
-    break;
-  }
-  default: {
-    redirectTo('/404');
-    break;
+  switch (pathname) {
+    case '/': {
+      routes.home($contentRoot, $lastScriptTag);
+      break;
+    }
+    case '/ang': case '/hukamnama': case '/search': case '/shabad': case '/404': {
+      const currentRoute = pathname.split('/')[1];
+      routes[currentRoute]($contentRoot, $lastScriptTag);
+      break;
+    }
+
+    case '/about': case '/terms-of-service': {
+      routes.default($contentRoot, $lastScriptTag, content[pathname]);
+      break;
+    }
+    case '/random': {
+      redirectTo('/shabad?random');
+      break;
+    }
+    default: {
+      redirectTo('/404');
+      break;
+    }
   }
 }
+
+router();
