@@ -3,3 +3,5 @@
 node_modules/
 /assets/js/*.js
 yarn.lock
+assets/css/*.css
+*.map
