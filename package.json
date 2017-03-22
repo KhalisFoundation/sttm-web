@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "standard --verbose | snazzy",
-
     "start": "npm-run-all --parallel build-watch:* server",
-
     "server": "lite-server",
     "build": "npm-run-all build:*",
     "build:babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
@@ -15,9 +13,7 @@
     "build-watch": "npm-run-all build-watch:*",
     "build-watch:babel": "npm run build:babel -- --watch",
     "build-watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
-
     "deploy": "git checkout dev && git pull origin && git push web",
-
     "build-prod": "npm run build-css && BABEL_ENV=production npm run babel",
     "deploy:server": "npm run build:prod && rm -rf .gitignore node_modules src LICENSE package.json README.md router.php"
   },
@@ -35,6 +31,7 @@
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.1.8",
     "babili": "0.0.11",
     "lite-server": "^2.3.0",
@@ -66,6 +63,9 @@
           "modules": false
         }
       ]
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
     ]
   },
   "standard": {

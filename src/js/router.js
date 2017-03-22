@@ -7,10 +7,49 @@ const createScripts = (...srces) => srces.map(createScript);
 const replaceChild = ($target, child) => { $target.innerHTML = ''; $target.appendChild(child); };
 
 const routes = {
-  404: {
-    init($target) {
-      document.body.classList.remove('home');
-      $target.innerHTML = `
+  _initForm() {
+    const formValues = ['q', 'type', 'source', 'ang']
+      .reduce((obj, val) => ({ ...obj, [val]: getParameterByName(val) || null }), {});
+
+    const entries = obj => Object.keys(obj).map(key => [key, obj[key]]);
+
+    const typesToOptions = [...Khajana.TYPES, 'Ang']
+      .map((string, value) => h('option', {
+        value,
+        ...(
+          parseInt(value) === parseInt(formValues.type)
+          ? { selected: true }
+          : { }
+        )
+      }, string))
+
+    const sourcesToOptions = entries(Khajana.SOURCES)
+      .map(([value, string]) => h('option', {
+        value,
+        ...(
+          value === formValues.source
+          ? { selected: true }
+          : { }
+        )
+      }, string))
+
+    const gurmukhiKeyboard = renderGurmukhiKeyboard(document.querySelector('#search'))
+
+    document.querySelector('#search').value = formValues.q;
+
+    document.querySelector('#search-type-value').value = formValues.type;
+
+    document.querySelector('#search-source-value').value = formValues.source;
+
+    document.querySelector('#searchType').innerHTML = typesToOptions.map(e => e.outerHTML).join('');
+
+    document.querySelector('#searchSource').innerHTML = sourcesToOptions.map(e => e.outerHTML).join('');
+
+    document.querySelector('#search-container').appendChild(gurmukhiKeyboard);
+  },
+  ['404'] ($target) {
+    document.body.classList.remove('home');
+    $target.innerHTML = `
         <div class="body_text row">
           <div class="small-12 medium-6 medium-offset-1 columns text-center">
             <h1 id="error-code">404</h1>
@@ -22,120 +61,153 @@ const routes = {
           </div>
         </div>
       `;
-    },
   },
-  ang: {
-    init($target, $scriptTarget) {
-      document.body.classList.remove('home');
-      $target.innerHTML = `Ang page`;
-      document.body.insertBefore(createScript('/src/js/ang.js'), $scriptTarget);
-    },
+  ang ($target, $scriptTarget) {
+    document.body.classList.remove('home');
+
+    this._initForm();
+
+    createScripts('/src/js/renderShabad.js', '/src/js/ang.js')
+      .forEach(e => document.body.insertBefore(e, $scriptTarget));
+
+    $controls = renderControls();
+
+    $shabad = h('div', { id: 'shabad', class: 'shabad display' });
+
+    $meta = h('div', { class: "hidden", id: "metadata" });
+
+    replaceChild($target, h('div', { }, [
+      $controls,
+      $meta,
+      h('div', { }, [ $shabad ]),
+    ]));
   },
-  default: {
-    init($target, $scriptTarget) {
-      document.body.classList.remove('home');
-      $target.innerHTML = `Default page`;
-      document.body.insertBefore(createScript('/src/js/default.js'), $scriptTarget);
-    },
+  default ($target, $scriptTarget) {
+    document.body.classList.remove('home');
+    $target.innerHTML = `Default page`;
+    document.body.insertBefore(createScript('/src/js/default.js'), $scriptTarget);
   },
-  home: {
-    init($target, $scriptTarget) {
-      document.body.classList.add('home', 'hide-search-bar');
-      $target.innerHTML = `
-      <div class="search-page">
-        <form class="search-form" action="/search">
-          <div class="flex justify-center align-center">
-            <div>
-              <img class="logo-long" src="/assets/images/sttm_logo_beta.png" alt="SikhiToTheMax Logo" />
-            </div>
-          </div>
-          <div id="search-container">
-            <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false"><button type="button" class="gurmukhi-keyboard-toggle"><i class="fa fa-keyboard-o"></i></button><button type="submit"><i class="fa fa-search"></i></button>
-<?php
-include 'inc/gurmukhi-keyboard.php';
-?>
-          </div>
-          <div class="row">
-            <div class="small-6 columns">
-              <select name="type" id="searchType">
-<?php
-  foreach ($search_types as $search_type_key => $search_type_val) {
-?>
-                <option value="<?= $search_type_key ?>"<?= $search_type_key == $search_type ? ' selected' : '' ?>><?= $search_type_val ?></option>
-<?php
-  }
-?>
-              </select>
-            </div>
-            <div class="small-6 columns">
-              <select name="source">
-<?php
-  foreach ($search_sources as $search_source_key => $search_source_val) {
-?>
-                <option value="<?= $search_source_key ?>"<?= $search_source_key == $search_source ? ' selected' : '' ?>><?= $search_source_val ?></option>
-<?php
-  }
-?>
-              </select>
-            </div>
-          </div>
-        </form>
-      </div>
+  home ($target, $scriptTarget) {
+    document.body.classList.add('home', 'hide-search-bar');
 
+    const entries = obj => Object.keys(obj).map(key => [key, obj[key]]);
 
-      `;
-    },
+    const $search =  h('input', {
+      name: "q"
+      , id: "search"
+      , class: "gurbani-font"
+      , type: "search"
+      , placeholder: "Koj"
+      , autocapitalize: "none"
+      , autocomplete: "off"
+      , autocorrect: "off"
+      , spellcheck: "false"
+    });
+
+    const typesToOptions = [...Khajana.TYPES, 'Ang']
+      .map((string, value) => h('option', { value }, string))
+
+    const sourcesToOptions = entries(Khajana.SOURCES)
+      .map(([value, string]) => h('option', { value }, string))
+
+    const gurmukhiKeyboard = renderGurmukhiKeyboard($search);
+
+    replaceChild($target, h('div', { class: "search-page" }, [
+      h('form', { class: "search-form" , action: "/search" }, [
+        h('div', { class: "flex justify-center align-center" }, [
+          h('div', { }, [
+            h('img', { class: "logo-long" , src: "/assets/images/sttm_logo_beta.png" , alt: "SikhiToTheMax Logo" }),
+          ]),
+        ]),
+        h('div', { id: "search-container" }, [
+          $search,
+          h(
+            'button', {
+              type: "button",
+              class: "gurmukhi-keyboard-toggle",
+              click() { gurmukhiKeyboard.classList.toggle('active') }
+            },
+            [ h('i', { class: "fa fa-keyboard-o" }, []) ]
+          ),
+          h('button', { type: "submit" }, [
+            h('i', { class: "fa fa-search" }, []),
+          ]),
+          gurmukhiKeyboard,
+        ]),
+        h('div', { class: "row search-options" }, [
+          h('div', { class: "small-6 columns" }, [
+            h('select', {
+              name: "type",
+              id: "searchType",
+              change(e) {
+                updateSearchLang(e);
+                updateSearchAction(e);
+              }
+            }, typesToOptions
+            ),
+          ]),
+          h('div', { class: "small-6 columns" }, [
+            h('select', { name: "source" }, sourcesToOptions),
+          ]),
+        ]),
+      ]),
+    ]));
   },
-  hukamnama: {
-    init($target, $scriptTarget) {
-      document.body.classList.remove('home');
+  hukamnama ($target, $scriptTarget) {
+    document.body.classList.remove('home');
 
-      $controls = renderControls();
-      $shabad = h('div', { id: 'shabad', class: 'shabad display' });
-      $meta = h('div', { class: "hidden", id: "metadata" });
+    this._initForm();
 
-      replaceChild($target, h('div', { class: 'body_text' }, [
-        h('h3', { style: "text-align: center;" }, 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar'),
-        $controls,
-        $meta,
-        h('div', { }, [ $shabad ]),
-      ]));
+    $controls = renderControls();
 
-      createScripts('/src/js/hukamnama.js', '/src/js/renderShabad.js')
-        .forEach(e => document.body.insertBefore(e, $scriptTarget));
-    },
+    $shabad = h('div', { id: 'shabad', class: 'shabad display' });
+
+    $meta = h('div', { class: "hidden", id: "metadata" });
+
+    replaceChild($target, h('div', { class: 'body_text' }, [
+      h('h3', { style: "text-align: center;" }, 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar'),
+      $controls,
+      $meta,
+      h('div', { }, [ $shabad ]),
+    ]));
+
+    createScripts('/src/js/hukamnama.js', '/src/js/renderShabad.js')
+      .forEach(e => document.body.insertBefore(e, $scriptTarget));
   },
-  search: {
-    init($target, $scriptTarget) {
-      document.body.classList.remove('home');
-      $controls = renderControls();
+  search ($target, $scriptTarget) {
+    document.body.classList.remove('home');
 
-      createScripts('/src/js/renderShabad.js', '/src/js/search.js')
-        .forEach(e => document.body.insertBefore(e, $scriptTarget));
+    this._initForm();
 
-      replaceChild($target, h('div', { }, [
-        $controls,
-        h('ul', { class: "search-results display" })
-      ]));
-    },
+    $controls = renderControls();
+
+    createScripts('/src/js/renderShabad.js', '/src/js/search.js')
+      .forEach(e => document.body.insertBefore(e, $scriptTarget));
+
+    replaceChild($target, h('div', { }, [
+      $controls,
+      h('ul', { class: "search-results display" })
+    ]));
   },
-  shabad: {
-    init($target, $scriptTarget) {
-      document.body.classList.remove('home');
+  shabad ($target, $scriptTarget) {
+    document.body.classList.remove('home');
 
-      createScripts('/src/js/renderShabad.js', '/src/js/shabad.js')
-        .forEach(e => document.body.insertBefore(e, $scriptTarget));
+    this._initForm();
 
-      $controls = renderControls();
-      $shabad = h('div', { id: 'shabad', class: 'shabad display' });
-      $meta = h('div', { class: "hidden", id: "metadata" });
+    createScripts('/src/js/renderShabad.js', '/src/js/shabad.js')
+      .forEach(e => document.body.insertBefore(e, $scriptTarget));
 
-      replaceChild($target, h('div', { }, [
-        $controls,
-        $meta,
-        h('div', { }, [ $shabad ]),
-      ]));
-    },
+    $controls = renderControls();
+
+    $shabad = h('div', { id: 'shabad', class: 'shabad display' });
+
+    $meta = h('div', { class: "hidden", id: "metadata" });
+
+    replaceChild($target, h('div', { }, [
+      $controls,
+      $meta,
+      h('div', { }, [ $shabad ]),
+    ]));
   },
 };
 
@@ -145,39 +217,21 @@ const $lastScriptTag = document.querySelector('script:last-child');
 const redirectTo = path => location.href = path;
 
 switch (pathname) {
-  case '/ang': {
-    routes.ang.init($contentRoot, $lastScriptTag);
-    break;
-  }
-  case '/default': {
-    routes.default.init($contentRoot, $lastScriptTag);
-    break;
-  }
   case '/': {
-    routes.home.init($contentRoot, $lastScriptTag);
+    routes.home($contentRoot, $lastScriptTag);
     break;
   }
-  case '/hukamnama': {
-    routes.hukamnama.init($contentRoot, $lastScriptTag);
+  case '/ang': case '/default': case '/hukamnama': case '/search': case '/shabad': case '/404': {
+    const currentRoute = pathname.split('/')[1];
+    routes[currentRoute]($contentRoot, $lastScriptTag);
     break;
   }
   case '/random': {
     redirectTo('/shabad?random');
     break;
   }
-  case '/search': {
-    routes.search.init($contentRoot, $lastScriptTag);
-    break;
-  }
-  case '/shabad': {
-    routes.shabad.init($contentRoot, $lastScriptTag);
-    break;
-  }
-  case '/404': {
-    routes['404'].init($contentRoot, $lastScriptTag);
-    break;
-  }
   default: {
     redirectTo('/404');
+    break;
   }
 }

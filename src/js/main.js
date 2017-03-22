@@ -53,28 +53,8 @@ $("#search-options select").on("change", function() {
   }
 });
 
-$(".gurmukhi-keyboard-toggle").on("click", function() {
-  $(".gurmukhi-keyboard").toggle();
-});
-$(".gurmukhi-keyboard button").on("click", function() {
-  if ($(this).data("action")) {
-    var action = $(this).data("action");
-    if (action == 'bksp') {
-      $("#search").val(function() {
-        return this.value.substring(0, this.value.length-1);
-      });
-    } else if (action == "close") {
-      $(".gurmukhi-keyboard").hide();
-    } else if (action.includes('page')) {
-      $(".gurmukhi-keyboard .page").hide();
-      $("#gurmukhi-keyboard-" + action).show();
-    }
-  } else {
-    var char = $(this).data("value") || $(this).text();
-    $("#search").val(function() {
-      return this.value + char;
-    });
-  }
+document.querySelector(".gurmukhi-keyboard-toggle").addEventListener("click", function() {
+  document.querySelector('.gurmukhi-keyboard').classList.toggle('active');
 });
 
 $("#shabad").on("click", ".share .copy", function() {
@@ -100,14 +80,22 @@ $("#shabad").on("click", ".share .twitter", function() {
   window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("http://www.sikhitothemax.org") + "&t=" + encodeURIComponent(post), "_blank");
 });*/
 
-function updateSearchLang(set_search_type) {
-  var searchType = typeof set_search_type == "string" ? parseInt(set_search_type) : parseInt($searchType.value);
+function updateSearchLang(e) {
+  let searchType, $search;
+
+  if (typeof e == "string") {
+    searchType = parseInt(e);
+  } else {
+    searchType = parseInt(e.currentTarget.value);
+    $search = e.currentTarget.form.q;
+  }
+
   switch (searchType) {
     case 3:
     case 4:
     case 5:
       $search.classList.remove("gurbani-font");
-      $search.placeholder = "Khoj";
+      $search.placeholder = searchType === 5 ? "Ang Number" : "Khoj";
       break;
     default:
       $search.classList.add("gurbani-font");
@@ -117,15 +105,23 @@ function updateSearchLang(set_search_type) {
   $searchType.value = searchType;
 }
 
-function updateSearchAction(set_search_type) {
-  var searchType = typeof set_search_type == "string" ? parseInt(set_search_type) : parseInt($searchType.value);
+function updateSearchAction(e) {
+  let searchType, $search, $form = $(".search-form");
+
+  if (typeof e == "string") {
+    searchType = parseInt(e);
+  } else {
+    searchType = parseInt(e.currentTarget.value);
+    $form = e.currentTarget.form;
+    $search = $form.q;
+  }
   switch (searchType) {
     case 5:
-      $(".search-form").attr('action','/ang');
+      $form.setAttribute('action', '/ang');
       $search.setAttribute('name','ang');
       break;
     default:
-      $(".search-form").attr('action','/search');
+      $form.setAttribute('action', '/search');
       $search.setAttribute('name','q');
       break;
   }

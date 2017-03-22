@@ -195,15 +195,25 @@ footer .menu li a:hover {
   background-color: #fff;
   color: #999;
 }
-#search-container .gurmukhi-keyboard {
+.gurmukhi-keyboard.active {
+  opacity: 1;
+  transform: rotateX(0deg);
+  pointer-events: auto;
+}
+.gurmukhi-keyboard {
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-  display: none;
+  opacity: 0;
+  transform: rotateX(-90deg) perspective(500px);
+  pointer-events: none;
+  transition: all 0.25s;
+  transform-origin: top;
   font-size: 0;
-  position: absolute;
+  top: 0px;
+  position: relative;
   overflow: hidden;
-  width: 288px;
+  width: 100%;
   z-index: 10000;
 }
 .gurmukhi-keyboard .page {
@@ -331,8 +341,8 @@ footer {
   max-height: 125px;
   margin: 1rem 0;
 }
-.home #search {
-  margin-bottom: 1rem;
+.home .search-options {
+  margin-top: 1rem;
 }
 
 /**************
@@ -652,7 +662,7 @@ blockquote {
   }
   .top-bar #search {
     max-width: 400px;
-    width: 356px;
+    width: 351px;
   }
   #search-options {
     width: 444px;
