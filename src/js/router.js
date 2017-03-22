@@ -246,13 +246,40 @@ function router () {
       routes[currentRoute]($contentRoot, $lastScriptTag);
       break;
     }
-
     case '/about': case '/terms-of-service': {
       routes.default($contentRoot, $lastScriptTag, content[pathname]);
       break;
     }
     case '/random': {
       redirectTo('/shabad?random');
+      break;
+    }
+    case "/rehat.asp": {
+      redirectTo('https://khalisfoundation.org/portfolio/maryada/');
+      break;
+    }
+    case "/search.asp": {
+      redirectTo('/');
+      break;
+    }
+    case "/page.asp": {
+      let query = location.search
+        .split('?')[1];
+
+      query = query
+        ?  query.split('&')
+        .map(e => e.split('='))
+        .reduce((obj, [key, val]) => ({...obj, [key]: val }), {})
+        : {};
+
+      if (query.SourceID && query.PageNo) {
+        redirectTo(`/ang?ang=${query.PageNo}&source=${query.SourceID}`);
+      } else if (query.ShabadID) {
+        redirectTo(`/shabad?id=${query.ShabadID}`);
+      } else if (query.random) {
+        redirectTo('/shabad?random');
+      }
+
       break;
     }
     default: {
