@@ -81,14 +81,9 @@ $("#shabad").on("click", ".share .twitter", function() {
 });*/
 
 function updateSearchLang(e) {
-  let searchType, $search;
-
-  if (typeof e == "string") {
-    searchType = parseInt(e);
-  } else {
-    searchType = parseInt(e.currentTarget.value);
-    $search = e.currentTarget.form.q;
-  }
+  const searchType = parseInt(e.currentTarget.value);
+  const $form = e.currentTarget.form || document.querySelector('.search-form');
+  const $search = $form.q;
 
   switch (searchType) {
     case 3:
@@ -106,15 +101,10 @@ function updateSearchLang(e) {
 }
 
 function updateSearchAction(e) {
-  let searchType, $search, $form = $(".search-form");
+  const searchType = parseInt(e.currentTarget.value);
+  const $form = e.currentTarget.form || document.querySelector('.search-form');
+  const $search = $form.q;
 
-  if (typeof e == "string") {
-    searchType = parseInt(e);
-  } else {
-    searchType = parseInt(e.currentTarget.value);
-    $form = e.currentTarget.form;
-    $search = $form.q;
-  }
   switch (searchType) {
     case 5:
       $form.setAttribute('action', '/ang');

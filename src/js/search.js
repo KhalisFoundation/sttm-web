@@ -10,9 +10,6 @@ $($searchResults).on("click", "a.load", function() {
 });
 
 $(function() {
-  updateSearchLang(type);
-  updateSearchAction(type);
-  
   if (q === '') {
     $searchResults.appendChild(H3([
       h('span', {}, 'Please enter your query in the search bar above'),

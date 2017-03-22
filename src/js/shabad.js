@@ -2,10 +2,8 @@
 $(function() {
   const [random, id, q, type] = ['random', 'id', 'q', 'type'].map(v => getParameterByName(v))
 
-  updateSearchLang(type);
-  updateSearchAction(type);
-
   document.body.classList.toggle("loading");
+
   $.ajax({
     url: Khajana.buildApiUrl(typeof random !== 'undefined' ? { random: true } : { id }),
     dataType: "json",
