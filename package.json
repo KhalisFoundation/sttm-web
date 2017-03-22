@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "standard --verbose | snazzy",
-    "start": "lite-server",
+    "start": "concurrently --kill-others \"npm run watch-css\" \"npm run babel:dev\" \"lite-server\"",
     "babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
     "build": "npm run babel",
-    "build:prod": "BABEL_ENV=production npm run babel",
+    "build:prod": "npm run build-css && BABEL_ENV=production npm run babel",
+    "babel:dev": "babel src/js --watch --out-dir assets/js --copy-files --ignore *.min.js",
     "deploy": "git checkout dev && git pull origin && git push web",
-    "deploy:server": "npm run build:prod && rm -rf .gitignore node_modules src LICENSE package.json README.md router.php"
+    "deploy:server": "npm run build:prod && rm -rf .gitignore node_modules src LICENSE package.json README.md router.php",
+    "build-css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
+    "watch-css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\""
   },
   "repository": {
     "type": "git",
@@ -28,6 +31,9 @@
     "babel-core": "^6.23.1",
     "babel-preset-env": "^1.1.8",
     "babili": "0.0.11",
+    "concurrently": "^3.4.0",
+    "node-sass": "^4.5.1",
+    "nodemon": "^1.11.0",
     "snazzy": "^6.0.0",
     "standard": "^9.0.1"
   },
