@@ -135,6 +135,12 @@ body.loading .spinner {
 .top-bar-logo-small {
   width: 3em;
 }
+
+body.hide-search-bar .top-bar .top-bar-left,
+body.hide-search-bar #search-options {
+  display: none;
+}
+
 .top-bar .top-bar-left {
   height: 54px;
   padding-top: 7px;

@@ -5,15 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "standard --verbose | snazzy",
-    "start": "concurrently --kill-others \"npm run watch-css\" \"npm run babel:dev\" \"lite-server\"",
-    "babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
-    "build": "npm run babel",
-    "build:prod": "npm run build-css && BABEL_ENV=production npm run babel",
-    "babel:dev": "babel src/js --watch --out-dir assets/js --copy-files --ignore *.min.js",
+
+    "start": "npm-run-all --parallel build-watch:* server",
+
+    "server": "lite-server",
+    "build": "npm-run-all build:*",
+    "build:babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
+    "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
+    "build-watch": "npm-run-all build-watch:*",
+    "build-watch:babel": "npm run build:babel -- --watch",
+    "build-watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
+
     "deploy": "git checkout dev && git pull origin && git push web",
-    "deploy:server": "npm run build:prod && rm -rf .gitignore node_modules src LICENSE package.json README.md router.php",
-    "build-css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
-    "watch-css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\""
+
+    "build-prod": "npm run build-css && BABEL_ENV=production npm run babel",
+    "deploy:server": "npm run build:prod && rm -rf .gitignore node_modules src LICENSE package.json README.md router.php"
   },
   "repository": {
     "type": "git",
@@ -31,9 +37,10 @@
     "babel-core": "^6.23.1",
     "babel-preset-env": "^1.1.8",
     "babili": "0.0.11",
-    "concurrently": "^3.4.0",
+    "lite-server": "^2.3.0",
     "node-sass": "^4.5.1",
     "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2",
     "snazzy": "^6.0.0",
     "standard": "^9.0.1"
   },
@@ -65,8 +72,5 @@
     "ignore": [
       "assets/js"
     ]
-  },
-  "dependencies": {
-    "lite-server": "^2.3.0"
   }
 }

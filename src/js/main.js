@@ -1,8 +1,8 @@
 const $search       = document.getElementById("search");
 const $searchType   = document.getElementById("searchType");
-const $controls     = document.getElementById("controls-wrapper");
-const $shabad       = document.getElementById("shabad");
-const $meta         = document.getElementById("metadata");
+let   $controls     = document.getElementById("controls-wrapper");
+let   $shabad       = document.getElementById("shabad");
+let   $meta         = document.getElementById("metadata");
 const prefs         = {};
 const default_prefs = {
   'displayOptions': ['translation-english'],
@@ -14,11 +14,11 @@ getPrefs();
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 if ($searchType) $searchType.addEventListener("change", updateSearchAction);
 
-$('#search').keyup(function () {
-    if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
-       this.value = this.value.replace(/[^0-9]/g, '');
-    }
-});
+$search.onkeyup = function () {
+  if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+  }
+};
 
 $(".search-form").on("submit", function(e) {
   if ($search.value.length <= 2 && $searchType.value != 5) {
@@ -93,6 +93,7 @@ $("#shabad").on("click", ".share .twitter", function() {
   tweet += " #sttm";
   window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweet), "_blank");
 });
+
 /*$("#shabad").on("click", ".share .facebook", function() {
   let post = $(this).parents(".line").children("textarea").val();
   post += " #sttm";
@@ -121,19 +122,19 @@ function updateSearchAction(set_search_type) {
   switch (searchType) {
     case 5:
       $(".search-form").attr('action','/ang');
-      $('#search').attr('name','ang');
+      $search.setAttribute('name','ang');
       break;
     default:
       $(".search-form").attr('action','/search');
-      $('#search').attr('name','q');
+      $search.setAttribute('name','q');
       break;
   }
   $searchType.value = searchType;
 }
 
 function shabadToggle(e) {
-  e.target.classList.toggle('active');
-  let option = e.target.id
+  e.currentTarget.classList.toggle('active');
+  let option = e.currentTarget.id;
   switch(option) {
     case "display-options-toggle":
       $("#display-options").toggleClass("hidden");
