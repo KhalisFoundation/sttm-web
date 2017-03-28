@@ -41,9 +41,9 @@ const routes = {
 
     document.querySelector('#search-source-value').value = formValues.source;
 
-    document.querySelector('#searchType').innerHTML = typesToOptions.map(e => e.outerHTML).join('');
+    document.querySelector('#search-type').innerHTML = typesToOptions.map(e => e.outerHTML).join('');
 
-    document.querySelector('#searchSource').innerHTML = sourcesToOptions.map(e => e.outerHTML).join('');
+    document.querySelector('#search-source').innerHTML = sourcesToOptions.map(e => e.outerHTML).join('');
 
     document.querySelector('#search-container').appendChild(gurmukhiKeyboard);
   },
@@ -151,7 +151,7 @@ const routes = {
           h('div', { class: "small-6 columns" }, [
             h('select', {
               name: "type",
-              id: "searchType",
+              id: "search-type",
               change(e) {
                 updateSearchLang(e);
                 updateSearchAction(e);
