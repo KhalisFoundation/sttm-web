@@ -1,0 +1,45 @@
+.display .gurbani-display div {
+  margin-bottom: -0.25rem;
+}
+
+.display .transliteration {
+  text-transform: capitalize;
+}
+
+.display .unicode,
+.display .translation,
+.display .transliteration {
+  display: none;
+}
+
+.display.unicode .unicode {
+  display: block;
+}
+
+.display.unicode .gurlipi {
+  display: none;
+}
+
+.display.translation-english .translation.english,
+.display.translation-punjabi .translation.punjabi,
+.display.translation-spanish .translation.spanish,
+.display.transliteration-english .transliteration.english {
+  display: block;
+}
+
+.display .gurlipi i,
+.display .unicode i {
+  font-style: normal;
+}
+
+.display.larivaar .gurlipi span,
+.display.larivaar .gurlipi i,
+.display.larivaar .unicode span,
+.display.larivaar .unicode i {
+  float: left;
+}
+
+.display.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
+.display.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
+  color: #f39c1d;
+}
