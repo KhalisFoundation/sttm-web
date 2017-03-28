@@ -1,4 +1,5 @@
 # SikhiToTheMax Website
+[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
 Originally developed by SHARE Charity UK, SikhiToTheMax has become a defacto standard for keertans and gurdwaras around the world to display gurbani on screens for sangat to join into the depth of Gurbani and translations.
 
