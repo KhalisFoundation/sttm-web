@@ -206,11 +206,11 @@
     width: calc(100% - 16px);
   }
 
-  #search-container {
+  .top-bar #search-container {
     width: 100%;
   }
 
-  #search {
+  .top-bar #search {
     max-width: none;
   }
 
@@ -262,11 +262,7 @@
     width: auto;
   }
 
-  #search-container {
-    max-width: 248px;
-  }
-
-  #search-container {
+  .top-bar #search-container {
     max-width: 288px;
   }
 
@@ -282,11 +278,11 @@
 }
 
 @media screen and (min-width: 64em) {
-  #search-container {
+  .top-bar #search-container {
     max-width: 444px;
   }
 
-  #search {
+  .top-bar #search {
     max-width: 400px;
     width: 351px;
   }
