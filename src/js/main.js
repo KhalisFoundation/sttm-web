@@ -1,5 +1,5 @@
 const $search       = document.getElementById("search");
-const $searchType   = document.getElementById("searchType");
+const $searchType   = document.getElementById("search-type");
 let   $controls     = document.getElementById("controls-wrapper");
 let   $shabad       = document.getElementById("shabad");
 let   $meta         = document.getElementById("metadata");
@@ -34,7 +34,7 @@ $(".shabad-controller-toggle").on("click", shabadToggle);
 //Shabad display option toggles
 $(".display-option-toggle").on("click", displayOptionToggle);
 
-$("#open_mobile_menu").on("click", function() {
+$("#open-mobile-menu").on("click", function() {
   document.body.classList.toggle("menu-open");
 })
 $(".top-bar-right .close a").on("click", function() {
@@ -48,7 +48,7 @@ $("#open_share_menu").on("click", function() {
 $("#search-options select").on("change", function() {
   var update = $(this).data("update");
   $("#" + update).val($(this).val());
-  if ($(this).attr("id") == "searchSource") {
+  if ($(this).attr("id") == "search-source") {
     $("#top-bar-search-form").submit();
   }
 });

@@ -1,0 +1,76 @@
+/* ***** Sharing Buttons *****
+  https://simplesharingbuttons.com/#code
+*/
+#share-menu {
+  border-radius: 2px;
+  float: right;
+  height: calc(10px + 2em);
+  margin-right: 35px;
+  padding: 0 35px !important;
+
+  a {
+    background-color: transparent !important;
+    color: #00669b;
+  }
+}
+
+.share-buttons {
+  float: right;
+  list-style: none;
+  margin: auto -20px;
+  padding: 5px 0;
+
+  li {
+    display: inline;
+    margin-left: 5px;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+
+  .sr-only {
+    border: 0;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+}
+
+.share-buttons .fa,
+.share .fa {
+  color: #868383;
+  font-size: 1.5em;
+  padding: 5px;
+}
+
+@media screen and (max-width: 45.999999em) {
+  #share-menu {
+    margin-right: 0 !important;
+    padding: 0 !important;
+  }
+
+  .share-buttons {
+    float: none !important;
+    margin: auto !important;
+    overflow: hidden;
+    text-align: center;
+    width: 0;
+    z-index: -1;
+  }
+
+  .share-buttons,
+  #share-menu {
+    background-color: #fafafa;
+    width: 100% !important;
+  }
+
+  .share-buttons .fa,
+  .share .fa {
+    font-size: 1.1em !important;
+  }
+}

@@ -1,0 +1,87 @@
+/* Global Helper Classes */
+.gurbani-font {
+  font-family: gurmukhi_heavy !important;
+}
+
+#search.gurbani-font {
+  font-family: anmol_lipi !important;
+}
+
+.gurbani-display {
+  font-size: 1.4em;
+}
+
+@media screen and (min-width: 46em) {
+  .gurbani-display {
+    font-size: 1.6em;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+  not supported by any browser */
+}
+
+.button {
+  margin: 0;
+}
+
+.show-on-mobile {
+  display: none !important;
+}
+
+@media screen and (max-width: 45.999999em) {
+  .show-on-mobile {
+    display: inline !important;
+  }
+}
+
+/* Flex Helper Classes */
+.flex {
+  display: flex;
+}
+
+.flex.justify-center {
+  justify-content: center;
+}
+
+.flex.justify-start {
+  justify-content: flex-start;
+}
+
+.flex.flex-end {
+  justify-content: flex-end;
+}
+
+.flex.align-center {
+  align-items: center;
+}
+
+.flex.align-start {
+  align-items: flex-start;
+}
+
+.flex.wrap {
+  flex-wrap: wrap;
+}
+
+.flex.space-around {
+  justify-content: space-around;
+}
+
+.flex.space-between {
+  justify-content: space-between;
+}
