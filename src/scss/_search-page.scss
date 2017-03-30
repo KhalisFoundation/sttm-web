@@ -1,0 +1,24 @@
+.search-page {
+  display: flex;
+  justify-content: center;
+  padding-top: 10vh;
+}
+
+.search-form {
+  /*max-width: calc(320px - 2rem);*/
+}
+
+.logo-long {
+  margin: 1rem 0;
+  max-height: 125px;
+}
+
+.home .search-options {
+  margin-top: 1rem;
+}
+
+@media screen and (min-width: 46em) {
+  .search-form {
+    max-width: 100%;
+  }
+}

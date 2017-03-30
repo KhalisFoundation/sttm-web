@@ -2,12 +2,10 @@
 $(function() {
   const [random, id, q, type] = ['random', 'id', 'q', 'type'].map(v => getParameterByName(v))
 
-  updateSearchLang(type);
-  updateSearchAction(type);
-
   document.body.classList.toggle("loading");
+
   $.ajax({
-    url: buildApiUrl(typeof random !== 'undefined' ? { random: true } : { id }),
+    url: Khajana.buildApiUrl(typeof random !== 'undefined' ? { random: true } : { id }),
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';

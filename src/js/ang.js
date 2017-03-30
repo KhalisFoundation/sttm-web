@@ -4,7 +4,7 @@ $(function() {
 
   document.body.classList.toggle("loading");
   $.ajax({
-    url: buildApiUrl({ ang, source }),
+    url: Khajana.buildApiUrl({ ang, source }),
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';

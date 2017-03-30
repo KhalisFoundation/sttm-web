@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SikhiToTheMax</title>
+    <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
+    <link rel="stylesheet" href="/assets/css/vendor/font-awesome.min.css?v=4.7.0">
+    <!-- TODO: Get asset_version -->
+    <link rel="stylesheet" href="/assets/css/bundle.css?v=<?= $asset_version ?>">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="manifest.json">
+  </head>
+  <body class="hide-side-bar home">
+
+    <div class="top-bar no-select">
+      <div class="row">
+        <div class="top-bar-title">
+          <a href="/"></a>
+        </div>
+        <div id="responsive-menu">
+          <div class="top-bar-left">
+            <form action="/search" id="top-bar-search-form" class="search-form">
+              <ul class="menu">
+                <li>
+
+                  <div id="search-container">
+
+                    <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" />
+
+                    <button class="gurmukhi-keyboard-toggle" type="button">
+                      <i class="fa fa-keyboard-o"></i>
+                    </button>
+
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                  </div>
+                </li>
+                <li><input name="type" class="hidden" id="search-type-value" hidden /></li>
+                <li><input name="source" class="hidden" id="search-source-value" hidden /></li>
+              </ul>
+            </form>
+                  </div>
+                  <div class="top-bar-right">
+                    <a href="#" class="button" id="open-mobile-menu"><i class="fa fa-bars"></i></a>
+                    <ul class="menu header-menu">
+                      <li><a href="/hukamnama">Hukamnama</a></li>
+                      <li><a href="/shabad?random">Random Shabad</a></li>
+                      <li class="close"><a href="#">Close</a></li>
+                    </ul>
+                  </div>
+          </div>
+          <div id="search-options">
+            <select id="search-type" data-update="search-type-value"></select>
+            <select id="search-source" data-update="search-source-value"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="spinner"></div>
+
+      <div class="row" id="content-root"></div>
+
+      <footer>
+
+        <div class="row">
+          <ul class="menu footer-menu">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="https://goo.gl/plk23h" target="_blank">Feedback</a></li>
+            <li><a href="/terms-of-service">Terms of Service</a></li>
+            <li><a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank">Desktop App</a></li>
+          </ul>
+        </div>
+      </footer>
+      <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-47386101-5', 'auto');
+ga('send', 'pageview');
+      </script>
+
+      <!-- Vendor Scripts -->
+      <script src="/assets/js/vendor/jquery-3.1.1.min.js"></script>
+      <script src="/assets/js/vendor/foundation.min.js?v=6.2.4"></script>
+      <script src="/assets/js/vendor/khajana-0.0.6.min.js"></script>
+      <!-- Util Scripts -->
+      <script src="/assets/js/main.js?v=<?= $asset_version ?>"></script>
+      <script src="/assets/js/h.js?v=1"></script>
+      <script src="/assets/js/getParameterByName.js"></script>
+      <script src="/assets/js/renderControls.js"></script>
+      <script src="/assets/js/renderGurmukhiKeyboard.js"></script>
+      <!-- App -->
+      <!-- Stuff of about and terms-of-service -->
+      <script src="/assets/js/content.js"></script>
+      <script src="/assets/js/router.js"></script>
+  </body>
+</html>

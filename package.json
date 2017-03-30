@@ -4,13 +4,20 @@
   "description": "Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
-    "test": "standard --verbose | snazzy",
-    "start": "php -S localhost:8000 router.php",
-    "babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
-    "build": "npm run babel",
-    "build:prod": "BABEL_ENV=production npm run babel",
+    "test": "htmlhint index.html && eslint src/js && stylelint \"src/scss/*.scss\" --syntax scss",
+    "start": "npm-run-all --parallel build-watch:* server-watch",
+    "server": "node server",
+    "server-watch": "nodemon --watch server/ server",
+    "webpack": "webpack",
+    "build": "npm-run-all build:*",
+    "build:babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
+    "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
+    "build-watch": "npm-run-all build-watch:*",
+    "build-watch:babel": "npm run build:babel -- --watch",
+    "build-watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
     "deploy": "git checkout dev && git pull origin && git push web",
-    "deploy:server": "npm run build:prod && rm -rf .gitignore node_modules src LICENSE package.json README.md router.php"
+    "build-prod": "npm run build:css && BABEL_ENV=production npm run build:babel",
+    "deploy:server": "npm run build && rm -rf .editorconfig .gitignore .htmlhintrc .stylelintrc node_modules src LICENSE package.json README.md"
   },
   "repository": {
     "type": "git",
@@ -26,10 +33,22 @@
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.1.8",
-    "babili": "0.0.11",
-    "snazzy": "^6.0.0",
-    "standard": "^9.0.1"
+    "babili": "0.0.12",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb-base": "^11.1.2",
+    "eslint-plugin-import": "^2.2.0",
+    "html-webpack-plugin": "^2.28.0",
+    "htmlhint": "^0.9.13",
+    "node-sass": "^4.5.1",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2",
+    "stylelint": "^7.9.0",
+    "stylelint-config-standard": "^16.0.0",
+    "stylelint-order": "^0.4.1",
+    "webpack": "^2.3.2"
   },
   "babel": {
     "env": {
@@ -53,11 +72,21 @@
           "modules": false
         }
       ]
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
     ]
   },
   "standard": {
     "ignore": [
       "assets/js"
     ]
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "foundation": "^4.2.1-1",
+    "jquery": "^3.2.1",
+    "khajana": "^0.0.6",
+    "morgan": "^1.8.1"
   }
 }

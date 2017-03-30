@@ -1,0 +1,36 @@
+@import
+  "display-controls",
+  "error-page",
+  "footer",
+  "fonts",
+  "header",
+  "helpers",
+  "panktee",
+  "results",
+  "search-page",
+  "shabad-page",
+  "sharing",
+  "spinner";
+
+body {
+  font-size: 18px;
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 100px;
+  position: relative;
+}
+
+.body_text {
+  padding: 1rem;
+
+  h2 {
+    font-size: 1.5em;
+    text-transform: uppercase;
+  }
+}
+
+@media screen and (min-width: 46em) {
+  .body_text h2 {
+    font-size: 2.5em;
+  }
+}

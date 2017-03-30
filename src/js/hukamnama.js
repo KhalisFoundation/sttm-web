@@ -5,7 +5,7 @@ $(function() {
 
   document.body.classList.toggle("loading");
   $.ajax({
-    url: buildApiUrl({ hukam: true }),
+    url: Khajana.buildApiUrl({ hukam: true }),
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
