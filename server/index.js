@@ -1,11 +1,7 @@
 const express = require('express');
-const morgan = require('morgan');
 const path = require('path');
 
 const app = express();
-
-// Logger
-app.use(morgan('tiny'));
 
 // Use client for static files
 app.use(express.static(`${__dirname}/../`));
