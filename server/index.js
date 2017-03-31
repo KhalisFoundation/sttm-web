@@ -1,7 +1,11 @@
+const compression = require('compression');
 const express = require('express');
 const path = require('path');
 
 const app = express();
+
+// Compress files
+app.use(compression());
 
 // Use client for static files
 app.use(express.static(`${__dirname}/../`));
