@@ -17,7 +17,7 @@
     "build-watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
     "deploy": "git checkout dev && git pull origin && git push web",
     "build-prod": "npm run build:css && BABEL_ENV=production npm run build:babel",
-    "deploy:server": "npm run build && rm -rf .editorconfig .gitignore .htmlhintrc .stylelintrc node_modules src LICENSE package.json README.md"
+    "deploy:server": "forever stopall && npm run build && rm -rf .editorconfig .gitignore .htmlhintrc .stylelintrc node_modules src LICENSE package.json README.md && forever node server"
   },
   "repository": {
     "type": "git",
