@@ -71,7 +71,7 @@ const routes = {
 
     this._initForm();
 
-    createScripts('/src/js/renderShabad.js', '/src/js/ang.js')
+    createScripts('/assets/js/renderShabad.js', '/assets/js/ang.js')
       .forEach(e => document.body.insertBefore(e, $scriptTarget));
 
     $controls = renderControls();
@@ -186,7 +186,7 @@ const routes = {
       h('div', { }, [ $shabad ]),
     ]));
 
-    createScripts('/src/js/hukamnama.js', '/src/js/renderShabad.js')
+    createScripts('/assets/js/hukamnama.js', '/assets/js/renderShabad.js')
       .forEach(e => document.body.insertBefore(e, $scriptTarget));
   },
   search ($target, $scriptTarget) {
@@ -198,7 +198,7 @@ const routes = {
 
     $controls = renderControls();
 
-    createScripts('/src/js/renderShabad.js', '/src/js/search.js')
+    createScripts('/assets/js/renderShabad.js', '/assets/js/search.js')
       .forEach(e => document.body.insertBefore(e, $scriptTarget));
 
     replaceChild($target, h('div', { }, [
@@ -213,7 +213,7 @@ const routes = {
 
     this._initForm();
 
-    createScripts('/src/js/renderShabad.js', '/src/js/shabad.js')
+    createScripts('/assets/js/renderShabad.js', '/assets/js/shabad.js')
       .forEach(e => document.body.insertBefore(e, $scriptTarget));
 
     $controls = renderControls();
