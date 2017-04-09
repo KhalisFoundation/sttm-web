@@ -50,7 +50,7 @@ function renderControls() {
     h('div', { id: "shabad-controllers" }, [
       h('a', { id: "display-options-toggle", class: "shabad-controller-toggle", click: shabadToggle }, [
         h('i', { class: "fa fa-sliders" }),
-        h('span', { }, 'Display Options'),
+        h('span', { }, 'Display Options ↓'),
       ]),
       h('a', { id: "unicode-toggle", class: "shabad-controller-toggle", click: shabadToggle }, 'Unicode'),
       h('a', { id: "larivaar-toggle", class: "shabad-controller-toggle", click: shabadToggle }, 'Larivaar'),
