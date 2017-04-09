@@ -109,8 +109,12 @@ function updateSearchAction(e) {
     case 5:
       $form.setAttribute('action', '/ang');
       $search.setAttribute('name','ang');
+      $search.removeAttribute('pattern');
+      $search.removeAttribute('title', '');
       break;
     default:
+      $search.setAttribute('pattern', '.{3,}');
+      $search.setAttribute('title', 'Enter 3 characters minimum.');
       $form.setAttribute('action', '/search');
       $search.setAttribute('name','q');
       break;

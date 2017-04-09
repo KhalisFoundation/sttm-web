@@ -26,7 +26,20 @@
 
                   <div id="search-container">
 
-                    <input name="q" id="search" class="gurbani-font" type="search" placeholder="Koj" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" />
+                    <input
+                       type="search"
+                       name="q"
+                       id="search"
+                       class="gurbani-font"
+                       placeholder="Koj"
+                       autocomplete="off"
+                       autocapitalize="none"
+                       autocorrect="off"
+                       spellcheck="false"
+                       pattern=".{3,}"
+                       required
+                       title="Enter 3 characters minimum."
+                     />
 
                     <button class="gurmukhi-keyboard-toggle" type="button">
                       <i class="fa fa-keyboard-o"></i>
