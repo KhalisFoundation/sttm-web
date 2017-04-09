@@ -5,7 +5,7 @@ let   $shabad       = document.getElementById("shabad");
 let   $meta         = document.getElementById("metadata");
 const prefs         = {};
 const default_prefs = {
-  'displayOptions': ['translation-english'],
+  'displayOptions': ['translation-english', 'transliteration-english'],
   'shabadToggles': []
 };
 
