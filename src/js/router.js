@@ -35,17 +35,33 @@ const routes = {
 
     const gurmukhiKeyboard = renderGurmukhiKeyboard(document.querySelector('#search'))
 
-    document.querySelector('#search').value = formValues.q;
+    const [
+      $$search, $$searchType, $$searchSource, $$searchTypes, $$searchSources, $$searchContainer
+    ] = [
+      '#search', '#search-type-value', '#search-source-value', '#search-type', '#search-source', '#search-container',
+    ].map(document.querySelector.bind(document));
 
-    document.querySelector('#search-type-value').value = formValues.type;
+    $$search.value = formValues.q;
 
-    document.querySelector('#search-source-value').value = formValues.source;
+    $$searchType.value = formValues.type;
 
-    document.querySelector('#search-type').innerHTML = typesToOptions.map(e => e.outerHTML).join('');
+    $$searchSource.value = formValues.source;
 
-    document.querySelector('#search-source').innerHTML = sourcesToOptions.map(e => e.outerHTML).join('');
+    $$searchTypes.innerHTML = typesToOptions.map(e => e.outerHTML).join('');
 
-    document.querySelector('#search-container').appendChild(gurmukhiKeyboard);
+    $$searchSources.innerHTML = sourcesToOptions.map(e => e.outerHTML).join('');
+
+    $$searchContainer.appendChild(gurmukhiKeyboard);
+
+    const mockEvent = {
+      currentTarget: {
+        value: $$searchType.value,
+        form: document.querySelector('.search-form'),
+      }
+    };
+
+    updateSearchLang(mockEvent);
+    updateSearchAction(mockEvent);
   },
   ['404'] ($target) {
     document.title = 'Page not found - SikhiToTheMax';
