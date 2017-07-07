@@ -5,8 +5,8 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "/assets/images/logo-144x144.png",
-      "sizes": "144x144",
+      "src": "/assets/images/logo-192x192.png",
+      "sizes": "192x192",
       "type": "image/png"
     }
   ]

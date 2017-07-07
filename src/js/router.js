@@ -150,7 +150,7 @@ const routes = {
       h('form', { class: "search-form" , action: "/search" }, [
         h('div', { class: "flex justify-center align-center" }, [
           h('div', { }, [
-            h('img', { class: "logo-long" , src: "/assets/images/sttm_logo_beta.png" , alt: "SikhiToTheMax Logo" }),
+            h('img', { class: "logo-long" , src: "/assets/images/sttm_logo.png" , alt: "SikhiToTheMax Logo" }),
           ]),
         ]),
         h('div', { id: "search-container" }, [
