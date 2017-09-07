@@ -1,0 +1,20 @@
+footer {
+  background-color: #fafafa;
+  border-top: 1px solid #ebebeb;
+  bottom: 0;
+  height: 49px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+
+  .menu li a {
+    color: #3c3c3c;
+    font-size: 0.9em;
+    margin: 0;
+    padding: 1rem;
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+}

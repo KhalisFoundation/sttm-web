@@ -1,8 +1,6 @@
 'use strict';
 const $searchResults = document.querySelector('.search-results');
 
-const H3 = children => h('h3', { class: 'text-center' }, children);
-
 const params = ['type', 'source', 'q'];
 
 const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
@@ -12,9 +10,6 @@ $($searchResults).on("click", "a.load", function() {
 });
 
 $(function() {
-  updateSearchLang(type);
-  updateSearchAction(type);
-  
   if (q === '') {
     $searchResults.appendChild(H3([
       h('span', {}, 'Please enter your query in the search bar above'),
@@ -28,7 +23,7 @@ $(function() {
 
 function loadResults(offset) {
   $.ajax({
-    url: buildApiUrl({ q, type, source, offset }),
+    url: Khajana.buildApiUrl({ q, type, source, offset }),
     dataType: "json",
     success: function(data) {
       $("h3.loading, li.load-more").remove();
@@ -79,7 +74,7 @@ function addSearchResult(shabad, q) {
     h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
     h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
       h('div', { class: 'meta flex wrap'} , [
-        h('a', { href: '#', }, `${SOURCES[shabad.source.id]} - ${shabad.pageno}`),
+        h('a', { href: '#', }, `${Khajana.SOURCES[shabad.source.id]} - ${shabad.pageno}`),
         h('a', { href: '#', }, `${shabad.writer.english}`),
         h('a', { href: '#', }, `${shabad.raag.english}`),
       ])
@@ -95,6 +90,6 @@ function noResults() {
 
 function showError(error) {
   $searchResults.appendChild(h('h2', { }, [
-    h('h3', { class: 'text-center' }, 'Facing some issues')
+    H3('Facing some issues'),
   ]));
 }

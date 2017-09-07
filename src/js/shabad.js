@@ -1,14 +1,11 @@
 'use strict';
-const H3 = children => h('h3', { class: 'text-center' }, children);
-
 $(function() {
-  const [id, q, type] = ['id', 'q', 'type'].map(v => getParameterByName(v))
-  updateSearchLang(type);
-  updateSearchAction(type);
+  const [random, id, q, type] = ['random', 'id', 'q', 'type'].map(v => getParameterByName(v))
 
   document.body.classList.toggle("loading");
+
   $.ajax({
-    url: buildApiUrl({ id }),
+    url: Khajana.buildApiUrl(typeof random !== 'undefined' ? { random: true } : { id }),
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
@@ -21,6 +18,6 @@ $(function() {
 
 function showError(error) {
   $shabad.appendChild(h('h2', { }, [
-    h('h3', { class: 'text-center' }, 'Facing some issues')
+    H3('Facing some issues'),
   ]));
 }

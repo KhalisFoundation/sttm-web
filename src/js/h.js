@@ -20,3 +20,5 @@ function h(type = 'div', attributes = { }, children = '') {
 
   return el;
 }
+
+const H3 = children => h('h3', { class: 'text-center' }, children);

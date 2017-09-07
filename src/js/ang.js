@@ -1,12 +1,10 @@
 'use strict';
-const H3 = children => h('h3', { class: 'text-center' }, children);
-
 $(function() {
   const [ang, source] = ['ang', 'source'].map(v => getParameterByName(v))
 
   document.body.classList.toggle("loading");
   $.ajax({
-    url: buildApiUrl({ ang, source }),
+    url: Khajana.buildApiUrl({ ang, source }),
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
@@ -19,6 +17,6 @@ $(function() {
 
 function showError(error) {
   $shabad.appendChild(h('h2', { }, [
-    h('h3', { class: 'text-center' }, 'Facing some issues')
+    H3('Facing some issues'),
   ]));
 }

@@ -1,0 +1,47 @@
+.search-results {
+  margin: 0.5rem 0;
+}
+
+.search-result,
+.load-more {
+  border-bottom: 1px solid #ddd;
+  list-style: none;
+  padding: 0.5rem 1rem;
+}
+
+.search-result {
+  a {
+    color: #00669b;
+    text-decoration: none;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .url {
+    color: green;
+    display: block;
+    word-wrap: break-word;
+  }
+
+  .meta a {
+    color: grey;
+    padding-right: 5px;
+  }
+}
+
+.load-more {
+  text-align: center;
+}
+
+@media screen and (min-width: 46em) {
+  .search-results {
+    margin: 1rem 2rem 1rem 3rem;
+  }
+
+  .search-result,
+  .load-more {
+    padding: 1rem 1rem 1rem 0;
+  }
+}

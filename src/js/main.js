@@ -1,11 +1,11 @@
 const $search       = document.getElementById("search");
-const $searchType   = document.getElementById("searchType");
-const $controls     = document.getElementById("controls-wrapper");
-const $shabad       = document.getElementById("shabad");
-const $meta         = document.getElementById("metadata");
+const $searchType   = document.getElementById("search-type");
+let   $controls     = document.getElementById("controls-wrapper");
+let   $shabad       = document.getElementById("shabad");
+let   $meta         = document.getElementById("metadata");
 const prefs         = {};
 const default_prefs = {
-  'displayOptions': ['translation-english'],
+  'displayOptions': ['translation-english', 'transliteration-english'],
   'shabadToggles': []
 };
 
@@ -14,11 +14,11 @@ getPrefs();
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
 if ($searchType) $searchType.addEventListener("change", updateSearchAction);
 
-$('#search').keyup(function () {
-    if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
-       this.value = this.value.replace(/[^0-9]/g, '');
-    }
-});
+$search.onkeyup = function () {
+  if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+  }
+};
 
 $(".search-form").on("submit", function(e) {
   if ($search.value.length <= 2 && $searchType.value != 5) {
@@ -34,7 +34,7 @@ $(".shabad-controller-toggle").on("click", shabadToggle);
 //Shabad display option toggles
 $(".display-option-toggle").on("click", displayOptionToggle);
 
-$("#open_mobile_menu").on("click", function() {
+$("#open-mobile-menu").on("click", function() {
   document.body.classList.toggle("menu-open");
 })
 $(".top-bar-right .close a").on("click", function() {
@@ -48,33 +48,13 @@ $("#open_share_menu").on("click", function() {
 $("#search-options select").on("change", function() {
   var update = $(this).data("update");
   $("#" + update).val($(this).val());
-  if ($(this).attr("id") == "searchSource") {
+  if ($(this).attr("id") == "search-source") {
     $("#top-bar-search-form").submit();
   }
 });
 
-$(".gurmukhi-keyboard-toggle").on("click", function() {
-  $(".gurmukhi-keyboard").toggle();
-});
-$(".gurmukhi-keyboard button").on("click", function() {
-  if ($(this).data("action")) {
-    var action = $(this).data("action");
-    if (action == 'bksp') {
-      $("#search").val(function() {
-        return this.value.substring(0, this.value.length-1);
-      });
-    } else if (action == "close") {
-      $(".gurmukhi-keyboard").hide();
-    } else if (action.includes('page')) {
-      $(".gurmukhi-keyboard .page").hide();
-      $("#gurmukhi-keyboard-" + action).show();
-    }
-  } else {
-    var char = $(this).data("value") || $(this).text();
-    $("#search").val(function() {
-      return this.value + char;
-    });
-  }
+document.querySelector(".gurmukhi-keyboard-toggle").addEventListener("click", function() {
+  document.querySelector('.gurmukhi-keyboard').classList.toggle('active');
 });
 
 $("#shabad").on("click", ".share .copy", function() {
@@ -93,20 +73,24 @@ $("#shabad").on("click", ".share .twitter", function() {
   tweet += " #sttm";
   window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweet), "_blank");
 });
+
 /*$("#shabad").on("click", ".share .facebook", function() {
   let post = $(this).parents(".line").children("textarea").val();
   post += " #sttm";
   window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("http://www.sikhitothemax.org") + "&t=" + encodeURIComponent(post), "_blank");
 });*/
 
-function updateSearchLang(set_search_type) {
-  var searchType = typeof set_search_type == "string" ? parseInt(set_search_type) : parseInt($searchType.value);
+function updateSearchLang(e) {
+  const searchType = parseInt(e.currentTarget.value);
+  const $form = e.currentTarget.form || document.querySelector('.search-form');
+  const $search = $form.q;
+
   switch (searchType) {
     case 3:
     case 4:
     case 5:
       $search.classList.remove("gurbani-font");
-      $search.placeholder = "Khoj";
+      $search.placeholder = searchType === 5 ? "Ang Number" : "Khoj";
       break;
     default:
       $search.classList.add("gurbani-font");
@@ -116,24 +100,31 @@ function updateSearchLang(set_search_type) {
   $searchType.value = searchType;
 }
 
-function updateSearchAction(set_search_type) {
-  var searchType = typeof set_search_type == "string" ? parseInt(set_search_type) : parseInt($searchType.value);
+function updateSearchAction(e) {
+  const searchType = parseInt(e.currentTarget.value);
+  const $form = e.currentTarget.form || document.querySelector('.search-form');
+  const $search = $form.q;
+
   switch (searchType) {
     case 5:
-      $(".search-form").attr('action','/ang');
-      $('#search').attr('name','ang');
+      $form.setAttribute('action', '/ang');
+      $search.setAttribute('name','ang');
+      $search.removeAttribute('pattern');
+      $search.removeAttribute('title', '');
       break;
     default:
-      $(".search-form").attr('action','/search');
-      $('#search').attr('name','q');
+      $search.setAttribute('pattern', '.{3,}');
+      $search.setAttribute('title', 'Enter 3 characters minimum.');
+      $form.setAttribute('action', '/search');
+      $search.setAttribute('name','q');
       break;
   }
   $searchType.value = searchType;
 }
 
 function shabadToggle(e) {
-  e.target.classList.toggle('active');
-  let option = e.target.id
+  e.currentTarget.classList.toggle('active');
+  let option = e.currentTarget.id;
   switch(option) {
     case "display-options-toggle":
       $("#display-options").toggleClass("hidden");

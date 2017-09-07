@@ -5,7 +5,7 @@ $(function() {
 
   document.body.classList.toggle("loading");
   $.ajax({
-    url: buildApiUrl({ hukam: true }),
+    url: Khajana.buildApiUrl({ hukam: true }),
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
@@ -18,7 +18,7 @@ $(function() {
 
 function showError(error) {
   $shabad.appendChild(h('h2', { }, [
-    h('h3', { class: 'text-center' }, 'Facing some issues')
+    H3('Facing some issues'),
   ]));
 }
 

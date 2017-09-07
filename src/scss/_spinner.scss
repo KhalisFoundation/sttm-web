@@ -1,0 +1,45 @@
+.spinner {
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+  background-image: url(/assets/images/spinner-mandala.png);
+  background-size: 200px 200px;
+  display: none;
+  height: 200px;
+  left: 50%;
+  margin: 10% 0 0 -60px;
+  position: relative;
+  width: 200px;
+  z-index: 999999;
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.loading .spinner {
+  display: block;
+}
+
+@media screen and (max-width: 45.999999em) {
+  .spinner {
+    background-size: 100px 100px;
+    height: 100px;
+    width: 100px;
+  }
+}

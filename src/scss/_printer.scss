@@ -1,0 +1,32 @@
+@media print {
+  .top-bar {
+    border-bottom: none;
+  }
+
+  .top-bar-title {
+    float: none;
+
+    a {
+      background-image: url(/assets/images/sttm_logo.png) !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      background-size: contain !important;
+    }
+  }
+
+  #responsive-menu,
+  #search-options,
+  #controls-wrapper,
+  footer,
+  .shabad .line:hover .share {
+    display: none !important;
+  }
+
+  a[href] {
+    text-decoration: none;
+
+    &::after {
+      content: "";
+    }
+  }
+}

@@ -1,0 +1,95 @@
+blockquote {
+  border: none;
+  margin: 0 0 0.1rem;
+  padding: 0 1.25rem 0 0;
+}
+
+.search-results blockquote {
+  font-size: 0.85em;
+  margin: 0 auto;
+}
+
+#metadata {
+  border: 1px solid #cacaca;
+  border-radius: 2px;
+  margin: 1rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.shabad {
+  display: flex;
+  justify-content: center;
+  margin: 0 1rem;
+}
+
+.shabad-container {
+  width: 100%;
+}
+
+.shabad-content > div {
+  margin-bottom: 1rem;
+}
+
+.shabad .line {
+  position: relative;
+}
+
+.shabad-content p,
+.clear {
+  clear: both;
+  margin-bottom: 0;
+}
+
+.shabad-content blockquote {
+  clear: both;
+}
+
+.shabad .line .share {
+  background-color: rgba(255, 255, 255, 0.85);
+  display: none;
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.shabad .line:hover .share {
+  display: block;
+}
+
+.shabad .share a {
+  color: #000;
+  margin-left: 5px;
+  padding: 0.5rem;
+}
+
+.shabad .share .copy:hover {
+  color: #f39c1d;
+}
+
+.shabad .share .twitter:hover {
+  color: #00aced;
+}
+
+.shabad .share .facebook:hover {
+  color: #3b5998;
+}
+
+.shabad textarea {
+  display: none;
+}
+
+@media screen and (min-width: 46em) {
+  #metadata {
+    margin: 1rem 2rem 1rem 3rem;
+  }
+
+  .shabad {
+    margin: 0 2rem 0 3rem;
+  }
+
+  #share-menu {
+    background-color: #fafafa;
+  }
+}

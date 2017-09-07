@@ -1,12 +1,15 @@
 {
-  "background_color": "#F99D1B",
+  "background_color": "#fff",
+  "theme_color": "#01669b",
   "name": "SikhiToTheMax",
   "short_name": "STTM",
+  "start_url": "/",
   "display": "standalone",
+  "orientation": "any",
   "icons": [
     {
-      "src": "/assets/images/logo-144x144.png",
-      "sizes": "144x144",
+      "src": "/assets/images/logo-192x192.png",
+      "sizes": "192x192",
       "type": "image/png"
     }
   ]
