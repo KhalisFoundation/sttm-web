@@ -14,4 +14,5 @@ app.use(express.static(`${__dirname}/../`));
 app.get('*', (req, res) => res.sendFile(path.resolve(`${__dirname}/../index.html`)));
 
 // Listen
-app.listen('8080', () => console.log('Server started'));
+const port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
+app.listen(port, () => console.log('Server started'));
