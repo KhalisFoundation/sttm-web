@@ -133,7 +133,7 @@ const routes = {
     const entries = obj => Object.keys(obj).map(key => [key, obj[key]]);
 
     const $search =  h('input', {
-      name: "q"h.split('?')
+      name: "q"
       , id: "search"
       , class: "gurbani-font"
       , type: "search"
@@ -144,7 +144,7 @@ const routes = {
       , spellcheck: "false"
       , required: 'required'
       , title: 'Enter 3 characters minimum.'
-      , pattern: '.{3,}'h.split('?')
+      , pattern: '.{3,}'
     });
 
     const typesToOptions = [...Khajana.TYPES, 'Ang']
