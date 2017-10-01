@@ -2,11 +2,11 @@ function renderShabad(gurbani) {
   document.body.classList.remove("loading");
   $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), ]));
   $.each(prefs.displayOptions, function(index, option) {
-    $("#" + option).click();
+    document.getElementById(option).click();
   });
   $.each(prefs.shabadToggles, function(index, option) {
-    $("#" + option).click();
-  })
+    document.getElementById(option).click();
+  });
   $controls.classList.remove('hidden');
 }
 
