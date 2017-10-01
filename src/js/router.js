@@ -74,6 +74,7 @@ const routes = {
   },
   ['404'] ($target) {
     document.title = 'Page not found - SikhiToTheMax';
+    const url = location.href;
 
     document.body.classList.remove('home');
     $target.innerHTML = `
@@ -82,7 +83,7 @@ const routes = {
             <h1 id="error-code">404</h1>
             <div id="error-msg">These are not the Singhs you are looking for.</div>
             <div id="error-desc">
-              The requested URL <code>${getQueryParams().from}</code> was not found on this server.
+              The requested URL <code>${url}</code> was not found on this server.
             </div>
           </div>
           <div class="small-12 medium-5 columns">
@@ -306,7 +307,7 @@ function router () {
       break;
     }
     default: {
-      redirectTo(`/404?from=${location.href}`);
+      routes['404']($contentRoot, $lastScriptTag);
       break;
     }
   }
