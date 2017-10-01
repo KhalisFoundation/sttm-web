@@ -36,6 +36,7 @@
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.1.8",
     "babili": "0.0.12",
     "eslint": "^3.18.0",
@@ -75,7 +76,13 @@
       ]
     ],
     "plugins": [
-      "transform-object-rest-spread"
+      "transform-object-rest-spread",
+      [
+        "transform-react-jsx",
+        {
+          "pragma": "h"
+        }
+      ]
     ]
   },
   "standard": {
