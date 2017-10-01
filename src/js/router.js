@@ -4,7 +4,6 @@
 
 const createScript = src => h('script', { src });
 const createScripts = (...srces) => srces.map(createScript);
-const replaceChild = ($target, child) => { $target.innerHTML = ''; $target.appendChild(child); };
 
 const routes = {
   _initForm() {
@@ -67,20 +66,23 @@ const routes = {
     document.title = 'Page not found - SikhiToTheMax';
 
     document.body.classList.remove('home');
-    $target.innerHTML = `
-        <div class="body_text row">
-          <div class="small-12 medium-6 medium-offset-1 columns text-center">
-            <h1 id="error-code">404</h1>
-            <div id="error-msg">These are not the Singhs you are looking for.</div>
-            <div id="error-desc">
-              The requested URL <code>${location.href}</code> was not found on this server.
-            </div>
-          </div>
-          <div class="small-12 medium-5 columns">
-            <img src="/assets/images/404.png">
+
+    const NotFound = (
+      <div class="body_text row">
+        <div class="small-12 medium-6 medium-offset-1 columns text-center">
+          <h1 id="error-code">404</h1>
+          <div id="error-msg">These are not the Singhs you are looking for.</div>
+          <div id="error-desc">
+            The requested URL <code>{location.href}</code> was not found on this server.
           </div>
         </div>
-      `;
+        <div class="small-12 medium-5 columns">
+          <img src="/assets/images/404.png" />
+        </div>
+      </div>
+    );
+
+    replaceChild($target, NotFound);
   },
   ang ($target, $scriptTarget) {
     document.title = 'Ang/Page Viewer - SikhiToTheMax';
@@ -146,46 +148,50 @@ const routes = {
 
     const gurmukhiKeyboard = renderGurmukhiKeyboard($search);
 
-    replaceChild($target, h('div', { class: "search-page" }, [
-      h('form', { class: "search-form" , action: "/search" }, [
-        h('div', { class: "flex justify-center align-center" }, [
-          h('div', { }, [
-            h('img', { class: "logo-long" , src: "/assets/images/sttm_logo.png" , alt: "SikhiToTheMax Logo" }),
+    const SearchPage = (
+      h('div', { class: "search-page" }, [
+        h('form', { class: "search-form", action: "/search" }, [
+          h('div', { class: "flex justify-center align-center" }, [
+            h('div', {}, [
+              h('img', { class: "logo-long", src: "/assets/images/sttm_logo.png", alt: "SikhiToTheMax Logo" }),
+            ]),
           ]),
-        ]),
-        h('div', { id: "search-container" }, [
-          $search,
-          h(
-            'button', {
-              type: "button",
-              class: "gurmukhi-keyboard-toggle",
-              click() { gurmukhiKeyboard.classList.toggle('active') }
-            },
-            [ h('i', { class: "fa fa-keyboard-o" }, []) ]
-          ),
-          h('button', { type: "submit" }, [
-            h('i', { class: "fa fa-search" }, []),
-          ]),
-          gurmukhiKeyboard,
-        ]),
-        h('div', { class: "row search-options" }, [
-          h('div', { class: "small-6 columns" }, [
-            h('select', {
-              name: "type",
-              id: "search-type",
-              change(e) {
-                updateSearchLang(e);
-                updateSearchAction(e);
-              }
-            }, typesToOptions
+          h('div', { id: "search-container" }, [
+            $search,
+            h(
+              'button', {
+                type: "button",
+                class: "gurmukhi-keyboard-toggle",
+                click() { gurmukhiKeyboard.classList.toggle('active') }
+              },
+              [h('i', { class: "fa fa-keyboard-o" }, [])]
             ),
+            h('button', { type: "submit" }, [
+              h('i', { class: "fa fa-search" }, []),
+            ]),
+            gurmukhiKeyboard,
           ]),
-          h('div', { class: "small-6 columns" }, [
-            h('select', { name: "source" }, sourcesToOptions),
+          h('div', { class: "row search-options" }, [
+            h('div', { class: "small-6 columns" }, [
+              h('select', {
+                name: "type",
+                id: "search-type",
+                change(e) {
+                  updateSearchLang(e);
+                  updateSearchAction(e);
+                }
+              }, typesToOptions
+              ),
+            ]),
+            h('div', { class: "small-6 columns" }, [
+              h('select', { name: "source" }, sourcesToOptions),
+            ]),
           ]),
         ]),
-      ]),
-    ]));
+      ])
+    );
+
+    replaceChild($target, SearchPage);
   },
   hukamnama ($target, $scriptTarget) {
     document.title = 'Hukamnama - SikhiToTheMax';
