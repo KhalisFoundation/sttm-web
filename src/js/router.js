@@ -2,6 +2,15 @@
 
 /* global h */
 
+const getQueryParams = () => location.search     // "?key=val..." or "?" or ""
+  .split('?')                                    // ["", "key=val..."] or [""]
+  .slice(-1)[0]                                  // "key=val..." or ""
+  .split('&')                                    // ["key=val", ...] or [""]
+  .filter(e => e !== "")                         // ["key=val",...] or []
+  .map(e => e.split('='))                        // [["key","val"],...] or []
+  .reduce((o, [k, v]) => ({ ...o, [k]: v }), {}) // {key: val,...} or {}
+;
+
 const createScript = src => h('script', { src });
 const createScripts = (...srces) => srces.map(createScript);
 const replaceChild = ($target, child) => { $target.innerHTML = ''; $target.appendChild(child); };
@@ -65,6 +74,7 @@ const routes = {
   },
   ['404'] ($target) {
     document.title = 'Page not found - SikhiToTheMax';
+    const url = location.href;
 
     document.body.classList.remove('home');
     $target.innerHTML = `
@@ -73,7 +83,7 @@ const routes = {
             <h1 id="error-code">404</h1>
             <div id="error-msg">These are not the Singhs you are looking for.</div>
             <div id="error-desc">
-              The requested URL <code>${location.href}</code> was not found on this server.
+              The requested URL <code>${url}</code> was not found on this server.
             </div>
           </div>
           <div class="small-12 medium-5 columns">
@@ -284,14 +294,7 @@ function router () {
       break;
     }
     case "/page.asp": {
-      let query = location.search
-        .split('?')[1];
-
-      query = query
-        ?  query.split('&')
-        .map(e => e.split('='))
-        .reduce((obj, [key, val]) => ({...obj, [key]: val }), {})
-        : {};
+      let query = getQueryParams();
 
       if (query.SourceID && query.PageNo) {
         redirectTo(`/ang?ang=${query.PageNo}&source=${query.SourceID}`);
@@ -304,7 +307,7 @@ function router () {
       break;
     }
     default: {
-      redirectTo('/404');
+      routes['404']($contentRoot, $lastScriptTag);
       break;
     }
   }
