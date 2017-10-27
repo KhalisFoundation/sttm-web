@@ -16,6 +16,7 @@ const createScripts = (...srces) => srces.map(createScript);
 const replaceChild = ($target, child) => { $target.innerHTML = ''; $target.appendChild(child); };
 
 const routes = {
+  // Populates the Search form.
   _initForm() {
     const formValues = ['q', 'type', 'source', 'ang']
       .reduce((obj, val) => ({ ...obj, [val]: getParameterByName(val) || null }), {});
@@ -27,8 +28,8 @@ const routes = {
         value,
         ...(
           parseInt(value) === parseInt(formValues.type)
-          ? { selected: true }
-          : { }
+            ? { selected: true }
+            : {}
         )
       }, string))
 
@@ -37,8 +38,8 @@ const routes = {
         value,
         ...(
           value === formValues.source
-          ? { selected: true }
-          : { }
+            ? { selected: true }
+            : {}
         )
       }, string))
 
@@ -64,7 +65,7 @@ const routes = {
 
     const mockEvent = {
       currentTarget: {
-        value: $$searchType.value,
+        value: $$searchType.value || 0,
         form: document.querySelector('.search-form'),
       }
     };
@@ -73,6 +74,8 @@ const routes = {
     updateSearchAction(mockEvent);
   },
   ['404'] ($target) {
+    this._initForm();
+
     document.title = 'Page not found - SikhiToTheMax';
     const url = location.href;
 
