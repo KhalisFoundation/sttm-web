@@ -41,7 +41,7 @@ function baani(gurbani) {
       h('div', { class: 'gurlipi' }, prepareLarivaar(shabad.gurbani.gurmukhi)),
       h('div', { class: 'unicode' }, prepareLarivaar(shabad.gurbani.unicode))
     ]),
-    h('p', { class: 'transliteration english' }, shabad.transliteration),
+    h('div', { class: 'transliteration english' }, shabad.transliteration),
     h('blockquote', { class: 'translation punjabi gurbani-font' }, [
       h('div', { class: 'gurlipi' }, shabad.translation.punjabi.bms.gurmukhi),
       h('div', { class: 'unicode' }, shabad.translation.punjabi.bms.unicode)
@@ -61,15 +61,11 @@ function baani(gurbani) {
 }
 
 function prepareLarivaar(padChhed) {
-  let shabads = padChhed.split(' ');
-  let newLine = '';
-  [...shabads].forEach(val => {
-    if(val.indexOf('॥') !== -1 || val.indexOf(']') !== -1) {
-      tag = "i";
-    } else {
-      tag = "span";
-    }
-    newLine += "<" + tag + ">" + val + (tag == "i" ? " " : "") + "</" + tag + "> ";
-  });
-  return newLine;
+  return padChhed
+    .split(' ')
+    .map(val => (val.indexOf('॥') !== -1 || val.indexOf(']') !== -1)
+      ? `<i>${val} </i>`
+      : `<div class="akhar">${val}</div>`
+    )
+    .join('')
 }

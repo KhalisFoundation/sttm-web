@@ -32,14 +32,17 @@
   font-style: normal;
 }
 
-.display.larivaar .gurlipi span,
-.display.larivaar .gurlipi i,
-.display.larivaar .unicode span,
-.display.larivaar .unicode i {
-  float: left;
+.display .akhar {
+  display: inline;
+  transition: all .25s;
+  padding-right: 0.5rem;
+}
+.display.larivaar .akhar {
+  padding-right: 0;
 }
 
-.display.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
-.display.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
+
+.display.larivaar.larivaar_assist .gurlipi .akhar:nth-of-type(2n),
+.display.larivaar.larivaar_assist .unicode .akhar:nth-of-type(2n) {
   color: #f39c1d;
 }
