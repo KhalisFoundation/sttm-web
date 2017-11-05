@@ -56,6 +56,9 @@ function loadResults(offset) {
 }
 
 function addSearchResult(shabad, q) {
+  const _source = Khajana.SOURCES[shabad.source.id];
+  const source = _source ? `${_source} - ${shabad.pageno}`: null;
+
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
       h('a', {
@@ -74,9 +77,9 @@ function addSearchResult(shabad, q) {
     h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
     h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
       h('div', { class: 'meta flex wrap'} , [
-        h('a', { href: '#', }, `${Khajana.SOURCES[shabad.source.id]} - ${shabad.pageno}`),
+        source && h('a', { href: '#', }, source),
         h('a', { href: '#', }, `${shabad.writer.english}`),
-        h('a', { href: '#', }, `${shabad.raag.english}`),
+        ['No Raag', null].every(s => s !== shabad.raag.english) && h('a', { href: '#', }, `${shabad.raag.english}`),
       ])
     ])
   );

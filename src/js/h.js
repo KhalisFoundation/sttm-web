@@ -11,7 +11,7 @@ function h(type = 'div', attributes = { }, children = '') {
   });
 
   if (children instanceof Array) {
-    children.forEach(child => el.appendChild(child));
+    children.forEach(child => child && el.appendChild(child));
   } else if (children instanceof HTMLElement) {
     el.appendChild(children);
   } else if (typeof children === 'string') {

@@ -27,7 +27,7 @@ function metaData(data) {
   english_meta.push(data.source.english);
 
   gurmukhi_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_gurmukhi + ' ' + data.source.pageno + '</a>');
-  english_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_english + ' ' + data.source.pageno + '</a>');
+  english_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_english + ' ' + data.source.pageno + '</a>');0
 
   $meta.appendChild(h('h4', { class: 'gurbani-font' }, gurmukhi_meta.join(' - ')));
   $meta.appendChild(h('h4', {}, english_meta.join(' - ')));
