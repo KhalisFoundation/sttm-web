@@ -25,34 +25,49 @@ function loadResults(offset) {
   $.ajax({
     url: Khajana.buildApiUrl({ q, type, source, offset }),
     dataType: "json",
-    success: function(data) {
+    success: function({ pageinfo: { pageresults, nextpageoffset }, shabads }) {
       $("h3.loading, li.load-more").remove();
-      if (data.pageinfo.pageresults > 0) {
-        document.body.classList.remove("loading");
-        $.each(data.shabads, function(key, val) {
-          addSearchResult(val.shabad, q);
-        });
-        if (data.pageinfo.nextpageoffset) {
-          $searchResults.appendChild(
-            h('li', { class: 'load-more' },
-              h('a', { class: 'load button', 'data-nextpage': data.pageinfo.nextpageoffset }, 'Load More')
-            )
-          );
+
+      switch (pageresults) {
+        case 0: {
+          noResults();
+          break;
         }
-      } else {
-        noResults();
+
+        // I'm feeling lucky
+        case 1: {
+          document.body.classList.remove("loading");
+          const [{ shabad }] = shabads;
+          location.href = getShabadHyperLink(shabad);
+          return;
+        }
+
+        default: {
+          document.body.classList.remove("loading");
+
+          shabads.forEach(({ shabad }) => addSearchResult(shabad, q));
+
+          if (nextpageoffset) {
+            $searchResults.appendChild(
+              h('li', { class: 'load-more' },
+                h('a', { class: 'load button', 'data-nextpage': nextpageoffset }, 'Load More')
+              )
+            );
+          }
+        }
       }
-    
-      $.each(prefs.displayOptions, function(index, option) {
-        $("#" + option).click();
-      });
-      $.each(prefs.shabadToggles, function(index, option) {
-        $("#" + option).click();
-      })
+
+      [...prefs.displayOptions, ...prefs.shabadToggles]
+        .forEach(option => document.getElementById(option).click())
+
       $controls.classList.remove('hidden');
     },
     error: showError
   });
+}
+
+function getShabadHyperLink (shabad) {
+  return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
 }
 
 function addSearchResult(shabad, q) {
@@ -62,7 +77,7 @@ function addSearchResult(shabad, q) {
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
       h('a', {
-        href: `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`,
+        href: getShabadHyperLink(shabad),
         class: 'gurbani-font gurbani-display',
       }, [
       h('div', { class: 'gurlipi' }, prepareLarivaar(shabad.gurbani.gurmukhi)),
@@ -86,7 +101,6 @@ function addSearchResult(shabad, q) {
 }
 
 function noResults() {
-
   document.body.classList.remove("loading");
   $searchResults.appendChild(H3('No results found'));
 }
