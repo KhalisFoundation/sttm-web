@@ -1,6 +1,20 @@
-function renderShabad(gurbani) {
+function renderShabad(gurbani, nav) {
   document.body.classList.remove("loading");
-  $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), ]));
+  let footnav = '';
+  if(typeof nav != "undefined") {
+    let link        = navLink(nav);
+    let pagination  = [];
+    if (typeof nav.previous != "undefined") {
+      pagination.push(h('a', { href: link + nav.previous }, '&laquo;'));
+    }
+
+    if (typeof nav.next != "undefined") {
+      pagination.push(h('a', { href: link + nav.next }, '&raquo;'));
+    }
+    footnav = h('div', { class: 'pagination'}, pagination);
+  }
+
+  $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), footnav, ]));
   $.each(prefs.displayOptions, function(index, option) {
     document.getElementById(option).click();
   });
@@ -10,7 +24,14 @@ function renderShabad(gurbani) {
   $controls.classList.remove('hidden');
 }
 
-function metaData(data) {
+function navLink(nav, source) {
+    switch (nav.type) {
+      case 'shabad': return 'shabad?id=';
+      case 'ang': return 'ang?source=' + source + '&ang=';
+    }
+}
+
+function metaData(data, nav) {
   let page_type_gurmukhi  = data.source.id == 'G' ? 'AMg' : 'pMnw';
   let page_type_english   = data.source.id == 'G' ? 'Ang' : 'Pannaa';
   let gurmukhi_meta       = [];
@@ -28,6 +49,18 @@ function metaData(data) {
 
   gurmukhi_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_gurmukhi + ' ' + data.source.pageno + '</a>');
   english_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_english + ' ' + data.source.pageno + '</a>');0
+
+  if(typeof nav != "undefined") {
+    let link = navLink(nav,data.source.id);
+
+    if (typeof nav.previous != "undefined") {
+      $meta.appendChild(h('div', { class: 'shabad-nav left'}, h('a', { href: link + nav.previous }, '&lt;')));
+    }
+
+    if (typeof nav.next != "undefined") {
+      $meta.appendChild(h('div', { class: 'shabad-nav right'}, h('a', { href: link + nav.next }, '&gt;'));
+    }
+  }
 
   $meta.appendChild(h('h4', { class: 'gurbani-font' }, gurmukhi_meta.join(' - ')));
   $meta.appendChild(h('h4', {}, english_meta.join(' - ')));
