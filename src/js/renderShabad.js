@@ -1,16 +1,38 @@
-function renderShabad(gurbani) {
+function renderShabad(gurbani, nav) {
   document.body.classList.remove("loading");
-  $shabad.appendChild(<div class="shabad-container">{Baani(gurbani)}</div>)
-  $.each(prefs.displayOptions, function(index, option) {
-    document.getElementById(option).click();
-  });
-  $.each(prefs.shabadToggles, function(index, option) {
-    document.getElementById(option).click();
-  });
+
+  let footnav = null;
+  if(typeof nav != "undefined") {
+    let link        = navLink(nav);
+    let pagination  = [];
+    if (typeof nav.previous != "undefined") {
+      pagination.push(<a href={link + nav.previous}>&laquo;</a>);
+    }
+
+    if (typeof nav.next != "undefined") {
+      pagination.push(<a href={link + nav.next}>&raquo;</a>);
+    }
+    footnav = <div class="pagination">{pagination}</div>;
+  }
+
+  $shabad.appendChild(<div class="shabad-container">{[ Baani(gurbani), footnav, ]}</div>);
+
+  [
+    ...prefs.displayOptions,
+    ...prefs.shabadToggles,
+  ].forEach(option => document.getElementById(option).click());
+  
   $controls.classList.remove('hidden');
 }
 
-function metaData(data) {
+function navLink(nav, source) {
+    switch (nav.type) {
+      case 'shabad': return 'shabad?id=';
+      case 'ang': return `ang?source=${source}&ang=`;
+    }
+}
+
+function metaData(data, nav) {
   let page_type_gurmukhi  = data.source.id == 'G' ? 'AMg' : 'pMnw';
   let page_type_english   = data.source.id == 'G' ? 'Ang' : 'Pannaa';
   let gurmukhi_meta       = [];
@@ -29,8 +51,20 @@ function metaData(data) {
   gurmukhi_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_gurmukhi + ' ' + data.source.pageno + '</a>');
   english_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_english + ' ' + data.source.pageno + '</a>');0
 
-  $meta.appendChild(<h4 class="gurbani-font">{gurmukhi_meta.join(" - ")}</h4>);
-  $meta.appendChild(<h4>{english_meta.join(' - ')}</h4>);
+  if(typeof nav != "undefined") {
+    let link = navLink(nav,data.source.id);
+
+    if (typeof nav.previous !== "undefined") {
+      $meta.appendChild(<div class="shabad-nav left"><a href={link + nav.previous}>&lt;</a></div>);
+    }
+
+    if (typeof nav.next !== "undefined") {
+      $meta.appendChild(<div class="shabad-nav right"><a href={link + nav.next}>&gt;</a></div>);
+    }
+  }
+
+  $meta.appendChild(<h4 class="gurbani-font", gurmukhi_meta.join(' - ')));
+  $meta.appendChild(<h4', {}, english_meta.join(' - ')));
 
   $meta.classList.remove('hidden');
 }
