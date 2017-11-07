@@ -8,8 +8,9 @@ $(function() {
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
-      metaData(data);
-      renderShabad(data.page);
+      data.navigation.type='ang';
+      metaData(data,data.navigation);
+      renderShabad(data.page, data.navigation);
     },
     error: showError
   });

@@ -9,8 +9,9 @@ $(function() {
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
-      metaData(data.shabadinfo);
-      renderShabad(data.gurbani);
+      data.navigation.type='shabad';
+      metaData(data.shabadinfo,data.navigation);
+      renderShabad(data.gurbani,data.navigation);
     },
     error: showError
   });

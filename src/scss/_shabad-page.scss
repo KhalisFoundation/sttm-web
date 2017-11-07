@@ -17,6 +17,46 @@ blockquote {
   text-align: center;
 }
 
+.shabad-nav, .shabad-nav a {
+  margin: 0 0 0 0;
+  height: 100%;
+  font-size: 30px;
+  transform: scaleY(6);
+  color: #D3D3D3;
+  font-weight: 300;
+}
+
+.shabad-nav a:hover:not(.active) {
+   color: #797979;
+}
+
+.shabad-nav.right {
+  float: right;
+}
+
+.shabad-nav.left {
+  float: left;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
 .shabad {
   display: flex;
   justify-content: center;
