@@ -1,8 +1,8 @@
 // TODO: Render via object -> transformation.
 
-function renderGurmukhiKeyboard ($search) {
+function renderGurmukhiKeyboard($search) {
   // Instead of attaching click to each button, we are using event delegation.
-  function click ({ target: $button, currentTarget: $keyboard }) {
+  function click({ target: $button, currentTarget: $keyboard }) {
     $button = $button.nodeName.toUpperCase() === 'I' ? $button.parentNode : $button;
 
     const { action } = $button.dataset;
@@ -12,7 +12,7 @@ function renderGurmukhiKeyboard ($search) {
         $keyboard.classList.remove('active');
         break;
       }
-      case 'bksp':  {
+      case 'bksp': {
         $search.value = $search.value.substring(0, $search.value.length - 1);
         break;
       }
@@ -31,146 +31,148 @@ function renderGurmukhiKeyboard ($search) {
     }
   }
 
-  return h('div', { class: 'gurmukhi-keyboard gurbani-font', click }, [
-    h('div', { class: 'page' , style: 'display: block;' , id: 'gurmukhi-keyboard-page-1' }, [
-      h('div', { class: 'keyboard-row' }, [
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'a'),
-          h('button', { type: 'button' }, 'A'),
-          h('button', { type: 'button' }, 'e'),
-          h('button', { type: 'button' }, 's'),
-          h('button', { type: 'button' }, 'h'),
-        ]),
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'k'),
-          h('button', { type: 'button' }, 'K'),
-          h('button', { type: 'button' }, 'g'),
-          h('button', { type: 'button' }, 'G'),
-          h('button', { type: 'button' }, '|'),
-        ]),
-      ]),
-      h('div', { class: 'keyboard-row' }, [
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'c'),
-          h('button', { type: 'button' }, 'C'),
-          h('button', { type: 'button' }, 'j'),
-          h('button', { type: 'button' }, 'J'),
-          h('button', { type: 'button' }, '\\'),
-        ]),
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 't'),
-          h('button', { type: 'button' }, 'T'),
-          h('button', { type: 'button' }, 'f'),
-          h('button', { type: 'button' }, 'F'),
-          h('button', { type: 'button' }, 'x'),
-        ]),
-      ]),
-      h('div', { class: 'keyboard-row' }, [
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'q'),
-          h('button', { type: 'button' }, 'Q'),
-          h('button', { type: 'button' }, 'd'),
-          h('button', { type: 'button' }, 'D'),
-          h('button', { type: 'button' }, 'n'),
-        ]),
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'p'),
-          h('button', { type: 'button' }, 'P'),
-          h('button', { type: 'button' }, 'b'),
-          h('button', { type: 'button' }, 'B'),
-          h('button', { type: 'button' }, 'm'),
-        ]),
-      ]),
-      h('div', { class: 'keyboard-row' }, [
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'X'),
-          h('button', { type: 'button' }, 'r'),
-          h('button', { type: 'button' }, 'l'),
-          h('button', { type: 'button' }, 'v'),
-          h('button', { type: 'button' }, 'V'),
-        ]),
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, '&nbsp;'),
-          h('button', { type: 'button' }, '&nbsp;'),
-          h('button', { type: 'button' , 'data-action': 'close' }, [
-            h('i', {class: 'fa fa-times'}),
-          ]),
-          h('button', { type: 'button' , 'data-action': 'page-2' }, 'uI'),
-          h('button', { type: 'button' , 'data-action': 'bksp' }, [
-            h('i', {class: 'fa fa-long-arrow-left'}),
-          ]),
-        ]),
-      ]),
-    ]),
-    h('div', { class: 'page' , id: 'gurmukhi-keyboard-page-2' }, [
-      h('div', { class: 'keyboard-row' }, [
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, '1'),
-          h('button', { type: 'button' }, '2'),
-          h('button', { type: 'button' }, '3'),
-          h('button', { type: 'button' }, '4'),
-          h('button', { type: 'button' }, '5'),
-        ]),
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, '6'),
-          h('button', { type: 'button' }, '7'),
-          h('button', { type: 'button' }, '8'),
-          h('button', { type: 'button' }, '9'),
-          h('button', { type: 'button' }, '0'),
-        ]),
-      ]),
-      h('div', { class: 'keyboard-row' }, [
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'w'),
-          h('button', { type: 'button' }, 'i'),
-          h('button', { type: 'button' }, 'I'),
-          h('button', { type: 'button' }, 'u'),
-          h('button', { type: 'button' }, 'U'),
-        ]),
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'y'),
-          h('button', { type: 'button' }, 'Y'),
-          h('button', { type: 'button' }, 'o'),
-          h('button', { type: 'button' }, 'O'),
-          h('button', { type: 'button' }, 'M'),
-        ]),
-      ]),
-      h('div', { class: 'keyboard-row' }, [
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'N'),
-          h('button', { type: 'button' }, 'W'),
-          h('button', { type: 'button' }, '`'),
-          h('button', { type: 'button' }, '~'),
-          h('button', { type: 'button' }, 'R'),
-        ]),
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'H'),
-          h('button', { type: 'button' }, '˜'),
-          h('button', { type: 'button' }, '´'),
-          h('button', { type: 'button' }, 'Í'),
-          h('button', { type: 'button' }, 'Ï'),
-        ]),
-      ]),
-      h('div', { class: 'keyboard-row' }, [
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, 'ç'),
-          h('button', { type: 'button' }, 'E'),
-          h('button', { type: 'button' }, '^'),
-          h('button', { type: 'button' }, '&nbsp;'),
-          h('button', { type: 'button' }, '&nbsp;'),
-        ]),
-        h('div', { class: 'keyboard-row-set' }, [
-          h('button', { type: 'button' }, '&nbsp;'),
-          h('button', { type: 'button' }, '&nbsp;'),
-          h('button', { type: 'button' , 'data-action': 'close' }, [
-            h('i', {class: 'fa fa-times'}),
-          ]),
-          h('button', { type: 'button' , 'data-action': 'page-1' }, 'a'),
-          h('button', { type: 'button' , 'data-action': 'bksp' }, [
-            h('i', {class: 'fa fa-long-arrow-left'}),
-          ]),
-        ]),
-      ]),
-    ]),
-  ]);
+  return (
+    <div class="gurmukhi-keyboard gurbani-font" click={click}>
+      <div class="page" style="display: block;" id="gurmukhi-keyboard-page-1">
+        <div class="keyboard-row">
+          <div class="keyboard-row-set">
+            <button type="button">a</button>
+            <button type="button">A</button>
+            <button type="button">e</button>
+            <button type="button">s</button>
+            <button type="button">h</button>
+          </div>
+          <div class="keyboard-row-set">
+            <button type="button">k</button>
+            <button type="button">K</button>
+            <button type="button">g</button>
+            <button type="button">G</button>
+            <button type="button">|</button>
+          </div>
+        </div>
+        <div class="keyboard-row">
+          <div class="keyboard-row-set">
+            <button type="button">c</button>
+            <button type="button">C</button>
+            <button type="button">j</button>
+            <button type="button">J</button>
+            <button type="button">\\</button>
+          </div>
+          <div class="keyboard-row-set">
+            <button type="button">t</button>
+            <button type="button">T</button>
+            <button type="button">f</button>
+            <button type="button">F</button>
+            <button type="button">x</button>
+          </div>
+        </div>
+        <div class="keyboard-row">
+          <div class="keyboard-row-set">
+            <button type="button">q</button>
+            <button type="button">Q</button>
+            <button type="button">d</button>
+            <button type="button">D</button>
+            <button type="button">n</button>
+          </div>
+          <div class="keyboard-row-set">
+            <button type="button">p</button>
+            <button type="button">P</button>
+            <button type="button">b</button>
+            <button type="button">B</button>
+            <button type="button">m</button>
+          </div>
+        </div>
+        <div class="keyboard-row">
+          <div class="keyboard-row-set">
+            <button type="button">X</button>
+            <button type="button">r</button>
+            <button type="button">l</button>
+            <button type="button">v</button>
+            <button type="button">V</button>
+          </div>
+          <div class="keyboard-row-set">
+            <button type="button">&nbsp;</button>
+            <button type="button">&nbsp;</button>
+            <button type="button" data-action="close">
+              <i class="fa fa-times" />
+            </button>
+            <button type="button" data-action="page-2">uI</button>
+            <button type="button" data-action="bksp">
+              <i class="fa fa-long-arrow-left" />
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="page" d="gurmukhi-keyboard-page-2">
+        <div class="keyboard-row">
+          <div class="keyboard-row-set">
+            <button type="button">1</button>
+            <button type="button">2</button>
+            <button type="button">3</button>
+            <button type="button">4</button>
+            <button type="button">5</button>
+          </div>
+          <div class="keyboard-row-set">
+            <button type="button">6</button>
+            <button type="button">7</button>
+            <button type="button">8</button>
+            <button type="button">9</button>
+            <button type="button">0</button>
+          </div>
+        </div>
+        <div class="keyboard-row">
+          <div class="keyboard-row-set">
+            <button type="button">w</button>
+            <button type="button">i</button>
+            <button type="button">I</button>
+            <button type="button">u</button>
+            <button type="button">U</button>
+          </div>
+          <div class="keyboard-row-set">
+            <button type="button">y</button>
+            <button type="button">Y</button>
+            <button type="button">o</button>
+            <button type="button">O</button>
+            <button type="button">M</button>
+          </div>
+        </div>
+        <div class="keyboard-row">
+          <div class="keyboard-row-set">
+            <button type="button">N</button>
+            <button type="button">W</button>
+            <button type="button">`</button>
+            <button type="button">~</button>
+            <button type="button">R</button>
+          </div>
+          <div class="keyboard-row-set">
+            <button type="button">H</button>
+            <button type="button">˜</button>
+            <button type="button">´</button>
+            <button type="button">Í</button>
+            <button type="button">Ï</button>
+          </div>
+        </div>
+        <div class="keyboard-row">
+          <div class="keyboard-row-set">
+            <button type="button">ç</button>
+            <button type="button">E</button>
+            <button type="button">^</button>
+            <button type="button">&nbsp;</button>
+            <button type="button">&nbsp;</button>
+          </div>
+          <div class="keyboard-row-set">
+            <button type="button">&nbsp;</button>
+            <button type="button">&nbsp;</button>
+            <button type="button" data-action="close">
+              <i class="fa fa-times" />
+            </button>
+            <button type="button" data-action="page-1">a</button>
+            <button type="button" data-action="bksp">
+              <i class="fa fa-long-arrow-left" />
+            </button>
+          </div>
+        </div>
+      </div >
+    </div >
+  );
 }

@@ -63,36 +63,10 @@ function metaData(data, nav) {
     }
   }
 
-  $meta.appendChild(<h4 class="gurbani-font", gurmukhi_meta.join(' - ')));
-  $meta.appendChild(<h4', {}, english_meta.join(' - ')));
+  $meta.appendChild(<h4 class="gurbani-font">{gurmukhi_meta.join(' - ')}</h4>);
+  $meta.appendChild(<h4>{english_meta.join(' - ')}</h4>);
 
   $meta.classList.remove('hidden');
-}
-
-// Deprecated. Please use Baani instead.
-function baani(gurbani) {
-  return h('div', { class: 'shabad-content' } , gurbani.map(({ shabad }) => h('div', { id: 'line-' + shabad.id, class: 'line' }, [
-    h('p', { class: 'gurmukhi gurbani-display gurbani-font' }, [
-      h('div', { class: 'gurlipi' }, prepareLarivaar(shabad.gurbani.gurmukhi)),
-      h('div', { class: 'unicode' }, prepareLarivaar(shabad.gurbani.unicode))
-    ]),
-    h('div', { class: 'transliteration english' }, shabad.transliteration),
-    h('blockquote', { class: 'translation punjabi gurbani-font' }, [
-      h('div', { class: 'gurlipi' }, shabad.translation.punjabi.bms.gurmukhi),
-      h('div', { class: 'unicode' }, shabad.translation.punjabi.bms.unicode)
-    ]),
-    h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
-    h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
-    h('div', { class: 'share' }, [
-      h('a', { class: 'copy' },
-        h('i', { class: 'fa fa-fw fa-clipboard' })),
-      h('a', { class: 'twitter' },
-        h('i', { class: 'fa fa-fw fa-twitter' }))/*,
-      h('a', { class: 'facebook' },
-        h('i', { class: 'fa fa-fw fa-facebook' }))*/
-    ]),
-    h('textarea', {}, shabad.GurmukhiUni + "\n" + shabad.English)
-  ])));
 }
 
 function Baani(gurbani) {
