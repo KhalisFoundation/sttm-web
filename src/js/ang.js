@@ -8,8 +8,8 @@ $(function() {
     dataType: "json",
     success: function(data) {
       $shabad.innerHTML = '';
-      data.navigation.type='ang';
-      metaData(data,data.navigation);
+      data.navigation.type = 'ang';
+      metaData(data, data.navigation);
       renderShabad(data.page, data.navigation);
     },
     error: showError

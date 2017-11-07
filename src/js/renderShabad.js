@@ -1,4 +1,4 @@
-function renderShabad(gurbani,nav) {
+function renderShabad(gurbani, nav) {
   document.body.classList.remove("loading");
   let footnav = '';
   if(typeof nav != "undefined") {
@@ -14,7 +14,7 @@ function renderShabad(gurbani,nav) {
     footnav = h('div', { class: 'pagination'}, pagination);
   }
 
-  $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), footnav]));
+  $shabad.appendChild(h('div', { class: 'shabad-container' }, [ baani(gurbani), footnav, ]));
   $.each(prefs.displayOptions, function(index, option) {
     document.getElementById(option).click();
   });
@@ -22,16 +22,16 @@ function renderShabad(gurbani,nav) {
     document.getElementById(option).click();
   });
   $controls.classList.remove('hidden');
-
-
 }
 
-function navLink(nav,source) {
-    if(nav.type == 'shabad') { return 'shabad?id='; }
-    else if(nav.type == 'ang') { return 'ang?source=' + source + '&ang='; }
+function navLink(nav, source) {
+    switch (nav.type) {
+      case 'shabad': return 'shabad?id=';
+      case 'ang': return 'ang?source=' + source + '&ang=';
+    }
 }
 
-function metaData(data,nav) {
+function metaData(data, nav) {
   let page_type_gurmukhi  = data.source.id == 'G' ? 'AMg' : 'pMnw';
   let page_type_english   = data.source.id == 'G' ? 'Ang' : 'Pannaa';
   let gurmukhi_meta       = [];
@@ -54,11 +54,11 @@ function metaData(data,nav) {
     let link = navLink(nav,data.source.id);
 
     if (typeof nav.previous != "undefined") {
-      $meta.appendChild(h('div', { class: 'shabad-nav left'}, '<a href="' + link + nav.previous + '">&lt;</a>'));
+      $meta.appendChild(h('div', { class: 'shabad-nav left'}, h('a', { href: link + nav.previous }, '&lt;')));
     }
 
     if (typeof nav.next != "undefined") {
-      $meta.appendChild(h('div', { class: 'shabad-nav right'}, '<a href="' + link + nav.next + '">&gt;'));
+      $meta.appendChild(h('div', { class: 'shabad-nav right'}, h('a', { href: link + nav.next }, '&gt;'));
     }
   }
 
