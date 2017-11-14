@@ -58,7 +58,7 @@ function metaData(data, nav) {
     }
 
     if (typeof nav.next != "undefined") {
-      $meta.appendChild(h('div', { class: 'shabad-nav right'}, h('a', { href: link + nav.next }, '&gt;'));
+      $meta.appendChild(h('div', { class: 'shabad-nav right'}, h('a', { href: link + nav.next }, '&gt;')));
     }
   }
 
