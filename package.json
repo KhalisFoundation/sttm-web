@@ -8,12 +8,13 @@
     "start": "npm-run-all --parallel build-watch:* server-watch",
     "server": "node server",
     "server-watch": "nodemon --watch server/ server",
-    "webpack": "webpack",
     "build": "npm-run-all build:*",
-    "build:babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js",
+    "build:babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js,src/js/components/*.js,src/js/router.js,src/js/util.js",
     "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
+    "build:webpack": "webpack",
     "build-watch": "npm-run-all build-watch:*",
     "build-watch:babel": "npm run build:babel -- --watch",
+    "build-watch:webpack": "npm run build:webpack -- --watch",
     "build-watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
     "deploy": "git checkout dev && git pull origin && git push web",
     "build-prod": "npm run build:css && BABEL_ENV=production npm run build:babel",
@@ -36,6 +37,7 @@
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.1.8",
     "babili": "0.0.12",
     "eslint": "^3.18.0",
@@ -75,7 +77,13 @@
       ]
     ],
     "plugins": [
-      "transform-object-rest-spread"
+      "transform-object-rest-spread",
+      [
+        "transform-react-jsx",
+        {
+          "pragma": "h"
+        }
+      ]
     ]
   },
   "standard": {

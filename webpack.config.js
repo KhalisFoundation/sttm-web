@@ -3,14 +3,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: {
-    app: path.resolve(__dirname, 'src', 'js', 'index.js'),
-    vendor: ['jquery', 'khajana', 'foundation'],
+    router: path.resolve(__dirname, 'src', 'js', 'router.js'),
   },
   output: {
     path: path.resolve(__dirname, 'assets', 'js'),
-    filename: '[name].[hash].min.js'
+    filename: '[name].js'
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [],
   module: {
     rules: [
       {
@@ -19,4 +18,4 @@ module.exports = {
       }
     ]
   }
-}
+};
