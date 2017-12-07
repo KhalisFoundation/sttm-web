@@ -90,7 +90,8 @@ const routes = {
 
   home ($target, $scriptTarget) {
     document.title = `SikhiToTheMax`;
-    document.body.classList.add('home', 'hide-search-bar');
+    // IE 11 doesn't support multiple args for classList.add.
+    ['home', 'hide-search-bar'].map(c => document.body.classList.add(c));
 
     replaceChild($target, SearchForm({ }));
   },
