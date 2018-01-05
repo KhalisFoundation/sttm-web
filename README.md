@@ -13,5 +13,8 @@ Acknowledgements: Bhai Tarsem Singh UK, SHARE UK, Khalis Foundation, Khalsa Foun
 
 Uses Khajana API: http://www.khajana.org
 
-# License 
+## License
 [GSL](/LICENSE)
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md)
