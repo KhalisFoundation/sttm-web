@@ -2,6 +2,17 @@
   margin-bottom: -0.25rem;
 }
 
+.display .split-view-baani {
+  display: none;
+}
+
+.display.split-view .split-view-baani {
+  display: block;
+}
+.display.split-view .mixed-view-baani {
+  display: none;
+}
+
 .display .transliteration {
   text-transform: capitalize;
 }

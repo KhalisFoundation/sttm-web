@@ -37,6 +37,7 @@ function metaData(data, nav) {
   let page_type_english   = data.source.id == 'G' ? 'Ang' : 'Pannaa';
   let gurmukhi_meta       = [];
   let english_meta        = [];
+
   if (data.raag && data.raag.gurmukhi && data.raag.gurmukhi != "null") {
     gurmukhi_meta.push(data.raag.gurmukhi);
     english_meta.push(data.raag.english);
@@ -45,11 +46,25 @@ function metaData(data, nav) {
     gurmukhi_meta.push(data.writer.gurmukhi);
     english_meta.push(data.writer.english);
   }
+
   gurmukhi_meta.push(data.source.gurmukhi);
   english_meta.push(data.source.english);
 
-  gurmukhi_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_gurmukhi + ' ' + data.source.pageno + '</a>');
-  english_meta.push('<a href="/ang?ang=' + data.source.pageno + '&amp;source=' + data.source.id + '">' + page_type_english + ' ' + data.source.pageno + '</a>');0
+  gurmukhi_meta.push(
+    (
+      <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
+        {`${page_type_gurmukhi} ${data.source.pageno}`}
+      </a>
+    ).outerHTML
+  );
+
+  english_meta.push(
+    (
+      <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
+        {`${page_type_english} ${data.source.pageno}`}
+      </a>
+    ).outerHTML
+  );
 
   if(typeof nav != "undefined") {
     let link = navLink(nav,data.source.id);
@@ -70,40 +85,66 @@ function metaData(data, nav) {
 }
 
 function Baani(gurbani) {
+  const BaaniLine = ({ gurmukhi, unicode }) => (
+    <div class="gurmukhi gurbani-display gurbani-font" >
+      <div class="gurlipi">{prepareLarivaar(gurmukhi)}</div>
+      <div class="unicode">{prepareLarivaar(unicode)}</div>
+    </div>
+  );
+  const EnglishTransliteration = ({ transliteration }) => (
+    <p class="transliteration english">{transliteration}</p>
+  )
+  const SpanishTranslation = ({ translation }) => (
+    <blockquote class="translation spanish">{translation}</blockquote>
+  );
+  const EnglishTranslation = ({ translation }) => (
+    <blockquote class="translation english">{translation}</blockquote>
+  );
+  const PunjabiTranslation = ({ gurmukhi, unicode }) => (
+    <blockquote class="translation punjabi gurbani-font">
+      <div class="gurlipi">{gurmukhi}</div>
+      <div class="unicode">{unicode}</div>
+    </blockquote>
+  );
+
   return (
     <div class="shabad-content">
-      {
-        gurbani.map(({ shabad }) => (
-          <div id={"line-" + shabad.id} class="line">
-            <p class="gurmukhi gurbani-display gurbani-font">
-              <div class="gurlipi">{prepareLarivaar(shabad.gurbani.gurmukhi)}</div>
-              <div class="unicode">{prepareLarivaar(shabad.gurbani.unicode)}</div>
-            </p>
-            <p class="transliteration english">{shabad.transliteration}</p>
-            <blockquote class="translation punjabi gurbani-font">
-              <div class="gurlipi">{shabad.translation.punjabi.bms.gurmukhi}</div>
-              <div class="unicode">{shabad.translation.punjabi.bms.unicode}</div>
-            </blockquote>
-
-            <blockquote class="translation english">{shabad.translation.english.ssk}</blockquote>
-
-            <blockquote class="translation spanish">{shabad.translation.spanish}</blockquote>
-
-            <div class="share">
-              <a class="copy">
-                <i class="fa fa-fw fa-clipboard" />
-              </a>
-              <a class="twitter">
-                <i class="fa fa-fw fa-twitter" />
-              </a>
-              {/*<a class="facebook">,
-                <i class="fa fa-fw fa-facebook" />
-              </a>*/}
+      <div class="mixed-view-baani">
+        {
+          gurbani.map(({ shabad }) => (
+            <div id={"line-" + shabad.id} class="line">
+              {BaaniLine(shabad.gurbani)}
+              {EnglishTransliteration(shabad)}
+              {PunjabiTranslation(shabad.translation.punjabi.bms)}
+              {EnglishTranslation({ translation: shabad.translation.english.ssk })}
+              {SpanishTranslation({ translation: shabad.translation.spanish })}
+              <div class="share">
+                <a class="copy"><i class="fa fa-fw fa-clipboard" /></a>
+                <a class="twitter"><i class="fa fa-fw fa-twitter" /></a>
+                {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
+              </div>
+              <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
             </div>
-            <textarea>{shabad.GurmukhiUni + "\n" + shabad.English}</textarea>
+          ))
+        }
+      </div>
+      <div class="split-view-baani">
+        <div>{gurbani.map(({ shabad }) => (
+          <div class="line">
+            {BaaniLine(shabad.gurbani)}
+            <div class="share">
+              <a class="copy"><i class="fa fa-fw fa-clipboard" /></a>
+              <a class="twitter"><i class="fa fa-fw fa-twitter" /></a>
+              {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
+            </div>
+            <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
           </div>
-        ))
-      }
+        ))}</div>
+        <div>{gurbani.map(({ shabad }) => EnglishTransliteration(shabad))}</div>
+        <div>{gurbani.map(({ shabad }) => PunjabiTranslation(shabad.translation.punjabi.bms))}</div>
+        <div>{gurbani.map(({ shabad }) => EnglishTranslation({ translation: shabad.translation.english.ssk }))}</div>
+        <div>{gurbani.map(({ shabad }) => SpanishTranslation({ translation: shabad.translation.spanish }))}</div>
+      </div>
     </div>
   );
 }

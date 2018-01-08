@@ -9,6 +9,29 @@ const default_prefs = {
   'shabadToggles': []
 };
 
+function getPrefs() {
+  $.each(default_prefs, function(key, defaults) {
+    prefs[key] = window.localStorage[key] ? JSON.parse(window.localStorage[key]) : defaults;
+  });
+}
+function setPref(key, val) {
+  window.localStorage[key] = JSON.stringify(val);
+}
+function checkboxPref(e, key, option) {
+  if (e.target.classList.contains('active')) {
+    if (prefs[key].indexOf(option) < 0) {
+      prefs[key].push(option);
+    }
+  } else {
+    const index = prefs[key].indexOf(option);
+    prefs[key].splice(index, 1);
+  }
+  setPref(key, prefs[key]);
+}
+
+// IE 10 doesn't support toggle class
+const toggleClass = ($el, cl) => $el.classList[$el.classList.contains(cl) ? 'remove' : 'add'](cl);
+
 getPrefs();
 
 if ($searchType) $searchType.addEventListener("change", updateSearchLang);
@@ -35,14 +58,14 @@ $(".shabad-controller-toggle").on("click", shabadToggle);
 $(".display-option-toggle").on("click", displayOptionToggle);
 
 $("#open-mobile-menu").on("click", function() {
-  document.body.classList.toggle("menu-open");
+  toggleClass(document.body, "menu-open");
 })
 $(".top-bar-right .close a").on("click", function() {
   document.body.classList.remove("menu-open");
 })
 
 $("#open_share_menu").on("click", function() {
-  document.body.classList.toggle("share-open");
+  toggleClass(document.body, "share-open");
 })
 
 $("#search-options select").on("change", function() {
@@ -53,9 +76,9 @@ $("#search-options select").on("change", function() {
   }
 });
 
-document.querySelector(".gurmukhi-keyboard-toggle").addEventListener("click", function() {
-  document.querySelector('.gurmukhi-keyboard').classList.toggle('active');
-});
+document.querySelector(".gurmukhi-keyboard-toggle").addEventListener("click", () =>
+  toggleClass(document.querySelector('.gurmukhi-keyboard'), 'active')
+);
 
 $("#shabad").on("click", ".share .copy", function() {
   let el = $(this).parents(".line").children("textarea");
@@ -123,31 +146,36 @@ function updateSearchAction(e) {
 }
 
 function shabadToggle(e) {
-  e.currentTarget.classList.toggle('active');
-  let option = e.currentTarget.id;
-  switch(option) {
-    case "display-options-toggle":
-      $("#display-options").toggleClass("hidden");
+  toggleClass(e.currentTarget, 'active');
+  const option = e.currentTarget.id;
+  switch (option) {
+    case 'display-options-toggle':
+      toggleClass(document.querySelector('#display-options'), 'hidden');
       break;
-    case "unicode-toggle":
-    case "larivaar-toggle":
-    case "larivaar_assist-toggle":
-      let toggle = e.target.id.split("-")[0];
-      $(".display").toggleClass(toggle);
+    case 'unicode-toggle':
+    case 'larivaar-toggle':
+    case 'larivaar_assist-toggle': {
+      const [toggle] = e.target.id.split('-');
+      toggleClass(document.querySelector('.display'), toggle);
       checkboxPref(e, 'shabadToggles', option);
       break;
+    }
   }
 }
+
 function displayOptionToggle(e) {
-  e.target.classList.toggle('active');
-  let option = e.target.id;
-  $(".display").toggleClass(option);
+  const option = e.target.id;
+  const $display = document.querySelector('.display');
+
+  toggleClass(e.target, 'active');
+  toggleClass($display, option);
+
   checkboxPref(e, 'displayOptions', option);
 
-  //Update the textarea for copy/social sharing
-  $(".display .line").each(function() {
-    let line_share_text = [];
-    $(this).children("p:visible, blockquote:visible").each(function() {
+  // Update the textarea for copy/social sharing
+  $('.display .line').each(function () {
+    const lineShareText = [];
+    $(this).children('p:visible, blockquote:visible').each(function () {
       let text = '';
       if ($(this).children('div.unicode').length > 0) {
         text = $(this).children('div.unicode').text();
@@ -155,31 +183,11 @@ function displayOptionToggle(e) {
         text = $(this).text();
       }
       if (text) {
-        line_share_text.push(text);
+        lineShareText.push(text);
       }
     });
-    $(this).find("textarea").val(line_share_text.join("\n"));
+    $(this).find('textarea').val(lineShareText.join('\n'));
   });
-}
-
-function getPrefs() {
-  $.each(default_prefs, function(key, defaults) {
-    prefs[key] = window.localStorage[key] ? JSON.parse(window.localStorage[key]) : defaults;
-  });
-}
-function setPref(key, val) {
-  window.localStorage[key] = JSON.stringify(val);
-}
-function checkboxPref(e, key, option) {
-  if (e.target.classList.contains('active')) {
-    if (prefs[key].indexOf(option) < 0) {
-      prefs[key].push(option);
-    }
-  } else {
-    let index = prefs[key].indexOf(option);
-    prefs[key].splice(index, 1);
-  }
-  setPref(key, prefs[key]);
 }
 
 function shortenURL(url = window.location.href) {

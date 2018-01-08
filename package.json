@@ -45,13 +45,13 @@
     "eslint-plugin-import": "^2.2.0",
     "html-webpack-plugin": "^2.28.0",
     "htmlhint": "^0.9.13",
-    "node-sass": "^4.5.1",
+    "node-sass": "^4.7.2",
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.0.2",
     "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.1",
-    "webpack": "^2.3.2"
+    "webpack": "^3.10.0"
   },
   "babel": {
     "env": {
