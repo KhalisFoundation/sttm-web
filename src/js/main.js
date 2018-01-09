@@ -24,9 +24,10 @@ function shortenURL(url = window.location.href) {
 
 const getPrefs = () => Object
   .keys(defaultPrefs)
-  .forEach(key => {
-    prefs[key] = localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : prefs[key];
-  });
+  .forEach(key => prefs[key] = localStorage.getItem(key)
+    ? JSON.parse(localStorage.getItem(key))
+    : defaultPrefs[key]
+  );
 
 const setPref = (key, val) => localStorage.setItem(key, JSON.stringify(val));
 
@@ -54,47 +55,43 @@ $search.onkeyup = function () {
   }
 };
 
-document.querySelector('.search-form').addEventListener('submit', e => {
-  if ($search.value.length <= 2 && $searchType.value != 5) {
-    alert('Please enter at least 3 characters');
-    e.preventDefault();
-    return false;
-  }
-});
+[document.querySelector('.search-form')]
+  .forEach(f => f && f.addEventListener('submit', e => {
+    if ($search.value.length <= 2 && $searchType.value != 5) {
+      alert('Please enter at least 3 characters');
+      e.preventDefault();
+      return false;
+    }
+  }));
 
 // Shabad controller toggles
 [...document.querySelectorAll('.shabad-controller-toggle')]
-  .forEach(e => e.addEventListener('click', shabadToggle));
+  .forEach(e => e && e.addEventListener('click', shabadToggle));
 
 // Shabad display option toggles
 [...document.querySelectorAll('.display-option-toggle')]
-  .forEach(e => e.addEventListener('click', displayOptionToggle));
+  .forEach(e => e && e.addEventListener('click', displayOptionToggle));
 
-document
-  .getElementById('open-mobile-menu')
-  .addEventListener('click', () => document.body.classList.toggle('menu-open'));
+[document.getElementById('open-mobile-menu')]
+  .forEach(e => e && addEventListener('click', () => document.body.classList.toggle('menu-open')));
 
-document
-  .querySelector('.top-bar-right .close a')
-  .addEventListener('click', () => document.body.classList.remove('menu-open'));
+[document.querySelector('.top-bar-right .close a')]
+  .forEach(e => e && addEventListener('click', () => document.body.classList.remove('menu-open')));
 
-document
-  .getElementById('open_share_menu')
-  .addEventListener('click', () => document.body.classList.toggle('share-open'));
+[document.getElementById('open_share_menu')]
+  .forEach(e => e && addEventListener('click', () => document.body.classList.toggle('share-open')));
 
-document
-  .querySelector('#search-options select')
-  .addEventListener('change', function () {
+[...document.querySelectorAll('#search-options select')]
+  .forEach(e => e && e.addEventListener('change', function () {
     const update = this.dataset.update;
     document.getElementById(update).value = this.value;
     if (this.getAttribute('id') === 'search-source') {
       document.getElementById('top-bar-search-form').submit();
     }
-  });
+  }));
 
-document
-  .querySelector('.gurmukhi-keyboard-toggle')
-  .addEventListener('click', () => document.querySelector('.gurmukhi-keyboard').classList.toggle('active')) ;
+[document.querySelector('.gurmukhi-keyboard-toggle')]
+  .forEach(e => e && e.addEventListener('click', () => document.querySelector('.gurmukhi-keyboard').classList.toggle('active')));
 
 $('#shabad').on('click', '.share .copy', function() {
   const el = $(this).parents('.line').children('textarea');
@@ -191,12 +188,12 @@ function displayOptionToggle(e) {
 
   // Update the textarea for copy/social sharing
   [...document.querySelectorAll('.display .line')]
-    .forEach(el => (
+    .forEach(el => el && (
       // for every textarea
       el.querySelector('textarea').value = (
 
-        // get all p, blockquotes 
-        [...el.querySelector('p, blockquote')]
+        // get all div, blockquotes 
+        [...el.querySelector('div, blockquote')]
 
           // filter hidden ones
           .filter(c => c.style.visibility !== 'hidden' && c.style.display !== 'none')

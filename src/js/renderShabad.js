@@ -17,10 +17,10 @@ function renderShabad(gurbani, nav) {
 
   $shabad.appendChild(<div class="shabad-container">{[ Baani(gurbani), footnav, ]}</div>);
 
-  [
-    ...prefs.displayOptions,
-    ...prefs.shabadToggles,
-  ].forEach(option => document.getElementById(option).click());
+  prefs
+    .displayOptions
+    .concat(prefs.shabadToggles)
+    .forEach(option => document.getElementById(option).click());
   
   $controls.classList.remove('hidden');
 }
