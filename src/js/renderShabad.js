@@ -6,11 +6,11 @@ function renderShabad(gurbani, nav) {
     let link        = navLink(nav);
     let pagination  = [];
     if (typeof nav.previous != "undefined") {
-      pagination.push(<a href={link + nav.previous}>&laquo;</a>);
+      pagination.push(<div class="shabad-nav left"><a href={link + nav.previous}><div>Previous</div>◯<span>〈</span></a></div>);
     }
 
     if (typeof nav.next != "undefined") {
-      pagination.push(<a href={link + nav.next}>&raquo;</a>);
+      pagination.push(<div class="shabad-nav right"><a href={link + nav.next}><div>Next</div>◯<span>〉</span></a></div>);
     }
     footnav = <div class="pagination">{pagination}</div>;
   }
@@ -21,7 +21,7 @@ function renderShabad(gurbani, nav) {
     .displayOptions
     .concat(prefs.shabadToggles)
     .forEach(option => document.getElementById(option).click());
-  
+
   $controls.classList.remove('hidden');
 }
 
@@ -70,11 +70,11 @@ function metaData(data, nav) {
     let link = navLink(nav,data.source.id);
 
     if (typeof nav.previous !== "undefined") {
-      $meta.appendChild(<div class="shabad-nav left"><a href={link + nav.previous}>&lt;</a></div>);
+      $meta.appendChild(<div class="shabad-nav left"><a href={link + nav.previous}>◯<span>〈</span></a></div>);
     }
 
     if (typeof nav.next !== "undefined") {
-      $meta.appendChild(<div class="shabad-nav right"><a href={link + nav.next}>&gt;</a></div>);
+      $meta.appendChild(<div class="shabad-nav right"><a href={link + nav.next}>◯<span>〉</span></a></div>);
     }
   }
 

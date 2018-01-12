@@ -18,12 +18,29 @@ blockquote {
 }
 
 .shabad-nav, .shabad-nav a {
-  margin: 0 0 0 0;
+  margin: 50px 0;
   height: 100%;
-  font-size: 30px;
-  transform: scaleY(6);
-  color: #D3D3D3;
-  font-weight: 300;
+  font-size: 50px;
+  color: #F99D1C;
+  font-weight: 500;
+  position:relative;
+}
+
+.shabad-nav span {
+  display: inline;
+  z-index: 10;
+  position: absolute;
+  transform: scaleY(.5);
+  font-size: 1em;
+  top: -.15em;
+}
+
+.shabad-nav.left span {
+  right: 0.35em;
+}
+
+.shabad-nav.right span {
+  left: 0.35em;
 }
 
 .shabad-nav a:hover:not(.active) {
@@ -39,22 +56,37 @@ blockquote {
 }
 
 .pagination {
-    display: inline-block;
+  display: inline-block;
+  width:100%;
+  margin: 0em;
+  padding: 0 1em 0 0;
 }
 
-.pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    border: 1px solid #ddd;
+.pagination .shabad-nav span {
+  top: 0.05em;
 }
 
-.pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
+.pagination .shabad-nav.left span {
+  right: 0.5em;
+}
+
+.pagination .shabad-nav.right span {
+  left: 0.5em;
+}
+
+.pagination .shabad-nav div {
+  font-size: .35em;
+  display: inline;
+  position: absolute;
+  top: 1.4em;
+}
+
+.pagination .shabad-nav.left div {
+  left: 4em;
+}
+
+.pagination .shabad-nav.right div {
+  right: 4em;
 }
 
 .shabad {
@@ -121,8 +153,25 @@ blockquote {
 }
 
 @media screen and (min-width: 46em) {
-  #metadata {
+  #metadata{
     margin: 1rem 2rem 1rem 3rem;
+  }
+
+  .shabad-nav, .shabad-nav a {
+    margin: 0;
+  }
+
+  .pagination .shabad-nav div {
+    font-size:0.5em;
+    top: .75em;
+  }
+
+  .pagination .shabad-nav.left div {
+    left: 3em;
+  }
+
+  .pagination .shabad-nav.right div {
+    right: 3em;
   }
 
   .shabad {
