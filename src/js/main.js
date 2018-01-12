@@ -192,13 +192,13 @@ function displayOptionToggle(e) {
       // for every textarea
       el.querySelector('textarea').value = (
 
-        // get all div, blockquotes 
+        // get all div, blockquotes
         [...el.querySelector('div, blockquote')]
 
           // filter hidden ones
           .filter(c => c.style.visibility !== 'hidden' && c.style.display !== 'none')
 
-          // get innerText 
+          // get innerText
           .map(child => child.querySelectorAll('div.unicode')
             ? child.querySelector('div.unicode').innerText
             : el.innerText)
