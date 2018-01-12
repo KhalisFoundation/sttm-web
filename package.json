@@ -4,7 +4,7 @@
   "description": "Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
-    "test": "htmlhint index.html && eslint src/js && stylelint \"src/scss/*.scss\" --syntax scss",
+    "test": "htmlhint index.html && eslint src/js server && stylelint \"src/scss/*.scss\" --syntax scss",
     "start": "npm-run-all --parallel build-watch:* server-watch",
     "server": "node server",
     "server-watch": "nodemon --watch server/ server",
