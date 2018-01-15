@@ -17,22 +17,23 @@ blockquote {
   text-align: center;
 }
 
-.shabad-nav, .shabad-nav a {
-  margin: 50px 0;
-  height: 100%;
+.shabad-nav,
+.shabad-nav a {
+  color: #f39c1d;
   font-size: 50px;
-  color: #F99D1C;
   font-weight: 500;
-  position:relative;
+  height: 100%;
+  margin: 50px 0;
+  position: relative;
 }
 
 .shabad-nav span {
   display: inline;
-  z-index: 10;
-  position: absolute;
-  transform: scaleY(.5);
   font-size: 1em;
-  top: -.15em;
+  position: absolute;
+  top: -0.15em;
+  transform: scaleY(0.5);
+  z-index: 10;
 }
 
 .shabad-nav.left span {
@@ -44,39 +45,29 @@ blockquote {
 }
 
 .shabad-nav a:hover:not(.active) {
-   color: #797979;
+  color: #797979;
 }
 
 .shabad-nav.right {
   float: right;
+  margin-left: 10px;
 }
 
 .shabad-nav.left {
   float: left;
+  margin-right: 10px;
 }
 
 .pagination {
   display: inline-block;
-  width:100%;
-  margin: 0em;
-  padding: 0 1em 0 0;
-}
-
-.pagination .shabad-nav span {
-  top: 0.05em;
-}
-
-.pagination .shabad-nav.left span {
-  right: 0.5em;
-}
-
-.pagination .shabad-nav.right span {
-  left: 0.5em;
+  margin: 0;
+  padding: 0 1em;
+  width: 100%;
 }
 
 .pagination .shabad-nav div {
-  font-size: .35em;
   display: inline;
+  font-size: 0.35em;
   position: absolute;
   top: 1.4em;
 }
@@ -153,17 +144,18 @@ blockquote {
 }
 
 @media screen and (min-width: 46em) {
-  #metadata{
+  #metadata {
     margin: 1rem 2rem 1rem 3rem;
   }
 
-  .shabad-nav, .shabad-nav a {
+  .shabad-nav,
+  .shabad-nav a {
     margin: 0;
   }
 
   .pagination .shabad-nav div {
-    font-size:0.5em;
-    top: .75em;
+    font-size: 0.5em;
+    top: 0.75em;
   }
 
   .pagination .shabad-nav.left div {
