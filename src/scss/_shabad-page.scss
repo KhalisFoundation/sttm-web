@@ -61,7 +61,7 @@ blockquote {
 .pagination {
   display: inline-block;
   margin: 0;
-  padding: 0 1em;
+  padding: 0 0.5em;
   width: 100%;
 }
 
@@ -83,7 +83,9 @@ blockquote {
 .shabad {
   display: flex;
   justify-content: center;
-  margin: 0 1rem;
+  padding: 0 1rem;
+  margin: 0;
+  width: 100%;
 }
 
 .shabad-container {
@@ -143,6 +145,12 @@ blockquote {
   display: none;
 }
 
+@media screen and (max-width: 350px) {
+  .pagination .shabad-nav div {
+    display: none;
+  }
+}
+
 @media screen and (min-width: 46em) {
   #metadata {
     margin: 1rem 2rem 1rem 3rem;
@@ -167,7 +175,7 @@ blockquote {
   }
 
   .shabad {
-    margin: 0 2rem 0 3rem;
+    padding: 0 2rem 0 3rem;
   }
 
   #share-menu {
