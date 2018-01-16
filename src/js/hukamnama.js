@@ -16,9 +16,13 @@ $(function() {
   });
 });
 
+const errorMessage = (
+  <h2>
+    <h3 class="text-center">Facing some issues</h3>
+  </h2>
+);
+
 function showError(error) {
-  $shabad.appendChild(h('h2', { }, [
-    H3('Facing some issues'),
-  ]));
+  $shabad.appendChild(errorMessage);
 }
 

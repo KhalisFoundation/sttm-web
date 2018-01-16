@@ -2,6 +2,17 @@
   margin-bottom: -0.25rem;
 }
 
+.display .split-view-baani {
+  display: none;
+}
+
+.display.split-view .split-view-baani {
+  display: block;
+}
+.display.split-view .mixed-view-baani {
+  display: none;
+}
+
 .display .transliteration {
   text-transform: capitalize;
 }
@@ -32,14 +43,17 @@
   font-style: normal;
 }
 
-.display.larivaar .gurlipi span,
-.display.larivaar .gurlipi i,
-.display.larivaar .unicode span,
-.display.larivaar .unicode i {
-  float: left;
+.display .akhar {
+  display: inline-block;
+  transition: all .25s;
+  padding-right: 0.5rem;
+}
+.display.larivaar .akhar {
+  padding-right: 0;
 }
 
-.display.larivaar.larivaar_assist .gurlipi span:nth-of-type(2n),
-.display.larivaar.larivaar_assist .unicode span:nth-of-type(2n) {
+
+.display.larivaar.larivaar_assist .gurlipi .akhar:nth-of-type(2n),
+.display.larivaar.larivaar_assist .unicode .akhar:nth-of-type(2n) {
   color: #f39c1d;
 }
