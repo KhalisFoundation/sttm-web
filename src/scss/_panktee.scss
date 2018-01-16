@@ -1,59 +1,56 @@
-.display .gurbani-display div {
-  margin-bottom: -0.25rem;
-}
-
-.display .split-view-baani {
-  display: none;
-}
-
-.display.split-view .split-view-baani {
-  display: block;
-}
-.display.split-view .mixed-view-baani {
-  display: none;
-}
-
-.display .transliteration {
-  text-transform: capitalize;
-}
-
-.display .unicode,
-.display .translation,
-.display .transliteration {
-  display: none;
-}
-
-.display.unicode .unicode {
-  display: block;
-}
-
-.display.unicode .gurlipi {
-  display: none;
-}
-
-.display.translation-english .translation.english,
-.display.translation-punjabi .translation.punjabi,
-.display.translation-spanish .translation.spanish,
-.display.transliteration-english .transliteration.english {
-  display: block;
-}
-
-.display .gurlipi i,
-.display .unicode i {
-  font-style: normal;
-}
-
-.display .akhar {
-  display: inline;
-  transition: all .25s;
-  padding-right: 0.5rem;
-}
-.display.larivaar .akhar {
-  padding-right: 0;
-}
-
-
-.display.larivaar.larivaar_assist .gurlipi .akhar:nth-of-type(2n),
-.display.larivaar.larivaar_assist .unicode .akhar:nth-of-type(2n) {
-  color: #f39c1d;
+.display {
+  .gurbani-display div {
+    margin-bottom: -0.25rem;
+  }
+  .transliteration {
+    text-transform: capitalize;
+  }
+  .unicode,
+  .translation,
+  .transliteration {
+    display: none;
+  }
+  .gurlipi i,
+  .unicode i {
+    font-style: normal;
+  }
+  .akhar {
+    display: inline;
+    transition: all .25s;
+    padding-right: 0.5rem;
+  }
+  .split-view-baani {
+    display: none;
+  }
+  &.split-view {
+    .split-view-baani {
+      display: block;
+      .split-view-baani-wrapper {
+        margin-top: 1em;
+      }
+    }
+    .mixed-view-baani {
+      display: none;
+    }
+  }
+  &.unicode .unicode {
+    display: block;
+  }
+  &.unicode .gurlipi {
+    display: none;
+  }
+  &.translation-english .translation.english,
+  &.translation-punjabi .translation.punjabi,
+  &.translation-spanish .translation.spanish,
+  &.transliteration-english .transliteration.english {
+    display: block;
+  }
+  &.larivaar .akhar {
+    padding-right: 0;
+  }
+  &.larivaar.larivaar_assist {
+    .gurlipi .akhar:nth-of-type(2n), .unicode .akhar:nth-of-type(2n) {
+      color: #f39c1d;
+    }
+  }
 }
