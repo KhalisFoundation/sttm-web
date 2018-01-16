@@ -6,11 +6,11 @@ function renderShabad(gurbani, nav) {
     let link        = navLink(nav);
     let pagination  = [];
     if (typeof nav.previous != "undefined") {
-      pagination.push(<div class="shabad-nav left"><a href={link + nav.previous}><div>Previous</div><i class="fa fa-chevron-left" aria-hidden="true"></i></a></div>);
+      pagination.push(<div class="shabad-nav left"><a href={link + nav.previous}><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Previous</span></a></div>);
     }
 
     if (typeof nav.next != "undefined") {
-      pagination.push(<div class="shabad-nav right"><a href={link + nav.next}><div>Next</div><i class="fa fa-chevron-right" aria-hidden="true"></i></a></div>);
+      pagination.push(<div class="shabad-nav right"><a href={link + nav.next}><span>Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></div>);
     }
     footnav = <div class="pagination">{pagination}</div>;
   }
@@ -66,20 +66,26 @@ function metaData(data, nav) {
     ).outerHTML
   );
 
-  if(typeof nav != "undefined") {
-    let link = navLink(nav,data.source.id);
+  if (typeof nav !== 'undefined') {
+    const link = navLink(nav, data.source.id);
 
-    if (typeof nav.previous !== "undefined") {
+    if (typeof nav.previous !== 'undefined') {
       $meta.appendChild(<div class="shabad-nav left"><a href={link + nav.previous}><i class="fa fa-chevron-left" aria-hidden="true"></i></a></div>);
-    }
-
-    if (typeof nav.next !== "undefined") {
-      $meta.appendChild(<div class="shabad-nav right"><a href={link + nav.next}><i class="fa fa-chevron-right" aria-hidden="true"></i></a></div>);
     }
   }
 
-  $meta.appendChild(<h4 class="gurbani-font">{gurmukhi_meta.join(' - ')}</h4>);
-  $meta.appendChild(<h4>{english_meta.join(' - ')}</h4>);
+  $meta.appendChild(<div class="meta">
+    <h4 class="gurbani-font">{gurmukhi_meta.join(' - ')}</h4>
+    <h4>{english_meta.join(' - ')}</h4>
+  </div>);
+
+  if (typeof nav !== 'undefined') {
+    const link = navLink(nav, data.source.id);
+
+    if (typeof nav.next !== 'undefined') {
+      $meta.appendChild(<div class="shabad-nav right"><a href={link + nav.next}><i class="fa fa-chevron-right" aria-hidden="true"></i></a></div>);
+    }
+  }
 
   $meta.classList.remove('hidden');
 }
