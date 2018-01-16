@@ -2,54 +2,68 @@
   .gurbani-display div {
     margin-bottom: -0.25rem;
   }
+
   .transliteration {
     text-transform: capitalize;
   }
+
   .unicode,
   .translation,
   .transliteration {
     display: none;
   }
+
   .gurlipi i,
   .unicode i {
     font-style: normal;
   }
+
   .akhar {
     display: inline;
-    transition: all .25s;
     padding-right: 0.5rem;
+    transition: all 0.25s;
   }
+
   .split-view-baani {
     display: none;
   }
+
   &.split-view {
     .split-view-baani {
       display: block;
+
       .split-view-baani-wrapper {
         margin-top: 1em;
       }
     }
+
     .mixed-view-baani {
       display: none;
     }
   }
+
   &.unicode .unicode {
     display: block;
   }
+
   &.unicode .gurlipi {
     display: none;
   }
+
   &.translation-english .translation.english,
   &.translation-punjabi .translation.punjabi,
   &.translation-spanish .translation.spanish,
   &.transliteration-english .transliteration.english {
     display: block;
   }
+
   &.larivaar .akhar {
     padding-right: 0;
   }
+
   &.larivaar.larivaar_assist {
-    .gurlipi .akhar:nth-of-type(2n), .unicode .akhar:nth-of-type(2n) {
+    .gurlipi .akhar:nth-of-type(2n),
+    .unicode .akhar:nth-of-type(2n) {
       color: #f39c1d;
     }
   }
