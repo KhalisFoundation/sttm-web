@@ -10,80 +10,83 @@ blockquote {
 }
 
 #metadata {
+  align-items: center;
   border: 1px solid #cacaca;
   border-radius: 2px;
+  display: flex;
   margin: 1rem;
   padding: 1rem;
   text-align: center;
+  width: calc(100% - 2rem);
 }
 
-.shabad-nav,
-.shabad-nav a {
-  color: #f39c1d;
-  font-size: 50px;
-  font-weight: 500;
-  height: 100%;
-  margin: 50px 0;
-  position: relative;
-}
+.shabad-nav {
+  a {
+    color: #f39c1d;
+    font-size: 50px;
+    font-weight: 500;
+    position: relative;
 
-.shabad-nav span {
-  display: inline;
-  font-size: 1em;
-  position: absolute;
-  top: -0.15em;
-  transform: scaleY(0.5);
-  z-index: 10;
-}
+    &:hover {
+      color: #797979;
+    }
+  }
 
-.shabad-nav.left span {
-  right: 0.35em;
-}
+  &.right {
+    margin-left: 10px;
+    text-align: right;
+  }
 
-.shabad-nav.right span {
-  left: 0.35em;
-}
-
-.shabad-nav a:hover:not(.active) {
-  color: #797979;
-}
-
-.shabad-nav.right {
-  float: right;
-  margin-left: 10px;
-}
-
-.shabad-nav.left {
-  float: left;
-  margin-right: 10px;
+  &.left {
+    margin-right: 10px;
+  }
 }
 
 .pagination {
-  display: inline-block;
+  align-items: center;
+  display: flex;
   margin: 0;
-  padding: 0 1em;
+  padding: 0 0.5em;
   width: 100%;
-}
 
-.pagination .shabad-nav div {
-  display: inline;
-  font-size: 0.35em;
-  position: absolute;
-  top: 1.4em;
-}
+  .shabad-nav {
+    flex-grow: 1;
 
-.pagination .shabad-nav.left div {
-  left: 4em;
-}
+    a {
+      align-items: center;
+      display: flex;
 
-.pagination .shabad-nav.right div {
-  right: 4em;
+      &:hover {
+        background-color: initial;
+      }
+
+      i {
+        flex-grow: 1;
+      }
+    }
+
+    span {
+      display: none;
+      flex-grow: 1;
+      font-size: 0.35em;
+    }
+
+    &.left span {
+      margin-left: 10px;
+    }
+
+    &.right span {
+      margin-right: 10px;
+    }
+  }
 }
 
 .shabad {
   display: flex;
   justify-content: center;
-  margin: 0 1rem;
+  margin: 0;
+  padding: 0 1rem;
+  width: 100%;
 }
 
 .shabad-container {
@@ -143,9 +146,22 @@ blockquote {
   display: none;
 }
 
+@media screen and (min-width: 350px) {
+  .pagination .shabad-nav a {
+    span {
+      display: initial;
+    }
+
+    i {
+      flex-grow: 0;
+    }
+  }
+}
+
 @media screen and (min-width: 46em) {
   #metadata {
     margin: 1rem 2rem 1rem 3rem;
+    width: calc(100% - 5rem);
   }
 
   .shabad-nav,
@@ -167,7 +183,7 @@ blockquote {
   }
 
   .shabad {
-    margin: 0 2rem 0 3rem;
+    padding: 0 2rem 0 3rem;
   }
 
   #share-menu {
