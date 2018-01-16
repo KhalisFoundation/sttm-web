@@ -42,6 +42,10 @@ blockquote {
   }
 }
 
+.meta {
+  flex-grow: 1;
+}
+
 .pagination {
   align-items: center;
   display: flex;
