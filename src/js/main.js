@@ -55,67 +55,53 @@ $search.onkeyup = function () {
   }
 };
 
-[document.querySelector('.search-form')]
-  .forEach(f => f && f.addEventListener('submit', e => {
-    if ($search.value.length <= 2 && $searchType.value != 5) {
-      alert('Please enter at least 3 characters');
-      e.preventDefault();
-      return false;
-    }
-  }));
+function attachEventListeners () {
+  // Search form validator
+  [document.querySelector('.search-form')]
+    .forEach(f => f && f.addEventListener('submit', e => {
+      if ($search.value.length <= 2 && $searchType.value != 5) {
+        alert('Please enter at least 3 characters');
+        e.preventDefault();
+        return false;
+      }
+    }));
 
-// Shabad controller toggles
-[...document.querySelectorAll('.shabad-controller-toggle')]
-  .forEach(e => e && e.addEventListener('click', shabadToggle));
+  // Shabad controller toggles
+  [...document.querySelectorAll('.shabad-controller-toggle')]
+    .forEach(e => e && e.addEventListener('click', shabadToggle));
 
-// Shabad display option toggles
-[...document.querySelectorAll('.display-option-toggle')]
-  .forEach(e => e && e.addEventListener('click', displayOptionToggle));
+  // Shabad display option toggles
+  [...document.querySelectorAll('.display-option-toggle')]
+    .forEach(e => e && e.addEventListener('click', displayOptionToggle));
 
-[document.getElementById('open-mobile-menu')]
-  .forEach(e => e && addEventListener('click', () => document.body.classList.toggle('menu-open')));
+  // Mobile hamburger menu
+  [document.getElementById('open-mobile-menu')]
+    .forEach(e => e && e.addEventListener('click', () => document.body.classList.toggle('menu-open')));
 
-[document.querySelector('.top-bar-right .close a')]
-  .forEach(e => e && addEventListener('click', () => document.body.classList.remove('menu-open')));
+  // Close menu
+  [document.querySelector('.top-bar-right .close a')]
+    .forEach(e => e && e.addEventListener('click', () => document.body.classList.remove('menu-open')));
 
-[document.getElementById('open_share_menu')]
-  .forEach(e => e && addEventListener('click', () => document.body.classList.toggle('share-open')));
+  // Share menu
+  [document.getElementById('open_share_menu')]
+    .forEach(e => e && e.addEventListener('click', () => document.body.classList.toggle('share-open')));
 
-[...document.querySelectorAll('#search-options select')]
-  .forEach(e => e && e.addEventListener('change', function () {
-    const update = this.dataset.update;
-    document.getElementById(update).value = this.value;
-    if (this.getAttribute('id') === 'search-source') {
-      document.getElementById('top-bar-search-form').submit();
-    }
-  }));
+  [...document.querySelectorAll('#search-options select')]
+    .forEach(e => e && e.addEventListener('change', function () {
+      const update = this.dataset.update;
+      document.getElementById(update).value = this.value;
+      if (this.getAttribute('id') === 'search-source') {
+        document.getElementById('top-bar-search-form').submit();
+      }
+    }));
 
-[document.querySelector('.gurmukhi-keyboard-toggle')]
-  .forEach(e => e && e.addEventListener('click', () => document.querySelector('.gurmukhi-keyboard').classList.toggle('active')));
+  [document.querySelector('.gurmukhi-keyboard-toggle')]
+    .forEach(e => e && e.addEventListener('click', () => document.querySelector('.gurmukhi-keyboard').classList.toggle('active')));
+}
 
-$('#shabad').on('click', '.share .copy', function() {
-  const el = $(this).parents('.line').children('textarea');
-  el.show().select();
-  document.execCommand('copy');
-  el.blur().hide();
+document.addEventListener('DOMContentLoaded', () => {
+  attachEventListeners();
 });
-
-$('#shabad').on('click', '.share .twitter', function () {
-  let tweet = $(this).parents('.line').children('textarea').val();
-  const shortURL = `\n${shortenURL()}`;
-  if (tweet.length + shortURL.length > 134) {
-    tweet = `${tweet.substring(0, 132 - shortURL.length)}..`;
-  }
-  tweet += shortURL;
-  tweet += ' #sttm';
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`, '_blank');
-});
-
-/*$("#shabad").on("click", ".share .facebook", function() {
-  let post = $(this).parents(".line").children("textarea").val();
-  post += " #sttm";
-  window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("http://www.sikhitothemax.org") + "&t=" + encodeURIComponent(post), "_blank");
-});*/
 
 function updateSearchLang(e) {
   const searchType = parseInt(e.currentTarget.value);
