@@ -104,8 +104,8 @@ function Baani(gurbani) {
   const onTweetClick = ({ currentTarget}) => {
     let tweet = currentTarget.parentNode.parentNode.querySelector('textarea').value;
     const shortURL = `\n${shortenURL()}`;
-    if (tweet.length + shortURL.length > 134) {
-      tweet = `${tweet.substring(0, 132 - shortURL.length)}..`;
+    if (tweet.length + shortURL.length > 274) {
+      tweet = `${tweet.substring(0, 272 - shortURL.length)}…`;
     }
     tweet += shortURL;
     tweet += ' #sttm';
