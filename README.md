@@ -11,7 +11,10 @@ Developer: Khalis Foundation and sevadars (see commiters for more details)
 
 Acknowledgements: Bhai Tarsem Singh UK, SHARE UK, Khalis Foundation, Khalsa Foundation UK, Dr. Sant Singh Khalsa, Dr. Kulbir Singh Thind
 
-Uses Khajana API: http://www.khajana.org
+Uses ShabadOS API: http://www.shabados.org
 
-# License 
+## License
 [GSL](/LICENSE)
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md)
