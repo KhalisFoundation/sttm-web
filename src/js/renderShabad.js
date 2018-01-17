@@ -135,21 +135,31 @@ function Baani(gurbani) {
         }
       </div>
       <div class="split-view-baani">
-        <div>{gurbani.map(({ shabad }) => (
-          <div class="line">
-            {BaaniLine(shabad.gurbani)}
-            <div class="share">
-              <a class="copy"><i class="fa fa-fw fa-clipboard" /></a>
-              <a class="twitter"><i class="fa fa-fw fa-twitter" /></a>
-              {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => (
+            <div class="line">
+              {BaaniLine(shabad.gurbani)}
+              <div class="share">
+                <a class="copy"><i class="fa fa-fw fa-clipboard" /></a>
+                <a class="twitter"><i class="fa fa-fw fa-twitter" /></a>
+                {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
+              </div>
+              <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
             </div>
-            <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
-          </div>
-        ))}</div>
-        <div>{gurbani.map(({ shabad }) => EnglishTransliteration(shabad))}</div>
-        <div>{gurbani.map(({ shabad }) => PunjabiTranslation(shabad.translation.punjabi.bms))}</div>
-        <div>{gurbani.map(({ shabad }) => EnglishTranslation({ translation: shabad.translation.english.ssk }))}</div>
-        <div>{gurbani.map(({ shabad }) => SpanishTranslation({ translation: shabad.translation.spanish }))}</div>
+          ))}
+        </div>
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => EnglishTransliteration(shabad))}
+        </div>
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => PunjabiTranslation(shabad.translation.punjabi.bms))}
+        </div>
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => EnglishTranslation({ translation: shabad.translation.english.ssk }))}
+        </div>
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => SpanishTranslation({ translation: shabad.translation.spanish }))}
+        </div>
       </div>
     </div>
   );

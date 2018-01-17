@@ -1,59 +1,70 @@
-.display .gurbani-display div {
-  margin-bottom: -0.25rem;
-}
+.display {
+  .gurbani-display div {
+    margin-bottom: -0.25rem;
+  }
 
-.display .split-view-baani {
-  display: none;
-}
+  .transliteration {
+    text-transform: capitalize;
+  }
 
-.display.split-view .split-view-baani {
-  display: block;
-}
-.display.split-view .mixed-view-baani {
-  display: none;
-}
+  .unicode,
+  .translation,
+  .transliteration {
+    display: none;
+  }
 
-.display .transliteration {
-  text-transform: capitalize;
-}
+  .gurlipi i,
+  .unicode i {
+    font-style: normal;
+  }
 
-.display .unicode,
-.display .translation,
-.display .transliteration {
-  display: none;
-}
+  .akhar {
+    display: inline-block;
+    transition: all .25s;
+    padding-right: 0.5rem;
+  }
+  
+  .split-view-baani {
+    display: none;
+  }
 
-.display.unicode .unicode {
-  display: block;
-}
+  &.split-view {
+    .split-view-baani {
+      display: block;
 
-.display.unicode .gurlipi {
-  display: none;
-}
+      .split-view-baani-wrapper {
+        margin-top: 1em;
+      }
+    }
 
-.display.translation-english .translation.english,
-.display.translation-punjabi .translation.punjabi,
-.display.translation-spanish .translation.spanish,
-.display.transliteration-english .transliteration.english {
-  display: block;
-}
+    .mixed-view-baani {
+      display: none;
+    }
+  }
 
-.display .gurlipi i,
-.display .unicode i {
-  font-style: normal;
-}
+  &.unicode .unicode {
+    display: block;
+  }
 
-.display .akhar {
-  display: inline-block;
-  transition: all .25s;
-  padding-right: 0.5rem;
-}
-.display.larivaar .akhar {
-  padding-right: 0;
-}
+  &.unicode .gurlipi {
+    display: none;
+  }
 
+  &.translation-english .translation.english,
+  &.translation-punjabi .translation.punjabi,
+  &.translation-spanish .translation.spanish,
+  &.transliteration-english .transliteration.english {
+    display: block;
+  }
+  
+  &.larivaar .akhar {
+    padding-right: 0;
+  }
 
-.display.larivaar.larivaar_assist .gurlipi .akhar:nth-of-type(2n),
-.display.larivaar.larivaar_assist .unicode .akhar:nth-of-type(2n) {
-  color: #f39c1d;
+  &.larivaar.larivaar_assist {
+    .gurlipi .akhar:nth-of-type(2n),
+    .unicode .akhar:nth-of-type(2n) {
+      color: #f39c1d;
+    }
+  }
 }
