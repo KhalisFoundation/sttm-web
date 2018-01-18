@@ -55,6 +55,8 @@ $search.onkeyup = function () {
   }
 };
 
+// Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
+
 function attachEventListeners () {
   // Search form validator
   [document.querySelector('.search-form')]
@@ -65,14 +67,6 @@ function attachEventListeners () {
         return false;
       }
     }));
-
-  // Shabad controller toggles
-  [...document.querySelectorAll('.shabad-controller-toggle')]
-    .forEach(e => e && e.addEventListener('click', shabadToggle));
-
-  // Shabad display option toggles
-  [...document.querySelectorAll('.display-option-toggle')]
-    .forEach(e => e && e.addEventListener('click', displayOptionToggle));
 
   // Mobile hamburger menu
   [document.getElementById('open-mobile-menu')]
