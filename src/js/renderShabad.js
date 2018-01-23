@@ -181,6 +181,7 @@ function Baani(gurbani) {
         <div class="split-view-baani-wrapper">
           {gurbani.map(({ shabad }) => SpanishTranslation({ translation: shabad.translation.spanish }))}
         </div>
+
       </div>
     </div>
   );
