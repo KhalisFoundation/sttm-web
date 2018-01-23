@@ -56,7 +56,7 @@ function renderGurmukhiKeyboard($search) {
             <button type="button">C</button>
             <button type="button">j</button>
             <button type="button">J</button>
-            <button type="button">\\</button>
+            <button type="button">\</button>
           </div>
           <div class="keyboard-row-set">
             <button type="button">t</button>

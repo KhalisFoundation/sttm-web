@@ -2,9 +2,9 @@ function renderShabad(gurbani, nav) {
   document.body.classList.remove("loading");
 
   let footnav = null;
-  if(typeof nav != "undefined") {
-    let link        = navLink(nav);
-    let pagination  = [];
+  if (typeof nav != "undefined") {
+    let link = navLink(nav);
+    let pagination = [];
     if (typeof nav.previous != "undefined") {
       pagination.push(<div class="shabad-nav left"><a href={link + nav.previous}><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Previous</span></a></div>);
     }
@@ -15,7 +15,7 @@ function renderShabad(gurbani, nav) {
     footnav = <div class="pagination">{pagination}</div>;
   }
 
-  $shabad.appendChild(<div class="shabad-container">{[ Baani(gurbani), footnav, ]}</div>);
+  $shabad.appendChild(<div class="shabad-container">{[Baani(gurbani), footnav,]}</div>);
 
   prefs
     .displayOptions
@@ -91,6 +91,27 @@ function metaData(data, nav) {
 }
 
 function Baani(gurbani) {
+  const onCopyClick = ({ currentTarget }) => {
+    const textarea = currentTarget.parentNode.parentNode.querySelector('textarea');
+    textarea.style.display = 'block';
+    textarea.focus();
+    textarea.select();
+    document.execCommand('copy');
+    textarea.blur();
+    textarea.style.display = 'none';
+  };
+
+  const onTweetClick = ({ currentTarget}) => {
+    let tweet = currentTarget.parentNode.parentNode.querySelector('textarea').value;
+    const shortURL = `\n${shortenURL()}`;
+    if (tweet.length + shortURL.length > 274) {
+      tweet = `${tweet.substring(0, 272 - shortURL.length)}…`;
+    }
+    tweet += shortURL;
+    tweet += ' #sttm';
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`, '_blank');
+  };
+
   const BaaniLine = ({ gurmukhi, unicode }) => (
     <div class="gurmukhi gurbani-display gurbani-font" >
       <div class="gurlipi">{prepareLarivaar(gurmukhi)}</div>
@@ -125,8 +146,8 @@ function Baani(gurbani) {
               {EnglishTranslation({ translation: shabad.translation.english.ssk })}
               {SpanishTranslation({ translation: shabad.translation.spanish })}
               <div class="share">
-                <a class="copy"><i class="fa fa-fw fa-clipboard" /></a>
-                <a class="twitter"><i class="fa fa-fw fa-twitter" /></a>
+                <a class="copy" click={onCopyClick}><i class="fa fa-fw fa-clipboard" /></a>
+                <a class="twitter" click={onTweetClick}><i class="fa fa-fw fa-twitter" /></a>
                 {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
               </div>
               <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
@@ -135,21 +156,32 @@ function Baani(gurbani) {
         }
       </div>
       <div class="split-view-baani">
-        <div>{gurbani.map(({ shabad }) => (
-          <div class="line">
-            {BaaniLine(shabad.gurbani)}
-            <div class="share">
-              <a class="copy"><i class="fa fa-fw fa-clipboard" /></a>
-              <a class="twitter"><i class="fa fa-fw fa-twitter" /></a>
-              {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => (
+            <div class="line">
+              {BaaniLine(shabad.gurbani)}
+              <div class="share">
+                <a class="copy"><i class="fa fa-fw fa-clipboard" /></a>
+                <a class="twitter"><i class="fa fa-fw fa-twitter" /></a>
+                {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
+              </div>
+              <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
             </div>
-            <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
-          </div>
-        ))}</div>
-        <div>{gurbani.map(({ shabad }) => EnglishTransliteration(shabad))}</div>
-        <div>{gurbani.map(({ shabad }) => PunjabiTranslation(shabad.translation.punjabi.bms))}</div>
-        <div>{gurbani.map(({ shabad }) => EnglishTranslation({ translation: shabad.translation.english.ssk }))}</div>
-        <div>{gurbani.map(({ shabad }) => SpanishTranslation({ translation: shabad.translation.spanish }))}</div>
+          ))}
+        </div>
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => EnglishTransliteration(shabad))}
+        </div>
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => PunjabiTranslation(shabad.translation.punjabi.bms))}
+        </div>
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => EnglishTranslation({ translation: shabad.translation.english.ssk }))}
+        </div>
+        <div class="split-view-baani-wrapper">
+          {gurbani.map(({ shabad }) => SpanishTranslation({ translation: shabad.translation.spanish }))}
+        </div>
+
       </div>
     </div>
   );

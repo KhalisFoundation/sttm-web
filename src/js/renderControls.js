@@ -74,11 +74,11 @@ function renderControls() {
             <a
               href="mailto:?subject=&body=:%20http%3A%2F%2Fsttm.ws"
               target="_blank"
-              title="Send email"
+              title="Share via email"
               onclick={"window.open('mailto:?subject=' + encodeURIComponent(document.title) + '&body=' +  encodeURIComponent(shortenURL())); return false;"}
             >
               <i class="fa fa-envelope" aria-hidden="true" />
-              <span class="sr-only">Send email</span>
+              <span class="sr-only">Share via email</span>
             </a>
           </li>
         </ul>
