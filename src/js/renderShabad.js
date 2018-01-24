@@ -38,7 +38,7 @@ function metaData(data, nav) {
   let gurmukhi_meta       = [];
   let english_meta        = [];
 
-  if (data.raag && data.raag.gurmukhi && data.raag.gurmukhi != "null") {
+  if !(data.raag && data.raag.gurmukhi && data.raag.gurmukhi in ("null", "false")) {
     gurmukhi_meta.push(data.raag.gurmukhi);
     english_meta.push(data.raag.english);
   }
