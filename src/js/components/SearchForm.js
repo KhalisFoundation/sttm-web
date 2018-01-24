@@ -45,7 +45,15 @@ export default ({ }) => {
 
           {$search}
 
-          <button 
+          <button
+            type="button"
+            class="clear-search-toggle"
+            click={() => $search.value=''}
+          >
+            <i class="fa fa-times" />
+          </button>
+
+          <button
             type="button"
             class="gurmukhi-keyboard-toggle"
             click={() => gurmukhiKeyboard.classList.toggle('active')}
