@@ -11,7 +11,7 @@ const defaultPrefs = {
 
 function shortenURL(url = window.location.href) {
   const path = window.location.pathname;
-  const shortdomain = 'sttm.ws';
+  const shortdomain = 'sttm.co';
   const URL = `http://${shortdomain}`;
 
   switch (path) {
