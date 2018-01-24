@@ -16,7 +16,7 @@ var content = {
   '/help': {
     title: "Help Section",
     content: `
-          <b>Watch the tutorial</b>
+          <b>Watch this tutorial to get started:</b>
           <div class="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/ZDX8nPkDBSc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
     `,
   },
