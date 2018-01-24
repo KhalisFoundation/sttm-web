@@ -94,7 +94,7 @@ function addSearchResult(shabad, q) {
       h('div', { class: 'meta flex wrap'} , [
         source && h('a', { href: '#', }, source),
         h('a', { href: '#', }, `${shabad.writer.english}`),
-        ['No Raag', null].every(s => s !== shabad.raag.english) && h('a', { href: '#', }, `${shabad.raag.english}`),
+        ['No Raag', 'false', null].every(s => s !== shabad.raag.english) && h('a', { href: '#', }, `${shabad.raag.english}`),
       ])
     ])
   );
