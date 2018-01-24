@@ -86,7 +86,7 @@ function renderControls() {
       <div id="shabad-controllers">
         <a id="display-options-toggle" class="shabad-controller-toggle" click={shabadToggle}>
           <i class="fa fa-sliders" />
-          <span>Display Options ↓</span>
+          <span>Display Options</span>
         </a>
         <a id="unicode-toggle" class="shabad-controller-toggle" click={shabadToggle}>Unicode</a>
         <a id="larivaar-toggle" class="shabad-controller-toggle" click={shabadToggle}>Larivaar</a>
