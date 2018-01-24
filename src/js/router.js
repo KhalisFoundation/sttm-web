@@ -149,7 +149,7 @@ function router () {
       routes[currentRoute]($contentRoot, $lastScriptTag);
       break;
     }
-    case '/about': case '/terms-of-service': {
+    case '/about': case '/help': case '/terms-of-service': {
       routes.default($contentRoot, $lastScriptTag, content[pathname]);
       break;
     }

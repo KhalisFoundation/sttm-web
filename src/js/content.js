@@ -13,6 +13,13 @@ var content = {
     <span style="font-weight: 500;">Acknowledgements:</span> Bhai Tarsem Singh UK, SHARE UK, Khalis Foundation, Khalsa Foundation UK, Dr. Sant Singh Khalsa, Dr. Kulbir Singh Thind
     `,
   },
+  '/help': {
+    title: "Help Section",
+    content: `
+          <b>Watch the tutorial</b>
+          <div class="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/ZDX8nPkDBSc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    `,
+  },
   '/terms-of-service': {
     title: 'Terms of Service',
     content: `
