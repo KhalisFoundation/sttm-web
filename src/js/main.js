@@ -91,6 +91,9 @@ function attachEventListeners () {
 
   [document.querySelector('.gurmukhi-keyboard-toggle')]
     .forEach(e => e && e.addEventListener('click', () => document.querySelector('.gurmukhi-keyboard').classList.toggle('active')));
+
+  [document.querySelector('.clear-search-toggle')]
+    .forEach(e => e && e.addEventListener('click', () => $search.value=''));
 }
 
 document.addEventListener('DOMContentLoaded', () => {

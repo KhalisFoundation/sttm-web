@@ -84,9 +84,15 @@
     background-color: #01669b;
   }
 
-  .gurmukhi-keyboard-toggle {
+  .gurmukhi-keyboard-toggle,
+  .clear-search-toggle {
     background-color: #fff;
     color: #999;
+    width:44px;
+  }
+
+  .clear-search-toggle {
+    width:22px;
   }
 }
 
@@ -101,7 +107,7 @@
   height: 44px;
   margin: 0;
   position: relative;
-  width: calc(100% - 88px);
+  width: calc(100% - 110px);
 }
 
 .gurmukhi-keyboard {
@@ -285,7 +291,7 @@
 
   .top-bar #search {
     max-width: 400px;
-    width: 356px;
+    width: 334px;
   }
 
   #search-options {
