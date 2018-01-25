@@ -100,21 +100,52 @@ document.addEventListener('DOMContentLoaded', () => {
   attachEventListeners();
 });
 
+function updateSearchContent(e,content,useEnglish) {
+  const $form = e.currentTarget.form || document.querySelector('.search-form');
+  const $search = $form.q;
+
+  if (typeof useEnglish === 'undefined' || useEnglish == false)
+  {
+      $search.classList.add('gurbani-font');
+  }
+  else
+  {
+      $search.classList.remove('gurbani-font');
+  }
+  $search.placeholder = content;
+}
+
 function updateSearchLang(e) {
   const searchType = parseInt(e.currentTarget.value);
   const $form = e.currentTarget.form || document.querySelector('.search-form');
   const $search = $form.q;
 
   switch (searchType) {
+    case 0:
+      //first letters
+      updateSearchContent(e,'"jmTAq"');
+      break;
+    case 1:
+      //first letter anywhere
+      updateSearchContent(e,'"mqjbe"');
+      break;
+    case 2:
+      //gurmukhi
+      updateSearchContent(e,'"jo mwgih Twkur Apuny qy"');
+      break;
     case 3:
+      //translation
+      updateSearchContent(e,'"He has extended His power"',true);
+      break;
     case 4:
+      //romanized
+      updateSearchContent(e,'"jo mange thakur apne te soi"',true);
+      break;
     case 5:
-      $search.classList.remove('gurbani-font');
-      $search.placeholder = searchType === 5 ? 'Ang Number' : 'Khoj';
+      updateSearchContent(e,'"123"',true);
       break;
     default:
-      $search.classList.add('gurbani-font');
-      $search.placeholder = 'Koj';
+      updateSearchContent(e,'Koj');
       break;
   }
   $searchType.value = searchType;
