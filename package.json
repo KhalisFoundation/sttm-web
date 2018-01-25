@@ -100,6 +100,6 @@
     "express": "^4.15.2",
     "foundation": "^4.2.1-1",
     "jquery": "^3.2.1",
-    "khajana": "^1.0.0"
+    "khajana": "^1.0.6"
   }
 }
