@@ -142,12 +142,21 @@ function updateSearchAction(e) {
   $searchType.value = searchType;
 }
 
+function displayOptionSlider(e) {
+  const option = e.id;
+  switch (option) {
+    case 'font-size-slider':
+      for (let line of document.querySelectorAll('.gurbani-display')){line.style.fontSize=(e.value/10)+"em";}
+      break;
+  }
+}
+
 function shabadToggle(e) {
   e.currentTarget.classList.toggle('active');
   const option = e.currentTarget.id;
   switch (option) {
     case 'display-options-toggle':
-      document.querySelector('#display-options').classList.toggle('hidden');
+      toggleHiddenFlex(document.querySelector('#display-options'));
       break;
     case 'unicode-toggle':
     case 'larivaar-toggle':
@@ -158,6 +167,10 @@ function shabadToggle(e) {
       break;
     }
   }
+}
+
+function toggleHiddenFlex(e) {
+  e.style.display = (e.style.display === 'none' || e.style.display === '')? 'flex' : 'none';
 }
 
 function displayOptionToggle(e) {
