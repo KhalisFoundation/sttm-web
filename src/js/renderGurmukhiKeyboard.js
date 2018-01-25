@@ -16,12 +16,13 @@ function renderGurmukhiKeyboard($search) {
         $search.value = $search.value.substring(0, $search.value.length - 1);
         break;
       }
-      case 'close': {
-        $keyboard.classList.remove('active');
+      case 'page-1': {
+        $("#gurmukhi-keyboard-page-2").hide();
+        $("#gurmukhi-keyboard-" + action).show();
         break;
       }
-      case 'page-1': case 'page-2': {
-        $($keyboard.querySelector('.page')).hide();
+      case 'page-2': {
+        $("#gurmukhi-keyboard-page-1").hide();
         $("#gurmukhi-keyboard-" + action).show();
         break;
       }
@@ -103,7 +104,7 @@ function renderGurmukhiKeyboard($search) {
           </div>
         </div>
       </div>
-      <div class="page" d="gurmukhi-keyboard-page-2">
+      <div class="page" id="gurmukhi-keyboard-page-2">
         <div class="keyboard-row">
           <div class="keyboard-row-set">
             <button type="button">1</button>
