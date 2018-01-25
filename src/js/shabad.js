@@ -9,7 +9,7 @@ $(function() {
     dataType: "json",
     success: function(data) {
       if(typeof random !== 'undefined') {
-        window.history.pushState("", "", '/shabad?q=random&id=' + data.shabadinfo.id);
+        window.history.pushState("", "", '/shabad?id=' + data.shabadinfo.id);
       }
       $shabad.innerHTML = '';
       data.navigation.type = 'shabad';
