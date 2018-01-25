@@ -2,10 +2,17 @@ footer {
   background-color: #fafafa;
   border-top: 1px solid #ebebeb;
   bottom: 0;
-  height: 49px;
+  min-height: 49px;
   left: 0;
   position: absolute;
   width: 100%;
+
+  .menu {
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
 
   .menu li a {
     color: #3c3c3c;
