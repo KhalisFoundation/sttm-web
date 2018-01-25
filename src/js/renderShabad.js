@@ -192,7 +192,7 @@ function prepareLarivaar(padChhed) {
     .split(' ')
     .map(val => (val.indexOf('॥') !== -1 || val.indexOf(']') !== -1)
       ? `<i>${val} </i>`
-      : `<div class="akhar">${val}</div>`
+      : `<span class="akhar">${val }</span>`
     )
     .join('')
 }
