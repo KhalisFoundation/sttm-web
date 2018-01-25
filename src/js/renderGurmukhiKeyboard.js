@@ -141,7 +141,7 @@ function renderGurmukhiKeyboard($search) {
           <div class="keyboard-row-set">
             <button type="button">N</button>
             <button type="button">W</button>
-            <button type="button">'`'</button>
+            <button type="button">`</button>
             <button type="button">~</button>
             <button type="button">R</button>
           </div>
