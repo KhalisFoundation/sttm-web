@@ -61,8 +61,8 @@ function attachEventListeners () {
   // Search form validator
   [document.querySelector('.search-form')]
     .forEach(f => f && f.addEventListener('submit', e => {
-      if ($search.value.length <= 2 && $searchType.value != 5) {
-        alert('Please enter at least 3 characters');
+      if ($search.value.length < 2 && $searchType.value != 5) {
+        alert('Please enter at least 2 characters');
         e.preventDefault();
         return false;
       }
@@ -133,8 +133,8 @@ function updateSearchAction(e) {
       $search.removeAttribute('title', '');
       break;
     default:
-      $search.setAttribute('pattern', '.{3,}');
-      $search.setAttribute('title', 'Enter 3 characters minimum.');
+      $search.setAttribute('pattern', '.{2,}');
+      $search.setAttribute('title', 'Enter 2 characters minimum.');
       $form.setAttribute('action', '/search');
       $search.setAttribute('name', 'q');
       break;
