@@ -7,6 +7,7 @@ const prefs = {};
 const defaultPrefs = {
   displayOptions: ['translation-english', 'transliteration-english'],
   shabadToggles: [],
+  sliders: {'font-size-slider': '16'}
 };
 
 function shortenURL(url = window.location.href) {
@@ -144,11 +145,16 @@ function updateSearchAction(e) {
 
 function displayOptionSlider(e) {
   const option = e.id;
+  var prefVal = {};
+
   switch (option) {
     case 'font-size-slider':
-      for (let line of document.querySelectorAll('.gurbani-display')){line.style.fontSize=(e.value/10)+"em";}
+      prefVal[option] = e.value;
+      let fontSize=(e.value/10)+"em";
+      for (let line of document.querySelectorAll('.gurbani-display')) { line.style.fontSize=fontSize; }
       break;
   }
+  if(prefVal != {}) { setPref('sliders',prefVal); }
 }
 
 function shabadToggle(e) {
