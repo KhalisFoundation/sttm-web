@@ -66,13 +66,12 @@ function loadResults(offset) {
   });
 }
 
-function getShabadHyperLink (shabad) {
+function getShabadHyperLink(shabad) {
   return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
 }
 
-function getRaagOrNull(Raag) {
-  if(Raag == "No Raag" ||  Raag == null){ return ""}
-  else {return Raag};
+function getRaagOrNull(raag) {
+  if (raag === 'No Raag' || raag === null) { return ''; } { return raag; }
 }
 
 function addSearchResult(shabad, q) {
@@ -97,9 +96,9 @@ function addSearchResult(shabad, q) {
     h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
     h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
       h('div', { class: 'meta flex wrap'} , [
-        source && h('a', { href: '#', }, source),
-        h('a', { href: '#', }, `${shabad.writer.english}`), 
-        h('a',{ href: '#', }, getRaagOrNull(shabad.raag.english))
+        source && h('a', { href: '#' }, source),
+        h('a', { href: '#' }, `${shabad.writer.english}`),
+        h('a', { href: '#' }, getRaagOrNull(shabad.raag.english)),
       ])
     ])
   );
