@@ -57,12 +57,10 @@ function loadResults(offset) {
         }
       }
 
-      if (typeof offset === 'undefined') {
-        [...prefs.displayOptions, ...prefs.shabadToggles]
-          .forEach(option => document.getElementById(option).click())
+      [...prefs.displayOptions, ...prefs.shabadToggles]
+        .forEach(option => document.getElementById(option).click())
 
-        $controls.classList.remove('hidden');
-      }
+      $controls.classList.remove('hidden');
     },
     error: showError
   });
