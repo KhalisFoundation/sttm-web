@@ -104,6 +104,8 @@ function updateSearchContent(e,content,useEnglish) {
   const $form = e.currentTarget.form || document.querySelector('.search-form');
   const $search = $form.q;
 
+  if (typeof content === 'undefined') { content = 'Koj'; }
+
   if (typeof useEnglish === 'undefined' || useEnglish == false)
   {
       $search.classList.add('gurbani-font');
@@ -120,34 +122,17 @@ function updateSearchLang(e) {
   const $form = e.currentTarget.form || document.querySelector('.search-form');
   const $search = $form.q;
 
-  switch (searchType) {
-    case 0:
-      //first letters
-      updateSearchContent(e,'"jmTAq"');
-      break;
-    case 1:
-      //first letter anywhere
-      updateSearchContent(e,'"mqjbe"');
-      break;
-    case 2:
-      //gurmukhi
-      updateSearchContent(e,'"jo mwgih Twkur Apuny qy"');
-      break;
-    case 3:
-      //translation
-      updateSearchContent(e,'"He has extended His power"',true);
-      break;
-    case 4:
-      //romanized
-      updateSearchContent(e,'"jo mange thakur apne te soi"',true);
-      break;
-    case 5:
-      updateSearchContent(e,'"123"',true);
-      break;
-    default:
-      updateSearchContent(e,'Koj');
-      break;
+  const options = {
+    0: ['"jmTAq"'], //first letters
+    1: ['"mqjbe"'], //first letter anywhere
+    2: ['"jo mwgih Twkur Apuny qy"'], //gurmukhi
+    3: ['"He has extended His power"',true], //translation
+    4: ['"jo mange thakur apne te soi"',true], //romanized
+    5: ['"123"',true], //ang
   }
+
+  updateSearchContent(e, options[searchType][0], options[searchType][1]);
+
   $searchType.value = searchType;
 }
 
