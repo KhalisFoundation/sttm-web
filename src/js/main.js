@@ -1,13 +1,13 @@
 const $search = document.getElementById('search');
 const $searchType = document.getElementById('search-type');
-let   $controls = document.getElementById('controls-wrapper');
-let   $shabad = document.getElementById('shabad');
-let   $meta = document.getElementById('metadata');
+let $controls = document.getElementById('controls-wrapper');
+let $shabad = document.getElementById('shabad');
+let $meta = document.getElementById('metadata');
 const prefs = {};
 const defaultPrefs = {
   displayOptions: ['translation-english', 'transliteration-english'],
   shabadToggles: [],
-  sliders: {'font-size-slider': '16'}
+  sliders: { 'font-size-slider': '16' },
 };
 
 function shortenURL(url = window.location.href) {
@@ -44,21 +44,9 @@ function checkboxPref(e, key, option) {
   setPref(key, prefs[key]);
 }
 
-getPrefs();
-
-if ($searchType) $searchType.addEventListener('change', updateSearchLang);
-
-if ($searchType) $searchType.addEventListener('change', updateSearchAction);
-
-$search.onkeyup = function () {
-  if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
-    this.value = this.value.replace(/[^0-9]/g, '');
-  }
-};
-
 // Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
 
-function attachEventListeners () {
+function attachEventListeners() {
   // Search form validator
   [document.querySelector('.search-form')]
     .forEach(f => f && f.addEventListener('submit', e => {
@@ -145,16 +133,16 @@ function updateSearchAction(e) {
 
 function displayOptionSlider(e) {
   const option = e.id;
-  var prefVal = {};
+  let prefVal = {};
 
   switch (option) {
     case 'font-size-slider':
       prefVal[option] = e.value;
-      let fontSize=(e.value/10)+"em";
-      for (let line of document.querySelectorAll('.gurbani-display')) { line.style.fontSize=fontSize; }
+      const fontSize = (e.value/10).toString() + 'em';
+      for ( let line of document.querySelectorAll('.gurbani-display') ) { line.style.fontSize=fontSize; }
       break;
   }
-  if(prefVal != {}) { setPref('sliders',prefVal); }
+  if ( prefVal !== {} ) { setPref('sliders', prefVal); }
 }
 
 function shabadToggle(e) {
@@ -212,3 +200,15 @@ function displayOptionToggle(e) {
           .join('\n')
       )));
 }
+
+getPrefs();
+
+if ($searchType) $searchType.addEventListener('change', updateSearchLang);
+
+if ($searchType) $searchType.addEventListener('change', updateSearchAction);
+
+$search.onkeyup = function () {
+  if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+  }
+};
