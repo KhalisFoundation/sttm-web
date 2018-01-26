@@ -1,7 +1,7 @@
 {
   "name": "SikhiToTheMax-Web",
   "version": "1.0.0",
-  "description": "Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.",
+  "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
     "test:lint:html": "htmlhint index.html",
