@@ -43,6 +43,10 @@ function checkboxPref(e, key, option) {
   setPref(key, prefs[key]);
 }
 
+function forceSearchNumeric() {
+    $search.value = $search.value.replace(/[^0-9]/g, '');
+}
+
 getPrefs();
 
 if ($searchType) $searchType.addEventListener('change', updateSearchLang);
@@ -50,14 +54,12 @@ if ($searchType) $searchType.addEventListener('change', updateSearchLang);
 if ($searchType) $searchType.addEventListener('change', updateSearchAction);
 
 $search.onkeyup = function () {
-  if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
-    this.value = this.value.replace(/[^0-9]/g, '');
-  }
+  if ($searchType.value == 5) { forceSearchNumeric(); }
 };
 
 // Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
 
-function attachEventListeners () {
+function attachEventListeners() {
   // Search form validator
   [document.querySelector('.search-form')]
     .forEach(f => f && f.addEventListener('submit', e => {
@@ -127,6 +129,7 @@ function updateSearchAction(e) {
 
   switch (searchType) {
     case 5:
+      forceSearchNumeric();
       $form.setAttribute('action', '/ang');
       $search.setAttribute('name', 'ang');
       $search.removeAttribute('pattern');
