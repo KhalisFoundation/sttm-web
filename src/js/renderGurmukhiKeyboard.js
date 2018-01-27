@@ -16,14 +16,10 @@ function renderGurmukhiKeyboard($search) {
         $search.value = $search.value.substring(0, $search.value.length - 1);
         break;
       }
-      case 'page-1': {
-        $("#gurmukhi-keyboard-page-2").hide();
-        $("#gurmukhi-keyboard-" + action).show();
-        break;
-      }
-      case 'page-2': {
-        $("#gurmukhi-keyboard-page-1").hide();
-        $("#gurmukhi-keyboard-" + action).show();
+      case 'page-1': case 'page-2': {
+        [...$keyboard.querySelectorAll('.page')]
+          .forEach((e) => { e.style.display = 'none'; });
+        document.getElementById(`gurmukhi-keyboard-${action}`).style.display = 'block';
         break;
       }
       default: {
