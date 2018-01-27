@@ -100,36 +100,29 @@ document.addEventListener('DOMContentLoaded', () => {
   attachEventListeners();
 });
 
-function updateSearchContent(e,content,useEnglish) {
+function updateSearchContent(e, content = 'Koj', useEnglish = false) {
   const $form = e.currentTarget.form || document.querySelector('.search-form');
-  const $search = $form.q;
+  const $searchField = $form.q;
 
-  if (typeof content === 'undefined') { content = 'Koj'; }
-
-  if (typeof useEnglish === 'undefined' || useEnglish == false)
-  {
-      $search.classList.add('gurbani-font');
+  if (useEnglish) {
+    $searchField.classList.remove('gurbani-font');
+  } else {
+    $searchField.classList.add('gurbani-font');
   }
-  else
-  {
-      $search.classList.remove('gurbani-font');
-  }
-  $search.placeholder = content;
+  $searchField.placeholder = content;
 }
 
 function updateSearchLang(e) {
-  const searchType = parseInt(e.currentTarget.value);
-  const $form = e.currentTarget.form || document.querySelector('.search-form');
-  const $search = $form.q;
+  const searchType = parseInt(e.currentTarget.value, 10);
 
   const options = {
-    0: ['"jmTAq"'], //first letters
-    1: ['"mqjbe"'], //first letter anywhere
-    2: ['"jo mwgih Twkur Apuny qy"'], //gurmukhi
-    3: ['"He has extended His power"',true], //translation
-    4: ['"jo mange thakur apne te soi"',true], //romanized
-    5: ['"123"',true], //ang
-  }
+    0: ['"jmTAq"'], // first letters
+    1: ['"mqjbe"'], // first letter anywhere
+    2: ['"jo mwgih Twkur Apuny qy"'], // gurmukhi
+    3: ['"He has extended His power"', true], // translation
+    4: ['"jo mange thakur apne te soi"', true], // romanized
+    5: ['"123"', true], //ang
+  };
 
   updateSearchContent(e, options[searchType][0], options[searchType][1]);
 
