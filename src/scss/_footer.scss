@@ -2,16 +2,16 @@ footer {
   background-color: #fafafa;
   border-top: 1px solid #ebebeb;
   bottom: 0;
-  min-height: 49px;
   left: 0;
+  min-height: 49px;
   position: absolute;
   width: 100%;
 
   .menu {
-    width:100%;
+    align-content: flex-start;
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-start;
+    width: 100%;
   }
 
   .menu li a {
