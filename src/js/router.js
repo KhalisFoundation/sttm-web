@@ -88,6 +88,15 @@ const routes = {
     replaceChild($target, Content({ title, content }));
   },
 
+  help ($target, $scriptTarget) {
+    document.title = 'Help - SikhiToTheMax';
+    document.body.classList.remove('home');
+
+    this._initForm();
+
+    replaceChild($target, Content({}));
+  },
+
   home ($target, $scriptTarget) {
     document.title = `SikhiToTheMax`;
     // IE 11 doesn't support multiple args for classList.add.
@@ -149,8 +158,12 @@ function router () {
       routes[currentRoute]($contentRoot, $lastScriptTag);
       break;
     }
-    case '/about': case '/help': case '/terms-of-service': {
+    case '/about': case '/terms-of-service': {
       routes.default($contentRoot, $lastScriptTag, content[pathname]);
+      break;
+    }
+    case '/help': {
+      routes[help]($contentRoot, $lastScriptTag);
       break;
     }
     case '/random': {
