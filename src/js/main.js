@@ -182,6 +182,9 @@ function shabadToggle(e) {
     case 'display-options-toggle':
       toggleHiddenFlex(document.querySelector('#display-options'));
       break;
+    case 'font-options-toggle':
+      toggleHiddenFlex(document.querySelector('#font-options'));
+      break;
     case 'unicode-toggle':
     case 'larivaar-toggle':
     case 'larivaar_assist-toggle': {

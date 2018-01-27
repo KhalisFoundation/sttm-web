@@ -13,7 +13,8 @@
   }
 }
 
-#display-options {
+#display-options,
+#font-options {
   display: none;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -23,7 +24,8 @@
 }
 
 @media screen and (min-width: 46em) {
-  #display-options {
+  #display-options,
+  #font-options {
     width: calc(100% - 5rem);
   }
 }
@@ -48,12 +50,26 @@
 }
 
 #shabad-controllers {
+  /* Opera doesn't support this in the shorthand */
+  background-attachment: local, local, scroll, scroll;
+  background-image:
+    /* Shadows */
+    linear-gradient(to right, #F5F5F5, #F5F5F5),
+    linear-gradient(to right, #F5F5F5, #F5F5F5),
+    /* Shadow covers */
+    linear-gradient(to right, rgba(0,0,0,.25), rgba(245,245,245,0)),
+    linear-gradient(to left, rgba(0,0,0,.25), rgba(245,245,245,0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+  margin: 50px auto;
   overflow-x: auto;
   white-space: nowrap;
 }
 
 .shabad-controller-toggle,
-.display-option-toggle {
+.display-option-toggle,
+.font-option-toggle {
   border: 1px solid #cacaca;
   border-radius: 2px;
   color: #3c3c3c;
@@ -88,7 +104,8 @@
   display: none;
 }
 
-.display-option-type {
+.display-option-type,
+.font-option-type {
   margin: 1rem auto 1rem 0;
 
   big, small {
