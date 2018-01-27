@@ -9,6 +9,7 @@ const defaultPrefs = {
   shabadToggles: [],
   sliders: { 'font-size-slider': '16' },
 };
+let placeholderAni;
 
 function shortenURL(url = window.location.href) {
   const path = window.location.pathname;
@@ -89,6 +90,23 @@ document.addEventListener('DOMContentLoaded', () => {
   attachEventListeners();
 });
 
+function animatePlaceholder(e, content) {
+  // todo - have a single $search var that points to the actual input element
+  const $form = e.target.form || document.querySelector('.search-form');
+  const $searchField = $form.q;
+  // animate over 2 seconds
+  const aniTime = 2000 / content.length;
+
+  const curPlaceholderLength = $searchField.placeholder.length;
+  const newPlaceholder = content.substr(0, curPlaceholderLength + 1);
+  $searchField.placeholder = newPlaceholder;
+  if (newPlaceholder !== content) {
+    placeholderAni = setTimeout((el) => {
+      animatePlaceholder(el, content);
+    }, aniTime, e);
+  }
+}
+
 function updateSearchContent(e, content = 'Koj', useEnglish = false) {
   const $form = e.currentTarget.form || document.querySelector('.search-form');
   const $searchField = $form.q;
@@ -98,19 +116,22 @@ function updateSearchContent(e, content = 'Koj', useEnglish = false) {
   } else {
     $searchField.classList.add('gurbani-font');
   }
-  $searchField.placeholder = content;
+
+  clearTimeout(placeholderAni);
+  $searchField.placeholder = '';
+  animatePlaceholder(e, content);
 }
 
 function updateSearchLang(e) {
   const searchType = parseInt(e.currentTarget.value, 10);
 
   const options = {
-    0: ['"jmTAq"'], // first letters
-    1: ['"mqjbe"'], // first letter anywhere
-    2: ['"jo mwgih Twkur Apuny qy"'], // gurmukhi
-    3: ['"He has extended His power"', true], // translation
-    4: ['"jo mange thakur apne te soi"', true], // romanized
-    5: ['"123"', true], //ang
+    0: ['jmTAq'], // first letters
+    1: ['mqjbe'], // first letter anywhere
+    2: ['jo mwgih Twkur Apuny qy'], // gurmukhi
+    3: ['He has extended His power', true], // translation
+    4: ['jo mange thakur apne te soi', true], // romanized
+    5: ['123', true], //ang
   };
 
   updateSearchContent(e, options[searchType][0], options[searchType][1]);
