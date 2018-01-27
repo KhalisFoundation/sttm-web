@@ -50,8 +50,8 @@ function attachEventListeners() {
   // Search form validator
   [document.querySelector('.search-form')]
     .forEach(f => f && f.addEventListener('submit', e => {
-      if ($search.value.length <= 2 && $searchType.value != 5) {
-        alert('Please enter at least 3 characters');
+      if ($search.value.length < 2 && $searchType.value != 5) {
+        alert('Please enter at least 2 characters');
         e.preventDefault();
         return false;
       }
@@ -89,23 +89,32 @@ document.addEventListener('DOMContentLoaded', () => {
   attachEventListeners();
 });
 
-function updateSearchLang(e) {
-  const searchType = parseInt(e.currentTarget.value);
+function updateSearchContent(e, content = 'Koj', useEnglish = false) {
   const $form = e.currentTarget.form || document.querySelector('.search-form');
-  const $search = $form.q;
+  const $searchField = $form.q;
 
-  switch (searchType) {
-    case 3:
-    case 4:
-    case 5:
-      $search.classList.remove('gurbani-font');
-      $search.placeholder = searchType === 5 ? 'Ang Number' : 'Khoj';
-      break;
-    default:
-      $search.classList.add('gurbani-font');
-      $search.placeholder = 'Koj';
-      break;
+  if (useEnglish) {
+    $searchField.classList.remove('gurbani-font');
+  } else {
+    $searchField.classList.add('gurbani-font');
   }
+  $searchField.placeholder = content;
+}
+
+function updateSearchLang(e) {
+  const searchType = parseInt(e.currentTarget.value, 10);
+
+  const options = {
+    0: ['"jmTAq"'], // first letters
+    1: ['"mqjbe"'], // first letter anywhere
+    2: ['"jo mwgih Twkur Apuny qy"'], // gurmukhi
+    3: ['"He has extended His power"', true], // translation
+    4: ['"jo mange thakur apne te soi"', true], // romanized
+    5: ['"123"', true], //ang
+  };
+
+  updateSearchContent(e, options[searchType][0], options[searchType][1]);
+
   $searchType.value = searchType;
 }
 
@@ -122,8 +131,8 @@ function updateSearchAction(e) {
       $search.removeAttribute('title', '');
       break;
     default:
-      $search.setAttribute('pattern', '.{3,}');
-      $search.setAttribute('title', 'Enter 3 characters minimum.');
+      $search.setAttribute('pattern', '.{2,}');
+      $search.setAttribute('title', 'Enter 2 characters minimum.');
       $form.setAttribute('action', '/search');
       $search.setAttribute('name', 'q');
       break;
