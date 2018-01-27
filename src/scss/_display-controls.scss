@@ -8,12 +8,12 @@
   z-index: 99;
 
   > div {
-    margin-bottom: 0.5rem;
     padding: 0 1rem;
   }
 }
 
-#display-options {
+#display-options,
+#font-options {
   display: none;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -23,7 +23,8 @@
 }
 
 @media screen and (min-width: 46em) {
-  #display-options {
+  #display-options,
+  #font-options {
     width: calc(100% - 5rem);
   }
 }
@@ -48,19 +49,22 @@
 }
 
 #shabad-controllers {
-  overflow-x: auto;
-  white-space: nowrap;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  /*width: calc(100% - 2rem);*/
 }
 
 .shabad-controller-toggle,
-.display-option-toggle {
+.display-option-toggle,
+.font-option-toggle {
   border: 1px solid #cacaca;
   border-radius: 2px;
   color: #3c3c3c;
   display: inline-block;
   font-size: 1rem;
   line-height: 1.4;
-  margin-right: 5px;
+  margin: 0 5px 0.5rem 0;
   padding: 4px 10px;
   transition: all 0.25s;
   vertical-align: baseline;
@@ -88,7 +92,8 @@
   display: none;
 }
 
-.display-option-type {
+.display-option-type,
+.font-option-type {
   margin: 1rem auto 1rem 0;
 
   big, small {
