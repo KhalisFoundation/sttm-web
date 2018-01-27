@@ -8,8 +8,8 @@ $(function() {
     url: Khajana.buildApiUrl(typeof random !== 'undefined' ? { random: true } : { id }),
     dataType: "json",
     success: function(data) {
-      if(typeof random !== 'undefined') {
-        window.history.pushState("", "", '/shabad?id=' + data.shabadinfo.id);
+      if (typeof random !== 'undefined') {
+        window.history.replaceState('', '', `/shabad?id=${data.shabadinfo.id}`);
       }
       $shabad.innerHTML = '';
       data.navigation.type = 'shabad';
