@@ -108,7 +108,7 @@ function animatePlaceholder(e, content) {
 }
 
 function updateSearchContent(e, content = 'Koj', useEnglish = false) {
-  const $form = e.currentTarget.form || document.querySelector('.search-form');
+  const $form = e.target.form || document.querySelector('.search-form');
   const $searchField = $form.q;
 
   if (useEnglish) {
@@ -123,7 +123,7 @@ function updateSearchContent(e, content = 'Koj', useEnglish = false) {
 }
 
 function updateSearchLang(e) {
-  const searchType = parseInt(e.currentTarget.value, 10);
+  const searchType = parseInt(e.target.value, 10);
 
   const options = {
     0: ['jmTAq'], // first letters
@@ -140,8 +140,8 @@ function updateSearchLang(e) {
 }
 
 function updateSearchAction(e) {
-  const searchType = parseInt(e.currentTarget.value);
-  const $form = e.currentTarget.form || document.querySelector('.search-form');
+  const searchType = parseInt(e.target.value);
+  const $form = e.target.form || document.querySelector('.search-form');
   const $search = $form.q;
 
   switch (searchType) {
