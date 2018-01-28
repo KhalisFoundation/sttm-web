@@ -97,7 +97,7 @@ function renderControls() {
           <span>Larivaar</span>
         </a>
         <a id="larivaar_assist-toggle" class="shabad-controller-toggle" click={shabadToggle}>
-          <span class="custom-fa custom-fa-assist" data-end="ਅ">ੳ</span>
+          <span class="custom-fa custom-fa-assist">ੳ</span>
           <span>Assist</span>
         </a>
       </div>
