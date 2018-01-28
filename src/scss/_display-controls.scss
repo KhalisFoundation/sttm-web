@@ -99,9 +99,12 @@
   i,
   .custom-fa {
     margin-right: 4px;
+  }
 
-    span {
+  .custom-fa-assist {
+    &::after {
       color: $sttm-orange;
+      content: attr(data-end);
     }
   }
 }
