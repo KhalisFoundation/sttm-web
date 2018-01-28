@@ -9,6 +9,7 @@ const defaultPrefs = {
   shabadToggles: [],
   sliders: { 'font-size-slider': '16' },
 };
+let placeholderAni;
 
 function shortenURL(url = window.location.href) {
   const path = window.location.pathname;
@@ -50,8 +51,8 @@ function attachEventListeners() {
   // Search form validator
   [document.querySelector('.search-form')]
     .forEach(f => f && f.addEventListener('submit', e => {
-      if ($search.value.length <= 2 && $searchType.value != 5) {
-        alert('Please enter at least 3 characters');
+      if ($search.value.length < 2 && $searchType.value != 5) {
+        alert('Please enter at least 2 characters');
         e.preventDefault();
         return false;
       }
@@ -79,7 +80,7 @@ function attachEventListeners() {
     }));
 
   [document.querySelector('.gurmukhi-keyboard-toggle')]
-    .forEach(e => e && e.addEventListener('click', () => document.querySelector('.gurmukhi-keyboard').classList.toggle('active')));
+    .forEach(e => e && e.addEventListener('click', () => [e, document.querySelector('.gurmukhi-keyboard')].forEach((f) => { f.classList.toggle('active'); })));
 
   [document.querySelector('.clear-search-toggle')]
     .forEach(e => e && e.addEventListener('click', () => $search.value=''));
@@ -89,29 +90,58 @@ document.addEventListener('DOMContentLoaded', () => {
   attachEventListeners();
 });
 
-function updateSearchLang(e) {
-  const searchType = parseInt(e.currentTarget.value);
-  const $form = e.currentTarget.form || document.querySelector('.search-form');
-  const $search = $form.q;
+function animatePlaceholder(e, content) {
+  // todo - have a single $search var that points to the actual input element
+  const $form = e.target.form || document.querySelector('.search-form');
+  const $searchField = $form.q;
+  // animate over 2 seconds
+  const aniTime = 2000 / content.length;
 
-  switch (searchType) {
-    case 3:
-    case 4:
-    case 5:
-      $search.classList.remove('gurbani-font');
-      $search.placeholder = searchType === 5 ? 'Ang Number' : 'Khoj';
-      break;
-    default:
-      $search.classList.add('gurbani-font');
-      $search.placeholder = 'Koj';
-      break;
+  const curPlaceholderLength = $searchField.placeholder.length;
+  const newPlaceholder = content.substr(0, curPlaceholderLength + 1);
+  $searchField.placeholder = newPlaceholder;
+  if (newPlaceholder !== content) {
+    placeholderAni = setTimeout((el) => {
+      animatePlaceholder(el, content);
+    }, aniTime, e);
   }
+}
+
+function updateSearchContent(e, content = 'Koj', useEnglish = false) {
+  const $form = e.target.form || document.querySelector('.search-form');
+  const $searchField = $form.q;
+
+  if (useEnglish) {
+    $searchField.classList.remove('gurbani-font');
+  } else {
+    $searchField.classList.add('gurbani-font');
+  }
+
+  clearTimeout(placeholderAni);
+  $searchField.placeholder = '';
+  animatePlaceholder(e, content);
+}
+
+function updateSearchLang(e) {
+  const searchType = parseInt(e.target.value, 10);
+
+  const options = {
+    0: ['jmTAq'], // first letters
+    1: ['mqjbe'], // first letter anywhere
+    2: ['jo mwgih Twkur Apuny qy'], // gurmukhi
+    3: ['He has extended His power', true], // translation
+    4: ['jo mange thakur apne te soi', true], // romanized
+    5: ['123', true], //ang
+  };
+
+  updateSearchContent(e, options[searchType][0], options[searchType][1]);
+
   $searchType.value = searchType;
 }
 
 function updateSearchAction(e) {
-  const searchType = parseInt(e.currentTarget.value);
-  const $form = e.currentTarget.form || document.querySelector('.search-form');
+  const searchType = parseInt(e.target.value);
+  const $form = e.target.form || document.querySelector('.search-form');
   const $search = $form.q;
 
   switch (searchType) {
@@ -122,8 +152,8 @@ function updateSearchAction(e) {
       $search.removeAttribute('title', '');
       break;
     default:
-      $search.setAttribute('pattern', '.{3,}');
-      $search.setAttribute('title', 'Enter 3 characters minimum.');
+      $search.setAttribute('pattern', '.{2,}');
+      $search.setAttribute('title', 'Enter 2 characters minimum.');
       $form.setAttribute('action', '/search');
       $search.setAttribute('name', 'q');
       break;
@@ -133,16 +163,22 @@ function updateSearchAction(e) {
 
 function displayOptionSlider(e) {
   const option = e.id;
-  let prefVal = {};
+  let prefVal = prefs.sliders;
 
   switch (option) {
-    case 'font-size-slider':
+    case 'font-size-slider': {
       prefVal[option] = e.value;
-      const fontSize = (e.value/10).toString() + 'em';
-      for ( let line of document.querySelectorAll('.gurbani-display') ) { line.style.fontSize=fontSize; }
+      const fontSize = `${(e.value / 10).toString()}em`;
+      [...document.querySelectorAll('.gurbani-display')].forEach((line) => {
+        line.style.fontSize = fontSize;
+      });
+      break;
+    }
+    default:
       break;
   }
-  if ( prefVal !== {} ) { setPref('sliders', prefVal); }
+  prefs.sliders = prefVal;
+  setPref('sliders', prefVal);
 }
 
 function shabadToggle(e) {
@@ -211,7 +247,15 @@ if ($searchType) $searchType.addEventListener('change', updateSearchLang);
 if ($searchType) $searchType.addEventListener('change', updateSearchAction);
 
 $search.onkeyup = function () {
-  if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
-    this.value = this.value.replace(/[^0-9]/g, '');
+  const value = this.value;
+  const clearSearchToggle = document.querySelector('.clear-search-toggle');
+  if (value.length > 0) {
+    clearSearchToggle.classList.add('active');
+  } else {
+    clearSearchToggle.classList.remove('active');
+  }
+  // Remove non-numeric characters for Ang search
+  if (parseInt($searchType.value, 10) === 5 && this.value !== this.value.replace(/\D/g, '')) {
+    this.value = this.value.replace(/\D/g, '');
   }
 };

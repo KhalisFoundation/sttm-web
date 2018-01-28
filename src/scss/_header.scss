@@ -88,11 +88,15 @@
   .clear-search-toggle {
     background-color: #fff;
     color: #999;
-    width:44px;
+    width: 44px;
+
+    &.active {
+      color: $sttm-orange;
+    }
   }
 
   .clear-search-toggle {
-    width:22px;
+    width: 22px;
   }
 }
 
@@ -147,15 +151,40 @@
 
   .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1),
   .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
-    background-color: #ccc;
+    background-color: #ececec;
   }
 
   button {
     color: #333;
     font-size: 1rem;
     line-height: 2;
+    position: relative;
     text-align: center;
     width: 20%;
+
+    &.active {
+      color: $sttm-orange;
+    }
+
+    &[data-action="page-1"] {
+      padding-right: 5px;
+      text-align: right;
+
+      &::after {
+        color: #000;
+        content: "|";
+        font-family: Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+        font-size: 0.8rem;
+        position: absolute;
+        right: -1px;
+        top: 2px;
+      }
+    }
+
+    &[data-action="page-2"] {
+      padding-left: 4px;
+      text-align: left;
+    }
   }
 }
 
