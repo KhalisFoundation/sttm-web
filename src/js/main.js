@@ -51,17 +51,7 @@ function forceSearchNumeric() {
 
 // Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
 
-function attachEventListeners() {
-  // Search form validator
-  [document.querySelector('.search-form')]
-    .forEach(f => f && f.addEventListener('submit', e => {
-      if ($search.value.length < 2 && $searchType.value != 5) {
-        alert('Please enter at least 2 characters');
-        e.preventDefault();
-        return false;
-      }
-    }));
-
+function attachEventListeners () {
   // Mobile hamburger menu
   [document.getElementById('open-mobile-menu')]
     .forEach(e => e && e.addEventListener('click', () => document.body.classList.toggle('menu-open')));
