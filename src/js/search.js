@@ -61,6 +61,8 @@ function loadResults(offset = null) {
         [...prefs.displayOptions, ...prefs.shabadToggles]
           .forEach(option => document.getElementById(option).click());
 
+        addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') < 0));
+
         Object
           .keys(prefs.sliders)
           .forEach((key) => {
