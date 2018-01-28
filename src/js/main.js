@@ -238,7 +238,15 @@ if ($searchType) $searchType.addEventListener('change', updateSearchLang);
 if ($searchType) $searchType.addEventListener('change', updateSearchAction);
 
 $search.onkeyup = function () {
-  if ($searchType.value == 5 && this.value != this.value.replace(/[^0-9]/g, '')) {
-    this.value = this.value.replace(/[^0-9]/g, '');
+  const value = this.value;
+  const clearSearchToggle = document.querySelector('.clear-search-toggle');
+  if (value.length > 0) {
+    clearSearchToggle.classList.add('active');
+  } else {
+    clearSearchToggle.classList.remove('active');
+  }
+  // Remove non-numeric characters for Ang search
+  if (parseInt($searchType.value, 10) === 5 && this.value !== this.value.replace(/\D/g, '')) {
+    this.value = this.value.replace(/\D/g, '');
   }
 };
