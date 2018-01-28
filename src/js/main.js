@@ -185,25 +185,18 @@ function displayOptionSlider(e) {
 function addSpaceForPadChed(status) {
   // add padched
   if (status === true) {
-    var padChedDiv = "<div class='padChedDiv' style='display: inline-block;'>&nbsp;</div>";
-    var akhars = document.getElementsByClassName("akhar");
+    const padChedDiv = '<div class="padChedDiv" style="display: inline-block;">&nbsp;</div>';
 
-    for(var i = 0; i < akhars.length; i++)
-    {
-        var element = akhars.item(i);
-        var str = element.innerHTML;
-        var text = str +  padChedDiv;
+    [...document.getElementsByClassName('akhar')]
+      .forEach((element) => {
+        const str = element.innerHTML;
+        const text = str + padChedDiv;
         element.innerHTML = text;
-    }
-    console.log('made padched');
-  }
-  else if (status === false) {
-    //remove padched
-    var elems = document.querySelectorAll(".padChedDiv");
-    elems.forEach(function(element) {
-      element.parentNode.removeChild(element);
-    });
-    console.log('made larivaar');
+      });
+  } else if (status === false) {
+    // remove padched
+    document.querySelectorAll('.padChedDiv')
+      .forEach(element => element.parentNode.removeChild(element));
   }
 }
 
