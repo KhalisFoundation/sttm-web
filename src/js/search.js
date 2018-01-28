@@ -72,7 +72,7 @@ function loadResults(offset) {
   });
 }
 
-function getShabadHyperLink (shabad) {
+function getShabadHyperLink(shabad) {
   return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
 }
 
@@ -98,9 +98,9 @@ function addSearchResult(shabad, q) {
     h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
     h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
       h('div', { class: 'meta flex wrap'} , [
-        source && h('a', { href: '#', }, source),
-        h('a', { href: '#', }, `${shabad.writer.english}`),
-        ['No Raag', null].every(s => s !== shabad.raag.english) && h('a', { href: '#', }, `${shabad.raag.english}`),
+        source && h('a', { href: '#' }, source),
+        h('a', { href: '#' }, `${shabad.writer.english}`),
+        (shabad.raag.english === 'No Raag' || shabad.raag.english === null) ? '' : h('a', { href: '#' }, shabad.raag.english),
       ])
     ])
   );
