@@ -182,6 +182,24 @@ function displayOptionSlider(e) {
   setPref('sliders', prefVal);
 }
 
+function addSpaceForPadChed(status) {
+  // add padched
+  if (status) {
+    const padChedDiv = '<span class="padChedDiv"> </span>';
+
+    [...document.querySelectorAll('.akhar')]
+      .forEach((element) => {
+        const str = element.innerHTML;
+        const text = str + padChedDiv;
+        element.innerHTML = text;
+      });
+  } else {
+    // remove padched
+    document.querySelectorAll('.padChedDiv')
+      .forEach(element => element.parentNode.removeChild(element));
+  }
+}
+
 function shabadToggle(e) {
   e.currentTarget.classList.toggle('active');
   const option = e.currentTarget.id;
@@ -192,14 +210,14 @@ function shabadToggle(e) {
     case 'font-options-toggle':
       toggleHiddenFlex(document.getElementById('font-options'));
       break;
-    case 'unicode-toggle':
     case 'larivaar-toggle':
     case 'larivaar_assist-toggle': {
+      addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') > -1));
+    case 'unicode-toggle':
       const [toggle] = ((e.target.tagName === 'SPAN') ? e.target.parentNode.id : e.target.id).split('-');
       document.querySelector('.display').classList.toggle(toggle);
       checkboxPref(e, 'shabadToggles', option);
       break;
-    }
     default:
       break;
   }
