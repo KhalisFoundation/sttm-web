@@ -51,17 +51,7 @@ function forceSearchNumeric() {
 
 // Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
 
-function attachEventListeners() {
-  // Search form validator
-  [document.querySelector('.search-form')]
-    .forEach(f => f && f.addEventListener('submit', e => {
-      if ($search.value.length < 2 && $searchType.value != 5) {
-        alert('Please enter at least 2 characters');
-        e.preventDefault();
-        return false;
-      }
-    }));
-
+function attachEventListeners () {
   // Mobile hamburger menu
   [document.getElementById('open-mobile-menu')]
     .forEach(e => e && e.addEventListener('click', () => document.body.classList.toggle('menu-open')));
@@ -149,6 +139,12 @@ function updateSearchAction(e) {
   const $search = $form.q;
 
   switch (searchType) {
+    case 4:
+      $search.setAttribute('pattern', '(\\w+\\W+){3,}\\w+\\W*');
+      $search.setAttribute('title', 'Enter 4 words minimum.');
+      $form.setAttribute('action', '/search');
+      $search.setAttribute('name', 'q');
+      break;
     case 5:
       forceSearchNumeric();
       $form.setAttribute('action', '/ang');
@@ -216,7 +212,10 @@ function shabadToggle(e) {
   const option = e.currentTarget.id;
   switch (option) {
     case 'display-options-toggle':
-      toggleHiddenFlex(document.querySelector('#display-options'));
+      toggleHiddenFlex(document.getElementById('display-options'));
+      break;
+    case 'font-options-toggle':
+      toggleHiddenFlex(document.getElementById('font-options'));
       break;
     case 'larivaar-toggle':
       var larivaarStatus = localStorage.getItem('shabadToggles').indexOf('larivaar-toggle') > -1;
@@ -226,6 +225,8 @@ function shabadToggle(e) {
       const [toggle] = e.target.id.split('-');
       document.querySelector('.display').classList.toggle(toggle);
       checkboxPref(e, 'shabadToggles', option);
+      break;
+    default:
       break;
   }
 }
