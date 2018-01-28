@@ -21,7 +21,7 @@ $(function() {
   loadResults();
 });
 
-function loadResults(offset) {
+function loadResults(offset = null) {
   $.ajax({
     url: Khajana.buildApiUrl({ q, type, source, offset }),
     dataType: "json",
@@ -57,9 +57,17 @@ function loadResults(offset) {
         }
       }
 
-      if (typeof offset === 'undefined') {
+      if (!offset) {
         [...prefs.displayOptions, ...prefs.shabadToggles]
-          .forEach(option => document.getElementById(option).click())
+          .forEach(option => document.getElementById(option).click());
+
+        Object
+          .keys(prefs.sliders)
+          .forEach((key) => {
+            const s = document.getElementById(key);
+            s.value = prefs.sliders[key];
+            displayOptionSlider(s);
+          });
 
         $controls.classList.remove('hidden');
       }
