@@ -82,9 +82,8 @@ function getShabadHyperLink(shabad) {
 function addSearchResult(shabad, q) {
   const _source = Khajana.SOURCES[shabad.source.id];
   //if page num is null
-  let shabadPageNo = shabad.pageno;
-  if (shabadPageNo == null) shabadPageNo = '';
-  const source = _source ? `${_source} - ${shabadPageNo}`: null;
+  const shabadPageNo = (shabad.pageno === null) ? '' : shabad.pageno;
+  const source = _source ? `${_source} - ${shabadPageNo}` : null;
 
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [

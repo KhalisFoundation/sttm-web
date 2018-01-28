@@ -58,7 +58,7 @@ function metaData(data, nav) {
   gurmukhi_meta.push(data.source.gurmukhi);
   english_meta.push(data.source.english);
 
-  if (data.source.pageno != null) {
+  if (data.source.pageno !== null) {
     gurmukhi_meta.push(
       (
         <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
