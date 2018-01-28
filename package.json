@@ -1,6 +1,6 @@
 {
   "name": "SikhiToTheMax-Web",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
