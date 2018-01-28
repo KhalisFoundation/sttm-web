@@ -49,7 +49,7 @@ const routes = {
     $$searchContainer.appendChild(gurmukhiKeyboard);
 
     const mockEvent = {
-      currentTarget: {
+      target: {
         value: $$searchType.value || 0,
         form: document.querySelector('.search-form'),
       }
