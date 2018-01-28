@@ -163,16 +163,22 @@ function updateSearchAction(e) {
 
 function displayOptionSlider(e) {
   const option = e.id;
-  let prefVal = {};
+  let prefVal = prefs.sliders;
 
   switch (option) {
-    case 'font-size-slider':
+    case 'font-size-slider': {
       prefVal[option] = e.value;
-      const fontSize = (e.value/10).toString() + 'em';
-      for ( let line of document.querySelectorAll('.gurbani-display') ) { line.style.fontSize=fontSize; }
+      const fontSize = `${(e.value / 10).toString()}em`;
+      [...document.querySelectorAll('.gurbani-display')].forEach((line) => {
+        line.style.fontSize = fontSize;
+      });
+      break;
+    }
+    default:
       break;
   }
-  if ( prefVal !== {} ) { setPref('sliders', prefVal); }
+  prefs.sliders = prefVal;
+  setPref('sliders', prefVal);
 }
 
 function shabadToggle(e) {

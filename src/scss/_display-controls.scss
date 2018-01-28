@@ -14,12 +14,12 @@
 }
 
 #display-options {
+  align-content: flex-start;
+  background-color: #fafafa;
   display: none;
   flex-wrap: wrap;
-  align-content: flex-start;
-  width: calc(100% - 2rem);
-  background-color: #FAFAFA;
   margin: 0 auto;
+  width: calc(100% - 2rem);
 }
 
 @media screen and (min-width: 46em) {
@@ -80,7 +80,6 @@
   i {
     margin-right: 4px;
   }
-
 }
 
 /* Hide Larivaar Assist if Larivaar is not checked */
@@ -91,8 +90,8 @@
 .display-option-type {
   margin: 1rem auto 1rem 0;
 
-  big, small {
+  big,
+  small {
     margin: 5px;
   }
-
 }
