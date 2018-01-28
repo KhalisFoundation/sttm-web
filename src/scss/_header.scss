@@ -88,11 +88,15 @@
   .clear-search-toggle {
     background-color: #fff;
     color: #999;
-    width:44px;
+    width: 44px;
+
+    &.active {
+      color: $sttm-orange;
+    }
   }
 
   .clear-search-toggle {
-    width:22px;
+    width: 22px;
   }
 }
 
