@@ -191,10 +191,10 @@ function shabadToggle(e) {
   const option = e.currentTarget.id;
   switch (option) {
     case 'display-options-toggle':
-      toggleHiddenFlex(document.querySelector('#display-options'));
+      toggleHiddenFlex(document.getElementById('display-options'));
       break;
     case 'font-options-toggle':
-      toggleHiddenFlex(document.querySelector('#font-options'));
+      toggleHiddenFlex(document.getElementById('font-options'));
       break;
     case 'unicode-toggle':
     case 'larivaar-toggle':
@@ -204,6 +204,8 @@ function shabadToggle(e) {
       checkboxPref(e, 'shabadToggles', option);
       break;
     }
+    default:
+      break;
   }
 }
 
