@@ -46,18 +46,8 @@ function checkboxPref(e, key, option) {
 }
 
 function forceSearchNumeric() {
-    $search.value = $search.value.replace(/\D/g, '');
+  $search.value = $search.value.replace(/\D/g, '');
 }
-
-getPrefs();
-
-if ($searchType) $searchType.addEventListener('change', updateSearchLang);
-
-if ($searchType) $searchType.addEventListener('change', updateSearchAction);
-
-$search.onkeyup = function () {
-  if ($searchType.value == 5) { forceSearchNumeric(); }
-};
 
 // Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
 
