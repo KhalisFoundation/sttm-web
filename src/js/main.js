@@ -211,10 +211,10 @@ function shabadToggle(e) {
       toggleHiddenFlex(document.getElementById('font-options'));
       break;
     case 'larivaar-toggle':
+    case 'larivaar_assist-toggle': {
       addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') > -1));
-    case 'larivaar_assist-toggle':
     case 'unicode-toggle':
-      const [toggle] = e.target.id.split('-');
+      const [toggle] = ((e.target.tagName === 'SPAN') ? e.target.parentNode.id : e.target.id).split('-');
       document.querySelector('.display').classList.toggle(toggle);
       checkboxPref(e, 'shabadToggles', option);
       break;

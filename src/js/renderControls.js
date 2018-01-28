@@ -92,8 +92,14 @@ function renderControls() {
           <i class="fa fa-sliders" />
           <span>Font</span>
         </a>
-        <a id="larivaar-toggle" class="shabad-controller-toggle" click={shabadToggle}>Larivaar</a>
-        <a id="larivaar_assist-toggle" class="shabad-controller-toggle" click={shabadToggle}>Larivaar Assist</a>
+        <a id="larivaar-toggle" class="shabad-controller-toggle" click={shabadToggle}>
+          <span class="custom-fa">ੳਅ</span>
+          <span>Larivaar</span>
+        </a>
+        <a id="larivaar_assist-toggle" class="shabad-controller-toggle" click={shabadToggle}>
+          <span class="custom-fa custom-fa-assist">ੳ</span>
+          <span>Assist</span>
+        </a>
       </div>
       <div id="display-options">
         <div class="display-option-type">
