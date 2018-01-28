@@ -22,6 +22,14 @@ function renderShabad(gurbani, nav) {
     .concat(prefs.shabadToggles)
     .forEach(option => document.getElementById(option).click());
 
+  Object
+    .keys(prefs.sliders)
+    .forEach((key) => {
+      const s = document.getElementById(key);
+      s.value = prefs.sliders[key];
+      displayOptionSlider(s);
+    });
+
   $controls.classList.remove('hidden');
 }
 
