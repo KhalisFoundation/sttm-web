@@ -58,21 +58,23 @@ function metaData(data, nav) {
   gurmukhi_meta.push(data.source.gurmukhi);
   english_meta.push(data.source.english);
 
-  gurmukhi_meta.push(
-    (
-      <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
-        {`${page_type_gurmukhi} ${data.source.pageno}`}
-      </a>
-    ).outerHTML
-  );
+  if (data.source.pageno != null) {
+    gurmukhi_meta.push(
+      (
+        <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
+          {`${page_type_gurmukhi} ${data.source.pageno}`}
+        </a>
+      ).outerHTML
+    );
 
-  english_meta.push(
-    (
-      <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
-        {`${page_type_english} ${data.source.pageno}`}
-      </a>
-    ).outerHTML
-  );
+    english_meta.push(
+      (
+        <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
+          {`${page_type_english} ${data.source.pageno}`}
+        </a>
+      ).outerHTML
+    );
+  }
 
   if (typeof nav !== 'undefined') {
     const link = navLink(nav, data.source.id);
