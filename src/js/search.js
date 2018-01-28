@@ -21,7 +21,7 @@ $(function() {
   loadResults();
 });
 
-function loadResults(offset) {
+function loadResults(offset = null) {
   $.ajax({
     url: Khajana.buildApiUrl({ q, type, source, offset }),
     dataType: "json",
@@ -57,16 +57,20 @@ function loadResults(offset) {
         }
       }
 
-      [...prefs.displayOptions, ...prefs.shabadToggles]
-        .forEach(option => document.getElementById(option).click())
+      if (!offset) {
+        [...prefs.displayOptions, ...prefs.shabadToggles]
+          .forEach(option => document.getElementById(option).click());
 
-      for (let id in prefs.sliders) {
-        let s = document.getElementById(id);
-        s.value=prefs.sliders[id];
-        displayOptionSlider(s);
+        Object
+          .keys(prefs.sliders)
+          .forEach((key) => {
+            const s = document.getElementById(key);
+            s.value = prefs.sliders[key];
+            displayOptionSlider(s);
+          });
+
+        $controls.classList.remove('hidden');
       }
-
-      $controls.classList.remove('hidden');
     },
     error: showError
   });
