@@ -45,6 +45,10 @@ function checkboxPref(e, key, option) {
   setPref(key, prefs[key]);
 }
 
+function forceSearchNumeric() {
+  $search.value = $search.value.replace(/\D/g, '');
+}
+
 // Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
 
 function attachEventListeners() {
@@ -146,6 +150,7 @@ function updateSearchAction(e) {
 
   switch (searchType) {
     case 5:
+      forceSearchNumeric();
       $form.setAttribute('action', '/ang');
       $search.setAttribute('name', 'ang');
       $search.removeAttribute('pattern');
@@ -252,7 +257,7 @@ $search.onkeyup = function () {
     clearSearchToggle.classList.remove('active');
   }
   // Remove non-numeric characters for Ang search
-  if (parseInt($searchType.value, 10) === 5 && this.value !== this.value.replace(/\D/g, '')) {
-    this.value = this.value.replace(/\D/g, '');
+  if (parseInt($searchType.value, 10) === 5) {
+    forceSearchNumeric();
   }
 };
