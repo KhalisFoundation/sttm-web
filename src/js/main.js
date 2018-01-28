@@ -34,7 +34,7 @@ const getPrefs = () => Object
 const setPref = (key, val) => localStorage.setItem(key, JSON.stringify(val));
 
 function checkboxPref(e, key, option) {
-  if (e.target.classList.contains('active')) {
+  if (e.currentTarget.classList.contains('active')) {
     if (prefs[key].indexOf(option) < 0) {
       prefs[key].push(option);
     }
@@ -202,7 +202,10 @@ function addSpaceForPadChed(status) {
 
 function shabadToggle(e) {
   e.currentTarget.classList.toggle('active');
-  const option = e.currentTarget.id;
+  const el = e.currentTarget;
+  const option = el.id;
+  let toggle = {};
+
   switch (option) {
     case 'display-options-toggle':
       toggleHiddenFlex(document.getElementById('display-options'));
@@ -211,10 +214,14 @@ function shabadToggle(e) {
       toggleHiddenFlex(document.getElementById('font-options'));
       break;
     case 'larivaar-toggle':
-      addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') > -1));
+      [toggle] = option.split('-');
+      document.querySelector('.display').classList.toggle(toggle);
+      checkboxPref(e, 'shabadToggles', option);
+      addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') < 0));
+      break;
     case 'larivaar_assist-toggle':
     case 'unicode-toggle':
-      const [toggle] = ((e.target.tagName === 'SPAN') ? e.target.parentNode.id : e.target.id).split('-');
+      [toggle] = option.split('-');
       document.querySelector('.display').classList.toggle(toggle);
       checkboxPref(e, 'shabadToggles', option);
       break;
