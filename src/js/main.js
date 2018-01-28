@@ -186,6 +186,30 @@ function displayOptionSlider(e) {
   setPref('sliders', prefVal);
 }
 
+function addSpaceForPadChed(status) {
+  // add padched
+
+  if (status == true) {
+    var padChedDiv = "<div class='padChedDiv' style='display: inline-block;'>&nbsp;</div>";
+    var akhars = document.getElementsByClassName("akhar");
+
+    for(var i = 0; i < akhars.length; i++)
+    {
+        var element = akhars.item(i);
+        var str = element.innerHTML;
+        var text = str +  padChedDiv;
+        element.innerHTML = text;
+    }
+  }
+  else {
+    //remove padched
+    var elems = document.querySelectorAll(".padChedDiv");
+    elems.forEach(function(element) {
+      element.parentNode.removeChild(element);
+    });
+  }
+}
+
 function shabadToggle(e) {
   e.currentTarget.classList.toggle('active');
   const option = e.currentTarget.id;
@@ -194,7 +218,10 @@ function shabadToggle(e) {
       toggleHiddenFlex(document.querySelector('#display-options'));
       break;
     case 'unicode-toggle':
-    case 'larivaar-toggle':
+    case 'larivaar-toggle': {
+      const larivaarStatus = localStorage.getItem('shabadToggles').indexOf('larivaar-toggle') >= 1;
+      addSpaceForPadChed(larivaarStatus);
+    }
     case 'larivaar_assist-toggle': {
       const [toggle] = e.target.id.split('-');
       document.querySelector('.display').classList.toggle(toggle);
