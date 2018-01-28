@@ -70,10 +70,6 @@ function getShabadHyperLink(shabad) {
   return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
 }
 
-function getRaagOrNull(raag) {
-  if (raag === 'No Raag' || raag === null) { return ''; } { return raag; }
-}
-
 function addSearchResult(shabad, q) {
   const _source = Khajana.SOURCES[shabad.source.id];
   const source = _source ? `${_source} - ${shabad.pageno}`: null;
@@ -98,7 +94,7 @@ function addSearchResult(shabad, q) {
       h('div', { class: 'meta flex wrap'} , [
         source && h('a', { href: '#' }, source),
         h('a', { href: '#' }, `${shabad.writer.english}`),
-        h('a', { href: '#' }, getRaagOrNull(shabad.raag.english)),
+        h('a', { href: '#' }, (shabad.raag.english === 'No Raag' || shabad.raag.english === null) ? '' : shabad.raag.english),
       ])
     ])
   );
