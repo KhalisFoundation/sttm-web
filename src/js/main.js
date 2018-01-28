@@ -184,16 +184,16 @@ function displayOptionSlider(e) {
 
 function addSpaceForPadChed(status) {
   // add padched
-  if (status === true) {
-    const padChedDiv = '<div class="padChedDiv">&nbsp;</div>';
+  if (status) {
+    const padChedDiv = '<span class="padChedDiv"> </span>';
 
-    [...document.getElementsByClassName('akhar')]
+    [...document.querySelectorAll('.akhar')]
       .forEach((element) => {
         const str = element.innerHTML;
         const text = str + padChedDiv;
         element.innerHTML = text;
       });
-  } else if (status === false) {
+  } else {
     // remove padched
     document.querySelectorAll('.padChedDiv')
       .forEach(element => element.parentNode.removeChild(element));
@@ -211,8 +211,7 @@ function shabadToggle(e) {
       toggleHiddenFlex(document.getElementById('font-options'));
       break;
     case 'larivaar-toggle':
-      var larivaarStatus = localStorage.getItem('shabadToggles').indexOf('larivaar-toggle') > -1;
-      addSpaceForPadChed(larivaarStatus);
+      addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') > -1));
     case 'larivaar_assist-toggle':
     case 'unicode-toggle':
       const [toggle] = e.target.id.split('-');
