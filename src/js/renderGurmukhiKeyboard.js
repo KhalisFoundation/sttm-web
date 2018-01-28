@@ -90,10 +90,8 @@ function renderGurmukhiKeyboard($search) {
           <div class="keyboard-row-set">
             <button type="button">&nbsp;</button>
             <button type="button">&nbsp;</button>
-            <button type="button" data-action="close">
-              <i class="fa fa-times" />
-            </button>
-            <button type="button" data-action="page-2">uI</button>
+            <button type="button" data-action="page-1" class="active">1</button>
+            <button type="button" data-action="page-2">2</button>
             <button type="button" data-action="bksp">
               <i class="fa fa-long-arrow-left" />
             </button>
@@ -160,10 +158,8 @@ function renderGurmukhiKeyboard($search) {
           <div class="keyboard-row-set">
             <button type="button">&nbsp;</button>
             <button type="button">&nbsp;</button>
-            <button type="button" data-action="close">
-              <i class="fa fa-times" />
-            </button>
-            <button type="button" data-action="page-1">a</button>
+            <button type="button" data-action="page-1">1</button>
+            <button type="button" data-action="page-2" class="active">2</button>
             <button type="button" data-action="bksp">
               <i class="fa fa-long-arrow-left" />
             </button>
