@@ -13,6 +13,21 @@
   }
 }
 
+#display-options {
+  align-content: flex-start;
+  background-color: #fafafa;
+  display: none;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: calc(100% - 2rem);
+}
+
+@media screen and (min-width: 46em) {
+  #display-options {
+    width: calc(100% - 5rem);
+  }
+}
+
 .shabad-controller-toggle span {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
   background-size: 9px 6px;
@@ -73,5 +88,10 @@
 }
 
 .display-option-type {
-  margin-bottom: 1rem;
+  margin: 1rem auto 1rem 0;
+
+  big,
+  small {
+    margin: 5px;
+  }
 }

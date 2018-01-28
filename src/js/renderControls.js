@@ -92,7 +92,7 @@ function renderControls() {
         <a id="larivaar-toggle" class="shabad-controller-toggle" click={shabadToggle}>Larivaar</a>
         <a id="larivaar_assist-toggle" class="shabad-controller-toggle" click={shabadToggle}>Larivaar Assist</a>
       </div>
-      <div id="display-options" class="hidden">
+      <div id="display-options">
         <div class="display-option-type">
           <div class="display-option-header">Transliteration</div>
           <a id="transliteration-english" class="display-option-toggle" click={displayOptionToggle}>English</a>
@@ -106,6 +106,10 @@ function renderControls() {
         <div class="display-option-type">
           <div class="display-option-header">Split View</div>
           <a id="split-view" class="display-option-toggle" click={displayOptionToggle}>Split View</a>
+        </div>
+        <div class="display-option-type">
+          <div class="display-option-header">Font Size</div>
+          <small class="gurbani-font">A</small><input type="range" min="5" max="50" value="16" id="font-size-slider" onchange="displayOptionSlider(this)" oninput="displayOptionSlider(this)" /><big class="gurbani-font">A</big>
         </div>
       </div>
     </div>
