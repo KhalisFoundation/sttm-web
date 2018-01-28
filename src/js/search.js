@@ -62,16 +62,17 @@ function loadResults(offset = null) {
           .forEach(option => document.getElementById(option).click());
 
         addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') < 0));
-
-        Object
-          .keys(prefs.sliders)
-          .forEach((key) => {
-            const s = document.getElementById(key);
-            s.value = prefs.sliders[key];
-            displayOptionSlider(s);
-          });
         $controls.classList.remove('hidden');
       }
+
+      Object
+        .keys(prefs.sliders)
+        .forEach((key) => {
+          const s = document.getElementById(key);
+          s.value = prefs.sliders[key];
+          displayOptionSlider(s);
+        });
+
     },
     error: showError
   });
