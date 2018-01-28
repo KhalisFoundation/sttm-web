@@ -185,7 +185,7 @@ function displayOptionSlider(e) {
 function addSpaceForPadChed(status) {
   // add padched
   if (status === true) {
-    const padChedDiv = '<div class="padChedDiv" style="display: inline-block;">&nbsp;</div>';
+    const padChedDiv = '<div class="padChedDiv">&nbsp;</div>';
 
     [...document.getElementsByClassName('akhar')]
       .forEach((element) => {
