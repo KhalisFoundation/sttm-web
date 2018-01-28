@@ -188,8 +188,7 @@ function displayOptionSlider(e) {
 
 function addSpaceForPadChed(status) {
   // add padched
-
-  if (status == true) {
+  if (status === true) {
     var padChedDiv = "<div class='padChedDiv' style='display: inline-block;'>&nbsp;</div>";
     var akhars = document.getElementsByClassName("akhar");
 
@@ -200,13 +199,15 @@ function addSpaceForPadChed(status) {
         var text = str +  padChedDiv;
         element.innerHTML = text;
     }
+    console.log('made padched');
   }
-  else {
+  else if (status === false) {
     //remove padched
     var elems = document.querySelectorAll(".padChedDiv");
     elems.forEach(function(element) {
       element.parentNode.removeChild(element);
     });
+    console.log('made larivaar');
   }
 }
 
@@ -217,17 +218,15 @@ function shabadToggle(e) {
     case 'display-options-toggle':
       toggleHiddenFlex(document.querySelector('#display-options'));
       break;
-    case 'unicode-toggle':
-    case 'larivaar-toggle': {
-      const larivaarStatus = localStorage.getItem('shabadToggles').indexOf('larivaar-toggle') >= 1;
+    case 'larivaar-toggle':
+      var larivaarStatus = localStorage.getItem('shabadToggles').indexOf('larivaar-toggle') > -1;
       addSpaceForPadChed(larivaarStatus);
-    }
-    case 'larivaar_assist-toggle': {
+    case 'larivaar_assist-toggle':
+    case 'unicode-toggle':
       const [toggle] = e.target.id.split('-');
       document.querySelector('.display').classList.toggle(toggle);
       checkboxPref(e, 'shabadToggles', option);
       break;
-    }
   }
 }
 

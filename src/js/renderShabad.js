@@ -22,7 +22,7 @@ function renderShabad(gurbani, nav) {
     .concat(prefs.shabadToggles)
     .forEach(option => document.getElementById(option).click());
 
-    var larivaarStatus = localStorage.getItem('shabadToggles').indexOf('larivaar-toggle') >= 1;
+    var larivaarStatus = localStorage.getItem('shabadToggles').indexOf('larivaar-toggle') > -1;
     addSpaceForPadChed(!larivaarStatus);
 
     Object
