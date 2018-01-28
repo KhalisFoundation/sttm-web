@@ -68,7 +68,6 @@ function loadResults(offset = null) {
             s.value = prefs.sliders[key];
             displayOptionSlider(s);
           });
-
         $controls.classList.remove('hidden');
       }
     },

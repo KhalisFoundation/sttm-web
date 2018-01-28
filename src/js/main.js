@@ -139,6 +139,12 @@ function updateSearchAction(e) {
   const $search = $form.q;
 
   switch (searchType) {
+    case 4:
+      $search.setAttribute('pattern', '(\\w+\\W+){3,}\\w+\\W*');
+      $search.setAttribute('title', 'Enter 4 words minimum.');
+      $form.setAttribute('action', '/search');
+      $search.setAttribute('name', 'q');
+      break;
     case 5:
       forceSearchNumeric();
       $form.setAttribute('action', '/ang');
