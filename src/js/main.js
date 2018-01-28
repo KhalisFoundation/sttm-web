@@ -3,9 +3,6 @@ const $searchType = document.getElementById('search-type');
 let   $controls = document.getElementById('controls-wrapper');
 let   $shabad = document.getElementById('shabad');
 let   $meta = document.getElementById('metadata');
-
-vex.defaultOptions.className = 'vex-theme-plain';
-
 const prefs = {};
 const defaultPrefs = {
   displayOptions: ['translation-english', 'transliteration-english'],
@@ -61,16 +58,6 @@ $search.onkeyup = function () {
 // Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
 
 function attachEventListeners () {
-  // Search form validator
-  [document.querySelector('.search-form')]
-    .forEach(f => f && f.addEventListener('submit', e => {
-      if ($search.value.length <= 2 && $searchType.value != 5) {
-        vex.dialog.alert('Please enter at least 3 characters');
-        e.preventDefault();
-        return false;
-      }
-    }));
-
   // Mobile hamburger menu
   [document.getElementById('open-mobile-menu')]
     .forEach(e => e && e.addEventListener('click', () => document.body.classList.toggle('menu-open')));
