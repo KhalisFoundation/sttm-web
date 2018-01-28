@@ -13,7 +13,8 @@
   }
 }
 
-#display-options {
+#display-options,
+#font-options {
   align-content: flex-start;
   background-color: #fafafa;
   display: none;
@@ -23,17 +24,18 @@
 }
 
 @media screen and (min-width: 46em) {
-  #display-options {
+  #display-options,
+  #font-options {
     width: calc(100% - 5rem);
   }
 }
 
 .shabad-controller-toggle span {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
-  background-size: 9px 6px;
-  background-position: right -1rem center;
   background-origin: content-box;
+  background-position: right -1rem center;
   background-repeat: no-repeat;
+  background-size: 9px 6px;
   padding-right: 1rem;
 }
 
@@ -48,12 +50,28 @@
 }
 
 #shabad-controllers {
+  /* Opera doesn't support this in the shorthand */
+  background-attachment: local, local, scroll, scroll;
+
+  /* do not change order of below */
+  background-image:
+    /* Shadows */
+    linear-gradient(to right, #f5f5f5, #f5f5f5),
+    linear-gradient(to right, #f5f5f5, #f5f5f5),
+    /* Shadow covers */
+    linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(245, 245, 245, 0)),
+    linear-gradient(to left, rgba(0, 0, 0, 0.25), rgba(245, 245, 245, 0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+  margin: 50px auto;
   overflow-x: auto;
   white-space: nowrap;
 }
 
 .shabad-controller-toggle,
-.display-option-toggle {
+.display-option-toggle,
+.font-option-toggle {
   border: 1px solid #cacaca;
   border-radius: 2px;
   color: #3c3c3c;
@@ -87,7 +105,8 @@
   display: none;
 }
 
-.display-option-type {
+.display-option-type,
+.font-option-type {
   margin: 1rem auto 1rem 0;
 
   big,
