@@ -94,7 +94,10 @@ const routes = {
 
     this._initForm();
 
-    replaceChild($target, Content({}));
+    createScripts('/assets/js/help.js')
+      .forEach(e => document.body.insertBefore(e, $scriptTarget));
+
+    replaceChild($target, Content('Help', help()));
   },
 
   home ($target, $scriptTarget) {
@@ -163,7 +166,7 @@ function router () {
       break;
     }
     case '/help': {
-      routes[help]($contentRoot, $lastScriptTag);
+      routes.help($contentRoot, $lastScriptTag);
       break;
     }
     case '/random': {

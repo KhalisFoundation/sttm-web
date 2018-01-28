@@ -1,4 +1,5 @@
 'use strict';
 $(function() {
-  $shabad.appendChild(<div>help</div>);
+  let help = <div></div>;
+  help.appendChild(<div>help</div>);
 });
