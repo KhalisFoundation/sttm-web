@@ -13,7 +13,7 @@ function fetchHukamnama() {
     .catch(error => {
       $shabad.appendChild(
         <h2>
-          <h3 class="text-center">Facing some issues</h3>
+          <h3 class='text-center'>Facing some issues</h3>
         </h2>
       );
       console.error(error);
