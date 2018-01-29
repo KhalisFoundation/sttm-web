@@ -21,7 +21,7 @@ $(function() {
   loadResults();
 });
 
-function loadResults(offset) {
+function loadResults(offset = null) {
   $.ajax({
     url: Khajana.buildApiUrl({ q, type, source, offset }),
     dataType: "json",
@@ -57,22 +57,36 @@ function loadResults(offset) {
         }
       }
 
-      [...prefs.displayOptions, ...prefs.shabadToggles]
-        .forEach(option => document.getElementById(option).click())
+      if (!offset) {
+        [...prefs.displayOptions, ...prefs.shabadToggles]
+          .forEach(option => document.getElementById(option).click());
 
-      $controls.classList.remove('hidden');
+        addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') < 0));
+        $controls.classList.remove('hidden');
+      }
+
+      Object
+        .keys(prefs.sliders)
+        .forEach((key) => {
+          const s = document.getElementById(key);
+          s.value = prefs.sliders[key];
+          displayOptionSlider(s);
+        });
+
     },
     error: showError
   });
 }
 
-function getShabadHyperLink (shabad) {
+function getShabadHyperLink(shabad) {
   return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
 }
 
 function addSearchResult(shabad, q) {
   const _source = Khajana.SOURCES[shabad.source.id];
-  const source = _source ? `${_source} - ${shabad.pageno}`: null;
+  //if page num is null
+  const shabadPageNo = (shabad.pageno === null) ? '' : shabad.pageno;
+  const source = _source ? `${_source} - ${shabadPageNo}` : null;
 
   $searchResults.appendChild(
     h('li', { class: 'search-result' }, [
@@ -92,9 +106,9 @@ function addSearchResult(shabad, q) {
     h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
     h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
       h('div', { class: 'meta flex wrap'} , [
-        source && h('a', { href: '#', }, source),
-        h('a', { href: '#', }, `${shabad.writer.english}`),
-        ['No Raag', null].every(s => s !== shabad.raag.english) && h('a', { href: '#', }, `${shabad.raag.english}`),
+        source && h('a', { href: '#' }, source),
+        h('a', { href: '#' }, `${shabad.writer.english}`),
+        (shabad.raag.english === 'No Raag' || shabad.raag.english === null) ? '' : h('a', { href: '#' }, shabad.raag.english),
       ])
     ])
   );

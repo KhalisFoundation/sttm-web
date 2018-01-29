@@ -85,14 +85,23 @@ function renderControls() {
       </div>
       <div id="shabad-controllers">
         <a id="display-options-toggle" class="shabad-controller-toggle" click={shabadToggle}>
-          <i class="fa fa-sliders" />
-          <span>Display Options ↓</span>
+          <i class="fa fa-television" />
+          <span>Display</span>
         </a>
-        <a id="unicode-toggle" class="shabad-controller-toggle" click={shabadToggle}>Unicode</a>
-        <a id="larivaar-toggle" class="shabad-controller-toggle" click={shabadToggle}>Larivaar</a>
-        <a id="larivaar_assist-toggle" class="shabad-controller-toggle" click={shabadToggle}>Larivaar Assist</a>
+        <a id="font-options-toggle" class="shabad-controller-toggle" click={shabadToggle}>
+          <i class="fa fa-sliders" />
+          <span>Font</span>
+        </a>
+        <a id="larivaar-toggle" class="shabad-controller-toggle" click={shabadToggle}>
+          <span class="custom-fa">ੳਅ</span>
+          <span>Larivaar</span>
+        </a>
+        <a id="larivaar_assist-toggle" class="shabad-controller-toggle" click={shabadToggle}>
+          <span class="custom-fa custom-fa-assist">ੳ</span>
+          <span>Assist</span>
+        </a>
       </div>
-      <div id="display-options" class="hidden">
+      <div id="display-options">
         <div class="display-option-type">
           <div class="display-option-header">Transliteration</div>
           <a id="transliteration-english" class="display-option-toggle" click={displayOptionToggle}>English</a>
@@ -106,6 +115,16 @@ function renderControls() {
         <div class="display-option-type">
           <div class="display-option-header">Split View</div>
           <a id="split-view" class="display-option-toggle" click={displayOptionToggle}>Split View</a>
+        </div>
+      </div>
+      <div id="font-options">
+        <div class="font-option-type">
+          <div class="font-option-header">Font</div>
+            <a id="unicode-toggle" class="shabad-controller-toggle" click={shabadToggle}>Unicode</a>
+        </div>
+        <div class="font-option-type">
+          <div class="font-option-header">Font Size</div>
+          <small class="gurbani-font">A</small><input type="range" min="5" max="50" value="16" id="font-size-slider" onchange="displayOptionSlider(this)" oninput="displayOptionSlider(this)" /><big class="gurbani-font">A</big>
         </div>
       </div>
     </div>

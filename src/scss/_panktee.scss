@@ -20,10 +20,9 @@
 
   .akhar {
     display: inline-block;
-    transition: all .25s;
-    padding-right: 0.5rem;
+    transition: all 0.25s;
   }
-  
+
   .split-view-baani {
     display: none;
   }
@@ -56,7 +55,7 @@
   &.transliteration-english .transliteration.english {
     display: block;
   }
-  
+
   &.larivaar .akhar {
     padding-right: 0;
   }
@@ -67,4 +66,9 @@
       color: #f39c1d;
     }
   }
+}
+
+.padChedDiv {
+  display: inline-block;
+  white-space: pre;
 }

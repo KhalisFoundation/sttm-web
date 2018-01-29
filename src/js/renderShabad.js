@@ -22,6 +22,16 @@ function renderShabad(gurbani, nav) {
     .concat(prefs.shabadToggles)
     .forEach(option => document.getElementById(option).click());
 
+    addSpaceForPadChed((prefs.shabadToggles.indexOf('larivaar-toggle') < 0));
+
+    Object
+    .keys(prefs.sliders)
+    .forEach((key) => {
+      const s = document.getElementById(key);
+      s.value = prefs.sliders[key];
+      displayOptionSlider(s);
+    });
+
   $controls.classList.remove('hidden');
 }
 
@@ -50,21 +60,23 @@ function metaData(data, nav) {
   gurmukhi_meta.push(data.source.gurmukhi);
   english_meta.push(data.source.english);
 
-  gurmukhi_meta.push(
-    (
-      <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
-        {`${page_type_gurmukhi} ${data.source.pageno}`}
-      </a>
-    ).outerHTML
-  );
+  if (data.source.pageno !== null) {
+    gurmukhi_meta.push(
+      (
+        <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
+          {`${page_type_gurmukhi} ${data.source.pageno}`}
+        </a>
+      ).outerHTML
+    );
 
-  english_meta.push(
-    (
-      <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
-        {`${page_type_english} ${data.source.pageno}`}
-      </a>
-    ).outerHTML
-  );
+    english_meta.push(
+      (
+        <a href={`/ang?ang=${data.source.pageno}&source=${data.source.id}`}>
+          {`${page_type_english} ${data.source.pageno}`}
+        </a>
+      ).outerHTML
+    );
+  }
 
   if (typeof nav !== 'undefined') {
     const link = navLink(nav, data.source.id);
@@ -192,7 +204,7 @@ function prepareLarivaar(padChhed) {
     .split(' ')
     .map(val => (val.indexOf('॥') !== -1 || val.indexOf(']') !== -1)
       ? `<i>${val} </i>`
-      : `<div class="akhar">${val}</div>`
+      : `<span class="akhar">${val }</span>`
     )
     .join('')
 }

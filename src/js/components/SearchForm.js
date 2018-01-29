@@ -8,14 +8,14 @@ export default ({ }) => {
       id="search"
       class="gurbani-font"
       type="search"
-      placeholder="Koj"
+      placeholder="jmTAq"
       autocapitalize="none"
       autocomplete="off"
       autocorrect="off"
       spellcheck="false"
       required='required'
-      title='Enter 3 characters minimum.'
-      pattern='.{3,}'
+      title='Enter 2 characters minimum.'
+      pattern='.{2,}'
     />
   );
 
@@ -45,7 +45,15 @@ export default ({ }) => {
 
           {$search}
 
-          <button 
+          <button
+            type="button"
+            class="clear-search-toggle"
+            click={() => $search.value=''}
+          >
+            <i class="fa fa-times" />
+          </button>
+
+          <button
             type="button"
             class="gurmukhi-keyboard-toggle"
             click={() => gurmukhiKeyboard.classList.toggle('active')}

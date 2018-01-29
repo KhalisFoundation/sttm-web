@@ -16,13 +16,10 @@ function renderGurmukhiKeyboard($search) {
         $search.value = $search.value.substring(0, $search.value.length - 1);
         break;
       }
-      case 'close': {
-        $keyboard.classList.remove('active');
-        break;
-      }
       case 'page-1': case 'page-2': {
-        $($keyboard.querySelector('.page')).hide();
-        $("#gurmukhi-keyboard-" + action).show();
+        [...$keyboard.querySelectorAll('.page')]
+          .forEach((e) => { e.style.display = 'none'; });
+        document.getElementById(`gurmukhi-keyboard-${action}`).style.display = 'block';
         break;
       }
       default: {
@@ -93,17 +90,15 @@ function renderGurmukhiKeyboard($search) {
           <div class="keyboard-row-set">
             <button type="button">&nbsp;</button>
             <button type="button">&nbsp;</button>
-            <button type="button" data-action="close">
-              <i class="fa fa-times" />
-            </button>
-            <button type="button" data-action="page-2">uI</button>
+            <button type="button" data-action="page-1" class="active">1</button>
+            <button type="button" data-action="page-2">2</button>
             <button type="button" data-action="bksp">
               <i class="fa fa-long-arrow-left" />
             </button>
           </div>
         </div>
       </div>
-      <div class="page" d="gurmukhi-keyboard-page-2">
+      <div class="page" id="gurmukhi-keyboard-page-2">
         <div class="keyboard-row">
           <div class="keyboard-row-set">
             <button type="button">1</button>
@@ -163,10 +158,8 @@ function renderGurmukhiKeyboard($search) {
           <div class="keyboard-row-set">
             <button type="button">&nbsp;</button>
             <button type="button">&nbsp;</button>
-            <button type="button" data-action="close">
-              <i class="fa fa-times" />
-            </button>
-            <button type="button" data-action="page-1">a</button>
+            <button type="button" data-action="page-1">1</button>
+            <button type="button" data-action="page-2" class="active">2</button>
             <button type="button" data-action="bksp">
               <i class="fa fa-long-arrow-left" />
             </button>
