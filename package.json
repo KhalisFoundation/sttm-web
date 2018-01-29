@@ -13,6 +13,7 @@
     "server": "node server",
     "server-watch": "nodemon --watch server/ server",
     "build": "npm-run-all build:*",
+    "build:deployment": "node build/build.js",
     "build:babel": "babel src/js --out-dir assets/js --copy-files --ignore *.min.js,src/js/components/*.js,src/js/router.js,src/js/util.js",
     "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
     "build:webpack": "webpack",
@@ -22,7 +23,7 @@
     "build-watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
     "deploy": "git checkout dev && git pull origin && git push web",
     "build-prod": "npm run build:css && BABEL_ENV=production npm run build:babel",
-    "deploy:server": "npm run build && rm -rf .editorconfig .gitignore .htmlhintrc .stylelintrc src LICENSE README.md && pm2 start server --name=\"sttm-prod\"",
+    "deploy:server": "NODE_ENV=production npm run build && rm -rf .editorconfig .gitignore .htmlhintrc .stylelintrc src LICENSE README.md && pm2 start server --name=\"sttm-prod\"",
     "deploy:dev-server": "npm run build && NODE_ENV=development pm2 start server --name=\"sttm-dev\""
   },
   "repository": {
@@ -52,6 +53,7 @@
     "node-sass": "^4.7.2",
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.0.2",
+    "replace-in-file": "^3.1.0",
     "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.1",
