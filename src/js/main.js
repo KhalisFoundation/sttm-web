@@ -287,3 +287,30 @@ $search.onkeyup = function () {
     forceSearchNumeric();
   }
 };
+
+const copyToClipboard = text => new Promise((resolve, reject) => {
+  try {
+    const textarea = document.createElement('textarea');
+    textarea.textContent = text;
+    document.body.appendChild(textarea);
+
+    const selection = document.getSelection();
+    const range = document.createRange();
+    range.selectNode(textarea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    const result = document.execCommand('copy');
+
+    selection.removeAllRanges();
+    document.body.removeChild(textarea);
+
+    if (result) {
+      resolve();
+    } else {
+      throw new Error('Failed to copy');
+    }
+  } catch (e) {
+    reject(e);
+  }
+});
