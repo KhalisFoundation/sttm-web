@@ -18,6 +18,10 @@ blockquote {
   padding: 1rem;
   text-align: center;
   width: calc(100% - 2rem);
+
+  &:empty {
+    display: none;
+  }
 }
 
 .shabad-nav {
