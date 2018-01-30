@@ -1,13 +1,14 @@
 const $searchResults = document.querySelector('.search-results');
 
-const loadResults = ({ source, type, q, offset = null }) =>
-  fetch(Khajana.buildApiUrl({ q, type, source, offset }))
+function loadResults({ source, type, q, offset = null }) {
+
+  return fetch(Khajana.buildApiUrl({ q, type, source, offset }))
     .then(r => r.json())
     .then(({ pageinfo: { pageresults, nextpageoffset }, shabads }) => {
 
       [...document.querySelectorAll('h3.loading, li.load-more')]
         .forEach(el => el && el.parentNode
-          ? el.parentNode.removeChild(el)
+          ? el.parentNode.removeChild()
           : el.remove()
         );
 
@@ -17,7 +18,7 @@ const loadResults = ({ source, type, q, offset = null }) =>
           break;
         }
 
-        // I'm feeling lucky
+          // I'm feeling lucky
         case 1: {
           document.body.classList.remove('loading');
           const [{ shabad }] = shabads;
@@ -27,9 +28,14 @@ const loadResults = ({ source, type, q, offset = null }) =>
 
         default: {
           document.body.classList.remove('loading');
+<<<<<<< HEAD
 
           shabads.forEach(({ shabad }) => addSearchResult({ shabad, q, type, source }));
 
+=======
+
+          shabads.forEach(({ shabad }) => addSearchResult({ shabad, q, type, source }));
+>>>>>>> Use fetch over jQuery.ajax (#280)
 
           if (nextpageoffset) {
             const loadMore = e => {
@@ -50,7 +56,11 @@ const loadResults = ({ source, type, q, offset = null }) =>
             };
 
             $searchResults.appendChild(
+<<<<<<< HEAD
               <li class='load-more' click={loadMore}>
+=======
+              <li class='load-more'>
+>>>>>>> Use fetch over jQuery.ajax (#280)
                 <a class='load button' data-nextpage={nextpageoffset}>Load More</a>
               </li>
             );
@@ -83,6 +93,10 @@ const loadResults = ({ source, type, q, offset = null }) =>
       );
       console.error(error);
     });
+<<<<<<< HEAD
+=======
+}
+>>>>>>> Use fetch over jQuery.ajax (#280)
 
 function getShabadHyperLink({ shabad, q, type, source }) {
   return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
@@ -121,8 +135,13 @@ function addSearchResult({ shabad, q, type, source }) {
         <a href='#'>{shabad.writer.english}</a>
 
         {shabad.raag.english === 'No Raag' || shabad.raag.english === null
+<<<<<<< HEAD
           ? ''
           : <a href='#'>{shabad.raag.english}</a>
+=======
+            ? ''
+            : <a href='#'>{shabad.raag.english}</a>
+>>>>>>> Use fetch over jQuery.ajax (#280)
         }
       </div>
     </li>
@@ -134,10 +153,20 @@ function noResults() {
   $searchResults.appendChild(<h3>No results found</h3>);
 }
 
+<<<<<<< HEAD
 function fetchSearchResults() {
   const params = ['type', 'source', 'q'];
   const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
 
+=======
+function fetchSearchResults () {
+  const params = ['type', 'source', 'q'];
+  const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
+
+  [...$searchResults.querySelectorAll('a.load')]
+    .forEach(el => el && el.addEventListener('click', () => loadResults({ source, type, q, offset: el.dataset.nextpage })));
+
+>>>>>>> Use fetch over jQuery.ajax (#280)
   if (q === '') {
     $searchResults.appendChild(<h3><span>Please enter your query in the search bar above</span></h3>);
     return;
@@ -145,7 +174,11 @@ function fetchSearchResults() {
 
   document.body.classList.toggle('loading');
 
+<<<<<<< HEAD
   return loadResults({ type, source, q });
+=======
+  loadResults({ type, source, q });
+>>>>>>> Use fetch over jQuery.ajax (#280)
 }
 
 fetchSearchResults();
