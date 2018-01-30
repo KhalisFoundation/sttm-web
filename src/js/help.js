@@ -3,7 +3,7 @@ function Help() {
     Web: [
       [ 'How do I search for a shabad?',
         `After launching SikhiToTheMax, by default you can search for a shabad by entering the
-        first letter of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ , you ' 
+        first letter of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ , you '
         would enter "gmsshn". Alternatively, you can click on the gurmukhi keyboard icon and type
         in the letters manually.`
       ],
@@ -34,7 +34,7 @@ function Help() {
       [
         'How do I install the desktop application?',
         `You can install SikhiToTheMax (STTM) by visiting
-          <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/">this website</a> 
+          <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/">this website</a>
           and choosing the Windows or macOS download link. After that, open the installer and follow
           the steps that are displayed.
           <img src="/assets/images/help/desktop-download.png" />
@@ -130,7 +130,8 @@ function Help() {
       ],
       [
         'How do I report a mistake?',
-        `Visit <a href="https://sikhitothemax.org">SikhiToTheMax.org</a> and click "Feedback" at the bottom of the page.`
+        `Visit <a href="https://sikhitothemax.org">SikhiToTheMax.org</a> and
+        click "<a href="https://goo.gl/plk23h">Feedback</a>" at the bottom of the page.`
       ]
     ]
   };
