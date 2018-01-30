@@ -1,7 +1,5 @@
 <!-- Please provide one line description of the changes you made.
-Example: I update the logic for this function to cover more cases. -->
-
-
+Example: I updated the logic for this function to cover more cases. -->
 
 <!-- Before submitting a PR, we would like you to confirm the following: -->
 
