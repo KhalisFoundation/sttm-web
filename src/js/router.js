@@ -97,7 +97,6 @@ const routes = {
     createScripts('/assets/js/help.js')
       .forEach(e => document.body.insertBefore(e, $scriptTarget));
 
-    replaceChild($target, Content('Help', help()));
   },
 
   home ($target, $scriptTarget) {
