@@ -1,6 +1,6 @@
 function renderControls() {
   return (
-    <div id="controls-wrapper" class="no-select hidden">
+   <div id="controls-wrapper" class="no-select hidden">
       <div id="share-menu">
         <ul class="share-buttons">
           <li>
@@ -81,8 +81,16 @@ function renderControls() {
               <span class="sr-only">Share via email</span>
             </a>
           </li>
+          <li>
+            <a id="copy-short-url" class="copy"
+              onclick={"copyShortUrl()"} >
+              <i class="fa fa-fw fa-clipboard" />
+              <span class="sr-only">Copy URL</span>
+            </a>
+          </li>
         </ul>
       </div>
+      <div id="copy-URL-confirm" class="copy-URL-confirm hidden">Link has been copied to your clipboard</div>
       <div id="shabad-controllers">
         <a id="display-options-toggle" class="shabad-controller-toggle" click={shabadToggle}>
           <i class="fa fa-television" />
@@ -129,4 +137,34 @@ function renderControls() {
       </div>
     </div>
   );
+}
+
+function copyShortUrl() {
+  var textarea = document.createElement('textarea');
+  textarea.textContent = shortenURL();
+  document.body.appendChild(textarea);
+
+  var selection = document.getSelection();
+  var range = document.createRange();
+  range.selectNode(textarea);
+  selection.removeAllRanges();
+  selection.addRange(range);
+
+  document.execCommand('copy');
+  selection.removeAllRanges();
+
+  document.body.removeChild(textarea);
+
+  //hide share menu temporarily
+  const shareMenu = document.getElementById("share-menu");
+  shareMenu.classList.add("hidden");
+
+  //show confirmation
+  const copyURLconfirm = document.getElementById("copy-URL-confirm");
+  copyURLconfirm.classList.remove("hidden");
+  setTimeout(() => {
+    copyURLconfirm.classList.add("hidden");
+    shareMenu.classList.remove("hidden");
+  }, 3000);
+  console.log(shortenURL());
 }
