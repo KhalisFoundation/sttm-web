@@ -1,32 +1,16 @@
-'use strict';
 const $searchResults = document.querySelector('.search-results');
 
-const params = ['type', 'source', 'q'];
+function loadResults({ source, type, q, offset = null }) {
 
-const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
+  return fetch(Khajana.buildApiUrl({ q, type, source, offset }))
+    .then(r => r.json())
+    .then(({ pageinfo: { pageresults, nextpageoffset }, shabads }) => {
 
-$($searchResults).on("click", "a.load", function() {
-  loadResults(this.dataset.nextpage);
-});
-
-$(function() {
-  if (q === '') {
-    $searchResults.appendChild(H3([
-      h('span', {}, 'Please enter your query in the search bar above'),
-    ]));
-    return;
-  }
-
-  document.body.classList.toggle("loading");
-  loadResults();
-});
-
-function loadResults(offset = null) {
-  $.ajax({
-    url: Khajana.buildApiUrl({ q, type, source, offset }),
-    dataType: "json",
-    success: function({ pageinfo: { pageresults, nextpageoffset }, shabads }) {
-      $("h3.loading, li.load-more").remove();
+      [...document.querySelectorAll('h3.loading, li.load-more')]
+        .forEach(el => el && el.parentNode
+          ? el.parentNode.removeChild()
+          : el.remove()
+        );
 
       switch (pageresults) {
         case 0: {
@@ -34,24 +18,24 @@ function loadResults(offset = null) {
           break;
         }
 
-        // I'm feeling lucky
+          // I'm feeling lucky
         case 1: {
-          document.body.classList.remove("loading");
+          document.body.classList.remove('loading');
           const [{ shabad }] = shabads;
-          location.href = getShabadHyperLink(shabad);
+          location.href = getShabadHyperLink({ shabad, q, type, source });
           return;
         }
 
         default: {
-          document.body.classList.remove("loading");
+          document.body.classList.remove('loading');
 
-          shabads.forEach(({ shabad }) => addSearchResult(shabad, q));
+          shabads.forEach(({ shabad }) => addSearchResult({ shabad, q, type, source }));
 
           if (nextpageoffset) {
             $searchResults.appendChild(
-              h('li', { class: 'load-more' },
-                h('a', { class: 'load button', 'data-nextpage': nextpageoffset }, 'Load More')
-              )
+              <li class='load-more'>
+                <a class='load button' data-nextpage={nextpageoffset}>Load More</a>
+              </li>
             );
           }
         }
@@ -73,54 +57,82 @@ function loadResults(offset = null) {
           displayOptionSlider(s);
         });
 
-    },
-    error: showError
-  });
+    })
+    .catch(error => {
+      $searchResults.appendChild(
+        <h2>
+          <h3 class='text-center'>Facing some issues</h3>
+        </h2>
+      );
+      console.error(error);
+    });
 }
 
-function getShabadHyperLink(shabad) {
+function getShabadHyperLink({ shabad, q, type, source }) {
   return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
 }
 
-function addSearchResult(shabad, q) {
+function addSearchResult({ shabad, q, type, source }) {
   const _source = Khajana.SOURCES[shabad.source.id];
-  //if page num is null
+
+  // if page num is null
   const shabadPageNo = (shabad.pageno === null) ? '' : shabad.pageno;
-  const source = _source ? `${_source} - ${shabadPageNo}` : null;
+  const presentationalSource = _source ? `${_source} - ${shabadPageNo}` : null;
 
   $searchResults.appendChild(
-    h('li', { class: 'search-result' }, [
-      h('a', {
-        href: getShabadHyperLink(shabad),
-        class: 'gurbani-font gurbani-display',
-      }, [
-      h('div', { class: 'gurlipi' }, prepareLarivaar(shabad.gurbani.gurmukhi)),
-      h('div', { class: 'unicode' }, prepareLarivaar(shabad.gurbani.unicode))
-    ]),
-    h('div', { class: 'clear'}, ''),
-    h('p', { class: 'transliteration english' }, shabad.transliteration),
-    h('blockquote', { class: 'translation punjabi gurbani-font' }, [
-      h('div', { class: 'gurlipi' }, shabad.translation.punjabi.bms.gurmukhi),
-      h('div', { class: 'unicode' }, shabad.translation.punjabi.bms.unicode)
-    ]),
-    h('blockquote', { class: 'translation english' }, shabad.translation.english.ssk),
-    h('blockquote', { class: 'translation spanish' }, shabad.translation.spanish),
-      h('div', { class: 'meta flex wrap'} , [
-        source && h('a', { href: '#' }, source),
-        h('a', { href: '#' }, `${shabad.writer.english}`),
-        (shabad.raag.english === 'No Raag' || shabad.raag.english === null) ? '' : h('a', { href: '#' }, shabad.raag.english),
-      ])
-    ])
+    <li class='search-result'>
+      <a href={getShabadHyperLink({ shabad, q, type, source })} class='gurbani-font gurbani-display'>
+        <div class='gurlipi'>{prepareLarivaar(shabad.gurbani.gurmukhi)}</div>
+        <div class='unicode'>{prepareLarivaar(shabad.gurbani.unicode)}</div>
+      </a>
+
+      <div class='clear' />
+
+      <p class='transliteration english'>{shabad.transliteration}</p>
+
+      <blockquote class='translation punjabi gurbani-font'>
+        <div class='gurlipi'>{shabad.translation.punjabi.bms.gurmukhi}</div>
+        <div class='unicode'>{shabad.translation.punjabi.bms.unicode}</div>
+      </blockquote>
+
+      <blockquote class='translation english'>{shabad.translation.english.ssk}</blockquote>
+
+      <blockquote class='translation spanish'>{shabad.translation.spanish}</blockquote>
+
+      <div class='meta flex wrap'>
+        {presentationalSource && <a href='#'>{presentationalSource}</a>}
+
+        <a href='#'>{shabad.writer.english}</a>
+
+        {shabad.raag.english === 'No Raag' || shabad.raag.english === null
+            ? ''
+            : <a href='#'>{shabad.raag.english}</a>
+        }
+      </div>
+    </li>
   );
 }
 
 function noResults() {
-  document.body.classList.remove("loading");
-  $searchResults.appendChild(H3('No results found'));
+  document.body.classList.remove('loading');
+  $searchResults.appendChild(<h3>No results found</h3>);
 }
 
-function showError(error) {
-  $searchResults.appendChild(h('h2', { }, [
-    H3('Facing some issues'),
-  ]));
+function fetchSearchResults () {
+  const params = ['type', 'source', 'q'];
+  const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
+
+  [...$searchResults.querySelectorAll('a.load')]
+    .forEach(el => el && el.addEventListener('click', () => loadResults({ source, type, q, offset: el.dataset.nextpage })));
+
+  if (q === '') {
+    $searchResults.appendChild(<h3><span>Please enter your query in the search bar above</span></h3>);
+    return;
+  }
+
+  document.body.classList.toggle('loading');
+
+  loadResults({ type, source, q });
 }
+
+fetchSearchResults();

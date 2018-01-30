@@ -1,28 +1,23 @@
-'use strict';
-
-$(function() {
+function fetchHukamnama() {
   const q = getParameterByName('q');
 
-  document.body.classList.toggle("loading");
-  $.ajax({
-    url: Khajana.buildApiUrl({ hukam: true }),
-    dataType: "json",
-    success: function(data) {
+  document.body.classList.toggle('loading');
+
+  return fetch(Khajana.buildApiUrl({ hukam: true }))
+    .then(r => r.json())
+    .then(data => {
       $shabad.innerHTML = '';
       metaData(data.shabadinfo);
       renderShabad(data.gurbani);
-    },
-    error: showError
-  });
-});
-
-const errorMessage = (
-  <h2>
-    <h3 class="text-center">Facing some issues</h3>
-  </h2>
-);
-
-function showError(error) {
-  $shabad.appendChild(errorMessage);
+    })
+    .catch(error => {
+      $shabad.appendChild(
+        <h2>
+          <h3 class='text-center'>Facing some issues</h3>
+        </h2>
+      );
+      console.error(error);
+    });
 }
 
+fetchHukamnama();
