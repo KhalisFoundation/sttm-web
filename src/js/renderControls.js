@@ -82,7 +82,7 @@ function renderControls() {
             </a>
           </li>
           <li>
-            <a id="copy-short-url" class="copy" onclick={"copyShortUrl()"} >
+            <a id="copy-short-url" class="copy" click={copyShortUrl} >
               <i class="fa fa-fw fa-clipboard" />
               <span class="sr-only">Copy URL</span>
             </a>
