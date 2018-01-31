@@ -170,7 +170,7 @@ function Help() {
                 <ul>
                   {contentWithTitle[header].map(([title, question]) => (
                     <li key={question}>
-                      <a href={`#${title}`}>{question}</a>
+                      <a href={`#${header}-${title}`}>{question}</a>
                     </li>
                   ))}
                 </ul>
@@ -184,9 +184,9 @@ function Help() {
             <section id={header} key={header}>
               <h3>{header}</h3>
               {contentWithTitle[header].map(([title, question, answer]) => (
-                <div class="question" id={title} key={title}>
+                <div class="question" id={`${header}-${title}`} key={title}>
                   <h4>
-                    <a href={`#${title}`}>#</a> {question}
+                    <a href={`#${header}-${title}`}>#</a> {question}
                   </h4>
                   <div>{answer}</div>
                 </div>

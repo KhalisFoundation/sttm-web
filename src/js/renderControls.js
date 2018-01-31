@@ -1,6 +1,6 @@
 function renderControls() {
   return (
-   <div id="controls-wrapper" class="no-select hidden">
+    <div id="controls-wrapper" class="no-select hidden">
       <div id="share-menu">
         <ul class="share-buttons">
           <li>
