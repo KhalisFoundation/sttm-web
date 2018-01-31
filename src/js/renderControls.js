@@ -1,6 +1,6 @@
 function renderControls() {
   return (
-    <div id="controls-wrapper" class="no-select hidden">
+   <div id="controls-wrapper" class="no-select hidden">
       <div id="share-menu">
         <ul class="share-buttons">
           <li>
@@ -81,6 +81,12 @@ function renderControls() {
               <span class="sr-only">Share via email</span>
             </a>
           </li>
+          <li>
+            <a id="copy-short-url" class="copy" click={copyShortUrl} >
+              <i class="fa fa-fw fa-clipboard" />
+              <span class="sr-only">Copy URL</span>
+            </a>
+          </li>
         </ul>
       </div>
       <div id="shabad-controllers">
@@ -129,4 +135,10 @@ function renderControls() {
       </div>
     </div>
   );
+}
+
+function copyShortUrl() {
+  copyToClipboard(shortenURL())
+    .then(() => showToast('Link has been copied to your clipboard!'))
+    .catch(() => showToast(`Sorry, we couldn't copy the link.`));
 }

@@ -242,30 +242,6 @@ function displayOptionToggle(e) {
   $display.classList.toggle(option);
 
   checkboxPref(e, 'displayOptions', option);
-
-  // Update the textarea for copy/social sharing
-  [...document.querySelectorAll('.display .line')]
-    .forEach(el => el && (
-      // for every textarea
-      el.querySelector('textarea').value = (
-
-        // get all div, blockquotes
-        [...el.querySelector('div, blockquote')]
-
-          // filter hidden ones
-          .filter(c => c.style.visibility !== 'hidden' && c.style.display !== 'none')
-
-          // get innerText
-          .map(child => child.querySelectorAll('div.unicode')
-            ? child.querySelector('div.unicode').innerText
-            : el.innerText)
-
-          // filter empty strings
-          .filter(text => text)
-
-          // join them by new line
-          .join('\n')
-      )));
 }
 
 getPrefs();
@@ -287,3 +263,41 @@ $search.onkeyup = function () {
     forceSearchNumeric();
   }
 };
+
+const copyToClipboard = text => new Promise((resolve, reject) => {
+  try {
+    const textarea = document.createElement('textarea');
+    textarea.textContent = text;
+    document.body.appendChild(textarea);
+
+    const selection = document.getSelection();
+    const range = document.createRange();
+    range.selectNode(textarea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    const result = document.execCommand('copy');
+
+    selection.removeAllRanges();
+    document.body.removeChild(textarea);
+
+    if (result) {
+      resolve();
+    } else {
+      throw new Error('Failed to copy');
+    }
+  } catch (e) {
+    reject(e);
+  }
+});
+
+const showToast = (text, delay = 2500) => new Promise(resolve => {
+  const copyURLconfirm = document.getElementById('toast-notification');
+  copyURLconfirm.innerText = text;
+  copyURLconfirm.classList.remove('hidden');
+
+  setTimeout(() => {
+    copyURLconfirm.classList.add('hidden');
+    resolve();
+  }, delay);
+});
