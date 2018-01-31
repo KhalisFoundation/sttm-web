@@ -1,6 +1,6 @@
 function renderControls() {
   return (
-   <div id="controls-wrapper" class="no-select hidden">
+    <div id="controls-wrapper" class="no-select hidden">
       <div id="share-menu">
         <ul class="share-buttons">
           <li>
@@ -126,7 +126,7 @@ function renderControls() {
       <div id="font-options">
         <div class="font-option-type">
           <div class="font-option-header">Font</div>
-            <a id="unicode-toggle" class="shabad-controller-toggle" click={shabadToggle}>Unicode</a>
+          <a id="unicode-toggle" class="shabad-controller-toggle" click={shabadToggle}>Unicode</a>
         </div>
         <div class="font-option-type">
           <div class="font-option-header">Font Size</div>
