@@ -123,3 +123,9 @@
     margin: 5px;
   }
 }
+
+/* Remove Microsoft Edge X icon from search bar */
+input::-ms-clear,
+input::-ms-reveal {
+  display: none;
+}
