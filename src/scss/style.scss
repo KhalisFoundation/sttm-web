@@ -12,7 +12,12 @@
   "search-page",
   "shabad-page",
   "sharing",
-  "spinner";
+  "spinner",
+  "help";
+
+html, body {
+  scroll-behavior: smooth;
+}
 
 body {
   background-color: #f5f5f5;
@@ -40,4 +45,20 @@ body {
 
 select {
   border-radius: 2px;
+}
+
+/* youtube responsive */
+.videoWrapper {
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  position: relative;
+}
+
+.videoWrapper iframe {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
