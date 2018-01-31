@@ -1,19 +1,20 @@
 function Help() {
   const content = {
     Web: [
-      [ 'How do I search for a shabad?',
+      [
+        "How do I search for a shabad?",
         `After launching SikhiToTheMax, by default you can search for a shabad by entering the
         first letter of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ , you '
         would enter "gmsshn". Alternatively, you can click on the gurmukhi keyboard icon and type
         in the letters manually.`
       ],
       [
-        'Can I separate the Gurbani from the English translations?',
+        "Can I separate the Gurbani from the English translations?",
         `When viewing a shabad or ang, click "Display Options" and then the "Split View" button
         in the drop down menu.`
       ],
       [
-        'What does the unicode button do?',
+        "What does the unicode button do?",
         `Unicode allows the Gumukhi text to be viewed without needing a pre-installed font. It will
         also allow you to copy and paste the text into vast variety of applications that you normally
         wouldn’t be able to do.`
@@ -21,7 +22,7 @@ function Help() {
     ],
     Desktop: [
       [
-        'Video Tutorial',
+        "Video Tutorial",
         `
           <div id="video">
             <div class="videoWrapper">
@@ -32,7 +33,7 @@ function Help() {
         `
       ],
       [
-        'How do I install the desktop application?',
+        "How do I install the desktop application?",
         `You can install SikhiToTheMax (STTM) by visiting
           <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/">this website</a>
           and choosing the Windows or macOS download link. After that, open the installer and follow
@@ -41,7 +42,7 @@ function Help() {
         `
       ],
       [
-        'How do I search for a shabad?',
+        "How do I search for a shabad?",
         `
         After launching STTM, by default you can search for a shabad by entering the first letter
          of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ , you would enter "gmsshn".'"
@@ -51,7 +52,7 @@ function Help() {
         `
       ],
       [
-        'What do the different search types do?',
+        "What do the different search types do?",
         `
         <ul>
           <li>First Letter (Start)
@@ -96,7 +97,7 @@ function Help() {
         </ul>`
       ],
       [
-        'How do I connect STTM to a projector?',
+        "How do I connect STTM to a projector?",
         `
           Plug in your computer to the projector or TV. Once you do this, go to your computer's
           display settings and change it to "Extended Desktop" (NOT mirroring). After that, launch
@@ -106,93 +107,98 @@ function Help() {
         `
       ],
       [
-        'How do I change the background color?',
+        "How do I change the background color?",
         `After launching STTM, click the icon for settings, and choose your theme.
         <img src="/assets/images/help/desktop-theme.png" />`
       ],
       [
-        'Can you view the Gurbani in Larivaar?',
+        "Can you view the Gurbani in Larivaar?",
         `Yes! After launching STTM, click the icon for settings, and choose the Larivaar option.
         <img src="/assets/images/help/desktop-larivaar.png" />`
       ],
       [
-        'How can I make the fonts on the screen smaller?',
+        "How can I make the fonts on the screen smaller?",
         `After launching STTM, click the icon for settings, and scroll down for options to
         adjust the font size.
         <img src="/assets/images/help/desktop-font-size.png" />`
       ],
       [
-        'Where can I see my previous shabads?',
+        "Where can I see my previous shabads?",
         `When using STTM in “Presenter View”, your history will appear in the bottom right
         quadrant. You can click any of the shabads in the list to bring them back up as your
         primary one.
         <img src="/assets/images/help/desktop-history.png" />`
       ],
       [
-        'How do I report a mistake?',
+        "How do I report a mistake?",
         `Visit <a href="https://sikhitothemax.org">SikhiToTheMax.org</a> and
         click "<a href="https://goo.gl/plk23h">Feedback</a>" at the bottom of the page.`
       ]
     ]
   };
 
-  const getTitle = question => question.split(' ').join('-').toLowerCase().replace(/[^a-z.\-]/g, '').substr(0, 50);
+  const getTitle = question =>
+    question
+      .split(" ")
+      .join("-")
+      .toLowerCase()
+      .replace(/[^a-z.\-]/g, "")
+      .substr(0, 50);
 
-  const contentWithTitle = Object
-    .keys(content)
-    .reduce((o, header) => ({
+  const contentWithTitle = Object.keys(content).reduce(
+    (o, header) => ({
       ...o,
-      [header]: content[header].map(([question, answer]) => [getTitle(question), question, answer]),
-    }), {});
+      [header]: content[header].map(([question, answer]) => [
+        getTitle(question),
+        question,
+        answer
+      ])
+    }),
+    {}
+  );
 
   const help = (
-    <div class='body_text'>
+    <div class="body_text">
       <h2>Help</h2>
 
       <div id="help">
-
         <div id="sidebar">
           <ul>
-            {
-              Object.keys(contentWithTitle).map(header => (
-                <li>
-                  <a href={`#${header}`}>{header}</a>
-                  <ul>
-                    {contentWithTitle[header].map(([title, question]) => (
-                      <li key={question}>
-                        <a href={`#${header}-${title}`}>{question}</a>
-                      </li>)
-                    )}
-                  </ul>
-                </li>
-              ))
-            }
+            {Object.keys(contentWithTitle).map(header => (
+              <li>
+                <a href={`#${header}`}>{header}</a>
+                <ul>
+                  {contentWithTitle[header].map(([title, question]) => (
+                    <li key={question}>
+                      <a href={`#${title}`}>{question}</a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
           </ul>
         </div>
 
         <main>
-          {
-            Object.keys(contentWithTitle).map((header) => (
-              <section id={header} key={header}>
-                <h3>{header}</h3>
-                {
-                  contentWithTitle[header].map(([title, question, answer]) => (
-                    <div class="question" id={`${header}-${title}`} key={title}>
-                      <h4><a href={`#${header}-${title}`}>#</a> {question}</h4>
-                      <div>{answer}</div>
-                    </div>
-                  ))
-                }
-              </section>
-            ))
-          }
+          {Object.keys(contentWithTitle).map(header => (
+            <section id={header} key={header}>
+              <h3>{header}</h3>
+              {contentWithTitle[header].map(([title, question, answer]) => (
+                <div class="question" id={title} key={title}>
+                  <h4>
+                    <a href={`#${title}`}>#</a> {question}
+                  </h4>
+                  <div>{answer}</div>
+                </div>
+              ))}
+            </section>
+          ))}
         </main>
-
       </div>
     </div>
   );
 
-  document.getElementById('content-root').appendChild(help);
+  document.getElementById("content-root").appendChild(help);
 }
 
 Help();
