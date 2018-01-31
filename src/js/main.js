@@ -298,6 +298,52 @@ const showToast = (text, delay = 2500) => new Promise((resolve) => {
   copyURLconfirm.innerText = text;
   copyURLconfirm.classList.remove('hidden');
 
+$search.onkeyup = function () {
+  const value = this.value;
+  const clearSearchToggle = document.querySelector('.clear-search-toggle');
+  if (value.length > 0) {
+    clearSearchToggle.classList.add('active');
+  } else {
+    clearSearchToggle.classList.remove('active');
+  }
+  // Remove non-numeric characters for Ang search
+  if (parseInt($searchType.value, 10) === 5) {
+    forceSearchNumeric();
+  }
+};
+
+const copyToClipboard = text => new Promise((resolve, reject) => {
+  try {
+    const textarea = document.createElement('textarea');
+    textarea.textContent = text;
+    document.body.appendChild(textarea);
+
+    const selection = document.getSelection();
+    const range = document.createRange();
+    range.selectNode(textarea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    const result = document.execCommand('copy');
+
+    selection.removeAllRanges();
+    document.body.removeChild(textarea);
+
+    if (result) {
+      resolve();
+    } else {
+      throw new Error('Failed to copy');
+    }
+  } catch (e) {
+    reject(e);
+  }
+});
+
+const showToast = (text, delay = 2500) => new Promise(resolve => {
+  const copyURLconfirm = document.getElementById('toast-notification');
+  copyURLconfirm.innerText = text;
+  copyURLconfirm.classList.remove('hidden');
+
   setTimeout(() => {
     copyURLconfirm.classList.add('hidden');
     resolve();
