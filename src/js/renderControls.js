@@ -89,7 +89,6 @@ function renderControls() {
           </li>
         </ul>
       </div>
-      <div id="copy-URL-confirm" class="copy-URL-confirm hidden">Link has been copied to your clipboard</div>
       <div id="shabad-controllers">
         <a id="display-options-toggle" class="shabad-controller-toggle" click={shabadToggle}>
           <i class="fa fa-television" />
@@ -139,16 +138,7 @@ function renderControls() {
 }
 
 function copyShortUrl() {
-  copyToClipboard(shortenURL());
-  //hide share menu temporarily
-  const shareMenu = document.getElementById('share-menu');
-  shareMenu.classList.add('hidden');
-
-  //show confirmation
-  const copyURLconfirm = document.getElementById('copy-URL-confirm');
-  copyURLconfirm.classList.remove('hidden');
-  setTimeout(() => {
-    copyURLconfirm.classList.add('hidden');
-    shareMenu.classList.remove('hidden');
-  }, 3000);
+  copyToClipboard(shortenURL())
+    .then(() => showToast('Link has been copied to your clipboard!'))
+    .catch(() => showToast(`Sorry, we couldn't copy the link.`));
 }

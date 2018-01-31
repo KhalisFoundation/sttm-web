@@ -76,9 +76,20 @@
   }
 }
 
-.copy-URL-confirm {
-  color: #00669b;
-  float: right;
-  margin: auto -20px;
-  padding: 5px 0;
+.toast-notification {
+  background-color: #444444;
+  color: #f39c1f;
+  font-weight: 500;
+  position: fixed;
+  left: 0;
+  padding: 0.5rem 1rem;
+  right: 0;
+  text-shadow: 0 0 0.1rem #272626;
+  top: 0;
+  z-index: 1;
+
+  @media screen and (max-width: 45.999999em) {
+    bottom: 0;
+    top: auto;
+  }
 }

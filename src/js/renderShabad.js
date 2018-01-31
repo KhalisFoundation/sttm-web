@@ -103,18 +103,18 @@ function metaData(data, nav) {
 }
 
 function Baani(gurbani) {
-  const onCopyClick = ({ currentTarget }) => {
-    const textarea = currentTarget.parentNode.parentNode.querySelector('textarea');
-    textarea.style.display = 'block';
-    textarea.focus();
-    textarea.select();
-    document.execCommand('copy');
-    textarea.blur();
-    textarea.style.display = 'none';
-  };
+  const _getShabadLine = el => [ ...el.parentNode.parentNode.querySelectorAll('div, blockquote') ] 
+    .filter(e => getComputedStyle(e).visibility !== 'hidden' && getComputedStyle(e).display !== 'none') // filter hidden ones
+    .map(child => (child.querySelector('div.unicode') || child).innerText) // get innerText
+    .filter(text => text) // filter empty strings
+    .join('\n'); // join them by new line
+
+  const onCopyClick = ({ currentTarget }) => copyToClipboard(_getShabadLine(currentTarget))
+    .then(() => showToast('Gurbaani has been copied!'))
+    .catch(() => showToast(`Sorry, we couldn't copy the link.`));
 
   const onTweetClick = ({ currentTarget}) => {
-    let tweet = currentTarget.parentNode.parentNode.querySelector('textarea').value;
+    let tweet = _getShabadLine(currentTarget);
     const shortURL = `\n${shortenURL()}`;
     if (tweet.length + shortURL.length > 274) {
       tweet = `${tweet.substring(0, 272 - shortURL.length)}…`;
