@@ -85,24 +85,12 @@ blockquote {
   }
 }
 
-.shabad {
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 0 1rem;
-  width: 100%;
-}
-
 .shabad-container {
   width: 100%;
 }
 
 .shabad-content > div {
   margin-bottom: 1rem;
-}
-
-.shabad .line {
-  position: relative;
 }
 
 .shabad-content p,
@@ -115,39 +103,49 @@ blockquote {
   clear: both;
 }
 
-.shabad .line .share {
-  background-color: rgba(255, 255, 255, 0.85);
-  display: none;
-  padding: 5px;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+.shabad {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0 1rem;
+  width: 100%;
 
-.shabad .line:hover .share {
-  display: block;
-}
+  .line {
+    position: relative;
 
-.shabad .share a {
-  color: #000;
-  margin-left: 5px;
-  padding: 0.5rem;
-}
+    .share {
+      background-color: rgba(255, 255, 255, 0.85);
+      display: none;
+      padding: 5px;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
 
-.shabad .share .copy:hover {
-  color: #f39c1d;
-}
+    &:hover .share {
+      display: block;
+    }
+  }
 
-.shabad .share .twitter:hover {
-  color: #00aced;
-}
+  .share {
+    a {
+      color: #000;
+      margin-left: 5px;
+      padding: 0.5rem;
+    }
 
-.shabad .share .facebook:hover {
-  color: #3b5998;
-}
+    .copy:hover {
+      color: #f39c1d;
+    }
 
-.shabad textarea {
-  display: none;
+    .twitter:hover {
+      color: #00aced;
+    }
+
+    .facebook:hover {
+      color: #3b5998;
+    }
+  }
 }
 
 @media screen and (min-width: 350px) {

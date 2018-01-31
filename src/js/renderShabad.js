@@ -162,7 +162,6 @@ function Baani(gurbani) {
                 <a class="twitter" click={onTweetClick}><i class="fa fa-fw fa-twitter" /></a>
                 {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
               </div>
-              <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
             </div>
           ))
         }
@@ -177,7 +176,6 @@ function Baani(gurbani) {
                 <a class="twitter"><i class="fa fa-fw fa-twitter" /></a>
                 {/*<a class="facebook"><i class="fa fa-fw fa-facebook" /></a>*/}
               </div>
-              <textarea>{`${shabad.gurbani.unicode}\n${shabad.translation.english.ssk}`}</textarea>
             </div>
           ))}
         </div>
