@@ -26,7 +26,7 @@ function shortenURL(url = window.location.href) {
 
 const getPrefs = () => Object
   .keys(defaultPrefs)
-  .forEach(key => prefs[key] = localStorage.getItem(key)
+  .forEach((key) => prefs[key] = localStorage.getItem(key)
     ? JSON.parse(localStorage.getItem(key))
     : defaultPrefs[key]
   );
@@ -51,7 +51,7 @@ function forceSearchNumeric() {
 
 // Note: Don't add listeners to JS rendered DOM Nodes. Use h() to bind eventListeners to them.
 
-function attachEventListeners () {
+function attachEventListeners() {
   // Mobile hamburger menu
   [document.getElementById('open-mobile-menu')]
     .forEach(e => e && e.addEventListener('click', () => document.body.classList.toggle('menu-open')));
@@ -77,7 +77,21 @@ function attachEventListeners () {
     .forEach(e => e && e.addEventListener('click', () => [e, document.querySelector('.gurmukhi-keyboard')].forEach((f) => { f.classList.toggle('active'); })));
 
   [document.querySelector('.clear-search-toggle')]
-    .forEach(e => e && e.addEventListener('click', () => $search.value=''));
+    .forEach(e => e && e.addEventListener('click', () => $search.value = ''));
+
+  $search.addEventListener('keyup', () => {
+    const value = this.value;
+    const clearSearchToggle = document.querySelector('.clear-search-toggle');
+    if (value.length > 0) {
+      clearSearchToggle.classList.add('active');
+    } else {
+      clearSearchToggle.classList.remove('active');
+    }
+    // Remove non-numeric characters for Ang search
+    if (parseInt($searchType.value, 10) === 5) {
+      forceSearchNumeric();
+    }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -188,6 +202,7 @@ function addSpaceForPadChed(status) {
     const padChedDiv = '<span class="padChedDiv"> </span>';
 
     [...document.querySelectorAll('.akhar')]
+      .filter(e => e.querySelector('.padChedDiv') === null)
       .forEach((element) => {
         const str = element.innerHTML;
         const text = str + padChedDiv;
@@ -250,20 +265,7 @@ if ($searchType) $searchType.addEventListener('change', updateSearchLang);
 
 if ($searchType) $searchType.addEventListener('change', updateSearchAction);
 
-$search.onkeyup = function () {
-  const value = this.value;
-  const clearSearchToggle = document.querySelector('.clear-search-toggle');
-  if (value.length > 0) {
-    clearSearchToggle.classList.add('active');
-  } else {
-    clearSearchToggle.classList.remove('active');
-  }
-  // Remove non-numeric characters for Ang search
-  if (parseInt($searchType.value, 10) === 5) {
-    forceSearchNumeric();
-  }
-};
-
+// TODO: Move to utils
 const copyToClipboard = text => new Promise((resolve, reject) => {
   try {
     const textarea = document.createElement('textarea');
@@ -291,7 +293,7 @@ const copyToClipboard = text => new Promise((resolve, reject) => {
   }
 });
 
-const showToast = (text, delay = 2500) => new Promise(resolve => {
+const showToast = (text, delay = 2500) => new Promise((resolve) => {
   const copyURLconfirm = document.getElementById('toast-notification');
   copyURLconfirm.innerText = text;
   copyURLconfirm.classList.remove('hidden');
