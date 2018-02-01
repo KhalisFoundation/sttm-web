@@ -1,14 +1,13 @@
 const $searchResults = document.querySelector('.search-results');
 
-function loadResults({ source, type, q, offset = null }) {
-
-  return fetch(Khajana.buildApiUrl({ q, type, source, offset }))
+const loadResults = ({ source, type, q, offset = null }) =>
+  fetch(Khajana.buildApiUrl({ q, type, source, offset }))
     .then(r => r.json())
     .then(({ pageinfo: { pageresults, nextpageoffset }, shabads }) => {
 
       [...document.querySelectorAll('h3.loading, li.load-more')]
         .forEach(el => el && el.parentNode
-          ? el.parentNode.removeChild()
+          ? el.parentNode.removeChild(el)
           : el.remove()
         );
 
@@ -18,7 +17,7 @@ function loadResults({ source, type, q, offset = null }) {
           break;
         }
 
-          // I'm feeling lucky
+        // I'm feeling lucky
         case 1: {
           document.body.classList.remove('loading');
           const [{ shabad }] = shabads;
@@ -31,9 +30,14 @@ function loadResults({ source, type, q, offset = null }) {
 
           shabads.forEach(({ shabad }) => addSearchResult({ shabad, q, type, source }));
 
+          const shouldLarivaar = prefs.shabadToggles.indexOf('larivaar-toggle') < 0;
+
           if (nextpageoffset) {
+            const loadMore = () => loadResults({ source, type, q, offset: nextpageoffset })
+              .then(() => addSpaceForPadChed(shouldLarivaar));
+
             $searchResults.appendChild(
-              <li class='load-more'>
+              <li class='load-more' click={loadMore}>
                 <a class='load button' data-nextpage={nextpageoffset}>Load More</a>
               </li>
             );
@@ -66,7 +70,6 @@ function loadResults({ source, type, q, offset = null }) {
       );
       console.error(error);
     });
-}
 
 function getShabadHyperLink({ shabad, q, type, source }) {
   return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
@@ -105,8 +108,8 @@ function addSearchResult({ shabad, q, type, source }) {
         <a href='#'>{shabad.writer.english}</a>
 
         {shabad.raag.english === 'No Raag' || shabad.raag.english === null
-            ? ''
-            : <a href='#'>{shabad.raag.english}</a>
+          ? ''
+          : <a href='#'>{shabad.raag.english}</a>
         }
       </div>
     </li>
@@ -118,12 +121,9 @@ function noResults() {
   $searchResults.appendChild(<h3>No results found</h3>);
 }
 
-function fetchSearchResults () {
+function fetchSearchResults() {
   const params = ['type', 'source', 'q'];
   const [type = 0, source = 'all', q = ''] = params.map(v => getParameterByName(v));
-
-  [...$searchResults.querySelectorAll('a.load')]
-    .forEach(el => el && el.addEventListener('click', () => loadResults({ source, type, q, offset: el.dataset.nextpage })));
 
   if (q === '') {
     $searchResults.appendChild(<h3><span>Please enter your query in the search bar above</span></h3>);
@@ -132,7 +132,7 @@ function fetchSearchResults () {
 
   document.body.classList.toggle('loading');
 
-  loadResults({ type, source, q });
+  return loadResults({ type, source, q });
 }
 
 fetchSearchResults();
