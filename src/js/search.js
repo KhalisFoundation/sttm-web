@@ -30,11 +30,24 @@ const loadResults = ({ source, type, q, offset = null }) =>
 
           shabads.forEach(({ shabad }) => addSearchResult({ shabad, q, type, source }));
 
-          const shouldLarivaar = prefs.shabadToggles.indexOf('larivaar-toggle') < 0;
 
           if (nextpageoffset) {
-            const loadMore = () => loadResults({ source, type, q, offset: nextpageoffset })
-              .then(() => addSpaceForPadChed(shouldLarivaar));
+            const loadMore = e => {
+              const shouldLarivaar = prefs.shabadToggles.indexOf('larivaar-toggle') < 0;
+              const previousLoadText = e.currentTarget.querySelector('a').innerText;
+
+              e.currentTarget.querySelector('a').innerText = 'Loading ...';
+              // To block further clicks.
+              e.currentTarget.style.pointerEvents = 'none';
+
+              loadResults({ source, type, q, offset: nextpageoffset })
+                .then(() => addSpaceForPadChed(shouldLarivaar))
+                .then(() => {
+                  // Undo DOM changes.
+                  e.currentTarget.querySelector('a').innerText = previousLoadText;
+                  e.currentTarget.style.pointerEvents = '';
+                });
+            };
 
             $searchResults.appendChild(
               <li class='load-more' click={loadMore}>
