@@ -1,3 +1,5 @@
+![SikhiToTheMax's logo](/assets/images/sttm_logo.png)
+
 # SikhiToTheMax Website
 
 Originally developed by SHARE Charity UK, SikhiToTheMax has become a defacto standard for keertans and gurdwaras around the world to display gurbani on screens for sangat to join into the depth of Gurbani and translations.
