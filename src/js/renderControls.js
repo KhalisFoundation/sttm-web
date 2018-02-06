@@ -81,6 +81,12 @@ function renderControls() {
               <span class="sr-only">Share via email</span>
             </a>
           </li>
+          <li>
+            <a id="copy-short-url" class="copy" click={copyShortUrl} >
+              <i class="fa fa-fw fa-clipboard" />
+              <span class="sr-only">Copy URL</span>
+            </a>
+          </li>
         </ul>
       </div>
       <div id="shabad-controllers">
@@ -120,7 +126,7 @@ function renderControls() {
       <div id="font-options">
         <div class="font-option-type">
           <div class="font-option-header">Font</div>
-            <a id="unicode-toggle" class="shabad-controller-toggle" click={shabadToggle}>Unicode</a>
+          <a id="unicode-toggle" class="shabad-controller-toggle" click={shabadToggle}>Unicode</a>
         </div>
         <div class="font-option-type">
           <div class="font-option-header">Font Size</div>
@@ -129,4 +135,10 @@ function renderControls() {
       </div>
     </div>
   );
+}
+
+function copyShortUrl() {
+  copyToClipboard(shortenURL())
+    .then(() => showToast('Link has been copied to your clipboard!'))
+    .catch(() => showToast(`Sorry, we couldn't copy the link.`));
 }

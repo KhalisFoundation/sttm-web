@@ -18,13 +18,7 @@ function h(type = 'div', attributes, ...children) {
     });
 
   if (children instanceof Array) {
-    children.filter(child => child !== null).forEach(child => {
-      if (child instanceof HTMLElement) {
-        el.appendChild(child)
-      } else {
-        el.innerHTML += child;
-      }
-    });
+    appendChildren(el, children);
   } else if (children instanceof HTMLElement) {
     el.appendChild(children);
   } else if (typeof children === 'string') {
@@ -32,6 +26,18 @@ function h(type = 'div', attributes, ...children) {
   }
 
   return el;
+}
+
+const appendChildren = (el, children) => {
+  children.filter(child => child !== null).forEach(child => {
+    if (child instanceof HTMLElement) {
+      el.appendChild(child)
+    } else if (child instanceof Array) {
+      appendChildren(el, child);
+    } else {
+      el.innerHTML += child;
+    }
+  });
 }
 
 const H3 = children => h('h3', { class: 'text-center' }, children);

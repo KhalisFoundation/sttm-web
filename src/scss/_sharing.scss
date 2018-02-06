@@ -75,3 +75,21 @@
     font-size: 1.1em !important;
   }
 }
+
+.toast-notification {
+  background-color: #313131;
+  color: #f39c1f;
+  font-weight: 400;
+  left: 0;
+  padding: 0.5rem 1rem;
+  position: fixed;
+  right: 0;
+  text-shadow: 0 0 0.05rem #0e0e0e;
+  top: 0;
+  z-index: 1;
+
+  @media screen and (max-width: 45.999999em) {
+    bottom: 0;
+    top: auto;
+  }
+}
