@@ -17,7 +17,6 @@
 #font-options {
   align-content: flex-start;
   background-color: #fafafa;
-  display: none;
   flex-wrap: wrap;
   margin: 0 auto;
   width: calc(100% - 2rem);
@@ -81,6 +80,7 @@
   line-height: 1.4;
   margin-right: 5px;
   padding: 4px 10px;
+  text-transform: capitalize;
   transition: all 0.25s;
   vertical-align: baseline;
 
@@ -107,11 +107,6 @@
       content: 'ਅ';
     }
   }
-}
-
-/* Hide Larivaar Assist if Larivaar is not checked */
-#larivaar-toggle:not(.active) + a {
-  display: none;
 }
 
 .display-option-type,

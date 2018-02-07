@@ -3,7 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: {
-    router: path.resolve(__dirname, 'src', 'js', 'router.js'),
+    vendor: ['react', 'react-dom', 'shabados'],
+    app: path.resolve(__dirname, 'src', 'js', 'index.js'),
   },
   output: {
     path: path.resolve(__dirname, 'assets', 'js'),

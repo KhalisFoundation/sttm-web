@@ -1,7 +1,6 @@
-export { default as NotFound } from './NotFound';
+export { default as Fetch } from './Fetch';
+export { default as Controls } from './Controls';
+export { default as Header } from './Header';
+export { default as Larivaar } from './Larivaar';
 export { default as SearchForm } from './SearchForm';
-export { default as ShabadContainer } from './ShabadContainer';
-export { default as SearchResults } from './SearchResults';
-export { default as Content } from './Content';
-export { default as Option } from './Option';
-export { default as Hukamnama } from './Hukamnama';
+export { default as GurmukhiKeyboard } from './GurmukhiKeyboard';

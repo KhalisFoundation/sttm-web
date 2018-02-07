@@ -1,5 +1,5 @@
 {
-  "name": "SikhiToTheMax-Web",
+  "name": "sikhitothemax-web",
   "version": "1.1.0",
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
@@ -8,6 +8,7 @@
     "test:lint:js": "eslint src/js server",
     "test:lint:css": "stylelint \"src/scss/*.scss\" --syntax scss",
     "test:lint": "npm-run-all test:lint:*",
+    "test:unit": "jest --no-cache",
     "test": "npm-run-all test:*",
     "start": "npm-run-all --parallel build-watch:* server-watch",
     "server": "node server",
@@ -38,38 +39,66 @@
   },
   "homepage": "https://github.com/KhalisFoundation/SikhiToTheMax-Web#readme",
   "devDependencies": {
-    "babel-cli": "^6.23.0",
-    "babel-core": "^6.23.1",
-    "babel-loader": "^6.4.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.1.8",
-    "babili": "0.0.12",
+    "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.40",
+    "@babel/plugin-syntax-object-rest-spread": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "@babel/preset-react": "^7.0.0-beta.40",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^22.4.1",
+    "babel-loader": "^8.0.0-beta.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.1",
     "eslint": "^3.18.0",
     "eslint-config-airbnb-base": "^11.1.2",
     "eslint-plugin-import": "^2.2.0",
     "html-webpack-plugin": "^2.28.0",
     "htmlhint": "^0.9.13",
+    "jest": "^22.4.2",
     "node-sass": "^4.7.2",
     "nodemon": "^1.11.0",
-    "npm-run-all": "^4.0.2",
+    "npm-run-all": "^4.1.2",
+    "prop-types": "^15.6.0",
+    "regenerator-runtime": "^0.11.1",
     "replace-in-file": "^3.1.0",
     "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.1",
     "webpack": "^3.10.0"
   },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/jest/coverage",
+    "coverageReporters": [
+      "html"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "<rootDir>/jest/setup.js"
+    ]
+  },
   "babel": {
     "env": {
-      "production": {
+      "production": {},
+      "test": {
         "presets": [
-          "babili"
+          "@babel/preset-env",
+          "@babel/preset-react"
+        ],
+        "plugins": [
+          "@babel/plugin-proposal-object-rest-spread",
+          "@babel/plugin-proposal-class-properties"
         ]
       }
     },
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
           "targets": {
             "browsers": [
@@ -80,16 +109,12 @@
           },
           "modules": false
         }
-      ]
+      ],
+      "@babel/preset-react"
     ],
     "plugins": [
-      "transform-object-rest-spread",
-      [
-        "transform-react-jsx",
-        {
-          "pragma": "h"
-        }
-      ]
+      "@babel/plugin-proposal-object-rest-spread",
+      "@babel/plugin-proposal-class-properties"
     ]
   },
   "standard": {
@@ -99,9 +124,11 @@
   },
   "dependencies": {
     "compression": "^1.6.2",
-    "express": "^4.15.2",
-    "foundation": "^4.2.1-1",
-    "jquery": "^3.2.1",
-    "khajana": "^1.0.0"
+    "express": "^4.16.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
+    "shabados": "^2.0.0-beta.1"
   }
 }

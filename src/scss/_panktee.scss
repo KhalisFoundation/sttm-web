@@ -7,12 +7,6 @@
     text-transform: capitalize;
   }
 
-  .unicode,
-  .translation,
-  .transliteration {
-    display: none;
-  }
-
   .gurlipi i,
   .unicode i {
     font-style: normal;
@@ -23,10 +17,6 @@
     transition: all 0.25s;
   }
 
-  .split-view-baani {
-    display: none;
-  }
-
   &.split-view {
     .split-view-baani {
       display: block;
@@ -35,18 +25,6 @@
         margin-top: 1em;
       }
     }
-
-    .mixed-view-baani {
-      display: none;
-    }
-  }
-
-  &.unicode .unicode {
-    display: block;
-  }
-
-  &.unicode .gurlipi {
-    display: none;
   }
 
   &.translation-english .translation.english,
