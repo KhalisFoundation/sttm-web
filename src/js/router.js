@@ -1,40 +1,72 @@
 import React from 'react';
-import Khajana from 'shabados';
-import { redirectTo, getQueryParams, getParameterByName, entries } from './util';
-import { Header } from './components';
-import Shabad from './pages/Shabad';
+import PropTypes from 'prop-types';
+import { redirectTo, getQueryParams, getParameterByName, throwError } from './util';
+import RenderPromise from './components/RenderPromise';
+import Header from './components/Header';
 import Home from './pages/Home';
-import Search from './pages/Search';
-import Hukamnama from './pages/Hukamnama';
-import Help from './pages/Help';
-import About from './pages/About';
-import Ang from './pages/Ang';
-import NotFound from './pages/NotFound';
-import TermsOfService from './pages/TermsOfService';
 
-const Layout = ({ children, isHome = false }) => (
-  <React.Fragment>
-    <Header isHome={isHome} />
-    {children}
-  </React.Fragment>
-);
+class Layout extends React.PureComponent {
+  static defaultProps = {
+    isHome: false,
+  };
+
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    isHome: PropTypes.bool,
+  };
+
+  render() {
+    const { children, isHome = false } = this.props;
+    return (
+      <React.Fragment>
+        <Header isHome={isHome} />
+        {children}
+      </React.Fragment>
+    );
+  }
+}
 
 const routes = {
-  'terms-of-service': function () {
+  ['terms-of-service'] () {
     document.title = 'Terms of Service - SikhiToTheMax';
 
     return (
       <Layout>
-        <TermsOfService />
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "TermsOfService" */ './pages/TermsOfService')}
+        >
+          {
+            ({ pending, resolved: { default: TermsOfService } = {}, rejected }) => (
+              pending
+                ? null
+                : TermsOfService 
+                  ? <TermsOfService />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
       </Layout>
     );
   },
-  404() {
+
+  ['404'] () {
     document.title = 'Page not found - SikhiToTheMax';
 
     return (
       <Layout>
-        <NotFound url={location.href} />
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "NotFound" */ './pages/NotFound')}
+        >
+          {
+            ({ pending, resolved: { default: NotFound } = {}, rejected }) => (
+              pending
+                ? null
+                : NotFound 
+                  ? <NotFound />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
       </Layout>
     );
   },
@@ -44,7 +76,19 @@ const routes = {
 
     return (
       <Layout>
-        <About />
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "About" */ './pages/About')}
+        >
+          {
+            ({ pending, resolved: { default: About } = {}, rejected }) => (
+              pending
+                ? null
+                : About 
+                  ? <About />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
       </Layout>
     );
   },
@@ -55,7 +99,19 @@ const routes = {
 
     return (
       <Layout>
-        <Ang ang={ang} source={source} />
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Ang" */ './pages/Ang')}
+        >
+          {
+            ({ pending, resolved: { default: Ang } = {}, rejected }) => (
+              pending
+                ? null
+                : Ang 
+                  ? <Ang ang={ang} source={source} />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
       </Layout>
     );
   },
@@ -65,7 +121,19 @@ const routes = {
 
     return (
       <Layout>
-        <Help />
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Help" */ './pages/Help')}
+        >
+          {
+            ({ pending, resolved: { default: Help } = {}, rejected }) => (
+              pending
+                ? null
+                : Help 
+                  ? <Help />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
       </Layout>
     );
   },
@@ -88,7 +156,19 @@ const routes = {
 
     return (
       <Layout>
-        <Hukamnama />
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Hukamnama" */ './pages/Hukamnama')}
+        >
+          {
+            ({ pending, resolved: { default: Hukamnama } = {}, rejected }) => (
+              pending
+                ? null
+                : Hukamnama
+                  ? <Hukamnama />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
       </Layout>
     );
   },
@@ -101,12 +181,19 @@ const routes = {
 
     return (
       <Layout>
-        <Search
-          q={q}
-          type={type}
-          source={source}
-          offset={offset}
-        />
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Search" */ './pages/Search')}
+        >
+          {
+            ({ pending, resolved: { default: Search } = {}, rejected }) => (
+              pending
+                ? null
+                : Search
+                  ? <Search q={q} type={type} source={source} offset={offset} />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
       </Layout>
     );
   },
@@ -117,7 +204,19 @@ const routes = {
     const [random, id, q, type] = ['random', 'id', 'q', 'type'].map(v => getParameterByName(v));
     return (
       <Layout>
-        <Shabad random={random === ''} id={id} q={q} type={type} />
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Shabad" */ './pages/Shabad')}
+        >
+          {
+            ({ pending, resolved: { default: Shabad } = {}, rejected }) => (
+              pending
+                ? null
+                : Shabad
+                  ? <Shabad random={random === ''} id={id} q={q} type={type} />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
       </Layout>
     );
   },

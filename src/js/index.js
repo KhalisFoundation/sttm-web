@@ -11,6 +11,7 @@ class Root extends React.PureComponent {
 
   componentDidCatch(error) {
     this.setState({ error });
+    // eslint-disable-next-line no-console
     console.error({ error });
   }
 

@@ -33,7 +33,7 @@ const initialState = {
   larivaar: getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR, DEFAULT_LARIVAAR),
   unicode: getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_UNICODE, DEFAULT_UNICODE),
   splitView: getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW, DEFAULT_SPLIT_VIEW),
-  fontSize: getNumberFromLocalStorage(LOCAL_STORAGE_KEY_FOR_FONT_SIZE, DEFAULT_SPLIT_VIEW),
+  fontSize: getNumberFromLocalStorage(LOCAL_STORAGE_KEY_FOR_FONT_SIZE, DEFAULT_FONT_SIZE),
 };
 
 const store = createStore(

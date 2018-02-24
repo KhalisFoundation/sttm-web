@@ -3,6 +3,7 @@ export const replaceState = url => window && window.history.replaceState('', '',
 export const pushState = url => window && window.history.pushState('', '', url);
 
 export const throwError = (msg, err) => {
+  // eslint-disable-next-line no-console
   console.warn(err);
   throw new Error(err);
 };
@@ -22,7 +23,7 @@ export function getQueryParams() {
   const re = /[?&]?([^=]+)=([^&]*)/g;
   let tokens;
 
-  while (tokens = re.exec(qs)) {
+  while ((tokens = re.exec(qs))) {
     params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
   }
 

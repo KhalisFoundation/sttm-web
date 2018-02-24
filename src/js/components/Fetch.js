@@ -18,6 +18,7 @@ export default class Fetch extends React.PureComponent {
     static propTypes = {
         transform: PropTypes.func,
         url: PropTypes.string,
+        children: PropTypes.func.isRequired,
         options: PropTypes.object,
     };
 
@@ -52,7 +53,7 @@ export default class Fetch extends React.PureComponent {
                     data,
                     error: null,
                 }))
-                .catch(err => this.setState({
+                .catch(error => this.setState({
                     loading: false,
                     res,
                     data: null,

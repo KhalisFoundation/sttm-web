@@ -1,8 +1,9 @@
 import React from 'react';
 import { SOURCES, TYPES } from 'shabados';
+import GurmukhiKeyboard from '../../components/GurmukhiKeyboard'
+import SearchForm  from '../../components/SearchForm';
 
 const types = [...TYPES, 'Ang'];
-import { GurmukhiKeyboard, SearchForm } from '../../components';
 
 export default class Home extends React.PureComponent {
   render() {
@@ -88,11 +89,7 @@ export default class Home extends React.PureComponent {
                         {
                           types
                             .map((children, value) =>
-                              <option
-                                key={value}
-                                value={value}
-                                children={children}
-                              />,
+                              <option key={value} value={value}>{children}</option>,
                             )
                         }
                       </select>
@@ -102,11 +99,7 @@ export default class Home extends React.PureComponent {
                         {
                           Object.entries(SOURCES)
                             .map(([value, children]) =>
-                              <option
-                                key={value}
-                                value={value}
-                                children={children}
-                              />,
+                              <option key={value} value={value}>{children}</option>,
                             )
                         }
                       </select>

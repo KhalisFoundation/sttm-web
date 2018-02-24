@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key, react/no-unescaped-entities */
 import React from 'react';
 
 export default function Help() {
@@ -47,7 +48,7 @@ export default function Help() {
         'How do I search for a shabad?',
         <React.Fragment>
           After launching STTM, by default you can search for a shabad by entering the first letter
-           of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ , you would enter "gmsshn".'"
+           of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ , you would enter <code>gmsshn</code>.
           <img src="/assets/images/help/desktop-search-ex.png" />
           Alternatively, you can click on the gurmukhi keyboard icon and type in the letters manually.
           <img src="/assets/images/help/desktop-keyboard.png" />
@@ -76,7 +77,7 @@ export default function Help() {
             <li>English Translation (Full Word)
             <ul>
                 <li>You can search for shabads via the english translations. For example, type in the word
-              "bird" and the results will show all shabads that include a translation for "bird".</li>
+              <code>bird</code> and the results will show all shabads that include a translation for "bird".</li>
               </ul>
             </li>
           </ul>

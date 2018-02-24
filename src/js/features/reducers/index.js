@@ -24,7 +24,7 @@ import {
     saveToLocalStorage,
 } from '../../util';
 
-export default function reducer(state = initalState, action) {
+export default function reducer(state, action) {
   switch (action.type) {
     case TOGGLE_TRANSLITERATION_OPTIONS: return {
       ...state,

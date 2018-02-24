@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
@@ -9,6 +10,10 @@ import {
 
 const onlyNumbers = str => str.replace(/\D/g, '');
 export default class SearchForm extends React.PureComponent {
+  static propTypes = {
+    children: PropTypes.func.isRequired,
+  };
+
   state = {
     displayGurmukhiKeyboard: false,
     query: '',
@@ -88,8 +93,8 @@ export default class SearchForm extends React.PureComponent {
   }
 
   // Retuns a function
-  setGurmukhiKeyboardVisibilityAs = value => e => this.setState({ displayGurmukhiKeyboard: value });
-  setQueryAs = value => e => this.setState({ query: value });
+  setGurmukhiKeyboardVisibilityAs = value => () => this.setState({ displayGurmukhiKeyboard: value });
+  setQueryAs = value => () => this.setState({ query: value });
 
   handleSearchChange = ({ target: { value } }) => this.setState(({ type }) => ({
     query: type === 5 ? onlyNumbers(value) : value
@@ -108,5 +113,5 @@ export default class SearchForm extends React.PureComponent {
     }
   );
 
-  handleSubmit = e => {/* Possible Validations, Analytics */};
+  handleSubmit = () => {/* Possible Validations, Analytics */};
 }
