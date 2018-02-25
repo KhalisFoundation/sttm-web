@@ -1,187 +1,254 @@
-/* global h */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { redirectTo, getQueryParams, getParameterByName, throwError } from './util';
+import RenderPromise from './components/RenderPromise';
+import Header from './components/Header';
+import Home from './pages/Home';
 
-import {
-  NotFound,
-  SearchForm,
-  ShabadContainer,
-  Hukamnama,
-  Content,
-  SearchResults,
-  Option,
-} from './components';
-import { entries, createScript, createScripts } from './util';
+class Layout extends React.PureComponent {
+  static defaultProps = {
+    isHome: false,
+  };
+
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    isHome: PropTypes.bool,
+  };
+
+  render() {
+    const { children, isHome = false } = this.props;
+    return (
+      <React.Fragment>
+        <Header isHome={isHome} />
+        {children}
+      </React.Fragment>
+    );
+  }
+}
 
 const routes = {
-  // Populates the Search form.
-  _initForm() {
-    const formValues = ['q', 'type', 'source', 'ang']
-      .reduce((obj, val) => ({ ...obj, [val]: getParameterByName(val) || null }), {});
+  ['terms-of-service'] () {
+    document.title = 'Terms of Service - SikhiToTheMax';
 
-    const typesToOptions = [...Khajana.TYPES, 'Ang']
-      .map((children, value) => Option({
-        isSelected: parseInt(value) === parseInt(formValues.type),
-        value,
-        children,
-      }));
-
-    const sourcesToOptions = entries(Khajana.SOURCES)
-      .map(([value, children]) => Option({
-        isSelected: value === formValues.source,
-        value,
-        children,
-      }));
-
-    const gurmukhiKeyboard = renderGurmukhiKeyboard(document.querySelector('#search'))
-
-    const [
-      $$search, $$searchType, $$searchSource,
-      $$searchTypes, $$searchSources, $$searchContainer
-    ] = [
-      '#search', '#search-type-value', '#search-source-value',
-      '#search-type', '#search-source', '#search-container',
-    ].map(document.querySelector.bind(document));
-
-    $$search.value = formValues.q;
-    $$searchType.value = formValues.type;
-    $$searchSource.value = formValues.source;
-    $$searchTypes.innerHTML = typesToOptions.map(e => e.outerHTML).join('');
-    $$searchSources.innerHTML = sourcesToOptions.map(e => e.outerHTML).join('');
-    $$searchContainer.appendChild(gurmukhiKeyboard);
-
-    const mockEvent = {
-      target: {
-        value: $$searchType.value || 0,
-        form: document.querySelector('.search-form'),
-      }
-    };
-
-    updateSearchLang(mockEvent);
-    updateSearchAction(mockEvent);
+    return (
+      <Layout>
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "TermsOfService" */ './pages/TermsOfService')}
+        >
+          {
+            ({ pending, resolved: { default: TermsOfService } = {}, rejected }) => (
+              pending
+                ? null
+                : TermsOfService 
+                  ? <TermsOfService />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
+      </Layout>
+    );
   },
 
-  ['404'] ($target) {
-    this._initForm();
-
+  ['404'] () {
     document.title = 'Page not found - SikhiToTheMax';
-    document.body.classList.remove('home');
-    replaceChild($target, NotFound({ url: location.href }));
+
+    return (
+      <Layout>
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "NotFound" */ './pages/NotFound')}
+        >
+          {
+            ({ pending, resolved: { default: NotFound } = {}, rejected }) => (
+              pending
+                ? null
+                : NotFound 
+                  ? <NotFound />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
+      </Layout>
+    );
   },
 
-  ang ($target, $scriptTarget) {
+  about() {
+    document.title = 'About - SikhiToTheMax';
+
+    return (
+      <Layout>
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "About" */ './pages/About')}
+        >
+          {
+            ({ pending, resolved: { default: About } = {}, rejected }) => (
+              pending
+                ? null
+                : About 
+                  ? <About />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
+      </Layout>
+    );
+  },
+
+  ang() {
     document.title = 'Ang/Page Viewer - SikhiToTheMax';
-    document.body.classList.remove('home');
+    const [ang, source] = ['ang', 'source'].map(v => getParameterByName(v));
 
-    this._initForm();
-
-    createScripts('/assets/js/renderShabad.js', '/assets/js/ang.js')
-      .forEach(e => document.body.insertBefore(e, $scriptTarget));
-
-    replaceChild($target, ShabadContainer({}));
+    return (
+      <Layout>
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Ang" */ './pages/Ang')}
+        >
+          {
+            ({ pending, resolved: { default: Ang } = {}, rejected }) => (
+              pending
+                ? null
+                : Ang 
+                  ? <Ang ang={ang} source={source} />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
+      </Layout>
+    );
   },
 
-  default ($target, $scriptTarget, { title = 'Title', content = 'Default content template' } = {}) {
-    document.title = `${title} - SikhiToTheMax`;
-    document.body.classList.remove('home');
-
-    this._initForm();
-
-    replaceChild($target, Content({ title, content }));
-  },
-
-  help ($target, $scriptTarget) {
+  help() {
     document.title = 'Help - SikhiToTheMax';
-    document.body.classList.remove('home');
 
-    this._initForm();
-
-    createScripts('/assets/js/help.js')
-      .forEach(e => document.body.insertBefore(e, $scriptTarget));
-
+    return (
+      <Layout>
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Help" */ './pages/Help')}
+        >
+          {
+            ({ pending, resolved: { default: Help } = {}, rejected }) => (
+              pending
+                ? null
+                : Help 
+                  ? <Help />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
+      </Layout>
+    );
   },
 
-  home ($target, $scriptTarget) {
-    document.title = `SikhiToTheMax`;
+  home() {
+    document.title = 'SikhiToTheMax';
+
     // IE 11 doesn't support multiple args for classList.add.
     ['home', 'hide-search-bar'].map(c => document.body.classList.add(c));
 
-    replaceChild($target, SearchForm({ }));
+    return (
+      <Layout isHome>
+        <Home />
+      </Layout>
+    );
   },
 
-  hukamnama ($target, $scriptTarget) {
+  hukamnama() {
     document.title = 'Hukamnama - SikhiToTheMax';
-    document.body.classList.remove('home');
 
-    this._initForm();
-
-    replaceChild($target, Hukamnama({}));
-
-    createScripts('/assets/js/hukamnama.js', '/assets/js/renderShabad.js')
-      .forEach(e => document.body.insertBefore(e, $scriptTarget));
+    return (
+      <Layout>
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Hukamnama" */ './pages/Hukamnama')}
+        >
+          {
+            ({ pending, resolved: { default: Hukamnama } = {}, rejected }) => (
+              pending
+                ? null
+                : Hukamnama
+                  ? <Hukamnama />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
+      </Layout>
+    );
   },
 
-  search ($target, $scriptTarget) {
+  search() {
     document.title = 'Search Results - SikhiToTheMax';
-    document.body.classList.remove('home');
 
-    this._initForm();
+    const params = ['type', 'source', 'q', 'offset'];
+    const [type = 0, source = 'all', q = '', offset] = params.map(v => getParameterByName(v));
 
-    createScripts('/assets/js/renderShabad.js', '/assets/js/search.js')
-      .forEach(e => document.body.insertBefore(e, $scriptTarget));
-
-    replaceChild($target, SearchResults({ }));
+    return (
+      <Layout>
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Search" */ './pages/Search')}
+        >
+          {
+            ({ pending, resolved: { default: Search } = {}, rejected }) => (
+              pending
+                ? null
+                : Search
+                  ? <Search q={q} type={type} source={source} offset={offset} />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
+      </Layout>
+    );
   },
 
-  shabad ($target, $scriptTarget) {
+  shabad() {
     document.title = 'Shabad - SikhiToTheMax';
-    document.body.classList.remove('home');
 
-    this._initForm();
-
-    createScripts('/assets/js/renderShabad.js', '/assets/js/shabad.js')
-      .forEach(e => document.body.insertBefore(e, $scriptTarget));
-
-    replaceChild($target, ShabadContainer({ }));
+    const [random, id, q, type] = ['random', 'id', 'q', 'type'].map(v => getParameterByName(v));
+    return (
+      <Layout>
+        <RenderPromise
+          promise={() => import(/* webpackChunkName: "Shabad" */ './pages/Shabad')}
+        >
+          {
+            ({ pending, resolved: { default: Shabad } = {}, rejected }) => (
+              pending
+                ? null
+                : Shabad
+                  ? <Shabad random={random === ''} id={id} q={q} type={type} />
+                  : throwError(`We are having trouble in rendering this route.`, rejected)
+            )
+          }
+        </RenderPromise>
+      </Layout>
+    );
   },
 };
 
-function router () {
+export default function router() {
   const { pathname } = location;
-  const $contentRoot = document.querySelector('#content-root');
-  const $lastScriptTag = document.querySelector('script:last-child');
-  const redirectTo = path => location.href = path;
-
   switch (pathname) {
     case '/': {
-      routes.home($contentRoot, $lastScriptTag);
-      break;
+      return routes.home();
     }
-    case '/ang': case '/hukamnama': case '/search': case '/shabad': case '/404': {
+    case '/about': case '/terms-of-service': case '/ang': case '/hukamnama': case '/search': case '/shabad': case '/404': {
       const currentRoute = pathname.split('/')[1];
-      routes[currentRoute]($contentRoot, $lastScriptTag);
-      break;
-    }
-    case '/about': case '/terms-of-service': {
-      routes.default($contentRoot, $lastScriptTag, content[pathname]);
-      break;
+      return routes[currentRoute]();
     }
     case '/help': {
-      routes.help($contentRoot, $lastScriptTag);
-      break;
+      return routes.help();
     }
     case '/random': {
       redirectTo('/shabad?random');
       break;
     }
-    case "/rehat.asp": {
+    case '/rehat.asp': {
       redirectTo('https://khalisfoundation.org/portfolio/maryada/');
       break;
     }
-    case "/search.asp": {
+    case '/search.asp': {
       redirectTo('/');
       break;
     }
-    case "/page.asp": {
-      let query = getQueryParams();
+    case '/page.asp': {
+      const query = getQueryParams();
 
       if (query.SourceID && query.PageNo) {
         redirectTo(`/ang?ang=${query.PageNo}&source=${query.SourceID}`);
@@ -194,10 +261,7 @@ function router () {
       break;
     }
     default: {
-      routes['404']($contentRoot, $lastScriptTag);
-      break;
+      return routes['404']();
     }
   }
 }
-
-router();

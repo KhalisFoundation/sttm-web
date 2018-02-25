@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Larivaar /> renders children when disabled 1`] = `
+<React.Fragment>
+  Vahi Guru
+</React.Fragment>
+`;
+
+exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
+<React.Fragment>
+  <span
+    key="0"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    Vahi
+  </span>
+  <span
+    key="1"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    Guru
+  </span>
+</React.Fragment>
+`;
+
+exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled 1`] = `
+<React.Fragment>
+  <span
+    key="0"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    Vahi
+  </span>
+  <span
+    key="1"
+    style={
+      Object {
+        "color": "#f39c1d",
+      }
+    }
+  >
+    Guru
+  </span>
+</React.Fragment>
+`;
