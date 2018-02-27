@@ -21,12 +21,12 @@ export const TRANSLATION_LANGUAGES = ['punjabi', 'english', 'spanish'];
 export const TRANSLITERATION_LANGUAGES = ['english'];
 
 export const DEFAULT_SEARCH_TYPE = 0;
-export const DEFAULT_SEARCH_SOURCE = 'G';
+export const DEFAULT_SEARCH_SOURCE = 'all';
 export const DEFAULT_TRANSLATION_LANGUAGES = ['english'];
 export const DEFAULT_TRANSLITERATION_LANGUAGES = ['english'];
-export const DEFAULT_LARIVAAR = true;
-export const DEFAULT_LARIVAAR_ASSIST = true;
-export const DEFAULT_UNICODE = true;
+export const DEFAULT_LARIVAAR = false;
+export const DEFAULT_LARIVAAR_ASSIST = false;
+export const DEFAULT_UNICODE = false;
 export const DEFAULT_SPLIT_VIEW = false;
 export const DEFAULT_FONT_SIZE = 16;
 
