@@ -154,7 +154,7 @@ class Shabad extends React.PureComponent {
       <React.Fragment>
         <Controls />
         <Meta info={info} nav={nav} type={type} />
-        <div id="shabad" className="shabad">
+        <div id="shabad" className="shabad display">
           <div className="shabad-container">
             <Baani
               gurbani={gurbani}

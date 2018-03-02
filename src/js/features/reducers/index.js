@@ -74,7 +74,7 @@ export default function reducer(state, action) {
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_FONT_SIZE, action.payload);
       return {
         ...state,
-        fontSize: parseInt(action.payload, 10),
+        fontSize: parseFloat(action.payload, 10),
       };
     }
     case SET_TRANSLATION_LANGUAGES: {
