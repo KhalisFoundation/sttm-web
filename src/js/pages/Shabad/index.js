@@ -1,3 +1,4 @@
+/* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from 'shabados';
@@ -14,7 +15,10 @@ export default class Shabad extends React.PureComponent {
 
   render() {
     const { random, id } = this.props;
-    const url = buildApiUrl(typeof random !== 'undefined' ? { random: true } : { id });
+    const url = buildApiUrl(typeof random !== 'undefined'
+      ? { random: true, API_URL }
+      : { id, API_URL }
+    );
 
     return (
       <PageLoader url={url}>{({ data, loading }) =>
