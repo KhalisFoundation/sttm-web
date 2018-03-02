@@ -13,24 +13,25 @@
   }
 }
 
-#display-options,
-#font-options {
+.display-options,
+.font-options {
   align-content: flex-start;
   background-color: #fafafa;
+  display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
   width: calc(100% - 2rem);
 }
 
 @media screen and (min-width: 46em) {
-  #display-options,
-  #font-options {
+  .display-options,
+  .font-options {
     width: calc(100% - 5rem);
   }
 }
 
-#display-options-toggle span,
-#font-options-toggle span {
+.display-options-toggle span,
+.font-options-toggle span {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
   background-origin: content-box;
   background-position: right -1rem center;

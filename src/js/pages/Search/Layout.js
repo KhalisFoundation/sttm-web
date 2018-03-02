@@ -57,7 +57,7 @@ class Layout extends React.PureComponent {
     }
 
     return (
-      <React.Fragment>
+      <div className="row" id="content-root">
         <Controls disableSplitView />
         <ul className="search-results display">
           {shabads.map(({ shabad }) => {
@@ -116,7 +116,7 @@ class Layout extends React.PureComponent {
             )
           }
         </ul>
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -15,22 +15,26 @@ export default class Shabad extends React.PureComponent {
 
   render() {
     const { random, id } = this.props;
-    const url = buildApiUrl(typeof random !== 'undefined'
-      ? { random: true, API_URL }
-      : { id, API_URL }
+    const url = buildApiUrl(random
+      ? { random, API_URL }
+      : { random, id, API_URL }
     );
 
     return (
       <PageLoader url={url}>{({ data, loading }) =>
         loading
           ? <Stub />
-          : <ShabadContent
-            random={random}
-            type="shabad"
-            info={data.shabadinfo}
-            gurbani={data.gurbani}
-            nav={data.navigation}
-          />
+          : (
+            <div className="row" id="content-root">
+              <ShabadContent
+                random={random}
+                type="shabad"
+                info={data.shabadinfo}
+                gurbani={data.gurbani}
+                nav={data.navigation}
+              />
+            </div>
+          )
       }</PageLoader>
     );
   }

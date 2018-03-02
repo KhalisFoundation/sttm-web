@@ -7,12 +7,9 @@ import { copyToClipboard, showToast, shortenURL, replaceState } from '../util';
 import { TRANSLATION_LANGUAGES } from '../constants';
 
 class FootNav extends React.PureComponent {
-  static defaultProps = {
-    nav: {}
-  };
-
   static propTypes = {
-    link: PropTypes.string.isRequired,
+    info: PropTypes.object.isRequired,
+    type: PropTypes.string,
     nav: PropTypes.shape({
       previous: PropTypes.string,
       next: PropTypes.string,
@@ -20,7 +17,8 @@ class FootNav extends React.PureComponent {
   };
 
   render() {
-    const { link, nav } = this.props;
+    const { info, nav, type } = this.props;
+    const link = navLink(type, info.source.id);
     return (
       <div className="pagination">
         {nav.previous && (
@@ -50,7 +48,6 @@ class Meta extends React.PureComponent {
   };
 
   static propTypes = {
-    link: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
@@ -116,8 +113,7 @@ class Shabad extends React.PureComponent {
 
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
-    random: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
+    random: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -149,8 +145,9 @@ class Shabad extends React.PureComponent {
       fontSize,
     } = this.props;
 
-    if (typeof random !== 'undefined') {
+    if (random) {
       replaceState(`/shabad?id=${info.id}`);
+      return null;
     }
 
     return (
@@ -169,7 +166,7 @@ class Shabad extends React.PureComponent {
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
             />
-            <FootNav />
+            <FootNav info={info} type={type} nav={nav} />
           </div>
         </div>
       </React.Fragment>
@@ -225,11 +222,25 @@ class EnglishTransliteration extends React.PureComponent {
 class Translation extends React.PureComponent {
   static propTypes = {
     type: PropTypes.oneOf(TRANSLATION_LANGUAGES),
-    unicode: PropTypes.bool.isRequired,
-    text: PropTypes.shape({
-      gurmukhi: PropTypes.string,
-      unicode: PropTypes.string,
-    }),
+    unicode: (props, propName) => {
+      if (props.type === 'punjabi' && (
+        props[propName] === undefined
+        || typeof props[propName] !== 'boolean'
+      )) {
+        return new Error(`${propName} is required when props.type = 'punjabi'`);
+      }
+    },
+    text: (props, propName) => {
+      if (props.type === 'punjabi' && (
+        props[propName] === undefined
+        || !('gurmukhi' in props[propName])
+        || !('unicode' in props[propName])
+        || typeof props[propName].gurmukhi !== 'string'
+        || typeof props[propName].unicode !== 'string'
+      )) {
+        return new Error(`${propName} is required when props.type = 'punjabi' of shape { gurmukhi: String, unicode: String }`);
+      }
+    },
     children: PropTypes.string.isRequired,
   };
 
@@ -254,7 +265,7 @@ class Translation extends React.PureComponent {
         </blockquote>
       )
       : (
-        <p className={className}>{this.props.children}</p>
+        <blockquote className={className}>{this.props.children}</blockquote>
       );
   }
 }
@@ -262,10 +273,6 @@ class Translation extends React.PureComponent {
 class Baani extends React.PureComponent {
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
-    text: PropTypes.shape({
-      unicode: PropTypes.string,
-      gurmukhi: PropTypes.string,
-    }).isRequired,
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -320,7 +327,7 @@ class Baani extends React.PureComponent {
                 larivaarAssist={larivaarAssist}
                 fontSize={fontSize}
               />
-              {transliterationLanguages.includes('english') && <EnglishTransliteration transliteration={shabad.transliteration} />}
+              {transliterationLanguages.includes('english') && <EnglishTransliteration>{shabad.transliteration}</EnglishTransliteration>}
               {translationLanguages.includes('punjabi') && <Translation type="punjabi" unicode={unicode} text={shabad.translation.punjabi.bms} />}
               {translationLanguages.includes('english') && <Translation type="english">{shabad.translation.english.ssk}</Translation>}
               {translationLanguages.includes('spanish') && <Translation type="spanish">{shabad.translation.spanish}</Translation>}
@@ -358,7 +365,7 @@ class Baani extends React.PureComponent {
         </div>
         {transliterationLanguages.includes('english') && (
           <div className="split-view-baani-wrapper">
-            {gurbani.map(({ shabad }) => <EnglishTransliteration key={shabad.id} transliteration={shabad.transliteration} />)}
+            {gurbani.map(({ shabad }) => <EnglishTransliteration key={shabad.id}>{shabad.transliteration}</EnglishTransliteration>)}
           </div>
         )}
         {translationLanguages.includes('punjabi') && (
