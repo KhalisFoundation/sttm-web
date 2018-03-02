@@ -12,13 +12,6 @@ export default class ShabadControls extends React.PureComponent {
     };
 
     static propTypes = {
-        q: PropTypes.string.isRequired,
-        type: PropTypes.number.isRequired,
-        source: PropTypes.string.isRequired,
-        resultsCount: PropTypes.number.isRequired,
-        nextPageOffset: PropTypes.number.isRequired,
-        shabads: PropTypes.array.isRequired,
-        onLoadMore: PropTypes.func.isRequired,
         translationLanguages: PropTypes.array.isRequired,
         transliterationLanguages: PropTypes.array.isRequired,
         larivaarAssist: PropTypes.bool.isRequired,
@@ -65,11 +58,11 @@ export default class ShabadControls extends React.PureComponent {
         return (
             <React.Fragment>
                 <div id="shabad-controllers">
-                    <a className={`shabad-controller-toggle ${showDisplayOptions ? 'active' : ''}`} onClick={toggleDisplayOptions}>
+                    <a className={`display-options-toggle shabad-controller-toggle ${showDisplayOptions ? 'active' : ''}`} onClick={toggleDisplayOptions}>
                         <i className="fa fa-television" />
                         <span>Display</span>
                     </a>
-                    <a className={`shabad-controller-toggle ${showFontOptions ? 'active' : ''}`} onClick={toggleFontOptions}>
+                    <a className={`font-options-toggle shabad-controller-toggle ${showFontOptions ? 'active' : ''}`} onClick={toggleFontOptions}>
                         <i className="fa fa-sliders" />
                         <span>Font</span>
                     </a>
@@ -85,7 +78,7 @@ export default class ShabadControls extends React.PureComponent {
                     )}
                 </div>
                 {showDisplayOptions && (
-                    <div id="display-options">
+                    <div className="display-options">
                         <div className="display-option-type">
                             <div className="display-option-header">Transliteration</div>
 
@@ -132,7 +125,7 @@ export default class ShabadControls extends React.PureComponent {
                     </div>
                 )}
                 {showFontOptions && (
-                    <div id="font-options">
+                    <div className="font-options">
                         <div className="font-option-type">
                             <div className="font-option-header">Font</div>
                             <a className={`shabad-controller-toggle ${unicode ? 'active' : ''}`} onClick={toggleUnicodeOption}>Unicode</a>
