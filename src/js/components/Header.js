@@ -53,6 +53,7 @@ export default class Header extends React.PureComponent {
                             <div id="search-container">
 
                               <input
+                                autoFocus="true"
                                 type="search"
                                 name={name}
                                 id="search"
