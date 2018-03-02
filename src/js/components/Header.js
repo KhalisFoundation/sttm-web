@@ -12,19 +12,23 @@ export default class Header extends React.PureComponent {
   };
 
   static propTypes = {
+    defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
   };
 
   render() {
-    const { isHome } = this.props;
+    const { defaultQuery, isHome } = this.props;
     return (
-      <div className="top-bar no-select">
+      <div className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
         <div className="row">
-          <div className="top-bar-title">
-            <a href="/"></a>
-          </div>
-          <SearchForm>{({
+          {!isHome && (
+            <div className="top-bar-title">
+              <a href="/"></a>
+            </div>
+          )}
+          <SearchForm defaultQuery={defaultQuery}>{({
             pattern,
+            defaultQuery,
             title,
             className,
             displayGurmukhiKeyboard,
@@ -53,6 +57,7 @@ export default class Header extends React.PureComponent {
                             <div id="search-container">
 
                               <input
+                                defaultValue={defaultQuery}
                                 autoFocus="true"
                                 type="search"
                                 name={name}
@@ -114,7 +119,7 @@ export default class Header extends React.PureComponent {
                           onClick={() => document.body.classList.remove('menu-open')}
                         >
                           Close
-              </a>
+                        </a>
                       </li>
                     </ul>
                   </div>

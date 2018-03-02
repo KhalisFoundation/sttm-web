@@ -29,5 +29,6 @@ export const DEFAULT_LARIVAAR_ASSIST = false;
 export const DEFAULT_UNICODE = false;
 export const DEFAULT_SPLIT_VIEW = false;
 export const DEFAULT_FONT_SIZE = 16;
+export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';

@@ -1,11 +1,24 @@
-.top-bar,
-.top-bar ul {
-  background-color: #fafafa;
-}
-
 .top-bar {
   border-bottom: 1px solid #ebebeb;
   position: relative;
+
+  &,
+  ul {
+    background-color: #fafafa;
+  }
+
+  &-naked {
+    &,
+    ul {
+      background: transparent;
+      border: none;
+    }
+
+    .top-bar-title {
+      margin: 0;
+      visibility: hidden;
+    }
+  }
 }
 
 .top-bar-title a {
@@ -20,19 +33,6 @@
 
 .top-bar-logo-small {
   width: 3em;
-}
-
-.home {
-  .top-bar,
-  .top-bar ul {
-    background: transparent;
-    border: none;
-  }
-
-  .top-bar-title {
-    margin: 0;
-    visibility: hidden;
-  }
 }
 
 .hide-search-bar {
