@@ -48,6 +48,7 @@ export default class Home extends React.PureComponent {
 
                   <div id="search-container">
                     <input
+                      autoFocus="true"
                       name={name}
                       id="search"
                       type="search"
