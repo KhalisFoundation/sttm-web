@@ -145,6 +145,6 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
-    "shabados": "^2.0.0-beta.1"
+    "shabados": "^2.0.0-beta.3"
   }
 }

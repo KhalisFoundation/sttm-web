@@ -1,3 +1,4 @@
+/* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from 'shabados';
@@ -28,7 +29,7 @@ export default class Search extends React.PureComponent {
       );
     }
 
-    const url = buildApiUrl({ q, type, source, offset: this.state.offset });
+    const url = buildApiUrl({ q, type, source, offset: this.state.offset, API_URL });
 
     return (
       <React.Fragment>

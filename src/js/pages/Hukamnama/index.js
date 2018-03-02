@@ -1,3 +1,4 @@
+/* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from 'shabados';
@@ -28,7 +29,7 @@ class Layout extends React.PureComponent {
 }
 
 export default function Ang() {
-  const url = buildApiUrl({ hukam: true });
+  const url = buildApiUrl({ hukam: true, API_URL });
 
   return (
     <PageLoader url={url}>{({ loading, data }) => (

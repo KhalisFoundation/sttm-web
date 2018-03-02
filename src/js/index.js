@@ -4,6 +4,13 @@ import { Provider } from 'react-redux';
 import router from './router';
 import store from './features/store';
 
+
+if (PRODUCTION) {
+  console.log('Production');
+} else {
+  console.log('Development');
+}
+
 class Root extends React.PureComponent {
   state = {
     error: null,

@@ -1,3 +1,4 @@
+/* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from 'shabados';
@@ -32,7 +33,7 @@ export default class Ang extends React.PureComponent {
   };
   render() {
     const { ang, source } = this.props;
-    const url = buildApiUrl({ ang, source });
+    const url = buildApiUrl({ ang, source, API_URL });
 
     return (
       <PageLoader url={url}>{({ loading, data }) => (
