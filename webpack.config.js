@@ -42,6 +42,7 @@ const vendor = [
   'shabados',
   'redux',
   'react-redux',
+  'react-router-dom',
 ];
 
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');

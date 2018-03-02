@@ -10,13 +10,18 @@ import {
 
 const onlyNumbers = str => str.replace(/\D/g, '');
 export default class SearchForm extends React.PureComponent {
+  static defaultProps = {
+    defaultQuery: '',
+  };
+
   static propTypes = {
     children: PropTypes.func.isRequired,
+    defaultQuery: PropTypes.string,
   };
 
   state = {
     displayGurmukhiKeyboard: false,
-    query: '',
+    query: this.props.defaultQuery,
     type: parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE) || DEFAULT_SEARCH_TYPE, 10),
     source: localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) || DEFAULT_SEARCH_SOURCE,
     placeholder: '',
