@@ -109,7 +109,7 @@ export const getArrayFromLocalStorage = (key, defaultValue = null) => {
 export const getNumberFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
   if (value === null) return defaultValue;
-  return parseInt(value, 10);
+  return parseFloat(value, 10);
 };
 
 export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
