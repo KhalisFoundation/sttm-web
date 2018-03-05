@@ -132,30 +132,28 @@ blockquote {
       position: absolute;
       right: 0;
       top: 0;
+
+      a {
+        color: #000;
+        margin-left: 5px;
+        padding: 0.5rem;
+      }
+
+      .copy:hover {
+        color: #f39c1d;
+      }
+
+      .twitter:hover {
+        color: #00aced;
+      }
+
+      .facebook:hover {
+        color: #3b5998;
+      }
     }
 
     &:hover .share {
       display: block;
-    }
-  }
-
-  .share {
-    a {
-      color: #000;
-      margin-left: 5px;
-      padding: 0.5rem;
-    }
-
-    .copy:hover {
-      color: #f39c1d;
-    }
-
-    .twitter:hover {
-      color: #00aced;
-    }
-
-    .facebook:hover {
-      color: #3b5998;
     }
   }
 }
@@ -169,6 +167,13 @@ blockquote {
     i {
       flex-grow: 0;
     }
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .share,
+  .line:hover .share {
+    display: none !important;
   }
 }
 
