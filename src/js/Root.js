@@ -19,8 +19,8 @@ export default class Root extends React.PureComponent {
       this.state.error
         ? (
           <main style={{ marginTop: '10vh' }}>
-            <h2>
-              <h3 className='text-center'>Facing some issues</h3>
+            <h2 className="text-center">
+              Facing some issues
             </h2>
             <pre style={{ margin: '10%', textAlign: 'left' }}>
               <code>
@@ -33,7 +33,7 @@ export default class Root extends React.PureComponent {
           <Router>
             <Switch>
               {routes.map((props, key) => <Route key={key} {...props} />)}
-              <Route render={NotFound} />
+              <Route render={() => <NotFound />} />
             </Switch>
           </Router>
         )
