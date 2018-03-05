@@ -121,3 +121,10 @@ export const saveToLocalStorage = (key, value) => requestAnimationFrame(
 export const toggleItemInArray = (item, arr) => arr.includes(item)
   ? arr.filter(k => k !== item)
   : [...arr, item];
+
+export function navLink(type, source) {
+  switch (type) {
+    case 'shabad': return 'shabad?id=';
+    case 'ang': return `ang?source=${source}&ang=`;
+  }
+}
