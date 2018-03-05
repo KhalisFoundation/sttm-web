@@ -163,8 +163,6 @@ export default [
         offset = 0
       ] = params.map(v => getParameterByName(v, search));
 
-      console.log({ offset });
-
       return (
         <Layout defaultQuery={q} title="Search Results - SikhiToTheMax">
           <RenderPromise
@@ -187,9 +185,15 @@ export default [
   {
     path: '/shabad',
     render({ location: { search }}) {
-      const [random, id, q, type] = ['random', 'id', 'q', 'type'].map(v => getParameterByName(v, search));
+      const [random, id, q, type, highlight] = ['random', 'id', 'q', 'type', 'highlight'].map(v => getParameterByName(v, search));
 
-      const isRandom = random !== undefined && random === '' ? true : false;
+      const otherProps = {
+        id,
+        q,
+        type,
+        random: random !== undefined && random === '' ? true : false,
+        highlight: highlight === undefined ? undefined : parseInt(highlight, 10),
+      };
 
       return (
         <Layout defaultQuery={q} title="Shabad - SikhiToTheMax">
@@ -201,7 +205,7 @@ export default [
                 pending
                   ? null
                   : Shabad
-                    ? <Shabad random={isRandom} id={id} q={q} type={type} />
+                    ? <Shabad {...otherProps} />
                     : throwError(`We are having trouble in rendering this route.`, rejected)
               )
             }

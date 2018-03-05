@@ -7,7 +7,13 @@ import Controls from '../../components/Controls';
 import Larivaar from '../../components/Larivaar';
 
 function getShabadHyperLink({ shabad, q, type, source }) {
-  return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
+  return '/shabad?' + [
+    `id=${shabad.shabadid}`,
+    `q=${q}`,
+    `${type ? `&type=${type}` : ''}`,
+    `${source ? `&source=${source}` : ''}`,
+    `highlight=${shabad.id}`
+  ].join('&');
 }
 
 export function Stub() {
@@ -66,13 +72,13 @@ class Layout extends React.PureComponent {
             return (
               <React.Fragment key={shabad.id}>
                 <li className='search-result'>
-                  <a style={{ fontSize: `${fontSize}em` }} href={getShabadHyperLink({ shabad, q, type, source })} className='gurbani-font gurbani-display'>
+                  <Link style={{ fontSize: `${fontSize}em` }} to={getShabadHyperLink({ shabad, q, type, source })} className='gurbani-font gurbani-display'>
                     {
                       unicode
                         ? <div className='unicode'><Larivaar larivaarAssist={larivaarAssist} enable={larivaar}>{shabad.gurbani.unicode}</Larivaar></div>
                         : <div className='gurlipi'><Larivaar larivaarAssist={larivaarAssist} enable={larivaar}>{shabad.gurbani.gurmukhi}</Larivaar></div>
                     }
-                  </a>
+                  </Link>
 
                   <div className='clear' />
 

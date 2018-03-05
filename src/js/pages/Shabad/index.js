@@ -9,12 +9,13 @@ const Stub = () => <div className="spinner" />;
 
 export default class Shabad extends React.PureComponent {
   static propTypes = {
-    random: PropTypes.any, // TODO: Fix a type
+    random: PropTypes.bool,
+    highlight: PropTypes.number,
     id: PropTypes.string,
   };
 
   render() {
-    const { random, id } = this.props;
+    const { random, id, highlight } = this.props;
     const url = buildApiUrl(random
       ? { random, API_URL }
       : { random, id, API_URL }
@@ -29,6 +30,7 @@ export default class Shabad extends React.PureComponent {
               <ShabadContent
                 random={random}
                 type="shabad"
+                highlight={highlight}
                 info={data.shabadinfo}
                 gurbani={data.gurbani}
                 nav={data.navigation}
