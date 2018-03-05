@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, TYPES } from 'shabados';
+import { Link } from 'react-router-dom';
 import GurmukhiKeyboard from './GurmukhiKeyboard';
 import SearchForm from './SearchForm';
 
@@ -23,7 +24,7 @@ export default class Header extends React.PureComponent {
         <div className="row">
           {!isHome && (
             <div className="top-bar-title">
-              <a href="/"></a>
+              <Link to="/"></Link>
             </div>
           )}
           <SearchForm defaultQuery={defaultQuery}>{({
@@ -111,8 +112,8 @@ export default class Header extends React.PureComponent {
                       <i className="fa fa-bars" />
                     </a>
                     <ul className="menu header-menu">
-                      <li><a href="/hukamnama">Hukamnama</a></li>
-                      <li><a href="/shabad?random">Random Shabad</a></li>
+                      <li><Link to="/hukamnama">Hukamnama</Link></li>
+                      <li><Link to="/shabad?random">Random Shabad</Link></li>
                       <li className="close">
                         <a
                           href="#"

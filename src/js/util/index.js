@@ -1,7 +1,3 @@
-export const redirectTo = path => location.href = path;
-export const replaceState = url => window && window.history.replaceState('', '', url);
-export const pushState = url => window && window.history.pushState('', '', url);
-
 export const throwError = (msg, err) => {
   // eslint-disable-next-line no-console
   console.warn(err);

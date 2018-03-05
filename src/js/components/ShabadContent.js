@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect, Link } from 'react-router-dom';
 import Larivaar from './Larivaar';
 import Controls from './Controls';
 import { connect } from 'react-redux';
-import { copyToClipboard, showToast, shortenURL, replaceState } from '../util';
+import { copyToClipboard, showToast, shortenURL } from '../util';
 import { TRANSLATION_LANGUAGES } from '../constants';
 
 class FootNav extends React.PureComponent {
@@ -23,18 +24,18 @@ class FootNav extends React.PureComponent {
       <div className="pagination">
         {nav.previous && (
           <div className="shabad-nav left">
-            <a href={link + nav.previous}>
+            <Link to={link + nav.previous}>
               <i className="fa fa-chevron-left" aria-hidden="true" />
               <span>Previous</span>
-            </a>
+            </Link>
           </div>
         )}
         {nav.next && (
           <div className="shabad-nav right">
-            <a href={link + nav.next}>
+            <Link to={link + nav.next}>
               <span>Next</span>
               <i className="fa fa-chevron-right" aria-hidden="true" />
-            </a>
+            </Link>
           </div>
         )}
       </div>
@@ -65,9 +66,9 @@ class Meta extends React.PureComponent {
     return (
       <div id="metadata">
         <div className="shabad-nav left">
-          <a href={link + nav.previous}>
+          <Link to={link + nav.previous}>
             <i className="fa fa-chevron-left" aria-hidden="true" />
-          </a>
+          </Link>
         </div>
         <div className="meta">
           <h4 className="gurbani-font">
@@ -77,9 +78,9 @@ class Meta extends React.PureComponent {
             <Item>{info.writer && info.writer.gurmukhi}</Item>
             <Item>{info.source.gurmukhi}</Item>
             <Item last>{info.pageno !== null && (
-              <a href={`/ang?ang=${info.source.pageno}&source=${info.source.id}`}>
+              <Link to={`/ang?ang=${info.source.pageno}&source=${info.source.id}`}>
                 {info.source.id == 'G' ? 'AMg' : 'pMnw'} {info.source.pageno}
-              </a>
+              </Link>
             )}
             </Item>
           </h4>
@@ -88,18 +89,18 @@ class Meta extends React.PureComponent {
             <Item>{info.writer && info.writer.english}</Item>
             <Item>{info.source.english}</Item>
             <Item last>{info.pageno !== null && (
-              <a href={`/ang?ang=${info.source.pageno}&source=${info.source.id}`}>
+              <Link to={`/ang?ang=${info.source.pageno}&source=${info.source.id}`}>
                 {info.source.id == 'G' ? 'Ang' : 'Pannaa'} {info.source.pageno}
-              </a>
+              </Link>
             )}
             </Item>
           </h4>
-        </div >
+        </div>
 
         <div className="shabad-nav right">
-          <a href={link + nav.next}>
+          <Link to={link + nav.next}>
             <i className="fa fa-chevron-right" aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -146,8 +147,7 @@ class Shabad extends React.PureComponent {
     } = this.props;
 
     if (random) {
-      replaceState(`/shabad?id=${info.id}`);
-      return null;
+      return <Redirect to={`/shabad?id=${info.id}`} />;
     }
 
     return (

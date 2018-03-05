@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link, Redirect } from 'react-router-dom';
 import { SOURCES } from 'shabados';
 import { connect } from 'react-redux';
 import Controls from '../../components/Controls';
 import Larivaar from '../../components/Larivaar';
-import { redirectTo } from '../../util';
 
 function getShabadHyperLink({ shabad, q, type, source }) {
   return `/shabad?id=${shabad.shabadid}&q=${q}${type ? `&type=${type}` : ''}${source ? `&source=${source}` : ''}`;
@@ -22,7 +22,6 @@ class Layout extends React.PureComponent {
       resultsCount: PropTypes.number.isRequired,
       nextPageOffset: PropTypes.number,
       shabads: PropTypes.array.isRequired,
-      onLoadMore: PropTypes.func.isRequired,
       translationLanguages: PropTypes.array.isRequired,
       transliterationLanguages: PropTypes.array.isRequired,
       larivaarAssist: PropTypes.bool.isRequired,
@@ -38,7 +37,6 @@ class Layout extends React.PureComponent {
       resultsCount,
       nextPageOffset,
       shabads,
-      onLoadMore,
       translationLanguages = [],
       transliterationLanguages = [],
       larivaarAssist,
@@ -50,10 +48,10 @@ class Layout extends React.PureComponent {
       return <h3>No results found</h3>;
     }
 
+    // I'm feeling lucky
     if (parseInt(resultsCount, 10) === 1) {
       const [{ shabad }] = shabads;
-      redirectTo(getShabadHyperLink({ shabad, q, type, source }));
-      return null;
+      return <Redirect to={getShabadHyperLink({ shabad, q, type, source })} />;
     }
 
     return (
@@ -110,8 +108,13 @@ class Layout extends React.PureComponent {
           })}
           {
             nextPageOffset && (
-              <li className='load-more' onClick={() => onLoadMore(nextPageOffset)}>
-                <a className='load button'>Load More</a>
+              <li className='load-more'>
+                <Link
+                  className='load button'
+                  to={`/search?q=${q}&source=${source}&type=${type}&offset=${nextPageOffset}`}
+                >
+                  Load More
+                </Link>
               </li>
             )
           }
