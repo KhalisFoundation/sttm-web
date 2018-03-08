@@ -43,6 +43,19 @@ export default class Baani extends React.PureComponent {
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`, '_blank');
   };
 
+  componentDidMount() {
+    if (this.$highlightedBaaniLine) {
+      if ('offsetTop' in this.$highlightedBaaniLine) {
+        const {
+          offsetTop,
+          offsetHeight
+        } = this.$highlightedBaaniLine;
+
+        requestAnimationFrame(() => window.scrollTo(0, offsetTop - offsetHeight));
+      }
+    }
+  }
+
   render() {
     const {
       gurbani,
@@ -60,7 +73,12 @@ export default class Baani extends React.PureComponent {
       <div className="mixed-view-baani">
         {
           gurbani.map(({ shabad }) => (
-            <div key={shabad.id} id={`line-${shabad.id}`} className="line">
+            <div
+              key={shabad.id}
+              id={`line-${shabad.id}`}
+              className="line"
+              ref={node => highlight === parseInt(shabad.id, 10) ? (this.$highlightedBaaniLine = node) : null}
+            >
               <BaaniLine
                 text={shabad.gurbani}
                 unicode={unicode}
@@ -89,7 +107,11 @@ export default class Baani extends React.PureComponent {
       <div className="split-view-baani">
         <div className="split-view-baani-wrapper">
           {gurbani.map(({ shabad }) => (
-            <div key={shabad.id} className="line">
+            <div
+              key={shabad.id}
+              className="line"
+              ref={node => highlight === parseInt(shabad.id, 10) ? (this.$highlightedBaaniLine = node) : null}
+            >
               <BaaniLine
                 text={shabad.gurbani}
                 unicode={unicode}
