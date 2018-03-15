@@ -50,6 +50,12 @@ npm start
 
 This will run a bunch of build tools and a `nodejs` server to deploy the code locally.
 
+* Step 4: Access your local dev environment of the SikhiToTheMax website
+
+```bash
+http://localhost:8080
+```
+
 ## License
 [GSL](/LICENSE)
 
