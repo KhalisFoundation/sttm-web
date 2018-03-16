@@ -17,6 +17,8 @@ export default class Header extends React.PureComponent {
     isHome: PropTypes.bool,
   };
 
+  toggleMenu = () => document.body.classList.toggle('menu-open');
+
   render() {
     const { defaultQuery, isHome } = this.props;
     return (
@@ -24,42 +26,60 @@ export default class Header extends React.PureComponent {
         <div className="row">
           {!isHome && (
             <div className="top-bar-title">
-              <Link to="/"></Link>
+              <Link to="/" />
             </div>
           )}
-          <SearchForm defaultQuery={defaultQuery}>{({
-            pattern,
-            defaultQuery,
-            title,
-            className,
-            displayGurmukhiKeyboard,
-            query,
-            type,
-            source,
-            action,
-            name,
-            placeholder,
-            setGurmukhiKeyboardVisibilityAs,
-            setQueryAs,
-            handleSearchChange,
-            handleSearchSourceChange,
-            handleSearchTypeChange,
-            handleSubmit,
-          }) => (
+          <SearchForm defaultQuery={defaultQuery}>
+            {({
+              pattern,
+              defaultQuery,
+              title,
+              className,
+              displayGurmukhiKeyboard,
+              query,
+              type,
+              source,
+              action,
+              name,
+              placeholder,
+              setGurmukhiKeyboardVisibilityAs,
+              setQueryAs,
+              handleSearchChange,
+              handleSearchSourceChange,
+              handleSearchTypeChange,
+              handleSubmit,
+            }) => (
               <React.Fragment>
                 <div id="responsive-menu">
                   <div className="top-bar-left">
                     {!isHome && (
-                      <form action={action} id="top-bar-search-form" className="search-form" onSubmit={handleSubmit}>
+                      <form
+                        action={action}
+                        id="top-bar-search-form"
+                        className="search-form"
+                        onSubmit={handleSubmit}
+                      >
                         <ul className="menu">
-                          <li><input name="type" className="hidden" id="search-type-value" hidden /></li>
-                          <li><input name="source" className="hidden" id="search-source-value" hidden /></li>
+                          <li>
+                            <input
+                              name="type"
+                              className="hidden"
+                              id="search-type-value"
+                              hidden
+                            />
+                          </li>
+                          <li>
+                            <input
+                              name="source"
+                              className="hidden"
+                              id="search-source-value"
+                              hidden
+                            />
+                          </li>
                           <li>
                             <div id="search-container">
-
                               <input
                                 defaultValue={defaultQuery}
-                                autoFocus="true"
                                 type="search"
                                 name={name}
                                 id="search"
@@ -76,19 +96,29 @@ export default class Header extends React.PureComponent {
                                 pattern={pattern}
                               />
 
-                              <button type="button" className="clear-search-toggle">
-                                <i className="fa fa-times"></i>
+                              <button
+                                type="button"
+                                className="clear-search-toggle"
+                                onClick={setQueryAs('')}
+                              >
+                                <i className="fa fa-times" />
                               </button>
 
                               <button
-                                className="gurmukhi-keyboard-toggle"
+                                className={`gurmukhi-keyboard-toggle ${
+                                  displayGurmukhiKeyboard ? 'active' : ''
+                                }`}
                                 type="button"
-                                onClick={setGurmukhiKeyboardVisibilityAs(!displayGurmukhiKeyboard)}
+                                onClick={setGurmukhiKeyboardVisibilityAs(
+                                  !displayGurmukhiKeyboard
+                                )}
                               >
-                                <i className="fa fa-keyboard-o"></i>
+                                <i className="fa fa-keyboard-o" />
                               </button>
 
-                              <button type="submit"><i className="fa fa-search"></i></button>
+                              <button type="submit">
+                                <i className="fa fa-search" />
+                              </button>
 
                               <GurmukhiKeyboard
                                 value={query}
@@ -107,17 +137,27 @@ export default class Header extends React.PureComponent {
                       href="#"
                       className="button"
                       id="open-mobile-menu"
-                      onClick={() => document.body.classList.toggle('menu-open')}
+                      onClick={this.toggleMenu}
                     >
                       <i className="fa fa-bars" />
                     </a>
                     <ul className="menu header-menu">
-                      <li><Link to="/hukamnama">Hukamnama</Link></li>
-                      <li><Link to="/shabad?random">Random Shabad</Link></li>
+                      <li>
+                        <Link to="/hukamnama" onClick={this.toggleMenu}>
+                          Hukamnama
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/shabad?random" onClick={this.toggleMenu}>
+                          Random Shabad
+                        </Link>
+                      </li>
                       <li className="close">
                         <a
                           href="#"
-                          onClick={() => document.body.classList.remove('menu-open')}
+                          onClick={() =>
+                            document.body.classList.remove('menu-open')
+                          }
                         >
                           Close
                         </a>
@@ -127,21 +167,28 @@ export default class Header extends React.PureComponent {
                 </div>
                 {!isHome && (
                   <div id="search-options">
-                    <select name="type" id="search-type" value={type} onChange={handleSearchTypeChange}>
-                      {
-                        types
-                          .map((children, value) =>
-                            <option key={value} value={value}>{children}</option>,
-                        )
-                      }
+                    <select
+                      name="type"
+                      id="search-type"
+                      value={type}
+                      onChange={handleSearchTypeChange}
+                    >
+                      {types.map((children, value) => (
+                        <option key={value} value={value}>
+                          {children}
+                        </option>
+                      ))}
                     </select>
-                    <select name="source" value={source} onChange={handleSearchSourceChange}>
-                      {
-                        Object.entries(SOURCES)
-                          .map(([value, children]) =>
-                            <option key={value} value={value}>{children}</option>
-                        )
-                      }
+                    <select
+                      name="source"
+                      value={source}
+                      onChange={handleSearchSourceChange}
+                    >
+                      {Object.entries(SOURCES).map(([value, children]) => (
+                        <option key={value} value={value}>
+                          {children}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 )}

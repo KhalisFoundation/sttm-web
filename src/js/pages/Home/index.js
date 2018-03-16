@@ -1,7 +1,7 @@
 import React from 'react';
 import { SOURCES, TYPES } from 'shabados';
-import GurmukhiKeyboard from '../../components/GurmukhiKeyboard'
-import SearchForm  from '../../components/SearchForm';
+import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
+import SearchForm from '../../components/SearchForm';
 
 const types = [...TYPES, 'Ang'];
 
@@ -64,13 +64,21 @@ export default class Home extends React.PureComponent {
                       title={title}
                       pattern={pattern}
                     />
-                    <button type="button" className="clear-search-toggle" onClick={setQueryAs('')}>
+                    <button
+                      type="button"
+                      className="clear-search-toggle"
+                      onClick={setQueryAs('')}
+                    >
                       <i className="fa fa-times" />
                     </button>
                     <button
                       type="button"
-                      className="gurmukhi-keyboard-toggle"
-                      onClick={setGurmukhiKeyboardVisibilityAs(!displayGurmukhiKeyboard)}
+                      className={`gurmukhi-keyboard-toggle ${
+                        displayGurmukhiKeyboard ? 'active' : ''
+                      }`}
+                      onClick={setGurmukhiKeyboardVisibilityAs(
+                        !displayGurmukhiKeyboard
+                      )}
                     >
                       <i className="fa fa-keyboard-o" />
                     </button>
@@ -86,23 +94,31 @@ export default class Home extends React.PureComponent {
                   </div>
                   <div className="row search-options">
                     <div className="small-6 columns">
-                      <select name="type" id="search-type" value={type} onChange={handleSearchTypeChange} disabled={isAnimatingPlaceholder}>
-                        {
-                          types
-                            .map((children, value) =>
-                              <option key={value} value={value}>{children}</option>,
-                            )
-                        }
+                      <select
+                        name="type"
+                        id="search-type"
+                        value={type}
+                        onChange={handleSearchTypeChange}
+                        disabled={isAnimatingPlaceholder}
+                      >
+                        {types.map((children, value) => (
+                          <option key={value} value={value}>
+                            {children}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div className="small-6 columns">
-                      <select name="source" value={source} onChange={handleSearchSourceChange}>
-                        {
-                          Object.entries(SOURCES)
-                            .map(([value, children]) =>
-                              <option key={value} value={value}>{children}</option>,
-                            )
-                        }
+                      <select
+                        name="source"
+                        value={source}
+                        onChange={handleSearchSourceChange}
+                      >
+                        {Object.entries(SOURCES).map(([value, children]) => (
+                          <option key={value} value={value}>
+                            {children}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

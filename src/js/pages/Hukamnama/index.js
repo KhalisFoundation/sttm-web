@@ -15,11 +15,14 @@ class Layout extends React.PureComponent {
     const { data } = this.props;
     return (
       <div className="body_text">
-        <h3 style={{ textAlign: 'center' }}>Daily Hukamnama from Sri Harmandir Sahib, Amritsar</h3>
+        <h3 style={{ textAlign: 'center' }}>
+          Daily Hukamnama from Sri Harmandir Sahib, Amritsar
+        </h3>
         <ShabadContent
           gurbani={data.gurbani}
           info={data.shabadinfo}
           nav={data.navigation}
+          random={false}
           type={'shabad'}
           source={data.source}
         />
@@ -32,10 +35,8 @@ export default function Ang() {
   const url = buildApiUrl({ hukam: true, API_URL });
 
   return (
-    <PageLoader url={url}>{({ loading, data }) => (
-      loading
-        ? <Stub />
-        : <Layout data={data} />
-    )}</PageLoader>
+    <PageLoader url={url}>
+      {({ loading, data }) => (loading ? <Stub /> : <Layout data={data} />)}
+    </PageLoader>
   );
 }

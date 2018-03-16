@@ -22,8 +22,14 @@ export default class SearchForm extends React.PureComponent {
   state = {
     displayGurmukhiKeyboard: false,
     query: this.props.defaultQuery,
-    type: parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE) || DEFAULT_SEARCH_TYPE, 10),
-    source: localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) || DEFAULT_SEARCH_SOURCE,
+    type: parseInt(
+      localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE) ||
+        DEFAULT_SEARCH_TYPE,
+      10
+    ),
+    source:
+      localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
+      DEFAULT_SEARCH_SOURCE,
     placeholder: '',
     isAnimatingPlaceholder: false,
   };
@@ -31,26 +37,30 @@ export default class SearchForm extends React.PureComponent {
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
 
-    const tick = () => setTimeout(() => this.setState(
-      ({ isAnimatingPlaceholder, placeholder }) => {
-        if (!isAnimatingPlaceholder) return null;
+    const tick = () =>
+      setTimeout(
+        () =>
+          this.setState(({ isAnimatingPlaceholder, placeholder }) => {
+            if (!isAnimatingPlaceholder) return null;
 
-        if (placeholder === finalPlaceholder) {
-          return { isAnimatingPlaceholder: false };
-        } else if (finalPlaceholder[placeholder.length]) {
-          return { placeholder: placeholder + finalPlaceholder[placeholder.length] };
-        }
-      },
-      () => this.state.isAnimatingPlaceholder && tick()
-    ), 2000/finalPlaceholder.length);
+            if (placeholder === finalPlaceholder) {
+              return { isAnimatingPlaceholder: false };
+            } else if (finalPlaceholder[placeholder.length]) {
+              return {
+                placeholder: placeholder + finalPlaceholder[placeholder.length],
+              };
+            }
+          }, () => this.state.isAnimatingPlaceholder && tick()),
+        2000 / finalPlaceholder.length
+      );
 
     tick();
-  }
+  };
 
-  beginPlaceholderAnimation = () => this.setState(
-    { isAnimatingPlaceholder: true, placeholder: '' },
-    () => requestAnimationFrame(this.animatePlaceholder)
-  );
+  beginPlaceholderAnimation = () =>
+    this.setState({ isAnimatingPlaceholder: true, placeholder: '' }, () =>
+      requestAnimationFrame(this.animatePlaceholder)
+    );
 
   componentDidMount() {
     this.beginPlaceholderAnimation();
@@ -67,56 +77,60 @@ export default class SearchForm extends React.PureComponent {
       handleSubmit,
     } = this;
 
-    const [,useEnglish = false] = PLACEHOLDERS[this.state.type];
+    const [, useEnglish = false] = PLACEHOLDERS[this.state.type];
 
     const className = useEnglish ? '' : 'gurbani-font';
 
-    const [title, pattern] = this.state.type === 4
-      ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
-      : this.state.type === 5
-        ? []
-        : ['Enter 2 characters minimum.', '.{2,}'];
+    const [title, pattern] =
+      this.state.type === 4
+        ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
+        : this.state.type === 5 ? [] : ['Enter 2 characters minimum.', '.{2,}'];
 
-    const [action, name] = this.state.type === 5 ? ['/ang', 'ang'] : ['/search', 'q'];
+    const [action, name] =
+      this.state.type === 5 ? ['/ang', 'ang'] : ['/search', 'q'];
 
-    return (
-      this.props.children({
-        pattern,
-        title,
-        className,
-        ...state,
-        action,
-        name,
-        setGurmukhiKeyboardVisibilityAs,
-        setQueryAs,
-        handleSearchChange,
-        handleSearchSourceChange,
-        handleSearchTypeChange,
-        handleSubmit,
-      })
-    );
+    return this.props.children({
+      pattern,
+      title,
+      className,
+      ...state,
+      action,
+      name,
+      setGurmukhiKeyboardVisibilityAs,
+      setQueryAs,
+      handleSearchChange,
+      handleSearchSourceChange,
+      handleSearchTypeChange,
+      handleSubmit,
+    });
   }
 
   // Retuns a function
-  setGurmukhiKeyboardVisibilityAs = value => () => this.setState({ displayGurmukhiKeyboard: value });
-  setQueryAs = value => () => this.setState({ query: value });
+  setGurmukhiKeyboardVisibilityAs = value => () =>
+    this.setState({ displayGurmukhiKeyboard: value });
 
-  handleSearchChange = ({ target: { value } }) => this.setState(({ type }) => ({
-    query: type === 5 ? onlyNumbers(value) : value
-  }));
+  setQueryAs = value => () =>
+    this.setState(({ type }) => ({
+      query: type === 5 ? onlyNumbers(value) : value,
+    }));
 
-  handleSearchSourceChange = e => this.setState(
-    { source: e.target.value },
-    () => localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE, this.state.source)
-  );
+  handleSearchChange = ({ target: { value } }) => this.setQueryAs(value)();
 
-  handleSearchTypeChange = e => this.setState(
-    { type: parseInt(e.target.value, 10) },
-    () => {
-      localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE, this.state.type); 
+  handleSearchSourceChange = e =>
+    this.setState({ source: e.target.value }, () =>
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
+        this.state.source
+      )
+    );
+
+  handleSearchTypeChange = e =>
+    this.setState({ type: parseInt(e.target.value, 10) }, () => {
+      localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE, this.state.type);
       requestAnimationFrame(this.beginPlaceholderAnimation);
-    }
-  );
+    });
 
-  handleSubmit = () => {/* Possible Validations, Analytics */};
+  handleSubmit = () => {
+    /* Possible Validations, Analytics */
+  };
 }

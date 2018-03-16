@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ButtonList = ({ buttons = [] }) => buttons.map((button, i) =>
-  <button key={i} type="button">{button}</button>
-);
+const ButtonList = ({ buttons = [] }) =>
+  buttons.map((button, i) => (
+    <button key={i} type="button">
+      {button}
+    </button>
+  ));
 
 export default class GurmukhiKeyboard extends React.PureComponent {
   static propTypes = {
@@ -16,7 +19,8 @@ export default class GurmukhiKeyboard extends React.PureComponent {
   // Instead of attaching click to each button, we are using event delegation.
   click = ({ target: _$button, currentTarget: $keyboard }) => {
     const { value, onKeyClick, onClose } = this.props;
-    const $button = _$button.nodeName.toUpperCase() === 'I' ? _$button.parentNode : _$button;
+    const $button =
+      _$button.nodeName.toUpperCase() === 'I' ? _$button.parentNode : _$button;
     const { action } = $button.dataset;
 
     switch (action) {
@@ -28,22 +32,34 @@ export default class GurmukhiKeyboard extends React.PureComponent {
         onKeyClick(value.substring(0, value.length - 1));
         break;
       }
-      case 'page-1': case 'page-2': {
-        [...$keyboard.querySelectorAll('.page')]
-          .forEach((e) => { e.style.display = 'none'; });
-        document.getElementById(`gurmukhi-keyboard-${action}`).style.display = 'block';
+      case 'page-1':
+      case 'page-2': {
+        [...$keyboard.querySelectorAll('.page')].forEach(e => {
+          e.style.display = 'none';
+        });
+        document.getElementById(`gurmukhi-keyboard-${action}`).style.display =
+          'block';
         break;
       }
       default: {
         onKeyClick(value + ($button.dataset.value || $button.innerText));
       }
     }
-  }
+  };
 
   render() {
     return (
-      <div className={`gurmukhi-keyboard gurbani-font ${this.props.active ? 'active' : ''}`} onClick={this.click}>
-        <div className="page" style={{ display: 'block' }} id="gurmukhi-keyboard-page-1">
+      <div
+        className={`gurmukhi-keyboard gurbani-font ${
+          this.props.active ? 'active' : ''
+        }`}
+        onClick={this.click}
+      >
+        <div
+          className="page"
+          style={{ display: 'block' }}
+          id="gurmukhi-keyboard-page-1"
+        >
           <div className="keyboard-row">
             <div className="keyboard-row-set">
               <ButtonList buttons={['a', 'A', 'e', 's', 'h']} />
@@ -73,9 +89,13 @@ export default class GurmukhiKeyboard extends React.PureComponent {
               <ButtonList buttons={['X', 'r', 'l', 'v', 'V']} />
             </div>
             <div className="keyboard-row-set">
-              <ButtonList buttons={['&nbsp;', '&nbsp;']} />
-              <button type="button" data-action="page-1" className="active">1</button>
-              <button type="button" data-action="page-2">2</button>
+              <ButtonList buttons={['\u00a0', '\u00a0']} />
+              <button type="button" data-action="page-1" className="active">
+                1
+              </button>
+              <button type="button" data-action="page-2">
+                2
+              </button>
               <button type="button" data-action="bksp">
                 <i className="fa fa-long-arrow-left" />
               </button>
@@ -109,19 +129,23 @@ export default class GurmukhiKeyboard extends React.PureComponent {
           </div>
           <div className="keyboard-row">
             <div className="keyboard-row-set">
-              <ButtonList buttons={['ç', 'E', '^', '&nbsp;', '&nbsp;']} />
+              <ButtonList buttons={['ç', 'E', '^', '\u00a0', '\u00a0']} />
             </div>
             <div className="keyboard-row-set">
-              <ButtonList buttons={['&nbsp;', '&nbsp;']} />
-              <button type="button" data-action="page-1">1</button>
-              <button type="button" data-action="page-2" className="active">2</button>
+              <ButtonList buttons={['\u00a0', '\u00a0']} />
+              <button type="button" data-action="page-1">
+                1
+              </button>
+              <button type="button" data-action="page-2" className="active">
+                2
+              </button>
               <button type="button" data-action="bksp">
                 <i className="fa fa-long-arrow-left" />
               </button>
             </div>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
     );
   }
 }
