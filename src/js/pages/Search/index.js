@@ -28,7 +28,7 @@ export default class Search extends React.PureComponent {
       );
     }
 
-    const url = buildApiUrl({ q, type, source, offset, API_URL });
+    const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL }));
 
     return (
       <PageLoader url={url}>

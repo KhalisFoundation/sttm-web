@@ -3,66 +3,62 @@ import PropTypes from 'prop-types';
 
 // This component uses children as a function pattern
 export default class Fetch extends React.PureComponent {
-    state = {
-        loading: true,
-        res: null,
-        data: null,
-        error: null,
-    };
+  state = {
+    loading: true,
+    res: null,
+    data: null,
+    error: null,
+  };
 
-    static defaultProps = {
-        transform: r => r.json(),
-        options: {},
-    };
+  static defaultProps = {
+    transform: r => r.json(),
+    options: {},
+  };
 
-    static propTypes = {
-        transform: PropTypes.func,
-        url: PropTypes.string,
-        children: PropTypes.func.isRequired,
-        options: PropTypes.object,
-    };
+  static propTypes = {
+    transform: PropTypes.func,
+    url: PropTypes.string,
+    children: PropTypes.func.isRequired,
+    options: PropTypes.object,
+  };
 
-    componentDidMount() {
-        const {
-            url,
-            options,
-            transform,
-        } = this.props;
+  componentDidMount() {
+    const { url, options, transform } = this.props;
 
-        this.fetchData(url, options, transform);
-    }
+    this.fetchData(url, options, transform);
+  }
 
-    componentWillReceiveProps(nextProps) {
-        const {
-            url,
-            options,
-            transform,
-        } = nextProps;
+  componentWillReceiveProps(nextProps) {
+    const { url, options, transform } = nextProps;
 
-        this.fetchData(url, options, transform);
-    }
+    this.fetchData(url, options, transform);
+  }
 
-    fetchData = (url, options, transform) => {
-        this.setState({ loading: true });
+  fetchData = (url, options, transform) => {
+    this.setState({ loading: true });
 
-        return fetch(url, options)
-            .then(res => transform(res)
-                .then(data => this.setState({
-                    loading: false,
-                    res,
-                    data,
-                    error: null,
-                }))
-                .catch(error => this.setState({
-                    loading: false,
-                    res,
-                    data: null,
-                    error,
-                }))
-            );
-    }
+    return fetch(url, options).then(res =>
+      transform(res)
+        .then(data =>
+          this.setState({
+            loading: false,
+            res,
+            data,
+            error: null,
+          })
+        )
+        .catch(error =>
+          this.setState({
+            loading: false,
+            res,
+            data: null,
+            error,
+          })
+        )
+    );
+  };
 
-    render () {
-        return this.props.children(this.state);
-    }
+  render() {
+    return this.props.children(this.state);
+  }
 }
