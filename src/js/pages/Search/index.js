@@ -7,22 +7,24 @@ import Layout, { Stub } from './Layout';
 
 export default class Search extends React.PureComponent {
   static defaultProps = {
-    offset: 0 
+    offset: 0,
   };
 
   static propTypes = {
     q: PropTypes.string.isRequired,
-    type: PropTypes.string,
+    type: PropTypes.number,
     source: PropTypes.string,
     offset: PropTypes.number,
-  }
+  };
 
   render() {
     const { q, type, source, offset } = this.props;
 
     if (q === '') {
       return (
-        <h3><span>Please enter your query in the search bar above</span></h3>
+        <h3>
+          <span>Please enter your query in the search bar above</span>
+        </h3>
       );
     }
 
@@ -30,21 +32,19 @@ export default class Search extends React.PureComponent {
 
     return (
       <PageLoader url={url}>
-        {
-          ({ loading, data }) => (
-            loading
-              ? <Stub />
-              : (
-                <Layout
-                  totalResults={data.pageinfo.totalresults}
-                  resultsCount={data.pageinfo.pageresults}
-                  nextPageOffset={data.pageinfo.nextpageoffset}
-                  shabads={data.shabads}
-                  q={q}
-                  type={type}
-                  source={source}
-                />
-              )
+        {({ loading, data }) =>
+          loading ? (
+            <Stub />
+          ) : (
+            <Layout
+              totalResults={data.pageinfo.totalresults}
+              resultsCount={data.pageinfo.pageresults}
+              nextPageOffset={data.pageinfo.nextpageoffset}
+              shabads={data.shabads}
+              q={q}
+              type={type}
+              source={source}
+            />
           )
         }
       </PageLoader>

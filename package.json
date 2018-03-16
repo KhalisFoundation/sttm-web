@@ -1,7 +1,8 @@
 {
   "name": "sikhitothemax-web",
   "version": "1.1.0",
-  "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
+  "description":
+    "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
     "test:lint:html": "htmlhint index.html",
@@ -13,17 +14,22 @@
     "start": "npm-run-all --parallel build-watch:* server-watch",
     "server": "node server",
     "server-watch": "nodemon --watch server/ server",
-    "webpack-stats": "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
+    "webpack-stats":
+      "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
     "build": "npm-run-all build:*",
     "build:deployment": "node build/build.js",
-    "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
+    "build:css":
+      "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
     "build:webpack": "webpack",
     "build-watch": "npm-run-all build-watch:*",
     "build-watch:webpack": "npm run build:webpack -- --watch",
-    "build-watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
+    "build-watch:css":
+      "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
     "deploy": "git checkout dev && git pull origin && git push web",
-    "deploy:server": "NODE_ENV=production npm run build && rm -rf .editorconfig .gitignore .htmlhintrc .stylelintrc src LICENSE README.md && pm2 start server --name=\"sttm-prod\"",
-    "deploy:dev-server": "npm run build && NODE_ENV=development pm2 start server --name=\"sttm-dev\""
+    "deploy:server":
+      "NODE_ENV=production npm run build && rm -rf .editorconfig .gitignore .htmlhintrc .stylelintrc src LICENSE README.md && pm2 start server --name=\"sttm-prod\"",
+    "deploy:dev-server":
+      "npm run build && NODE_ENV=development pm2 start server --name=\"sttm-dev\""
   },
   "repository": {
     "type": "git",
@@ -75,15 +81,9 @@
   "jest": {
     "collectCoverage": true,
     "coverageDirectory": "<rootDir>/jest/coverage",
-    "coverageReporters": [
-      "html"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "setupFiles": [
-      "<rootDir>/jest/setup.js"
-    ]
+    "coverageReporters": ["html"],
+    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "setupFiles": ["<rootDir>/jest/setup.js"]
   },
   "babel": {
     "env": {
@@ -93,18 +93,13 @@
             "transform-react-remove-prop-types",
             {
               "mode": "remove",
-              "ignoreFilenames": [
-                "node_modules"
-              ]
+              "ignoreFilenames": ["node_modules"]
             }
           ]
         ]
       },
       "test": {
-        "presets": [
-          "@babel/preset-env",
-          "@babel/preset-react"
-        ],
+        "presets": ["@babel/preset-env", "@babel/preset-react"],
         "plugins": [
           "@babel/plugin-proposal-object-rest-spread",
           "@babel/plugin-proposal-class-properties"
@@ -116,11 +111,7 @@
         "@babel/preset-env",
         {
           "targets": {
-            "browsers": [
-              "> 1%",
-              "ie 11",
-              "safari 9"
-            ]
+            "browsers": ["> 1%", "ie 11", "safari 9"]
           },
           "modules": false
         }
@@ -134,9 +125,7 @@
     ]
   },
   "standard": {
-    "ignore": [
-      "assets/js"
-    ]
+    "ignore": ["assets/js"]
   },
   "dependencies": {
     "compression": "^1.6.2",
@@ -147,5 +136,9 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "shabados": "^2.0.0-beta.3"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }
