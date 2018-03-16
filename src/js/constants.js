@@ -37,5 +37,11 @@ export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
   NO_RESULTS_FOUND: 'Sorry. No results found',
+  GURBAANI_COPIED: 'Gurbaani has been copied!',
+  LINK_COPIED: 'Link has been copied to your clipboard!',
+  COPY_FAILURE: "Sorry, we couldn't copy the link.",
   LOAD_MORE: 'Load More',
+  PAGE_NOT_FOUND_MESSAGE: 'These are not the Singhs you are looking for.',
+  URL_NOT_FOUND: url =>
+    `The requested URL <code>${url}</code> was not found on this server.`,
 };
