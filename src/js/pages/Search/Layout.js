@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { SOURCES } from 'shabados';
 import { connect } from 'react-redux';
+import { TEXTS } from '../../constants';
 import Controls from '../../components/Controls';
 import Larivaar from '../../components/Larivaar';
 
@@ -53,8 +54,13 @@ class Layout extends React.PureComponent {
       unicode,
       fontSize,
     } = this.props;
+
     if (parseInt(resultsCount, 10) === 0) {
-      return <h3>No results found</h3>;
+      return (
+        <div className="text-center row" id="content-root">
+          <h1>{TEXTS.NO_RESULTS_FOUND}</h1>
+        </div>
+      );
     }
 
     // I'm feeling lucky
@@ -161,7 +167,7 @@ class Layout extends React.PureComponent {
                 className="load button"
                 to={`/search?q=${q}&source=${source}&type=${type}&offset=${nextPageOffset}`}
               >
-                Load More
+                {TEXTS.LOAD_MORE}
               </Link>
             </li>
           )}

@@ -16,7 +16,14 @@
 }
 
 .search-options {
-  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem -5px;
+
+  .search-option {
+    margin: 5px;
+    width: calc(50% - 10px);
+  }
 }
 
 @media screen and (min-width: 46em) {

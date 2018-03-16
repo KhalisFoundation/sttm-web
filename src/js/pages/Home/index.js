@@ -92,8 +92,8 @@ export default class Home extends React.PureComponent {
                       onClose={setGurmukhiKeyboardVisibilityAs(false)}
                     />
                   </div>
-                  <div className="row search-options">
-                    <div className="small-6 columns">
+                  <div className="search-options">
+                    <div className="search-option">
                       <select
                         name="type"
                         id="search-type"
@@ -108,7 +108,7 @@ export default class Home extends React.PureComponent {
                         ))}
                       </select>
                     </div>
-                    <div className="small-6 columns">
+                    <div className="search-option">
                       <select
                         name="source"
                         value={source}
