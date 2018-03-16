@@ -1,11 +1,12 @@
 import React from 'react';
 import { showToast, copyToClipboard, shortenURL } from '../util';
+import TEXTS from '../constants';
 
 export default function ShareButtons() {
-  const copyShortUrl = () => copyToClipboard(shortenURL())
-    .then(() => showToast('Link has been copied to your clipboard!'))
-    .catch(() => showToast('Sorry, we couldn\'t copy the link.'));
-
+  const copyShortUrl = () =>
+    copyToClipboard(shortenURL())
+      .then(() => showToast(TEXTS.LINK_COPIED))
+      .catch(() => showToast(TEXTS.COPY_FAILURE));
 
   // TODO: Use array to generate this DOM
 
@@ -19,7 +20,11 @@ export default function ShareButtons() {
             rel="noopener noreferrer"
             title="Share on Facebook"
             onClick={() => {
-              window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shortenURL())}&t=${encodeURIComponent(shortenURL())}`);
+              window.open(
+                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                  shortenURL()
+                )}&t=${encodeURIComponent(shortenURL())}`
+              );
               return false;
             }}
           >
@@ -34,7 +39,11 @@ export default function ShareButtons() {
             rel="noopener noreferrer"
             title="Tweet"
             onClick={() => {
-              window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(document.title)}:%20${encodeURIComponent(shortenURL())}`);
+              window.open(
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  document.title
+                )}:%20${encodeURIComponent(shortenURL())}`
+              );
               return false;
             }}
           >
@@ -50,7 +59,11 @@ export default function ShareButtons() {
             rel="noopener noreferrer"
             title="Share on Whatsapp"
             onClick={() => {
-              window.open(`whatsapp://send?text=${encodeURIComponent(shortenURL())}%20${encodeURIComponent(document.title)}`);
+              window.open(
+                `whatsapp://send?text=${encodeURIComponent(
+                  shortenURL()
+                )}%20${encodeURIComponent(document.title)}`
+              );
               return false;
             }}
           >
@@ -65,7 +78,11 @@ export default function ShareButtons() {
             rel="noopener noreferrer"
             title="Submit to Reddit"
             onClick={() => {
-              window.open(`http://www.reddit.com/submit?url=${encodeURIComponent(shortenURL())}&title: ${encodeURIComponent(document.title)}`);
+              window.open(
+                `http://www.reddit.com/submit?url=${encodeURIComponent(
+                  shortenURL()
+                )}&title: ${encodeURIComponent(document.title)}`
+              );
               return false;
             }}
           >
@@ -80,7 +97,11 @@ export default function ShareButtons() {
             rel="noopener noreferrer"
             title="Post to Tumblr"
             onClick={() => {
-              window.open(`http://www.tumblr.com/share?v=3&u=${encodeURIComponent(shortenURL())}&t=${encodeURIComponent(document.title)}`);
+              window.open(
+                `http://www.tumblr.com/share?v=3&u=${encodeURIComponent(
+                  shortenURL()
+                )}&t=${encodeURIComponent(document.title)}`
+              );
               return false;
             }}
           >
@@ -95,7 +116,11 @@ export default function ShareButtons() {
             rel="noopener noreferrer"
             title="Pin it"
             onClick={() => {
-              window.open(`http://pinterest.com/pin/create/button/?url=${encodeURIComponent(shortenURL())}&description=${encodeURIComponent(document.title)}`);
+              window.open(
+                `http://pinterest.com/pin/create/button/?url=${encodeURIComponent(
+                  shortenURL()
+                )}&description=${encodeURIComponent(document.title)}`
+              );
               return false;
             }}
           >
@@ -110,7 +135,11 @@ export default function ShareButtons() {
             rel="noopener noreferrer"
             title="Share via email"
             onClick={() => {
-              window.open(`mailto:?subject=${encodeURIComponent(document.title)}&body=${encodeURIComponent(shortenURL())}`);
+              window.open(
+                `mailto:?subject=${encodeURIComponent(
+                  document.title
+                )}&body=${encodeURIComponent(shortenURL())}`
+              );
               return false;
             }}
           >
@@ -119,14 +148,12 @@ export default function ShareButtons() {
           </a>
         </li>
         <li>
-          <a id="copy-short-url" className="copy" onClick={copyShortUrl} >
+          <a id="copy-short-url" className="copy" onClick={copyShortUrl}>
             <i className="fa fa-fw fa-clipboard" />
             <span className="sr-only">Copy URL</span>
           </a>
         </li>
       </ul>
     </div>
-
   );
 }
-
