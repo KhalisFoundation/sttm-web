@@ -17,7 +17,6 @@
     "webpack-stats":
       "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
     "build": "npm-run-all build:*",
-    "build:deployment": "node build/build.js",
     "build:css":
       "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
     "build:webpack": "webpack",
@@ -27,7 +26,7 @@
       "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
     "deploy": "git checkout dev && git pull origin && git push web",
     "deploy:server":
-      "NODE_ENV=production npm run build && rm -rf .editorconfig .gitignore .htmlhintrc .stylelintrc src LICENSE README.md && pm2 start server --name=\"sttm-prod\"",
+      "NODE_ENV=production npm run build && rm -rf .editorconfig .gitignore .github .htmlhintrc .stylelintrc .vscode stats.json webpack.config.js src LICENSE CONTRIBUTING.md README.md jest && pm2 start server --name=\"sttm-prod\"",
     "deploy:dev-server":
       "npm run build && NODE_ENV=development pm2 start server --name=\"sttm-dev\""
   },
