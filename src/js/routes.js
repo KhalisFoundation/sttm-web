@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import { getQueryParams, getParameterByName, throwError } from './util';
 import { Redirect } from 'react-router-dom';
