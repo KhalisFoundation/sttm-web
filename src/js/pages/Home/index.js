@@ -2,6 +2,7 @@ import React from 'react';
 import { SOURCES, TYPES } from 'shabados';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
+import Logo from '../../components/Logo';
 
 const types = [...TYPES, 'Ang'];
 
@@ -38,11 +39,7 @@ export default class Home extends React.PureComponent {
                 >
                   <div className="flex justify-center align-center">
                     <div>
-                      <img
-                        className="logo-long"
-                        src="/assets/images/sttm_logo.png"
-                        alt="SikhiToTheMax Logo"
-                      />
+                      <Logo className="logo-long" />
                     </div>
                   </div>
 
