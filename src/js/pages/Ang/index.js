@@ -36,11 +36,9 @@ export default class Ang extends React.PureComponent {
     const url = buildApiUrl({ ang, source, API_URL });
 
     return (
-      <PageLoader url={url}>{({ loading, data }) => (
-        loading
-          ? <Stub />
-          : <Layout data={data} />
-      )}</PageLoader>
+      <PageLoader url={url}>
+        {({ loading, data }) => (loading ? <Stub /> : <Layout data={data} />)}
+      </PageLoader>
     );
   }
 }

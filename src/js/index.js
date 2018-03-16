@@ -7,6 +7,6 @@ import Root from './Root';
 render(
   <Provider store={store}>
     <Root />
-  </Provider>
-  , document.getElementById('app-root')
+  </Provider>,
+  document.getElementById('app-root')
 );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { showToast, copyToClipboard, shortenURL } from '../util';
-import TEXTS from '../constants';
+import { TEXTS } from '../constants';
 
 export default function ShareButtons() {
   const copyShortUrl = () =>
