@@ -109,7 +109,7 @@ export default [
           >
             {({ pending, resolved: { default: Ang } = {}, rejected }) =>
               pending ? null : Ang ? (
-                <Ang ang={ang} source={source} />
+                <Ang ang={parseInt(ang, 10)} source={source} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,

@@ -32,10 +32,14 @@ export function shortenURL(url = window.location.href) {
   const URL = `http://${shortdomain}`;
 
   switch (path) {
-    case '/shabad': return `${URL}/s/${getParameterByName('id')}`;
-    case '/ang': return `${URL}/a/${getParameterByName('ang')}`;
-    case '/hukamnama': return `${URL}/h`;
-    default: return url.replace(window.location.hostname, shortdomain);
+    case '/shabad':
+      return `${URL}/s/${getParameterByName('id')}`;
+    case '/ang':
+      return `${URL}/a/${getParameterByName('ang')}`;
+    case '/hukamnama':
+      return `${URL}/h`;
+    default:
+      return url.replace(window.location.hostname, shortdomain);
   }
 }
 
@@ -46,55 +50,58 @@ export function addSpaceForPadChed(status) {
 
     [...document.querySelectorAll('.akhar')]
       .filter(e => e.querySelector('.padChedDiv') === null)
-      .forEach((element) => {
+      .forEach(element => {
         const str = element.innerHTML;
         const text = str + padChedDiv;
         element.innerHTML = text;
       });
   } else {
     // remove padched
-    document.querySelectorAll('.padChedDiv')
+    document
+      .querySelectorAll('.padChedDiv')
       .forEach(element => element.parentNode.removeChild(element));
   }
 }
 
-export const showToast = (text, delay = 2500) => new Promise((resolve) => {
-  const copyURLconfirm = document.getElementById('toast-notification');
-  copyURLconfirm.innerText = text;
-  copyURLconfirm.classList.remove('hidden');
+export const showToast = (text, delay = 2500) =>
+  new Promise(resolve => {
+    const copyURLconfirm = document.getElementById('toast-notification');
+    copyURLconfirm.innerText = text;
+    copyURLconfirm.classList.remove('hidden');
 
-  setTimeout(() => {
-    copyURLconfirm.classList.add('hidden');
-    resolve();
-  }, delay);
-});
-
-export const copyToClipboard = text => new Promise((resolve, reject) => {
-  try {
-    const textarea = document.createElement('textarea');
-    textarea.textContent = text;
-    document.body.appendChild(textarea);
-
-    const selection = document.getSelection();
-    const range = document.createRange();
-    range.selectNode(textarea);
-    selection.removeAllRanges();
-    selection.addRange(range);
-
-    const result = document.execCommand('copy');
-
-    selection.removeAllRanges();
-    document.body.removeChild(textarea);
-
-    if (result) {
+    setTimeout(() => {
+      copyURLconfirm.classList.add('hidden');
       resolve();
-    } else {
-      throw new Error('Failed to copy');
+    }, delay);
+  });
+
+export const copyToClipboard = text =>
+  new Promise((resolve, reject) => {
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.textContent = text;
+      document.body.appendChild(textarea);
+
+      const selection = document.getSelection();
+      const range = document.createRange();
+      range.selectNode(textarea);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      const result = document.execCommand('copy');
+
+      selection.removeAllRanges();
+      document.body.removeChild(textarea);
+
+      if (result) {
+        resolve();
+      } else {
+        throw new Error('Failed to copy');
+      }
+    } catch (e) {
+      reject(e);
     }
-  } catch (e) {
-    reject(e);
-  }
-});
+  });
 
 export const getArrayFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
@@ -114,17 +121,17 @@ export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
   return value === 'true';
 };
 
-export const saveToLocalStorage = (key, value) => requestAnimationFrame(
-  () => localStorage.setItem(key, value),
-);
+export const saveToLocalStorage = (key, value) =>
+  requestAnimationFrame(() => localStorage.setItem(key, value));
 
-export const toggleItemInArray = (item, arr) => arr.includes(item)
-  ? arr.filter(k => k !== item)
-  : [...arr, item];
+export const toggleItemInArray = (item, arr) =>
+  arr.includes(item) ? arr.filter(k => k !== item) : [...arr, item];
 
 export function navLink(type, source) {
   switch (type) {
-    case 'shabad': return 'shabad?id=';
-    case 'ang': return `ang?source=${source}&ang=`;
+    case 'shabad':
+      return 'shabad?id=';
+    case 'ang':
+      return `ang?source=${source}&ang=`;
   }
 }

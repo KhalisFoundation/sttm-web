@@ -9,7 +9,8 @@ import Baani from './Baani';
 
 class Shabad extends React.PureComponent {
   static defaultProps = {
-    nav: {}
+    random: false,
+    nav: {},
   };
 
   static propTypes = {
