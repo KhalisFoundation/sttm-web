@@ -56,10 +56,9 @@
 
   /* do not change order of below */
   background-image:
-    /* Shadows */ linear-gradient(to right, #f5f5f5, #f5f5f5),
     linear-gradient(to right, #f5f5f5, #f5f5f5),
-    /* Shadow covers */
-      linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(245, 245, 245, 0)),
+    linear-gradient(to right, #f5f5f5, #f5f5f5),
+    linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(245, 245, 245, 0)),
     linear-gradient(to left, rgba(0, 0, 0, 0.25), rgba(245, 245, 245, 0));
   background-position: left center, right center, left center, right center;
   background-repeat: no-repeat;
