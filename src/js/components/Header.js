@@ -65,6 +65,7 @@ export default class Header extends React.PureComponent {
                             <input
                               name="type"
                               className="hidden"
+                              defaultValue={type}
                               id="search-type-value"
                               hidden
                             />
@@ -72,6 +73,7 @@ export default class Header extends React.PureComponent {
                           <li>
                             <input
                               name="source"
+                              defaultValue={source}
                               className="hidden"
                               id="search-source-value"
                               hidden
