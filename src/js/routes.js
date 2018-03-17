@@ -103,7 +103,7 @@ export default [
       const [ang, source] = ['ang', 'source'].map(v => getParameterByName(v));
 
       return (
-        <Layout q={ang} title="Ang/Page Viewer - SikhiToTheMax">
+        <Layout defaultQuery={ang} title="Ang/Page Viewer - SikhiToTheMax">
           <RenderPromise
             promise={() => import(/* webpackChunkName: "Ang" */ './pages/Ang')}
           >
