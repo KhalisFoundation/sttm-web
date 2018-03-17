@@ -35,6 +35,7 @@ deploy:
       branch: master
 
 before_install:
+- npm i -g npm@latest
 - openssl aes-256-cbc -K $encrypted_1454d8bcbe1b_key -iv $encrypted_1454d8bcbe1b_iv
   -in deploy.enc -out scripts/deploy -d
 
