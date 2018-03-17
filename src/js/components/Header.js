@@ -36,6 +36,7 @@ export default class Header extends React.PureComponent {
               title,
               className,
               displayGurmukhiKeyboard,
+              isAnimatingPlaceholder,
               query,
               type,
               source,
@@ -64,6 +65,7 @@ export default class Header extends React.PureComponent {
                             <input
                               name="type"
                               className="hidden"
+                              defaultValue={type}
                               id="search-type-value"
                               hidden
                             />
@@ -71,6 +73,7 @@ export default class Header extends React.PureComponent {
                           <li>
                             <input
                               name="source"
+                              defaultValue={source}
                               className="hidden"
                               id="search-source-value"
                               hidden
@@ -171,6 +174,7 @@ export default class Header extends React.PureComponent {
                       name="type"
                       id="search-type"
                       value={type}
+                      disabled={isAnimatingPlaceholder}
                       onChange={handleSearchTypeChange}
                     >
                       {types.map((children, value) => (

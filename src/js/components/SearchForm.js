@@ -40,7 +40,7 @@ export default class SearchForm extends React.PureComponent {
     const tick = () =>
       setTimeout(
         () =>
-          this.setState(({ isAnimatingPlaceholder, placeholder }) => {
+          this._setState(({ isAnimatingPlaceholder, placeholder }) => {
             if (!isAnimatingPlaceholder) return null;
 
             if (placeholder === finalPlaceholder) {
@@ -58,12 +58,19 @@ export default class SearchForm extends React.PureComponent {
   };
 
   beginPlaceholderAnimation = () =>
-    this.setState({ isAnimatingPlaceholder: true, placeholder: '' }, () =>
+    this._setState({ isAnimatingPlaceholder: true, placeholder: '' }, () =>
       requestAnimationFrame(this.animatePlaceholder)
     );
 
+  _setState = (...args) => (this._mounted ? this.setState(...args) : null);
+
   componentDidMount() {
+    this._mounted = true;
     this.beginPlaceholderAnimation();
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
   render() {

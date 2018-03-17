@@ -13,15 +13,16 @@ class Layout extends React.PureComponent {
   };
   render() {
     const { data } = this.props;
+
     return (
-      <React.Fragment>
+      <div className="row" id="content-root">
         <ShabadContent
           gurbani={data.page}
-          nav={data.navigation}
+          nav={Array.isArray(data.navigation) ? {} : data.navigation}
           info={{ source: data.source }}
           type="ang"
         />
-      </React.Fragment>
+      </div>
     );
   }
 }
