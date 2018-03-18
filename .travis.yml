@@ -10,7 +10,7 @@ branches:
   - dev
 
 addons:
-  ssh_known_hosts: usc-avm01.khalis.net
+  ssh_known_hosts: usc-avm01.khalis.net:1157
 
 install:
 - npm ci
