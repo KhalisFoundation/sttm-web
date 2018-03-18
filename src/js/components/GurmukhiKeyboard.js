@@ -42,6 +42,7 @@ export default class GurmukhiKeyboard extends React.PureComponent {
           'block';
         break;
       }
+      case 'help': break;
       default: {
         onKeyClick(value + ($button.dataset.value || $button.innerText));
       }
@@ -102,7 +103,7 @@ export default class GurmukhiKeyboard extends React.PureComponent {
               </button>
 
               <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
-                <button type="button">?</button>
+                <button data-action="help" type="button">?</button>
               </Link>
             </div>
           </div>
@@ -148,7 +149,7 @@ export default class GurmukhiKeyboard extends React.PureComponent {
                 <i className="fa fa-long-arrow-left" />
               </button>
               <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
-                <button type="button">?</button>
+                <button data-action="help" type="button">?</button>
               </Link>
             </div>
           </div>
