@@ -74,7 +74,6 @@ export const copyToClipboard = text =>
       selection.addRange(range);
 
       const result = document.execCommand('copy');
-
       selection.removeAllRanges();
       document.body.removeChild(textarea);
 

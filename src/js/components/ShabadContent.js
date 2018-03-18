@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getEmbedCode, showToast, copyToClipboard } from '../util';
+import { showToast, copyToClipboard } from '../util';
 import Controls, { supportedMedia } from './Controls';
 import FootNav from './FootNav';
 import Meta from './Meta';
@@ -39,6 +39,13 @@ class Shabad extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
   };
 
+  getEmbedCode = null;
+
+  componentDidMount() {
+    // PreLoad
+    this.getEmbedCode = import(/* webpackChunkName: "embed" */ '../util/embed.js');
+  }
+
   render() {
     const {
       props: {
@@ -67,7 +74,11 @@ class Shabad extends React.PureComponent {
     return (
       <React.Fragment>
         <Controls
-          media={supportedMedia}
+          media={
+            type === 'shabad'
+              ? supportedMedia
+              : supportedMedia.filter(m => m !== 'embed')
+          }
           onSelectAllClick={handleSelectAll}
           onEmbedClick={handleEmbed}
         />
@@ -123,7 +134,10 @@ class Shabad extends React.PureComponent {
 
   handleEmbed = () => {
     const { gurbani, info } = this.props;
-    copyToClipboard(getEmbedCode({ gurbani, info }))
+
+    this.getEmbedCode
+      .then(({ default: getEmbedCode }) => getEmbedCode({ gurbani, info }))
+      .then(copyToClipboard)
       .then(() => showToast(TEXTS.EMBED_COPIED))
       .catch(() => showToast(TEXTS.EMBED_FAILURE));
   };
