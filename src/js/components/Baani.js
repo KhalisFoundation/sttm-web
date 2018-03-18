@@ -26,7 +26,7 @@ export default class Baani extends React.PureComponent {
 
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
-    type: PropTypes.string,
+    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -135,7 +135,9 @@ export default class Baani extends React.PureComponent {
             ))}
 
             <Actions
-              disabledActions={type === 'ang' ? [] : ['openShabad']}
+              disabledActions={
+                ['ang', 'hukamnama'].includes(type) ? [] : ['openShabad']
+              }
               shabad={shabad}
               onTweetClick={this.onTweetClick(shabad)}
               onCopyClick={this.onCopyClick(shabad)}
@@ -170,7 +172,9 @@ export default class Baani extends React.PureComponent {
               />
 
               <Actions
-                disabledActions={type === 'ang' ? [] : ['openShabad']}
+                disabledActions={
+                  ['ang', 'hukamnama'].includes(type) ? [] : ['openShabad']
+                }
                 shabad={shabad}
                 onTweetClick={this.onTweetClick(shabad)}
                 onCopyClick={this.onCopyClick(shabad)}

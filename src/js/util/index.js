@@ -110,6 +110,7 @@ export const toggleItemInArray = (item, arr) =>
 
 export function navLink(type, source) {
   switch (type) {
+    case 'hukamnama':
     case 'shabad':
       return 'shabad?id=';
     case 'ang':

@@ -23,7 +23,7 @@ class Layout extends React.PureComponent {
           info={data.shabadinfo}
           nav={data.navigation}
           random={false}
-          type={'shabad'}
+          type={'hukamnama'}
           source={data.source}
         />
       </div>

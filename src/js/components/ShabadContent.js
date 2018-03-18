@@ -20,7 +20,7 @@ class Shabad extends React.PureComponent {
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
-    type: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.string,
