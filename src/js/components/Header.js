@@ -8,19 +8,27 @@ import SearchForm from './SearchForm';
 const types = [...TYPES, 'Ang'];
 
 export default class Header extends React.PureComponent {
-  static defaultProps = {
-    isHome: false,
-  };
+  static defaultProps = { isHome: false };
 
   static propTypes = {
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
+    history: PropTypes.shape({ push: PropTypes.func }),
   };
 
   toggleMenu = () => document.body.classList.toggle('menu-open');
+  closeMenu = () => document.body.classList.remove('menu-open');
+  onFormSubmit = ({ type, source, query }) =>
+    this.props.history.push(`/search?type=${type}&source=${source}&q=${query}`);
 
   render() {
-    const { defaultQuery, isHome } = this.props;
+    const {
+      props: { defaultQuery, isHome },
+      toggleMenu,
+      closeMenu,
+      onFormSubmit,
+    } = this;
+
     return (
       <div className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
         <div className="row">
@@ -29,7 +37,11 @@ export default class Header extends React.PureComponent {
               <Link to="/" />
             </div>
           )}
-          <SearchForm defaultQuery={defaultQuery}>
+          <SearchForm
+            defaultQuery={defaultQuery}
+            submitOnChangeOf={['type', 'source']}
+            onSubmit={onFormSubmit}
+          >
             {({
               pattern,
               defaultQuery,
@@ -57,8 +69,8 @@ export default class Header extends React.PureComponent {
                       <form
                         action={action}
                         id="top-bar-search-form"
-                        className="search-form"
                         onSubmit={handleSubmit}
+                        className="search-form"
                       >
                         <ul className="menu">
                           <li>
@@ -140,28 +152,23 @@ export default class Header extends React.PureComponent {
                       href="#"
                       className="button"
                       id="open-mobile-menu"
-                      onClick={this.toggleMenu}
+                      onClick={toggleMenu}
                     >
                       <i className="fa fa-bars" />
                     </a>
                     <ul className="menu header-menu">
                       <li>
-                        <Link to="/hukamnama" onClick={this.toggleMenu}>
+                        <Link to="/hukamnama" onClick={toggleMenu}>
                           Hukamnama
                         </Link>
                       </li>
                       <li>
-                        <Link to="/shabad?random" onClick={this.toggleMenu}>
+                        <Link to="/shabad?random" onClick={toggleMenu}>
                           Random Shabad
                         </Link>
                       </li>
                       <li className="close">
-                        <a
-                          href="#"
-                          onClick={() =>
-                            document.body.classList.remove('menu-open')
-                          }
-                        >
+                        <a href="#" onClick={closeMenu}>
                           Close
                         </a>
                       </li>

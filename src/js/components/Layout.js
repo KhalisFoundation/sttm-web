@@ -16,18 +16,21 @@ export default class Layout extends React.PureComponent {
     isHome: PropTypes.bool,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     document.title = this.props.title;
   }
 
   render() {
-    const { children, isHome = false } = this.props;
+    const { children, isHome = false, ...props } = this.props;
     return (
       <React.Fragment>
-        <Header defaultQuery={this.props.defaultQuery} isHome={isHome} />
+        <Header
+          defaultQuery={this.props.defaultQuery}
+          isHome={isHome}
+          {...props}
+        />
         {children}
       </React.Fragment>
     );
   }
 }
-

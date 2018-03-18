@@ -44,4 +44,5 @@ export const TEXTS = {
   PAGE_NOT_FOUND_MESSAGE: 'These are not the Singhs you are looking for.',
   URL_NOT_FOUND: url =>
     `The requested URL <code>${url}</code> was not found on this server.`,
+  EMPTY_QUERY: 'Please enter your query in the search bar above',
 };

@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from 'shabados';
+import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
 import Layout, { Stub } from './Layout';
 
@@ -22,9 +23,9 @@ export default class Search extends React.PureComponent {
 
     if (q === '') {
       return (
-        <h3>
-          <span>Please enter your query in the search bar above</span>
-        </h3>
+        <div className="text-center row" id="content-root">
+          <h1>{TEXTS.EMPTY_QUERY}</h1>
+        </div>
       );
     }
 

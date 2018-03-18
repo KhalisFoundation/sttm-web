@@ -8,20 +8,40 @@ import {
   DEFAULT_SEARCH_SOURCE,
 } from '../constants';
 
+const SEARCH_TYPES = {
+  ROMANIZED: 4,
+  ANG: 5,
+};
+
 const onlyNumbers = str => str.replace(/\D/g, '');
 export default class SearchForm extends React.PureComponent {
   static defaultProps = {
     defaultQuery: '',
+    submitOnChangeOf: [],
   };
 
   static propTypes = {
     children: PropTypes.func.isRequired,
     defaultQuery: PropTypes.string,
+    submitOnChangeOf: PropTypes.arrayOf(
+      PropTypes.oneOf(['type', 'source', 'query'])
+    ),
+    onSubmit: props => {
+      if (
+        props.submitOnChangeOf.length !== 0 &&
+        typeof props.onSubmit !== 'function'
+      ) {
+        return new Error(
+          `"onSubmit" is required when "submitOnChange" isn't empty`
+        );
+      }
+    },
   };
 
   state = {
     displayGurmukhiKeyboard: false,
     query: this.props.defaultQuery,
+    shouldSubmit: false,
     type: parseInt(
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE) ||
         DEFAULT_SEARCH_TYPE,
@@ -38,7 +58,7 @@ export default class SearchForm extends React.PureComponent {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
 
     const tick = () =>
-      setTimeout(
+      (this.timer = setTimeout(
         () =>
           this._setState(({ isAnimatingPlaceholder, placeholder }) => {
             if (!isAnimatingPlaceholder) return null;
@@ -52,15 +72,25 @@ export default class SearchForm extends React.PureComponent {
             }
           }, () => this.state.isAnimatingPlaceholder && tick()),
         2000 / finalPlaceholder.length
-      );
+      ));
 
     tick();
   };
 
-  beginPlaceholderAnimation = () =>
-    this._setState({ isAnimatingPlaceholder: true, placeholder: '' }, () =>
-      requestAnimationFrame(this.animatePlaceholder)
+  beginPlaceholderAnimation = () => {
+    if (this.state.query === '') {
+      clearTimeout(this.timer);
+      this._setState({ isAnimatingPlaceholder: true, placeholder: '' }, () => {
+        requestAnimationFrame(this.animatePlaceholder);
+      });
+    }
+  };
+
+  stopPlaceholderAnimation = () => {
+    this.setState({ isAnimatingPlaceholder: false }, () =>
+      clearTimeout(this.timer)
     );
+  };
 
   _setState = (...args) => (this._mounted ? this.setState(...args) : null);
 
@@ -89,12 +119,14 @@ export default class SearchForm extends React.PureComponent {
     const className = useEnglish ? '' : 'gurbani-font';
 
     const [title, pattern] =
-      this.state.type === 4
+      this.state.type === SEARCH_TYPES.ROMANIZED
         ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
-        : this.state.type === 5 ? [] : ['Enter 2 characters minimum.', '.{2,}'];
+        : this.state.type === SEARCH_TYPES.ANG
+          ? []
+          : ['Enter 2 characters minimum.', '.{2,}'];
 
     const [action, name] =
-      this.state.type === 5 ? ['/ang', 'ang'] : ['/search', 'q'];
+      this.state.type === SEARCH_TYPES.ANG ? ['/ang', 'ang'] : ['/search', 'q'];
 
     return this.props.children({
       pattern,
@@ -111,31 +143,78 @@ export default class SearchForm extends React.PureComponent {
       handleSubmit,
     });
   }
+  componentDidUpdate() {
+    const {
+      state: { shouldSubmit, source, type, query },
+      props: { onSubmit },
+    } = this;
+
+    if (shouldSubmit) {
+      this.setState(
+        {
+          shouldSubmit: false,
+        },
+        () =>
+          onSubmit({
+            source,
+            type,
+            query,
+          })
+      );
+    }
+  }
 
   // Retuns a function
   setGurmukhiKeyboardVisibilityAs = value => () =>
     this.setState({ displayGurmukhiKeyboard: value });
 
-  setQueryAs = value => () =>
+  setQueryAs = value => () => {
+    this.stopPlaceholderAnimation();
     this.setState(({ type }) => ({
-      query: type === 5 ? onlyNumbers(value) : value,
+      query: type === SEARCH_TYPES.ANG ? onlyNumbers(value) : value,
+      shouldSubmit:
+        this.props.submitOnChangeOf.includes('query') &&
+        (type === SEARCH_TYPES.ANG ? onlyNumbers(value) : value) !== '',
     }));
+  };
 
   handleSearchChange = ({ target: { value } }) => this.setQueryAs(value)();
 
   handleSearchSourceChange = e =>
-    this.setState({ source: e.target.value }, () =>
-      localStorage.setItem(
-        LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
-        this.state.source
-      )
+    this.setState(
+      {
+        source: e.target.value,
+        shouldSubmit:
+          this.props.submitOnChangeOf.includes('source') &&
+          this.state.query !== '',
+      },
+      () =>
+        localStorage.setItem(
+          LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
+          this.state.source
+        )
     );
 
   handleSearchTypeChange = e =>
-    this.setState({ type: parseInt(e.target.value, 10) }, () => {
-      localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE, this.state.type);
-      requestAnimationFrame(this.beginPlaceholderAnimation);
-    });
+    this.setState(
+      {
+        type: parseInt(e.target.value, 10),
+        query:
+          parseInt(e.target.value, 10) === SEARCH_TYPES.ANG
+            ? onlyNumbers(this.state.query)
+            : this.state.query,
+        shouldSubmit:
+          this.props.submitOnChangeOf.includes('type') &&
+          this.state.query !== '',
+      },
+      () => {
+        localStorage.setItem(
+          LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+          this.state.type
+        );
+        requestAnimationFrame(this.beginPlaceholderAnimation);
+      }
+    );
 
   handleSubmit = () => {
     /* Possible Validations, Analytics */

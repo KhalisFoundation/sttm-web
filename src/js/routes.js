@@ -35,19 +35,19 @@ export default [
   {
     path: '/',
     exact: true,
-    render() {
+    render(props) {
       return (
-        <Layout title="SikhiToTheMax" isHome>
-          <Home />
+        <Layout title="SikhiToTheMax" isHome {...props}>
+          <Home {...props} />
         </Layout>
       );
     },
   },
   {
     path: '/terms-of-service',
-    render() {
+    render(props) {
       return (
-        <Layout title="Terms Of Service">
+        <Layout title="Terms Of Service" {...props}>
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "TermsOfService" */ './pages/TermsOfService')
@@ -59,7 +59,7 @@ export default [
               rejected,
             }) =>
               pending ? null : TermsOfService ? (
-                <TermsOfService />
+                <TermsOfService {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
@@ -74,9 +74,9 @@ export default [
   },
   {
     path: '/about',
-    render() {
+    render(props) {
       return (
-        <Layout title="About - SikhiToTheMax">
+        <Layout title="About - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "About" */ './pages/About')
@@ -84,7 +84,7 @@ export default [
           >
             {({ pending, resolved: { default: About } = {}, rejected }) =>
               pending ? null : About ? (
-                <About />
+                <About {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
@@ -99,17 +99,21 @@ export default [
   },
   {
     path: '/ang',
-    render() {
+    render(props) {
       const [ang, source] = ['ang', 'source'].map(v => getParameterByName(v));
 
       return (
-        <Layout defaultQuery={ang} title="Ang/Page Viewer - SikhiToTheMax">
+        <Layout
+          defaultQuery={ang}
+          title="Ang/Page Viewer - SikhiToTheMax"
+          {...props}
+        >
           <RenderPromise
             promise={() => import(/* webpackChunkName: "Ang" */ './pages/Ang')}
           >
             {({ pending, resolved: { default: Ang } = {}, rejected }) =>
               pending ? null : Ang ? (
-                <Ang ang={parseInt(ang, 10)} source={source} />
+                <Ang ang={parseInt(ang, 10)} source={source} {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
@@ -124,9 +128,9 @@ export default [
   },
   {
     path: '/help',
-    render() {
+    render(props) {
       return (
-        <Layout title="Help - SikhiToTheMax">
+        <Layout title="Help - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "Help" */ './pages/Help')
@@ -134,7 +138,7 @@ export default [
           >
             {({ pending, resolved: { default: Help } = {}, rejected }) =>
               pending ? null : Help ? (
-                <Help />
+                <Help {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
@@ -149,9 +153,9 @@ export default [
   },
   {
     path: '/hukamnama',
-    render() {
+    render(props) {
       return (
-        <Layout title="Hukamnama - SikhiToTheMax">
+        <Layout title="Hukamnama - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "Hukamnama" */ './pages/Hukamnama')
@@ -159,7 +163,7 @@ export default [
           >
             {({ pending, resolved: { default: Hukamnama } = {}, rejected }) =>
               pending ? null : Hukamnama ? (
-                <Hukamnama />
+                <Hukamnama {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
@@ -174,7 +178,8 @@ export default [
   },
   {
     path: '/search',
-    render({ location: { search } }) {
+    render(props) {
+      const { location: { search } } = props;
       const params = ['type', 'source', 'q', 'offset'];
 
       const [
@@ -185,7 +190,11 @@ export default [
       ] = params.map(v => getParameterByName(v, search));
 
       return (
-        <Layout defaultQuery={q} title="Search Results - SikhiToTheMax">
+        <Layout
+          defaultQuery={q}
+          title="Search Results - SikhiToTheMax"
+          {...props}
+        >
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "Search" */ './pages/Search')
@@ -198,6 +207,7 @@ export default [
                   type={parseInt(type, 10)}
                   source={source}
                   offset={parseInt(offset)}
+                  {...props}
                 />
               ) : (
                 throwError(
@@ -213,7 +223,8 @@ export default [
   },
   {
     path: '/shabad',
-    render({ location: { search } }) {
+    render(props) {
+      const { location: { search } } = props;
       const [random, id, q, type, highlight] = [
         'random',
         'id',
@@ -232,7 +243,7 @@ export default [
       };
 
       return (
-        <Layout defaultQuery={q} title="Shabad - SikhiToTheMax">
+        <Layout defaultQuery={q} title="Shabad - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "Shabad" */ './pages/Shabad')
@@ -240,7 +251,7 @@ export default [
           >
             {({ pending, resolved: { default: Shabad } = {}, rejected }) =>
               pending ? null : Shabad ? (
-                <Shabad {...otherProps} />
+                <Shabad {...otherProps} {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
