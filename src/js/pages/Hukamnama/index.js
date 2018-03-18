@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from 'shabados';
+import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
 import ShabadContent from '../../components/ShabadContent';
 
@@ -15,17 +16,17 @@ class Layout extends React.PureComponent {
     const { data } = this.props;
     return (
       <div className="body_text">
-        <h3 style={{ textAlign: 'center' }}>
-          Daily Hukamnama from Sri Harmandir Sahib, Amritsar
-        </h3>
-        <ShabadContent
-          gurbani={data.gurbani}
-          info={data.shabadinfo}
-          nav={data.navigation}
-          random={false}
-          type={'hukamnama'}
-          source={data.source}
-        />
+        <h3 style={{ textAlign: 'center' }}>{TEXTS.HUKAMNAMA}</h3>
+        <div className="row" id="content-root">
+          <ShabadContent
+            gurbani={data.gurbani}
+            info={data.shabadinfo}
+            nav={data.navigation}
+            random={false}
+            type={'hukamnama'}
+            source={data.source}
+          />
+        </div>
       </div>
     );
   }
