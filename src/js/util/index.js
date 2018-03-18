@@ -43,26 +43,6 @@ export function shortenURL(url = window.location.href) {
   }
 }
 
-export function addSpaceForPadChed(status) {
-  // add padched
-  if (status) {
-    const padChedDiv = '<span className="padChedDiv"> </span>';
-
-    [...document.querySelectorAll('.akhar')]
-      .filter(e => e.querySelector('.padChedDiv') === null)
-      .forEach(element => {
-        const str = element.innerHTML;
-        const text = str + padChedDiv;
-        element.innerHTML = text;
-      });
-  } else {
-    // remove padched
-    document
-      .querySelectorAll('.padChedDiv')
-      .forEach(element => element.parentNode.removeChild(element));
-  }
-}
-
 export const showToast = (text, delay = 2500) =>
   new Promise(resolve => {
     const copyURLconfirm = document.getElementById('toast-notification');

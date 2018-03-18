@@ -7,9 +7,6 @@ export default class EnglishTransliteration extends React.PureComponent {
   };
 
   render() {
-    return (
-      <p className="transliteration english">{this.props.children}</p>
-    );
+    return <div className="transliteration english">{this.props.children}</div>;
   }
 }
-

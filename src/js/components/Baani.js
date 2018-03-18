@@ -136,6 +136,8 @@ export default class Baani extends React.PureComponent {
               onTweetClick={this.onTweetClick(shabad)}
               onCopyClick={this.onCopyClick(shabad)}
             />
+
+            <br />
           </div>
         ))}
       </div>
