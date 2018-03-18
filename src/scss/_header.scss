@@ -88,11 +88,16 @@
   .clear-search-toggle {
     background-color: #fff;
     color: #999;
-    outline: none;
     width: 44px;
 
     &.active {
       color: $sttm-orange;
+    }
+
+    &:active,
+    &:hover {
+      color: $sttm-orange;
+      outline: none;
     }
   }
 

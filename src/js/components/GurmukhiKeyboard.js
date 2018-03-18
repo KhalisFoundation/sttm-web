@@ -101,7 +101,7 @@ export default class GurmukhiKeyboard extends React.PureComponent {
                 <i className="fa fa-long-arrow-left" />
               </button>
 
-              <Link to="/help#Desktop-how-do-i-search-for-a-shabad">
+              <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
                 <button type="button">?</button>
               </Link>
             </div>
@@ -137,7 +137,7 @@ export default class GurmukhiKeyboard extends React.PureComponent {
               <ButtonList buttons={['ç', 'E', '^', '\u00a0', '\u00a0']} />
             </div>
             <div className="keyboard-row-set">
-              <ButtonList buttons={['\u00a0', '\u00a0']} />
+              <button type="button">{'\u00a0'}</button>
               <button type="button" data-action="page-1">
                 1
               </button>
@@ -147,6 +147,9 @@ export default class GurmukhiKeyboard extends React.PureComponent {
               <button type="button" data-action="bksp">
                 <i className="fa fa-long-arrow-left" />
               </button>
+              <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
+                <button type="button">?</button>
+              </Link>
             </div>
           </div>
         </div>

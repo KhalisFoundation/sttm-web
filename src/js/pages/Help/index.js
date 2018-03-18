@@ -57,6 +57,41 @@ const content = {
         </ul>
       </React.Fragment>,
     ],
+    [
+      `How to type Gurmukhi with keyboard?`,
+      <React.Fragment>
+        <p>
+          In order to search using qwerty based keyboard, you need to refer to
+          following key mappings between Gurmukhi letters and English letters.
+        </p>
+        <table>
+          <tbody>
+            {[
+              ['a', 'A', 'e', 's', 'h'],
+              ['k', 'K', 'g', 'G', '|'],
+              ['c', 'C', 'j', 'J', '\\'],
+              ['t', 'T', 'f', 'F', 'x'],
+              ['q', 'Q', 'd', 'D', 'n'],
+              ['p', 'P', 'b', 'B', 'm'],
+              ['X', 'r', 'l', 'v', 'V'],
+            ].map(keys => (
+              <tr key={keys[0]}>
+                {keys.map(key => (
+                  <React.Fragment key={key}>
+                    <td>
+                      <strong>{key}</strong>
+                    </td>
+                    <td>
+                      <span className="gurbani-font">{key}</span>
+                    </td>
+                  </React.Fragment>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </React.Fragment>,
+    ],
   ],
   Desktop: [
     [
