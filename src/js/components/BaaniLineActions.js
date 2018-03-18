@@ -2,20 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+export const supportedActions = ['openShabad', 'copy', 'tweet'];
 export default class Actions extends React.PureComponent {
+  static defaultProps = {
+    disabledActions: [],
+  };
+
   static propTypes = {
     shabad: PropTypes.shape({
       id: PropTypes.string,
       shabadid: PropTypes.string,
     }),
+    disabledActions: PropTypes.arrayOf(PropTypes.oneOf(supportedActions)),
     onCopyClick: PropTypes.func,
     onTweetClick: PropTypes.func,
   };
 
   render() {
-    const { shabad, onCopyClick, onTweetClick } = this.props;
-    return (
-      <div className="share">
+    const { shabad, disabledActions, onCopyClick, onTweetClick } = this.props;
+    const actions = {
+      openShabad: (
         <Link
           role="button"
           aria-label="Go to shabad"
@@ -24,6 +30,8 @@ export default class Actions extends React.PureComponent {
         >
           <i className="fa fa-fw fa-external-link-square" />
         </Link>
+      ),
+      copy: (
         <a
           className="copy"
           onClick={onCopyClick}
@@ -33,6 +41,8 @@ export default class Actions extends React.PureComponent {
         >
           <i className="fa fa-fw fa-clipboard" />
         </a>
+      ),
+      tweet: (
         <a
           className="twitter"
           onClick={onTweetClick}
@@ -42,6 +52,13 @@ export default class Actions extends React.PureComponent {
         >
           <i className="fa fa-fw fa-twitter" />
         </a>
+      ),
+    };
+    return (
+      <div className="share">
+        {supportedActions
+          .filter(e => !disabledActions.includes(e))
+          .map(action => actions[action])}
       </div>
     );
   }

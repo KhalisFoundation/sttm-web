@@ -60,6 +60,7 @@ class Shabad extends React.PureComponent {
         <div id="shabad" className="shabad display">
           <div className="shabad-container">
             <Baani
+              type={type}
               gurbani={gurbani}
               splitView={splitView}
               unicode={unicode}
