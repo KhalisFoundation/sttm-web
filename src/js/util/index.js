@@ -1,3 +1,5 @@
+import { SHORT_DOMAIN } from '../constants';
+
 export const throwError = (msg, err) => {
   // eslint-disable-next-line no-console
   console.warn(err);
@@ -28,8 +30,7 @@ export function getQueryParams() {
 
 export function shortenURL(url = window.location.href) {
   const path = window.location.pathname;
-  const shortdomain = 'sttm.co';
-  const URL = `http://${shortdomain}`;
+  const URL = `http://${SHORT_DOMAIN}`;
 
   switch (path) {
     case '/shabad':
@@ -39,7 +40,7 @@ export function shortenURL(url = window.location.href) {
     case '/hukamnama':
       return `${URL}/h`;
     default:
-      return url.replace(window.location.hostname, shortdomain);
+      return url.replace(window.location.hostname, SHORT_DOMAIN);
   }
 }
 

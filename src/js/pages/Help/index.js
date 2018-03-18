@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-key, react/no-unescaped-entities */
+import { SHORT_DOMAIN } from '../../constants';
 import React from 'react';
 
 export default function Help() {
@@ -21,6 +22,39 @@ export default function Help() {
         `Unicode allows the Gumukhi text to be viewed without needing a pre-installed font. It will
         also allow you to copy and paste the text into vast variety of applications that you normally
         wouldn’t be able to do.`,
+      ],
+      [
+        'How does the URL shorter work?',
+        <React.Fragment>
+          We have a custom domain for short urls,{' '}
+          <a href={`http://${SHORT_DOMAIN}`}>{`http://${SHORT_DOMAIN}`}</a>. It
+          works as follows:
+          <ul>
+            <li>
+              In case of a shabad, say
+              <code>
+                ਮੇਰੇ ਸਾਹਾ ਮੈ ਹਰਿ ਦਰਸਨ ਸੁਖੁ ਹੋਇ ॥ ਹਮਰੀ ਬੇਦਨਿ ਤੂ ਜਾਨਤਾ ਸਾਹਾ ਅਵਰੁ
+                ਕਿਆ ਜਾਨੈ ਕੋਇ ॥ ਰਹਾਉ ॥
+              </code>, the shabad id is <code>2555</code>, and the short URL is{' '}
+              <a
+                href={`http://${SHORT_DOMAIN}/s/2555`}
+              >{`http://${SHORT_DOMAIN}/s/2555`}</a>.
+            </li>
+            <li>
+              In case of ang, for example ang 12 of Guru Granth Sahib Jee, the
+              short URL is{' '}
+              <a
+                href={`http://${SHORT_DOMAIN}/a/12`}
+              >{`http://${SHORT_DOMAIN}/a/12`}</a>.
+            </li>
+            <li>
+              In case of hukamnama, the short URL is{' '}
+              <a
+                href={`http://${SHORT_DOMAIN}/h`}
+              >{`http://${SHORT_DOMAIN}/h`}</a>.
+            </li>
+          </ul>
+        </React.Fragment>,
       ],
     ],
     Desktop: [

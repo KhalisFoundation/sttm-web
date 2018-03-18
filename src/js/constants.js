@@ -1,3 +1,5 @@
+export const SHORT_DOMAIN = 'sttm.co';
+
 export const LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE = 'searchSource';
 export const LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE = 'searchType';
 export const LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES =
