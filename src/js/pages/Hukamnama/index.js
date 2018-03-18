@@ -1,6 +1,7 @@
 /* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { buildApiUrl } from 'shabados';
 import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
@@ -15,8 +16,10 @@ class Layout extends React.PureComponent {
   render() {
     const { data } = this.props;
     return (
-      <div className="body_text">
-        <h3 style={{ textAlign: 'center' }}>{TEXTS.HUKAMNAMA}</h3>
+      <div className="row" id="content-root">
+        <h4 className="breadcrumb">
+          <Link to="/">Home</Link> » {TEXTS.HUKAMNAMA}
+        </h4>
         <div className="row" id="content-root">
           <ShabadContent
             gurbani={data.gurbani}

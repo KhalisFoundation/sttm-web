@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const ButtonList = ({ buttons = [] }) =>
   buttons.map((button, i) => (
@@ -89,7 +90,7 @@ export default class GurmukhiKeyboard extends React.PureComponent {
               <ButtonList buttons={['X', 'r', 'l', 'v', 'V']} />
             </div>
             <div className="keyboard-row-set">
-              <ButtonList buttons={['\u00a0', '\u00a0']} />
+              <button type="button">{'\u00a0'}</button>
               <button type="button" data-action="page-1" className="active">
                 1
               </button>
@@ -99,6 +100,10 @@ export default class GurmukhiKeyboard extends React.PureComponent {
               <button type="button" data-action="bksp">
                 <i className="fa fa-long-arrow-left" />
               </button>
+
+              <Link to="/help#Desktop-how-do-i-search-for-a-shabad">
+                <button type="button">?</button>
+              </Link>
             </div>
           </div>
         </div>
