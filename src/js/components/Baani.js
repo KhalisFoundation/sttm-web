@@ -1,11 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Actions from './BaaniLineActions';
 import Translation from './Translation';
 import Transliteration from './Transliteration';
 import BaaniLine from './BaaniLine';
 import { TEXTS } from '.././constants';
 import { copyToClipboard, showToast, shortenURL } from '../util';
 
+const transliterationMap = {
+  english: shabad => shabad.transliteration,
+};
+
+const translationMap = {
+  spanish: shabad => shabad.translation.spanish,
+  english: shabad => shabad.translation.english.ssk,
+  punjabi: shabad => ({
+    ...shabad.translation.punjabi.bms,
+    toString: () => shabad.translation.punjabi.bms.unicode,
+  }),
+};
 export default class Baani extends React.PureComponent {
   static defaultProps = {
     highlight: null,
@@ -23,24 +36,25 @@ export default class Baani extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
   };
 
-  _getShabadLine = el =>
-    [...el.parentNode.parentNode.querySelectorAll('div, blockquote')]
-      .filter(
-        e =>
-          getComputedStyle(e).visibility !== 'hidden' &&
-          getComputedStyle(e).display !== 'none'
-      ) // filter hidden ones
-      .map(child => (child.querySelector('div.unicode') || child).innerText) // get innerText
-      .filter(text => text) // filter empty strings
-      .join('\n'); // join them by new line
+  getShareLine = shabad => {
+    return [
+      shabad.gurbani.unicode,
+      ...this.props.transliterationLanguages.map(language =>
+        transliterationMap[language](shabad)
+      ),
+      ...this.props.translationLanguages.map(language =>
+        translationMap[language](shabad)
+      ),
+    ].join('\n');
+  };
 
-  onCopyClick = ({ currentTarget }) =>
-    copyToClipboard(this._getShabadLine(currentTarget))
+  onCopyClick = shabad => () =>
+    copyToClipboard(this.getShareLine(shabad))
       .then(() => showToast(TEXTS.GURBAANI_COPIED))
       .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-  onTweetClick = ({ currentTarget }) => {
-    let tweet = this._getShabadLine(currentTarget);
+  onTweetClick = shabad => () => {
+    let tweet = this.getShareLine(shabad);
     const shortURL = `\n${shortenURL()}`;
     if (tweet.length + shortURL.length > 274) {
       tweet = `${tweet.substring(0, 272 - shortURL.length)}…`;
@@ -99,36 +113,29 @@ export default class Baani extends React.PureComponent {
               larivaarAssist={larivaarAssist}
               fontSize={fontSize}
             />
-            {transliterationLanguages.includes('english') && (
-              <Transliteration>{shabad.transliteration}</Transliteration>
-            )}
-            {translationLanguages.includes('punjabi') && (
-              <Translation
-                type="punjabi"
-                unicode={unicode}
-                text={shabad.translation.punjabi.bms}
-              />
-            )}
-            {translationLanguages.includes('english') && (
-              <Translation type="english">
-                {shabad.translation.english.ssk}
-              </Translation>
-            )}
-            {translationLanguages.includes('spanish') && (
-              <Translation type="spanish">
-                {shabad.translation.spanish}
-              </Translation>
-            )}
+            {transliterationLanguages.map(language => (
+              <Transliteration key={shabad.id + language}>
+                {transliterationMap[language](shabad)}
+              </Transliteration>
+            ))}
 
-            <div className="share">
-              <a className="copy" onClick={this.onCopyClick}>
-                <i className="fa fa-fw fa-clipboard" />
-              </a>
-              <a className="twitter" onClick={this.onTweetClick}>
-                <i className="fa fa-fw fa-twitter" />
-              </a>
-              {/* <a className="facebook"><i className="fa fa-fw fa-facebook" /></a> */}
-            </div>
+            {translationLanguages.map(language => (
+              <Translation
+                key={shabad.id + language}
+                type={language}
+                {...Translation.getTranslationProps({
+                  translationMap,
+                  language,
+                  shabad,
+                  unicode,
+                })}
+              />
+            ))}
+            <Actions
+              shabad={shabad}
+              onTweetClick={this.onTweetClick(shabad)}
+              onCopyClick={this.onCopyClick(shabad)}
+            />
           </div>
         ))}
       </div>
@@ -155,57 +162,40 @@ export default class Baani extends React.PureComponent {
                 larivaarAssist={larivaarAssist}
                 fontSize={fontSize}
               />
-              <div className="share">
-                <a className="copy">
-                  <i className="fa fa-fw fa-clipboard" />
-                </a>
-                <a className="twitter">
-                  <i className="fa fa-fw fa-twitter" />
-                </a>
-                {/* <a className="facebook"><i className="fa fa-fw fa-facebook" /></a> */}
-              </div>
+
+              <Actions
+                shabad={shabad}
+                onTweetClick={this.onTweetClick(shabad)}
+                onCopyClick={this.onCopyClick(shabad)}
+              />
             </div>
           ))}
         </div>
-        {transliterationLanguages.includes('english') && (
-          <div className="split-view-baani-wrapper">
+        {transliterationLanguages.map(language => (
+          <div key={language} className="split-view-baani-wrapper">
             {gurbani.map(({ shabad }) => (
               <Transliteration key={shabad.id}>
-                {shabad.transliteration}
+                {transliterationMap[language](shabad)}
               </Transliteration>
             ))}
           </div>
-        )}
-        {translationLanguages.includes('punjabi') && (
-          <div className="split-view-baani-wrapper">
+        ))}
+        {translationLanguages.map(language => (
+          <div key={language} className="split-view-baani-wrapper">
             {gurbani.map(({ shabad }) => (
               <Translation
-                type="punjabi"
                 key={shabad.id}
-                unicode={unicode}
-                text={shabad.translation.punjabi.bms}
+                type={language}
+                {...Translation.getTranslationProps({
+                  translationMap,
+                  language,
+                  shabad,
+                  unicode,
+                })}
               />
             ))}
           </div>
-        )}
-        {translationLanguages.includes('english') && (
-          <div className="split-view-baani-wrapper">
-            {gurbani.map(({ shabad }) => (
-              <Translation type="english" key={shabad.id}>
-                {shabad.translation.english.ssk}
-              </Translation>
-            ))}
-          </div>
-        )}
-        {translationLanguages.includes('spanish') && (
-          <div className="split-view-baani-wrapper">
-            {gurbani.map(({ shabad }) => (
-              <Translation type="spanish" key={shabad.id}>
-                {shabad.translation.spanish}
-              </Translation>
-            ))}
-          </div>
-        )}
+        ))}
       </div>
     );
 

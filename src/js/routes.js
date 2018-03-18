@@ -189,6 +189,10 @@ export default [
         offset = 0,
       ] = params.map(v => getParameterByName(v, search));
 
+      if (parseInt(type, 10) === 5) {
+        return <Redirect to={`/ang?ang=${q}&source=${source}`} />;
+      }
+
       return (
         <Layout
           defaultQuery={q}

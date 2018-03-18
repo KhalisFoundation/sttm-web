@@ -38,8 +38,8 @@ export default class Search extends React.PureComponent {
             <Stub />
           ) : (
             <Layout
-              totalResults={data.pageinfo.totalresults}
-              resultsCount={data.pageinfo.pageresults}
+              totalResults={data.pageinfo.totalresults || 0}
+              resultsCount={data.pageinfo.pageresults || 0}
               nextPageOffset={data.pageinfo.nextpageoffset}
               shabads={data.shabads}
               q={q}
