@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Controls from './Controls';
+import { getEmbedCode, showToast, copyToClipboard } from '../util';
+import Controls, { supportedMedia } from './Controls';
 import FootNav from './FootNav';
 import Meta from './Meta';
 import ProgressBar from './ProgressBar';
 import Baani from './Baani';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '../constants';
 
 class Shabad extends React.PureComponent {
   state = {
@@ -39,20 +41,24 @@ class Shabad extends React.PureComponent {
 
   render() {
     const {
-      gurbani,
-      nav,
-      info,
-      type,
-      random,
-      splitView,
-      translationLanguages,
-      transliterationLanguages,
-      larivaarAssist,
-      larivaar,
-      highlight,
-      unicode,
-      fontSize,
-    } = this.props;
+      props: {
+        gurbani,
+        nav,
+        info,
+        type,
+        random,
+        splitView,
+        translationLanguages,
+        transliterationLanguages,
+        larivaarAssist,
+        larivaar,
+        highlight,
+        unicode,
+        fontSize,
+      },
+      handleEmbed,
+      handleSelectAll,
+    } = this;
 
     if (random) {
       return <Redirect to={`/shabad?id=${info.id}`} />;
@@ -60,7 +66,11 @@ class Shabad extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <Controls />
+        <Controls
+          media={supportedMedia}
+          onSelectAllClick={handleSelectAll}
+          onEmbedClick={handleEmbed}
+        />
         <Meta info={info} nav={nav} type={type} />
         <div id="shabad" className="shabad display">
           <div className="shabad-container">
@@ -103,6 +113,20 @@ class Shabad extends React.PureComponent {
   componentWillUnmount() {
     removeEventListener('scroll', this.scrollListener);
   }
+
+  handleSelectAll = () => {
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNode(document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`));
+    selection.addRange(range);
+  };
+
+  handleEmbed = () => {
+    const { gurbani, info } = this.props;
+    copyToClipboard(getEmbedCode({ gurbani, info }))
+      .then(() => showToast(TEXTS.EMBED_COPIED))
+      .catch(() => showToast(TEXTS.EMBED_FAILURE));
+  };
 }
 
 const stateToProps = state => state;

@@ -53,6 +53,9 @@ export const TEXTS = {
   NO_RESULTS_FOUND_DESCRIPTION: (source, type) =>
     `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above. If you still cannot find your shabad, head over to `,
   GURBAANI_COPIED: 'Gurbaani has been copied to your clipboard!',
+  EMBED_COPIED:
+    'Embedding code has been copied. Paste it in a rich editor usually found in forums',
+  EMBED_FAILURE: "Sorry, we couldn't copy embed code",
   LINK_COPIED: 'Link has been copied to your clipboard!',
   COPY_FAILURE: "Sorry, we couldn't copy the link. Try copying it manually.",
   PREVIOUS_PAGE: 'Previous Page',
@@ -66,3 +69,5 @@ export const TEXTS = {
   REDIRECTING: 'Redirecting you to',
   REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
 };
+
+export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';
