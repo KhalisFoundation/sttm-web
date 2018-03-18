@@ -185,7 +185,19 @@ export function getEmbedCode({ gurbani, info }) {
           height: 500px;
           overflow: scroll;
           border-radius: 5px;
+          position: relative;
         }
+
+        #sttm-root .sttm-header {
+          position: sticky;
+          top: 0;
+          display: flex;
+          background: linear-gradient(45deg, rgba(1, 102, 155), rgba(243, 156, 29));
+          margin: -10px;
+          padding: 6px;
+          justify-content: space-between;
+        }
+
         
         #sttm-root .sttm-button {
           text-decoration: none;
@@ -195,6 +207,13 @@ export function getEmbedCode({ gurbani, info }) {
           padding: 10px;
           margin: 5px;
           border-radius: 5px;
+        }
+
+        #sttm-root .sttm-shabad-controls {
+          position: sticky;
+          top: 64px;
+          background: #f5f5f5;
+          width: 100%;
         }
 
         #sttm-root .sttm-button.sttm-enabled {
@@ -229,14 +248,6 @@ export function getEmbedCode({ gurbani, info }) {
           margin: .25em;
         }
 
-        #sttm-root .sttm-header {
-          display: flex;
-          background: linear-gradient(45deg, rgba(1, 102, 155, 0.6), rgba(243, 156, 29, 0.8));
-          margin: -10px;
-          padding: 6px;
-          justify-content: space-between;
-        }
-
         #sttm-root .sttm-line .sttm-translation.sttm-enabled,
         #sttm-root .sttm-line .sttm-transliteration.sttm-enabled {
           display: block;
@@ -256,6 +267,7 @@ export function getEmbedCode({ gurbani, info }) {
             info.id
           }">Open in SikhiToTheMax</a>
         </div>
+        <div class="sttm-shabad-controls"></div>
         <h3 class="sttm-shabad-meta">
           ${info.writer.english} | 
           ${info.source.english}: 
@@ -265,7 +277,6 @@ export function getEmbedCode({ gurbani, info }) {
             ${info.source.pageno}
           </a>
         </h3>
-        <div class="sttm-shabad-controls"></div>
         <div class="sttm-shabad-content">
         ${gurbani
           .map(
