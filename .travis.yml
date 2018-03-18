@@ -9,6 +9,9 @@ branches:
   - master
   - dev
 
+addons:
+  ssh_known_hosts: usc-avm01.khalis.net
+
 install:
 - npm ci
 # keep the npm cache around to speed up installs
