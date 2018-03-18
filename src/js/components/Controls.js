@@ -16,13 +16,49 @@ import {
   toggleSplitViewOption,
 } from '../features/actions';
 
-function Controls(props) {
-  return (
-    <div id="controls-wrapper" className="no-select">
-      <ShareButtons />
-      <ShabadControls {...props} />
-    </div>
-  );
+class Controls extends React.PureComponent {
+  state = {
+    showBorder: false,
+  };
+
+  componentDidMount() {
+    this.mounted = true;
+    window.addEventListener('scroll', this.scrollListener, { passive: true });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    window.removeEventListener('scroll', this.scrollListener, {
+      passive: true,
+    });
+  }
+
+  scrollListener = () => {
+    if (window.scrollY >= this.$wrapper.offsetTop) {
+      if (this.mounted && this.state.showBorder === false) {
+        this.setState({ showBorder: true });
+      }
+    } else {
+      if (this.mounted && this.state.showBorder === true) {
+        this.setState({ showBorder: false });
+      }
+    }
+  };
+
+  setRef = node => (this.$wrapper = node);
+
+  render() {
+    return (
+      <div
+        id="controls-wrapper"
+        className={`no-select ${this.state.showBorder ? 'with-border' : ''}`}
+        ref={this.setRef}
+      >
+        <ShareButtons />
+        <ShabadControls {...this.props} />
+      </div>
+    );
+  }
 }
 
 // TODO: Take exactly what we need.

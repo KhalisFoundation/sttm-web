@@ -1,15 +1,28 @@
 #controls-wrapper {
   background-color: #f5f5f5;
   margin: 0;
-  padding-top: 0.5rem;
+  padding: 0.5rem 0 2px;
   position: -webkit-sticky;
   position: sticky;
   top: calc(-16px - 2em);
+  transition: box-shadow 0.5s;
   z-index: 1;
+
+  &.with-border {
+    box-shadow: 0 8px 6px -10px black;
+  }
 
   > div {
     margin-bottom: 0.5rem;
     padding: 0 1rem;
+  }
+
+  @media screen and (min-width: 46em) {
+    top: 0;
+
+    > div {
+      padding: 0 2rem 0 3rem;
+    }
   }
 }
 
@@ -38,16 +51,6 @@
   background-repeat: no-repeat;
   background-size: 9px 6px;
   padding-right: 1rem;
-}
-
-@media screen and (min-width: 46em) {
-  #controls-wrapper {
-    top: 0;
-
-    > div {
-      padding: 0 2rem 0 3rem;
-    }
-  }
 }
 
 #shabad-controllers {
