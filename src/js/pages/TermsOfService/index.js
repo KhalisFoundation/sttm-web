@@ -8,7 +8,7 @@ export default class TermsOfService extends React.PureComponent {
         <h4 className="breadcrumb">
           <Link to="/">Home</Link> » Terms of Service
         </h4>
-        <div>
+        <div className="wrapper">
           The Khalis Foundation and Affiliates (the “Service”) is freely
           accessible worldwide to anyone with Internet access. Access to and use
           of the Service is subject to the Terms and Conditions listed below and

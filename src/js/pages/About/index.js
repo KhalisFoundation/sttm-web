@@ -7,7 +7,7 @@ export default function About() {
       <h4 className="breadcrumb">
         <Link to="/">Home</Link> » About
       </h4>
-      <div>
+      <div className="wrapper">
         Originally developed by Bhai Tarsem Singh of SHARE charity UK,
         SikhiToTheMax has become a defacto standard for keertans and gurdwaras
         around the world to display gurbani on screens for sangat to join into

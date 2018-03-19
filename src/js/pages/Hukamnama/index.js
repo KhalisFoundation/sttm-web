@@ -20,16 +20,14 @@ class Layout extends React.PureComponent {
         <h4 className="breadcrumb">
           <Link to="/">Home</Link> » {TEXTS.HUKAMNAMA}
         </h4>
-        <div className="row" id="content-root">
-          <ShabadContent
-            gurbani={data.gurbani}
-            info={data.shabadinfo}
-            nav={data.navigation}
-            random={false}
-            type={'hukamnama'}
-            source={data.source}
-          />
-        </div>
+        <ShabadContent
+          gurbani={data.gurbani}
+          info={data.shabadinfo}
+          nav={data.navigation}
+          random={false}
+          type={'hukamnama'}
+          source={data.source}
+        />
       </div>
     );
   }

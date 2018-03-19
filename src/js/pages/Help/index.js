@@ -8,10 +8,13 @@ const content = {
   Web: [
     [
       'How do I search for a shabad?',
-      `After launching SikhiToTheMax, by default you can search for a shabad by entering the
-        first letter of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ, you
-        would enter "gmsshn". Alternatively, you can click on the gurmukhi keyboard icon and type
-        in the letters manually.`,
+      <React.Fragment>
+        After launching SikhiToTheMax, by default you can search for a shabad by
+        entering the first letter of each word. For example, if the shabad is{' '}
+        <code>ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ</code>, you would enter "gmsshn".
+        Alternatively, you can click on the gurmukhi keyboard icon and type in
+        the letters manually.
+      </React.Fragment>,
     ],
     [
       'Can I separate the Gurbani from the English translations?',
@@ -42,8 +45,8 @@ const content = {
             >{`http://${SHORT_DOMAIN}/s/2555`}</a>.
           </li>
           <li>
-            In case of ang, for example ang 12 of Guru Granth Sahib Jee, the
-            short URL is{' '}
+            In case of ang, for example ang <code>12</code> of Guru Granth Sahib
+            Jee, the short URL is{' '}
             <a
               href={`http://${SHORT_DOMAIN}/a/12`}
             >{`http://${SHORT_DOMAIN}/a/12`}</a>.
@@ -113,10 +116,10 @@ const content = {
     [
       'How do I install the desktop application?',
       <React.Fragment>
-        You can install SikhiToTheMax (STTM) by visiting
+        You can install SikhiToTheMax (STTM) by visiting{' '}
         <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/">
           this website
-        </a>
+        </a>{' '}
         and choosing the Windows or macOS download link. After that, open the
         installer and follow the steps that are displayed.
         <img src="/assets/images/help/desktop-download.png" />
@@ -171,9 +174,8 @@ const content = {
             <ul>
               <li>
                 You can search for shabads via the english translations. For
-                example, type in the word
-                <code>bird</code> and the results will show all shabads that
-                include a translation for "bird".
+                example, type in the word <code>bird</code> and the results will
+                show all shabads that include a translation for "bird".
               </li>
             </ul>
           </li>
@@ -316,9 +318,9 @@ export default class Help extends React.Component {
                     id={`${header}-${title}`}
                     key={title}
                   >
-                    <h4>
+                    <h3>
                       <a href={`#${header}-${title}`}>#</a> {question}
-                    </h4>
+                    </h3>
                     <div>{answer}</div>
                   </div>
                 ))}
