@@ -5,7 +5,7 @@ import { toSearchURL } from '../../util';
 import { pageView } from '../../util/analytics';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
-import Logo from '../../components/Logo';
+import Logo from '../../components/Icons/Logo';
 
 const types = [...TYPES, 'Ang'];
 
