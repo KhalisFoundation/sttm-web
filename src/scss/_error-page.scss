@@ -3,6 +3,10 @@
   font-family: cursive, sans-serif;
   font-size: 7rem;
   font-weight: bold;
+
+  @media screen and (max-width: 500px) {
+    text-align: center;
+  }
 }
 
 #error-msg {
