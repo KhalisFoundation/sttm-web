@@ -333,8 +333,9 @@ export default class Help extends React.Component {
   }
 
   scrollToQuestion = () => {
-    if (this.props.location.hash.includes('#')) {
-      const $item = document.querySelector(this.props.location.hash);
+    const { hash } = this.props.location;
+    if (hash.includes('#')) {
+      const $item = document.querySelector(`[id="${hash.replace('#', '')}"]`);
       if ($item) {
         requestAnimationFrame(() => window.scrollTo(0, $item.offsetTop));
       }
