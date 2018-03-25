@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Larivaar /> renders children when disabled 1`] = `
-<>
+<React.Fragment>
   Vahi Guru
-</>
+</React.Fragment>
 `;
 
 exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
-<>
+<React.Fragment>
   <span
     key="0"
     style={
@@ -28,11 +28,11 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
   >
     Guru
   </span>
-</>
+</React.Fragment>
 `;
 
 exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled 1`] = `
-<>
+<React.Fragment>
   <span
     key="0"
     style={
@@ -53,5 +53,5 @@ exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled
   >
     Guru
   </span>
-</>
+</React.Fragment>
 `;

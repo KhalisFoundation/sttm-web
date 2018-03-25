@@ -63,13 +63,13 @@ class Layout extends React.PureComponent {
         <GenericError
           title={TEXTS.NO_RESULTS_FOUND(q)}
           description={
-            <>
+            <React.Fragment>
               {TEXTS.NO_RESULTS_FOUND_DESCRIPTION(SOURCES[source], TYPES[type])}
               <Link to="/help#Desktop-i-cant-find-my-shabad.">
                 {' '}
                 {TEXTS.HELP_SECTION}.
               </Link>.
-            </>
+            </React.Fragment>
           }
           image={SachKaur}
         />
@@ -94,7 +94,7 @@ class Layout extends React.PureComponent {
               : null;
 
             return (
-              < key={shabad.id}>
+              <React.Fragment key={shabad.id}>
                 <li className="search-result">
                   <Link
                     style={{ fontSize: `${fontSize}em` }}
@@ -171,7 +171,7 @@ class Layout extends React.PureComponent {
                     )}
                   </div>
                 </li>
-              </>
+              </React.Fragment>
             );
           })}
           <li className="load-more">

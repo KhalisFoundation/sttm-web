@@ -23,14 +23,14 @@ export default class Layout extends React.PureComponent {
   render() {
     const { children, isHome = false, ...props } = this.props;
     return (
-      <>
+      <React.Fragment>
         <Header
           defaultQuery={this.props.defaultQuery}
           isHome={isHome}
           {...props}
         />
         {children}
-      </>
+      </React.Fragment>
     );
   }
 }

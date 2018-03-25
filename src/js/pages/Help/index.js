@@ -8,13 +8,13 @@ const content = {
   Web: [
     [
       'How do I search for a shabad?',
-      <>
+      <React.Fragment>
         After launching SikhiToTheMax, by default you can search for a shabad by
         entering the first letter of each word. For example, if the shabad is{' '}
         <code>ਗੁਰੁ ਮੇਰੈ ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ</code>, you would enter "gmsshn".
         Alternatively, you can click on the gurmukhi keyboard icon and type in
         the letters manually.
-      </>,
+      </React.Fragment>,
     ],
     [
       'Can I separate the Gurbani from the English translations?',
@@ -29,7 +29,7 @@ const content = {
     ],
     [
       'How does the URL shorter work?',
-      <>
+      <React.Fragment>
         We have a custom domain for short urls,{' '}
         <a href={`http://${SHORT_DOMAIN}`}>{`http://${SHORT_DOMAIN}`}</a>. It
         works as follows:
@@ -58,11 +58,11 @@ const content = {
             >{`http://${SHORT_DOMAIN}/h`}</a>.
           </li>
         </ul>
-      </>,
+      </React.Fragment>,
     ],
     [
       `How to type Gurmukhi with keyboard?`,
-      <>
+      <React.Fragment>
         <p>
           In order to search using qwerty based keyboard, you need to refer to
           following key mappings between Gurmukhi letters and English letters.
@@ -80,20 +80,20 @@ const content = {
             ].map(keys => (
               <tr key={keys[0]}>
                 {keys.map(key => (
-                  < key={key}>
+                  <React.Fragment key={key}>
                     <td>
                       <strong>{key}</strong>
                     </td>
                     <td>
                       <span className="gurbani-font">{key}</span>
                     </td>
-                  </>
+                  </React.Fragment>
                 ))}
               </tr>
             ))}
           </tbody>
         </table>
-      </>,
+      </React.Fragment>,
     ],
   ],
   Desktop: [
@@ -115,7 +115,7 @@ const content = {
     ],
     [
       'How do I install the desktop application?',
-      <>
+      <React.Fragment>
         You can install SikhiToTheMax (STTM) by visiting{' '}
         <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/">
           this website
@@ -123,11 +123,11 @@ const content = {
         and choosing the Windows or macOS download link. After that, open the
         installer and follow the steps that are displayed.
         <img src="/assets/images/help/desktop-download.png" />
-      </>,
+      </React.Fragment>,
     ],
     [
       'How do I search for a shabad?',
-      <>
+      <React.Fragment>
         After launching STTM, by default you can search for a shabad by entering
         the first letter of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ
         ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ , you would enter <code>gmsshn</code>.
@@ -135,11 +135,11 @@ const content = {
         Alternatively, you can click on the gurmukhi keyboard icon and type in
         the letters manually.
         <img src="/assets/images/help/desktop-keyboard.png" />
-      </>,
+      </React.Fragment>,
     ],
     [
       'What do the different search types do?',
-      <>
+      <React.Fragment>
         <ul>
           <li>
             First Letter (Start)
@@ -180,7 +180,7 @@ const content = {
             </ul>
           </li>
         </ul>
-      </>,
+      </React.Fragment>,
     ],
     [
       "I can't find my shabad.",
@@ -202,55 +202,55 @@ const content = {
     ],
     [
       'How do I connect STTM to a projector?',
-      <>
+      <React.Fragment>
         Plug in your computer to the projector or TV. Once you do this, go to
         your computer's display settings and change it to "Extended Desktop"
         (NOT mirroring). After that, launch STTM and turn on "Presenter View" in
         the settings!
         <img src="/assets/images/help/desktop-extend-pc.png" />
         <img src="/assets/images/help/desktop-extend-mac.png" />
-      </>,
+      </React.Fragment>,
     ],
     [
       'How do I change the background color?',
-      <>
+      <React.Fragment>
         After launching STTM, click the icon for settings, and choose your
         theme.
         <img src="/assets/images/help/desktop-theme.png" />
-      </>,
+      </React.Fragment>,
     ],
     [
       'Can you view the Gurbani in Larivaar?',
-      <>
+      <React.Fragment>
         Yes! After launching STTM, click the icon for settings, and choose the
         Larivaar option.
         <img src="/assets/images/help/desktop-larivaar.png" />
-      </>,
+      </React.Fragment>,
     ],
     [
       'How can I make the fonts on the screen smaller?',
-      <>
+      <React.Fragment>
         After launching STTM, click the icon for settings, and scroll down for
         options to adjust the font size.
         <img src="/assets/images/help/desktop-font-size.png" />
-      </>,
+      </React.Fragment>,
     ],
     [
       'Where can I see my previous shabads?',
-      <>
+      <React.Fragment>
         When using STTM in “Presenter View”, your history will appear in the
         bottom right quadrant. You can click any of the shabads in the list to
         bring them back up as your primary one.
         <img src="/assets/images/help/desktop-history.png" />
-      </>,
+      </React.Fragment>,
     ],
     [
       'How do I report a mistake?',
-      <>
+      <React.Fragment>
         Visit <a href="https://sikhitothemax.org">SikhiToTheMax.org</a> and
         click "<a href="https://goo.gl/plk23h">Feedback</a>" at the bottom of
         the page.
-      </>,
+      </React.Fragment>,
     ],
   ],
 };
