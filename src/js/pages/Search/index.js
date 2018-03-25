@@ -40,6 +40,7 @@ export default class Search extends React.PureComponent {
             <Layout
               totalResults={data.pageinfo.totalresults || 0}
               resultsCount={data.pageinfo.pageresults || 0}
+              offset={offset}
               nextPageOffset={data.pageinfo.nextpageoffset}
               shabads={data.shabads}
               q={q}

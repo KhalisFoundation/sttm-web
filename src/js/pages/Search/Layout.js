@@ -31,6 +31,7 @@ class Layout extends React.PureComponent {
     source: PropTypes.string.isRequired,
     resultsCount: PropTypes.number.isRequired,
     nextPageOffset: PropTypes.number,
+    offset: PropTypes.number,
     shabads: PropTypes.array.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -43,6 +44,7 @@ class Layout extends React.PureComponent {
     const {
       q,
       type,
+      offset,
       source,
       resultsCount,
       nextPageOffset,
@@ -161,16 +163,25 @@ class Layout extends React.PureComponent {
               </React.Fragment>
             );
           })}
-          {nextPageOffset && (
-            <li className="load-more">
+          <li className="load-more">
+            {offset > 0 && (
+              <Link
+                className="load button"
+                to={`/search?q=${q}&source=${source}&type=${type}&offset=${offset -
+                  1}`}
+              >
+                {TEXTS.PREVIOUS_PAGE}
+              </Link>
+            )}
+            {nextPageOffset && (
               <Link
                 className="load button"
                 to={`/search?q=${q}&source=${source}&type=${type}&offset=${nextPageOffset}`}
               >
-                {TEXTS.LOAD_MORE}
+                {TEXTS.NEXT_PAGE}
               </Link>
-            </li>
-          )}
+            )}
+          </li>
         </ul>
       </div>
     );
