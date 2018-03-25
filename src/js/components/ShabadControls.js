@@ -53,7 +53,7 @@ export default class ShabadControls extends React.PureComponent {
       toggleUnicodeOption,
     } = this.props;
     return (
-      <>
+      <React.Fragment>
         <div id="shabad-controllers">
           <a
             className={`display-options-toggle shabad-controller-toggle ${
@@ -174,7 +174,7 @@ export default class ShabadControls extends React.PureComponent {
             </div>
           </div>
         )}
-      </>
+      </React.Fragment>
     );
   }
 }

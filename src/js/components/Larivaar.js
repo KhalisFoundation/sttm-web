@@ -18,7 +18,7 @@ export default class Larivaar extends React.PureComponent {
     const { larivaarAssist, enable, children } = this.props;
     const larivaarAssistColor = larivaarAssist ? LARIVAAR_ASSIST_COLOR : '';
     return (
-      <>
+      <React.Fragment>
         {enable
           ? children.split(' ').map(
               (val, i) =>
@@ -34,7 +34,7 @@ export default class Larivaar extends React.PureComponent {
                 )
             )
           : children}
-      </>
+      </React.Fragment>
     );
   }
 }

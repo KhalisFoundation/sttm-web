@@ -24,13 +24,13 @@ class Layout extends React.PureComponent {
         <GenericError
           title={TEXTS.ANG_NOT_FOUND}
           description={
-            <>
+            <React.Fragment>
               {TEXTS.ANG_NOT_FOUND_DESCRIPTION(ang, SOURCES[source])}
               <Link to="/help#Desktop-i-cant-find-my-shabad.">
                 {' '}
                 {TEXTS.HELP_SECTION}.
               </Link>
-            </>
+            </React.Fragment>
           }
           image={BalpreetSingh}
         />
