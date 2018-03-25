@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { SOURCES } from 'shabados';
+import { TYPES, SOURCES } from 'shabados';
 import { connect } from 'react-redux';
 import { TEXTS } from '../../constants';
 import Controls from '../../components/Controls';
+import GenericError, { SachKaur } from '../../components/GenericError';
 import Larivaar from '../../components/Larivaar';
 
 function getShabadHyperLink({ shabad, q, type, source }) {
@@ -59,9 +60,14 @@ class Layout extends React.PureComponent {
 
     if (parseInt(resultsCount, 10) === 0) {
       return (
-        <div className="text-center row" id="content-root">
-          <h1>{TEXTS.NO_RESULTS_FOUND}</h1>
-        </div>
+        <GenericError
+          title={TEXTS.NO_RESULTS_FOUND(q)}
+          description={TEXTS.NO_RESULTS_FOUND_DESCRIPTION(
+            SOURCES[source],
+            TYPES[type]
+          )}
+          image={SachKaur}
+        />
       );
     }
 

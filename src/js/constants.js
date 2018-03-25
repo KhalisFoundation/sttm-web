@@ -38,9 +38,14 @@ export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
+  GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
+  GENERIC_ERROR_DESCRIPTION: `This is really unsual. You may want to hit the Feedback button and report this issue to our Sevadaars.`,
   GO_TO_SHABAD: 'Open Shabad',
   HUKAMNAMA: 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar',
-  NO_RESULTS_FOUND: 'Sorry. No results found',
+  NO_RESULTS_FOUND: query =>
+    `Sorry, we couldn't find results for you query "${query}".`,
+  NO_RESULTS_FOUND_DESCRIPTION: (source, type) =>
+    `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above.`,
   GURBAANI_COPIED: 'Gurbaani has been copied!',
   LINK_COPIED: 'Link has been copied to your clipboard!',
   COPY_FAILURE: "Sorry, we couldn't copy the link.",
@@ -48,6 +53,7 @@ export const TEXTS = {
   NEXT_PAGE: 'Next Page',
   PAGE_NOT_FOUND_MESSAGE: 'These are not the Singhs you are looking for.',
   URL_NOT_FOUND: url =>
-    `The requested URL <code>${url}</code> was not found on this server.`,
-  EMPTY_QUERY: 'Please enter your query in the search bar above',
+    `The requested URL "${url}" was not found on this server.`,
+  EMPTY_QUERY: `Oh no! You can't just search for nothing.`,
+  EMPTY_QUERY_DESCRIPTION: 'Please enter your query in the search bar above.',
 };

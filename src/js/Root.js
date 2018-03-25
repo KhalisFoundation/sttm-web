@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import routes, { NotFound } from './routes';
+import GenericError, { BalpreetSingh } from './components/GenericError';
+import { TEXTS } from './constants';
 
 export default class Root extends React.PureComponent {
   state = {
@@ -15,12 +17,11 @@ export default class Root extends React.PureComponent {
 
   render() {
     return this.state.error ? (
-      <main style={{ marginTop: '10vh' }}>
-        <h2 className="text-center">Facing some issues</h2>
-        <pre style={{ margin: '10%', textAlign: 'left' }}>
-          <code>{JSON.stringify(this.state.error, null, 2)}</code>
-        </pre>
-      </main>
+      <GenericError
+        title={TEXTS.GENERIC_ERROR}
+        description={TEXTS.GENERIC_ERROR_DESCRIPTION}
+        image={BalpreetSingh}
+      />
     ) : (
       <Router>
         <Switch>

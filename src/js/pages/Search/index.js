@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { buildApiUrl } from 'shabados';
 import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
+import GenericError, { SachKaur } from '../../components/GenericError';
 import Layout, { Stub } from './Layout';
 
 export default class Search extends React.PureComponent {
@@ -23,9 +24,11 @@ export default class Search extends React.PureComponent {
 
     if (q === '') {
       return (
-        <div className="text-center row" id="content-root">
-          <h1>{TEXTS.EMPTY_QUERY}</h1>
-        </div>
+        <GenericError
+          title={TEXTS.EMPTY_QUERY}
+          description={TEXTS.EMPTY_QUERY_DESCRIPTION}
+          image={SachKaur}
+        />
       );
     }
 

@@ -58,3 +58,37 @@ select {
 .wrapper {
   padding: 0 1rem;
 }
+
+.error-message {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  padding: 10vh 5vw;
+
+  p {
+    max-width: 40vw;
+  }
+
+  img {
+    padding: 5vh 2vw;
+  }
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column-reverse;
+
+    p {
+      max-width: none;
+    }
+
+    img {
+      max-height: 40vh;
+      padding: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  h3 {
+    font-weight: bold;
+  }
+}
