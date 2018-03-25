@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { TYPES, SOURCES } from 'shabados';
 import { connect } from 'react-redux';
-import { TEXTS } from '../../constants';
+import { PLACEHOLDERS, TEXTS } from '../../constants';
 import Controls from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Larivaar from '../../components/Larivaar';
@@ -59,9 +59,14 @@ class Layout extends React.PureComponent {
     } = this.props;
 
     if (parseInt(resultsCount, 10) === 0) {
+      const className = PLACEHOLDERS[type][1] === true ? '' : 'gurbani-font';
       return (
         <GenericError
-          title={TEXTS.NO_RESULTS_FOUND(q)}
+          title={
+            <React.Fragment>
+              {TEXTS.NO_RESULTS_FOUND} <span className={className}>"{q}"</span>
+            </React.Fragment>
+          }
           description={
             <React.Fragment>
               {TEXTS.NO_RESULTS_FOUND_DESCRIPTION(SOURCES[source], TYPES[type])}
