@@ -17,8 +17,8 @@ const images = {
 
 export default class GenericError extends React.PureComponent {
   static propTypes = {
-    title: PropTypes.string,
-    description: PropTypes.string,
+    title: PropTypes.node,
+    description: PropTypes.node,
     image: PropTypes.oneOf([SachKaur, BalpreetSingh]),
   };
   render() {
@@ -29,7 +29,7 @@ export default class GenericError extends React.PureComponent {
       <div className="error-message">
         <div>
           <h3>{title}</h3>
-          <p>{description}</p>
+          <section>{description}</section>
         </div>
         <div>
           <img src={url} alt={alt} />

@@ -45,7 +45,7 @@ export const TEXTS = {
   NO_RESULTS_FOUND: query =>
     `Sorry, we couldn't find results for you query "${query}".`,
   NO_RESULTS_FOUND_DESCRIPTION: (source, type) =>
-    `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above.`,
+    `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above. If you still can not find your shabad, head over to `,
   GURBAANI_COPIED: 'Gurbaani has been copied!',
   LINK_COPIED: 'Link has been copied to your clipboard!',
   COPY_FAILURE: "Sorry, we couldn't copy the link.",

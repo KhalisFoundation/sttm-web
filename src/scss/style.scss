@@ -65,7 +65,7 @@ select {
   justify-content: space-around;
   padding: 10vh 5vw;
 
-  p {
+  section {
     max-width: 40vw;
   }
 
@@ -76,7 +76,7 @@ select {
   @media screen and (max-width: 500px) {
     flex-direction: column-reverse;
 
-    p {
+    section {
       max-width: none;
     }
 

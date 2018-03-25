@@ -62,10 +62,15 @@ class Layout extends React.PureComponent {
       return (
         <GenericError
           title={TEXTS.NO_RESULTS_FOUND(q)}
-          description={TEXTS.NO_RESULTS_FOUND_DESCRIPTION(
-            SOURCES[source],
-            TYPES[type]
-          )}
+          description={
+            <React.Fragment>
+              {TEXTS.NO_RESULTS_FOUND_DESCRIPTION(SOURCES[source], TYPES[type])}
+              <Link to="/help#Desktop-i-cant-find-my-shabad.">
+                {' '}
+                help section
+              </Link>.
+            </React.Fragment>
+          }
           image={SachKaur}
         />
       );
