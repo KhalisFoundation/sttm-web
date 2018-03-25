@@ -64,7 +64,8 @@ class Layout extends React.PureComponent {
         <GenericError
           title={
             <React.Fragment>
-              {TEXTS.NO_RESULTS_FOUND} <span className={className}>"{q}"</span>
+              {TEXTS.NO_RESULTS_FOUND}{' '}
+              <span className={className}>{`"${q}"`}</span>
             </React.Fragment>
           }
           description={
