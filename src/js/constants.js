@@ -38,17 +38,17 @@ export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
-  HELP_SECTION: 'help section',
+  HELP_SECTION: 'the help section',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
   GENERIC_ERROR_DESCRIPTION: `This is really unsual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
   GO_TO_SHABAD: 'Open Shabad',
   HUKAMNAMA: 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar',
   ANG_NOT_FOUND: `Sorry, we couldn't find the requested ang (page).`,
   ANG_NOT_FOUND_DESCRIPTION: (ang, source) =>
-    `Ang (page) "${ang}" was not found in "${source}". Make sure ang (page) ${ang} is actually present in the selected source. If you still can not find your shabad, head over to `,
+    `Ang (page) "${ang}" was not found in "${source}". Make sure ang (page) ${ang} is actually present in the selected source. If you still cannot find your shabad, head over to `,
   NO_RESULTS_FOUND: `Sorry, we couldn't find results for your query`,
   NO_RESULTS_FOUND_DESCRIPTION: (source, type) =>
-    `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above. If you still can not find your shabad, head over to `,
+    `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above. If you still cannot find your shabad, head over to `,
   GURBAANI_COPIED: 'Gurbaani has been copied to your clipboard!',
   LINK_COPIED: 'Link has been copied to your clipboard!',
   COPY_FAILURE: "Sorry, we couldn't copy the link. Try copying it manually.",

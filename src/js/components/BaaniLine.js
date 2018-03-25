@@ -16,10 +16,26 @@ export default class BaaniLine extends React.PureComponent {
   };
 
   render() {
-    const { larivaar, larivaarAssist, shouldHighlight, fontSize, unicode, text } = this.props;
+    const {
+      larivaar,
+      larivaarAssist,
+      shouldHighlight,
+      fontSize,
+      unicode,
+      text,
+    } = this.props;
     return (
-      <div className={`gurmukhi ${shouldHighlight ? 'highlight' : ''} gurbani-display gurbani-font`} style={{ fontSize: `${fontSize}em` }}>
-        <div className={unicode ? 'unicode' : 'gurlipi'}>
+      <div
+        className={`gurmukhi ${
+          shouldHighlight ? 'highlight' : ''
+        } gurbani-display gurbani-font`}
+        style={{ fontSize: `${fontSize}em` }}
+      >
+        <div
+          className={`${larivaar ? 'larivaar' : ''} ${
+            unicode ? 'unicode' : 'gurlipi'
+          }`}
+        >
           <Larivaar larivaarAssist={larivaarAssist} enable={larivaar}>
             {unicode ? text.unicode : text.gurmukhi}
           </Larivaar>
@@ -28,4 +44,3 @@ export default class BaaniLine extends React.PureComponent {
     );
   }
 }
-
