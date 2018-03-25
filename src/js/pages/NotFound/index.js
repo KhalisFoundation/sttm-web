@@ -12,13 +12,13 @@ export default class NotFound extends React.PureComponent {
   render() {
     const { url } = this.props;
     return (
-      <div className="row" id="content-root">
-        <div className="small-12 medium-6 medium-offset-1 columns text-center">
+      <div className="error-message row" id="content-root">
+        <div>
           <h1 id="error-code">404</h1>
           <div id="error-msg">{TEXTS.PAGE_NOT_FOUND_MESSAGE}</div>
           <div id="error-desc">{TEXTS.URL_NOT_FOUND(url)}</div>
         </div>
-        <div className="small-12 medium-5 columns">
+        <div>
           <img
             src="/assets/images/404.png"
             alt="Image of Sikh Man smiling at you"
