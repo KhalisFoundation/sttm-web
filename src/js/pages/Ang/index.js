@@ -28,8 +28,8 @@ class Layout extends React.PureComponent {
               {TEXTS.ANG_NOT_FOUND_DESCRIPTION(ang, SOURCES[source])}
               <Link to="/help#Desktop-i-cant-find-my-shabad.">
                 {' '}
-                {TEXTS.HELP_SECTION}.
-              </Link>
+                {TEXTS.HELP_SECTION}
+              </Link>.
             </React.Fragment>
           }
           image={BalpreetSingh}

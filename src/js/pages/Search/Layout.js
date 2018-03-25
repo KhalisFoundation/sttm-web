@@ -73,7 +73,7 @@ class Layout extends React.PureComponent {
               {TEXTS.NO_RESULTS_FOUND_DESCRIPTION(SOURCES[source], TYPES[type])}
               <Link to="/help#Desktop-i-cant-find-my-shabad.">
                 {' '}
-                {TEXTS.HELP_SECTION}.
+                {TEXTS.HELP_SECTION}
               </Link>.
             </React.Fragment>
           }
