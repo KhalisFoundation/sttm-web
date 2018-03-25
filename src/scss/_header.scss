@@ -321,8 +321,8 @@
   }
 
   #responsive-menu {
-    float: left;
-    width: calc(100% - 70px); /* Logo - 54px + 1rem(16px) margin */
+    display: flex;
+    justify-content: space-between;
   }
 
   #open-mobile-menu,
