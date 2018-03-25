@@ -105,8 +105,12 @@ export default class TermsOfService extends React.PureComponent {
           The Khalis Foundation at . This document is subject to change at any
           time without notice. Use of this website implies agreement to these
           terms and conditions.
-          <h3>Legal Acknowledgements</h3>
-          <br />
+          <hr />
+          <h3 id="copyright">Copyright</h3>
+          All images and assets not covered under other licenses are covered
+          under full Copyright © 2018 Khalis Foundation.
+          <hr />
+          <h3 id="acknowledgements">Legal Acknowledgements</h3>
           <a href="https://www.vexels.com/vectors/preview/77606/floral-mandala-vector">
             {' '}
             Floral mandala vector{' '}

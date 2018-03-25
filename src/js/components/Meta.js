@@ -23,10 +23,10 @@ export default class Meta extends React.PureComponent {
     const link = navLink(type, info.source.id);
     const Item = ({ children, last = false }) =>
       children ? (
-        <React.Fragment>
+        <>
           {children}
           {last ? '' : ' - '}
-        </React.Fragment>
+        </>
       ) : null;
     return (
       <div id="metadata">

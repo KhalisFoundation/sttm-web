@@ -54,7 +54,7 @@ class Shabad extends React.PureComponent {
     }
 
     return (
-      <React.Fragment>
+      <>
         <Controls />
         <Meta info={info} nav={nav} type={type} />
         <div id="shabad" className="shabad display">
@@ -74,7 +74,7 @@ class Shabad extends React.PureComponent {
             <FootNav info={info} type={type} nav={nav} />
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

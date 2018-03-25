@@ -29,7 +29,7 @@ export default class Home extends React.PureComponent {
           handleSearchTypeChange,
           handleSubmit,
         }) => (
-          <React.Fragment>
+          <>
             <div className="row" id="content-root">
               <div className="search-page">
                 <form
@@ -122,7 +122,7 @@ export default class Home extends React.PureComponent {
                 </form>
               </div>
             </div>
-          </React.Fragment>
+          </>
         )}
       </SearchForm>
     );

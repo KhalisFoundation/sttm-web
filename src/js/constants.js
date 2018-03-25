@@ -38,10 +38,14 @@ export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
+  HELP_SECTION: 'help section',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
   GENERIC_ERROR_DESCRIPTION: `This is really unsual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
   GO_TO_SHABAD: 'Open Shabad',
   HUKAMNAMA: 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar',
+  ANG_NOT_FOUND: `Sorry, we couldn't find the requested ang (page).`,
+  ANG_NOT_FOUND_DESCRIPTION: (ang, source) =>
+    `Ang (page) "${ang}" was not found in "${source}". Make sure ang (page) ${ang} is actually present in the selected source. If you still can not find your shabad, head over to `,
   NO_RESULTS_FOUND: query =>
     `Sorry, we couldn't find results for your query "${query}".`,
   NO_RESULTS_FOUND_DESCRIPTION: (source, type) =>

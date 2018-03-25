@@ -1,7 +1,10 @@
 /* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { buildApiUrl } from 'shabados';
+import { Link } from 'react-router-dom';
+import { buildApiUrl, SOURCES } from 'shabados';
+import GenericError, { BalpreetSingh } from '../../components/GenericError';
+import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
 import ShabadContent from '../../components/ShabadContent';
 
@@ -9,10 +12,30 @@ const Stub = () => <div className="spinner" />;
 
 class Layout extends React.PureComponent {
   static propTypes = {
+    ang: PropTypes.number,
+    source: PropTypes.oneOf(Object.keys(SOURCES)),
     data: PropTypes.object.isRequired,
   };
   render() {
-    const { data } = this.props;
+    const { ang, source, data } = this.props;
+
+    if (data.page.length === 0) {
+      return (
+        <GenericError
+          title={TEXTS.ANG_NOT_FOUND}
+          description={
+            <>
+              {TEXTS.ANG_NOT_FOUND_DESCRIPTION(ang, SOURCES[source])}
+              <Link to="/help#Desktop-i-cant-find-my-shabad.">
+                {' '}
+                {TEXTS.HELP_SECTION}.
+              </Link>
+            </>
+          }
+          image={BalpreetSingh}
+        />
+      );
+    }
 
     return (
       <div className="row" id="content-root">
@@ -38,7 +61,9 @@ export default class Ang extends React.PureComponent {
 
     return (
       <PageLoader url={url}>
-        {({ loading, data }) => (loading ? <Stub /> : <Layout data={data} />)}
+        {({ loading, data }) =>
+          loading ? <Stub /> : <Layout data={data} ang={ang} source={source} />
+        }
       </PageLoader>
     );
   }

@@ -62,7 +62,7 @@ export default class Header extends React.PureComponent {
               handleSearchTypeChange,
               handleSubmit,
             }) => (
-              <React.Fragment>
+              <>
                 <div id="responsive-menu">
                   <div className="top-bar-left">
                     {!isHome && (
@@ -203,7 +203,7 @@ export default class Header extends React.PureComponent {
                     </select>
                   </div>
                 )}
-              </React.Fragment>
+              </>
             )}
           </SearchForm>
         </div>
