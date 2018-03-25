@@ -26,7 +26,25 @@ export default function getEmbedCode({ gurbani, info }) {
           justify-content: space-between;
         }
 
-        
+        #sttm-root .sttm-header img {
+          height: 50px;
+          width: 50px;
+        }
+
+        #sttm-root .sttm-header div {
+          display: flex;
+          align-items: center;
+        }
+
+        #sttm-root .sttm-header .sttm-title {
+          text-transform: uppercase;
+          margin-left: 10px;
+          font-weight: 200;
+          text-decoration: none;
+          letter-spacing: 2px;
+          color: white;
+        }
+
         #sttm-root .sttm-button {
           text-decoration: none;
           text-transform: capitalize;
@@ -35,11 +53,12 @@ export default function getEmbedCode({ gurbani, info }) {
           padding: 10px;
           margin: 5px;
           border-radius: 5px;
+          cursor: pointer;
         }
 
         #sttm-root .sttm-shabad-controls {
           position: sticky;
-          top: 64px;
+          top: 62px;
           background: #f5f5f5;
           width: 100%;
         }
@@ -82,18 +101,31 @@ export default function getEmbedCode({ gurbani, info }) {
         }
 
         #sttm-root .sttm-shabad-meta {
-
+          padding: 0 10px;
         }
+
+        #sttm-root .sttm-shabad-meta a {
+          color: #01669b;
+          text-decoration: none;
+        }
+
         #sttm-root .sttm-shabad-content {
 
         }
       </style>
       <div id="sttm-root">
         <div class="sttm-header">
-          <img height="50" src="https://sikhitothemax.org/assets/images/sttm_icon.png" alt="SikhiToTheMax Logo"/>
-          <a class="sttm-button sttm-primary" href="https://sikhitothemax.org/shabad?id=${
-            info.id
-          }">Open in SikhiToTheMax</a>
+          <div>
+            <img height="50" src="https://sikhitothemax.org/assets/images/sttm_icon.png" alt="SikhiToTheMax Logo"/>
+            <a class="sttm-title" href="https://sikhitothemax.org" target="_blank">Sikhi To The Max</a>
+          </div>
+          <div>
+            <a href="https://sikhitothemax.org/shabad?id=${
+              info.id
+            }" target="_blank">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="30" width="30" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
+            </a>
+          </div>
         </div>
         <div class="sttm-shabad-controls"></div>
         <h3 class="sttm-shabad-meta">

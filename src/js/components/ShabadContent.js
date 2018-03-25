@@ -41,11 +41,6 @@ class Shabad extends React.PureComponent {
 
   getEmbedCode = null;
 
-  componentDidMount() {
-    // PreLoad
-    this.getEmbedCode = import(/* webpackChunkName: "embed" */ '../util/embed.js');
-  }
-
   render() {
     const {
       props: {
@@ -119,6 +114,8 @@ class Shabad extends React.PureComponent {
   componentDidMount() {
     addEventListener('scroll', this.scrollListener, { passive: true });
     this.scrollListener();
+    // PreLoad
+    this.getEmbedCode = import(/* webpackChunkName: "embed" */ '../util/embed.js');
   }
 
   componentWillUnmount() {

@@ -196,7 +196,6 @@ export function getEmbedCode({ gurbani, info }) {
           padding: 6px;
           justify-content: space-between;
         }
-
         
         #sttm-root .sttm-button {
           text-decoration: none;
@@ -250,13 +249,6 @@ export function getEmbedCode({ gurbani, info }) {
         #sttm-root .sttm-line .sttm-translation.sttm-enabled,
         #sttm-root .sttm-line .sttm-transliteration.sttm-enabled {
           display: block;
-        }
-
-        #sttm-root .sttm-shabad-meta {
-
-        }
-        #sttm-root .sttm-shabad-content {
-
         }
       </style>
       <div id="sttm-root">
