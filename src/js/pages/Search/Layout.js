@@ -181,7 +181,7 @@ class Layout extends React.PureComponent {
             );
           })}
           <li className="load-more">
-            {offset > 0 && (
+            {offset > 0 ? (
               <Link
                 className="load button"
                 to={`/search?q=${q}&source=${source}&type=${type}&offset=${offset -
@@ -189,14 +189,18 @@ class Layout extends React.PureComponent {
               >
                 {TEXTS.PREVIOUS_PAGE}
               </Link>
+            ) : (
+              <div />
             )}
-            {nextPageOffset && (
+            {nextPageOffset ? (
               <Link
                 className="load button"
                 to={`/search?q=${q}&source=${source}&type=${type}&offset=${nextPageOffset}`}
               >
                 {TEXTS.NEXT_PAGE}
               </Link>
+            ) : (
+              <div />
             )}
           </li>
         </ul>

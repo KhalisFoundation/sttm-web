@@ -36,6 +36,10 @@
   display: flex;
   justify-content: space-between;
   text-align: center;
+
+  &:empty {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 46em) {
