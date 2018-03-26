@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import GurmukhiKeyboard from './GurmukhiKeyboard';
 import SearchForm from './SearchForm';
 import { toSearchURL } from '../util';
-import Logo from './Logo';
 
 const types = [...TYPES, 'Ang'];
 
@@ -42,14 +41,7 @@ export default class Header extends React.PureComponent {
         <div className="row">
           {!isHome && (
             <div className="top-bar-title">
-              <Link to="/">
-                <Logo
-                  style={{
-                    transform: `scale(0.62)`,
-                    marginTop: -18,
-                  }}
-                />
-              </Link>
+              <Link to="/" />
             </div>
           )}
           <SearchForm

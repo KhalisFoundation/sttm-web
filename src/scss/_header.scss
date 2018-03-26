@@ -22,7 +22,12 @@
 }
 
 .top-bar-title a {
+  background-image: url(/assets/images/sttm_logo.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   display: inline-block;
+  height: 54px;
   width: 100%;
 }
 
