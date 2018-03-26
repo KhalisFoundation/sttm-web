@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { TYPES, SOURCES } from 'shabados';
 import { connect } from 'react-redux';
+import { toSearchURL } from '../../util';
 import { PLACEHOLDERS, TEXTS } from '../../constants';
 import Controls from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
@@ -180,29 +181,41 @@ class Layout extends React.PureComponent {
               </React.Fragment>
             );
           })}
-          <li className="load-more">
-            {offset > 0 ? (
-              <Link
-                className="load button"
-                to={`/search?q=${q}&source=${source}&type=${type}&offset=${offset -
-                  1}`}
-              >
-                {TEXTS.PREVIOUS_PAGE}
-              </Link>
-            ) : (
-              <div />
+          {offset !== 0 &&
+            nextPageOffset && (
+              <li className="load-more">
+                {offset > 0 ? (
+                  <Link
+                    className="load button"
+                    to={toSearchURL({
+                      query: q,
+                      source,
+                      type,
+                      offset: offset - 1,
+                    })}
+                  >
+                    {TEXTS.PREVIOUS_PAGE}
+                  </Link>
+                ) : (
+                  <div />
+                )}
+                {nextPageOffset ? (
+                  <Link
+                    className="load button"
+                    to={toSearchURL({
+                      query: q,
+                      type,
+                      source,
+                      offset: nextPageOffset,
+                    })}
+                  >
+                    {TEXTS.NEXT_PAGE}
+                  </Link>
+                ) : (
+                  <div />
+                )}
+              </li>
             )}
-            {nextPageOffset ? (
-              <Link
-                className="load button"
-                to={`/search?q=${q}&source=${source}&type=${type}&offset=${nextPageOffset}`}
-              >
-                {TEXTS.NEXT_PAGE}
-              </Link>
-            ) : (
-              <div />
-            )}
-          </li>
         </ul>
       </div>
     );

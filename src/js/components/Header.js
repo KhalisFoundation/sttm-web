@@ -4,6 +4,8 @@ import { SOURCES, TYPES } from 'shabados';
 import { Link } from 'react-router-dom';
 import GurmukhiKeyboard from './GurmukhiKeyboard';
 import SearchForm from './SearchForm';
+import { toSearchURL } from '../util';
+import Logo from './Logo';
 
 const types = [...TYPES, 'Ang'];
 
@@ -18,8 +20,13 @@ export default class Header extends React.PureComponent {
 
   toggleMenu = () => document.body.classList.toggle('menu-open');
   closeMenu = () => document.body.classList.remove('menu-open');
-  onFormSubmit = ({ type, source, query }) =>
-    this.props.history.push(`/search?type=${type}&source=${source}&q=${query}`);
+
+  onFormSubmit = data => e => {
+    e.preventDefault();
+    this.handleFormSubmit(data);
+  };
+
+  handleFormSubmit = data => this.props.history.push(toSearchURL(data));
 
   render() {
     const {
@@ -27,6 +34,7 @@ export default class Header extends React.PureComponent {
       toggleMenu,
       closeMenu,
       onFormSubmit,
+      handleFormSubmit,
     } = this;
 
     return (
@@ -34,13 +42,20 @@ export default class Header extends React.PureComponent {
         <div className="row">
           {!isHome && (
             <div className="top-bar-title">
-              <Link to="/" />
+              <Link to="/">
+                <Logo
+                  style={{
+                    transform: `scale(0.62)`,
+                    marginTop: -18,
+                  }}
+                />
+              </Link>
             </div>
           )}
           <SearchForm
             defaultQuery={defaultQuery}
             submitOnChangeOf={['type', 'source']}
-            onSubmit={onFormSubmit}
+            onSubmit={handleFormSubmit}
           >
             {({
               pattern,
@@ -60,7 +75,6 @@ export default class Header extends React.PureComponent {
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
-              handleSubmit,
             }) => (
               <React.Fragment>
                 <div id="responsive-menu">
@@ -69,7 +83,7 @@ export default class Header extends React.PureComponent {
                       <form
                         action={action}
                         id="top-bar-search-form"
-                        onSubmit={handleSubmit}
+                        onSubmit={onFormSubmit({ type, source, query })}
                         className="search-form"
                       >
                         <ul className="menu">

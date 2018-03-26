@@ -1,4 +1,8 @@
-import { SHORT_DOMAIN } from '../constants';
+import {
+  DEFAULT_SEARCH_TYPE,
+  DEFAULT_SEARCH_SOURCE,
+  SHORT_DOMAIN,
+} from '../constants';
 
 export const throwError = (msg, err) => {
   // eslint-disable-next-line no-console
@@ -117,3 +121,10 @@ export function navLink(type, source) {
       return `ang?source=${source}&ang=`;
   }
 }
+
+export const toSearchURL = ({
+  query,
+  type = DEFAULT_SEARCH_TYPE,
+  source = DEFAULT_SEARCH_SOURCE,
+  offset = '',
+}) => `/search?q=${query}&type=${type}&source=${source}&offset=${offset}`;

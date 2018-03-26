@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { SOURCES, TYPES } from 'shabados';
+import { toSearchURL } from '../../util';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Logo';
@@ -7,6 +9,15 @@ import Logo from '../../components/Logo';
 const types = [...TYPES, 'Ang'];
 
 export default class Home extends React.PureComponent {
+  static propTypes = {
+    history: PropTypes.shape({ push: PropTypes.func }),
+  };
+
+  onSubmit = data => e => {
+    e.preventDefault();
+    this.props.history.push(toSearchURL(data));
+  };
+
   render() {
     return (
       <SearchForm>
@@ -27,7 +38,6 @@ export default class Home extends React.PureComponent {
           handleSearchChange,
           handleSearchSourceChange,
           handleSearchTypeChange,
-          handleSubmit,
         }) => (
           <React.Fragment>
             <div className="row" id="content-root">
@@ -35,7 +45,7 @@ export default class Home extends React.PureComponent {
                 <form
                   className="search-form"
                   action={action}
-                  onSubmit={handleSubmit}
+                  onSubmit={this.onSubmit({ query, type, source })}
                 >
                   <div className="flex justify-center align-center">
                     <div>
