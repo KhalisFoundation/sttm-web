@@ -29,21 +29,6 @@ body {
   position: relative;
 }
 
-.body_text {
-  padding: 1rem;
-
-  h2 {
-    font-size: 1.5em;
-    text-transform: uppercase;
-  }
-}
-
-@media screen and (min-width: 46em) {
-  .body_text h2 {
-    font-size: 2.5em;
-  }
-}
-
 select {
   border-radius: 2px;
 }
@@ -62,4 +47,49 @@ select {
   position: absolute;
   top: 0;
   width: 100%;
+}
+
+.breadcrumb {
+  border-bottom: 1px solid grey;
+  margin: 20px;
+  padding-bottom: 10px;
+}
+
+.wrapper {
+  padding: 0 1rem;
+}
+
+.error-message {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  padding: 10vh 5vw;
+
+  section {
+    max-width: 40vw;
+  }
+
+  img {
+    padding: 5vh 2vw;
+  }
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column-reverse;
+
+    section {
+      max-width: none;
+    }
+
+    img {
+      margin-bottom: 10px;
+      max-height: 40vh;
+      padding: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  h3 {
+    font-weight: bold;
+  }
 }

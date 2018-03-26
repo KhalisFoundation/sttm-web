@@ -4,13 +4,12 @@
   animation: spin 4s linear infinite;
   background-image: url(/assets/images/spinner-mandala.png);
   background-size: 200px 200px;
-  display: none;
   height: 200px;
   left: 50%;
   margin: 10% 0 0 -60px;
   position: relative;
   width: 200px;
-  z-index: 999999;
+  z-index: 1;
 }
 
 @-moz-keyframes spin {
@@ -30,10 +29,6 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
-}
-
-.loading .spinner {
-  display: block;
 }
 
 @media screen and (max-width: 45.999999em) {

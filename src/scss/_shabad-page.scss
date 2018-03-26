@@ -114,8 +114,21 @@ blockquote {
   padding: 0 1rem;
   width: 100%;
 
+  .mixed-view-baani {
+    .line {
+      margin-bottom: -27px;
+      position: relative;
+    }
+  }
+
   .line {
-    position: relative;
+    .gurbani-display {
+      transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+      span {
+        transition: color 0.25s ease-in;
+      }
+    }
 
     .share {
       background-color: rgba(255, 255, 255, 0.85);
@@ -124,30 +137,28 @@ blockquote {
       position: absolute;
       right: 0;
       top: 0;
+
+      a {
+        color: #000;
+        margin-left: 5px;
+        padding: 0.5rem;
+      }
+
+      .copy:hover {
+        color: #f39c1d;
+      }
+
+      .twitter:hover {
+        color: #00aced;
+      }
+
+      .facebook:hover {
+        color: #3b5998;
+      }
     }
 
     &:hover .share {
       display: block;
-    }
-  }
-
-  .share {
-    a {
-      color: #000;
-      margin-left: 5px;
-      padding: 0.5rem;
-    }
-
-    .copy:hover {
-      color: #f39c1d;
-    }
-
-    .twitter:hover {
-      color: #00aced;
-    }
-
-    .facebook:hover {
-      color: #3b5998;
     }
   }
 }
@@ -161,6 +172,13 @@ blockquote {
     i {
       flex-grow: 0;
     }
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .share,
+  .line:hover .share {
+    display: none !important;
   }
 }
 

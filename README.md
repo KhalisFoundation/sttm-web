@@ -4,7 +4,7 @@
 
 Originally developed by SHARE Charity UK, SikhiToTheMax has become a defacto standard for keertans and gurdwaras around the world to display gurbani on screens for sangat to join into the depth of Gurbani and translations.
 
-SikhiToTheMax is now developed by Khalis Foundation as seva to the panth and is working hard to ensure it lives up to its name. 
+SikhiToTheMax is now developed by Khalis Foundation as seva to the panth and is working hard to ensure it lives up to its name.
 Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.
 
 Website: http://www.SikhiToTheMax.org
@@ -17,7 +17,7 @@ Uses ShabadOS API: http://www.shabados.org
 
 ## Build Instructions
 
-Make sure you've [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) & [`nodejs`](https://nodejs.org/en/) installed in your system. 
+Make sure you've [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) & [`nodejs`](https://nodejs.org/en/) installed in your system.
 
 Open terminal and follow these steps;
 
@@ -34,7 +34,6 @@ cd SikhiToTheMax-Web/
 ```
 
 * Step 2: Install dependencies.
-
 
 ```bash
 npm install
@@ -57,7 +56,11 @@ http://localhost:8080
 ```
 
 ## License
+
 [GSL](/LICENSE)
 
+All images and assets not covered under other licenses are covered under full Copyright © 2018 Khalis Foundation.
+
 ## Contributing
+
 See [CONTRIBUTING.md](CONTRIBUTING.md)

@@ -1,7 +1,10 @@
 .DS_Store
+jest/coverage/
 /inc/mysql.php
 node_modules/
 /assets/js/*.js
+/assets/js/**/*.js
+/assets/js/**/**/*.js
 yarn.lock
 assets/css/*.css
 *.swp

@@ -1,12 +1,18 @@
 .display {
   .gurbani-display div {
     margin-bottom: -0.25rem;
+
+    &.larivaar {
+      word-break: break-all;
+    }
   }
 
-  .unicode,
-  .translation,
+  .highlight {
+    color: #01669b;
+  }
+
   .transliteration {
-    display: none;
+    text-transform: capitalize;
   }
 
   .gurlipi i,
@@ -19,30 +25,18 @@
     transition: all 0.25s;
   }
 
-  .split-view-baani {
-    display: none;
-  }
-
   &.split-view {
     .split-view-baani {
       display: block;
+
+      .line {
+        margin-bottom: auto;
+      }
 
       .split-view-baani-wrapper {
         margin-top: 1em;
       }
     }
-
-    .mixed-view-baani {
-      display: none;
-    }
-  }
-
-  &.unicode .unicode {
-    display: block;
-  }
-
-  &.unicode .gurlipi {
-    display: none;
   }
 
   &.translation-english .translation.english,

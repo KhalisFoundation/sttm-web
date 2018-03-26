@@ -1,0 +1,46 @@
+language: node_js
+dist: trusty
+sudo: false
+
+node_js: "8"
+
+branches:
+  only:
+  - master
+  - dev
+
+addons:
+  ssh_known_hosts: usc-avm01.khalis.net:1157
+
+install:
+- npm ci
+# keep the npm cache around to speed up installs
+cache:
+  directories:
+  - "$HOME/.npm"
+
+env:
+  global:
+  - REMOTE_USER=khalsa
+  - REMOTE_HOST=usc-avm01.khalis.net
+  - PORT=1157
+
+deploy:
+  # deploy to dev
+  - provider: script
+    script: bash scripts/deploy.sh dev
+    on:
+      branch: dev
+  # deploy to production
+  - provider: script
+    script: bash scripts/deploy.sh prod
+    on:
+      branch: master
+
+before_install:
+- npm i -g npm@latest
+- openssl aes-256-cbc -K $encrypted_1454d8bcbe1b_key -iv $encrypted_1454d8bcbe1b_iv
+  -in deploy.enc -out scripts/deploy -d
+
+before_script:
+- chmod 600 scripts/deploy && mv scripts/deploy ~/.ssh/id_rsa
