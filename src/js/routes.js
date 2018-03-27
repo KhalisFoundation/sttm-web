@@ -5,6 +5,7 @@ import { getQueryParams, getParameterByName, throwError } from './util';
 import { Redirect } from 'react-router-dom';
 import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
+import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
 import { DEFAULT_SEARCH_SOURCE, DEFAULT_SEARCH_TYPE } from './constants';
 
@@ -229,6 +230,11 @@ export default [
     path: '/shabad',
     render(props) {
       const { location: { search } } = props;
+
+      if (location.search === '') {
+        return <Redirect to="/random" />;
+      }
+
       const [random, id, q, type, highlight] = [
         'random',
         'id',
@@ -275,12 +281,6 @@ export default [
     },
   },
   {
-    path: '/rehat.asp',
-    render() {
-      return <Redirect to="https://khalisfoundation.org/portfolio/maryada/" />;
-    },
-  },
-  {
     path: '/search.asp',
     render() {
       return <Redirect to="/" />;
@@ -299,7 +299,30 @@ export default [
       } else if (query.random) {
         url = '/shabad?random';
       }
-      <Redirect to={url} />;
+      return <Redirect to={url} />;
+    },
+  },
+  {
+    path: '/rehat.asp',
+    render() {
+      return (
+        <Layout>
+          <RedirectExternal
+            to="https://khalisfoundation.org/portfolio/maryada/"
+            name="Maryada page"
+          />
+        </Layout>
+      );
+    },
+  },
+  {
+    path: '/tabla.asp',
+    render() {
+      return (
+        <Layout>
+          <RedirectExternal to="https://tabla.pro" name="Tabla Page" />
+        </Layout>
+      );
     },
   },
 ];
