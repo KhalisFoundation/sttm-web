@@ -4,6 +4,7 @@
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
+    "pre-push-message": "echo \" ✋ Before your push gets submitted to remote, \n we'll like to run 🏃‍♂️ some tests to avoid wasting your, reviewers' and CI's time ⏱ . \n Thank you for being patient! 👳‍♂️ \"",
     "test:lint:html": "htmlhint index.html",
     "test:lint:js": "eslint src/js server",
     "test:lint:css": "stylelint \"src/scss/*.scss\" --syntax scss",
@@ -151,5 +152,9 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "prepush": {
+    "silent": true,
+    "run": ["pre-push-message", "test"]
   }
 }
