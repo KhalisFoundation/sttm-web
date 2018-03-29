@@ -84,27 +84,34 @@ const content = {
         have the following options:
         <ul>
           <li>
-            In case of a shabad, say <code>ਮੇਰੇ ਸਾਹਾ ਮੈ ਹਰਿ ਦਰਸਨ ਸੁਖੁ ਹੋਇ ॥
-            ਹਮਰੀ ਬੇਦਨਿ ਤੂ ਜਾਨਤਾ ਸਾਹਾ ਅਵਰੁ ਕਿਆ ਜਾਨੈ ਕੋਇ ॥ ਰਹਾਉ ॥</code>, the
-            shabad id is <code>2555</code>, and the short URL is {' '}
-            <a href="http://sttm.co/s/2555"> http://sttm.co/s/2555</a>{' '}
+            In case of a shabad, say{' '}
+            <code>
+              ਮੇਰੇ ਸਾਹਾ ਮੈ ਹਰਿ ਦਰਸਨ ਸੁਖੁ ਹੋਇ ॥ ਹਮਰੀ ਬੇਦਨਿ ਤੂ ਜਾਨਤਾ ਸਾਹਾ ਅਵਰੁ ਕਿਆ
+              ਜਾਨੈ ਕੋਇ ॥ ਰਹਾਉ ॥
+            </code>, the shabad id is <code>2555</code>, and the short URL is{' '}
+            <a href={`http://${SHORT_DOMAIN}/s/2555`}>
+              {' '}
+              http://{SHORT_DOMAIN}/s/2555
+            </a>{' '}
           </li>
           <li>
             In case of ang, for example ang <code>12</code> of Guru Granth Sahib
-            Jee, the short URL is {' '} <a href="http://sttm.co/a/12">
-            http://sttm.co/a/12</a>{' '}
+            Jee, the short URL is{' '}
+            <a href={`http://{SHORT_DOMAIN}/a/12`}>
+              http://{SHORT_DOMAIN}/a/12
+            </a>{' '}
           </li>
           <li>
-            In case of hukamnama, the short URL is {' '}
-            <a href="http://sttm.co/h"> http://sttm.co/h </a>{' '}
+            In case of hukamnama, the short URL is{' '}
+            <a href={`http://${SHORT_DOMAIN}/h`}> http://{SHORT_DOMAIN}/h </a>{' '}
           </li>
           <li>
-            In case of random shabad, the short URL is {' '}
-            <a href="http://sttm.co/r"> http://sttm.co/r </a>{' '}
+            In case of random shabad, the short URL is{' '}
+            <a href={`http://${SHORT_DOMAIN}/r`}> http://{SHORT_DOMAIN}/r </a>{' '}
           </li>
         </ul>
       </React.Fragment>,
-    ]
+    ],
   ],
   Desktop: [
     [
