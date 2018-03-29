@@ -60,4 +60,6 @@ export const TEXTS = {
   EMPTY_QUERY: `Oh no! You can't just search for nothing.`,
   EMPTY_QUERY_DESCRIPTION:
     'Please enter your query in the search bar above to give us a chance to serve you.',
+  REDIRECTING: 'Redirecting you to',
+  REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
 };
