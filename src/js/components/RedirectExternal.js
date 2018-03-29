@@ -21,7 +21,8 @@ export default class RedirectExternal extends React.PureComponent {
             {TEXTS.REDIRECTING} <a href={to}>{name}</a>.
           </h3>
           <section>
-            {TEXTS.REDIRECTING_DESCRIPTION} <code>{to}</code>.
+            {TEXTS.REDIRECTING_DESCRIPTION}{' '}
+            <code style={{ wordBreak: 'break-word' }}>{to}</code>.
           </section>
         </div>
       </div>
