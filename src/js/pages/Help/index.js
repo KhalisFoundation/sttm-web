@@ -28,39 +28,6 @@ const content = {
         wouldn’t be able to do.`,
     ],
     [
-      'How does the URL shorter work?',
-      <React.Fragment>
-        We have a custom domain for short urls,{' '}
-        <a href={`http://${SHORT_DOMAIN}`}>{`http://${SHORT_DOMAIN}`}</a>. It
-        works as follows:
-        <ul>
-          <li>
-            In case of a shabad, say
-            <code>
-              ਮੇਰੇ ਸਾਹਾ ਮੈ ਹਰਿ ਦਰਸਨ ਸੁਖੁ ਹੋਇ ॥ ਹਮਰੀ ਬੇਦਨਿ ਤੂ ਜਾਨਤਾ ਸਾਹਾ ਅਵਰੁ ਕਿਆ
-              ਜਾਨੈ ਕੋਇ ॥ ਰਹਾਉ ॥
-            </code>, the shabad id is <code>2555</code>, and the short URL is{' '}
-            <a
-              href={`http://${SHORT_DOMAIN}/s/2555`}
-            >{`http://${SHORT_DOMAIN}/s/2555`}</a>.
-          </li>
-          <li>
-            In case of ang, for example ang <code>12</code> of Guru Granth Sahib
-            Jee, the short URL is{' '}
-            <a
-              href={`http://${SHORT_DOMAIN}/a/12`}
-            >{`http://${SHORT_DOMAIN}/a/12`}</a>.
-          </li>
-          <li>
-            In case of hukamnama, the short URL is{' '}
-            <a
-              href={`http://${SHORT_DOMAIN}/h`}
-            >{`http://${SHORT_DOMAIN}/h`}</a>.
-          </li>
-        </ul>
-      </React.Fragment>,
-    ],
-    [
       `How to type Gurmukhi with keyboard?`,
       <React.Fragment>
         <p>
@@ -93,6 +60,56 @@ const content = {
             ))}
           </tbody>
         </table>
+      </React.Fragment>,
+    ],
+    [
+      `What is Split View?`,
+      <React.Fragment>
+        Split view separates the gurmukhi, transliteration, and translations
+        into individual sections on the page. To access this option, open
+        display settings, and choose “Split View”
+        <img src="/assets/images/help/web-split-view.png" />
+      </React.Fragment>,
+    ],
+    [
+      'How do I share a shabad and use the link shortener?',
+      <React.Fragment>
+        Each shabad has a unique URL that can be shared online. Rather than
+        copying a long URL, we automatically shorten it to something more
+        shareable. You can do this by clicking any of the social media icons in
+        the shabad view, or pressing the last icon to copy the link to your
+        clipboard
+        <img src="/assets/images/help/web-share-link-shortener.png" />
+        Additionally, for more advanced ways of using the link shortener, you
+        have the following options:
+        <ul>
+          <li>
+            In case of a shabad, say{' '}
+            <code>
+              ਮੇਰੇ ਸਾਹਾ ਮੈ ਹਰਿ ਦਰਸਨ ਸੁਖੁ ਹੋਇ ॥ ਹਮਰੀ ਬੇਦਨਿ ਤੂ ਜਾਨਤਾ ਸਾਹਾ ਅਵਰੁ ਕਿਆ
+              ਜਾਨੈ ਕੋਇ ॥ ਰਹਾਉ ॥
+            </code>, the shabad id is <code>2555</code>, and the short URL is{' '}
+            <a href={`http://${SHORT_DOMAIN}/s/2555`}>
+              {' '}
+              http://{SHORT_DOMAIN}/s/2555
+            </a>{' '}
+          </li>
+          <li>
+            In case of ang, for example ang <code>12</code> of Guru Granth Sahib
+            Jee, the short URL is{' '}
+            <a href={`http://{SHORT_DOMAIN}/a/12`}>
+              http://{SHORT_DOMAIN}/a/12
+            </a>{' '}
+          </li>
+          <li>
+            In case of hukamnama, the short URL is{' '}
+            <a href={`http://${SHORT_DOMAIN}/h`}> http://{SHORT_DOMAIN}/h </a>{' '}
+          </li>
+          <li>
+            In case of random shabad, the short URL is{' '}
+            <a href={`http://${SHORT_DOMAIN}/r`}> http://{SHORT_DOMAIN}/r </a>{' '}
+          </li>
+        </ul>
       </React.Fragment>,
     ],
   ],
