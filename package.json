@@ -1,10 +1,10 @@
 {
   "name": "sikhitothemax-web",
   "version": "1.1.0",
-  "description":
-    "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
+  "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
+    "pre-push-message": "echo \" ✋ Before your push gets submitted to remote, \n we'll like to run 🏃‍♂️ some tests to avoid wasting your, reviewers' and CI's time ⏱ . \n Thank you for being patient! 👳‍♂️ \"",
     "test:lint:html": "htmlhint index.html",
     "test:lint:js": "eslint src/js server",
     "test:lint:css": "stylelint \"src/scss/*.scss\" --syntax scss",
@@ -14,21 +14,16 @@
     "start": "npm-run-all --parallel build-watch:* server-watch",
     "server": "node server",
     "server-watch": "nodemon --watch server/ server",
-    "webpack-stats":
-      "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
+    "webpack-stats": "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
     "build": "npm-run-all build:*",
-    "build:css":
-      "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
+    "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss assets/css/bundle.css",
     "build:webpack": "webpack",
     "build-watch": "npm-run-all build-watch:*",
     "build-watch:webpack": "npm run build:webpack -- --watch",
-    "build-watch:css":
-      "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
+    "build-watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss assets/css/bundle.css\"",
     "deploy": "git checkout dev && git pull origin && git push web",
-    "deploy:server":
-      "NODE_ENV=production npm run build && rm -rf .editorconfig .gitignore .github .htmlhintrc .stylelintrc .vscode stats.json webpack.config.js src LICENSE CONTRIBUTING.md README.md jest && pm2 start server --name=\"sttm-prod\"",
-    "deploy:dev-server":
-      "npm run build && NODE_ENV=development pm2 start server --name=\"sttm-dev\""
+    "deploy:server": "NODE_ENV=production npm run build && rm -rf .editorconfig .gitignore .github .htmlhintrc .stylelintrc .vscode stats.json webpack.config.js src LICENSE CONTRIBUTING.md README.md jest && pm2 start server --name=\"sttm-prod\"",
+    "deploy:dev-server": "npm run build && NODE_ENV=development pm2 start server --name=\"sttm-dev\""
   },
   "repository": {
     "type": "git",
@@ -68,6 +63,7 @@
     "node-sass": "^4.7.2",
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.1.2",
+    "pre-push": "^0.1.1",
     "prop-types": "^15.6.0",
     "regenerator-runtime": "^0.11.1",
     "replace-in-file": "^3.1.0",
@@ -80,9 +76,15 @@
   "jest": {
     "collectCoverage": true,
     "coverageDirectory": "<rootDir>/jest/coverage",
-    "coverageReporters": ["html"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
-    "setupFiles": ["<rootDir>/jest/setup.js"]
+    "coverageReporters": [
+      "html"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "<rootDir>/jest/setup.js"
+    ]
   },
   "babel": {
     "env": {
@@ -92,13 +94,18 @@
             "transform-react-remove-prop-types",
             {
               "mode": "remove",
-              "ignoreFilenames": ["node_modules"]
+              "ignoreFilenames": [
+                "node_modules"
+              ]
             }
           ]
         ]
       },
       "test": {
-        "presets": ["@babel/preset-env", "@babel/preset-react"],
+        "presets": [
+          "@babel/preset-env",
+          "@babel/preset-react"
+        ],
         "plugins": [
           "@babel/plugin-proposal-object-rest-spread",
           "@babel/plugin-proposal-class-properties"
@@ -110,7 +117,11 @@
         "@babel/preset-env",
         {
           "targets": {
-            "browsers": ["> 1%", "ie 11", "safari 9"]
+            "browsers": [
+              "> 1%",
+              "ie 11",
+              "safari 9"
+            ]
           },
           "modules": false
         }
@@ -124,7 +135,9 @@
     ]
   },
   "standard": {
-    "ignore": ["assets/js"]
+    "ignore": [
+      "assets/js"
+    ]
   },
   "dependencies": {
     "compression": "^1.6.2",
@@ -139,5 +152,9 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "prepush": {
+    "silent": true,
+    "run": ["pre-push-message", "test"]
   }
 }
