@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as Analytics from '../../util/analytics';
+import { pageView } from '../../util/analytics';
 
 export default class TermsOfService extends React.PureComponent {
   render() {
@@ -122,6 +122,6 @@ export default class TermsOfService extends React.PureComponent {
     );
   }
   componentDidMount() {
-    Analytics.pageView('/terms-of-service');
+    pageView('/terms-of-service');
   }
 }

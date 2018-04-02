@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, TYPES } from 'shabados';
 import { toSearchURL } from '../../util';
-import * as Analytics from '../../util/analytics';
+import { pageView } from '../../util/analytics';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Logo';
@@ -14,8 +14,9 @@ export default class Home extends React.PureComponent {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
 
-  onSubmit = data => e => {
+  onSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
+    handleSubmit();
     this.props.history.push(toSearchURL(data));
   };
 
@@ -38,6 +39,7 @@ export default class Home extends React.PureComponent {
           setQueryAs,
           handleSearchChange,
           handleSearchSourceChange,
+          handleSubmit,
           handleSearchTypeChange,
         }) => (
           <React.Fragment>
@@ -46,7 +48,12 @@ export default class Home extends React.PureComponent {
                 <form
                   className="search-form"
                   action={action}
-                  onSubmit={this.onSubmit({ query, type, source })}
+                  onSubmit={this.onSubmit({
+                    handleSubmit,
+                    query,
+                    type,
+                    source,
+                  })}
                 >
                   <div className="flex justify-center align-center">
                     <div>
@@ -140,6 +147,6 @@ export default class Home extends React.PureComponent {
   }
 
   componentDidMount() {
-    Analytics.pageView('/');
+    pageView('/');
   }
 }

@@ -5,6 +5,7 @@ import Translation from './Translation';
 import Transliteration from './Transliteration';
 import BaaniLine from './BaaniLine';
 import { TEXTS } from '.././constants';
+import { clickEvent, ACTIONS } from '../util/analytics';
 import { copyToClipboard, showToast, shortenURL } from '../util';
 
 const transliterationMap = {
@@ -52,9 +53,19 @@ export default class Baani extends React.PureComponent {
   onCopyClick = shabad => () =>
     copyToClipboard(this.getShareLine(shabad))
       .then(() => showToast(TEXTS.GURBAANI_COPIED))
+      .then(() =>
+        clickEvent({
+          action: ACTIONS.LINE_SHARER,
+          label: 'copy-line',
+        })
+      )
       .catch(() => showToast(TEXTS.COPY_FAILURE));
 
   onTweetClick = shabad => () => {
+    clickEvent({
+      action: ACTIONS.LINE_SHARER,
+      label: 'twitter',
+    });
     let tweet = this.getShareLine(shabad);
     const shortURL = `\n${shortenURL()}`;
     if (tweet.length + shortURL.length > 274) {

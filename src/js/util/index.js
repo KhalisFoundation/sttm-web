@@ -91,7 +91,12 @@ export const copyToClipboard = text =>
 export const getArrayFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
   if (value === null) return defaultValue;
-  return JSON.parse(value, 10);
+  try {
+    return JSON.parse(value, 10);
+  } catch (err) {
+    localStorage.setItem(key, []);
+    return [];
+  }
 };
 
 export const getNumberFromLocalStorage = (key, defaultValue = null) => {
@@ -124,7 +129,7 @@ export function navLink(type, source) {
 
 export const objectToQueryParams = object =>
   Object.entries(object)
-    .filter(([, value]) => value !== undefined)
+    .filter(([, value]) => [undefined, NaN, null, ''].every(n => n !== value))
     .map(([key, value]) => `${key}=${value}`)
     .join('&');
 

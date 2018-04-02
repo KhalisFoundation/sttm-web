@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import routes, { NotFound } from './routes';
 import Layout from './components/Layout';
 import GenericError, { BalpreetSingh } from './components/GenericError';
+import { ACTIONS, errorEvent } from './util/analytics';
 import { TEXTS } from './constants';
 
 export default class Root extends React.PureComponent {
@@ -12,6 +13,10 @@ export default class Root extends React.PureComponent {
 
   componentDidCatch(error) {
     this.setState({ error });
+    errorEvent({
+      action: ACTIONS.GENERIC_ERROR,
+      label: JSON.stringify(error),
+    });
     // eslint-disable-next-line no-console
     console.error({ error });
   }

@@ -5,7 +5,7 @@ import { TYPES, SOURCES } from 'shabados';
 import { connect } from 'react-redux';
 import { toShabadURL, toSearchURL } from '../../util';
 import { PLACEHOLDERS, TEXTS } from '../../constants';
-import * as Analytics from '../../util/analytics';
+import { ACTIONS, pageView, errorEvent } from '../../util/analytics';
 import Controls from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Larivaar from '../../components/Larivaar';
@@ -49,6 +49,12 @@ class Layout extends React.PureComponent {
 
     if (parseInt(resultsCount, 10) === 0) {
       const className = PLACEHOLDERS[type][1] === true ? '' : 'gurbani-font';
+
+      errorEvent({
+        action: ACTIONS.NO_RESULTS_FOUND,
+        label: `q:${q},source:${source},type:${type}`,
+      });
+
       return (
         <GenericError
           title={
@@ -211,7 +217,7 @@ class Layout extends React.PureComponent {
 
   componentDidMount() {
     const { q, type, offset, source } = this.props;
-    Analytics.pageView(toSearchURL({ q, type, source, offset }));
+    pageView(toSearchURL({ q, type, source, offset }));
   }
 }
 

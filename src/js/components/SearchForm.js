@@ -7,6 +7,7 @@ import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
 } from '../constants';
+import { clickEvent, ACTIONS } from '../util/analytics';
 
 const SEARCH_TYPES = {
   ROMANIZED: 4,
@@ -154,19 +155,26 @@ export default class SearchForm extends React.PureComponent {
         {
           shouldSubmit: false,
         },
-        () =>
+        () => {
+          this.handleSubmit();
           onSubmit({
             source,
             type,
             query,
-          })
+          });
+        }
       );
     }
   }
 
   // Retuns a function
   setGurmukhiKeyboardVisibilityAs = value => () =>
-    this.setState({ displayGurmukhiKeyboard: value });
+    this.setState({ displayGurmukhiKeyboard: value }, () => {
+      clickEvent({
+        action: ACTIONS.GURMUKHI_KEYBOARD,
+        label: value ? 1 : 0,
+      });
+    });
 
   setQueryAs = value => () => {
     this.stopPlaceholderAnimation();
@@ -178,7 +186,9 @@ export default class SearchForm extends React.PureComponent {
     }));
   };
 
-  handleSearchChange = ({ target: { value } }) => this.setQueryAs(value)();
+  handleSearchChange = ({ target: { value } }) => {
+    this.setQueryAs(value)();
+  };
 
   handleSearchSourceChange = e =>
     this.setState(
@@ -188,11 +198,16 @@ export default class SearchForm extends React.PureComponent {
           this.props.submitOnChangeOf.includes('source') &&
           this.state.query !== '',
       },
-      () =>
+      () => {
+        clickEvent({
+          action: ACTIONS.SEARCH_SOURCE,
+          label: this.state.source,
+        });
         localStorage.setItem(
           LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
           this.state.source
-        )
+        );
+      }
     );
 
   handleSearchTypeChange = e =>
@@ -208,6 +223,7 @@ export default class SearchForm extends React.PureComponent {
           this.state.query !== '',
       },
       () => {
+        clickEvent({ action: ACTIONS.SEARCH_TYPE, label: this.state.type });
         localStorage.setItem(
           LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
           this.state.type
@@ -218,5 +234,9 @@ export default class SearchForm extends React.PureComponent {
 
   handleSubmit = () => {
     /* Possible Validations, Analytics */
+    clickEvent({
+      action: ACTIONS.SEARCH_QUERY,
+      label: this.state.query,
+    });
   };
 }

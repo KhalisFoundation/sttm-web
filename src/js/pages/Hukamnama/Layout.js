@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { TEXTS } from '../../constants';
-import * as Analytics from '../../util/analytics';
+import { pageView } from '../../util/analytics';
 import ShabadContent from '../../components/ShabadContent';
 
 export const Stub = () => <div className="spinner" />;
@@ -30,6 +30,6 @@ export default class Layout extends React.PureComponent {
     );
   }
   componentDidMount() {
-    Analytics.pageView('/hukamnama');
+    pageView('/hukamnama');
   }
 }

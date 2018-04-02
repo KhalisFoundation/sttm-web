@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Analytics from '../../util/analytics';
+import { pageView } from '../../util/analytics';
 import { TEXTS } from '../../constants';
 
 export default class NotFound extends React.PureComponent {
@@ -29,6 +29,6 @@ export default class NotFound extends React.PureComponent {
     );
   }
   componentDidMount() {
-    Analytics.pageView(`/404?from=${this.props.url}`);
+    pageView(`/404?from=${this.props.url}`);
   }
 }

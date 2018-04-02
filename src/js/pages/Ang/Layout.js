@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { SOURCES } from 'shabados';
-import * as Analytics from '../../util/analytics';
+import { pageView, errorEvent, ACTIONS } from '../../util/analytics';
 import GenericError, { BalpreetSingh } from '../../components/GenericError';
 import { TEXTS } from '../../constants';
 import ShabadContent from '../../components/ShabadContent';
@@ -19,6 +19,10 @@ export default class Layout extends React.PureComponent {
     const { ang, source, data } = this.props;
 
     if (data.page.length === 0) {
+      errorEvent({
+        action: ACTIONS.ANG_NOT_FOUND,
+        label: `ang:${ang},source:${source}`,
+      });
       return (
         <GenericError
           title={TEXTS.ANG_NOT_FOUND}
@@ -50,6 +54,6 @@ export default class Layout extends React.PureComponent {
 
   componentDidMount() {
     const { ang, source } = this.props;
-    Analytics.pageView(`/ang?ang=${ang}&source=${source}`);
+    pageView(`/ang?ang=${ang}&source=${source}`);
   }
 }

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from 'shabados';
 import PageLoader from '../PageLoader';
-import * as Analytics from '../../util/analytics';
+import { pageView } from '../../util/analytics';
 import ShabadContent from '../../components/ShabadContent';
 import { toShabadURL } from '../../util';
 
@@ -47,11 +47,9 @@ export default class Shabad extends React.PureComponent {
     const { random, id, highlight } = this.props;
 
     if (random) {
-      Analytics.pageView('/shabad?random');
+      pageView('/shabad?random');
     } else {
-      Analytics.pageView(
-        toShabadURL({ shabad: { shabadid: id, id: highlight } })
-      );
+      pageView(toShabadURL({ shabad: { shabadid: id, id: highlight } }));
     }
   }
 }
