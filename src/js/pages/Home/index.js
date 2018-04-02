@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, TYPES } from 'shabados';
 import { toSearchURL } from '../../util';
+import * as Analytics from '../../util/analytics';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Logo';
@@ -136,5 +137,9 @@ export default class Home extends React.PureComponent {
         )}
       </SearchForm>
     );
+  }
+
+  componentDidMount() {
+    Analytics.pageView('/');
   }
 }

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import * as Analytics from '../../util/analytics';
 import { SHORT_DOMAIN } from '../../constants';
 
 const content = {
@@ -361,6 +362,7 @@ export default class Help extends React.Component {
 
   componentDidMount() {
     this.scrollToQuestion();
+    Analytics.pageView('/help');
   }
 
   componentDidUpdate(prevProps) {

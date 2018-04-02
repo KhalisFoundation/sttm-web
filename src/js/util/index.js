@@ -122,9 +122,29 @@ export function navLink(type, source) {
   }
 }
 
+export const objectToQueryParams = object =>
+  Object.entries(object)
+    .filter(([, value]) => value !== undefined)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+
 export const toSearchURL = ({
-  query,
+  query: q,
   type = DEFAULT_SEARCH_TYPE,
   source = DEFAULT_SEARCH_SOURCE,
   offset = '',
-}) => `/search?q=${query}&type=${type}&source=${source}&offset=${offset}`;
+}) => `/search?${objectToQueryParams({ q, type, source, offset })}`;
+
+export const toShabadURL = ({
+  shabad: { shabadid: id, id: highlight },
+  q,
+  type = undefined,
+  source = undefined,
+}) =>
+  `/shabad?${objectToQueryParams({
+    id,
+    q,
+    type,
+    source,
+    highlight,
+  })}`;
