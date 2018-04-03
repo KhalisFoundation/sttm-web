@@ -88,14 +88,19 @@ export const copyToClipboard = text =>
     }
   });
 
-export const getArrayFromLocalStorage = (key, defaultValue = null) => {
+export const getArrayFromLocalStorage = (key, defaultValue = []) => {
   const value = localStorage.getItem(key);
-  if (value === null) return defaultValue;
+
+  if ([null, 'null', '', undefined, 'undefined'].some(v => value === v)) {
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+    return defaultValue;
+  }
+
   try {
-    return JSON.parse(value, 10);
+    return JSON.parse(value);
   } catch (err) {
-    localStorage.setItem(key, []);
-    return [];
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+    return defaultValue;
   }
 };
 
