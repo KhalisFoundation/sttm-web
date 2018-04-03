@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ACTIONS, clickEvent } from '../util/analytics';
 
 export const supportedActions = ['openShabad', 'copy', 'tweet'];
+
+const openShabad = () =>
+  clickEvent({
+    action: ACTIONS.LINE_SHARER,
+    label: ' open-shabad',
+  });
 export default class Actions extends React.PureComponent {
   static defaultProps = {
     disabledActions: [],
@@ -26,6 +33,7 @@ export default class Actions extends React.PureComponent {
           role="button"
           aria-label="Go to shabad"
           title="Go to shabad"
+          onClick={openShabad}
           to={`/shabad?id=${shabad.shabadid}&highlight=${shabad.id}`}
         >
           <i className="fa fa-fw fa-external-link-square" />

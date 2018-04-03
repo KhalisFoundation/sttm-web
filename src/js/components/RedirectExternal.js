@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TEXTS } from '../constants';
+import { pageView } from '../util/analytics';
 
 export default class RedirectExternal extends React.PureComponent {
   static propTypes = {
@@ -9,6 +10,7 @@ export default class RedirectExternal extends React.PureComponent {
   };
 
   componentDidMount() {
+    pageView(this.props.to);
     location.href = this.props.to;
   }
 

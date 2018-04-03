@@ -91,7 +91,12 @@ export const copyToClipboard = text =>
 export const getArrayFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
   if (value === null) return defaultValue;
-  return JSON.parse(value, 10);
+  try {
+    return JSON.parse(value, 10);
+  } catch (err) {
+    localStorage.setItem(key, []);
+    return [];
+  }
 };
 
 export const getNumberFromLocalStorage = (key, defaultValue = null) => {
@@ -122,9 +127,29 @@ export function navLink(type, source) {
   }
 }
 
+export const objectToQueryParams = object =>
+  Object.entries(object)
+    .filter(([, value]) => [undefined, NaN, null, ''].every(n => n !== value))
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+
 export const toSearchURL = ({
-  query,
+  query: q,
   type = DEFAULT_SEARCH_TYPE,
   source = DEFAULT_SEARCH_SOURCE,
   offset = '',
-}) => `/search?q=${query}&type=${type}&source=${source}&offset=${offset}`;
+}) => `/search?${objectToQueryParams({ q, type, source, offset })}`;
+
+export const toShabadURL = ({
+  shabad: { shabadid: id, id: highlight },
+  q,
+  type = undefined,
+  source = undefined,
+}) =>
+  `/shabad?${objectToQueryParams({
+    id,
+    q,
+    type,
+    source,
+    highlight,
+  })}`;
