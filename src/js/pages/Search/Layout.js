@@ -3,24 +3,12 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { TYPES, SOURCES } from 'shabados';
 import { connect } from 'react-redux';
-import { toSearchURL } from '../../util';
+import { toShabadURL, toSearchURL } from '../../util';
 import { PLACEHOLDERS, TEXTS } from '../../constants';
+import { ACTIONS, pageView, errorEvent } from '../../util/analytics';
 import Controls from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Larivaar from '../../components/Larivaar';
-
-function getShabadHyperLink({ shabad, q, type, source }) {
-  return (
-    '/shabad?' +
-    [
-      `id=${shabad.shabadid}`,
-      `q=${q}`,
-      `${type ? `&type=${type}` : ''}`,
-      `${source ? `&source=${source}` : ''}`,
-      `highlight=${shabad.id}`,
-    ].join('&')
-  );
-}
 
 export function Stub() {
   return <div className="spinner" />;
@@ -61,6 +49,12 @@ class Layout extends React.PureComponent {
 
     if (parseInt(resultsCount, 10) === 0) {
       const className = PLACEHOLDERS[type][1] === true ? '' : 'gurbani-font';
+
+      errorEvent({
+        action: ACTIONS.NO_RESULTS_FOUND,
+        label: `q:${q},source:${source},type:${type}`,
+      });
+
       return (
         <GenericError
           title={
@@ -86,7 +80,7 @@ class Layout extends React.PureComponent {
     // I'm feeling lucky
     if (parseInt(resultsCount, 10) === 1) {
       const [{ shabad }] = shabads;
-      return <Redirect to={getShabadHyperLink({ shabad, q, type, source })} />;
+      return <Redirect to={toShabadURL({ shabad, q, type, source })} />;
     }
 
     return (
@@ -105,7 +99,7 @@ class Layout extends React.PureComponent {
                 <li className="search-result">
                   <Link
                     style={{ fontSize: `${fontSize}em` }}
-                    to={getShabadHyperLink({ shabad, q, type, source })}
+                    to={toShabadURL({ shabad, q, type, source })}
                     className="gurbani-font gurbani-display"
                   >
                     {unicode ? (
@@ -219,6 +213,11 @@ class Layout extends React.PureComponent {
         </ul>
       </div>
     );
+  }
+
+  componentDidMount() {
+    const { q, type, offset, source } = this.props;
+    pageView(toSearchURL({ q, type, source, offset }));
   }
 }
 

@@ -1,13 +1,90 @@
 import React from 'react';
 import { showToast, copyToClipboard, shortenURL } from '../util';
 import { TEXTS } from '../constants';
+import { clickEvent, ACTIONS } from '../util/analytics';
+
+const handleFacebook = () => {
+  clickEvent({ action: ACTIONS.SHARE, label: 'facebook' });
+  window.open(
+    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      shortenURL()
+    )}&t=${encodeURIComponent(shortenURL())}`
+  );
+  return false;
+};
+
+const handleTwitter = () => {
+  clickEvent({ action: ACTIONS.SHARE, label: 'twitter' });
+  window.open(
+    `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      document.title
+    )}:%20${encodeURIComponent(shortenURL())}`
+  );
+  return false;
+};
+
+const handleWhatsapp = () => {
+  clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
+  window.open(
+    `whatsapp://send?text=${encodeURIComponent(
+      shortenURL()
+    )}%20${encodeURIComponent(document.title)}`
+  );
+  return false;
+};
+
+const handleReddit = () => {
+  clickEvent({ action: ACTIONS.SHARE, label: 'reddit' });
+  window.open(
+    `http://www.reddit.com/submit?url=${encodeURIComponent(
+      shortenURL()
+    )}&title: ${encodeURIComponent(document.title)}`
+  );
+  return false;
+};
+
+const handleTumblr = () => {
+  clickEvent({ action: ACTIONS.SHARE, label: 'tumblr' });
+  window.open(
+    `http://www.tumblr.com/share?v=3&u=${encodeURIComponent(
+      shortenURL()
+    )}&t=${encodeURIComponent(document.title)}`
+  );
+  return false;
+};
+
+const handlePinterest = () => {
+  clickEvent({ action: ACTIONS.SHARE, label: 'pinterest' });
+  window.open(
+    `http://pinterest.com/pin/create/button/?url=${encodeURIComponent(
+      shortenURL()
+    )}&description=${encodeURIComponent(document.title)}`
+  );
+  return false;
+};
+
+const handleEmail = () => {
+  clickEvent({ action: ACTIONS.SHARE, label: 'email' });
+  window.open(
+    `mailto:?subject=${encodeURIComponent(
+      document.title
+    )}&body=${encodeURIComponent(shortenURL())}`
+  );
+  return false;
+};
+
+const copyShortUrl = () =>
+  copyToClipboard(shortenURL())
+    .then(() => showToast(TEXTS.LINK_COPIED))
+    .then(() =>
+      clickEvent({
+        action: ACTIONS.COPY_SHORT_URL,
+        label: shortenURL(),
+      })
+    )
+    .catch(() => showToast(TEXTS.COPY_FAILURE));
 
 export default function ShareButtons() {
-  const copyShortUrl = () =>
-    copyToClipboard(shortenURL())
-      .then(() => showToast(TEXTS.LINK_COPIED))
-      .catch(() => showToast(TEXTS.COPY_FAILURE));
-
   // TODO: Use array to generate this DOM
 
   return (
@@ -19,14 +96,7 @@ export default function ShareButtons() {
             target="_blank"
             rel="noopener noreferrer"
             title="Share on Facebook"
-            onClick={() => {
-              window.open(
-                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                  shortenURL()
-                )}&t=${encodeURIComponent(shortenURL())}`
-              );
-              return false;
-            }}
+            onClick={handleFacebook}
           >
             <i className="fa fa-facebook" aria-hidden="true" />
             <span className="sr-only">Share on Facebook</span>
@@ -38,14 +108,7 @@ export default function ShareButtons() {
             target="_blank"
             rel="noopener noreferrer"
             title="Tweet"
-            onClick={() => {
-              window.open(
-                `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  document.title
-                )}:%20${encodeURIComponent(shortenURL())}`
-              );
-              return false;
-            }}
+            onClick={handleTwitter}
           >
             <i className="fa fa-twitter" aria-hidden="true" />
             <span className="sr-only">Tweet</span>
@@ -58,14 +121,7 @@ export default function ShareButtons() {
             target="_blank"
             rel="noopener noreferrer"
             title="Share on Whatsapp"
-            onClick={() => {
-              window.open(
-                `whatsapp://send?text=${encodeURIComponent(
-                  shortenURL()
-                )}%20${encodeURIComponent(document.title)}`
-              );
-              return false;
-            }}
+            onClick={handleWhatsapp}
           >
             <i className="fa fa-whatsapp" aria-hidden="true" />
             <span className="sr-only">Share on Whatsapp</span>
@@ -77,14 +133,7 @@ export default function ShareButtons() {
             target="_blank"
             rel="noopener noreferrer"
             title="Submit to Reddit"
-            onClick={() => {
-              window.open(
-                `http://www.reddit.com/submit?url=${encodeURIComponent(
-                  shortenURL()
-                )}&title: ${encodeURIComponent(document.title)}`
-              );
-              return false;
-            }}
+            onClick={handleReddit}
           >
             <i className="fa fa-reddit" aria-hidden="true" />
             <span className="sr-only">Submit to Reddit</span>
@@ -96,14 +145,7 @@ export default function ShareButtons() {
             target="_blank"
             rel="noopener noreferrer"
             title="Post to Tumblr"
-            onClick={() => {
-              window.open(
-                `http://www.tumblr.com/share?v=3&u=${encodeURIComponent(
-                  shortenURL()
-                )}&t=${encodeURIComponent(document.title)}`
-              );
-              return false;
-            }}
+            onClick={handleTumblr}
           >
             <i className="fa fa-tumblr" aria-hidden="true" />
             <span className="sr-only">Post to Tumblr</span>
@@ -115,14 +157,7 @@ export default function ShareButtons() {
             target="_blank"
             rel="noopener noreferrer"
             title="Pin it"
-            onClick={() => {
-              window.open(
-                `http://pinterest.com/pin/create/button/?url=${encodeURIComponent(
-                  shortenURL()
-                )}&description=${encodeURIComponent(document.title)}`
-              );
-              return false;
-            }}
+            onClick={handlePinterest}
           >
             <i className="fa fa-pinterest" aria-hidden="true" />
             <span className="sr-only">Pin it</span>
@@ -134,14 +169,7 @@ export default function ShareButtons() {
             target="_blank"
             rel="noopener noreferrer"
             title="Share via email"
-            onClick={() => {
-              window.open(
-                `mailto:?subject=${encodeURIComponent(
-                  document.title
-                )}&body=${encodeURIComponent(shortenURL())}`
-              );
-              return false;
-            }}
+            onClick={handleEmail}
           >
             <i className="fa fa-envelope" aria-hidden="true" />
             <span className="sr-only">Share via email</span>
