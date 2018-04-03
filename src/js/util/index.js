@@ -90,8 +90,11 @@ export const copyToClipboard = text =>
 
 export const getArrayFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
-  if (value === null) return defaultValue;
-  return JSON.parse(value, 10);
+  if ([null, 'null', '', undefined, 'undefined'].some(v => value === v)) {
+    localStorage.setItem(key, JSON.stringify([]));
+    return defaultValue;
+  }
+  return JSON.parse(value);
 };
 
 export const getNumberFromLocalStorage = (key, defaultValue = null) => {
