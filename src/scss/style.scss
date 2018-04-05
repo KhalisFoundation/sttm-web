@@ -108,3 +108,17 @@ select {
     font-weight: bold;
   }
 }
+
+.dark-mode {
+  thead {
+    background-color: $sttm-dark-grey;
+  }
+
+  tbody {
+    background-color: $sttm-darker-grey;
+  }
+
+  tr:nth-child(even) {
+    background-color: $sttm-lighter-black;
+  }
+}
