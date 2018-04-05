@@ -8,7 +8,7 @@
   }
 
   .highlight {
-    color: #01669b;
+    color: $sttm-blue;
   }
 
   .gurlipi i,
@@ -49,7 +49,7 @@
   &.larivaar.larivaar_assist {
     .gurlipi .akhar:nth-of-type(2n),
     .unicode .akhar:nth-of-type(2n) {
-      color: #f39c1d;
+      color: $sttm-orange;
     }
   }
 }

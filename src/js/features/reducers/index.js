@@ -6,6 +6,7 @@ import {
   TOGGLE_LARIVAAR_ASSIST_OPTION,
   TOGGLE_LARIVAAR_OPTION,
   TOGGLE_UNICODE_OPTION,
+  TOGGLE_DARK_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   SET_FONT_SIZE,
   SET_TRANSLATION_LANGUAGES,
@@ -16,6 +17,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_UNICODE,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
+  LOCAL_STORAGE_KEY_FOR_DARK_MODE,
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
@@ -67,6 +69,19 @@ export default function reducer(state, action) {
       return {
         ...state,
         showFontOptions,
+      };
+    }
+    case TOGGLE_DARK_MODE: {
+      const darkMode = !state.darkMode;
+      clickEvent({
+        action: TOGGLE_DARK_MODE,
+        label: darkMode ? 1 : 0,
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_DARK_MODE, darkMode);
+      return {
+        ...state,
+        darkMode,
       };
     }
     case TOGGLE_SPLIT_VIEW_OPTION: {

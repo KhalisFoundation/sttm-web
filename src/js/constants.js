@@ -11,6 +11,7 @@ export const LOCAL_STORAGE_KEY_FOR_LARIVAAR = 'larivaar';
 export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
+export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 
 export const PLACEHOLDERS = {
   0: ['jmTAq'], // first letters
@@ -34,6 +35,7 @@ export const DEFAULT_UNICODE = false;
 export const DEFAULT_SPLIT_VIEW = false;
 export const DEFAULT_FONT_SIZE = 2;
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
+export const DEFAULT_DARK_MODE = false;
 
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 

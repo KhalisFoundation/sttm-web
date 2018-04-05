@@ -14,6 +14,7 @@ import {
   toggleTransliterationOptions,
   toggleUnicodeOption,
   toggleSplitViewOption,
+  toggleDarkMode,
 } from '../features/actions';
 
 class Controls extends React.PureComponent {
@@ -76,6 +77,7 @@ const dispatchToProps = {
   toggleTransliterationOptions,
   toggleUnicodeOption,
   toggleSplitViewOption,
+  toggleDarkMode,
 };
 
 // TODO: Connect individual components instead of all controls.

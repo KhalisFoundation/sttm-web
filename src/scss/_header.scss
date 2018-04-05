@@ -1,10 +1,14 @@
 .top-bar {
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid $sttm-lighter-grey;
   position: relative;
 
   &,
   ul {
-    background-color: #fafafa;
+    background-color: $sttm-white;
+
+    .dark-mode & {
+      background-color: $sttm-light-black;
+    }
   }
 
   &-naked {
@@ -18,6 +22,10 @@
       margin: 0;
       visibility: hidden;
     }
+  }
+
+  .dark-mode & {
+    border-color: $sttm-dark-grey;
   }
 }
 
@@ -52,27 +60,40 @@
   font-weight: 500;
 
   > a {
-    color: #3c3c3c;
+    color: $sttm-lighter-black;
     font-size: 0.9em;
     margin: 0;
     padding: 1rem;
 
     &:hover {
-      background-color: #ddd;
+      background-color: $sttm-lighter-grey;
+    }
+
+    .dark-mode & {
+      color: $sttm-dark-white;
+
+      &:hover {
+        background-color: $sttm-lighter-black;
+      }
     }
   }
 }
 
 #search-container {
-  background-color: #fff;
+  background-color: $sttm-pure-white;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   height: 44px;
   margin: 0;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
 
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+    box-shadow: 0 2px 2px 0 $sttm-black, 0 0 0 1px $sttm-black;
+  }
+
   > button {
-    color: #fff;
+    color: $sttm-pure-white;
     display: inline-block;
     float: left;
     height: 44px;
@@ -81,14 +102,18 @@
   }
 
   button[type='submit'] {
-    background-color: #01669b;
+    background-color: $sttm-blue;
   }
 
   .gurmukhi-keyboard-toggle,
   .clear-search-toggle {
-    background-color: #fff;
-    color: #999;
+    background-color: $sttm-pure-white;
+    color: $sttm-grey;
     width: 44px;
+
+    .dark-mode & {
+      background-color: $sttm-lighter-black;
+    }
 
     &.active {
       color: $sttm-orange;
@@ -123,12 +148,16 @@
     pointer-events: none;
     visibility: hidden;
   }
+
+  .dark-mode & {
+    color: $sttm-dark-white;
+  }
 }
 
 .gurmukhi-keyboard {
-  background-color: #fff;
+  background-color: $sttm-pure-white;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   font-size: 0;
   opacity: 0;
   overflow: hidden;
@@ -141,6 +170,10 @@
   width: 100%;
   z-index: 2;
 
+  .dark-mode & {
+    background-color: $sttm-light-black;
+  }
+
   &.active {
     opacity: 1;
     pointer-events: auto;
@@ -152,7 +185,7 @@
   }
 
   .keyboard-row {
-    border-bottom: 2px solid #999;
+    border-bottom: 2px solid $sttm-grey;
   }
 
   .keyboard-row-set {
@@ -162,17 +195,25 @@
 
   .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1),
   .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
-    background-color: #ececec;
+    background-color: $sttm-lighter-grey;
+
+    .dark-mode & {
+      background-color: $sttm-lighter-black;
+    }
   }
 
   button {
-    color: #333;
+    color: $sttm-black;
     font-size: 1rem;
     line-height: 2;
     outline: none;
     position: relative;
     text-align: center;
     width: 20%;
+
+    .dark-mode & {
+      color: $sttm-grey;
+    }
 
     &.active {
       color: $sttm-orange;
@@ -183,7 +224,7 @@
       text-align: right;
 
       &::after {
-        color: #000;
+        color: $sttm-pure-black;
         content: '|';
         font-family: Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
         font-size: 0.8rem;
@@ -201,10 +242,10 @@
 }
 
 #open-mobile-menu {
-  background-color: #fff;
-  border: 1px solid #00669b;
+  background-color: $sttm-pure-white;
+  border: 1px solid $sttm-blue;
   border-radius: 2px;
-  color: #00669b;
+  color: $sttm-blue;
   font-size: 1rem;
   height: 48px;
   line-height: 18px;
@@ -212,6 +253,10 @@
   right: 0.5rem;
   top: 0.5rem;
   width: 48px;
+
+  .dark-mode & {
+    background-color: $sttm-light-black;
+  }
 }
 
 #search-options {
@@ -268,8 +313,8 @@
   }
 
   .top-bar-right ul.menu {
-    background-color: #fff;
-    border-bottom: 1px solid #00669b;
+    background-color: $sttm-pure-white;
+    border-bottom: 1px solid $sttm-blue;
     height: 0;
     left: 0;
     overflow: hidden;
@@ -277,6 +322,10 @@
     top: -1px;
     transition: height 400ms ease-out;
     width: 100%;
+
+    .dark-mode & {
+      background-color: $sttm-light-black;
+    }
   }
 
   body.menu-open .top-bar-right ul.menu {
@@ -286,7 +335,7 @@
   }
 
   .top-bar-right .menu li {
-    border-bottom: 1px solid #00669b;
+    border-bottom: 1px solid $sttm-blue;
     display: block;
     text-align: center;
   }

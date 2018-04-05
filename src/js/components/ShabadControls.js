@@ -14,6 +14,7 @@ export default class ShabadControls extends React.PureComponent {
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
+    darkMode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
     disableSplitView: PropTypes.bool.isRequired,
     showDisplayOptions: PropTypes.bool.isRequired,
@@ -25,6 +26,7 @@ export default class ShabadControls extends React.PureComponent {
     toggleDisplayOptions: PropTypes.func.isRequired,
     toggleFontOptions: PropTypes.func.isRequired,
     toggleLarivaarAssistOption: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     toggleLarivaarOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
     toggleUnicodeOption: PropTypes.func.isRequired,
@@ -39,6 +41,7 @@ export default class ShabadControls extends React.PureComponent {
       transliterationLanguages,
       larivaarAssist,
       larivaar,
+      darkMode,
       unicode,
       fontSize,
       splitView,
@@ -47,6 +50,7 @@ export default class ShabadControls extends React.PureComponent {
       setTransliterationLanguages,
       toggleDisplayOptions,
       toggleFontOptions,
+      toggleDarkMode,
       toggleLarivaarAssistOption,
       toggleLarivaarOption,
       toggleSplitViewOption,
@@ -144,6 +148,15 @@ export default class ShabadControls extends React.PureComponent {
                 </a>
               </div>
             )}
+            <div className="display-option-type">
+              <div className="display-option-header">Dark Mode</div>
+              <a
+                className={`display-option-toggle ${darkMode ? 'active' : ''}`}
+                onClick={toggleDarkMode}
+              >
+                {darkMode ? 'Disable' : 'Enable'}
+              </a>
+            </div>
           </div>
         )}
         {showFontOptions && (

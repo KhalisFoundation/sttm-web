@@ -1,5 +1,5 @@
 #error-code {
-  color: #01669b;
+  color: $sttm-blue;
   font-family: cursive, sans-serif;
   font-size: 7rem;
   font-weight: bold;
@@ -10,7 +10,7 @@
 }
 
 #error-msg {
-  color: #f39c1d;
+  color: $sttm-orange;
   font-weight: bold;
 }
 

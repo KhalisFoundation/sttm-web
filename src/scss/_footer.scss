@@ -1,11 +1,16 @@
 footer {
-  background-color: #fafafa;
-  border-top: 1px solid #ebebeb;
+  background-color: $sttm-white;
+  border-top: 1px solid $sttm-lighter-grey;
   bottom: 0;
   left: 0;
   min-height: 49px;
   position: absolute;
   width: 100%;
+
+  .dark-mode & {
+    background-color: $sttm-light-black;
+    border-top: 1px solid $sttm-lighter-black;
+  }
 
   .footer {
     align-items: center;
@@ -24,13 +29,21 @@ footer {
       width: 100%;
 
       li a {
-        color: #3c3c3c;
+        color: $sttm-lighter-black;
         font-size: 0.9em;
         margin: 0;
         padding: 1rem;
 
         &:hover {
-          background-color: #ddd;
+          background-color: $sttm-lighter-grey;
+        }
+
+        .dark-mode & {
+          color: $sttm-white;
+
+          &:hover {
+            background-color: $sttm-lighter-black;
+          }
         }
       }
     }
