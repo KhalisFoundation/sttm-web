@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { pageView } from '../../util/analytics';
 import PropTypes from 'prop-types';
 import raagIndices from './raagIndices';
+import { toAngURL } from '../../util';
 
 const sanitizeHash = (...args) => args.map(a => a.replace(/ /gi, '')).join('-');
 
@@ -54,17 +55,17 @@ export default class GranthIndex extends React.PureComponent {
                       </tr>
                     </thead>
                     <tbody>
-                      {indices.map(({ name, pages: [from, to] }) => (
+                      {indices.map(({ name, pages: [from, to], highlight }) => (
                         <tr id={`${sanitizeHash(granthName, name)}`} key={name}>
                           <td>{name}</td>
                           <td>
-                            <Link to={`/ang?ang=${from}&source=${source}`}>
+                            <Link
+                              to={toAngURL({ ang: from, source, highlight })}
+                            >
                               {from}
                             </Link>{' '}
                             to{' '}
-                            <Link to={`/ang?ang=${to}&source=${source}`}>
-                              {to}
-                            </Link>
+                            <Link to={toAngURL({ ang: to, source })}>{to}</Link>
                           </td>
                         </tr>
                       ))}

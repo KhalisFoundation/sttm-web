@@ -1,7 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import { getQueryParams, getParameterByName, throwError } from './util';
+import {
+  toAngURL,
+  getQueryParams,
+  getParameterByName,
+  throwError,
+} from './util';
 import { Redirect } from 'react-router-dom';
 import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
@@ -101,7 +106,9 @@ export default [
   {
     path: '/ang',
     render(props) {
-      const [ang, source] = ['ang', 'source'].map(v => getParameterByName(v));
+      const [ang, source, highlight] = ['ang', 'source', 'highlight'].map(v =>
+        getParameterByName(v)
+      );
 
       return (
         <Layout
@@ -114,7 +121,16 @@ export default [
           >
             {({ pending, resolved: { default: Ang } = {}, rejected }) =>
               pending ? null : Ang ? (
-                <Ang ang={parseInt(ang, 10)} source={source} {...props} />
+                <Ang
+                  ang={parseInt(ang, 10)}
+                  source={source}
+                  highlight={
+                    highlight === undefined
+                      ? undefined
+                      : parseInt(highlight, 10)
+                  }
+                  {...props}
+                />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
@@ -216,7 +232,7 @@ export default [
       ] = params.map(v => getParameterByName(v, search));
 
       if (parseInt(type, 10) === 5) {
-        return <Redirect to={`/ang?ang=${q}&source=${source}`} />;
+        return <Redirect to={toAngURL({ ang: q, source })} />;
       }
 
       return (
@@ -318,7 +334,7 @@ export default [
       let url = '';
 
       if (query.SourceID && query.PageNo) {
-        url = `/ang?ang=${query.PageNo}&source=${query.SourceID}`;
+        url = toAngURL({ ang: query.PageNo, source: query.SourceID });
       } else if (query.ShabadID) {
         url = `/shabad?id=${query.ShabadID}`;
       } else if (query.random) {

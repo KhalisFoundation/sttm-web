@@ -88,10 +88,13 @@ export const copyToClipboard = text =>
     }
   });
 
+export const isFalsy = value =>
+  [null, 'null', '', undefined, 'undefined'].some(v => value === v);
+
 export const getArrayFromLocalStorage = (key, defaultValue = []) => {
   const value = localStorage.getItem(key);
 
-  if ([null, 'null', '', undefined, 'undefined'].some(v => value === v)) {
+  if (isFalsy(value)) {
     localStorage.setItem(key, JSON.stringify(defaultValue));
     return defaultValue;
   }
@@ -155,6 +158,13 @@ export const toShabadURL = ({
     id,
     q,
     type,
+    source,
+    highlight,
+  })}`;
+
+export const toAngURL = ({ ang, source, highlight }) =>
+  `/ang?${objectToQueryParams({
+    ang,
     source,
     highlight,
   })}`;

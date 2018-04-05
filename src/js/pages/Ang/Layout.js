@@ -6,6 +6,7 @@ import { pageView, errorEvent, ACTIONS } from '../../util/analytics';
 import GenericError, { BalpreetSingh } from '../../components/GenericError';
 import { TEXTS } from '../../constants';
 import ShabadContent from '../../components/ShabadContent';
+import { toAngURL } from '../../util';
 
 export const Stub = () => <div className="spinner" />;
 
@@ -13,10 +14,11 @@ export default class Layout extends React.PureComponent {
   static propTypes = {
     ang: PropTypes.number,
     source: PropTypes.oneOf(Object.keys(SOURCES)),
+    highlight: PropTypes.number,
     data: PropTypes.object.isRequired,
   };
   render() {
-    const { ang, source, data } = this.props;
+    const { ang, source, highlight, data } = this.props;
 
     if (data.page.length === 0) {
       errorEvent({
@@ -45,6 +47,7 @@ export default class Layout extends React.PureComponent {
       <div className="row" id="content-root">
         <ShabadContent
           gurbani={data.page}
+          highlight={highlight}
           nav={Array.isArray(data.navigation) ? {} : data.navigation}
           info={{ source: data.source }}
           type="ang"
@@ -55,6 +58,6 @@ export default class Layout extends React.PureComponent {
 
   componentDidMount() {
     const { ang, source } = this.props;
-    pageView(`/ang?ang=${ang}&source=${source}`);
+    pageView(toAngURL({ ang, source }));
   }
 }
