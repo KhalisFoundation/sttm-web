@@ -39,6 +39,7 @@ export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
   HELP_SECTION: 'the help section',
+  INDEX_SECTION: 'the index page',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
   GENERIC_ERROR_DESCRIPTION: `This is really unsual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
   GO_TO_SHABAD: 'Open Shabad',
@@ -60,4 +61,6 @@ export const TEXTS = {
   EMPTY_QUERY: `Oh no! You can't just search for nothing.`,
   EMPTY_QUERY_DESCRIPTION:
     'Please enter your query in the search bar above to give us a chance to serve you.',
+  REDIRECTING: 'Redirecting you to',
+  REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
 };

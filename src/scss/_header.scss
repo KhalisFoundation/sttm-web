@@ -249,7 +249,7 @@
   }
 
   .search-form {
-    max-width: none;
+    max-width: 100vw;
     padding: 0 8px;
   }
 
@@ -331,7 +331,7 @@
   }
 }
 
-@media screen and (min-width: 51em) {
+@media screen and (min-width: 56em) {
   .top-bar #search-container {
     max-width: 444px;
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { TEXTS } from '../constants';
-import { navLink } from '../util';
+import { isFalsy, toAngURL, navLink } from '../util';
 
 export default class Meta extends React.PureComponent {
   static defaultProps = {
@@ -30,11 +30,13 @@ export default class Meta extends React.PureComponent {
       ) : null;
     return (
       <div id="metadata">
-        <div className="shabad-nav left">
-          <Link to={link + nav.previous}>
-            <i className="fa fa-chevron-left" aria-hidden="true" />
-          </Link>
-        </div>
+        {isFalsy(nav.previous) === false && (
+          <div className="shabad-nav left">
+            <Link to={link + nav.previous}>
+              <i className="fa fa-chevron-left" aria-hidden="true" />
+            </Link>
+          </div>
+        )}
         <div className="meta">
           {['hukamnama'].includes(type) && (
             <h4>
@@ -53,7 +55,10 @@ export default class Meta extends React.PureComponent {
             <Item last>
               {info.pageno !== null && (
                 <Link
-                  to={`/ang?ang=${info.source.pageno}&source=${info.source.id}`}
+                  to={toAngURL({
+                    ang: info.source.pageno,
+                    source: info.source.id,
+                  })}
                 >
                   {info.source.id == 'G' ? 'AMg' : 'pMnw'} {info.source.pageno}
                 </Link>
@@ -70,23 +75,25 @@ export default class Meta extends React.PureComponent {
             <Item>{info.writer && info.writer.english}</Item>
             <Item>{info.source.english}</Item>
             <Item last>
-              {info.pageno !== null && (
-                <Link
-                  to={`/ang?ang=${info.source.pageno}&source=${info.source.id}`}
-                >
-                  {info.source.id == 'G' ? 'Ang' : 'Pannaa'}{' '}
-                  {info.source.pageno}
-                </Link>
-              )}
+              <Link
+                to={toAngURL({
+                  ang: info.source.pageno,
+                  source: info.source.id,
+                })}
+              >
+                {info.source.id == 'G' ? 'Ang' : 'Pannaa'} {info.source.pageno}
+              </Link>
             </Item>
           </h4>
         </div>
 
-        <div className="shabad-nav right">
-          <Link to={link + nav.next}>
-            <i className="fa fa-chevron-right" aria-hidden="true" />
-          </Link>
-        </div>
+        {isFalsy(nav.next) === false && (
+          <div className="shabad-nav right">
+            <Link to={link + nav.next}>
+              <i className="fa fa-chevron-right" aria-hidden="true" />
+            </Link>
+          </div>
+        )}
       </div>
     );
   }

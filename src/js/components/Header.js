@@ -20,8 +20,9 @@ export default class Header extends React.PureComponent {
   toggleMenu = () => document.body.classList.toggle('menu-open');
   closeMenu = () => document.body.classList.remove('menu-open');
 
-  onFormSubmit = data => e => {
+  onFormSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
+    handleSubmit();
     this.handleFormSubmit(data);
   };
 
@@ -67,6 +68,7 @@ export default class Header extends React.PureComponent {
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
+              handleSubmit,
             }) => (
               <React.Fragment>
                 <div id="responsive-menu">
@@ -75,7 +77,12 @@ export default class Header extends React.PureComponent {
                       <form
                         action={action}
                         id="top-bar-search-form"
-                        onSubmit={onFormSubmit({ type, source, query })}
+                        onSubmit={onFormSubmit({
+                          handleSubmit,
+                          type,
+                          source,
+                          query,
+                        })}
                         className="search-form"
                       >
                         <ul className="menu">
@@ -171,6 +178,11 @@ export default class Header extends React.PureComponent {
                       <li>
                         <Link to="/shabad?random" onClick={toggleMenu}>
                           Random Shabad
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/index" onClick={toggleMenu}>
+                          Index
                         </Link>
                       </li>
                       <li className="close">

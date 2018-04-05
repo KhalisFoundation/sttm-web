@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { pageView } from '../../util/analytics';
 import { TEXTS } from '../../constants';
 
 export default class NotFound extends React.PureComponent {
@@ -26,5 +27,8 @@ export default class NotFound extends React.PureComponent {
         </div>
       </div>
     );
+  }
+  componentDidMount() {
+    pageView(`/404?from=${this.props.url}`);
   }
 }

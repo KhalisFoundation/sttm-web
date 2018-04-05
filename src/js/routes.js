@@ -1,10 +1,16 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import { getQueryParams, getParameterByName, throwError } from './util';
+import {
+  toAngURL,
+  getQueryParams,
+  getParameterByName,
+  throwError,
+} from './util';
 import { Redirect } from 'react-router-dom';
 import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
+import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
 import { DEFAULT_SEARCH_SOURCE, DEFAULT_SEARCH_TYPE } from './constants';
 
@@ -100,7 +106,9 @@ export default [
   {
     path: '/ang',
     render(props) {
-      const [ang, source] = ['ang', 'source'].map(v => getParameterByName(v));
+      const [ang, source, highlight] = ['ang', 'source', 'highlight'].map(v =>
+        getParameterByName(v)
+      );
 
       return (
         <Layout
@@ -113,7 +121,41 @@ export default [
           >
             {({ pending, resolved: { default: Ang } = {}, rejected }) =>
               pending ? null : Ang ? (
-                <Ang ang={parseInt(ang, 10)} source={source} {...props} />
+                <Ang
+                  ang={parseInt(ang, 10)}
+                  source={source}
+                  highlight={
+                    highlight === undefined
+                      ? undefined
+                      : parseInt(highlight, 10)
+                  }
+                  {...props}
+                />
+              ) : (
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
+                )
+              )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
+    path: '/index',
+    render(props) {
+      return (
+        <Layout title="Index - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(/* webpackChunkName: "GranthIndex" */ './pages/GranthIndex')
+            }
+          >
+            {({ pending, resolved: { default: Index } = {}, rejected }) =>
+              pending ? null : Index ? (
+                <Index {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
@@ -190,7 +232,7 @@ export default [
       ] = params.map(v => getParameterByName(v, search));
 
       if (parseInt(type, 10) === 5) {
-        return <Redirect to={`/ang?ang=${q}&source=${source}`} />;
+        return <Redirect to={toAngURL({ ang: q, source })} />;
       }
 
       return (
@@ -229,6 +271,11 @@ export default [
     path: '/shabad',
     render(props) {
       const { location: { search } } = props;
+
+      if (location.search === '') {
+        return <Redirect to="/random" />;
+      }
+
       const [random, id, q, type, highlight] = [
         'random',
         'id',
@@ -275,12 +322,6 @@ export default [
     },
   },
   {
-    path: '/rehat.asp',
-    render() {
-      return <Redirect to="https://khalisfoundation.org/portfolio/maryada/" />;
-    },
-  },
-  {
     path: '/search.asp',
     render() {
       return <Redirect to="/" />;
@@ -293,13 +334,36 @@ export default [
       let url = '';
 
       if (query.SourceID && query.PageNo) {
-        url = `/ang?ang=${query.PageNo}&source=${query.SourceID}`;
+        url = toAngURL({ ang: query.PageNo, source: query.SourceID });
       } else if (query.ShabadID) {
         url = `/shabad?id=${query.ShabadID}`;
       } else if (query.random) {
         url = '/shabad?random';
       }
-      <Redirect to={url} />;
+      return <Redirect to={url} />;
+    },
+  },
+  {
+    path: '/rehat.asp',
+    render() {
+      return (
+        <Layout>
+          <RedirectExternal
+            to="https://khalisfoundation.org/portfolio/maryada/"
+            name="Maryada page"
+          />
+        </Layout>
+      );
+    },
+  },
+  {
+    path: '/tabla.asp',
+    render() {
+      return (
+        <Layout>
+          <RedirectExternal to="https://tabla.pro" name="Tabla Page" />
+        </Layout>
+      );
     },
   },
 ];
