@@ -39,7 +39,7 @@ export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
   HELP_SECTION: 'the help section',
-  INDEX_SECTION: 'the index page of granths',
+  INDEX_SECTION: 'the index page',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
   GENERIC_ERROR_DESCRIPTION: `This is really unsual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
   GO_TO_SHABAD: 'Open Shabad',
