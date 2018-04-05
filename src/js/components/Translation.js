@@ -44,19 +44,23 @@ export default class Translation extends React.PureComponent {
 
   render() {
     const { type, unicode, text } = this.props;
-    const className = `transliteration ${type} ${
-      type === PUNJABI ? 'gurbani-font' : ''
-    }`;
-    return type === PUNJABI ? (
-      <blockquote className="translation punjabi gurbani-font">
-        {unicode ? (
-          <div className="unicode">{text.unicode}</div>
-        ) : (
-          <div className="gurlipi">{text.gurmukhi}</div>
-        )}
-      </blockquote>
-    ) : (
-      <blockquote className={className}>{this.props.children}</blockquote>
-    );
+
+    if (type === PUNJABI) {
+      return (
+        <blockquote className="translation punjabi gurbani-font">
+          {unicode ? (
+            <div className="unicode">{text.unicode}</div>
+          ) : (
+            <div className="gurlipi">{text.gurmukhi}</div>
+          )}
+        </blockquote>
+      );
+    } else {
+      return (
+        <blockquote className={`translation ${type}`}>
+          {this.props.children}
+        </blockquote>
+      );
+    }
   }
 }
