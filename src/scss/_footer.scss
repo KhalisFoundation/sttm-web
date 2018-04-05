@@ -1,5 +1,5 @@
 footer {
-  background-color: #fafafa;
+  background-color: $sttm-white;
   border-top: 1px solid #ebebeb;
   bottom: 0;
   left: 0;
@@ -24,13 +24,13 @@ footer {
       width: 100%;
 
       li a {
-        color: #3c3c3c;
+        color: $sttm-lighter-black;
         font-size: 0.9em;
         margin: 0;
         padding: 1rem;
 
         &:hover {
-          background-color: #ddd;
+          background-color: $sttm-lighter-grey;
         }
       }
     }

@@ -21,7 +21,7 @@ body {
 }
 
 body {
-  background-color: #f5f5f5;
+  background-color: $sttm-dark-white;
   font-size: 18px;
   height: auto;
   min-height: 100%;
@@ -92,4 +92,9 @@ select {
   h3 {
     font-weight: bold;
   }
+}
+
+.dark-mode {
+  background-color: $sttm-black;
+  color: $sttm-white;
 }

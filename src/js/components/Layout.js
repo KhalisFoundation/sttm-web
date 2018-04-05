@@ -2,8 +2,9 @@ import React from 'react';
 import Header from './Header';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE } from '../constants';
+import { connect } from 'react-redux';
 
-export default class Layout extends React.PureComponent {
+class Layout extends React.PureComponent {
   static defaultProps = {
     isHome: false,
     title: DEFAULT_PAGE_TITLE,
@@ -12,6 +13,7 @@ export default class Layout extends React.PureComponent {
   static propTypes = {
     title: PropTypes.string,
     children: PropTypes.node.isRequired,
+    darkMode: PropTypes.bool.isRequired,
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
   };
@@ -33,4 +35,18 @@ export default class Layout extends React.PureComponent {
       </React.Fragment>
     );
   }
+
+  updateTheme() {
+    document.body.classList[this.props.darkMode ? 'add' : 'remove'](
+      'dark-mode'
+    );
+  }
+  componentDidMount() {
+    this.updateTheme();
+  }
+  componentDidUpdate() {
+    this.updateTheme();
+  }
 }
+
+export default connect(({ darkMode }) => ({ darkMode }))(Layout);

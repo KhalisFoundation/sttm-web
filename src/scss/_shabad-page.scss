@@ -26,13 +26,13 @@ blockquote {
 
 .shabad-nav {
   a {
-    color: #f39c1d;
+    color: $sttm-orange;
     font-size: 50px;
     font-weight: 500;
     position: relative;
 
     &:hover {
-      color: #797979;
+      color: $sttm-dark-grey;
     }
   }
 
@@ -131,7 +131,7 @@ blockquote {
     }
 
     .share {
-      background-color: rgba(255, 255, 255, 0.85);
+      background-color: $sttm-transparent-white;
       display: none;
       padding: 5px;
       position: absolute;
@@ -139,21 +139,21 @@ blockquote {
       top: 0;
 
       a {
-        color: #000;
+        color: $sttm-pure-black;
         margin-left: 5px;
         padding: 0.5rem;
       }
 
       .copy:hover {
-        color: #f39c1d;
+        color: $sttm-orange;
       }
 
       .twitter:hover {
-        color: #00aced;
+        color: $twitter-blue;
       }
 
       .facebook:hover {
-        color: #3b5998;
+        color: $facebook-blue;
       }
     }
 
@@ -211,6 +211,6 @@ blockquote {
   }
 
   #share-menu {
-    background-color: #fafafa;
+    background-color: $sttm-white;
   }
 }

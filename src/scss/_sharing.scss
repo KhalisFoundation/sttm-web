@@ -11,7 +11,7 @@
 
   a {
     background-color: transparent !important;
-    color: #00669b;
+    color: $sttm-blue;
   }
 }
 
@@ -44,7 +44,7 @@
 
 .share-buttons .fa,
 .share .fa {
-  color: #868383;
+  color: $sttm-darker-grey;
   font-size: 1.5em;
   padding: 5px;
 }
@@ -66,7 +66,7 @@
 
   .share-buttons,
   #share-menu {
-    background-color: #fafafa;
+    background-color: $sttm-white;
     width: 100% !important;
   }
 
@@ -77,14 +77,14 @@
 }
 
 .toast-notification {
-  background-color: #313131;
-  color: #f39c1f;
+  background-color: $sttm-black;
+  color: $sttm-orange;
   font-weight: 400;
   left: 0;
   padding: 0.5rem 1rem;
   position: fixed;
   right: 0;
-  text-shadow: 0 0 0.05rem #0e0e0e;
+  text-shadow: 0 0 0.05rem $sttm-pure-black;
   top: 0;
   z-index: 4;
 
