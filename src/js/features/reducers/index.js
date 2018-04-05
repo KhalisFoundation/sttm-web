@@ -119,11 +119,10 @@ export default function reducer(state, action) {
       };
     }
     case SET_FONT_SIZE: {
-      const fontSize = !parseFloat(action.payload, 10);
-      clickEvent({
-        action: SET_FONT_SIZE,
-        label: fontSize ? 1 : 0,
-      });
+      const fontSize = parseFloat(action.payload, 10);
+
+      if (fontSize === state.fontSize) return state;
+
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_FONT_SIZE, action.payload);
       return {
         ...state,
