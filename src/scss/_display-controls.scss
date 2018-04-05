@@ -38,6 +38,10 @@
   flex-wrap: wrap;
   margin: 0 auto;
   width: calc(100% - 2rem);
+
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+  }
 }
 
 @media screen and (min-width: 46em) {
@@ -73,12 +77,20 @@
   margin: 0.25rem auto;
   overflow-x: auto;
   white-space: nowrap;
+
+  .dark-mode & {
+    background-image:
+      linear-gradient(to right, $sttm-light-black, $sttm-light-black),
+      linear-gradient(to right, $sttm-light-black, $sttm-light-black),
+      linear-gradient(to right, $sttm-black, $sttm-lighter-black),
+      linear-gradient(to left, $sttm-black, $sttm-lighter-black);
+  }
 }
 
 .shabad-controller-toggle,
 .display-option-toggle,
 .font-option-toggle {
-  border: 1px solid #cacaca;
+  border: 1px solid $sttm-light-grey;
   border-radius: 2px;
   color: $sttm-lighter-black;
   display: inline-block;
@@ -89,6 +101,12 @@
   text-transform: capitalize;
   transition: all 0.25s;
   vertical-align: baseline;
+
+  .dark-mode & {
+    background-color: $sttm-light-black;
+    border-color: $sttm-lighter-black;
+    color: $sttm-grey;
+  }
 
   &:hover {
     border-color: $sttm-blue;

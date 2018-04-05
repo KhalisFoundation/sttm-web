@@ -24,7 +24,7 @@ const content = {
     ],
     [
       'What does the unicode button do?',
-      `Unicode allows the Gumukhi text to be viewed without needing a pre-installed font. It will
+      `Unicode allows the Gurmukhi text to be viewed without needing a pre-installed font. It will
         also allow you to copy and paste the text into vast variety of applications that you normally
         wouldn’t be able to do.`,
     ],

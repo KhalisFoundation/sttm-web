@@ -18,10 +18,6 @@ class Layout extends React.PureComponent {
     isHome: PropTypes.bool,
   };
 
-  componentDidMount() {
-    document.title = this.props.title;
-  }
-
   render() {
     const { children, isHome = false, ...props } = this.props;
     return (
@@ -41,9 +37,12 @@ class Layout extends React.PureComponent {
       'dark-mode'
     );
   }
+
   componentDidMount() {
+    document.title = this.props.title;
     this.updateTheme();
   }
+
   componentDidUpdate() {
     this.updateTheme();
   }

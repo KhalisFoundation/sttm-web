@@ -1,11 +1,16 @@
 footer {
   background-color: $sttm-white;
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid $sttm-lighter-grey;
   bottom: 0;
   left: 0;
   min-height: 49px;
   position: absolute;
   width: 100%;
+
+  .dark-mode & {
+    background-color: $sttm-light-black;
+    border-top: 1px solid $sttm-lighter-black;
+  }
 
   .footer {
     align-items: center;
@@ -31,6 +36,14 @@ footer {
 
         &:hover {
           background-color: $sttm-lighter-grey;
+        }
+
+        .dark-mode & {
+          color: $sttm-white;
+
+          &:hover {
+            background-color: $sttm-lighter-black;
+          }
         }
       }
     }

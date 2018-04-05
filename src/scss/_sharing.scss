@@ -68,6 +68,10 @@
   #share-menu {
     background-color: $sttm-white;
     width: 100% !important;
+
+    .dark-mode & {
+      background-color: $sttm-light-black;
+    }
   }
 
   .share-buttons .fa,
