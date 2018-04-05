@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ACTIONS, clickEvent } from '../util/analytics';
+import { toShabadURL } from '../util';
 
 export const supportedActions = ['openShabad', 'copy', 'tweet'];
 
@@ -34,7 +35,7 @@ export default class Actions extends React.PureComponent {
           aria-label="Go to shabad"
           title="Go to shabad"
           onClick={openShabad}
-          to={`/shabad?id=${shabad.shabadid}&highlight=${shabad.id}`}
+          to={toShabadURL({ shabad })}
         >
           <i className="fa fa-fw fa-external-link-square" />
         </Link>
