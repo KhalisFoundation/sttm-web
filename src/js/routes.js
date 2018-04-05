@@ -128,6 +128,31 @@ export default [
     },
   },
   {
+    path: '/index',
+    render(props) {
+      return (
+        <Layout title="Index - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(/* webpackChunkName: "GranthIndex" */ './pages/GranthIndex')
+            }
+          >
+            {({ pending, resolved: { default: Index } = {}, rejected }) =>
+              pending ? null : Index ? (
+                <Index {...props} />
+              ) : (
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
+                )
+              )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
     path: '/help',
     render(props) {
       return (

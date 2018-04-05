@@ -171,6 +171,11 @@ export default class Header extends React.PureComponent {
                     </a>
                     <ul className="menu header-menu">
                       <li>
+                        <Link to="/index" onClick={toggleMenu}>
+                          Index
+                        </Link>
+                      </li>
+                      <li>
                         <Link to="/hukamnama" onClick={toggleMenu}>
                           Hukamnama
                         </Link>
