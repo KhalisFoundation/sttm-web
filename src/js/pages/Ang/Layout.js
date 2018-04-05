@@ -32,7 +32,8 @@ export default class Layout extends React.PureComponent {
               <Link to="/help#Desktop-i-cant-find-my-shabad.">
                 {' '}
                 {TEXTS.HELP_SECTION}
-              </Link>.
+              </Link>{' '}
+              or <Link to="/index"> {TEXTS.INDEX_SECTION}</Link>.
             </React.Fragment>
           }
           image={BalpreetSingh}
