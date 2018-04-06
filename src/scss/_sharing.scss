@@ -12,6 +12,10 @@
   a {
     background-color: transparent !important;
     color: $sttm-blue;
+
+    .dark-mode & {
+      color: $sttm-light-blue;
+    }
   }
 }
 

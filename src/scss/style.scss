@@ -112,13 +112,21 @@ select {
 .dark-mode {
   thead {
     background-color: $sttm-dark-grey;
+
+    tr {
+      color: $sttm-light-grey;
+    }
   }
 
   tbody {
     background-color: $sttm-darker-grey;
   }
 
-  tr:nth-child(even) {
+  tr {
     background-color: $sttm-lighter-black;
+  }
+
+  tr:nth-child(even) {
+    background-color: $sttm-light-black;
   }
 }

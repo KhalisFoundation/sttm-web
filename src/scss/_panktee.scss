@@ -9,6 +9,10 @@
 
   .highlight {
     color: $sttm-blue;
+
+    .dark-mode & {
+      color: $sttm-light-blue;
+    }
   }
 
   .gurlipi i,

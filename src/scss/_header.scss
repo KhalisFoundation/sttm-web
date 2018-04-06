@@ -103,6 +103,10 @@
 
   button[type='submit'] {
     background-color: $sttm-blue;
+
+    .dark-mode & {
+      background-color: $sttm-light-blue;
+    }
   }
 
   .gurmukhi-keyboard-toggle,
@@ -256,6 +260,7 @@
 
   .dark-mode & {
     background-color: $sttm-light-black;
+    border-color: $sttm-light-blue;
   }
 }
 
@@ -325,6 +330,7 @@
 
     .dark-mode & {
       background-color: $sttm-light-black;
+      border-color: $sttm-light-blue;
     }
   }
 
@@ -338,6 +344,10 @@
     border-bottom: 1px solid $sttm-blue;
     display: block;
     text-align: center;
+
+    .dark-mode & {
+      border-color: $sttm-light-blue;
+    }
   }
 
   .top-bar-right .menu li a {
