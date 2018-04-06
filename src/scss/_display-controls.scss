@@ -113,8 +113,8 @@
     color: $sttm-blue;
 
     .dark-mode & {
-      border-color: $sttm-light-blue;
-      color: $sttm-light-blue;
+      border-color: $sttm-blue;
+      color: $sttm-blue;
     }
   }
 
@@ -125,8 +125,8 @@
     color: $sttm-pure-white;
 
     .dark-mode & {
-      background-color: $sttm-light-blue;
-      border-color: $sttm-light-blue;
+      background-color: $sttm-blue;
+      border-color: $sttm-blue;
     }
   }
 

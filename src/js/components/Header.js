@@ -8,6 +8,48 @@ import { toSearchURL } from '../util';
 
 const types = [...TYPES, 'Ang'];
 
+class Menu extends React.PureComponent {
+  toggleMenu = () => document.body.classList.toggle('menu-open');
+  closeMenu = () => document.body.classList.remove('menu-open');
+  render() {
+    const { toggleMenu, closeMenu } = this;
+    return (
+      <div className="top-bar-right">
+        <span
+          role="button"
+          aria-label="Open menu"
+          className="button"
+          id="open-mobile-menu"
+          onClick={toggleMenu}
+        >
+          <i className="fa fa-bars" />
+        </span>
+        <ul className="menu header-menu">
+          <li>
+            <Link to="/hukamnama" onClick={toggleMenu}>
+              Hukamnama
+            </Link>
+          </li>
+          <li>
+            <Link to="/shabad?random" onClick={toggleMenu}>
+              Random Shabad
+            </Link>
+          </li>
+          <li>
+            <Link to="/index" onClick={toggleMenu}>
+              Index
+            </Link>
+          </li>
+          <li className="close">
+            <span role="button" aria-label="Close menu" onClick={closeMenu}>
+              Close
+            </span>
+          </li>
+        </ul>
+      </div>
+    );
+  }
+}
 export default class Header extends React.PureComponent {
   static defaultProps = { isHome: false };
 
@@ -16,9 +58,6 @@ export default class Header extends React.PureComponent {
     isHome: PropTypes.bool,
     history: PropTypes.shape({ push: PropTypes.func }),
   };
-
-  toggleMenu = () => document.body.classList.toggle('menu-open');
-  closeMenu = () => document.body.classList.remove('menu-open');
 
   onFormSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
@@ -31,8 +70,6 @@ export default class Header extends React.PureComponent {
   render() {
     const {
       props: { defaultQuery, isHome },
-      toggleMenu,
-      closeMenu,
       onFormSubmit,
       handleFormSubmit,
     } = this;
@@ -160,38 +197,7 @@ export default class Header extends React.PureComponent {
                       </form>
                     )}
                   </div>
-                  <div className="top-bar-right">
-                    <a
-                      href="#"
-                      className="button"
-                      id="open-mobile-menu"
-                      onClick={toggleMenu}
-                    >
-                      <i className="fa fa-bars" />
-                    </a>
-                    <ul className="menu header-menu">
-                      <li>
-                        <Link to="/hukamnama" onClick={toggleMenu}>
-                          Hukamnama
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/shabad?random" onClick={toggleMenu}>
-                          Random Shabad
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/index" onClick={toggleMenu}>
-                          Index
-                        </Link>
-                      </li>
-                      <li className="close">
-                        <a href="#" onClick={closeMenu}>
-                          Close
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                  <Menu />
                 </div>
                 {!isHome && (
                   <div id="search-options">

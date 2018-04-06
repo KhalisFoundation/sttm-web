@@ -59,9 +59,13 @@
   display: inline-block;
   font-weight: 500;
 
-  > a {
+  a,
+  span {
+    align-items: center;
     color: $sttm-lighter-black;
+    display: flex;
     font-size: 0.9em;
+    justify-content: center;
     margin: 0;
     padding: 1rem;
 
@@ -105,7 +109,7 @@
     background-color: $sttm-blue;
 
     .dark-mode & {
-      background-color: $sttm-light-blue;
+      background-color: $sttm-blue;
     }
   }
 
@@ -155,6 +159,10 @@
 
   .dark-mode & {
     color: $sttm-dark-white;
+
+    &::placeholder {
+      color: $sttm-dark-grey;
+    }
   }
 }
 
@@ -340,20 +348,25 @@
     z-index: 3;
   }
 
-  .top-bar-right .menu li {
-    border-bottom: 1px solid $sttm-blue;
-    display: block;
-    text-align: center;
+  .top-bar-right {
+    .menu li {
+      border-bottom: 1px solid $sttm-blue;
+      display: block;
+      text-align: center;
 
-    .dark-mode & {
-      border-color: $sttm-light-blue;
+      .dark-mode & {
+        border-color: $sttm-light-blue;
+      }
+
+      a,
+      span {
+        cursor: pointer;
+        display: block;
+        height: 4rem;
+        line-height: 2.6rem;
+        margin: 0;
+      }
     }
-  }
-
-  .top-bar-right .menu li a {
-    height: 4rem;
-    line-height: 2.6rem;
-    margin: 0;
   }
 }
 
