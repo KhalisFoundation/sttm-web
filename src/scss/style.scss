@@ -140,8 +140,7 @@ select {
   z-index: 4;
 
   .progressbar {
-    background: linear-gradient(45deg, $sttm-blue, $sttm-orange);
+    background-color: $sttm-orange;
     height: 100%;
-    transition: transform 0.05s ease-in;
   }
 }

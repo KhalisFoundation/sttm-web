@@ -90,7 +90,7 @@ class Shabad extends React.PureComponent {
       const maxY =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
-      const width = y / maxY;
+      const width = (y / maxY).toPrecision(2);
       this.setState({ width });
     });
   };
