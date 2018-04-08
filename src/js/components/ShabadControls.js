@@ -121,21 +121,23 @@ export default class ShabadControls extends React.PureComponent {
             </div>
             <div className="display-option-type">
               <div className="display-option-header">Translation</div>
-              {TRANSLATION_LANGUAGES.map(lang => (
-                <a
-                  key={lang}
-                  className={`display-option-toggle ${
-                    translationLanguages.includes(lang) ? 'active' : ''
-                  }`}
-                  onClick={() =>
-                    setTranslationLanguages(
-                      toggleItemInArray(lang, translationLanguages)
-                    )
-                  }
-                >
-                  {lang}
-                </a>
-              ))}
+              <div className="display-option-content">
+                {TRANSLATION_LANGUAGES.map(lang => (
+                  <a
+                    key={lang}
+                    className={`display-option-toggle ${
+                      translationLanguages.includes(lang) ? 'active' : ''
+                    }`}
+                    onClick={() =>
+                      setTranslationLanguages(
+                        toggleItemInArray(lang, translationLanguages)
+                      )
+                    }
+                  >
+                    {lang}
+                  </a>
+                ))}
+              </div>
             </div>
             {disableSplitView ? null : (
               <div className="display-option-type">

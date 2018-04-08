@@ -46,10 +46,14 @@
   }
 }
 
-.share-buttons .fa,
-.share .fa {
-  color: $sttm-darker-grey;
-  font-size: 1.5em;
+.chevron {
+  fill: $sttm-orange;
+}
+
+.share-buttons svg,
+.share svg {
+  fill: $sttm-darker-grey;
+  font-size: 2em;
   padding: 5px;
 }
 
@@ -78,9 +82,9 @@
     }
   }
 
-  .share-buttons .fa,
-  .share .fa {
-    font-size: 1.1em !important;
+  .share-buttons svg,
+  .share svg {
+    font-size: 2em !important;
   }
 }
 

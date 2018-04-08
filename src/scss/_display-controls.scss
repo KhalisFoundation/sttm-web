@@ -53,7 +53,7 @@
 
 .display-options-toggle span,
 .font-options-toggle span {
-  background-image: url("data:image/svg+xml;utf8,<svg width="1em" height="1em" xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
   background-origin: content-box;
   background-position: right -1rem center;
   background-repeat: no-repeat;
@@ -74,6 +74,7 @@
   background-position: left center, right center, left center, right center;
   background-repeat: no-repeat;
   background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+  display: flex;
   margin: 0.25rem auto;
   overflow-x: auto;
   white-space: nowrap;
@@ -90,10 +91,11 @@
 .shabad-controller-toggle,
 .display-option-toggle,
 .font-option-toggle {
+  align-items: center;
   border: 1px solid $sttm-light-grey;
   border-radius: 2px;
   color: $sttm-lighter-black;
-  display: inline-block;
+  display: flex;
   font-size: 1rem;
   line-height: 1.4;
   margin-right: 5px;
@@ -102,10 +104,19 @@
   transition: all 0.25s;
   vertical-align: baseline;
 
+  svg {
+    fill: $sttm-light-black;
+    margin-right: 0.5em;
+  }
+
   .dark-mode & {
     background-color: $sttm-light-black;
     border-color: $sttm-lighter-black;
     color: $sttm-grey;
+
+    svg {
+      fill: $sttm-grey;
+    }
   }
 
   &:hover {
@@ -141,6 +152,10 @@
       content: 'ਅ';
     }
   }
+}
+
+.display-option-content {
+  display: flex;
 }
 
 .display-option-type,
