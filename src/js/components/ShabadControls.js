@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { toggleItemInArray } from '../util';
 import { TRANSLATION_LANGUAGES, TRANSLITERATION_LANGUAGES } from '../constants';
+import TelevisionIcon from './Icons/Television';
+import SlidersIcon from './Icons/Sliders';
 
 export default class ShabadControls extends React.PureComponent {
   static defaultProps = {
@@ -65,7 +67,7 @@ export default class ShabadControls extends React.PureComponent {
             }`}
             onClick={toggleDisplayOptions}
           >
-            <i className="fa fa-television" />
+            <TelevisionIcon />
             <span>Display</span>
           </a>
           <a
@@ -74,7 +76,7 @@ export default class ShabadControls extends React.PureComponent {
             }`}
             onClick={toggleFontOptions}
           >
-            <i className="fa fa-sliders" />
+            <SlidersIcon />
             <span>Font</span>
           </a>
           <a

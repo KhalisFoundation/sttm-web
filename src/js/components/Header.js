@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import GurmukhiKeyboard from './GurmukhiKeyboard';
 import SearchForm from './SearchForm';
 import { toSearchURL } from '../util';
+import BarsIcon from './Icons/Bars';
+import CrossIcon from './Icons/Times';
+import KeyboardIcon from './Icons/Keyboard';
+import SearchIcon from './Icons/Search';
 
 const types = [...TYPES, 'Ang'];
 
@@ -22,7 +26,7 @@ class Menu extends React.PureComponent {
           id="open-mobile-menu"
           onClick={toggleMenu}
         >
-          <i className="fa fa-bars" />
+          <BarsIcon />
         </span>
         <ul className="menu header-menu">
           <li>
@@ -166,7 +170,7 @@ export default class Header extends React.PureComponent {
                                 className="clear-search-toggle"
                                 onClick={setQueryAs('')}
                               >
-                                <i className="fa fa-times" />
+                                <CrossIcon />
                               </button>
 
                               <button
@@ -178,11 +182,11 @@ export default class Header extends React.PureComponent {
                                   !displayGurmukhiKeyboard
                                 )}
                               >
-                                <i className="fa fa-keyboard-o" />
+                                <KeyboardIcon />
                               </button>
 
                               <button type="submit">
-                                <i className="fa fa-search" />
+                                <SearchIcon />
                               </button>
 
                               <GurmukhiKeyboard

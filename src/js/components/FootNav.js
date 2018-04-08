@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { navLink } from '../util';
+import Chevron from './Icons/Chevron';
 
 export default class FootNav extends React.PureComponent {
   static propTypes = {
@@ -21,7 +22,7 @@ export default class FootNav extends React.PureComponent {
         {nav.previous && (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              <i className="fa fa-chevron-left" aria-hidden="true" />
+              <Chevron left />
               <span>Previous</span>
             </Link>
           </div>
@@ -30,7 +31,7 @@ export default class FootNav extends React.PureComponent {
           <div className="shabad-nav right">
             <Link to={link + nav.next}>
               <span>Next</span>
-              <i className="fa fa-chevron-right" aria-hidden="true" />
+              <Chevron right />
             </Link>
           </div>
         )}

@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ACTIONS, clickEvent } from '../util/analytics';
 import { toShabadURL } from '../util';
+import TwitterIcon from './Icons/Twitter';
+import ClipboardIcon from './Icons/Clipboard';
+import ExternalLinkIcon from './Icons/ExternalLink';
 
 export const supportedActions = ['openShabad', 'copy', 'tweet'];
 
@@ -37,7 +40,7 @@ export default class Actions extends React.PureComponent {
           onClick={openShabad}
           to={toShabadURL({ shabad })}
         >
-          <i className="fa fa-fw fa-external-link-square" />
+          <ExternalLinkIcon />
         </Link>
       ),
       copy: (
@@ -48,7 +51,7 @@ export default class Actions extends React.PureComponent {
           aria-label="Copy to clipboard"
           title="Copy to clipboard"
         >
-          <i className="fa fa-fw fa-clipboard" />
+          <ClipboardIcon />
         </a>
       ),
       tweet: (
@@ -59,7 +62,7 @@ export default class Actions extends React.PureComponent {
           aria-label="Tweet this line"
           title="Tweet this line"
         >
-          <i className="fa fa-fw fa-twitter" />
+          <TwitterIcon />
         </a>
       ),
     };

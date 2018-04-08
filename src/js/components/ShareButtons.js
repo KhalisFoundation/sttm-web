@@ -2,6 +2,14 @@ import React from 'react';
 import { showToast, copyToClipboard, shortenURL } from '../util';
 import { TEXTS } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
+import FacebookIcon from './Icons/Facebook';
+import TwitterIcon from './Icons/Twitter';
+import PinterestIcon from './Icons/Pinterest';
+import WhatsAppIcon from './Icons/WhatsApp';
+import TumblrIcon from './Icons/Tumblr';
+import RedditIcon from './Icons/Reddit';
+import EnvelopeIcon from './Icons/Envelope';
+import ClipboardIcon from './Icons/Clipboard';
 
 const handleFacebook = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'facebook' });
@@ -98,7 +106,7 @@ export default function ShareButtons() {
             title="Share on Facebook"
             onClick={handleFacebook}
           >
-            <i className="fa fa-facebook" aria-hidden="true" />
+            <FacebookIcon />
             <span className="sr-only">Share on Facebook</span>
           </a>
         </li>
@@ -110,7 +118,7 @@ export default function ShareButtons() {
             title="Tweet"
             onClick={handleTwitter}
           >
-            <i className="fa fa-twitter" aria-hidden="true" />
+            <TwitterIcon />
             <span className="sr-only">Tweet</span>
           </a>
         </li>
@@ -123,7 +131,7 @@ export default function ShareButtons() {
             title="Share on Whatsapp"
             onClick={handleWhatsapp}
           >
-            <i className="fa fa-whatsapp" aria-hidden="true" />
+            <WhatsAppIcon />
             <span className="sr-only">Share on Whatsapp</span>
           </a>
         </li>
@@ -135,7 +143,7 @@ export default function ShareButtons() {
             title="Submit to Reddit"
             onClick={handleReddit}
           >
-            <i className="fa fa-reddit" aria-hidden="true" />
+            <RedditIcon />
             <span className="sr-only">Submit to Reddit</span>
           </a>
         </li>
@@ -147,7 +155,7 @@ export default function ShareButtons() {
             title="Post to Tumblr"
             onClick={handleTumblr}
           >
-            <i className="fa fa-tumblr" aria-hidden="true" />
+            <TumblrIcon />
             <span className="sr-only">Post to Tumblr</span>
           </a>
         </li>
@@ -159,7 +167,7 @@ export default function ShareButtons() {
             title="Pin it"
             onClick={handlePinterest}
           >
-            <i className="fa fa-pinterest" aria-hidden="true" />
+            <PinterestIcon />
             <span className="sr-only">Pin it</span>
           </a>
         </li>
@@ -171,13 +179,13 @@ export default function ShareButtons() {
             title="Share via email"
             onClick={handleEmail}
           >
-            <i className="fa fa-envelope" aria-hidden="true" />
+            <EnvelopeIcon />
             <span className="sr-only">Share via email</span>
           </a>
         </li>
         <li>
           <a id="copy-short-url" className="copy" onClick={copyShortUrl}>
-            <i className="fa fa-fw fa-clipboard" />
+            <ClipboardIcon />
             <span className="sr-only">Copy URL</span>
           </a>
         </li>
