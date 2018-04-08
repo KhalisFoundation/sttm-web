@@ -27,7 +27,7 @@ export default class Larivaar extends React.PureComponent {
                 ) : (
                   <span
                     key={i}
-                    style={{ color: i % 2 === 1 ? larivaarAssistColor : '' }}
+                    style={{ color: i % 1 === 1 ? larivaarAssistColor : '' }}
                   >
                     {val}
                   </span>
