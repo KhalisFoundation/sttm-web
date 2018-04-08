@@ -102,22 +102,23 @@ export default class ShabadControls extends React.PureComponent {
           <div className="display-options">
             <div className="display-option-type">
               <div className="display-option-header">Transliteration</div>
-
-              {TRANSLITERATION_LANGUAGES.map(lang => (
-                <a
-                  key={lang}
-                  className={`display-option-toggle ${
-                    transliterationLanguages.includes(lang) ? 'active' : ''
-                  }`}
-                  onClick={() =>
-                    setTransliterationLanguages(
-                      toggleItemInArray(lang, transliterationLanguages)
-                    )
-                  }
-                >
-                  {lang}
-                </a>
-              ))}
+              <div className="display-option-content">
+                {TRANSLITERATION_LANGUAGES.map(lang => (
+                  <a
+                    key={lang}
+                    className={`display-option-toggle ${
+                      transliterationLanguages.includes(lang) ? 'active' : ''
+                    }`}
+                    onClick={() =>
+                      setTransliterationLanguages(
+                        toggleItemInArray(lang, transliterationLanguages)
+                      )
+                    }
+                  >
+                    {lang}
+                  </a>
+                ))}
+              </div>
             </div>
             <div className="display-option-type">
               <div className="display-option-header">Translation</div>
@@ -142,24 +143,30 @@ export default class ShabadControls extends React.PureComponent {
             {disableSplitView ? null : (
               <div className="display-option-type">
                 <div className="display-option-header">Split View</div>
-                <a
-                  className={`display-option-toggle ${
-                    splitView ? 'active' : ''
-                  }`}
-                  onClick={toggleSplitViewOption}
-                >
-                  {splitView ? 'Disable' : 'Enable'}
-                </a>
+                <div className="display-option-content">
+                  <a
+                    className={`display-option-toggle ${
+                      splitView ? 'active' : ''
+                    }`}
+                    onClick={toggleSplitViewOption}
+                  >
+                    {splitView ? 'Disable' : 'Enable'}
+                  </a>
+                </div>
               </div>
             )}
             <div className="display-option-type">
               <div className="display-option-header">Dark Mode</div>
-              <a
-                className={`display-option-toggle ${darkMode ? 'active' : ''}`}
-                onClick={toggleDarkMode}
-              >
-                {darkMode ? 'Disable' : 'Enable'}
-              </a>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle ${
+                    darkMode ? 'active' : ''
+                  }`}
+                  onClick={toggleDarkMode}
+                >
+                  {darkMode ? 'Disable' : 'Enable'}
+                </a>
+              </div>
             </div>
           </div>
         )}
