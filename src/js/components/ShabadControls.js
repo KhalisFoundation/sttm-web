@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { toggleItemInArray } from '../util';
 import { TRANSLATION_LANGUAGES, TRANSLITERATION_LANGUAGES } from '../constants';
+import TelevisionIcon from './Icons/Television';
+import SlidersIcon from './Icons/Sliders';
 
 export default class ShabadControls extends React.PureComponent {
   static defaultProps = {
@@ -65,7 +67,7 @@ export default class ShabadControls extends React.PureComponent {
             }`}
             onClick={toggleDisplayOptions}
           >
-            <i className="fa fa-television" />
+            <TelevisionIcon />
             <span>Display</span>
           </a>
           <a
@@ -74,7 +76,7 @@ export default class ShabadControls extends React.PureComponent {
             }`}
             onClick={toggleFontOptions}
           >
-            <i className="fa fa-sliders" />
+            <SlidersIcon />
             <span>Font</span>
           </a>
           <a
@@ -100,62 +102,71 @@ export default class ShabadControls extends React.PureComponent {
           <div className="display-options">
             <div className="display-option-type">
               <div className="display-option-header">Transliteration</div>
-
-              {TRANSLITERATION_LANGUAGES.map(lang => (
-                <a
-                  key={lang}
-                  className={`display-option-toggle ${
-                    transliterationLanguages.includes(lang) ? 'active' : ''
-                  }`}
-                  onClick={() =>
-                    setTransliterationLanguages(
-                      toggleItemInArray(lang, transliterationLanguages)
-                    )
-                  }
-                >
-                  {lang}
-                </a>
-              ))}
+              <div className="display-option-content">
+                {TRANSLITERATION_LANGUAGES.map(lang => (
+                  <a
+                    key={lang}
+                    className={`display-option-toggle ${
+                      transliterationLanguages.includes(lang) ? 'active' : ''
+                    }`}
+                    onClick={() =>
+                      setTransliterationLanguages(
+                        toggleItemInArray(lang, transliterationLanguages)
+                      )
+                    }
+                  >
+                    {lang}
+                  </a>
+                ))}
+              </div>
             </div>
             <div className="display-option-type">
               <div className="display-option-header">Translation</div>
-              {TRANSLATION_LANGUAGES.map(lang => (
-                <a
-                  key={lang}
-                  className={`display-option-toggle ${
-                    translationLanguages.includes(lang) ? 'active' : ''
-                  }`}
-                  onClick={() =>
-                    setTranslationLanguages(
-                      toggleItemInArray(lang, translationLanguages)
-                    )
-                  }
-                >
-                  {lang}
-                </a>
-              ))}
+              <div className="display-option-content">
+                {TRANSLATION_LANGUAGES.map(lang => (
+                  <a
+                    key={lang}
+                    className={`display-option-toggle ${
+                      translationLanguages.includes(lang) ? 'active' : ''
+                    }`}
+                    onClick={() =>
+                      setTranslationLanguages(
+                        toggleItemInArray(lang, translationLanguages)
+                      )
+                    }
+                  >
+                    {lang}
+                  </a>
+                ))}
+              </div>
             </div>
             {disableSplitView ? null : (
               <div className="display-option-type">
                 <div className="display-option-header">Split View</div>
-                <a
-                  className={`display-option-toggle ${
-                    splitView ? 'active' : ''
-                  }`}
-                  onClick={toggleSplitViewOption}
-                >
-                  {splitView ? 'Disable' : 'Enable'}
-                </a>
+                <div className="display-option-content">
+                  <a
+                    className={`display-option-toggle ${
+                      splitView ? 'active' : ''
+                    }`}
+                    onClick={toggleSplitViewOption}
+                  >
+                    {splitView ? 'Disable' : 'Enable'}
+                  </a>
+                </div>
               </div>
             )}
             <div className="display-option-type">
               <div className="display-option-header">Dark Mode</div>
-              <a
-                className={`display-option-toggle ${darkMode ? 'active' : ''}`}
-                onClick={toggleDarkMode}
-              >
-                {darkMode ? 'Disable' : 'Enable'}
-              </a>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle ${
+                    darkMode ? 'active' : ''
+                  }`}
+                  onClick={toggleDarkMode}
+                >
+                  {darkMode ? 'Disable' : 'Enable'}
+                </a>
+              </div>
             </div>
           </div>
         )}

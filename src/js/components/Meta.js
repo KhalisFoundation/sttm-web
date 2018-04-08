@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { TEXTS } from '../constants';
 import { isFalsy, toAngURL, navLink } from '../util';
+import Chevron from './Icons/Chevron';
 
 export default class Meta extends React.PureComponent {
   static defaultProps = {
@@ -33,7 +34,7 @@ export default class Meta extends React.PureComponent {
         {isFalsy(nav.previous) === false && (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              <i className="fa fa-chevron-left" aria-hidden="true" />
+              <Chevron left />
             </Link>
           </div>
         )}
@@ -90,7 +91,7 @@ export default class Meta extends React.PureComponent {
         {isFalsy(nav.next) === false && (
           <div className="shabad-nav right">
             <Link to={link + nav.next}>
-              <i className="fa fa-chevron-right" aria-hidden="true" />
+              <Chevron right />
             </Link>
           </div>
         )}

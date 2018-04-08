@@ -116,20 +116,23 @@
   .gurmukhi-keyboard-toggle,
   .clear-search-toggle {
     background-color: $sttm-pure-white;
-    color: $sttm-grey;
     width: 44px;
+
+    svg {
+      fill: $sttm-grey;
+    }
 
     .dark-mode & {
       background-color: $sttm-lighter-black;
     }
 
-    &.active {
-      color: $sttm-orange;
+    &.active svg {
+      fill: $sttm-orange;
     }
 
-    &:active,
-    &:hover {
-      color: $sttm-orange;
+    &:active svg,
+    &:hover svg {
+      fill: $sttm-orange;
       outline: none;
     }
   }
@@ -257,7 +260,6 @@
   background-color: $sttm-pure-white;
   border: 1px solid $sttm-blue;
   border-radius: 2px;
-  color: $sttm-blue;
   font-size: 1rem;
   height: 48px;
   line-height: 18px;
@@ -265,6 +267,10 @@
   right: 0.5rem;
   top: 0.5rem;
   width: 48px;
+
+  svg {
+    fill: $sttm-blue;
+  }
 
   .dark-mode & {
     background-color: $sttm-light-black;
