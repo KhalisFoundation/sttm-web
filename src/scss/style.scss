@@ -130,3 +130,18 @@ select {
     background-color: $sttm-light-black;
   }
 }
+
+#progressbar-root {
+  height: 2px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 4;
+
+  .progressbar {
+    background: linear-gradient(45deg, $sttm-blue, $sttm-orange);
+    height: 100%;
+    transition: transform 0.05s ease-in;
+  }
+}

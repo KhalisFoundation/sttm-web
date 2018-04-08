@@ -5,9 +5,14 @@ import { connect } from 'react-redux';
 import Controls from './Controls';
 import FootNav from './FootNav';
 import Meta from './Meta';
+import ProgressBar from './ProgressBar';
 import Baani from './Baani';
 
 class Shabad extends React.PureComponent {
+  state = {
+    progress: 0,
+  };
+
   static defaultProps = {
     random: false,
     nav: {},
@@ -74,8 +79,28 @@ class Shabad extends React.PureComponent {
             <FootNav info={info} type={type} nav={nav} />
           </div>
         </div>
+        <ProgressBar percent={this.state.width} />
       </React.Fragment>
     );
+  }
+
+  scrollListener = () => {
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      const maxY =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const width = y / maxY;
+      this.setState({ width });
+    });
+  };
+
+  componentDidMount() {
+    addEventListener('scroll', this.scrollListener, { passive: true });
+  }
+
+  componentWillUnmount() {
+    removeEventListener('scroll', this.scrollListener);
   }
 }
 
