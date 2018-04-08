@@ -79,7 +79,7 @@ class Shabad extends React.PureComponent {
             <FootNav info={info} type={type} nav={nav} />
           </div>
         </div>
-        <ProgressBar percent={this.state.width} />
+        <ProgressBar percent={this.state.progress} />
       </React.Fragment>
     );
   }
@@ -90,13 +90,14 @@ class Shabad extends React.PureComponent {
       const maxY =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
-      const width = (y / maxY).toPrecision(2);
-      this.setState({ width });
+      const progress = parseFloat((y / maxY).toPrecision(2));
+      this.setState({ progress });
     });
   };
 
   componentDidMount() {
     addEventListener('scroll', this.scrollListener, { passive: true });
+    this.scrollListener();
   }
 
   componentWillUnmount() {

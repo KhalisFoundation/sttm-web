@@ -132,7 +132,7 @@ select {
 }
 
 #progressbar-root {
-  height: 2px;
+  height: 3px;
   left: 0;
   position: fixed;
   top: 0;
@@ -141,6 +141,6 @@ select {
 
   .progressbar {
     background-color: $sttm-orange;
-    height: 100%;
+    height: 3px;
   }
 }

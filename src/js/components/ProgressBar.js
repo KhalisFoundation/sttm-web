@@ -15,7 +15,7 @@ export default class ProgressBar extends React.PureComponent {
         <div
           className="progressbar"
           style={{
-            transform: `scaleX(${this.props.percent})`,
+            transform: `scaleX(${this.props.percent}) translateZ(0)`,
             transformOrigin: '0 0',
           }}
         />
