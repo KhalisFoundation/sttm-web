@@ -1,8 +1,12 @@
 #error-code {
-  color: #01669b;
+  color: $sttm-blue;
   font-family: cursive, sans-serif;
   font-size: 7rem;
   font-weight: bold;
+
+  .dark-mode & {
+    color: $sttm-light-blue;
+  }
 
   @media screen and (max-width: 500px) {
     text-align: center;
@@ -10,7 +14,7 @@
 }
 
 #error-msg {
-  color: #f39c1d;
+  color: $sttm-orange;
   font-weight: bold;
 }
 

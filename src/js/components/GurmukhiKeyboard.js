@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import ArrowIcon from './Icons/Arrow';
 
 const ButtonList = ({ buttons = [] }) =>
   buttons.map((button, i) => (
@@ -42,7 +43,8 @@ export default class GurmukhiKeyboard extends React.PureComponent {
           'block';
         break;
       }
-      case 'help': break;
+      case 'help':
+        break;
       default: {
         onKeyClick(value + ($button.dataset.value || $button.innerText));
       }
@@ -99,11 +101,13 @@ export default class GurmukhiKeyboard extends React.PureComponent {
                 2
               </button>
               <button type="button" data-action="bksp">
-                <i className="fa fa-long-arrow-left" />
+                <ArrowIcon />
               </button>
 
               <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
-                <button data-action="help" type="button">?</button>
+                <button data-action="help" type="button">
+                  ?
+                </button>
               </Link>
             </div>
           </div>
@@ -146,10 +150,12 @@ export default class GurmukhiKeyboard extends React.PureComponent {
                 2
               </button>
               <button type="button" data-action="bksp">
-                <i className="fa fa-long-arrow-left" />
+                <ArrowIcon />
               </button>
               <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
-                <button data-action="help" type="button">?</button>
+                <button data-action="help" type="button">
+                  ?
+                </button>
               </Link>
             </div>
           </div>

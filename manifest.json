@@ -5,7 +5,6 @@
   "short_name": "STTM",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "any",
   "icons": [
     {
       "src": "/assets/images/logo-192x192.png",

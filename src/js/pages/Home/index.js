@@ -5,7 +5,10 @@ import { toSearchURL } from '../../util';
 import { pageView } from '../../util/analytics';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
-import Logo from '../../components/Logo';
+import Logo from '../../components/Icons/Logo';
+import CrossIcon from '../../components/Icons/Times';
+import KeyboardIcon from '../../components/Icons/Keyboard';
+import SearchIcon from '../../components/Icons/Search';
 
 const types = [...TYPES, 'Ang'];
 
@@ -84,7 +87,7 @@ export default class Home extends React.PureComponent {
                       className="clear-search-toggle"
                       onClick={setQueryAs('')}
                     >
-                      <i className="fa fa-times" />
+                      <CrossIcon />
                     </button>
                     <button
                       type="button"
@@ -95,10 +98,10 @@ export default class Home extends React.PureComponent {
                         !displayGurmukhiKeyboard
                       )}
                     >
-                      <i className="fa fa-keyboard-o" />
+                      <KeyboardIcon />
                     </button>
                     <button type="submit">
-                      <i className="fa fa-search" />
+                      <SearchIcon />
                     </button>
                     <GurmukhiKeyboard
                       value={query}

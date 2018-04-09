@@ -11,7 +11,11 @@
 
   a {
     background-color: transparent !important;
-    color: #00669b;
+    color: $sttm-blue;
+
+    .dark-mode & {
+      color: $sttm-light-blue;
+    }
   }
 }
 
@@ -42,10 +46,14 @@
   }
 }
 
-.share-buttons .fa,
-.share .fa {
-  color: #868383;
-  font-size: 1.5em;
+.chevron {
+  fill: $sttm-orange;
+}
+
+.share-buttons svg,
+.share svg {
+  fill: $sttm-darker-grey;
+  font-size: 2em;
   padding: 5px;
 }
 
@@ -66,25 +74,29 @@
 
   .share-buttons,
   #share-menu {
-    background-color: #fafafa;
+    background-color: $sttm-white;
     width: 100% !important;
+
+    .dark-mode & {
+      background-color: $sttm-light-black;
+    }
   }
 
-  .share-buttons .fa,
-  .share .fa {
-    font-size: 1.1em !important;
+  .share-buttons svg,
+  .share svg {
+    font-size: 2em !important;
   }
 }
 
 .toast-notification {
-  background-color: #313131;
-  color: #f39c1f;
+  background-color: $sttm-black;
+  color: $sttm-orange;
   font-weight: 400;
   left: 0;
   padding: 0.5rem 1rem;
   position: fixed;
   right: 0;
-  text-shadow: 0 0 0.05rem #0e0e0e;
+  text-shadow: 0 0 0.05rem $sttm-pure-black;
   top: 0;
   z-index: 4;
 
