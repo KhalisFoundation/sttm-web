@@ -62,6 +62,7 @@ export default class ShabadControls extends React.PureComponent {
       <React.Fragment>
         <div id="shabad-controllers">
           <a
+            data-test-id="display-options"
             className={`display-options-toggle shabad-controller-toggle ${
               showDisplayOptions ? 'active' : ''
             }`}
@@ -145,6 +146,7 @@ export default class ShabadControls extends React.PureComponent {
                 <div className="display-option-header">Split View</div>
                 <div className="display-option-content">
                   <a
+                    data-test-id="split-view"
                     className={`display-option-toggle ${
                       splitView ? 'active' : ''
                     }`}

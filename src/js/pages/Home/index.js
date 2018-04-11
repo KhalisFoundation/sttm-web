@@ -102,7 +102,7 @@ export default class Home extends React.PureComponent {
                     >
                       <KeyboardIcon />
                     </button>
-                    <button type="submit">
+                    <button data-test-id="search-button" type="submit">
                       <SearchIcon />
                     </button>
                     <GurmukhiKeyboard

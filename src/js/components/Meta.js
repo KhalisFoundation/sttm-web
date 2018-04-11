@@ -5,6 +5,14 @@ import { TEXTS } from '../constants';
 import { isFalsy, toAngURL, navLink } from '../util';
 import Chevron from './Icons/Chevron';
 
+const isGotoShabadEnabled = type => ['hukamnama'].includes(type);
+const angOrPanna = (source, english = false) => {
+  if (source === 'G') {
+    return english ? 'Ang' : 'AMg';
+  }
+  return english ? 'Pannaa' : 'pMnw';
+};
+
 export default class Meta extends React.PureComponent {
   static defaultProps = {
     nav: {},
@@ -33,15 +41,17 @@ export default class Meta extends React.PureComponent {
       <div id="metadata">
         {isFalsy(nav.previous) === false && (
           <div className="shabad-nav left">
-            <Link to={link + nav.previous}>
+            <Link title="Previous" to={link + nav.previous}>
               <Chevron left />
             </Link>
           </div>
         )}
         <div className="meta">
-          {['hukamnama'].includes(type) && (
+          {isGotoShabadEnabled(type) && (
             <h4>
-              <Link to={`/shabad?id=${info.id}`}>{TEXTS.GO_TO_SHABAD}</Link>
+              <Link title="Go to Shabad" to={`/shabad?id=${info.id}`}>
+                {TEXTS.GO_TO_SHABAD}
+              </Link>
             </h4>
           )}
           <h4 className="gurbani-font">
@@ -56,12 +66,13 @@ export default class Meta extends React.PureComponent {
             <Item last>
               {info.pageno !== null && (
                 <Link
+                  title={`Open ${angOrPanna(info.source.id, false)}`}
                   to={toAngURL({
                     ang: info.source.pageno,
                     source: info.source.id,
                   })}
                 >
-                  {info.source.id == 'G' ? 'AMg' : 'pMnw'} {info.source.pageno}
+                  {angOrPanna(info.source.id, false)} {info.source.pageno}
                 </Link>
               )}
             </Item>
@@ -77,12 +88,13 @@ export default class Meta extends React.PureComponent {
             <Item>{info.source.english}</Item>
             <Item last>
               <Link
+                title={`Open ${angOrPanna(info.source.id, true)}`}
                 to={toAngURL({
                   ang: info.source.pageno,
                   source: info.source.id,
                 })}
               >
-                {info.source.id == 'G' ? 'Ang' : 'Pannaa'} {info.source.pageno}
+                {angOrPanna(info.source.id, true)} {info.source.pageno}
               </Link>
             </Item>
           </h4>
@@ -90,7 +102,7 @@ export default class Meta extends React.PureComponent {
 
         {isFalsy(nav.next) === false && (
           <div className="shabad-nav right">
-            <Link to={link + nav.next}>
+            <Link title="Next" to={link + nav.next}>
               <Chevron right />
             </Link>
           </div>
