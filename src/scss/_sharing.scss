@@ -104,4 +104,10 @@
     bottom: 0;
     top: auto;
   }
+
+  .dark-mode & {
+    background-color: $sttm-orange;
+    color: $sttm-black;
+    text-shadow: none;
+  }
 }

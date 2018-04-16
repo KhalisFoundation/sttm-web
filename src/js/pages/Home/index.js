@@ -5,7 +5,6 @@ import { toSearchURL } from '../../util';
 import { pageView } from '../../util/analytics';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
-import Doodle from '../../components/Doodle';
 import Logo from '../../components/Icons/Logo';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
@@ -61,7 +60,6 @@ export default class Home extends React.PureComponent {
                 >
                   <div className="flex justify-center align-center">
                     <div>
-                      <Doodle href="https://www.instagram.com/dilmeet.kaur/" src="2018-04-14-vaisakhi-dilmeet-kaur.png" />
                       <Logo className="logo-long" />
                     </div>
                   </div>
