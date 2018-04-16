@@ -11,7 +11,10 @@
     color: $sttm-blue;
 
     .dark-mode & {
-      color: $sttm-orange;
+      border-left: 5px solid $sttm-orange;
+      color: inherit;
+      margin: 5px 0;
+      padding-left: 5px;
     }
   }
 
