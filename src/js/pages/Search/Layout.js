@@ -5,7 +5,12 @@ import { TYPES, SOURCES } from 'shabados';
 import { connect } from 'react-redux';
 import { toShabadURL, toSearchURL } from '../../util';
 import { PLACEHOLDERS, TEXTS } from '../../constants';
-import { ACTIONS, pageView, errorEvent } from '../../util/analytics';
+import {
+  ACTIONS,
+  pageView,
+  clickEvent,
+  errorEvent,
+} from '../../util/analytics';
 import Controls from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Larivaar from '../../components/Larivaar';
@@ -175,41 +180,44 @@ class Layout extends React.PureComponent {
               </React.Fragment>
             );
           })}
-          {offset !== 0 &&
-            nextPageOffset && (
-              <li className="load-more">
-                {offset > 0 ? (
-                  <Link
-                    className="load button"
-                    to={toSearchURL({
-                      query: q,
-                      source,
-                      type,
-                      offset: offset - 1,
-                    })}
-                  >
-                    {TEXTS.PREVIOUS_PAGE}
-                  </Link>
-                ) : (
-                  <div />
-                )}
-                {nextPageOffset ? (
-                  <Link
-                    className="load button"
-                    to={toSearchURL({
-                      query: q,
-                      type,
-                      source,
-                      offset: nextPageOffset,
-                    })}
-                  >
-                    {TEXTS.NEXT_PAGE}
-                  </Link>
-                ) : (
-                  <div />
-                )}
-              </li>
-            )}
+          {(offset > 0 || nextPageOffset) && (
+            <li className="load-more">
+              {offset > 0 ? (
+                <Link
+                  className="load button"
+                  title={TEXTS.PREVIOUS_PAGE}
+                  onClick={() => clickEvent({ action: TEXTS.PREVIOUS_PAGE })}
+                  to={toSearchURL({
+                    query: q,
+                    source,
+                    type,
+                    offset: offset - 1,
+                  })}
+                >
+                  {TEXTS.PREVIOUS_PAGE}
+                </Link>
+              ) : (
+                <div />
+              )}
+              {nextPageOffset ? (
+                <Link
+                  className="load button"
+                  title={TEXTS.NEXT_PAGE}
+                  onClick={() => clickEvent({ action: TEXTS.NEXT_PAGE })}
+                  to={toSearchURL({
+                    query: q,
+                    type,
+                    source,
+                    offset: nextPageOffset,
+                  })}
+                >
+                  {TEXTS.NEXT_PAGE}
+                </Link>
+              ) : (
+                <div />
+              )}
+            </li>
+          )}
         </ul>
       </div>
     );
