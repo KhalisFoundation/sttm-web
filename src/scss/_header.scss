@@ -195,10 +195,6 @@
     transform: rotateX(0deg);
   }
 
-  .page {
-    display: none;
-  }
-
   .keyboard-row {
     border-bottom: 2px solid $sttm-grey;
   }
@@ -232,6 +228,10 @@
 
     &.active {
       color: $sttm-orange;
+    }
+
+    .dark-mode &[data-action='bksp'] {
+      fill: $sttm-grey;
     }
 
     &[data-action='page-1'] {
