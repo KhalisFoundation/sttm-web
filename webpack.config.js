@@ -31,7 +31,7 @@ const plugins = PRODUCTION
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');
 
 module.exports = {
-  mode: PRODUCTION || 'development',
+  mode: PRODUCTION ? 'production' : 'development',
   entry: {
     app,
   },
@@ -44,7 +44,17 @@ module.exports = {
   plugins,
   optimization: {
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
-    concatenateModules: true //ModuleConcatenationPlugin
+    concatenateModules: true, //ModuleConcatenationPlugin
+    splitChunks: {
+      cacheGroups: {
+        // All dependencies in `node_modules` become part of vendor chunk
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all'
+        }
+      }
+    }
   },
   module: {
     rules: [
