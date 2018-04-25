@@ -37,25 +37,33 @@ export default class Fetch extends React.PureComponent {
   fetchData = (url, options, transform) => {
     this.setState({ loading: true });
 
-    return fetch(url, options).then(res =>
-      transform(res)
-        .then(data =>
-          this.setState({
-            loading: false,
-            res,
-            data,
-            error: null,
-          })
-        )
-        .catch(error =>
-          this.setState({
-            loading: false,
-            res,
-            data: null,
-            error,
-          })
-        )
-    );
+    return fetch(url, options)
+      .then(res =>
+        transform(res)
+          .then(data =>
+            this.setState({
+              loading: false,
+              res,
+              data,
+              error: null,
+            })
+          )
+          .catch(error =>
+            this.setState({
+              loading: false,
+              res,
+              data: null,
+              error,
+            })
+          )
+      )
+      .catch(error =>
+        this.setState({
+          loading: false,
+          data: null,
+          error,
+        })
+      );
   };
 
   render() {

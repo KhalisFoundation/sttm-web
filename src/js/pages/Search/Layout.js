@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { TYPES, SOURCES } from 'shabados';
 import { connect } from 'react-redux';
 import { toShabadURL, toSearchURL } from '../../util';
-import { PLACEHOLDERS, TEXTS } from '../../constants';
+import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '../../constants';
 import {
   ACTIONS,
   pageView,

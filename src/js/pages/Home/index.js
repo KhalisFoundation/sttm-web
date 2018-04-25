@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, TYPES } from 'shabados';
+import { SOURCES, TYPES } from '../../constants';
 import { toSearchURL } from '../../util';
 import { pageView } from '../../util/analytics';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
@@ -9,8 +9,6 @@ import Logo from '../../components/Icons/Logo';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
-
-const types = [...TYPES, 'Ang'];
 
 export default class Home extends React.PureComponent {
   static propTypes = {
@@ -119,7 +117,7 @@ export default class Home extends React.PureComponent {
                         onChange={handleSearchTypeChange}
                         disabled={isAnimatingPlaceholder}
                       >
-                        {types.map((children, value) => (
+                        {TYPES.map((children, value) => (
                           <option key={value} value={value}>
                             {children}
                           </option>

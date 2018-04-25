@@ -16,15 +16,17 @@ class Layout extends React.PureComponent {
     darkMode: PropTypes.bool.isRequired,
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
+    isAng: PropTypes.bool,
   };
 
   render() {
-    const { children, isHome = false, ...props } = this.props;
+    const { children, isAng = false, isHome = false, ...props } = this.props;
     return (
       <React.Fragment>
         <Header
           defaultQuery={this.props.defaultQuery}
           isHome={isHome}
+          isAng={isAng}
           {...props}
         />
         {children}

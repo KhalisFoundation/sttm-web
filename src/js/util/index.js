@@ -19,8 +19,8 @@ export function getParameterByName(_name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-export function getQueryParams() {
-  const qs = document.location.search.replace(/\+/g, ' ');
+export function getQueryParams(str = document.location.search) {
+  const qs = str.replace(/\+/g, ' ');
   const params = {};
   const re = /[?&]?([^=]+)=([^&]*)/g;
   let tokens;

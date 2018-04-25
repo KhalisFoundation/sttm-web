@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  TYPES,
+  SOURCES,
   LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
   PLACEHOLDERS,
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
+  SEARCH_TYPES,
 } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
-
-const SEARCH_TYPES = {
-  ROMANIZED: 4,
-  ANG: 5,
-};
+import { getNumberFromLocalStorage } from '../util';
 
 const onlyNumbers = str => str.replace(/\D/g, '');
 export default class SearchForm extends React.PureComponent {
@@ -24,6 +23,8 @@ export default class SearchForm extends React.PureComponent {
   static propTypes = {
     children: PropTypes.func.isRequired,
     defaultQuery: PropTypes.string,
+    defaultType: PropTypes.oneOf(TYPES),
+    defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'query'])
     ),
@@ -43,17 +44,37 @@ export default class SearchForm extends React.PureComponent {
     displayGurmukhiKeyboard: false,
     query: this.props.defaultQuery,
     shouldSubmit: false,
-    type: parseInt(
-      localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE) ||
-        DEFAULT_SEARCH_TYPE,
-      10
-    ),
+    type:
+      this.props.defaultType ||
+      getNumberFromLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+        DEFAULT_SEARCH_TYPE
+      ),
     source:
+      this.props.defaultSource ||
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
       DEFAULT_SEARCH_SOURCE,
     placeholder: '',
     isAnimatingPlaceholder: false,
   };
+
+  static getDerivedStateFromProps(
+    { defaultType, defaultSource, defaultQuery },
+    { type, source, query }
+  ) {
+    if (
+      defaultQuery !== query ||
+      defaultType !== type ||
+      defaultSource !== source
+    ) {
+      return {
+        query: defaultQuery || query,
+        type: defaultType || type,
+        source: defaultSource || source,
+      };
+    }
+    return null;
+  }
 
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];

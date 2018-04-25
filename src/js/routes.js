@@ -12,7 +12,11 @@ import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
 import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
-import { DEFAULT_SEARCH_SOURCE, DEFAULT_SEARCH_TYPE } from './constants';
+import {
+  DEFAULT_SEARCH_SOURCE,
+  DEFAULT_SEARCH_TYPE,
+  SEARCH_TYPES,
+} from './constants';
 
 export function NotFound() {
   return (
@@ -114,6 +118,7 @@ export default [
         <Layout
           defaultQuery={ang}
           title="Ang/Page Viewer - SikhiToTheMax"
+          isAng={true}
           {...props}
         >
           <RenderPromise
@@ -221,7 +226,9 @@ export default [
   {
     path: '/search',
     render(props) {
-      const { location: { search } } = props;
+      const {
+        location: { search },
+      } = props;
       const params = ['type', 'source', 'q', 'offset'];
 
       const [
@@ -231,7 +238,7 @@ export default [
         offset = 0,
       ] = params.map(v => getParameterByName(v, search));
 
-      if (parseInt(type, 10) === 5) {
+      if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
         return <Redirect to={toAngURL({ ang: q, source })} />;
       }
 
@@ -270,7 +277,9 @@ export default [
   {
     path: '/shabad',
     render(props) {
-      const { location: { search } } = props;
+      const {
+        location: { search },
+      } = props;
 
       if (location.search === '') {
         return <Redirect to="/random" />;

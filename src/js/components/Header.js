@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, TYPES } from 'shabados';
+import { SOURCES, SEARCH_TYPES, TYPES } from '../constants';
 import { Link } from 'react-router-dom';
 import GurmukhiKeyboard from './GurmukhiKeyboard';
 import SearchForm from './SearchForm';
-import { toSearchURL } from '../util';
+import { toSearchURL, getQueryParams } from '../util';
 import BarsIcon from './Icons/Bars';
 import CrossIcon from './Icons/Times';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 
-const types = [...TYPES, 'Ang'];
 class Menu extends React.PureComponent {
   toggleMenu = () => document.body.classList.toggle('menu-open');
   closeMenu = () => document.body.classList.remove('menu-open');
@@ -54,11 +53,15 @@ class Menu extends React.PureComponent {
   }
 }
 export default class Header extends React.PureComponent {
-  static defaultProps = { isHome: false };
+  static defaultProps = { isHome: false, location: { search: '' } };
 
   static propTypes = {
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
+    isAng: PropTypes.bool,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }),
     history: PropTypes.shape({ push: PropTypes.func }),
   };
 
@@ -72,10 +75,19 @@ export default class Header extends React.PureComponent {
 
   render() {
     const {
-      props: { defaultQuery, isHome },
+      props: {
+        defaultQuery,
+        isHome,
+        isAng,
+        location: { search },
+      },
       onFormSubmit,
       handleFormSubmit,
     } = this;
+    const {
+      source: defaultSource = null,
+      type: defaultType = isAng ? SEARCH_TYPES.ANG : null,
+    } = getQueryParams(search);
 
     return (
       <div className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
@@ -87,6 +99,8 @@ export default class Header extends React.PureComponent {
           )}
           <SearchForm
             defaultQuery={defaultQuery}
+            defaultSource={defaultSource}
+            defaultType={defaultType}
             submitOnChangeOf={['type', 'source']}
             onSubmit={handleFormSubmit}
           >
@@ -211,7 +225,7 @@ export default class Header extends React.PureComponent {
                       disabled={isAnimatingPlaceholder}
                       onChange={handleSearchTypeChange}
                     >
-                      {types.map((children, value) => (
+                      {TYPES.map((children, value) => (
                         <option key={value} value={value}>
                           {children}
                         </option>

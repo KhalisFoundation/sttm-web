@@ -31,7 +31,7 @@ export default class FootNav extends React.PureComponent {
           <div className="shabad-nav right">
             <Link to={link + nav.next}>
               <span>Next</span>
-              <Chevron right />
+              <Chevron />
             </Link>
           </div>
         )}

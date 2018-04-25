@@ -91,7 +91,7 @@ export default class Meta extends React.PureComponent {
         {isFalsy(nav.next) === false && (
           <div className="shabad-nav right">
             <Link to={link + nav.next}>
-              <Chevron right />
+              <Chevron />
             </Link>
           </div>
         )}
