@@ -11,7 +11,6 @@ import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 
 const types = [...TYPES, 'Ang'];
-
 class Menu extends React.PureComponent {
   toggleMenu = () => document.body.classList.toggle('menu-open');
   closeMenu = () => document.body.classList.remove('menu-open');

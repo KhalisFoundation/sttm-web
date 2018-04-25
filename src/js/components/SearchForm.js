@@ -169,6 +169,7 @@ export default class SearchForm extends React.PureComponent {
 
   // Retuns a function
   setGurmukhiKeyboardVisibilityAs = value => () =>
+    value !== this.state.displayGurmukhiKeyboard &&
     this.setState({ displayGurmukhiKeyboard: value }, () => {
       clickEvent({
         action: ACTIONS.GURMUKHI_KEYBOARD,
