@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { clickEvent, ACTIONS } from '../util/analytics';
 import { showToast, copyToClipboard } from '../util';
 import Controls, { supportedMedia } from './Controls';
 import FootNav from './FootNav';
@@ -127,10 +128,14 @@ class Shabad extends React.PureComponent {
     const range = document.createRange();
     range.selectNode(document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`));
     selection.addRange(range);
+
+    clickEvent({ action: ACTIONS.SHARE, label: 'select-all' });
   };
 
   handleEmbed = () => {
     const { gurbani, info } = this.props;
+
+    clickEvent({ action: ACTIONS.SHARE, label: 'embed' });
 
     this.getEmbedCode
       .then(({ default: getEmbedCode }) => getEmbedCode({ gurbani, info }))
