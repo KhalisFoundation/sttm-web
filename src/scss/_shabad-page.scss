@@ -48,6 +48,16 @@ blockquote {
   &.left {
     margin-right: 10px;
   }
+
+  &.disabled-nav {
+    a {
+      color: $sttm-dark-grey;
+
+      svg {
+        fill: $sttm-dark-grey;
+      }
+    }
+  }
 }
 
 .meta {
