@@ -1,7 +1,8 @@
-const compression = require('compression');
-const express = require('express');
-const os = require('os');
-const path = require('path');
+import compression from 'compression';
+import express from 'express';
+import { hostname as _hostname } from 'os';
+import createTemplate from './template';
+import seo from '../seo';
 
 const app = express();
 
@@ -9,7 +10,7 @@ const app = express();
 app.use(compression());
 
 // Infrastructure display
-const hostname = os.hostname().substr(0, 3);
+const hostname = _hostname().substr(0, 3);
 app.use((req, res, next) => {
   res.setHeader('origin-server', hostname);
   return next();
@@ -20,7 +21,13 @@ app.use(express.static(`${__dirname}/../`));
 
 // Direct all calls to index template
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(`${__dirname}/../index.html`));
+  const { path } = req;
+  const { title, createDescription } = seo[
+    seo[path] === undefined ? '/' : path
+  ];
+  const description = createDescription(req);
+  const template = createTemplate({ title, description });
+  template(res);
 });
 
 // Listen

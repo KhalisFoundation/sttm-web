@@ -1,20 +1,27 @@
+import marinate from 'marinate';
+
+export default ({ title, description }) => marinate`
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SikhiToTheMax</title>
+  <title>${title}</title>
+  <meta name="description" content="${description}">
+
   <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
+
   <!-- TODO: Get asset_version -->
   <link rel="stylesheet" href="/assets/css/bundle.css?v=<?= $asset_version ?>">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <link rel="manifest" href="manifest.json">
+
   <!-- Safari iOS config -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="STTM">
   <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png">
+
   <!-- Windows Tile -->
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
@@ -81,3 +88,4 @@
 </body>
 
 </html>
+`;
