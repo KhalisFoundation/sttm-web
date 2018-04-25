@@ -110,7 +110,6 @@ export default class Header extends React.PureComponent {
               title,
               className,
               displayGurmukhiKeyboard,
-              isAnimatingPlaceholder,
               query,
               type,
               source,
@@ -222,7 +221,6 @@ export default class Header extends React.PureComponent {
                       name="type"
                       id="search-type"
                       value={type}
-                      disabled={isAnimatingPlaceholder}
                       onChange={handleSearchTypeChange}
                     >
                       {TYPES.map((children, value) => (

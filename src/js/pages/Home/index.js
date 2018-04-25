@@ -35,7 +35,6 @@ export default class Home extends React.PureComponent {
           action,
           name,
           placeholder,
-          isAnimatingPlaceholder,
           setGurmukhiKeyboardVisibilityAs,
           setQueryAs,
           handleSearchChange,
@@ -115,7 +114,6 @@ export default class Home extends React.PureComponent {
                         id="search-type"
                         value={type}
                         onChange={handleSearchTypeChange}
-                        disabled={isAnimatingPlaceholder}
                       >
                         {TYPES.map((children, value) => (
                           <option key={value} value={value}>
