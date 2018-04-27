@@ -1,9 +1,11 @@
 # Contributing to SikhiToTheMax
+
 First of all, thank you for taking the time to contribute!
 
 The following is a set of guidelines for contributing to SikhiToTheMax and its packages, which are hosted in the [Khalis Foundation organization](https://github.com/khalisfoundation) on GitHub. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ## Styleguides
+
 ### Git Commit Messages
 
 * Use the present tense ("Add feature" not "Added feature")
@@ -14,7 +16,7 @@ The following is a set of guidelines for contributing to SikhiToTheMax and its p
 
 ## JavaScript Styleguide
 
-All JavaScript must adhere to [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
+All JavaScript must adhere to our [ESLint](tree/.eslintrc) and [Prettier](tree/package.json) rules. We recommend using [VSCode](https://code.visualstudio.com/) with [Prettier](https://prettier.io/) [plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) installed to avoid linting errors. We anyway lint the code before pushing to repo.
 
 ## CSS Styleguide
 
