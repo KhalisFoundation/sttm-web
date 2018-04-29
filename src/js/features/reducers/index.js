@@ -24,6 +24,7 @@ import {
 } from '../../constants';
 import { saveToLocalStorage } from '../../util';
 import { clickEvent } from '../../util/analytics';
+import { DARK_MODE_COOKIE } from '../../../../common/constants';
 
 export default function reducer(state, action) {
   switch (action.type) {
@@ -79,6 +80,7 @@ export default function reducer(state, action) {
       });
 
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_DARK_MODE, darkMode);
+      document.cookie = `${DARK_MODE_COOKIE}=${darkMode ? 1 : 0};`;
       return {
         ...state,
         darkMode,

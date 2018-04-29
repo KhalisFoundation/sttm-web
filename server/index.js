@@ -1,36 +1,54 @@
+/* eslint-disable no-console */
 import compression from 'compression';
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../seo';
+import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
 
+const hostname = _hostname().substr(0, 3);
+const port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
 const app = express();
 
-// Compress files
-app.use(compression());
+app
+  // Compress files
+  .use(compression())
 
-// Infrastructure display
-const hostname = _hostname().substr(0, 3);
-app.use((req, res, next) => {
-  res.setHeader('origin-server', hostname);
-  return next();
-});
+  // Add cookie parser
+  .use(cookieParser())
 
-// Use client for static files
-app.use(express.static(`${__dirname}/../`));
+  // Infrastructure display
+  .use((req, res, next) => {
+    res.setHeader('origin-server', hostname);
+    return next();
+  })
 
-// Direct all calls to index template
-app.get('*', (req, res) => {
-  const { path } = req;
-  const { title, createDescription } = seo[
-    seo[path] === undefined ? '/' : path
-  ];
-  const description = createDescription(req);
-  const template = createTemplate({ title, description });
-  template(res);
-});
+  // Use client for static files
+  .use(express.static(`${__dirname}/../`))
 
-// Listen
-const port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
-// eslint-disable-next-line no-console
-app.listen(port, () => console.log(`Server started on port:${port}`));
+  // Direct all calls to index template
+  .get('*', (req, res) => {
+    const { path } = req;
+
+    const { title: _title, createDescription } = seo[
+      seo[path] === undefined ? '/' : path
+    ];
+
+    const title = typeof _title === 'function' ? _title(req) : _title;
+
+    const description = createDescription(req);
+
+    const bodyClass =
+      DARK_MODE_COOKIE in req.cookies &&
+      parseInt(req.cookies[DARK_MODE_COOKIE], 10) === 1
+        ? DARK_MODE_CLASS_NAME
+        : '';
+
+    const template = createTemplate({ bodyClass, title, description });
+
+    template(res);
+  })
+
+  // Listen on port
+  .listen(port, () => console.log(`Server started on port:${port}`));

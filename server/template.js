@@ -1,6 +1,6 @@
 import marinate from 'marinate';
 
-export default ({ title, description }) => marinate`
+export default ({ bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +33,7 @@ export default ({ title, description }) => marinate`
   <link async rel="preload" href="assets/js/chunks/Shabad.js" as="script">
 </head>
 
-<body>
+<body class="${bodyClass}">
   <div id="toast-notification" class="toast-notification hidden"></div>
 
   <div id="app-root"></div>

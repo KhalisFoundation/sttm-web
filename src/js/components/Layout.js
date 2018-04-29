@@ -3,6 +3,7 @@ import Header from './Header';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE } from '../constants';
 import { connect } from 'react-redux';
+import { DARK_MODE_CLASS_NAME } from '../../../common/constants';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -36,7 +37,7 @@ class Layout extends React.PureComponent {
 
   updateTheme() {
     document.body.classList[this.props.darkMode ? 'add' : 'remove'](
-      'dark-mode'
+      DARK_MODE_CLASS_NAME
     );
   }
 

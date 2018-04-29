@@ -1,9 +1,12 @@
-import { DEFAULT_SEARCH_SOURCE, SOURCES } from '../src/js/constants';
+import { SOURCES } from '../src/js/constants';
 
 const suffix = suffix => (value = '') =>
   `${value}${value === '' ? '' : ' - '}${suffix}`;
 
 const suffixAppName = suffix('SikhiToTheMax');
+
+const getAng = req => req.query.ang;
+const getSource = req => SOURCES[req.query.source || 'G'];
 
 export default {
   '/': {
@@ -24,11 +27,9 @@ export default {
       `SikhiToTheMax is backed by a non-profit organization named Khalis Foundation.`,
   },
   '/ang': {
-    title: suffixAppName('Ang/Page Viewer'),
+    title: req => suffixAppName(`Ang ${getAng(req)} of ${getSource(req)}`),
     createDescription: req =>
-      `Read page number ${req.query.ang} of ${
-        SOURCES[req.query.source || DEFAULT_SEARCH_SOURCE]
-      } now`,
+      `Read page number ${getAng(req)} of ${getSource(req)} now`,
   },
   '/index': {
     title: suffixAppName('Index'),

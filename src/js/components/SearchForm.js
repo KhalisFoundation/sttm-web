@@ -23,7 +23,7 @@ export default class SearchForm extends React.PureComponent {
   static propTypes = {
     children: PropTypes.func.isRequired,
     defaultQuery: PropTypes.string,
-    defaultType: PropTypes.oneOf(TYPES),
+    defaultType: PropTypes.oneOf(Object.keys(TYPES)),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'query'])

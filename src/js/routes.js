@@ -16,6 +16,7 @@ import {
   DEFAULT_SEARCH_SOURCE,
   DEFAULT_SEARCH_TYPE,
   SEARCH_TYPES,
+  SOURCES,
 } from './constants';
 
 export function NotFound() {
@@ -117,7 +118,8 @@ export default [
       return (
         <Layout
           defaultQuery={ang}
-          title="Ang/Page Viewer - SikhiToTheMax"
+          title={`Ang ${ang} of ${SOURCES[source] ||
+            SOURCES.G} Ang/Page Viewer - SikhiToTheMax`}
           isAng={true}
           {...props}
         >
