@@ -1,5 +1,8 @@
 export const createAction = type => payload => ({ type, payload });
 
+export const SET_ONLINE_MODE = 'SET_ONLINE_MODE';
+export const setOnlineMode = createAction(SET_ONLINE_MODE);
+
 export const TOGGLE_DISPLAY_OPTIONS = 'TOGGLE_DISPLAY_OPTIONS';
 export const toggleDisplayOptions = createAction(TOGGLE_DISPLAY_OPTIONS);
 

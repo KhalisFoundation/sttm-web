@@ -4,25 +4,25 @@
   border-bottom: 1px solid $sttm-lighter-grey;
   position: relative;
 
-  &-naked {
-    &,
-    ul {
-      background: transparent;
-      border: none;
-    }
-
-    .top-bar-title {
-      margin: 0;
-      visibility: hidden;
-    }
-  }
-
   &,
   ul {
     background-color: $sttm-white;
 
     .dark-mode & {
       background-color: $sttm-light-black;
+    }
+  }
+
+  &-naked {
+    &,
+    ul {
+      background-color: transparent;
+      border: none;
+    }
+
+    .top-bar-title {
+      margin: 0;
+      visibility: hidden;
     }
   }
 

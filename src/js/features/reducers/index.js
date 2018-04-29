@@ -11,6 +11,7 @@ import {
   SET_FONT_SIZE,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
+  SET_ONLINE_MODE,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -28,6 +29,12 @@ import { DARK_MODE_COOKIE } from '../../../../common/constants';
 
 export default function reducer(state, action) {
   switch (action.type) {
+    case SET_ONLINE_MODE: {
+      return {
+        ...state,
+        online: action.payload,
+      };
+    }
     case TOGGLE_TRANSLITERATION_OPTIONS: {
       const showTransliterationOptions = !state.showTransliterationOptions;
       clickEvent({

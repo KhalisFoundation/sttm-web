@@ -8,11 +8,12 @@ export default ({ bodyClass, title, description }) => marinate`
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${title}</title>
   <meta name="description" content="${description}">
+  <meta name="theme-color" content="#01669b">
 
   <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
 
   <!-- TODO: Get asset_version -->
-  <link rel="stylesheet" href="/assets/css/bundle.css?v=<?= $asset_version ?>">
+  <link rel="stylesheet" href="/assets/css/bundle.css">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <link rel="manifest" href="manifest.json">
 
