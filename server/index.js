@@ -20,7 +20,7 @@ app
   .use(cookieParser())
 
   // Redirect HTTP traffic to HTTPS
-  .use(redirectToHTTPS([/localhost:(\d{4})/]))
+  .use(redirectToHTTPS([/localhost:(\d{4})/, /dev.sikhitothemax.org/]))
 
   // Infrastructure display
   .use((req, res, next) => {
