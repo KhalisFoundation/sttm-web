@@ -140,7 +140,9 @@ class Shabad extends React.PureComponent {
     Promise.resolve(
       `<div data-sttm-height="500" data-sttm-width="500" data-sttm-id="${
         info.id
-      }">SikhiToTheMax</div><script async src="https://sttm.co/embed.js"></script>`
+      }"><a href="https://sttm.co/embed?id=${
+        info.id
+      }">SikhiToTheMax</a></div><script async src="https://sttm.co/embed.js"></script>`
     )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.EMBED_COPIED))

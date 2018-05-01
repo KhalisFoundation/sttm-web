@@ -11,6 +11,24 @@ export default ({ bodyClass, title, description }) => marinate`
   <meta name="description" content="${description}">
   <meta name="theme-color" content="${ONLINE_COLOR}">
 
+  <meta property="og:type" content="website">
+  <meta property="og:author" content="https://khalisfoundation.org/">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:image" content="/assets/images/sttm_logo.png">
+  <meta property="og:image:width" content="1138">
+  <meta property="og:image:height" content="250">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:site" content="@khalisfound">
+  <meta property="twitter:creator" content="@khalisfound">
+  <meta property="twitter:title" content="${title}">
+  <meta property="twitter:description" content="${description}">
+  <meta property="twitter:image:src" content="/assets/images/sttm_logo.png">
+  <meta property="twitter:image:width" content="1138">
+  <meta property="twitter:image:height" content="250">
+
+  <link rel="shortcut icon" href="/favicon.ico">
+
   <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
 
   <!-- TODO: Get asset_version -->
