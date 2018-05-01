@@ -117,7 +117,7 @@
     background-color: $sttm-white;
     margin-left: 1rem !important;
     text-align: left;
-    width: 100% !important;
+    width: calc(100% - 1rem) !important;
 
     .dark-mode & {
       background-color: $sttm-light-black;

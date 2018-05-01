@@ -62,6 +62,14 @@ export const showToast = (text, delay = 2500) =>
 
 export const copyToClipboard = text =>
   new Promise((resolve, reject) => {
+    if ('clipboard' in navigator && 'writeText' in navigator.clipboard) {
+      navigator.clipboard
+        .writeText(text)
+        .then(resolve)
+        .catch(reject);
+      return;
+    }
+
     try {
       const textarea = document.createElement('textarea');
       textarea.textContent = text;
