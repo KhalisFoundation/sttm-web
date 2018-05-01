@@ -30,9 +30,23 @@
   }
 }
 
+@keyframes flip-open {
+  from {
+    opacity: 0;
+    transform: rotateX(-90deg) perspective(500px);
+    transform-origin: top;
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
+
 .display-options,
 .font-options {
   align-content: flex-start;
+  animation: flip-open 0.25s;
   background-color: $sttm-white;
   display: flex;
   flex-wrap: wrap;
@@ -42,11 +56,8 @@
   .dark-mode & {
     background-color: $sttm-lighter-black;
   }
-}
 
-@media screen and (min-width: 46em) {
-  .display-options,
-  .font-options {
+  @media screen and (min-width: 46em) {
     width: calc(100% - 5rem);
   }
 }

@@ -4,7 +4,11 @@ import GenericError, { SachKaur } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
 import { connect } from 'react-redux';
-import { DARK_MODE_CLASS_NAME } from '../../../common/constants';
+import {
+  DARK_MODE_CLASS_NAME,
+  ONLINE_COLOR,
+  OFFLINE_COLOR,
+} from '../../../common/constants';
 import { setOnlineMode } from '../features/actions';
 
 class Layout extends React.PureComponent {
@@ -32,6 +36,18 @@ class Layout extends React.PureComponent {
       isHome = false,
       ...props
     } = this.props;
+
+    if (window !== undefined) {
+      const $metaColor = document.querySelector('meta[name="theme-color"]');
+
+      if ($metaColor) {
+        $metaColor.setAttribute(
+          'content',
+          online ? ONLINE_COLOR : OFFLINE_COLOR
+        );
+      }
+    }
+
     return online ? (
       <React.Fragment>
         <Header

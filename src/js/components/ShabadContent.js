@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { clickEvent, ACTIONS } from '../util/analytics';
+import { clickEvent, ACTIONS, errorEvent } from '../util/analytics';
 import { showToast, copyToClipboard } from '../util';
 import Controls, { supportedMedia } from './Controls';
 import FootNav from './FootNav';
@@ -60,7 +60,7 @@ class Shabad extends React.PureComponent {
         fontSize,
       },
       handleEmbed,
-      handleSelectAll,
+      handleCopyAll,
     } = this;
 
     if (random) {
@@ -73,9 +73,11 @@ class Shabad extends React.PureComponent {
           media={
             type === 'shabad'
               ? supportedMedia
-              : supportedMedia.filter(m => m !== 'embed')
+              : supportedMedia.filter(
+                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
+                )
           }
-          onSelectAllClick={handleSelectAll}
+          onCopyAllClick={handleCopyAll}
           onEmbedClick={handleEmbed}
         />
         <Meta info={info} nav={nav} type={type} />
@@ -123,14 +125,16 @@ class Shabad extends React.PureComponent {
     removeEventListener('scroll', this.scrollListener);
   }
 
-  handleSelectAll = () => {
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNode(document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`));
-    selection.addRange(range);
-
-    clickEvent({ action: ACTIONS.SHARE, label: 'select-all' });
-  };
+  handleCopyAll = () =>
+    Promise.resolve(
+      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).textContent
+    )
+      .then(copyToClipboard)
+      .then(() => showToast(TEXTS.GURBAANI_COPIED))
+      .then(() => clickEvent({ action: ACTIONS.SHARE, label: 'copy-all' }))
+      .catch(({ message: label = '' } = {}) =>
+        errorEvent({ action: 'copy-all-failure', label })
+      );
 
   handleEmbed = () => {
     const { gurbani, info } = this.props;

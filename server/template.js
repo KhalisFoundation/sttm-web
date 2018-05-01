@@ -1,4 +1,5 @@
 import marinate from 'marinate';
+import { ONLINE_COLOR } from '../common/constants';
 
 export default ({ bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
@@ -8,7 +9,7 @@ export default ({ bodyClass, title, description }) => marinate`
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${title}</title>
   <meta name="description" content="${description}">
-  <meta name="theme-color" content="#01669b">
+  <meta name="theme-color" content="${ONLINE_COLOR}">
 
   <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
 
@@ -27,9 +28,17 @@ export default ({ bodyClass, title, description }) => marinate`
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
+  <!-- Preload Images -->
+  <link async rel="preload" href="/assets/images/sttm_logo.png" as="image">
+  <link async rel="preload" href="/assets/images/logo-192x192.png" as="image">
+
+  <!-- Preload Fonts -->
+  <link async rel="preload" href="/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1" as="font">
+  <link async rel="preload" href="/assets/fonts/AnmolLipiSG.ttf?v=1" as="font">
+
   <!-- Preload JavaScript -->
-  <link rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad.js" as="script">
-  <link rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad.js" as="script">
   <link async rel="preload" href="assets/js/chunks/Search.js" as="script">
   <link async rel="preload" href="assets/js/chunks/Shabad.js" as="script">
 </head>

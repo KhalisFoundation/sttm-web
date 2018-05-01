@@ -13,9 +13,9 @@ render(
 
 /* eslint-disable no-console */
 // Service Worker Registeration
-if ('serviceWorker' in navigator) {
+/*if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('service-worker.js', { scope: './' })
     .then(reg => console.log('Registration succeeded. Scope is ' + reg.scope))
     .catch(console.error);
-}
+}*/
