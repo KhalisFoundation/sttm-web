@@ -138,9 +138,9 @@ class Shabad extends React.PureComponent {
     clickEvent({ action: ACTIONS.SHARE, label: 'embed' });
 
     Promise.resolve(
-      `<iframe src="https://sttm.co/embed.html?id=${
+      `<div data-sttm-height="500" data-sttm-width="500" data-sttm-id="${
         info.id
-      }" height=500 width=300 ></iframe>`
+      }">SikhiToTheMax</div><script async src="https://sttm.co/embed.js"></script>`
     )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.EMBED_COPIED))
