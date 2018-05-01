@@ -11,6 +11,7 @@ export default ({ bodyClass, title, description }) => marinate`
   <meta name="description" content="${description}">
   <meta name="theme-color" content="${ONLINE_COLOR}">
 
+  <!-- Open Graph and Twitter -->
   <meta property="og:type" content="website">
   <meta property="og:author" content="https://khalisfoundation.org/">
   <meta property="og:title" content="${title}">
@@ -49,6 +50,7 @@ export default ({ bodyClass, title, description }) => marinate`
   <!-- Preload Images -->
   <link async rel="preload" href="/assets/images/sttm_logo.png" as="image">
   <link async rel="preload" href="/assets/images/logo-192x192.png" as="image">
+  <link async rel="preload" href="/assets/images/Sach Kaur.png" as="image">
 
   <!-- Preload Fonts -->
   <link async rel="preload" href="/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1" as="font">

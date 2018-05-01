@@ -51,7 +51,7 @@ app
 
     const template = createTemplate({ bodyClass, title, description });
 
-    template(res);
+    template(res, { debug: 'off', stringToBufferThreshold: 1000 });
   })
 
   // Listen on port

@@ -7,8 +7,6 @@ const onCache = cache =>
     '/assets/js/app.js',
     '/assets/css/vendor/foundation.min.css?v=6.2.4',
     '/assets/css/bundle.css',
-    '/assets/images/Sach Kaur.png',
-    '/assets/images/Sach%20Kaur.png',
     '/favicon.ico',
   ]);
 
