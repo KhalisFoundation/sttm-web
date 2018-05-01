@@ -69,7 +69,7 @@ class Shabad extends React.PureComponent {
       <React.Fragment>
         <Controls
           media={
-            type === 'shabad'
+            ['shabad', 'hukamnama', 'ang'].includes(type)
               ? supportedMedia
               : supportedMedia.filter(
                   m => ['embed', 'copyAll', 'copy'].includes(m) === false
@@ -133,14 +133,22 @@ class Shabad extends React.PureComponent {
       );
 
   handleEmbed = () => {
-    const { info } = this.props;
+    const { info, type } = this.props;
 
     clickEvent({ action: ACTIONS.SHARE, label: 'embed' });
 
+    const attrs = [
+      `data-sttm-height="500"`,
+      `data-sttm-width="500"`,
+      type === 'ang'
+        ? `data-sttm-ang="${info.source.pageno}" data-sttm-source="${
+            info.source.id
+          }"`
+        : `data-sttm-id="${info.id}"`,
+    ].join(' ');
+
     Promise.resolve(
-      `<div data-sttm-height="500" data-sttm-width="500" data-sttm-id="${
-        info.id
-      }"><a href="https://sttm.co/embed?id=${
+      `<div ${attrs}><a href="https://sttm.co/embed?id=${
         info.id
       }">SikhiToTheMax</a></div><script async src="https://sttm.co/embed.js"></script>`
     )
