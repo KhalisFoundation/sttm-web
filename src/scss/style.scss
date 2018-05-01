@@ -142,5 +142,6 @@ select {
   .progressbar {
     background-color: $sttm-orange;
     height: 3px;
+    transition: transform ease-in-out 0.1s;
   }
 }

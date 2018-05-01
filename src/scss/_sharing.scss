@@ -64,6 +64,7 @@
 
     .short-url {
       &-input {
+        background-color: $sttm-white;
         display: inline-block;
         font-size: 11px;
         height: auto;
@@ -71,6 +72,12 @@
         position: relative;
         top: -12px;
         width: 175px;
+
+        .dark-mode & {
+          background-color: $sttm-lighter-black;
+          border-color: $sttm-black;
+          color: $sttm-white;
+        }
       }
 
       &-icon {
@@ -80,6 +87,10 @@
         right: 0;
         top: -14px;
         width: 0.8em;
+
+        .dark-mode & {
+          box-shadow: -5px 0 7px -6px $sttm-light-black;
+        }
       }
     }
   }
