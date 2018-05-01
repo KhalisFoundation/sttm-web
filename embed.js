@@ -119,7 +119,130 @@ function appendChildren(el, children) {
       h('div', null, [].concat($translationButtons, $transliterationButton))
     );
   }
-  addControls();
-})();
 
-console.log('yolo');
+  function buildDOM({
+    gurbani = null,
+    shabadinfo: info = null,
+    page = null,
+    source = null,
+  }) {
+    const $header = document.querySelector('.sttm-header');
+    const $meta = document.querySelector('.sttm-shabad-meta');
+    const $content = document.querySelector('.sttm-shabad-content');
+
+    function Page(gurbani) {
+      return gurbani.map(({ shabad }) =>
+        h(
+          'div',
+          { class: 'sttm-line' },
+          h('div', { class: 'sttm-baani' }, shabad.gurbani.unicode),
+          h('div', { class: 'sttm-transliteration' }, shabad.transliteration),
+          h(
+            'div',
+            { class: 'sttm-translation sttm-english sttm-enabled' },
+            shabad.translation.english.ssk
+          ),
+          h(
+            'div',
+            { class: 'sttm-translation sttm-punjabi' },
+            shabad.translation.punjabi.bms.unicode
+          ),
+          h(
+            'div',
+            { class: 'sttm-translation sttm-spanish' },
+            shabad.translation.spanish
+          )
+        )
+      );
+    }
+
+    if (gurbani !== null && info !== null) {
+      $header.appendChild(
+        h(
+          'a',
+          {
+            class: 'sttm-button sttm-primary',
+            href: `https://sikhitothemax.org/shabad?id=${info.id}`,
+          },
+          'Open in SikhiToTheMax'
+        )
+      );
+
+      appendChildren($meta, [
+        `${info.writer.english} | ${info.source.english}: `,
+        h(
+          'a',
+          {
+            href: `https://sikhitothemax.org/ang?ang=${
+              info.source.pageno
+            }&source=${info.source.id}`,
+          },
+          info.source.pageno
+        ),
+      ]);
+
+      appendChildren($content, Page(gurbani));
+    } else if (page !== null && source !== null) {
+      $header.appendChild(
+        h(
+          'a',
+          {
+            class: 'sttm-button sttm-primary',
+            href: `https://sikhitothemax.org/ang?ang=${source.pageno}&source=${
+              source.id
+            }`,
+          },
+          'Open in SikhiToTheMax'
+        )
+      );
+
+      appendChildren($meta, [
+        `${source.english}: `,
+        h(
+          'a',
+          {
+            href: `https://sikhitothemax.org/ang?ang=${source.pageno}&source=${
+              source.id
+            }`,
+          },
+          source.pageno
+        ),
+      ]);
+
+      appendChildren($content, Page(page));
+    } else {
+      // error
+    }
+  }
+
+  function getQueryParams(str = document.location.search) {
+    const qs = str.replace(/\+/g, ' ');
+    const params = {};
+    const re = /[?&]?([^=]+)=([^&]*)/g;
+    let tokens;
+
+    while ((tokens = re.exec(qs))) {
+      params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+  }
+
+  const { id = null, ang = null, source = 'G' } = getQueryParams(
+    document.location.search
+  );
+  let url;
+
+  if (id !== null) {
+    url = `https://api.banidb.com/shabad/${id}`;
+  } else if (ang !== null) {
+    url = `https://api.banidb.com/ang/${ang}/${source}`;
+  } else {
+    // error;
+  }
+
+  fetch(url)
+    .then(r => r.json())
+    .then(buildDOM)
+    .then(addControls);
+})();

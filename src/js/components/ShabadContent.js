@@ -40,8 +40,6 @@ class Shabad extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
   };
 
-  getEmbedCode = null;
-
   render() {
     const {
       props: {
@@ -117,8 +115,6 @@ class Shabad extends React.PureComponent {
   componentDidMount() {
     addEventListener('scroll', this.scrollListener, { passive: true });
     this.scrollListener();
-    // PreLoad
-    this.getEmbedCode = import(/* webpackChunkName: "embed" */ '../util/embed.js');
   }
 
   componentWillUnmount() {
@@ -137,12 +133,15 @@ class Shabad extends React.PureComponent {
       );
 
   handleEmbed = () => {
-    const { gurbani, info } = this.props;
+    const { info } = this.props;
 
     clickEvent({ action: ACTIONS.SHARE, label: 'embed' });
 
-    this.getEmbedCode
-      .then(({ default: getEmbedCode }) => getEmbedCode({ gurbani, info }))
+    Promise.resolve(
+      `<iframe src="https://sttm.co/embed.html?id=${
+        info.id
+      }" height=500 width=300 ></iframe>`
+    )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.EMBED_COPIED))
       .catch(() => showToast(TEXTS.EMBED_FAILURE));
