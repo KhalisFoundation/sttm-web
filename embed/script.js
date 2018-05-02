@@ -135,8 +135,9 @@ function appendChildren(el, children) {
     const $content = document.querySelector('.sttm-shabad-content');
 
     function Page(gurbani) {
-      return gurbani.map(({ shabad }) =>
-        h(
+      return gurbani.map(function(data) {
+        const shabad = data.shabad;
+        return h(
           'div',
           { class: 'sttm-line' },
           h('div', { class: 'sttm-baani' }, shabad.gurbani.unicode),
@@ -156,8 +157,8 @@ function appendChildren(el, children) {
             { class: 'sttm-translation sttm-spanish' },
             shabad.translation.spanish
           )
-        )
-      );
+        );
+      });
     }
 
     if (gurbani !== null && info !== null) {
@@ -166,20 +167,22 @@ function appendChildren(el, children) {
           'a',
           {
             class: 'sttm-button sttm-primary',
-            href: `https://sikhitothemax.org/shabad?id=${info.id}`,
+            href: 'https://sikhitothemax.org/shabad?id=' + info.id,
           },
           'Open in SikhiToTheMax'
         )
       );
 
       appendChildren($meta, [
-        `${info.writer.english} | ${info.source.english}: `,
+        info.writer.english + ' | ' + info.source.english + ': ',
         h(
           'a',
           {
-            href: `https://sikhitothemax.org/ang?ang=${
-              info.source.pageno
-            }&source=${info.source.id}`,
+            href:
+              'https://sikhitothemax.org/ang?ang=' +
+              info.source.pageno +
+              '&source=' +
+              info.source.id,
           },
           info.source.pageno
         ),
@@ -192,22 +195,26 @@ function appendChildren(el, children) {
           'a',
           {
             class: 'sttm-button sttm-primary',
-            href: `https://sikhitothemax.org/ang?ang=${source.pageno}&source=${
-              source.id
-            }`,
+            href:
+              'https://sikhitothemax.org/ang?ang=' +
+              source.pageno +
+              '&source=' +
+              source.id,
           },
           'Open in SikhiToTheMax'
         )
       );
 
       appendChildren($meta, [
-        `${source.english}: `,
+        source.english + ': ',
         h(
           'a',
           {
-            href: `https://sikhitothemax.org/ang?ang=${source.pageno}&source=${
-              source.id
-            }`,
+            href:
+              'https://sikhitothemax.org/ang?ang=' +
+              source.pageno +
+              '&source=' +
+              source.id,
           },
           source.pageno
         ),
@@ -238,9 +245,9 @@ function appendChildren(el, children) {
   let url;
 
   if (id !== null) {
-    url = `https://api.banidb.com/shabad/${id}`;
+    url = 'https://api.banidb.com/shabad/' + id;
   } else if (ang !== null) {
-    url = `https://api.banidb.com/ang/${ang}/${source}`;
+    url = 'https://api.banidb.com/ang/' + ang + '/' + source;
   } else {
     // error;
   }

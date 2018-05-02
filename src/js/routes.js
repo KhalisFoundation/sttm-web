@@ -19,6 +19,8 @@ import {
   SOURCES,
 } from './constants';
 
+// TODO: Rely on `../../seo/` for titles.
+
 export function NotFound() {
   return (
     <Layout title="Page not found - SikhiToTheMax">
