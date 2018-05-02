@@ -16,7 +16,7 @@ The following is a set of guidelines for contributing to SikhiToTheMax and its p
 
 ## JavaScript Styleguide
 
-All JavaScript must adhere to our [ESLint](tree/.eslintrc) and [Prettier](tree/package.json) rules. We recommend using [VSCode](https://code.visualstudio.com/) with [Prettier](https://prettier.io/) [plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) installed to avoid linting errors. We anyway lint the code before pushing to repo.
+All JavaScript must adhere to our [ESLint](.eslintrc) and [Prettier](package.json) rules. We recommend using [VSCode](https://code.visualstudio.com/) with [Prettier](https://prettier.io/) [plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) installed to avoid linting errors. We anyway lint the code before pushing to repo.
 
 ## CSS Styleguide
 
