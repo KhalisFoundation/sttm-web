@@ -11,6 +11,7 @@ import {
   SET_FONT_SIZE,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
+  SET_ONLINE_MODE,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -24,9 +25,16 @@ import {
 } from '../../constants';
 import { saveToLocalStorage } from '../../util';
 import { clickEvent } from '../../util/analytics';
+import { DARK_MODE_COOKIE } from '../../../../common/constants';
 
 export default function reducer(state, action) {
   switch (action.type) {
+    case SET_ONLINE_MODE: {
+      return {
+        ...state,
+        online: action.payload,
+      };
+    }
     case TOGGLE_TRANSLITERATION_OPTIONS: {
       const showTransliterationOptions = !state.showTransliterationOptions;
       clickEvent({
@@ -79,6 +87,7 @@ export default function reducer(state, action) {
       });
 
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_DARK_MODE, darkMode);
+      document.cookie = `${DARK_MODE_COOKIE}=${darkMode ? 1 : 0};`;
       return {
         ...state,
         darkMode,

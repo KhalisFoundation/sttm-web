@@ -31,11 +31,17 @@ export default class Meta extends React.PureComponent {
       ) : null;
     return (
       <div id="metadata">
-        {isFalsy(nav.previous) === false && (
+        {isFalsy(nav.previous) === false ? (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
               <Chevron left />
             </Link>
+          </div>
+        ) : (
+          <div className="shabad-nav left disabled-nav">
+            <a>
+              <Chevron left />
+            </a>
           </div>
         )}
         <div className="meta">
@@ -88,11 +94,17 @@ export default class Meta extends React.PureComponent {
           </h4>
         </div>
 
-        {isFalsy(nav.next) === false && (
+        {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
             <Link to={link + nav.next}>
-              <Chevron right />
+              <Chevron />
             </Link>
+          </div>
+        ) : (
+          <div className="shabad-nav right disabled-nav">
+            <a>
+              <Chevron />
+            </a>
           </div>
         )}
       </div>
