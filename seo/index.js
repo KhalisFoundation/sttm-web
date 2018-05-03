@@ -1,4 +1,4 @@
-import { SOURCES } from '../src/js/constants';
+import { SOURCES } from 'shabados';
 
 const suffix = suffix => (value = '') =>
   `${value}${value === '' ? '' : ' - '}${suffix}`;
