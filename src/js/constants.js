@@ -1,18 +1,3 @@
-import { SOURCES, TYPES as _TYPES } from 'shabados';
-
-export { SOURCES };
-
-export const SEARCH_TYPES = {
-  FIRST_LETTERS: 0,
-  FIRST_LETTERS_ANYWHERE: 1,
-  GURMUKHI_WORD: 2,
-  ENGLISH_WORD: 3,
-  ROMANIZED: 4,
-  ANG: 5,
-};
-
-export const TYPES = [..._TYPES, 'Ang'];
-
 export const SHORT_DOMAIN = 'sttm.co';
 
 export const LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE = 'searchSource';
@@ -29,18 +14,18 @@ export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 
 export const PLACEHOLDERS = {
-  [SEARCH_TYPES.FIRST_LETTERS]: ['jmTAq'], // first letters
-  [SEARCH_TYPES.FIRST_LETTERS_ANYWHERE]: ['mqjbe'], // first letter anywhere
-  [SEARCH_TYPES.GURMUKHI_WORD]: ['jo mwgih Twkur Apuny qy'], // gurmukhi
-  [SEARCH_TYPES.ENGLISH_WORD]: ['He has extended His power', true], // translation
-  [SEARCH_TYPES.ROMANIZED]: ['jo mange thakur apne te soi', true], // romanized
-  [SEARCH_TYPES.ANG]: ['123', true], //ang
+  0: ['jmTAq'], // first letters
+  1: ['mqjbe'], // first letter anywhere
+  2: ['jo mwgih Twkur Apuny qy'], // gurmukhi
+  3: ['He has extended His power', true], // translation
+  4: ['jo mange thakur apne te soi', true], // romanized
+  5: ['123', true], //ang
 };
 
 export const TRANSLATION_LANGUAGES = ['punjabi', 'english', 'spanish'];
 export const TRANSLITERATION_LANGUAGES = ['english'];
 
-export const DEFAULT_SEARCH_TYPE = SEARCH_TYPES.FIRST_LETTERS;
+export const DEFAULT_SEARCH_TYPE = 0;
 export const DEFAULT_SEARCH_SOURCE = 'all';
 export const DEFAULT_TRANSLATION_LANGUAGES = ['english'];
 export const DEFAULT_TRANSLITERATION_LANGUAGES = ['english'];
@@ -55,8 +40,6 @@ export const DEFAULT_DARK_MODE = false;
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
-  OFFLINE: `It seems you aren't connected to internet`,
-  OFFLINE_DESCRIPTION: `Unfortunately we don't support offline mode fully as of now, and you would need to be connected to use SikhiToTheMax.`,
   HELP_SECTION: 'the help section',
   INDEX_SECTION: 'the index page',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
@@ -70,9 +53,6 @@ export const TEXTS = {
   NO_RESULTS_FOUND_DESCRIPTION: (source, type) =>
     `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above. If you still cannot find your shabad, head over to `,
   GURBAANI_COPIED: 'Gurbaani has been copied to your clipboard!',
-  EMBED_COPIED:
-    'Embedding code has been copied. Paste it in a rich editor usually found in forums',
-  EMBED_FAILURE: "Sorry, we couldn't copy embed code",
   LINK_COPIED: 'Link has been copied to your clipboard!',
   COPY_FAILURE: "Sorry, we couldn't copy the link. Try copying it manually.",
   PREVIOUS_PAGE: 'Previous Page',
@@ -86,5 +66,3 @@ export const TEXTS = {
   REDIRECTING: 'Redirecting you to',
   REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
 };
-
-export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';

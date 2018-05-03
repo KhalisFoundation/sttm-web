@@ -30,23 +30,9 @@
   }
 }
 
-@keyframes flip-open {
-  from {
-    opacity: 0;
-    transform: rotateX(-90deg) perspective(500px);
-    transform-origin: top;
-  }
-
-  to {
-    opacity: 1;
-    transform: rotateX(0deg);
-  }
-}
-
 .display-options,
 .font-options {
   align-content: flex-start;
-  animation: flip-open 0.25s;
   background-color: $sttm-white;
   display: flex;
   flex-wrap: wrap;
@@ -56,8 +42,11 @@
   .dark-mode & {
     background-color: $sttm-lighter-black;
   }
+}
 
-  @media screen and (min-width: 46em) {
+@media screen and (min-width: 46em) {
+  .display-options,
+  .font-options {
     width: calc(100% - 5rem);
   }
 }
@@ -73,6 +62,18 @@
 }
 
 #shabad-controllers {
+  /* Opera doesn't support this in the shorthand */
+  background-attachment: local, local, scroll, scroll;
+
+  /* do not change order of below */
+  background-image:
+    linear-gradient(to right, $sttm-dark-white, $sttm-dark-white),
+    linear-gradient(to right, $sttm-dark-white, $sttm-dark-white),
+    linear-gradient(to right, $sttm-black, $sttm-lighter-black),
+    linear-gradient(to left, $sttm-black, $sttm-lighter-black);
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
   display: flex;
   margin: 0.25rem auto;
   overflow-x: auto;

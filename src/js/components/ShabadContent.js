@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { clickEvent, ACTIONS, errorEvent } from '../util/analytics';
-import { showToast, copyToClipboard } from '../util';
-import Controls, { supportedMedia } from './Controls';
+import Controls from './Controls';
 import FootNav from './FootNav';
 import Meta from './Meta';
 import ProgressBar from './ProgressBar';
 import Baani from './Baani';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '../constants';
 
 class Shabad extends React.PureComponent {
   state = {
@@ -42,24 +39,20 @@ class Shabad extends React.PureComponent {
 
   render() {
     const {
-      props: {
-        gurbani,
-        nav,
-        info,
-        type,
-        random,
-        splitView,
-        translationLanguages,
-        transliterationLanguages,
-        larivaarAssist,
-        larivaar,
-        highlight,
-        unicode,
-        fontSize,
-      },
-      handleEmbed,
-      handleCopyAll,
-    } = this;
+      gurbani,
+      nav,
+      info,
+      type,
+      random,
+      splitView,
+      translationLanguages,
+      transliterationLanguages,
+      larivaarAssist,
+      larivaar,
+      highlight,
+      unicode,
+      fontSize,
+    } = this.props;
 
     if (random) {
       return <Redirect to={`/shabad?id=${info.id}`} />;
@@ -67,17 +60,7 @@ class Shabad extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <Controls
-          media={
-            ['shabad', 'hukamnama', 'ang'].includes(type)
-              ? supportedMedia
-              : supportedMedia.filter(
-                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
-                )
-          }
-          onCopyAllClick={handleCopyAll}
-          onEmbedClick={handleEmbed}
-        />
+        <Controls />
         <Meta info={info} nav={nav} type={type} />
         <div id="shabad" className="shabad display">
           <div className="shabad-container">
@@ -120,42 +103,6 @@ class Shabad extends React.PureComponent {
   componentWillUnmount() {
     removeEventListener('scroll', this.scrollListener);
   }
-
-  handleCopyAll = () =>
-    Promise.resolve(
-      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).textContent
-    )
-      .then(copyToClipboard)
-      .then(() => showToast(TEXTS.GURBAANI_COPIED))
-      .then(() => clickEvent({ action: ACTIONS.SHARE, label: 'copy-all' }))
-      .catch(({ message: label = '' } = {}) =>
-        errorEvent({ action: 'copy-all-failure', label })
-      );
-
-  handleEmbed = () => {
-    const { info, type } = this.props;
-
-    clickEvent({ action: ACTIONS.SHARE, label: 'embed' });
-
-    const attrs = [
-      `data-sttm-height="500"`,
-      `data-sttm-width="500"`,
-      type === 'ang'
-        ? `data-sttm-ang="${info.source.pageno}" data-sttm-source="${
-            info.source.id
-          }"`
-        : `data-sttm-id="${info.id}"`,
-    ].join(' ');
-
-    Promise.resolve(
-      `<div ${attrs}><a href="https://sttm.co/embed?id=${
-        info.id
-      }">SikhiToTheMax</a></div><script async src="https://sttm.co/embed.js"></script>`
-    )
-      .then(copyToClipboard)
-      .then(() => showToast(TEXTS.EMBED_COPIED))
-      .catch(() => showToast(TEXTS.EMBED_FAILURE));
-  };
 }
 
 const stateToProps = state => state;

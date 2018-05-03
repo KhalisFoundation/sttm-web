@@ -3,104 +3,55 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ArrowIcon from './Icons/Arrow';
 
-const ButtonList = ({ onButtonClick, buttons = [] }) =>
+const ButtonList = ({ buttons = [] }) =>
   buttons.map((button, i) => (
-    <button key={i} data-value={button} type="button" onClick={onButtonClick}>
+    <button key={i} type="button">
       {button}
     </button>
   ));
-
-const keyboardGrid = [
-  [
-    [['a', 'A', 'e', 's', 'h'], ['k', 'K', 'g', 'G', '|']],
-    [['c', 'C', 'j', 'J', '\\'], ['t', 'T', 'f', 'F', 'x']],
-    [['q', 'Q', 'd', 'D', 'n'], ['p', 'P', 'b', 'B', 'm']],
-    [['X', 'r', 'l', 'v', 'V']],
-  ],
-  [
-    [[1, 2, 3, 4, 5], [6, 7, 8, 9, 0]],
-    [['w', 'i', 'I', 'u', 'U'], ['y', 'Y', 'o', 'O', 'M']],
-    [['N', 'W', '`', '~', 'R'], ['H', '˜', '´', 'Í', 'Ï']],
-    [['ç', 'E', '^', '\u00a0', '\u00a0']],
-  ],
-];
 
 export default class GurmukhiKeyboard extends React.PureComponent {
   static propTypes = {
     value: PropTypes.string.isRequired,
     active: PropTypes.bool.isRequired,
     onKeyClick: PropTypes.func.isRequired,
-    onClose: PropTypes.func,
+    onClose: PropTypes.func.isRequired,
   };
 
-  state = {
-    page: 1,
-  };
+  // Instead of attaching click to each button, we are using event delegation.
+  click = ({ target: _$button, currentTarget: $keyboard }) => {
+    const { value, onKeyClick, onClose } = this.props;
+    const $button =
+      _$button.nodeName.toUpperCase() === 'I' ? _$button.parentNode : _$button;
+    const { action } = $button.dataset;
 
-  handleBackspace = () =>
-    this.props.onKeyClick(
-      this.props.value.substring(0, this.props.value.length - 1)
-    );
-
-  handlePageClick = page => () => this.setState({ page });
-
-  handleClick = ({
-    target: {
-      dataset: { value },
-    },
-  }) => this.props.onKeyClick(`${this.props.value}${value}`);
-
-  componentDidMount() {
-    addEventListener('click', this.windowEventListener);
-  }
-
-  windowEventListener = ({ path }) => {
-    if (
-      path.some(
-        ({ classList = null }) =>
-          classList &&
-          (classList.contains('gurmukhi-keyboard') ||
-            classList.contains('gurmukhi-keyboard-toggle'))
-      ) === false
-    ) {
-      this.props.onClose();
+    switch (action) {
+      case 'close': {
+        onClose();
+        break;
+      }
+      case 'bksp': {
+        onKeyClick(value.substring(0, value.length - 1));
+        break;
+      }
+      case 'page-1':
+      case 'page-2': {
+        [...$keyboard.querySelectorAll('.page')].forEach(e => {
+          e.style.display = 'none';
+        });
+        document.getElementById(`gurmukhi-keyboard-${action}`).style.display =
+          'block';
+        break;
+      }
+      case 'help':
+        break;
+      default: {
+        onKeyClick(value + ($button.dataset.value || $button.innerText));
+      }
     }
   };
 
-  componentWillUnmount() {
-    removeEventListener('click', this.windowEventListener);
-  }
-
   render() {
-    const meta = (
-      <div className="keyboard-row-set">
-        <button type="button">{'\u00a0'}</button>
-        {[1, 2].map(page => (
-          <button
-            key={page}
-            type="button"
-            data-action={`page-${page}`}
-            title={`Page ${page}`}
-            onClick={this.handlePageClick(page)}
-            className={this.state.page === page ? 'active' : ''}
-          >
-            {page}
-          </button>
-        ))}
-        <button
-          type="button"
-          data-action="bksp"
-          title="Backspace"
-          onClick={this.handleBackspace}
-        >
-          <ArrowIcon />
-        </button>
-        <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
-          <button type="button">?</button>
-        </Link>
-      </div>
-    );
-
     return (
       <div
         className={`gurmukhi-keyboard gurbani-font ${
@@ -108,37 +59,107 @@ export default class GurmukhiKeyboard extends React.PureComponent {
         }`}
         onClick={this.click}
       >
-        {keyboardGrid.map(
-          (rows, index) =>
-            index + 1 === this.state.page && (
-              <div
-                className="page"
-                key={index}
-                id={`gurmukhi-keyboard-page-${index + 1}`}
-              >
-                {rows.map(([first, second], rowIndex, { length }) => (
-                  <div key={`${index}-${rowIndex}`} className="keyboard-row">
-                    <div className="keyboard-row-set">
-                      <ButtonList
-                        onButtonClick={this.handleClick}
-                        buttons={first}
-                      />
-                    </div>
-                    {rowIndex === length - 1 ? (
-                      meta
-                    ) : (
-                      <div className="keyboard-row-set">
-                        <ButtonList
-                          onButtonClick={this.handleClick}
-                          buttons={second}
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )
-        )}
+        <div
+          className="page"
+          style={{ display: 'block' }}
+          id="gurmukhi-keyboard-page-1"
+        >
+          <div className="keyboard-row">
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['a', 'A', 'e', 's', 'h']} />
+            </div>
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['k', 'K', 'g', 'G', '|']} />
+            </div>
+          </div>
+          <div className="keyboard-row">
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['c', 'C', 'j', 'J', '\\']} />
+            </div>
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['t', 'T', 'f', 'F', 'x']} />
+            </div>
+          </div>
+          <div className="keyboard-row">
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['q', 'Q', 'd', 'D', 'n']} />
+            </div>
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['p', 'P', 'b', 'B', 'm']} />
+            </div>
+          </div>
+          <div className="keyboard-row">
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['X', 'r', 'l', 'v', 'V']} />
+            </div>
+            <div className="keyboard-row-set">
+              <button type="button">{'\u00a0'}</button>
+              <button type="button" data-action="page-1" className="active">
+                1
+              </button>
+              <button type="button" data-action="page-2">
+                2
+              </button>
+              <button type="button" data-action="bksp">
+                <ArrowIcon />
+              </button>
+
+              <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
+                <button data-action="help" type="button">
+                  ?
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="page" id="gurmukhi-keyboard-page-2">
+          <div className="keyboard-row">
+            <div className="keyboard-row-set">
+              <ButtonList buttons={[1, 2, 3, 4, 5]} />
+            </div>
+            <div className="keyboard-row-set">
+              <ButtonList buttons={[6, 7, 8, 9, 0]} />
+            </div>
+          </div>
+          <div className="keyboard-row">
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['w', 'i', 'I', 'u', 'U']} />
+            </div>
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['y', 'Y', 'o', 'O', 'M']} />
+            </div>
+          </div>
+          <div className="keyboard-row">
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['N', 'W', '`', '~', 'R']} />
+            </div>
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['H', '˜', '´', 'Í', 'Ï']} />
+            </div>
+          </div>
+          <div className="keyboard-row">
+            <div className="keyboard-row-set">
+              <ButtonList buttons={['ç', 'E', '^', '\u00a0', '\u00a0']} />
+            </div>
+            <div className="keyboard-row-set">
+              <button type="button">{'\u00a0'}</button>
+              <button type="button" data-action="page-1">
+                1
+              </button>
+              <button type="button" data-action="page-2" className="active">
+                2
+              </button>
+              <button type="button" data-action="bksp">
+                <ArrowIcon />
+              </button>
+              <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
+                <button data-action="help" type="button">
+                  ?
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

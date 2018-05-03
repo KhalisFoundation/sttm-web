@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  TYPES,
-  SOURCES,
   LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
   PLACEHOLDERS,
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
-  SEARCH_TYPES,
 } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
-import { getNumberFromLocalStorage } from '../util';
+
+const SEARCH_TYPES = {
+  ROMANIZED: 4,
+  ANG: 5,
+};
 
 const onlyNumbers = str => str.replace(/\D/g, '');
 export default class SearchForm extends React.PureComponent {
@@ -23,8 +24,6 @@ export default class SearchForm extends React.PureComponent {
   static propTypes = {
     children: PropTypes.func.isRequired,
     defaultQuery: PropTypes.string,
-    defaultType: PropTypes.oneOf(Object.keys(TYPES)),
-    defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'query'])
     ),
@@ -44,37 +43,17 @@ export default class SearchForm extends React.PureComponent {
     displayGurmukhiKeyboard: false,
     query: this.props.defaultQuery,
     shouldSubmit: false,
-    type:
-      this.props.defaultType ||
-      getNumberFromLocalStorage(
-        LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-        DEFAULT_SEARCH_TYPE
-      ),
+    type: parseInt(
+      localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE) ||
+        DEFAULT_SEARCH_TYPE,
+      10
+    ),
     source:
-      this.props.defaultSource ||
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
       DEFAULT_SEARCH_SOURCE,
     placeholder: '',
     isAnimatingPlaceholder: false,
   };
-
-  static getDerivedStateFromProps(
-    { defaultType, defaultSource, defaultQuery },
-    { type, source, query }
-  ) {
-    if (
-      defaultQuery !== query ||
-      defaultType !== type ||
-      defaultSource !== source
-    ) {
-      return {
-        query: defaultQuery || query,
-        type: defaultType || type,
-        source: defaultSource || source,
-      };
-    }
-    return null;
-  }
 
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
@@ -108,13 +87,11 @@ export default class SearchForm extends React.PureComponent {
     }
   };
 
-  stopPlaceholderAnimation = () =>
-    new Promise(resolve =>
-      this.setState({ isAnimatingPlaceholder: false }, () => {
-        clearTimeout(this.timer);
-        resolve();
-      })
+  stopPlaceholderAnimation = () => {
+    this.setState({ isAnimatingPlaceholder: false }, () =>
+      clearTimeout(this.timer)
     );
+  };
 
   _setState = (...args) => (this._mounted ? this.setState(...args) : null);
 
@@ -192,7 +169,6 @@ export default class SearchForm extends React.PureComponent {
 
   // Retuns a function
   setGurmukhiKeyboardVisibilityAs = value => () =>
-    value !== this.state.displayGurmukhiKeyboard &&
     this.setState({ displayGurmukhiKeyboard: value }, () => {
       clickEvent({
         action: ACTIONS.GURMUKHI_KEYBOARD,
@@ -200,15 +176,15 @@ export default class SearchForm extends React.PureComponent {
       });
     });
 
-  setQueryAs = value => () =>
-    this.stopPlaceholderAnimation().then(() =>
-      this.setState(({ type }) => ({
-        query: type === SEARCH_TYPES.ANG ? onlyNumbers(value) : value,
-        shouldSubmit:
-          this.props.submitOnChangeOf.includes('query') &&
-          (type === SEARCH_TYPES.ANG ? onlyNumbers(value) : value) !== '',
-      }))
-    );
+  setQueryAs = value => () => {
+    this.stopPlaceholderAnimation();
+    this.setState(({ type }) => ({
+      query: type === SEARCH_TYPES.ANG ? onlyNumbers(value) : value,
+      shouldSubmit:
+        this.props.submitOnChangeOf.includes('query') &&
+        (type === SEARCH_TYPES.ANG ? onlyNumbers(value) : value) !== '',
+    }));
+  };
 
   handleSearchChange = ({ target: { value } }) => {
     this.setQueryAs(value)();
@@ -234,28 +210,26 @@ export default class SearchForm extends React.PureComponent {
       }
     );
 
-  handleSearchTypeChange = ({ currentTarget: { value } }) =>
-    this.stopPlaceholderAnimation().then(() =>
-      this.setState(
-        {
-          type: parseInt(value, 10),
-          query:
-            parseInt(value, 10) === SEARCH_TYPES.ANG
-              ? onlyNumbers(this.state.query)
-              : this.state.query,
-          shouldSubmit:
-            this.props.submitOnChangeOf.includes('type') &&
-            this.state.query !== '',
-        },
-        () => {
-          clickEvent({ action: ACTIONS.SEARCH_TYPE, label: this.state.type });
-          localStorage.setItem(
-            LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-            this.state.type
-          );
-          requestAnimationFrame(this.beginPlaceholderAnimation);
-        }
-      )
+  handleSearchTypeChange = e =>
+    this.setState(
+      {
+        type: parseInt(e.target.value, 10),
+        query:
+          parseInt(e.target.value, 10) === SEARCH_TYPES.ANG
+            ? onlyNumbers(this.state.query)
+            : this.state.query,
+        shouldSubmit:
+          this.props.submitOnChangeOf.includes('type') &&
+          this.state.query !== '',
+      },
+      () => {
+        clickEvent({ action: ACTIONS.SEARCH_TYPE, label: this.state.type });
+        localStorage.setItem(
+          LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+          this.state.type
+        );
+        requestAnimationFrame(this.beginPlaceholderAnimation);
+      }
     );
 
   handleSubmit = () => {

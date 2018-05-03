@@ -120,14 +120,14 @@ select {
 
   tbody {
     background-color: $sttm-darker-grey;
+  }
 
-    tr {
-      background-color: $sttm-lighter-black;
+  tr {
+    background-color: $sttm-lighter-black;
+  }
 
-      &:nth-child(even) {
-        background-color: $sttm-light-black;
-      }
-    }
+  tr:nth-child(even) {
+    background-color: $sttm-light-black;
   }
 }
 
@@ -142,6 +142,5 @@ select {
   .progressbar {
     background-color: $sttm-orange;
     height: 3px;
-    transition: transform ease-in-out 0.1s;
   }
 }
