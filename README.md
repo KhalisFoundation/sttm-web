@@ -13,9 +13,7 @@ Developer: Khalis Foundation and sevadars (see commiters for more details)
 
 Acknowledgements: Bhai Tarsem Singh UK, SHARE UK, Khalis Foundation, Khalsa Foundation UK, Dr. Sant Singh Khalsa, Dr. Kulbir Singh Thind
 
-![BaniDB Logo](http://www.banidb.com/wp-content/uploads/2018/03/full-banidb-logo.png)
-
-Uses BaniDB API: http://banidb.com/
+Uses ShabadOS API: http://www.shabados.org
 
 ## Build Instructions
 
