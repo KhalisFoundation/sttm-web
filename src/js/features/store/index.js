@@ -25,7 +25,6 @@ import {
 } from '../../util';
 
 const initialState = {
-  online: window !== undefined ? window.navigator.onLine : true,
   showDisplayOptions: false,
   showFontOptions: false,
   showTransliterationOptions: false,
