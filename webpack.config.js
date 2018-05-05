@@ -19,6 +19,11 @@ const plugins = PRODUCTION
         PRODUCTION: JSON.stringify(true),
         API_URL: JSON.stringify(API_URLS.PRODUCTION),
       }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: 3,
+      }),
+      new webpack.optimize.ModuleConcatenationPlugin(),
       new UglifyJsPlugin(),
     ]
   : [
@@ -26,13 +31,26 @@ const plugins = PRODUCTION
         PRODUCTION: JSON.stringify(false),
         API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
       }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: 3,
+      }),
     ];
+
+const vendor = [
+  'react',
+  'react-dom',
+  'shabados',
+  'redux',
+  'react-redux',
+  'react-router-dom',
+];
 
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');
 
 module.exports = {
-  mode: PRODUCTION ? 'production' : 'development',
   entry: {
+    vendor,
     app,
   },
   output: {
@@ -42,20 +60,6 @@ module.exports = {
     publicPath: 'assets/js/',
   },
   plugins,
-  optimization: {
-    noEmitOnErrors: true, // NoEmitOnErrorsPlugin
-    concatenateModules: true, //ModuleConcatenationPlugin
-    splitChunks: {
-      cacheGroups: {
-        // All dependencies in `node_modules` become part of vendor chunk
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all'
-        }
-      }
-    }
-  },
   module: {
     rules: [
       {
