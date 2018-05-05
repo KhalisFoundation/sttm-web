@@ -48,6 +48,16 @@ blockquote {
   &.left {
     margin-right: 10px;
   }
+
+  &.disabled-nav {
+    a {
+      color: $sttm-dark-grey;
+
+      svg {
+        fill: $sttm-dark-grey;
+      }
+    }
+  }
 }
 
 .meta {
@@ -118,13 +128,6 @@ blockquote {
   padding: 0 1rem;
   width: 100%;
 
-  .mixed-view-baani {
-    .line {
-      margin-bottom: -27px;
-      position: relative;
-    }
-  }
-
   .line {
     .gurbani-display {
       transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -167,6 +170,13 @@ blockquote {
 
     &:hover .share {
       display: block;
+    }
+  }
+
+  .mixed-view-baani {
+    .line {
+      margin-bottom: -27px;
+      position: relative;
     }
   }
 }

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { SOURCES } from 'shabados';
 import { pageView, errorEvent, ACTIONS } from '../../util/analytics';
 import GenericError, { BalpreetSingh } from '../../components/GenericError';
-import { TEXTS } from '../../constants';
+import { SOURCES, TEXTS } from '../../constants';
 import ShabadContent from '../../components/ShabadContent';
 import { toAngURL } from '../../util';
 

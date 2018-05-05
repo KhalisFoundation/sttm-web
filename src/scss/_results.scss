@@ -2,8 +2,7 @@
   margin: 0.5rem 0;
 }
 
-.search-result,
-.load-more {
+.search-result {
   border-bottom: 1px solid $sttm-lighter-grey;
   list-style: none;
   padding: 0.5rem 1rem;
@@ -11,9 +10,7 @@
   .dark-mode & {
     border-color: $sttm-dark-grey;
   }
-}
 
-.search-result {
   a {
     color: $sttm-blue;
     text-decoration: none;
@@ -41,12 +38,19 @@
 }
 
 .load-more {
+  border-bottom: 1px solid $sttm-lighter-grey;
   display: flex;
   justify-content: space-between;
+  list-style: none;
+  padding: 0.5rem 1rem;
   text-align: center;
 
   &:empty {
     display: none;
+  }
+
+  .dark-mode & {
+    border-color: $sttm-dark-grey;
   }
 }
 
