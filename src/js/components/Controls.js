@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ShabadControls from './ShabadControls';
-import ShareButtons, { supportedMedia as _s } from './ShareButtons';
+import ShareButtons from './ShareButtons';
 import {
   setFontSize,
   setTranslationLanguages,
@@ -16,8 +16,6 @@ import {
   toggleSplitViewOption,
   toggleDarkMode,
 } from '../features/actions';
-
-export const supportedMedia = _s;
 
 class Controls extends React.PureComponent {
   state = {
@@ -57,7 +55,7 @@ class Controls extends React.PureComponent {
         className={`no-select ${this.state.showBorder ? 'with-border' : ''}`}
         ref={this.setRef}
       >
-        <ShareButtons {...this.props} />
+        <ShareButtons />
         <ShabadControls {...this.props} />
       </div>
     );

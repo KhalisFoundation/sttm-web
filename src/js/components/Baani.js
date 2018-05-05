@@ -4,8 +4,8 @@ import Actions from './BaaniLineActions';
 import Translation from './Translation';
 import Transliteration from './Transliteration';
 import BaaniLine from './BaaniLine';
+import { TEXTS } from '.././constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
 import { copyToClipboard, showToast, shortenURL } from '../util';
 
 const transliterationMap = {
@@ -222,7 +222,7 @@ export default class Baani extends React.PureComponent {
     );
 
     return (
-      <div className={SHABAD_CONTENT_CLASSNAME}>
+      <div className="shabad-content">
         {splitView ? splitViewMarkup : mixedViewMarkup}
       </div>
     );

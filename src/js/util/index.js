@@ -19,8 +19,8 @@ export function getParameterByName(_name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-export function getQueryParams(str = document.location.search) {
-  const qs = str.replace(/\+/g, ' ');
+export function getQueryParams() {
+  const qs = document.location.search.replace(/\+/g, ' ');
   const params = {};
   const re = /[?&]?([^=]+)=([^&]*)/g;
   let tokens;
@@ -62,14 +62,6 @@ export const showToast = (text, delay = 2500) =>
 
 export const copyToClipboard = text =>
   new Promise((resolve, reject) => {
-    if ('clipboard' in navigator && 'writeText' in navigator.clipboard) {
-      navigator.clipboard
-        .writeText(text)
-        .then(resolve)
-        .catch(reject);
-      return;
-    }
-
     try {
       const textarea = document.createElement('textarea');
       textarea.textContent = text;
@@ -82,6 +74,7 @@ export const copyToClipboard = text =>
       selection.addRange(range);
 
       const result = document.execCommand('copy');
+
       selection.removeAllRanges();
       document.body.removeChild(textarea);
 
