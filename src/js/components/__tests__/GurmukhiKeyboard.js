@@ -7,8 +7,8 @@ import { StaticRouter } from 'react-router-dom';
 describe('<GurmukhiKeyboard />', () => {
   it('renders correctly', () => {
     const component = mount(
-      <StaticRouter>
-        <GurmukhiKeyboard value={'mere'} onKeyClick={jest.fn()} />
+      <StaticRouter context={{}}>
+        <GurmukhiKeyboard active value={'mere'} onKeyClick={jest.fn()} />
       </StaticRouter>
     );
 
@@ -17,8 +17,8 @@ describe('<GurmukhiKeyboard />', () => {
   it('triggers onKeyClick', () => {
     const onKeyClick = jest.fn();
     const component = mount(
-      <StaticRouter>
-        <GurmukhiKeyboard onKeyClick={onKeyClick} value={'mere'} />
+      <StaticRouter context={{}}>
+        <GurmukhiKeyboard active onKeyClick={onKeyClick} value={'mere'} />
       </StaticRouter>
     );
 

@@ -3,6 +3,7 @@
 exports[`<GurmukhiKeyboard /> renders correctly 1`] = `
 <StaticRouter
   basename=""
+  context={Object {}}
   location="/"
 >
   <Router
@@ -26,11 +27,12 @@ exports[`<GurmukhiKeyboard /> renders correctly 1`] = `
     }
   >
     <GurmukhiKeyboard
+      active={true}
       onKeyClick={[MockFunction]}
       value="mere"
     >
       <div
-        className="gurmukhi-keyboard gurbani-font "
+        className="gurmukhi-keyboard gurbani-font active"
       >
         <div
           className="page"
