@@ -13,8 +13,8 @@ export default class Meta extends React.PureComponent {
   static propTypes = {
     type: PropTypes.string.isRequired,
     info: PropTypes.object.isRequired,
-    translationLanguagesLength: PropTypes.number.isRequired,
-    transliterationLanguagesLength: PropTypes.number.isRequired,
+    translationLanguages: PropTypes.array.isRequired,
+    transliterationLanguages: PropTypes.array.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.string,
       next: PropTypes.string,
@@ -22,7 +22,7 @@ export default class Meta extends React.PureComponent {
   };
 
   render() {
-    const { nav = {}, type, info, translationLanguagesLength, transliterationLanguagesLength } = this.props;
+    const { nav = {}, type, info, translationLanguages, transliterationLanguages } = this.props;
     const link = navLink(type, info.source.id);
     const Item = ({ children, last = false }) =>
       children ? (
@@ -31,6 +31,8 @@ export default class Meta extends React.PureComponent {
           {last ? '' : ' - '}
         </React.Fragment>
       ) : null;
+
+    const shouldShowEnglishInHeader = translationLanguages.includes('english') || transliterationLanguages.includes('english')
 
     return (
       <div id="metadata">
@@ -76,7 +78,7 @@ export default class Meta extends React.PureComponent {
             </Item>
           </h4>
           
-          { (translationLanguagesLength + transliterationLanguagesLength !== 0) ? (
+          { shouldShowEnglishInHeader ? (
             <h4>
               <Item>
                 {info.raag &&
