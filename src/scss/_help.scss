@@ -19,12 +19,12 @@
       color: $sttm-blue;
       list-style-type: square;
 
-      .dark-mode & {
-        color: $sttm-light-blue;
-      }
-
       ul {
         color: $sttm-bright-orange;
+      }
+
+      .dark-mode & {
+        color: $sttm-light-blue;
       }
     }
   }

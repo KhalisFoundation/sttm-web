@@ -1,3 +1,5 @@
+/* TODO: Fix no-descending-specificity issues */
+/* stylelint-disable no-descending-specificity */
 .top-bar {
   border-bottom: 1px solid $sttm-lighter-grey;
   position: relative;
@@ -14,7 +16,7 @@
   &-naked {
     &,
     ul {
-      background: transparent;
+      background-color: transparent;
       border: none;
     }
 
@@ -43,16 +45,34 @@
   width: 3em;
 }
 
+.top-bar-left {
+  height: 54px;
+  padding-top: 7px;
+}
+
+#search-options {
+  clear: both;
+  margin-left: 70px;
+  padding: 0.5rem 0 0;
+  width: 288px;
+
+  select {
+    display: inline-block;
+    float: left;
+    margin: 0;
+    width: calc(50% - 0.5rem);
+
+    &:nth-child(1) {
+      margin-right: 1rem;
+    }
+  }
+}
+
 .hide-search-bar {
   .top-bar-left,
   #search-options {
     display: none;
   }
-}
-
-.top-bar-left {
-  height: 54px;
-  padding-top: 7px;
 }
 
 .top-bar-right .menu > li {
@@ -195,10 +215,6 @@
     transform: rotateX(0deg);
   }
 
-  .page {
-    display: none;
-  }
-
   .keyboard-row {
     border-bottom: 2px solid $sttm-grey;
   }
@@ -232,6 +248,10 @@
 
     &.active {
       color: $sttm-orange;
+    }
+
+    .dark-mode &[data-action='bksp'] {
+      fill: $sttm-grey;
     }
 
     &[data-action='page-1'] {
@@ -274,24 +294,6 @@
 
   .dark-mode & {
     background-color: $sttm-light-black;
-  }
-}
-
-#search-options {
-  clear: both;
-  margin-left: 70px;
-  padding: 0.5rem 0 0;
-  width: 288px;
-
-  select {
-    display: inline-block;
-    float: left;
-    margin: 0;
-    width: calc(50% - 0.5rem);
-
-    &:nth-child(1) {
-      margin-right: 1rem;
-    }
   }
 }
 

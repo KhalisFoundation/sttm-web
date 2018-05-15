@@ -17,6 +17,11 @@
       color: $sttm-light-blue;
     }
   }
+
+  @media screen and (max-width: 45.999999em) {
+    margin-right: 0 !important;
+    padding: 0 !important;
+  }
 }
 
 .share-buttons {
@@ -44,6 +49,51 @@
     position: absolute;
     width: 1px;
   }
+
+  @media screen and (max-width: 45.999999em) {
+    float: none !important;
+    margin: auto !important;
+    overflow: hidden;
+    text-align: center;
+    width: 0;
+    z-index: -1;
+  }
+
+  #copy-short-url {
+    position: relative;
+
+    .short-url {
+      &-input {
+        background-color: $sttm-white;
+        display: inline-block;
+        font-size: 11px;
+        height: auto;
+        margin: 0;
+        position: relative;
+        top: -12px;
+        width: 175px;
+
+        .dark-mode & {
+          background-color: $sttm-lighter-black;
+          border-color: $sttm-black;
+          color: $sttm-white;
+        }
+      }
+
+      &-icon {
+        box-shadow: -5px 0 7px -6px $sttm-grey;
+        height: 0.8em;
+        position: absolute;
+        right: 0;
+        top: -14px;
+        width: 0.8em;
+
+        .dark-mode & {
+          box-shadow: -5px 0 7px -6px $sttm-light-black;
+        }
+      }
+    }
+  }
 }
 
 .chevron {
@@ -55,36 +105,23 @@
   fill: $sttm-darker-grey;
   font-size: 2em;
   padding: 5px;
+
+  @media screen and (max-width: 45.999999em) {
+    font-size: 2em !important;
+  }
 }
 
 @media screen and (max-width: 45.999999em) {
-  #share-menu {
-    margin-right: 0 !important;
-    padding: 0 !important;
-  }
-
-  .share-buttons {
-    float: none !important;
-    margin: auto !important;
-    overflow: hidden;
-    text-align: center;
-    width: 0;
-    z-index: -1;
-  }
-
   .share-buttons,
   #share-menu {
     background-color: $sttm-white;
-    width: 100% !important;
+    margin-left: 1rem !important;
+    text-align: left;
+    width: calc(100% - 1rem) !important;
 
     .dark-mode & {
       background-color: $sttm-light-black;
     }
-  }
-
-  .share-buttons svg,
-  .share svg {
-    font-size: 2em !important;
   }
 }
 

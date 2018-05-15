@@ -328,7 +328,7 @@ const getTitle = question =>
     .split(' ')
     .join('-')
     .toLowerCase()
-    .replace(/[^a-z.\-]/g, '')
+    .replace(/[^a-z.\\-]/g, '')
     .substr(0, 50);
 
 const contentWithTitle = Object.keys(content).reduce(

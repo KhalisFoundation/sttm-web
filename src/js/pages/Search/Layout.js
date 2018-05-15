@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { TYPES, SOURCES } from 'shabados';
 import { connect } from 'react-redux';
 import { toShabadURL, toSearchURL } from '../../util';
-import { PLACEHOLDERS, TEXTS } from '../../constants';
+import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '../../constants';
 import {
   ACTIONS,
   pageView,
   clickEvent,
   errorEvent,
 } from '../../util/analytics';
-import Controls from '../../components/Controls';
+import Controls, { supportedMedia } from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Larivaar from '../../components/Larivaar';
 
@@ -90,7 +89,16 @@ class Layout extends React.PureComponent {
 
     return (
       <div className="row" id="content-root">
-        <Controls disableSplitView />
+        <Controls
+          media={
+            type === 'shabad'
+              ? supportedMedia
+              : supportedMedia.filter(
+                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
+                )
+          }
+          disableSplitView
+        />
         <ul className="search-results display">
           {shabads.map(({ shabad }) => {
             const _source = SOURCES[shabad.source.id];

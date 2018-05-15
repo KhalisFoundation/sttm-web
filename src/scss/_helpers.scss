@@ -1,3 +1,5 @@
+/* stylelint-disable font-family-no-missing-generic-family-keyword */
+
 /* Global Helper Classes */
 .gurbani-font {
   font-family: gurmukhi_heavy !important;
@@ -39,12 +41,16 @@
   margin: 0;
 }
 
-.show-on-mobile {
-  display: none !important;
+.show-on-desktop {
+  @media screen and (max-width: 45.9em) {
+    display: none !important;
+  }
 }
 
-@media screen and (max-width: 45.999999em) {
-  .show-on-mobile {
+.show-on-mobile {
+  display: none !important;
+
+  @media screen and (max-width: 45.999999em) {
     display: inline !important;
   }
 }
