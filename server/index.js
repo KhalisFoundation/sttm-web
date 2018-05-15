@@ -2,7 +2,6 @@
 import compression from 'compression';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { redirectToHTTPS } from 'express-http-to-https';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../seo';
@@ -18,9 +17,6 @@ app
 
   // Add cookie parser
   .use(cookieParser())
-
-  // Redirect HTTP traffic to HTTPS
-  .use(redirectToHTTPS([/localhost:(\d{4})/, /dev.sikhitothemax.org/]))
 
   // Infrastructure display
   .use((req, res, next) => {

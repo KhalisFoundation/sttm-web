@@ -145,7 +145,6 @@
     "cookie-parser": "^1.4.3",
     "esm": "^3.0.27",
     "express": "^4.16.3",
-    "express-http-to-https": "^1.1.4",
     "marinate": "^0.1.5",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
