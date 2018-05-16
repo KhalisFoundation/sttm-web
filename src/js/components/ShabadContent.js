@@ -78,13 +78,7 @@ class Shabad extends React.PureComponent {
           onCopyAllClick={handleCopyAll}
           onEmbedClick={handleEmbed}
         />
-        <Meta
-          info={info}
-          nav={nav}
-          type={type}
-          translationLanguages={translationLanguages}
-          transliterationLanguages={transliterationLanguages}
-        />
+        <Meta info={info} nav={nav} type={type} translationLanguages={translationLanguages} transliterationLanguages={transliterationLanguages} />
         <div id="shabad" className="shabad display">
           <div className="shabad-container">
             <Baani

@@ -43,12 +43,12 @@ export default class Meta extends React.PureComponent {
             </Link>
           </div>
         ) : (
-            <div className="shabad-nav left disabled-nav">
-              <a>
-                <Chevron left />
-              </a>
-            </div>
-          )}
+          <div className="shabad-nav left disabled-nav">
+            <a>
+              <Chevron left />
+            </a>
+          </div>
+        )}
         <div className="meta">
           {['hukamnama'].includes(type) && (
             <h4>
@@ -77,8 +77,8 @@ export default class Meta extends React.PureComponent {
               )}
             </Item>
           </h4>
-
-          {shouldShowEnglishInHeader && (
+          
+          { shouldShowEnglishInHeader ? (
             <h4>
               <Item>
                 {info.raag &&
@@ -99,9 +99,9 @@ export default class Meta extends React.PureComponent {
                 </Link>
               </Item>
             </h4>
-          )}
-
-
+          ) : '' }
+            
+          
 
         </div>
 
@@ -112,12 +112,12 @@ export default class Meta extends React.PureComponent {
             </Link>
           </div>
         ) : (
-            <div className="shabad-nav right disabled-nav">
-              <a>
-                <Chevron />
-              </a>
-            </div>
-          )}
+          <div className="shabad-nav right disabled-nav">
+            <a>
+              <Chevron />
+            </a>
+          </div>
+        )}
       </div>
     );
   }

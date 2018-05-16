@@ -25,7 +25,7 @@ app
   })
 
   // Use client for static files
-  .use(express.static(`${__dirname}/../public`))
+  .use(express.static(`${__dirname}/../`))
 
   // Direct all calls to index template
   .get('*', (req, res) => {

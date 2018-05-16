@@ -2,8 +2,10 @@
 jest/coverage/
 /inc/mysql.php
 node_modules/
-public/assets/js/**/*.js
+/assets/js/*.js
+/assets/js/**/*.js
+/assets/js/**/**/*.js
 yarn.lock
-public/assets/css/*.css
+assets/css/*.css
 *.swp
 *.map
