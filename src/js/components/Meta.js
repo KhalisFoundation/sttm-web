@@ -29,6 +29,7 @@ export default class Meta extends React.PureComponent {
       translationLanguages,
       transliterationLanguages,
     } = this.props;
+
     const link = navLink(type, info.source.id);
     const Item = ({ children, last = false }) =>
       children ? (
