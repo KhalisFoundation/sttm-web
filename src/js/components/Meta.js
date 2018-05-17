@@ -22,7 +22,14 @@ export default class Meta extends React.PureComponent {
   };
 
   render() {
-    const { nav = {}, type, info, translationLanguages, transliterationLanguages } = this.props;
+    const {
+      nav = {},
+      type,
+      info,
+      translationLanguages,
+      transliterationLanguages,
+    } = this.props;
+
     const link = navLink(type, info.source.id);
     const Item = ({ children, last = false }) =>
       children ? (
@@ -32,7 +39,9 @@ export default class Meta extends React.PureComponent {
         </React.Fragment>
       ) : null;
 
-    const shouldShowEnglishInHeader = translationLanguages.includes('english') || transliterationLanguages.includes('english')
+    const shouldShowEnglishInHeader =
+      translationLanguages.includes('english') ||
+      transliterationLanguages.includes('english');
 
     return (
       <div id="metadata">
@@ -95,14 +104,12 @@ export default class Meta extends React.PureComponent {
                     source: info.source.id,
                   })}
                 >
-                  {info.source.id == 'G' ? 'Ang' : 'Pannaa'} {info.source.pageno}
+                  {info.source.id == 'G' ? 'Ang' : 'Pannaa'}{' '}
+                  {info.source.pageno}
                 </Link>
               </Item>
             </h4>
           )}
-
-
-
         </div>
 
         {isFalsy(nav.next) === false ? (
