@@ -41,6 +41,7 @@ module.exports = {
     filename: '[name].js',
     publicPath: 'assets/js/',
   },
+  devtool: PRODUCTION ? undefined : 'inline-source-map',
   plugins,
   optimization: {
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin

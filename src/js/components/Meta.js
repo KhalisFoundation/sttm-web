@@ -13,6 +13,8 @@ export default class Meta extends React.PureComponent {
   static propTypes = {
     type: PropTypes.string.isRequired,
     info: PropTypes.object.isRequired,
+    translationLanguages: PropTypes.array.isRequired,
+    transliterationLanguages: PropTypes.array.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.string,
       next: PropTypes.string,
@@ -20,7 +22,13 @@ export default class Meta extends React.PureComponent {
   };
 
   render() {
-    const { nav = {}, type, info } = this.props;
+    const {
+      nav = {},
+      type,
+      info,
+      translationLanguages,
+      transliterationLanguages,
+    } = this.props;
     const link = navLink(type, info.source.id);
     const Item = ({ children, last = false }) =>
       children ? (
@@ -29,6 +37,11 @@ export default class Meta extends React.PureComponent {
           {last ? '' : ' - '}
         </React.Fragment>
       ) : null;
+
+    const shouldShowEnglishInHeader =
+      translationLanguages.includes('english') ||
+      transliterationLanguages.includes('english');
+
     return (
       <div id="metadata">
         {isFalsy(nav.previous) === false ? (
@@ -72,26 +85,30 @@ export default class Meta extends React.PureComponent {
               )}
             </Item>
           </h4>
-          <h4>
-            <Item>
-              {info.raag &&
-                info.raag.english &&
-                info.raag.english !== 'null' &&
-                info.raag.english}
-            </Item>
-            <Item>{info.writer && info.writer.english}</Item>
-            <Item>{info.source.english}</Item>
-            <Item last>
-              <Link
-                to={toAngURL({
-                  ang: info.source.pageno,
-                  source: info.source.id,
-                })}
-              >
-                {info.source.id == 'G' ? 'Ang' : 'Pannaa'} {info.source.pageno}
-              </Link>
-            </Item>
-          </h4>
+
+          {shouldShowEnglishInHeader && (
+            <h4>
+              <Item>
+                {info.raag &&
+                  info.raag.english &&
+                  info.raag.english !== 'null' &&
+                  info.raag.english}
+              </Item>
+              <Item>{info.writer && info.writer.english}</Item>
+              <Item>{info.source.english}</Item>
+              <Item last>
+                <Link
+                  to={toAngURL({
+                    ang: info.source.pageno,
+                    source: info.source.id,
+                  })}
+                >
+                  {info.source.id == 'G' ? 'Ang' : 'Pannaa'}{' '}
+                  {info.source.pageno}
+                </Link>
+              </Item>
+            </h4>
+          )}
         </div>
 
         {isFalsy(nav.next) === false ? (
