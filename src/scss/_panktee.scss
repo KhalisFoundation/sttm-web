@@ -4,7 +4,11 @@
 
     &.larivaar {
       // word-break: break-all;
-    }
+    }  
+  }
+
+  .wordBreakSpecialChar {
+    display: inline-block;
   }
 
   .highlight {
