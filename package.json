@@ -151,6 +151,7 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",
+    "redux-debounced": "^0.5.0",
     "shabados": "^2.0.0-beta.3"
   },
   "prettier": {
