@@ -7,3 +7,4 @@ yarn.lock
 public/assets/css/*.css
 *.swp
 *.map
+.idea/
