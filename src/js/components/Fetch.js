@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const TIMEOUT = 10000;
+
 // This component uses children as a function pattern
 export default class Fetch extends React.PureComponent {
   state = {
@@ -21,7 +23,7 @@ export default class Fetch extends React.PureComponent {
     children: PropTypes.func.isRequired,
     options: PropTypes.object,
   };
-
+    
   componentDidMount() {
     const { url, options, transform } = this.props;
 
@@ -29,7 +31,7 @@ export default class Fetch extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { url, options, transform } = nextProps;
+    const { url, options, transform } = nextProps;    
 
     this.fetchData(url, options, transform);
   }
@@ -37,33 +39,37 @@ export default class Fetch extends React.PureComponent {
   fetchData = (url, options, transform) => {
     this.setState({ loading: true });
 
-    return fetch(url, options)
+    const timeoutPromise = new Promise(function(resolve, reject) {
+      setTimeout(reject, TIMEOUT)
+    })
+
+    return Promise.race([timeoutPromise, fetch(url, options)])
       .then(res =>
-        transform(res)
+        transform(res) 
           .then(data =>
-            this.setState({
-              loading: false,
-              res,
-              data,
-              error: null,
-            })
+              this.setState({
+                loading: false,
+                res,
+                data,
+                error: null,
+              })
+            )
+            .catch(error =>
+              this.setState({
+                loading: false,
+                res,
+                data: null,
+                error,
+              })
+            )
           )
           .catch(error =>
             this.setState({
               loading: false,
-              res,
               data: null,
               error,
             })
-          )
-      )
-      .catch(error =>
-        this.setState({
-          loading: false,
-          data: null,
-          error,
-        })
-      );
+          );
   };
 
   render() {
