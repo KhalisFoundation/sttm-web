@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TIMEOUT = 10000;
+const TIMEOUT = 10000; // 10 seconds
 
 // This component uses children as a function pattern
 export default class Fetch extends React.PureComponent {
@@ -23,7 +23,7 @@ export default class Fetch extends React.PureComponent {
     children: PropTypes.func.isRequired,
     options: PropTypes.object,
   };
-    
+
   componentDidMount() {
     const { url, options, transform } = this.props;
 
@@ -31,7 +31,7 @@ export default class Fetch extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { url, options, transform } = nextProps;    
+    const { url, options, transform } = nextProps;
 
     this.fetchData(url, options, transform);
   }
@@ -40,36 +40,37 @@ export default class Fetch extends React.PureComponent {
     this.setState({ loading: true });
 
     const timeoutPromise = new Promise(function(resolve, reject) {
-      setTimeout(reject, TIMEOUT)
-    })
+      setTimeout(reject, TIMEOUT);
+    });
 
+    // If timeoutPromise completes before fetch the top level catch is executed
     return Promise.race([timeoutPromise, fetch(url, options)])
       .then(res =>
-        transform(res) 
+        transform(res)
           .then(data =>
-              this.setState({
-                loading: false,
-                res,
-                data,
-                error: null,
-              })
-            )
-            .catch(error =>
-              this.setState({
-                loading: false,
-                res,
-                data: null,
-                error,
-              })
-            )
+            this.setState({
+              loading: false,
+              res,
+              data,
+              error: null,
+            })
           )
           .catch(error =>
             this.setState({
               loading: false,
+              res,
               data: null,
               error,
             })
-          );
+          )
+      )
+      .catch(error =>
+        this.setState({
+          loading: false,
+          data: null,
+          error,
+        })
+      );
   };
 
   render() {
