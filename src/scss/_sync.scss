@@ -1,0 +1,26 @@
+@import 'colours';
+
+.sync-form {
+  align-items: flex-start;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+
+  .dark-mode & {
+    color: $sttm-white;
+  }
+
+  &--input {
+    border-radius: 5px 0 0 5px;
+    height: 3rem;
+    max-width: 50%;
+  }
+
+  &--button {
+    border: 1px solid $sttm-grey;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    height: 3rem;
+    padding: 0 1rem;
+  }
+}

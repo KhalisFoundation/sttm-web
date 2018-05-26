@@ -24,16 +24,17 @@ class Shabad extends React.PureComponent {
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
     highlight: PropTypes.number,
-    random: PropTypes.bool.isRequired,
-    splitView: PropTypes.bool.isRequired,
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.string,
       next: PropTypes.string,
     }),
+
+    random: PropTypes.bool.isRequired,
+    splitView: PropTypes.bool.isRequired,
+    translationLanguages: PropTypes.array.isRequired,
+    transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
