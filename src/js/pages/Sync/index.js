@@ -1,6 +1,6 @@
 import React from 'react';
 import { TEXTS } from '../../constants';
-import ShabadContent from '../../components/ShabadContent';
+import Viewer from './Viewer';
 
 // TODO: Move to constants/webpackDefine
 const SYNC_API_URL = 'http://localhost:1337';
@@ -48,7 +48,7 @@ export default class Sync extends React.PureComponent {
       <div className="row" id="content-root">
         <h2>Sync</h2>
         {this.state.connected ? (
-          <Sync.Viewer {...this.state} />
+          <Viewer {...this.state} />
         ) : (
           <Sync.Form onSubmit={this.handleSubmit} />
         )}
@@ -72,28 +72,6 @@ export default class Sync extends React.PureComponent {
       this._socket.disconnect();
     }
   }
-
-  /**
-   * Function Viewer Component
-   *
-   * @static
-   * @memberof Sync
-   */
-  static Viewer = ({ namespaceString, data = {} }) => (
-    <React.Fragment>
-      <h4>
-        Connected to <code>{namespaceString}</code>
-      </h4>
-      {Object.keys(data).length !== 0 && (
-        <ShabadContent
-          type={data.type}
-          highlight={data.highlight}
-          gurbani={data.gurbani}
-          info={data.info}
-        />
-      )}
-    </React.Fragment>
-  );
 
   /**
    * Functional Form Component
