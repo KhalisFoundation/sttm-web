@@ -1,12 +1,44 @@
-var matrasThatAppearAtRightSideOfChar = "wIuUyYoOW"
-var halfCharThatAppearAtRightSideOfChar = "Í´R@˜®"
-var nasalSoundCaharacter = "NMµ"
-var sihari = "i";
-var allMatrasHalfCharAndNasalSoundChar = sihari + matrasThatAppearAtRightSideOfChar + halfCharThatAppearAtRightSideOfChar + nasalSoundCaharacter
-var unicodeMatras = "ਾਿੀੁੂੇੈੋੌੰਂ"
+import React from 'react';
 
+const matrasThatAppearAtRightSideOfChar = "wIuUyYoOW"
+const halfCharThatAppearAtRightSideOfChar = "Í´R@˜®"
+const nasalSoundCaharacter = "NMµ"
+const sihari = "i";
+const allMatrasHalfCharAndNasalSoundChar = sihari + matrasThatAppearAtRightSideOfChar + halfCharThatAppearAtRightSideOfChar + nasalSoundCaharacter
+const unicodeMatras = "ਾਿੀੁੂੇੈੋੌੰਂ"
+
+export function fixLarivaar(word, unicode) {
+    var breakSupportedCharList = [];
+    
+    var segmentedValArr = null;
+    if(unicode) {
+        segmentedValArr = fixLarivaarUnicode(word);
+    } else {
+        segmentedValArr = fixLarivaarGurmukhiFont(word);
+    }
+    
+    // Add each segment with wbr in a new span
+    for(let i=0;i<segmentedValArr.length;i++) {
+        if(segmentedValArr[i].indexOf("´") != -1) {
+        // handle space break for this special character
+        breakSupportedCharList.push(
+            <span key={i} className = "wordBreakSpecialChar">
+            {segmentedValArr[i]}<wbr />
+            </span>
+        )    
+        } else {
+        breakSupportedCharList.push(
+            <span key={i}>
+            {segmentedValArr[i]}<wbr />
+            </span>
+        )  
+        }
+    }    
+    return breakSupportedCharList;
+      
+}
 // Look for consonants and break word
-export function fixLarivaar(str) {
+function fixLarivaarGurmukhiFont(str) {
 	var arrWordBreak = [];
 	// search and break till next consonant
     var segmentedStr = '';
@@ -21,7 +53,6 @@ export function fixLarivaar(str) {
 			arrWordBreak.push(segmentedStr)
 			segmentedStr = '';
 		}
-		console.log(segmentedStr)
 	}
     return arrWordBreak
 }
@@ -29,7 +60,7 @@ export function fixLarivaar(str) {
 // In unicode All matras are right hand sided
 // and matras comes after main consonant and half character
 // we need to break word after Matras not consonant
-export function fixLarivaarUnicode(str) {
+function fixLarivaarUnicode(str) {
 	var arrWordBreak = [];
 	// search and break till next consonant
     var segmentedStr = '';

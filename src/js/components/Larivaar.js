@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LARIVAAR_ASSIST_COLOR } from '../constants';
-import { fixLarivaar, fixLarivaarUnicode } from './utilLarivaar';
+import { fixLarivaar } from './utilLarivaar';
 
 export default class Larivaar extends React.PureComponent {
   static defaultProps = {
@@ -27,33 +27,7 @@ export default class Larivaar extends React.PureComponent {
                 if(val.indexOf('॥') !== -1 || val.indexOf(']') !== -1) {
                   return `${val} `
                 } else {
-                  var breakSupportedCharList = [];
-
-                  var segmentedValArr = null;
-                  if(unicode) {
-                    segmentedValArr = fixLarivaarUnicode(val);
-                  } else {
-                    segmentedValArr = fixLarivaar(val);
-                  }
-
-                  // Add each segment with wbr in a new span
-                  for(let i=0;i<segmentedValArr.length;i++) {
-                    if(segmentedValArr[i].indexOf("´") != -1) {
-                      // handle space break for this special character
-                      breakSupportedCharList.push(
-                        <span key={i} className = "wordBreakSpecialChar">
-                          {segmentedValArr[i]}<wbr />
-                        </span>
-                      )    
-                    } else {
-                      breakSupportedCharList.push(
-                        <span key={i}>
-                          {segmentedValArr[i]}<wbr />
-                        </span>
-                      )  
-                    }
-                  }
-
+                  var breakSupportedCharList = fixLarivaar(val, unicode)
                   // highlight if larivaar assist is on
                   if(breakSupportedCharList.length) {
                     return <span key={indexVal} style={{ color: indexVal % 2 === 1 ? larivaarAssistColor : '' }}>{breakSupportedCharList.map((element) => {
