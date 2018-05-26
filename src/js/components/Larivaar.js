@@ -27,12 +27,12 @@ export default class Larivaar extends React.PureComponent {
                 if(val.indexOf('॥') !== -1 || val.indexOf(']') !== -1) {
                   return `${val} `
                 } else {
-                  var breakSupportedCharList = fixLarivaar(val, unicode)
+                  var breakSupportedCharList = fixLarivaar(val, unicode, larivaarAssistColor, indexVal)
                   // highlight if larivaar assist is on
                   if(breakSupportedCharList.length) {
-                    return <span key={indexVal} style={{ color: indexVal % 2 === 1 ? larivaarAssistColor : '' }}>{breakSupportedCharList.map((element) => {
+                    return breakSupportedCharList.map((element) => {
                       return element
-                    })}</span>
+                    })
                   } else {
                     return (
                       <span key={indexVal}>

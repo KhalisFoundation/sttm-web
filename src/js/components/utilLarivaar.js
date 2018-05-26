@@ -7,7 +7,7 @@ const sihari = "i";
 const allMatrasHalfCharAndNasalSoundChar = sihari + matrasThatAppearAtRightSideOfChar + halfCharThatAppearAtRightSideOfChar + nasalSoundCaharacter
 const unicodeMatras = "ਾਿੀੁੂੇੈੋੌੰਂ"
 
-export function fixLarivaar(word, unicode) {
+export function fixLarivaar(word, unicode, larivaarAssistColor, indexVal) {
     var breakSupportedCharList = [];
     
     var segmentedValArr = null;
@@ -27,11 +27,13 @@ export function fixLarivaar(word, unicode) {
             </span>
         )    
         } else {
-        breakSupportedCharList.push(
-            <span key={i}>
-            {segmentedValArr[i]}<wbr />
-            </span>
-        )  
+            breakSupportedCharList.push(
+                <span key={indexVal} style={{ color: indexVal % 2 === 1 ? larivaarAssistColor : '' }}>
+                    <span key={i}>
+                    {segmentedValArr[i]}<wbr />
+                    </span>
+                </span>
+            )
         }
     }    
     return breakSupportedCharList;
