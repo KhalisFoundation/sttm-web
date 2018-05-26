@@ -36,7 +36,7 @@ export default class BaaniLine extends React.PureComponent {
             unicode ? 'unicode' : 'gurlipi'
           }`}
         >
-          <Larivaar larivaarAssist={larivaarAssist} enable={larivaar}>
+          <Larivaar larivaarAssist={larivaarAssist} enable={larivaar} unicode={unicode}>
             {unicode ? text.unicode : text.gurmukhi}
           </Larivaar>
         </div>
