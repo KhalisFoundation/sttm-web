@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Larivaar from './Larivaar';
+import Larivaar from './Larivaar/index';
 
 export default class BaaniLine extends React.PureComponent {
   static propTypes = {

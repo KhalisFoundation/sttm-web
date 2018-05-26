@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LARIVAAR_ASSIST_COLOR } from '../constants';
-import { fixLarivaar } from './utilLarivaar';
+import { LARIVAAR_ASSIST_COLOR } from '../../constants';
+import { fixLarivaar } from './util';
 
 export default class Larivaar extends React.PureComponent {
   static defaultProps = {

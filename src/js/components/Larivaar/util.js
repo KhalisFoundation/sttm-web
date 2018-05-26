@@ -28,7 +28,7 @@ export function fixLarivaar(word, unicode, larivaarAssistColor, indexVal) {
         )    
         } else {
             breakSupportedCharList.push(
-                <span key={indexVal} style={{ color: indexVal % 2 === 1 ? larivaarAssistColor : '' }}>
+                <span key={indexVal+"."+i} style={{ color: indexVal % 2 === 1 ? larivaarAssistColor : '' }}>
                     <span key={i}>
                     {segmentedValArr[i]}<wbr />
                     </span>
