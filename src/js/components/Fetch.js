@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TIMEOUT = 10000; // 10 seconds
-
 // This component uses children as a function pattern
 export default class Fetch extends React.PureComponent {
   state = {
@@ -15,6 +13,7 @@ export default class Fetch extends React.PureComponent {
   static defaultProps = {
     transform: r => r.json(),
     options: {},
+    timeout: 10000,
   };
 
   static propTypes = {
@@ -22,25 +21,26 @@ export default class Fetch extends React.PureComponent {
     url: PropTypes.string,
     children: PropTypes.func.isRequired,
     options: PropTypes.object,
+    timeout: PropTypes.number,
   };
 
   componentDidMount() {
-    const { url, options, transform } = this.props;
+    const { url, options, transform, timeout } = this.props;
 
-    this.fetchData(url, options, transform);
+    this.fetchData(url, options, transform, timeout);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { url, options, transform } = nextProps;
+    const { url, options, transform, timeout } = nextProps;
 
-    this.fetchData(url, options, transform);
+    this.fetchData(url, options, transform, timeout);
   }
 
-  fetchData = (url, options, transform) => {
+  fetchData = (url, options, transform, timeout) => {
     this.setState({ loading: true });
 
     const timeoutPromise = new Promise(function(resolve, reject) {
-      setTimeout(reject, TIMEOUT);
+      setTimeout(reject, timeout);
     });
 
     // If timeoutPromise completes before fetch the top level catch is executed
