@@ -22,6 +22,8 @@ class Layout extends React.PureComponent {
     online: PropTypes.bool,
     children: PropTypes.node.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
+      .isRequired,
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
     isAng: PropTypes.bool,
