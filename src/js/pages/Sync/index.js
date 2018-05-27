@@ -1,6 +1,7 @@
 import React from 'react';
 import { TEXTS } from '../../constants';
 import Viewer from './Viewer';
+import { Link } from 'react-router-dom';
 
 // TODO: Move to constants/webpackDefine
 const SYNC_API_URL = 'http://localhost:1337';
@@ -46,12 +47,16 @@ export default class Sync extends React.PureComponent {
   render() {
     return (
       <div className="row" id="content-root">
-        <h2>Sync</h2>
-        {this.state.connected ? (
-          <Viewer {...this.state} />
-        ) : (
-          <Sync.Form onSubmit={this.handleSubmit} />
-        )}
+        <h4 className="breadcrumb">
+          <Link to="/">Home</Link> » {TEXTS.SYNC}
+        </h4>
+        <div className="wrapper">
+          {this.state.connected ? (
+            <Viewer {...this.state} />
+          ) : (
+            <Sync.Form onSubmit={this.handleSubmit} />
+          )}
+        </div>
       </div>
     );
   }
@@ -64,13 +69,23 @@ export default class Sync extends React.PureComponent {
       script.src = src;
       document.body.appendChild(script);
     }
+
+    window.addEventListener('beforeunload', this._alertOnExit);
   }
+
+  _alertOnExit = e => {
+    if (this.state.connected) {
+      return (e.returnValue = TEXTS.SYNC_DISCONNECT);
+    }
+    return null;
+  };
 
   componentWillUnmount() {
     this._mounted = false;
     if (this.state.connected && this._socket) {
       this._socket.disconnect();
     }
+    window.removeEventListener('beforeunload', this._alertOnExit);
   }
 
   /**

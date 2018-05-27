@@ -11,16 +11,29 @@
   }
 
   &--input {
+    background-color: transparent;
     border-radius: 5px 0 0 5px;
     height: 3rem;
     max-width: 50%;
+
+    &:focus {
+      background-color: transparent;
+    }
+
+    .dark-mode & {
+      color: $sttm-dark-white;
+
+      &::placeholder {
+        color: $sttm-dark-grey;
+      }
+    }
   }
 
   &--button {
     border: 1px solid $sttm-grey;
-    border-left: none;
     border-radius: 0 5px 5px 0;
     height: 3rem;
+    margin-left: -1px;
     padding: 0 1rem;
   }
 }

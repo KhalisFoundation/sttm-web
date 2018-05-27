@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ShabadContent from '../../components/ShabadContent';
 import { buildApiUrl } from 'shabados';
+import { TEXTS } from '../../constants';
 
 /**
  *
@@ -50,22 +51,21 @@ export default class Viewer extends React.PureComponent {
       state: { response },
     } = this;
 
-    return (
-      <React.Fragment>
-        <h4>
-          Connected to <code>{namespaceString}</code>
-        </h4>
-        {Object.keys(data).length === 0 ? null : response ? (
-          <ShabadContent
-            type="shabad"
-            highlight={data.highlight}
-            gurbani={response.gurbani}
-            info={response.shabadinfo}
-          />
-        ) : (
-          'Loading...'
-        )}
-      </React.Fragment>
-    );
+    if (Object.keys(data).length === 0) {
+      return <h4>{TEXTS.SYNC_CONNECTED(namespaceString)}</h4>;
+    }
+
+    if (response) {
+      return (
+        <ShabadContent
+          type="shabad"
+          highlight={data.highlight}
+          gurbani={response.gurbani}
+          info={response.shabadinfo}
+        />
+      );
+    }
+
+    return <div className="spinner" />;
   }
 }
