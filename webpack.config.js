@@ -36,11 +36,12 @@ module.exports = {
     app,
   },
   output: {
-    path: path.resolve(__dirname, 'assets', 'js'),
+    path: path.resolve(__dirname, 'public/assets', 'js'),
     chunkFilename: 'chunks/[name].js',
     filename: '[name].js',
     publicPath: 'assets/js/',
   },
+  devtool: PRODUCTION ? undefined : 'inline-source-map',
   plugins,
   optimization: {
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
@@ -51,10 +52,10 @@ module.exports = {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
-          chunks: 'all'
-        }
-      }
-    }
+          chunks: 'all',
+        },
+      },
+    },
   },
   module: {
     rules: [
