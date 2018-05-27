@@ -6,6 +6,7 @@ const path = require('path');
 const API_URLS = {
   PRODUCTION: 'https://api.banidb.com/',
   DEVELOPMENT: 'http://devapi.khajana.org/',
+  SYNC: 'http://api.sikhitothemax.org/',
 };
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -18,6 +19,7 @@ const plugins = PRODUCTION
         },
         PRODUCTION: JSON.stringify(true),
         API_URL: JSON.stringify(API_URLS.PRODUCTION),
+        SYNC_API_URL: API_URLS.SYNC,
       }),
       new UglifyJsPlugin(),
     ]
@@ -25,6 +27,7 @@ const plugins = PRODUCTION
       new webpack.DefinePlugin({
         PRODUCTION: JSON.stringify(false),
         API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
+        SYNC_API_URL: API_URLS.SYNC,
       }),
     ];
 

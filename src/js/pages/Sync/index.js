@@ -1,10 +1,8 @@
+/* globals SYNC_API_URL */
 import React from 'react';
 import { TEXTS } from '../../constants';
 import Viewer from './Viewer';
 import { Link } from 'react-router-dom';
-
-// TODO: Move to constants/webpackDefine
-const SYNC_API_URL = 'http://localhost:1337';
 
 /**
  *
