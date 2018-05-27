@@ -12,7 +12,7 @@ import {
 } from '../../util/analytics';
 import Controls, { supportedMedia } from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
-import Larivaar from '../../components/Larivaar';
+import Larivaar from '../../components/Larivaar/index';
 
 export function Stub() {
   return <div className="spinner" />;
@@ -117,10 +117,7 @@ class Layout extends React.PureComponent {
                   >
                     {unicode ? (
                       <div className="unicode">
-                        <Larivaar
-                          larivaarAssist={larivaarAssist}
-                          enable={larivaar}
-                        >
+                        <Larivaar larivaarAssist={larivaarAssist} enable={larivaar} unicode={unicode}>
                           {shabad.gurbani.unicode}
                         </Larivaar>
                       </div>
