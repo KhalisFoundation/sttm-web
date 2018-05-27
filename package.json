@@ -4,7 +4,7 @@
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
-    "pre-push-message": "echo \" ✋ Before your push gets submitted to remote, \n we'll like to run 🏃‍♂️ some tests to avoid wasting your, reviewers' and CI's time ⏱ . \n Thank you for being patient! \"",
+    "pre-push-message": "echo \"Before your push gets submitted to remote, we'll like to run some tests to avoid wasting your, reviewers' and CI's time. Thank you for being patient!\"",
     "server": "node -r esm server",
     "start": "npm-run-all --parallel watch:*",
     "watch": "npm-run-all watch:*",
