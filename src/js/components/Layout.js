@@ -34,6 +34,7 @@ class Layout extends React.PureComponent {
       children,
       isAng = false,
       isHome = false,
+      location: { pathname },
       ...props
     } = this.props;
 
@@ -48,7 +49,7 @@ class Layout extends React.PureComponent {
       }
     }
 
-    return online ? (
+    return online || pathname !== '/' ? (
       <React.Fragment>
         <Header
           defaultQuery={this.props.defaultQuery}
