@@ -28,7 +28,7 @@ export default class Fetch extends React.PureComponent {
     this.fetchData(url, options, transform);
   }
 
-  componentWillReceiveProps(nextProps) {
+  unsafe_componentwilleceiveprops(nextProps) {
     const { url, options, transform } = nextProps;
 
     this.fetchData(url, options, transform);
