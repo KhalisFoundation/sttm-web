@@ -9,24 +9,79 @@ exports[`<Larivaar /> renders children when disabled 1`] = `
 exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
 <React.Fragment>
   <span
-    key="0"
+    key="0.0"
     style={
       Object {
         "color": "",
       }
     }
   >
-    Vahi
+    <span
+      key="0"
+    >
+      V
+      <wbr />
+    </span>
   </span>
   <span
-    key="1"
+    key="0.1"
     style={
       Object {
         "color": "",
       }
     }
   >
-    Guru
+    <span
+      key="1"
+    >
+      a
+      <wbr />
+    </span>
+  </span>
+  <span
+    key="0.2"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    <span
+      key="2"
+    >
+      h
+      <wbr />
+    </span>
+  </span>
+  <span
+    key="1.0"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    <span
+      key="0"
+    >
+      Gu
+      <wbr />
+    </span>
+  </span>
+  <span
+    key="1.1"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    <span
+      key="1"
+    >
+      ru
+      <wbr />
+    </span>
   </span>
 </React.Fragment>
 `;
@@ -34,24 +89,79 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
 exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled 1`] = `
 <React.Fragment>
   <span
-    key="0"
+    key="0.0"
     style={
       Object {
         "color": "",
       }
     }
   >
-    Vahi
+    <span
+      key="0"
+    >
+      V
+      <wbr />
+    </span>
   </span>
   <span
-    key="1"
+    key="0.1"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    <span
+      key="1"
+    >
+      a
+      <wbr />
+    </span>
+  </span>
+  <span
+    key="0.2"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    <span
+      key="2"
+    >
+      h
+      <wbr />
+    </span>
+  </span>
+  <span
+    key="1.0"
     style={
       Object {
         "color": "#f39c1d",
       }
     }
   >
-    Guru
+    <span
+      key="0"
+    >
+      Gu
+      <wbr />
+    </span>
+  </span>
+  <span
+    key="1.1"
+    style={
+      Object {
+        "color": "#f39c1d",
+      }
+    }
+  >
+    <span
+      key="1"
+    >
+      ru
+      <wbr />
+    </span>
   </span>
 </React.Fragment>
 `;
