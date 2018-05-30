@@ -29,7 +29,7 @@ export default class Fetch extends React.PureComponent {
   }
 
   static getDerivedStateFromProps (newProps) {
-    const { url, options, transform } = nextProps;
+    const { url, options, transform } = newProps;
 
     this.fetchData(url, options, transform);
   }
