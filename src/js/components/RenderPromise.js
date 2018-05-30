@@ -17,7 +17,7 @@ export default class RenderPromise extends React.PureComponent {
     this.executePromise(this.props.promise);
   }
 
-  unsafe_componentwilleceiveprops (newProps) {
+  static getDerivedStateFromProps (newProps) {
     this.executePromise(newProps.promise);
   }
 
