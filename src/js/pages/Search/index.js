@@ -6,6 +6,7 @@ import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Layout, { Stub } from './Layout';
+import HandleSearchError from '../../components/HandleSearchError';
 
 export default class Search extends React.PureComponent {
   static defaultProps = {
@@ -35,24 +36,26 @@ export default class Search extends React.PureComponent {
     const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL }));
 
     return (
-      <PageLoader url={url}>
-        {({ loading, data }) =>
-          loading ? (
-            <Stub />
-          ) : (
-            <Layout
-              totalResults={data.pageinfo.totalresults || 0}
-              resultsCount={data.pageinfo.pageresults || 0}
-              offset={offset}
-              nextPageOffset={data.pageinfo.nextpageoffset}
-              shabads={data.shabads}
-              q={q}
-              type={type}
-              source={source}
-            />
-          )
-        }
-      </PageLoader>
+      <HandleSearchError q={q} type={type} source={source}>
+        <PageLoader url={url}>
+          {({ loading, data }) =>
+            loading ? (
+              <Stub />
+            ) : (
+              <Layout
+                totalResults={data.pageinfo.totalresults || 0}
+                resultsCount={data.pageinfo.pageresults || 0}
+                offset={offset}
+                nextPageOffset={data.pageinfo.nextpageoffset}
+                shabads={data.shabads}
+                q={q}
+                type={type}
+                source={source}
+              />
+            )
+          }
+        </PageLoader>
+      </HandleSearchError>
     );
   }
 }

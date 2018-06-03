@@ -40,7 +40,7 @@ export default class Fetch extends React.PureComponent {
     this.setState({ loading: true });
 
     const timeoutPromise = new Promise(function(resolve, reject) {
-      setTimeout(reject, timeout);
+      setTimeout(reject, timeout, 'Fetch request timed out!');
     });
 
     // If timeoutPromise completes before fetch the top level catch is executed
