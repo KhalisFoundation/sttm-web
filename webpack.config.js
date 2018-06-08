@@ -4,8 +4,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
 const API_URLS = {
-  PRODUCTION: 'https://api.banidb.com/',
-  DEVELOPMENT: 'http://devapi.khajana.org/',
+  PRODUCTION: '//api.banidb.com/',
+  DEVELOPMENT: '//api.khajana.org/',
 };
 
 const PRODUCTION = process.env.NODE_ENV === 'production';

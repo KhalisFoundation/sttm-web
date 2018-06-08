@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import GenericError, { SachKaur } from './GenericError';
+import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
 import { connect } from 'react-redux';
@@ -9,6 +9,7 @@ import {
   ONLINE_COLOR,
   OFFLINE_COLOR,
 } from '../../../common/constants';
+import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
 
 class Layout extends React.PureComponent {
@@ -29,6 +30,20 @@ class Layout extends React.PureComponent {
     isAng: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
   };
+
+  state = {
+    error: null,
+  };
+
+  componentDidCatch(error) {
+    this.setState({ error });
+    errorEvent({
+      action: ACTIONS.GENERIC_ERROR,
+      label: JSON.stringify(error),
+    });
+    // eslint-disable-next-line no-console
+    console.error({ error });
+  }
 
   render() {
     const {
@@ -59,7 +74,15 @@ class Layout extends React.PureComponent {
           isAng={isAng}
           {...props}
         />
-        {children}
+        {this.state.error ? (
+          <GenericError
+            title={TEXTS.GENERIC_ERROR}
+            description={TEXTS.GENERIC_ERROR_DESCRIPTION}
+            image={BalpreetSingh}
+          />
+        ) : (
+          children
+        )}
       </React.Fragment>
     ) : (
       <div className="content-root">
@@ -93,8 +116,14 @@ class Layout extends React.PureComponent {
   onOnline = () => this.props.setOnlineMode(true);
   onOffline = () => this.props.setOnlineMode(false);
 
-  componentDidUpdate() {
-    this.updateTheme();
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.darkMode !== this.props.darkMode) {
+      this.updateTheme();
+    }
+
+    if (prevState.error !== null && this.state.error !== null) {
+      this.setState({ error: null });
+    }
   }
 }
 
