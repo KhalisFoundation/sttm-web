@@ -20,7 +20,7 @@ app
 
   // Infrastructure display
   .use((req, res, next) => {
-    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('origin-server', hostname);
     return next();
   })
