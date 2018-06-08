@@ -29,7 +29,7 @@ app
 
   // Direct all calls to index template
   .get('*', (req, res) => {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
     const { path } = req;
 
     const { title: _title, createDescription } = seo[
