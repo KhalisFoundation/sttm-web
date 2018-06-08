@@ -73,6 +73,7 @@
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^18.0.0",
     "stylelint-order": "^0.8.1",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15"
   },
@@ -143,18 +144,18 @@
     ]
   },
   "dependencies": {
+    "@sttm/banidb": "^1.1.0",
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
     "esm": "^3.0.27",
     "express": "^4.16.3",
     "marinate": "^0.1.5",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",
-    "redux-debounced": "^0.5.0",
-    "shabados": "^2.0.0-beta.3"
+    "redux-debounced": "^0.5.0"
   },
   "prettier": {
     "singleQuote": true,

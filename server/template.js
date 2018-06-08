@@ -91,7 +91,7 @@ export default ({ bodyClass, title, description }) => marinate`
       </ul>
       <div class="copyright">
         Copyright © 2018 Khalis Foundation
-        <span>, SikhiToTheMax Trademark SHARE Charities, UK</span>
+        <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
       </div>
     </div>
   </footer>

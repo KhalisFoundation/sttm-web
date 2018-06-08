@@ -28,10 +28,16 @@ export default class Fetch extends React.PureComponent {
     this.fetchData(url, options, transform);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { url, options, transform } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { url, options, transform } = this.props;
 
-    this.fetchData(url, options, transform);
+    if (
+      prevProps.url !== url ||
+      prevProps.options !== options ||
+      prevProps.transform !== transform
+    ) {
+      this.fetchData(url, options, transform);
+    }
   }
 
   fetchData = (url, options, transform) => {

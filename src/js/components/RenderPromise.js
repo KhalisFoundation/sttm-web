@@ -13,19 +13,26 @@ export default class RenderPromise extends React.PureComponent {
     children: PropTypes.func.isRequired,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.executePromise(this.props.promise);
   }
 
-  componentWillReceiveProps (newProps) {
-    this.executePromise(newProps.promise);
+  componentDidUpdate(prevProps) {
+    if (prevProps.promise !== this.props.promise) {
+      this.executePromise(this.props.promise);
+    }
   }
 
-  executePromise = promise => promise()
-    .then(data => this.setState({ pending: false, resolved: data, rejected: false }))
-    .catch(error => this.setState({ pending: false, resolved: false, rejected: error }));
+  executePromise = promise =>
+    promise()
+      .then(data =>
+        this.setState({ pending: false, resolved: data, rejected: false })
+      )
+      .catch(error =>
+        this.setState({ pending: false, resolved: false, rejected: error })
+      );
 
-  render () {
+  render() {
     return this.props.children(this.state);
   }
 }
