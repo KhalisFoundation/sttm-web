@@ -36,7 +36,7 @@ class Layout extends React.PureComponent {
       children,
       isAng = false,
       isHome = false,
-      location: { pathname },
+      location: { pathname = '/' } = {},
       ...props
     } = this.props;
 
@@ -98,6 +98,9 @@ class Layout extends React.PureComponent {
   }
 }
 
-export default connect(({ online, darkMode }) => ({ online, darkMode }), {
-  setOnlineMode,
-})(Layout);
+export default connect(
+  ({ online, darkMode }) => ({ online, darkMode }),
+  {
+    setOnlineMode,
+  }
+)(Layout);

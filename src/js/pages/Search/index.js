@@ -1,7 +1,7 @@
 /* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { buildApiUrl } from 'shabados';
+import { buildApiUrl } from '@sttm/banidb';
 import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
 import GenericError, { SachKaur } from '../../components/GenericError';
