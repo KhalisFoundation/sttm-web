@@ -9,7 +9,12 @@ export default class Doodle extends React.PureComponent {
   render() {
     const { href, src } = this.props;
     return (
-      <a className="doodle" href={href} target="_blank" rel="noopener">
+      <a
+        className="doodle"
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src={`/assets/images/doodles/${src}`} />
       </a>
     );

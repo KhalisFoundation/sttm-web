@@ -4,8 +4,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
 const API_URLS = {
-  PRODUCTION: 'https://api.banidb.com/',
-  DEVELOPMENT: 'http://devapi.khajana.org/',
+  PRODUCTION: '//api.banidb.com/',
+  DEVELOPMENT: '//api.khajana.org/',
 };
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -36,11 +36,12 @@ module.exports = {
     app,
   },
   output: {
-    path: path.resolve(__dirname, 'assets', 'js'),
+    path: path.resolve(__dirname, 'public/assets', 'js'),
     chunkFilename: 'chunks/[name].js',
     filename: '[name].js',
     publicPath: 'assets/js/',
   },
+  devtool: PRODUCTION ? undefined : 'inline-source-map',
   plugins,
   optimization: {
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
@@ -51,10 +52,10 @@ module.exports = {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
-          chunks: 'all'
-        }
-      }
-    }
+          chunks: 'all',
+        },
+      },
+    },
   },
   module: {
     rules: [

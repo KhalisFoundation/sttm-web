@@ -153,7 +153,13 @@ export const toSearchURL = ({
   type = DEFAULT_SEARCH_TYPE,
   source = DEFAULT_SEARCH_SOURCE,
   offset = '',
-}) => `/search?${objectToQueryParams({ q, type, source, offset })}`;
+}) =>
+  `/search?${objectToQueryParams({
+    q: encodeURIComponent(q),
+    type,
+    source,
+    offset,
+  })}`;
 
 export const toShabadURL = ({
   shabad: { shabadid: id, id: highlight },

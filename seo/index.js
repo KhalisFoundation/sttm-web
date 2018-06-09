@@ -1,4 +1,4 @@
-import { SOURCES } from 'shabados';
+import { SOURCES } from '@sttm/banidb';
 
 const suffix = suffix => (value = '') =>
   `${value}${value === '' ? '' : ' - '}${suffix}`;

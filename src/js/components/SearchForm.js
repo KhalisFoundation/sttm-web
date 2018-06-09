@@ -58,24 +58,6 @@ export default class SearchForm extends React.PureComponent {
     isAnimatingPlaceholder: false,
   };
 
-  static getDerivedStateFromProps(
-    { defaultType, defaultSource, defaultQuery },
-    { type, source, query }
-  ) {
-    if (
-      defaultQuery !== query ||
-      defaultType !== type ||
-      defaultSource !== source
-    ) {
-      return {
-        query: defaultQuery || query,
-        type: defaultType || type,
-        source: defaultSource || source,
-      };
-    }
-    return null;
-  }
-
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
 
@@ -149,16 +131,18 @@ export default class SearchForm extends React.PureComponent {
           ? []
           : ['Enter 2 characters minimum.', '.{2,}'];
 
-    const [action, name] =
-      this.state.type === SEARCH_TYPES.ANG ? ['/ang', 'ang'] : ['/search', 'q'];
+    const [action, name, inputType] = SearchForm.getFormDetails(
+      this.state.type
+    );
 
     return this.props.children({
+      ...state,
       pattern,
       title,
       className,
-      ...state,
       action,
       name,
+      inputType,
       setGurmukhiKeyboardVisibilityAs,
       setQueryAs,
       handleSearchChange,
@@ -265,4 +249,14 @@ export default class SearchForm extends React.PureComponent {
       label: this.state.query,
     });
   };
+
+  /**
+   * Returns an array of form action, input name and input type
+   * @param {number} type
+   * @memberof SearchForm
+   */
+  static getFormDetails = type =>
+    type === SEARCH_TYPES.ANG
+      ? ['/ang', 'ang', 'number']
+      : ['/search', 'q', 'search'];
 }

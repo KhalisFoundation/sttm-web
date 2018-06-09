@@ -1,4 +1,4 @@
-export const createAction = type => payload => ({ type, payload });
+export const createAction = (type, meta) => payload => ({type, meta, payload});
 
 export const SET_ONLINE_MODE = 'SET_ONLINE_MODE';
 export const setOnlineMode = createAction(SET_ONLINE_MODE);
@@ -37,7 +37,11 @@ export const TOGGLE_SPLIT_VIEW_OPTION = 'TOGGLE_SPLIT_VIEW_OPTION';
 export const toggleSplitViewOption = createAction(TOGGLE_SPLIT_VIEW_OPTION);
 
 export const SET_FONT_SIZE = 'SET_FONT_SIZE';
-export const setFontSize = createAction(SET_FONT_SIZE);
+export const setFontSize = createAction(SET_FONT_SIZE, {
+  debounce: {
+    time: 300
+  }
+});
 
 export const SET_TRANSLATION_LANGUAGES = 'SET_TRANSLATION_LANGUAGES';
 export const setTranslationLanguages = createAction(SET_TRANSLATION_LANGUAGES);

@@ -5,11 +5,31 @@ export default ({ bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${title}</title>
-  <meta name="description" content="${description}">
   <meta name="theme-color" content="${ONLINE_COLOR}">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+  <meta charset="utf-8">
+  <meta name="description" content="${description}">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="//cdn.polyfill.io" crossorigin>
+  <link rel="preconnect" href="//api.banidb.com" crossorigin>
+
+  <!-- Preload Fonts -->
+  <link async rel="preload" href="/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1" as="font">
+  <link async rel="preload" href="/assets/fonts/AnmolLipiSG.ttf?v=1" as="font">
+
+  <!-- Preload JavaScript -->
+  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Search.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Shabad.js" as="script">
+
+  <!-- Preload Images -->
+  <link async rel="preload" href="/assets/images/sttm_logo.png" as="image">
+  <link async rel="preload" href="/assets/images/logo-192x192.png" as="image">
 
   <!-- Open Graph and Twitter -->
   <meta property="og:type" content="website">
@@ -28,15 +48,6 @@ export default ({ bodyClass, title, description }) => marinate`
   <meta property="twitter:image:width" content="1138">
   <meta property="twitter:image:height" content="250">
 
-  <link rel="shortcut icon" href="/favicon.ico">
-
-  <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
-
-  <!-- TODO: Get asset_version -->
-  <link rel="stylesheet" href="/assets/css/bundle.css">
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="manifest" href="manifest.json">
-
   <!-- Safari iOS config -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -47,20 +58,11 @@ export default ({ bodyClass, title, description }) => marinate`
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
-  <!-- Preload Images -->
-  <link async rel="preload" href="/assets/images/sttm_logo.png" as="image">
-  <link async rel="preload" href="/assets/images/logo-192x192.png" as="image">
-  <link async rel="preload" href="/assets/images/Sach Kaur.png" as="image">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Preload Fonts -->
-  <link async rel="preload" href="/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1" as="font">
-  <link async rel="preload" href="/assets/fonts/AnmolLipiSG.ttf?v=1" as="font">
-
-  <!-- Preload JavaScript -->
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Search.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Shabad.js" as="script">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
+  <link rel="stylesheet" href="/assets/css/bundle.css">
 </head>
 
 <body class="${bodyClass}">
@@ -89,7 +91,7 @@ export default ({ bodyClass, title, description }) => marinate`
       </ul>
       <div class="copyright">
         Copyright © 2018 Khalis Foundation
-        <span>, SikhiToTheMax Trademark SHARE Charities, UK</span>
+        <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
       </div>
     </div>
   </footer>
