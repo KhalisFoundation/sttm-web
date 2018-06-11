@@ -1,7 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { toggleItemInArray } from '../util';
-import { TRANSLATION_LANGUAGES, TRANSLITERATION_LANGUAGES } from '../constants';
+import {
+  TRANSLATION_LANGUAGES,
+  TRANSLITERATION_LANGUAGES,
+  DEFAULT_TRANSLATION_LANGUAGES,
+  DEFAULT_TRANSLITERATION_LANGUAGES,
+  DEFAULT_DARK_MODE,
+  DEFAULT_UNICODE,
+  DEFAULT_FONT_SIZE,
+} from '../constants';
 import TelevisionIcon from './Icons/Television';
 import SlidersIcon from './Icons/Sliders';
 
@@ -22,9 +30,11 @@ export default class ShabadControls extends React.PureComponent {
     showDisplayOptions: PropTypes.bool.isRequired,
     showFontOptions: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
+    setUnicode: PropTypes.func.isRequired,
     setFontSize: PropTypes.func.isRequired,
     setTranslationLanguages: PropTypes.func.isRequired,
     setTransliterationLanguages: PropTypes.func.isRequired,
+    setDarkMode: PropTypes.func.isRequired,
     toggleDisplayOptions: PropTypes.func.isRequired,
     toggleFontOptions: PropTypes.func.isRequired,
     toggleLarivaarAssistOption: PropTypes.func.isRequired,
@@ -47,9 +57,11 @@ export default class ShabadControls extends React.PureComponent {
       unicode,
       fontSize,
       splitView,
+      setUnicode,
       setFontSize,
       setTranslationLanguages,
       setTransliterationLanguages,
+      setDarkMode,
       toggleDisplayOptions,
       toggleFontOptions,
       toggleDarkMode,
@@ -168,6 +180,20 @@ export default class ShabadControls extends React.PureComponent {
                 </a>
               </div>
             </div>
+            <div className="display-reset-option-content">
+              <a
+                className={`display-option-toggle ${darkMode ? 'active' : ''}`}
+                onClick={() => {
+                  setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES);
+                  setTransliterationLanguages(
+                    DEFAULT_TRANSLITERATION_LANGUAGES
+                  );
+                  setDarkMode(DEFAULT_DARK_MODE);
+                }}
+              >
+                Reset
+              </a>
+            </div>
           </div>
         )}
         {showFontOptions && (
@@ -190,11 +216,22 @@ export default class ShabadControls extends React.PureComponent {
                 type="range"
                 min="5"
                 max="50"
-                defaultValue={fontSize * 10}
+                value={fontSize * 10}
                 onChange={e => setFontSize(e.currentTarget.value / 10)}
                 onInput={e => setFontSize(e.currentTarget.value / 10)}
               />
               <big className="gurbani-font">A</big>
+            </div>
+            <div className="display-reset-option-content">
+              <a
+                className={`display-option-toggle ${darkMode ? 'active' : ''}`}
+                onClick={() => {
+                  setUnicode(DEFAULT_UNICODE);
+                  setFontSize(DEFAULT_FONT_SIZE);
+                }}
+              >
+                Reset
+              </a>
             </div>
           </div>
         )}

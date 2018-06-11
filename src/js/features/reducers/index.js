@@ -8,10 +8,12 @@ import {
   TOGGLE_UNICODE_OPTION,
   TOGGLE_DARK_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
+  SET_UNICODE,
   SET_FONT_SIZE,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
+  SET_DARK_MODE,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -142,6 +144,18 @@ export default function reducer(state, action) {
         larivaarAssist,
       };
     }
+    case SET_UNICODE: {
+      const unicode = action.payload || 0;
+      clickEvent({
+        action: SET_UNICODE,
+        label: unicode ? 1 : 0,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_UNICODE, unicode);
+      return {
+        ...state,
+        unicode,
+      };
+    }
     case SET_FONT_SIZE: {
       const fontSize = parseFloat(action.payload, 10);
 
@@ -181,6 +195,18 @@ export default function reducer(state, action) {
       return {
         ...state,
         transliterationLanguages,
+      };
+    }
+    case SET_DARK_MODE: {
+      const darkMode = action.payload || 0;
+      clickEvent({
+        action: SET_DARK_MODE,
+        label: darkMode ? 1 : 0,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_DARK_MODE, darkMode);
+      return {
+        ...state,
+        darkMode,
       };
     }
     default:

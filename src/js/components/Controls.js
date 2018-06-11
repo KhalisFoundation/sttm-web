@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import ShabadControls from './ShabadControls';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
+  setUnicode,
   setFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
+  setDarkMode,
   toggleDisplayOptions,
   toggleFontOptions,
   toggleLarivaarAssistOption,
@@ -68,9 +70,11 @@ class Controls extends React.PureComponent {
 const stateToProps = state => state;
 
 const dispatchToProps = {
+  setUnicode,
   setFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
+  setDarkMode,
   toggleDisplayOptions,
   toggleFontOptions,
   toggleLarivaarAssistOption,
@@ -83,4 +87,7 @@ const dispatchToProps = {
 };
 
 // TODO: Connect individual components instead of all controls.
-export default connect(stateToProps, dispatchToProps)(Controls);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(Controls);
