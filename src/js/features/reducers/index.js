@@ -145,10 +145,10 @@ export default function reducer(state, action) {
       };
     }
     case SET_UNICODE: {
-      const unicode = action.payload || 0;
+      const unicode = action.payload || false;
       clickEvent({
         action: SET_UNICODE,
-        label: unicode ? 1 : 0,
+        label: unicode ? true : false,
       });
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_UNICODE, unicode);
       return {
@@ -198,10 +198,10 @@ export default function reducer(state, action) {
       };
     }
     case SET_DARK_MODE: {
-      const darkMode = action.payload || 0;
+      const darkMode = action.payload || false;
       clickEvent({
         action: SET_DARK_MODE,
-        label: darkMode ? 1 : 0,
+        label: darkMode ? true : false,
       });
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_DARK_MODE, darkMode);
       return {
