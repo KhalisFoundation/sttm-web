@@ -228,6 +228,31 @@ export default [
     },
   },
   {
+    path: '/sync',
+    render(props) {
+      return (
+        <Layout title="Sync - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(/* webpackChunkName: "Sync" */ './pages/Sync')
+            }
+          >
+            {({ pending, resolved: { default: Sync } = {}, rejected }) =>
+              pending ? null : Sync ? (
+                <Sync {...props} />
+              ) : (
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
+                )
+              )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
     path: '/search',
     render(props) {
       const {

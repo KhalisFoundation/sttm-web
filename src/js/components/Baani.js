@@ -79,7 +79,7 @@ export default class Baani extends React.PureComponent {
     );
   };
 
-  componentDidMount() {
+  _scrollToHiglight = () => {
     if (this.$highlightedBaaniLine) {
       if ('offsetTop' in this.$highlightedBaaniLine) {
         const { offsetTop, offsetHeight } = this.$highlightedBaaniLine;
@@ -88,6 +88,16 @@ export default class Baani extends React.PureComponent {
           window.scrollTo(0, offsetTop - offsetHeight)
         );
       }
+    }
+  };
+
+  componentDidMount() {
+    this._scrollToHiglight();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.highlight !== prevProps.highlight) {
+      this._scrollToHiglight();
     }
   }
 

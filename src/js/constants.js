@@ -55,6 +55,11 @@ export const DEFAULT_DARK_MODE = false;
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
+  SYNC: `Remote Sync`,
+  SYNC_DESCRIPTION: `Remote Sync is a feature of SikhiToTheMax desktop application. It allows you to view the shabad and current line displayed via the Desktop Application on your mobile/device. To get started you need to enter the code below, as shared by the desktop application.`,
+  SYNC_CONNECTED: code =>
+    `Awesome! You're now connected to the device "${code}" and will start receiving shabads soon! The screen would automatically update now as shabad and the line changes on the desktop.`,
+  SYNC_DISCONNECT: `Are you sure you want to disconnect now? You can re-connect by entering the same code later.`,
   OFFLINE: `It seems you aren't connected to internet`,
   OFFLINE_DESCRIPTION: `Unfortunately we don't support offline mode fully as of now, and you would need to be connected to use SikhiToTheMax.`,
   HELP_SECTION: 'the help section',
