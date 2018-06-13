@@ -1,4 +1,4 @@
-import { SOURCES, TYPES as _TYPES } from 'shabados';
+import { SOURCES, TYPES as _TYPES } from '@sttm/banidb';
 
 export { SOURCES };
 

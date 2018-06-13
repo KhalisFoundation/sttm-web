@@ -98,6 +98,7 @@ export default class Header extends React.PureComponent {
             </div>
           )}
           <SearchForm
+            key={`${defaultQuery}${defaultSource}${defaultType}`}
             defaultQuery={defaultQuery}
             defaultSource={defaultSource}
             defaultType={defaultType}
@@ -106,9 +107,9 @@ export default class Header extends React.PureComponent {
           >
             {({
               pattern,
-              defaultQuery,
               title,
               className,
+              inputType,
               displayGurmukhiKeyboard,
               query,
               type,
@@ -160,15 +161,14 @@ export default class Header extends React.PureComponent {
                           <li>
                             <div id="search-container">
                               <input
-                                defaultValue={defaultQuery}
-                                type="search"
-                                name={name}
+                                type={inputType}
                                 id="search"
                                 autoComplete="off"
                                 autoCapitalize="none"
                                 autoCorrect="off"
                                 spellCheck="false"
-                                required
+                                required="required"
+                                name={name}
                                 value={query}
                                 onChange={handleSearchChange}
                                 className={className}

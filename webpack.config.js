@@ -4,11 +4,11 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
 const API_URLS = {
-  PRODUCTION: 'https://api.banidb.com/',
-  DEVELOPMENT: 'http://devapi.khajana.org/',
+  PRODUCTION: '//api.banidb.com/',
+  DEVELOPMENT: '//devapi.khajana.org/',
   SYNC: {
-    PRODUCTION: 'https://api.sikhitothemax.org/',
-    LOCAL: 'https://api.sikhitothemax.org/',
+    PRODUCTION: '//api.sikhitothemax.org/',
+    LOCAL: '//api.sikhitothemax.org/',
   },
 };
 

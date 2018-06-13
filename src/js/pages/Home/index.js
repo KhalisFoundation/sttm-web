@@ -31,6 +31,7 @@ export default class Home extends React.PureComponent {
           displayGurmukhiKeyboard,
           query,
           type,
+          inputType,
           source,
           action,
           name,
@@ -66,7 +67,7 @@ export default class Home extends React.PureComponent {
                       autoFocus="true"
                       name={name}
                       id="search"
-                      type="search"
+                      type={inputType}
                       autoCapitalize="none"
                       autoComplete="off"
                       autoCorrect="off"
