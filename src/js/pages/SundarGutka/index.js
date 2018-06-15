@@ -6,6 +6,7 @@ import { versesToGurbani } from '../../util';
 import PropTypes from 'prop-types';
 import ShabadContent from '../../components/ShabadContent';
 import Fetch from '../../components/Fetch';
+import { TEXTS } from '../../constants';
 
 export default class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -13,6 +14,8 @@ export default class SundarGutka extends React.PureComponent {
   };
 
   static DEFAULT_BAANI_ID = 0;
+
+  $details = React.createRef();
 
   state = {
     baanies: null,
@@ -32,20 +35,36 @@ export default class SundarGutka extends React.PureComponent {
           ) : (
             <React.Fragment>
               <div id="sidebar">
-                <details>
+                <details ref={this.$details}>
                   <summary>Sundar Gutka Baanies</summary>
                   <ul>
                     {baanies.map(({ ID, transliteration }) => (
                       <li key={ID}>
-                        <a
-                          onClick={() => this.setState({ currentBaaniId: ID })}
-                        >
+                        <a onClick={this.handleBaaniClick(ID)}>
                           {transliteration}
                         </a>
                       </li>
                     ))}
                   </ul>
                 </details>
+                <div className="show-on-mobile">
+                  {TEXTS.SUNDAR_GUTKA_APP}{' '}
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Android
+                  </a>{' '}
+                  |{' '}
+                  <a
+                    href="https://itunes.apple.com/in/app/sundar-gutka/id431446112?mt=8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    iOS
+                  </a>
+                </div>
               </div>
 
               <main>
@@ -72,6 +91,13 @@ export default class SundarGutka extends React.PureComponent {
       </div>
     );
   }
+
+  handleBaaniClick = ID => () => {
+    window.scrollTo(0, 0);
+    this.$details.current.setAttribute('close', '');
+    this.$details.current.removeAttribute('open');
+    this.setState({ currentBaaniId: ID });
+  };
 
   componentDidMount() {
     pageView('/sundar-gutka');
