@@ -55,4 +55,8 @@ export default {
     title: suffixAppName('Shabad'),
     createDescription: () => `Read shabad online right now.`,
   },
+  '/sync': {
+    title: suffixAppName('Sync'),
+    createDescription: () => ``,
+  },
 };

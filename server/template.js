@@ -22,8 +22,8 @@ export default ({ bodyClass, title, description }) => marinate`
   <link async rel="preload" href="/assets/fonts/AnmolLipiSG.ttf?v=1" as="font">
 
   <!-- Preload JavaScript -->
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad~Sync.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad~Sync.js" as="script">
   <link async rel="preload" href="assets/js/chunks/Search.js" as="script">
   <link async rel="preload" href="assets/js/chunks/Shabad.js" as="script">
 

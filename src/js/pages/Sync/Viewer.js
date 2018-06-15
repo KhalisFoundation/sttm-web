@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ShabadContent from '../../components/ShabadContent';
-import { buildApiUrl } from 'shabados';
+import { buildApiUrl } from '@sttm/banidb';
 import { TEXTS } from '../../constants';
 
 /**
