@@ -1,6 +1,6 @@
 /* globals API_URL */
 import React from 'react';
-import { buildApiUrl } from 'shabados';
+import { buildApiUrl } from '@sttm/banidb';
 import PageLoader from '../PageLoader';
 import Layout, { Stub } from './Layout';
 

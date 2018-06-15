@@ -1,4 +1,4 @@
-import { SOURCES } from 'shabados';
+import { SOURCES } from '@sttm/banidb';
 
 const suffix = suffix => (value = '') =>
   `${value}${value === '' ? '' : ' - '}${suffix}`;
@@ -54,5 +54,14 @@ export default {
   '/shabad': {
     title: suffixAppName('Shabad'),
     createDescription: () => `Read shabad online right now.`,
+  },
+  '/sync': {
+    title: suffixAppName('Sync'),
+    createDescription: () => ``,
+  },
+  '/sundar-gutka': {
+    title: suffixAppName('Sundar Gutka'),
+    createDescription: () =>
+      `Read nitnem baanies with translations, transliterations and larivaar online right now.`,
   },
 };

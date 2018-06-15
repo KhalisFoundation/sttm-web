@@ -1,4 +1,4 @@
-import { SOURCES, TYPES as _TYPES } from 'shabados';
+import { SOURCES, TYPES as _TYPES } from '@sttm/banidb';
 
 export { SOURCES };
 
@@ -55,12 +55,18 @@ export const DEFAULT_DARK_MODE = false;
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
+  SYNC: `Remote Sync`,
+  SYNC_DESCRIPTION: `Remote Sync is a feature of SikhiToTheMax desktop application. It allows you to view the shabad and current line displayed via the Desktop Application on your mobile/device. To get started you need to enter the code below, as shared by the desktop application.`,
+  SYNC_NOTIFICATION: code => `You're now connected to ${code}. Tap to dismiss.`,
+  SYNC_CONNECTED: code =>
+    `Awesome! You're now connected to the device "${code}" and will start receiving shabads soon! The screen would automatically update now as shabad and the line changes on the desktop.`,
+  SYNC_DISCONNECT: `Are you sure you want to disconnect now? You can re-connect by entering the same code later.`,
   OFFLINE: `It seems you aren't connected to internet`,
   OFFLINE_DESCRIPTION: `Unfortunately we don't support offline mode fully as of now, and you would need to be connected to use SikhiToTheMax.`,
   HELP_SECTION: 'the help section',
   INDEX_SECTION: 'the index page',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
-  GENERIC_ERROR_DESCRIPTION: `This is really unsual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
+  GENERIC_ERROR_DESCRIPTION: `This is really unusual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
   GO_TO_SHABAD: 'Open Shabad',
   HUKAMNAMA: 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar',
   ANG_NOT_FOUND: `Sorry, we couldn't find the requested ang (page).`,

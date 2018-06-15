@@ -4,7 +4,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
-import seo from '../seo';
+import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
 
 const hostname = _hostname().substr(0, 3);
@@ -29,6 +29,8 @@ app
 
   // Direct all calls to index template
   .get('*', (req, res) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+
     const { path } = req;
 
     const { title: _title, createDescription } = seo[

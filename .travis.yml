@@ -10,7 +10,9 @@ branches:
   - dev
 
 addons:
-  ssh_known_hosts: usc-avm01.khalis.net:1157
+  ssh_known_hosts:
+    - use-avm01.khalis.net:1157
+    - euw-avm02.khalis.net:1157
 
 install:
 - npm ci
@@ -22,7 +24,8 @@ cache:
 env:
   global:
   - REMOTE_USER=khalsa
-  - REMOTE_HOST=usc-avm01.khalis.net
+  - REMOTE_HOST_1=use-avm01.khalis.net
+  - REMOTE_HOST_2=euw-avm02.khalis.net
   - PORT=1157
 
 deploy:
