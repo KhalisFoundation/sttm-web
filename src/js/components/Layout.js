@@ -36,7 +36,24 @@ class Layout extends React.PureComponent {
   };
 
   componentDidCatch(error) {
-    this.setState({ error });
+    const newState = {
+      error,
+      errorProps: {
+        title: TEXTS.GENERIC_ERROR,
+        description: TEXTS.GENERIC_ERROR_DESCRIPTION,
+        image: BalpreetSingh,
+      },
+    };
+    switch (error.message) {
+      case TEXTS.TIMEOUT_ERROR: {
+        newState.errorProps.title = TEXTS.TIMEOUT_ERROR;
+        newState.errorProps.description = TEXTS.TIMEOUT_ERROR_DESCRIPTION;
+        break;
+      }
+    }
+
+    this.setState(newState);
+
     errorEvent({
       action: ACTIONS.GENERIC_ERROR,
       label: JSON.stringify(error),
@@ -75,11 +92,7 @@ class Layout extends React.PureComponent {
           {...props}
         />
         {this.state.error ? (
-          <GenericError
-            title={TEXTS.GENERIC_ERROR}
-            description={TEXTS.GENERIC_ERROR_DESCRIPTION}
-            image={BalpreetSingh}
-          />
+          <GenericError {...this.state.errorProps} />
         ) : (
           children
         )}
