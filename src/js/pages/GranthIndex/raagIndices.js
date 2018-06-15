@@ -8,20 +8,49 @@ export default {
         pages: [14, 94],
       },
       {
+        name: 'Sri Raag Ki Vaar',
+        pages: [83, 91],
+      },
+      {
         name: 'Raag Maajh',
         pages: [94, 151],
+      },
+      {
+        name: 'Vaar Manjh Ki',
+        pages: [137, 150],
+        highlight: 5589,
       },
       {
         name: 'Raag Gauri',
         pages: [151, 347],
       },
       {
+        name: 'Gauri Ki Vaar M4',
+        pages: [300, 317],
+        highlight: 13721,
+      },
+
+      {
+        name: 'Gauri Ki Vaar M5',
+        pages: [318, 323],
+      },
+      {
         name: 'Raag Asa',
         pages: [347, 489],
       },
       {
+        name: 'Asa Ki Vaar',
+        pages: [462, 475],
+        highlight: 20756,
+      },
+      {
         name: 'Raag Gujari',
         pages: [489, 527],
+      },
+      {
+        name: 'Gujari Ki Vaar',
+        pages: [508, 517],
+        highlight: 22620,
       },
       {
         name: 'Raag Devagandhari',
@@ -32,12 +61,27 @@ export default {
         pages: [537, 557],
       },
       {
+        name: 'Bihagare Ki Vaar',
+        pages: [548, 556],
+        highlight: 24137,
+      },
+      {
         name: 'Raag Vadahans',
         pages: [557, 595],
       },
       {
+        name: 'Vadahans Ki Vaar',
+        pages: [585, 594],
+        highlight: 25541,
+      },
+      {
         name: 'Raag Sorath',
         pages: [595, 660],
+      },
+      {
+        name: 'Raag Sorath Vaar',
+        pages: [642, 654],
+        highlight: 27772,
       },
       {
         name: 'Raag Dhanasari',
@@ -46,6 +90,11 @@ export default {
       {
         name: 'Raag Jaitsri',
         pages: [696, 711],
+      },
+      {
+        name: 'Jaitsri M5 Vaar Saloka Naal',
+        pages: [705, 710],
+        highlight: 30297,
       },
       {
         name: 'Raag Todi',
@@ -64,8 +113,17 @@ export default {
         pages: [728, 795],
       },
       {
+        name: 'Vaar Suhi Ki',
+        pages: [785, 792],
+        highlight: 33325,
+      },
+      {
         name: 'Raag Bilaval',
         pages: [795, 859],
+      },
+      {
+        name: 'Bilaval Ki Vaar',
+        pages: [849, 855],
       },
       {
         name: 'Raag Gond',
@@ -74,6 +132,19 @@ export default {
       {
         name: 'Raag Ramkali',
         pages: [876, 975],
+      },
+      {
+        name: 'Ramkali Ki Vaar M3',
+        pages: [947, 956],
+      },
+      {
+        name: 'Ramkali Ki Vaar M5',
+        pages: [957, 966],
+      },
+      {
+        name: 'Ramkali Ki Vaar Rai Balvand',
+        pages: [966, 968],
+        highlight: 41341,
       },
       {
         name: 'Raag Nat Narain',
@@ -86,6 +157,11 @@ export default {
       {
         name: 'Raag Maru',
         pages: [989, 1107],
+      },
+      {
+        name: 'Maru Vaar M3',
+        pages: [1086, 1094],
+        highlight: 46419,
       },
       {
         name: 'Raag Tukhari',
@@ -104,16 +180,36 @@ export default {
         pages: [1168, 1197],
       },
       {
+        name: 'Basant Ki Vaar',
+        pages: [1193, 1193],
+        highlight: 51311,
+      },
+      {
         name: 'Raag Sarang',
         pages: [1197, 1254],
+      },
+      {
+        name: 'Sarang Ki Vaar',
+        pages: [1237, 1251],
+        highlight: 52956,
       },
       {
         name: 'Raag Mallar',
         pages: [1254, 1294],
       },
       {
+        name: 'Vaar Mallar Ki',
+        pages: [1278, 1291],
+        highlight: 54666,
+      },
+      {
         name: 'Raag Kanara',
         pages: [1294, 1319],
+      },
+      {
+        name: 'Kanare Ki Vaar',
+        pages: [1312, 1318],
+        highlight: 56001,
       },
       {
         name: 'Raag Kalian',
