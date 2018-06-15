@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TEXTS } from '../constants';
 
 // This component uses children as a function pattern
 export default class Fetch extends React.PureComponent {
@@ -46,7 +47,7 @@ export default class Fetch extends React.PureComponent {
     this.setState({ loading: true });
 
     const timeoutPromise = new Promise(function(resolve, reject) {
-      setTimeout(reject, timeout, 'Fetch request timed out!');
+      setTimeout(reject, timeout, TEXTS.TIMEOUT_ERROR);
     });
 
     // If timeoutPromise completes before fetch the top level catch is executed
