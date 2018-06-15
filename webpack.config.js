@@ -4,6 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
 const API_URLS = {
+  BANIS: '//api.banidb.com/v2/banis',
   PRODUCTION: '//api.banidb.com/',
   DEVELOPMENT: '//devapi.khajana.org/',
   SYNC: {
@@ -23,6 +24,7 @@ const plugins = PRODUCTION
         PRODUCTION: JSON.stringify(true),
         API_URL: JSON.stringify(API_URLS.PRODUCTION),
         SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
+        BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       }),
       new UglifyJsPlugin(),
     ]
@@ -31,6 +33,7 @@ const plugins = PRODUCTION
         PRODUCTION: JSON.stringify(false),
         API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
         SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
+        BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       }),
     ];
 
