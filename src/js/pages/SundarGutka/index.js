@@ -32,15 +32,20 @@ export default class SundarGutka extends React.PureComponent {
           ) : (
             <React.Fragment>
               <div id="sidebar">
-                <ul>
-                  {baanies.map(({ ID, transliteration }) => (
-                    <li key={ID}>
-                      <a onClick={() => this.setState({ currentBaaniId: ID })}>
-                        {transliteration}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                <details>
+                  <summary>Sundar Gutka Baanies</summary>
+                  <ul>
+                    {baanies.map(({ ID, transliteration }) => (
+                      <li key={ID}>
+                        <a
+                          onClick={() => this.setState({ currentBaaniId: ID })}
+                        >
+                          {transliteration}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
               </div>
 
               <main>

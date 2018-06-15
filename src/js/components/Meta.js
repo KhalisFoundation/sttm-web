@@ -48,13 +48,13 @@ export default class Meta extends React.PureComponent {
         {isFalsy(nav.previous) === false ? (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              <Chevron left />
+              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
             </Link>
           </div>
         ) : (
           <div className="shabad-nav left disabled-nav">
             <a>
-              <Chevron left />
+              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
             </a>
           </div>
         )}
@@ -115,13 +115,13 @@ export default class Meta extends React.PureComponent {
         {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
             <Link to={link + nav.next}>
-              <Chevron />
+              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
             </Link>
           </div>
         ) : (
           <div className="shabad-nav right disabled-nav">
             <a>
-              <Chevron />
+              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
             </a>
           </div>
         )}

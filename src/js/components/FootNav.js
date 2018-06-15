@@ -22,14 +22,14 @@ export default class FootNav extends React.PureComponent {
         {nav.previous ? (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              <Chevron left />
+              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
               <span>Previous</span>
             </Link>
           </div>
         ) : (
           <div className="shabad-nav left disabled-nav">
             <a>
-              <Chevron left />
+              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
               <span>Previous</span>
             </a>
           </div>
@@ -38,14 +38,14 @@ export default class FootNav extends React.PureComponent {
           <div className="shabad-nav right">
             <Link to={link + nav.next}>
               <span>Next</span>
-              <Chevron />
+              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
             </Link>
           </div>
         ) : (
           <div className="shabad-nav right disabled-nav">
             <a>
               <span>Next</span>
-              <Chevron />
+              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
             </a>
           </div>
         )}

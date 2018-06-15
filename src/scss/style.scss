@@ -146,3 +146,35 @@ select {
     transition: transform ease-in-out 0.1s;
   }
 }
+
+.scroll-to-top {
+  align-items: center;
+  animation: grow ease-in-out 0.25s;
+  background-color: $sttm-white;
+  border-radius: 50%;
+  bottom: 20px;
+  box-shadow: 0 1px 4px 0 $sttm-dark-grey;
+  cursor: pointer;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  position: fixed;
+  right: 20px;
+  width: 50px;
+  z-index: 4;
+
+  @keyframes grow {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .dark-mode & {
+    background-color: $sttm-darker-grey;
+    box-shadow: none;
+  }
+}

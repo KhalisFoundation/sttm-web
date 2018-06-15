@@ -11,6 +11,7 @@ import {
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
+import ScrollToTop from './ScrollToTop';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -33,6 +34,7 @@ class Layout extends React.PureComponent {
 
   state = {
     error: null,
+    showScrollToTop: false,
   };
 
   componentDidCatch(error) {
@@ -96,6 +98,7 @@ class Layout extends React.PureComponent {
         ) : (
           children
         )}
+        {this.state.showScrollToTop && <ScrollToTop />}
       </React.Fragment>
     ) : (
       <div className="content-root">
@@ -117,6 +120,7 @@ class Layout extends React.PureComponent {
   componentDidMount() {
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
+    window.addEventListener('scroll', this.onScroll, { passive: true });
     document.title = this.props.title;
     this.updateTheme();
   }
@@ -124,7 +128,16 @@ class Layout extends React.PureComponent {
   componentWillUnmount() {
     window.removeEventListener('online', this.onOnline);
     window.removeEventListener('offline', this.onOffline);
+    window.removeEventListener('scroll', this.onScroll);
   }
+
+  onScroll = () => {
+    if (window.scrollY > window.innerHeight / 2) {
+      this.setState({ showScrollToTop: true });
+    } else {
+      this.setState({ showScrollToTop: false });
+    }
+  };
 
   onOnline = () => this.props.setOnlineMode(true);
   onOffline = () => this.props.setOnlineMode(false);
