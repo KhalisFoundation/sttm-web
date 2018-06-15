@@ -3,6 +3,7 @@ import React from 'react';
 import { TEXTS } from '../../constants';
 import Viewer from './Viewer';
 import { Link } from 'react-router-dom';
+import { showToast } from '../../util';
 
 /**
  *
@@ -61,7 +62,7 @@ export default class Sync extends React.PureComponent {
 
   componentDidMount() {
     this._mounted = true;
-    const src = `${SYNC_API_URL}/socket.io/socket.io.js`;
+    const src = `${SYNC_API_URL}socket.io/socket.io.js`;
     if (document.querySelector(`script[src="${src}"]`) === null) {
       const script = document.createElement('script');
       script.src = src;
@@ -120,17 +121,22 @@ export default class Sync extends React.PureComponent {
    * @memberof ItemList
    */
   handleSubmit = code => {
-    fetch(`${SYNC_API_URL}/sync/join/${code}`)
+    fetch(`${SYNC_API_URL}sync/join/${code}`)
       .then(r => r.json())
       .then(({ data, error }) => {
-        if (error) {
+        if (error || data === undefined) {
           this._setState({ error, data, connected: false });
         } else {
           const { namespaceString } = data;
           this._setState({ connected: true, namespaceString });
+          showToast(
+            TEXTS.SYNC_NOTIFICATION(code),
+            Infinity,
+            'toast-notification-green'
+          );
 
           if (window.io !== undefined) {
-            this._socket = window.io(`${SYNC_API_URL}/${namespaceString}`);
+            this._socket = window.io(`${SYNC_API_URL}${namespaceString}`);
 
             this._socket.on('data', data => this._setState({ data }));
 
@@ -146,6 +152,7 @@ export default class Sync extends React.PureComponent {
             // TODO: idk how to wait for io to come on window, setInterval? eww.
           }
         }
-      });
+      })
+      .catch(error => this._setState({ error, data: null, connected: false }));
   };
 }
