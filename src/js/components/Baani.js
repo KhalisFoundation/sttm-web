@@ -20,6 +20,14 @@ const translationMap = {
     toString: () => shabad.translation.punjabi.bms.unicode,
   }),
 };
+
+/**
+ *
+ *
+ * @export
+ * @class Baani
+ * @extends {React.PureComponent}
+ */
 export default class Baani extends React.PureComponent {
   static defaultProps = {
     highlight: null,

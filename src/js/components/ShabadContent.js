@@ -11,7 +11,19 @@ import ProgressBar from './ProgressBar';
 import Baani from './Baani';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '../constants';
 
+/**
+ *
+ *
+ * @class Shabad
+ * @augments {React.PureComponent<ShabadProps, ShabadState>}
+ */
 class Shabad extends React.PureComponent {
+  /**
+   * @typedef {object} ShabadState
+   * @property {number} progress of vertical scroll
+   *
+   * @memberof Shabad
+   */
   state = {
     progress: 0,
   };
@@ -21,6 +33,17 @@ class Shabad extends React.PureComponent {
     nav: {},
   };
 
+  /**
+   * @typedef {object} ShabadProps
+   * @property {array} gurbani
+   * @property {number} highlight LineNo of highlighted shabad line
+   * @property {'shabad'|'ang'|'hukamnama'} type of shabad
+   * @property {{ previous: string, next: string }} nav
+   * @property {object} info
+   *
+   *
+   * @memberof Shabad
+   */
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
     highlight: PropTypes.number,

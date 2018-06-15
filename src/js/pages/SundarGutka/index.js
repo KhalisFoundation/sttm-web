@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { pageView } from '../../util/analytics';
+import { versesToGurbani } from '../../util';
 import PropTypes from 'prop-types';
 import ShabadContent from '../../components/ShabadContent';
 import Fetch from '../../components/Fetch';
@@ -11,9 +12,11 @@ export default class SundarGutka extends React.PureComponent {
     location: PropTypes.shape({ hash: PropTypes.string }),
   };
 
+  static DEFAULT_BAANI_ID = 0;
+
   state = {
     baanies: null,
-    currentBaaniId: 0,
+    currentBaaniId: SundarGutka.DEFAULT_BAANI_ID,
   };
 
   render() {
@@ -41,20 +44,17 @@ export default class SundarGutka extends React.PureComponent {
               </div>
 
               <main>
-                {currentBaaniId !== 0 && (
+                {currentBaaniId !== SundarGutka.DEFAULT_BAANI_ID && (
                   <Fetch url={`${BANIS_API_URL}/${currentBaaniId}`}>
                     {({ data, loading }) =>
                       loading ? (
                         <div className="spinner" />
                       ) : (
-                        /* TODO make v2 data compliant with v1 */
                         <ShabadContent
                           type="shabad"
-                          info={data.shabadInfo}
+                          info={data.baniInfo}
                           nav={data.nav}
-                          gurbani={data.verses.map(v => ({
-                            shabad: { ...v, gurbani: v.verse },
-                          }))}
+                          gurbani={versesToGurbani(data.verses)}
                         />
                       )
                     }

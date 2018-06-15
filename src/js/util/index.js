@@ -193,3 +193,15 @@ export const toAngURL = ({ ang, source, highlight }) =>
     source,
     highlight,
   })}`;
+
+/**
+ * @sttm/banidb API v2 to v1 transformer
+ */
+export const versesToGurbani = verses =>
+  verses.map(({ verse, ...v }) => ({
+    shabad: {
+      ...v,
+      gurbani: verse,
+      transliteration: v.transliteration.english,
+    },
+  }));

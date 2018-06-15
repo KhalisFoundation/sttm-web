@@ -32,18 +32,23 @@ export default class Fetch extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { url, options, transform } = this.props;
+    const { url, options, transform, timeout } = this.props;
 
     if (
       prevProps.url !== url ||
       prevProps.options !== options ||
       prevProps.transform !== transform
     ) {
-      this.fetchData(url, options, transform);
+      this.fetchData(url, options, transform, timeout);
     }
   }
 
-  fetchData = (url, options, transform, timeout) => {
+  fetchData = (
+    url,
+    options,
+    transform,
+    timeout = Fetch.defaultProps.timeout
+  ) => {
     this.setState({ loading: true });
 
     const timeoutPromise = new Promise(function(resolve, reject) {
