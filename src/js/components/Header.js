@@ -43,6 +43,11 @@ class Menu extends React.PureComponent {
             </Link>
           </li>
           <li>
+            <Link to="/sundar-gutka" onClick={toggleMenu}>
+              Sundar Gutka
+            </Link>
+          </li>
+          <li>
             <Link to="/sync" onClick={toggleMenu}>
               Sync
             </Link>

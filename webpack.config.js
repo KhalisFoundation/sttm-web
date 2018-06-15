@@ -4,7 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
 const API_URLS = {
-  BANIS: '://api.banidb.com/v2/banis',
+  BANIS: '//api.banidb.com/v2/banis',
   PRODUCTION: '//api.banidb.com/',
   DEVELOPMENT: '//devapi.khajana.org/',
   SYNC: {
