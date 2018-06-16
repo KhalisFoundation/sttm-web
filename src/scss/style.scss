@@ -160,8 +160,9 @@ select {
   justify-content: center;
   position: fixed;
   right: 20px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   width: 50px;
-  z-index: 4;
+  z-index: 5;
 
   @keyframes grow {
     from {
