@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { toShabadURL, toSearchURL } from '../../util';
+import { getHighlightIndices, toShabadURL, toSearchURL } from '../../util';
 import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '../../constants';
 import {
   ACTIONS,
@@ -34,6 +34,19 @@ class Layout extends React.PureComponent {
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
   };
+
+  static HiglightedSearch = ({ children, startIndex, endIndex }) =>
+    children.split(' ').map((word, i) => (
+      <span
+        key={i}
+        className={
+          i >= startIndex && i < endIndex ? 'search-highlight-word' : ''
+        }
+      >
+        {` ${word} `}
+      </span>
+    ));
+
   render() {
     const {
       q,
@@ -50,6 +63,8 @@ class Layout extends React.PureComponent {
       unicode,
       fontSize,
     } = this.props;
+
+    const { HiglightedSearch } = Layout;
 
     if (parseInt(resultsCount, 10) === 0) {
       const className = PLACEHOLDERS[type][1] === true ? '' : 'gurbani-font';
@@ -106,12 +121,11 @@ class Layout extends React.PureComponent {
             const presentationalSource = _source
               ? `${_source} - ${shabadPageNo}`
               : null;
-            const highlightStartIndex = shabad.gurbani.gurmukhi
-              .split(' ')
-              .map(e => e[0])
-              .join('')
-              .indexOf(q);
-            const higlightEndIndex = highlightStartIndex + q.length;
+            const [highlightStartIndex, higlightEndIndex] = getHighlightIndices(
+              shabad.gurbani.gurmukhi,
+              q,
+              type
+            );
 
             return (
               <React.Fragment key={shabad.id}>
@@ -127,7 +141,16 @@ class Layout extends React.PureComponent {
                           larivaarAssist={larivaarAssist}
                           enable={larivaar}
                         >
-                          {shabad.gurbani.unicode}
+                          {larivaar ? (
+                            shabad.gurbani.unicode
+                          ) : (
+                            <HiglightedSearch
+                              startIndex={highlightStartIndex}
+                              endIndex={higlightEndIndex}
+                            >
+                              {shabad.gurbani.unicode}
+                            </HiglightedSearch>
+                          )}
                         </Larivaar>
                       </div>
                     ) : (
@@ -136,21 +159,16 @@ class Layout extends React.PureComponent {
                           larivaarAssist={larivaarAssist}
                           enable={larivaar}
                         >
-                          {larivaar == false
-                            ? shabad.gurbani.gurmukhi
-                                .split(' ')
-                                .map(
-                                  (word, i) =>
-                                    i >= highlightStartIndex &&
-                                    i < higlightEndIndex ? (
-                                      <span style={{ color: 'pink' }}>
-                                        {` ${word} `}
-                                      </span>
-                                    ) : (
-                                      word
-                                    )
-                                )
-                            : shabad.gurbani.gurmukhi}
+                          {larivaar ? (
+                            shabad.gurbani.gurmukhi
+                          ) : (
+                            <HiglightedSearch
+                              startIndex={highlightStartIndex}
+                              endIndex={higlightEndIndex}
+                            >
+                              {shabad.gurbani.gurmukhi}
+                            </HiglightedSearch>
+                          )}
                         </Larivaar>
                       </div>
                     )}

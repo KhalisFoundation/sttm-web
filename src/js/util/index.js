@@ -2,6 +2,7 @@ import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
   SHORT_DOMAIN,
+  SEARCH_TYPES,
 } from '../constants';
 
 /**
@@ -242,3 +243,47 @@ export const versesToGurbani = verses =>
       transliteration: v.transliteration.english,
     },
   }));
+
+/**
+ *
+ * @param {string} baani
+ * @param {string} query
+ * @param {number} type
+ * @returns {array} of [start, end) indices
+ */
+export const getHighlightIndices = (baani, query, type) => {
+  let start = -1,
+    end = -1;
+  let baaniWords = baani.split(' ');
+
+  switch (type) {
+    // TODO: This is obviously not the best way to handle it.
+    case SEARCH_TYPES.ROMANIZED: {
+      query = query
+        .split(' ')
+        .map(w => w[0])
+        .join('');
+
+      baaniWords = baaniWords.map(w => (w.startsWith('i') ? w.slice(1) : w));
+    }
+    case SEARCH_TYPES.FIRST_LETTERS: // eslint-disable-line no-fallthrough
+    case SEARCH_TYPES.FIRST_LETTERS_ANYWHERE: {
+      start = baaniWords
+        .map(word => word[0])
+        .join('')
+        .indexOf(query);
+      end = start + query.length;
+      break;
+    }
+    case SEARCH_TYPES.GURMUKHI_WORD: {
+      const q = query.split(' ');
+      start = baaniWords.indexOf(q[0]);
+      start =
+        start === -1 ? baaniWords.findIndex(w => w.includes(q[0])) : start;
+      end = start + q.length;
+      break;
+    }
+  }
+
+  return [start, start === -1 ? 0 : end];
+};
