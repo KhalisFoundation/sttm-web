@@ -106,6 +106,12 @@ class Layout extends React.PureComponent {
             const presentationalSource = _source
               ? `${_source} - ${shabadPageNo}`
               : null;
+            const highlightStartIndex = shabad.gurbani.gurmukhi
+              .split(' ')
+              .map(e => e[0])
+              .join('')
+              .indexOf(q);
+            const higlightEndIndex = highlightStartIndex + q.length;
 
             return (
               <React.Fragment key={shabad.id}>
@@ -130,7 +136,21 @@ class Layout extends React.PureComponent {
                           larivaarAssist={larivaarAssist}
                           enable={larivaar}
                         >
-                          {shabad.gurbani.gurmukhi}
+                          {larivaar == false
+                            ? shabad.gurbani.gurmukhi
+                                .split(' ')
+                                .map(
+                                  (word, i) =>
+                                    i >= highlightStartIndex &&
+                                    i < higlightEndIndex ? (
+                                      <span style={{ color: 'pink' }}>
+                                        {` ${word} `}
+                                      </span>
+                                    ) : (
+                                      word
+                                    )
+                                )
+                            : shabad.gurbani.gurmukhi}
                         </Larivaar>
                       </div>
                     )}
