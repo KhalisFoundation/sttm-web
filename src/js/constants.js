@@ -27,6 +27,7 @@ export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
+export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 
 export const PLACEHOLDERS = {
   [SEARCH_TYPES.FIRST_LETTERS]: ['jmTAq'], // first letters
@@ -55,6 +56,7 @@ export const DEFAULT_DARK_MODE = false;
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
+  SEHAJ_PAATH: ang => `Continue reading Ang ${ang}`,
   SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,
   SYNC: `Remote Sync`,
   SYNC_DESCRIPTION: `Remote Sync is a feature of SikhiToTheMax desktop application. It allows you to view the shabad and current line displayed via the Desktop Application on your mobile/device. To get started you need to enter the code below, as shared by the desktop application.`,

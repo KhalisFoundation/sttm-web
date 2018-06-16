@@ -37,7 +37,7 @@ class Shabad extends React.PureComponent {
    * @typedef {object} ShabadProps
    * @property {array} gurbani
    * @property {number} highlight LineNo of highlighted shabad line
-   * @property {'shabad'|'ang'|'hukamnama'} type of shabad
+   * @property {ShabadContentTypes} type of shabad
    * @property {{ previous: string, next: string }} nav
    * @property {object} info
    *

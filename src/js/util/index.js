@@ -4,12 +4,26 @@ import {
   SHORT_DOMAIN,
 } from '../constants';
 
+/**
+ * Throws given error. This is a workaround for absence of throw expressions.
+ * Calling this function lets you throw an error inline (eg. JSX)
+ *
+ * @param {string} msg
+ * @param {*} err
+ */
 export const throwError = (msg, err) => {
   // eslint-disable-next-line no-console
   console.warn(err);
   throw new Error(err);
 };
 
+/**
+ * URL QueryParam reader
+ *
+ * @param {string} _name of parameter to read from query params
+ * @param {string} [url=window.location.href] to read query params from
+ * @returns {string}
+ */
 export function getParameterByName(_name, url = window.location.href) {
   const name = _name.replace(/[[\]]/g, '\\$&');
   const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
@@ -19,6 +33,11 @@ export function getParameterByName(_name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
+/**
+ * Returns query param object derived from a given url
+ * @param {string} str containing query params
+ * @returns {object}
+ */
 export function getQueryParams(str = document.location.search) {
   const qs = str.replace(/\+/g, ' ');
   const params = {};
@@ -32,6 +51,11 @@ export function getQueryParams(str = document.location.search) {
   return params;
 }
 
+/**
+ * sttm.co URL shortner service
+ *
+ * @param {string} url
+ */
 export function shortenURL(url = window.location.href) {
   const path = window.location.pathname;
   const URL = `http://${SHORT_DOMAIN}`;
@@ -49,9 +73,11 @@ export function shortenURL(url = window.location.href) {
 }
 
 /**
+ * Shows a toast
  *
  * @param {string} text to display in notification toast
  * @param {number} delay (in ms) to wait before hiding toast. Pass Infinity if you want to hide it on user action.
+ * @returns {Promise} which resolves after hiding the toast.
  */
 export const showToast = (text, delay = 2500, className = '') =>
   new Promise(resolve => {
@@ -72,6 +98,11 @@ export const showToast = (text, delay = 2500, className = '') =>
     }
   });
 
+/**
+ * Uses new navigator.clipboard.writeText, fallsback to old-school method
+ * @param {string} text to be copied into clipboard
+ * @returns {Promise} which resolves if successfuly copied
+ */
 export const copyToClipboard = text =>
   new Promise((resolve, reject) => {
     if ('clipboard' in navigator && 'writeText' in navigator.clipboard) {
@@ -138,6 +169,12 @@ export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
   return value === 'true';
 };
 
+/**
+ * Saves to localStorage in next animation frame.
+ *
+ * @param {string} key
+ * @param {string} value
+ */
 export const saveToLocalStorage = (key, value) =>
   requestAnimationFrame(() => localStorage.setItem(key, value));
 

@@ -178,3 +178,18 @@ select {
     box-shadow: none;
   }
 }
+
+.sehaj-paath-link {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+
+  svg {
+    fill: $sttm-light-black;
+    margin-right: 0.5rem;
+
+    .dark-mode & {
+      fill: $sttm-light-grey;
+    }
+  }
+}

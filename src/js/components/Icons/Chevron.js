@@ -25,9 +25,9 @@ const getRotationStyles = direction => {
   }
 
   return {
-    oTransform: transform,
-    webkitTransform: transform,
-    mozTransform: transform,
+    OTransform: transform,
+    WebkitTransform: transform,
+    MozTransform: transform,
     transform,
   };
 };
