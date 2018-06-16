@@ -36,7 +36,7 @@ export default class SundarGutka extends React.PureComponent {
             <React.Fragment>
               <div id="sidebar">
                 <details ref={this.$details}>
-                  <summary>Sundar Gutka Baanies</summary>
+                  <summary>{TEXTS.SUNDAR_GUTKA_HEADER}</summary>
                   <ul>
                     {baanies.map(({ ID, transliteration }) => (
                       <li key={ID}>
@@ -67,7 +67,7 @@ export default class SundarGutka extends React.PureComponent {
                 </div>
               </div>
 
-              <main>
+              <main style={{ padding: 0 }}>
                 {currentBaaniId !== SundarGutka.DEFAULT_BAANI_ID && (
                   <Fetch url={`${BANIS_API_URL}/${currentBaaniId}`}>
                     {({ data, loading }) =>
@@ -79,6 +79,10 @@ export default class SundarGutka extends React.PureComponent {
                           info={data.baniInfo}
                           nav={data.nav}
                           gurbani={versesToGurbani(data.verses)}
+                          hideMeta
+                          controlProps={{
+                            disableSplitView: true,
+                          }}
                         />
                       )
                     }

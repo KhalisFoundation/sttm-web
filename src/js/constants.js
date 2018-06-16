@@ -57,6 +57,7 @@ export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
   SEHAJ_PAATH: ang => `Continue reading Ang ${ang}`,
+  SUNDAR_GUTKA_HEADER: `Sundar Gutka Baaniyaan`,
   SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,
   SYNC: `Remote Sync`,
   SYNC_DESCRIPTION: `Remote Sync is a feature of SikhiToTheMax desktop application. It allows you to view the shabad and current line displayed via the Desktop Application on your mobile/device. To get started you need to enter the code below, as shared by the desktop application.`,

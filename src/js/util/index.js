@@ -235,10 +235,11 @@ export const toAngURL = ({ ang, source, highlight }) =>
  * @sttm/banidb API v2 to v1 transformer
  */
 export const versesToGurbani = verses =>
-  verses.map(({ verse, ...v }) => ({
+  verses.map(({ verse, ...v }, i) => ({
     shabad: {
       ...v,
       gurbani: verse,
+      id: v.lineNo || '' + i,
       transliteration: v.transliteration.english,
     },
   }));
