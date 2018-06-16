@@ -19,16 +19,20 @@ export function fixLarivaar(word, unicode, larivaarAssistColor, indexVal) {
     
     // Add each segment with wbr in a new span
     for(let i=0;i<segmentedValArr.length;i++) {
+        let style = {
+            color: indexVal % 2 === 1 ? larivaarAssistColor : '' 
+        }
         if(segmentedValArr[i].indexOf("´") != -1) {
-        // handle space break for this special character
-        breakSupportedCharList.push(
-            <span key={i} className = "wordBreakSpecialChar">
-            {segmentedValArr[i]}<wbr />
-            </span>
-        )    
+            Object.assign(style, {display: "inline-block"})
+            // handle space break for this special character
+            breakSupportedCharList.push(
+                <span key={i} style={style}>
+                    {segmentedValArr[i]}<wbr />
+                </span>
+            )    
         } else {
             breakSupportedCharList.push(
-                <span key={indexVal+"."+i} style={{ color: indexVal % 2 === 1 ? larivaarAssistColor : '' }}>
+                <span key={indexVal+"."+i} style={style}>
                     <span key={i}>
                     {segmentedValArr[i]}<wbr />
                     </span>
