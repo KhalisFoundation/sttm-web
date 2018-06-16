@@ -11,7 +11,19 @@ import ProgressBar from './ProgressBar';
 import Baani from './Baani';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '../constants';
 
+/**
+ *
+ *
+ * @class Shabad
+ * @augments {React.PureComponent<ShabadProps, ShabadState>}
+ */
 class Shabad extends React.PureComponent {
+  /**
+   * @typedef {object} ShabadState
+   * @property {number} progress of vertical scroll
+   *
+   * @memberof Shabad
+   */
   state = {
     progress: 0,
   };
@@ -21,19 +33,31 @@ class Shabad extends React.PureComponent {
     nav: {},
   };
 
+  /**
+   * @typedef {object} ShabadProps
+   * @property {array} gurbani
+   * @property {number} highlight LineNo of highlighted shabad line
+   * @property {'shabad'|'ang'|'hukamnama'} type of shabad
+   * @property {{ previous: string, next: string }} nav
+   * @property {object} info
+   *
+   *
+   * @memberof Shabad
+   */
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
     highlight: PropTypes.number,
-    random: PropTypes.bool.isRequired,
-    splitView: PropTypes.bool.isRequired,
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.string,
       next: PropTypes.string,
     }),
+
+    random: PropTypes.bool.isRequired,
+    splitView: PropTypes.bool.isRequired,
+    translationLanguages: PropTypes.array.isRequired,
+    transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
@@ -78,7 +102,13 @@ class Shabad extends React.PureComponent {
           onCopyAllClick={handleCopyAll}
           onEmbedClick={handleEmbed}
         />
-        <Meta info={info} nav={nav} type={type} />
+        <Meta
+          info={info}
+          nav={nav}
+          type={type}
+          translationLanguages={translationLanguages}
+          transliterationLanguages={transliterationLanguages}
+        />
         <div id="shabad" className="shabad display">
           <div className="shabad-container">
             <Baani

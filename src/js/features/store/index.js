@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createDebounce from 'redux-debounced';
 import reducer from '../reducers';
 import {
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
@@ -63,8 +64,11 @@ const initialState = {
     DEFAULT_DARK_MODE
   ),
 };
+const createStoreWithMiddleware = applyMiddleware(
+  createDebounce()
+)(createStore);
 
-const store = createStore(
+const store = createStoreWithMiddleware(
   reducer,
   initialState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

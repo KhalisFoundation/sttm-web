@@ -2,10 +2,9 @@
 import compression from 'compression';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { redirectToHTTPS } from 'express-http-to-https';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
-import seo from '../seo';
+import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
 
 const hostname = _hostname().substr(0, 3);
@@ -19,9 +18,6 @@ app
   // Add cookie parser
   .use(cookieParser())
 
-  // Redirect HTTP traffic to HTTPS
-  .use(redirectToHTTPS([/localhost:(\d{4})/, /dev.sikhitothemax.org/]))
-
   // Infrastructure display
   .use((req, res, next) => {
     res.setHeader('origin-server', hostname);
@@ -29,10 +25,12 @@ app
   })
 
   // Use client for static files
-  .use(express.static(`${__dirname}/../`))
+  .use(express.static(`${__dirname}/../public`))
 
   // Direct all calls to index template
   .get('*', (req, res) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+
     const { path } = req;
 
     const { title: _title, createDescription } = seo[

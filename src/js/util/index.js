@@ -48,16 +48,28 @@ export function shortenURL(url = window.location.href) {
   }
 }
 
-export const showToast = (text, delay = 2500) =>
+/**
+ *
+ * @param {string} text to display in notification toast
+ * @param {number} delay (in ms) to wait before hiding toast. Pass Infinity if you want to hide it on user action.
+ */
+export const showToast = (text, delay = 2500, className = '') =>
   new Promise(resolve => {
-    const copyURLconfirm = document.getElementById('toast-notification');
-    copyURLconfirm.innerText = text;
-    copyURLconfirm.classList.remove('hidden');
-
-    setTimeout(() => {
-      copyURLconfirm.classList.add('hidden');
+    const $notification = document.getElementById('toast-notification');
+    $notification.innerText = text;
+    $notification.classList.add(className);
+    $notification.classList.remove('hidden');
+    const hideToast = () => {
+      $notification.classList.add('hidden');
+      $notification.classList.remove(className);
       resolve();
-    }, delay);
+    };
+
+    if (delay === Infinity) {
+      $notification.addEventListener('click', hideToast);
+    } else {
+      setTimeout(hideToast, delay);
+    }
   });
 
 export const copyToClipboard = text =>
@@ -153,7 +165,13 @@ export const toSearchURL = ({
   type = DEFAULT_SEARCH_TYPE,
   source = DEFAULT_SEARCH_SOURCE,
   offset = '',
-}) => `/search?${objectToQueryParams({ q, type, source, offset })}`;
+}) =>
+  `/search?${objectToQueryParams({
+    q: encodeURIComponent(q),
+    type,
+    source,
+    offset,
+  })}`;
 
 export const toShabadURL = ({
   shabad: { shabadid: id, id: highlight },
@@ -175,3 +193,15 @@ export const toAngURL = ({ ang, source, highlight }) =>
     source,
     highlight,
   })}`;
+
+/**
+ * @sttm/banidb API v2 to v1 transformer
+ */
+export const versesToGurbani = verses =>
+  verses.map(({ verse, ...v }) => ({
+    shabad: {
+      ...v,
+      gurbani: verse,
+      transliteration: v.transliteration.english,
+    },
+  }));

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TEXTS } from '../constants';
 
 // This component uses children as a function pattern
 export default class Fetch extends React.PureComponent {
@@ -13,6 +14,7 @@ export default class Fetch extends React.PureComponent {
   static defaultProps = {
     transform: r => r.json(),
     options: {},
+    timeout: 10000,
   };
 
   static propTypes = {
@@ -20,24 +22,40 @@ export default class Fetch extends React.PureComponent {
     url: PropTypes.string,
     children: PropTypes.func.isRequired,
     options: PropTypes.object,
+    timeout: PropTypes.number,
   };
 
   componentDidMount() {
-    const { url, options, transform } = this.props;
+    const { url, options, transform, timeout } = this.props;
 
-    this.fetchData(url, options, transform);
+    this.fetchData(url, options, transform, timeout);
   }
 
-  static getDerivedStateFromProps (newProps) {
-    const { url, options, transform } = newProps;
-
-    this.fetchData(url, options, transform);
+  componentDidUpdate(prevProps) {
+    const { url, options, transform, timeout } = this.props;
+    if (
+      prevProps.url !== url ||
+      prevProps.options !== options ||
+      prevProps.transform !== transform
+    ) {
+      this.fetchData(url, options, transform, timeout);
+    }
   }
 
-  fetchData = (url, options, transform) => {
+  fetchData = (
+    url,
+    options,
+    transform,
+    timeout = Fetch.defaultProps.timeout
+  ) => {
     this.setState({ loading: true });
 
-    return fetch(url, options)
+    const timeoutPromise = new Promise(function(resolve, reject) {
+      setTimeout(reject, timeout, TEXTS.TIMEOUT_ERROR);
+    });
+
+    // If timeoutPromise completes before fetch the top level catch is executed
+    return Promise.race([timeoutPromise, fetch(url, options)])
       .then(res =>
         transform(res)
           .then(data =>

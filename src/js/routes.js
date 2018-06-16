@@ -178,6 +178,31 @@ export default [
     },
   },
   {
+    path: '/sundar-gutka',
+    render(props) {
+      return (
+        <Layout title="Sundar Gutka - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(/* webpackChunkName: "SundarGutka" */ './pages/SundarGutka')
+            }
+          >
+            {({ pending, resolved: { default: SundarGutka } = {}, rejected }) =>
+              pending ? null : SundarGutka ? (
+                <SundarGutka {...props} />
+              ) : (
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
+                )
+              )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
     path: '/help',
     render(props) {
       return (
@@ -215,6 +240,31 @@ export default [
             {({ pending, resolved: { default: Hukamnama } = {}, rejected }) =>
               pending ? null : Hukamnama ? (
                 <Hukamnama {...props} />
+              ) : (
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
+                )
+              )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
+    path: '/sync',
+    render(props) {
+      return (
+        <Layout title="Sync - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(/* webpackChunkName: "Sync" */ './pages/Sync')
+            }
+          >
+            {({ pending, resolved: { default: Sync } = {}, rejected }) =>
+              pending ? null : Sync ? (
+                <Sync {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
