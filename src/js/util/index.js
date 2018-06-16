@@ -263,11 +263,12 @@ export const getHighlightIndices = (baani, query, type) => {
         .split(' ')
         .map(w => w[0])
         .join('');
-
-      baaniWords = baaniWords.map(w => (w.startsWith('i') ? w.slice(1) : w));
     }
     case SEARCH_TYPES.FIRST_LETTERS: // eslint-disable-line no-fallthrough
     case SEARCH_TYPES.FIRST_LETTERS_ANYWHERE: {
+      // remove i from start of words
+      baaniWords = baaniWords.map(w => (w.startsWith('i') ? w.slice(1) : w));
+
       start = baaniWords
         .map(word => word[0])
         .join('')
