@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import ShabadControls from './ShabadControls';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
-  setUnicode,
   setFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
-  setDarkMode,
+  resetDisplayOptionsDispatcher,
+  resetFontOptionsDispatcher,
   toggleDisplayOptions,
   toggleFontOptions,
   toggleLarivaarAssistOption,
@@ -18,6 +18,7 @@ import {
   toggleSplitViewOption,
   toggleDarkMode,
 } from '../features/actions';
+import store from '../features/store'
 
 export const supportedMedia = _s;
 
@@ -69,12 +70,15 @@ class Controls extends React.PureComponent {
 // TODO: Take exactly what we need.
 const stateToProps = state => state;
 
+const resetFontOptions = resetFontOptionsDispatcher(store.dispatch)
+const resetDisplayOptions = resetDisplayOptionsDispatcher(store.dispatch)
+
 const dispatchToProps = {
-  setUnicode,
   setFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
-  setDarkMode,
+  resetDisplayOptions,
+  resetFontOptions,
   toggleDisplayOptions,
   toggleFontOptions,
   toggleLarivaarAssistOption,

@@ -4,11 +4,6 @@ import { toggleItemInArray } from '../util';
 import {
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
-  DEFAULT_TRANSLATION_LANGUAGES,
-  DEFAULT_TRANSLITERATION_LANGUAGES,
-  DEFAULT_DARK_MODE,
-  DEFAULT_UNICODE,
-  DEFAULT_FONT_SIZE,
 } from '../constants';
 import TelevisionIcon from './Icons/Television';
 import SlidersIcon from './Icons/Sliders';
@@ -30,11 +25,11 @@ export default class ShabadControls extends React.PureComponent {
     showDisplayOptions: PropTypes.bool.isRequired,
     showFontOptions: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
-    setUnicode: PropTypes.func.isRequired,
     setFontSize: PropTypes.func.isRequired,
     setTranslationLanguages: PropTypes.func.isRequired,
     setTransliterationLanguages: PropTypes.func.isRequired,
-    setDarkMode: PropTypes.func.isRequired,
+    resetDisplayOptions: PropTypes.func.isRequired,
+    resetFontOptions: PropTypes.func.isRequired,
     toggleDisplayOptions: PropTypes.func.isRequired,
     toggleFontOptions: PropTypes.func.isRequired,
     toggleLarivaarAssistOption: PropTypes.func.isRequired,
@@ -57,11 +52,11 @@ export default class ShabadControls extends React.PureComponent {
       unicode,
       fontSize,
       splitView,
-      setUnicode,
       setFontSize,
       setTranslationLanguages,
       setTransliterationLanguages,
-      setDarkMode,
+      resetDisplayOptions,
+      resetFontOptions,
       toggleDisplayOptions,
       toggleFontOptions,
       toggleDarkMode,
@@ -76,7 +71,7 @@ export default class ShabadControls extends React.PureComponent {
           <a
             className={`display-options-toggle shabad-controller-toggle ${
               showDisplayOptions ? 'active' : ''
-            }`}
+              }`}
             onClick={toggleDisplayOptions}
           >
             <TelevisionIcon />
@@ -85,7 +80,7 @@ export default class ShabadControls extends React.PureComponent {
           <a
             className={`font-options-toggle shabad-controller-toggle ${
               showFontOptions ? 'active' : ''
-            }`}
+              }`}
             onClick={toggleFontOptions}
           >
             <SlidersIcon />
@@ -102,7 +97,7 @@ export default class ShabadControls extends React.PureComponent {
             <a
               className={`shabad-controller-toggle ${
                 larivaarAssist ? 'active' : ''
-              }`}
+                }`}
               onClick={toggleLarivaarAssistOption}
             >
               <span className="custom-fa custom-fa-assist">ੳ</span>
@@ -120,7 +115,7 @@ export default class ShabadControls extends React.PureComponent {
                     key={lang}
                     className={`display-option-toggle ${
                       transliterationLanguages.includes(lang) ? 'active' : ''
-                    }`}
+                      }`}
                     onClick={() =>
                       setTransliterationLanguages(
                         toggleItemInArray(lang, transliterationLanguages)
@@ -140,7 +135,7 @@ export default class ShabadControls extends React.PureComponent {
                     key={lang}
                     className={`display-option-toggle ${
                       translationLanguages.includes(lang) ? 'active' : ''
-                    }`}
+                      }`}
                     onClick={() =>
                       setTranslationLanguages(
                         toggleItemInArray(lang, translationLanguages)
@@ -159,7 +154,7 @@ export default class ShabadControls extends React.PureComponent {
                   <a
                     className={`display-option-toggle ${
                       splitView ? 'active' : ''
-                    }`}
+                      }`}
                     onClick={toggleSplitViewOption}
                   >
                     {splitView ? 'Disable' : 'Enable'}
@@ -173,7 +168,7 @@ export default class ShabadControls extends React.PureComponent {
                 <a
                   className={`display-option-toggle ${
                     darkMode ? 'active' : ''
-                  }`}
+                    }`}
                   onClick={toggleDarkMode}
                 >
                   {darkMode ? 'Disable' : 'Enable'}
@@ -183,13 +178,7 @@ export default class ShabadControls extends React.PureComponent {
             <div className="display-reset-option-content">
               <a
                 className={`display-option-toggle ${darkMode ? 'active' : ''}`}
-                onClick={() => {
-                  setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES);
-                  setTransliterationLanguages(
-                    DEFAULT_TRANSLITERATION_LANGUAGES
-                  );
-                  setDarkMode(DEFAULT_DARK_MODE);
-                }}
+                onClick={resetDisplayOptions}
               >
                 Reset
               </a>
@@ -203,7 +192,7 @@ export default class ShabadControls extends React.PureComponent {
               <a
                 className={`shabad-controller-toggle ${
                   unicode ? 'active' : ''
-                }`}
+                  }`}
                 onClick={toggleUnicodeOption}
               >
                 Unicode
@@ -225,10 +214,7 @@ export default class ShabadControls extends React.PureComponent {
             <div className="display-reset-option-content">
               <a
                 className={`display-option-toggle ${darkMode ? 'active' : ''}`}
-                onClick={() => {
-                  setUnicode(DEFAULT_UNICODE);
-                  setFontSize(DEFAULT_FONT_SIZE);
-                }}
+                onClick={resetFontOptions}
               >
                 Reset
               </a>
