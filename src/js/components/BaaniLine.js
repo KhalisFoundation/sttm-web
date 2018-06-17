@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Larivaar from './Larivaar/index';
+import Larivaar from './Larivaar';
 
 export default class BaaniLine extends React.PureComponent {
   static propTypes = {
@@ -36,7 +36,11 @@ export default class BaaniLine extends React.PureComponent {
             unicode ? 'unicode' : 'gurlipi'
           }`}
         >
-          <Larivaar larivaarAssist={larivaarAssist} enable={larivaar} unicode={unicode}>
+          <Larivaar
+            larivaarAssist={larivaarAssist}
+            enable={larivaar}
+            unicode={unicode}
+          >
             {unicode ? text.unicode : text.gurmukhi}
           </Larivaar>
         </div>

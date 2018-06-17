@@ -1,112 +1,104 @@
 import React from 'react';
 
-const matrasThatAppearAtRightSideOfChar = "wIuUyYoOW"
-const halfCharThatAppearAtRightSideOfChar = "Í´R@˜®"
-const nasalSoundCaharacter = "NMµ"
-const sihari = "i";
-const allMatrasHalfCharAndNasalSoundChar = sihari + matrasThatAppearAtRightSideOfChar + halfCharThatAppearAtRightSideOfChar + nasalSoundCaharacter
-const unicodeMatras = "ਾਿੀੁੂੇੈੋੌੰਂ"
+const matrasThatAppearAtRightSideOfChar = 'wIuUyYoOW';
+const halfCharThatAppearAtRightSideOfChar = 'Í´R@˜®';
+const nasalSoundCaharacter = 'NMµ';
+const sihari = 'i';
+const allMatrasHalfCharAndNasalSoundChar =
+  sihari +
+  matrasThatAppearAtRightSideOfChar +
+  halfCharThatAppearAtRightSideOfChar +
+  nasalSoundCaharacter;
+const unicodeMatras = 'ਾਿੀੁੂੇੈੋੌੰਂ';
 
 export function fixLarivaar(word, unicode, larivaarAssistColor, indexVal) {
-    var breakSupportedCharList = [];
-    
-    var segmentedValArr = null;
-    if(unicode) {
-        segmentedValArr = fixLarivaarUnicode(word);
+  var breakSupportedCharList = [];
+
+  var segmentedValArr = null;
+  if (unicode) {
+    segmentedValArr = fixLarivaarUnicode(word);
+  } else {
+    segmentedValArr = fixLarivaarGurmukhiFont(word);
+  }
+
+  // Add each segment with wbr in a new span
+  for (let i = 0; i < segmentedValArr.length; i++) {
+    let style = {
+      color: indexVal % 2 === 1 ? larivaarAssistColor : '',
+    };
+    if (segmentedValArr[i].indexOf('´') != -1) {
+      Object.assign(style, { display: 'inline-block' });
+      // handle space break for this special character
+      breakSupportedCharList.push(
+        <span key={i} style={style}>
+          {segmentedValArr[i]}
+          <wbr />
+        </span>
+      );
     } else {
-        segmentedValArr = fixLarivaarGurmukhiFont(word);
+      breakSupportedCharList.push(
+        <span key={indexVal + '.' + i} style={style}>
+          <span key={i}>
+            {segmentedValArr[i]}
+            <wbr />
+          </span>
+        </span>
+      );
     }
-    
-    // Add each segment with wbr in a new span
-    for(let i=0;i<segmentedValArr.length;i++) {
-        let style = {
-            color: indexVal % 2 === 1 ? larivaarAssistColor : '' 
-        }
-        if(segmentedValArr[i].indexOf("´") != -1) {
-            Object.assign(style, {display: "inline-block"})
-            // handle space break for this special character
-            breakSupportedCharList.push(
-                <span key={i} style={style}>
-                    {segmentedValArr[i]}<wbr />
-                </span>
-            )    
-        } else {
-            breakSupportedCharList.push(
-                <span key={indexVal+"."+i} style={style}>
-                    <span key={i}>
-                    {segmentedValArr[i]}<wbr />
-                    </span>
-                </span>
-            )
-        }
-    }    
-    return breakSupportedCharList;
-      
+  }
+  return breakSupportedCharList;
 }
 // Look for consonants and break word
 function fixLarivaarGurmukhiFont(str) {
-	var arrWordBreak = [];
-	// search and break till next consonant
-    var segmentedStr = '';
-	for(var i=0;i<str.length;i++) {
-        segmentedStr += str[i]
-        // handle sihari exeption
-        // add to the segment string and ignore other checks
-        if(isSihari(str[i])) {
-            continue;
-        }
-		if(isConsonant(str[i+1]) || isSihari(str[i+1])) {
-			arrWordBreak.push(segmentedStr)
-			segmentedStr = '';
-		}
-	}
-    return arrWordBreak
+  var arrWordBreak = [];
+  // search and break till next consonant
+  var segmentedStr = '';
+  for (var i = 0; i < str.length; i++) {
+    segmentedStr += str[i];
+    // handle sihari exeption
+    // add to the segment string and ignore other checks
+    if (isSihari(str[i])) {
+      continue;
+    }
+    if (isConsonant(str[i + 1]) || isSihari(str[i + 1])) {
+      arrWordBreak.push(segmentedStr);
+      segmentedStr = '';
+    }
+  }
+  return arrWordBreak;
 }
 
 // In unicode All matras are right hand sided
 // and matras comes after main consonant and half character
 // we need to break word after Matras not consonant
 function fixLarivaarUnicode(str) {
-	var arrWordBreak = [];
-	// search and break till next consonant
-    var segmentedStr = '';
-	for(var i=0;i<str.length;i++) {
-        segmentedStr += str[i]
-        // exception for half character
-        if(str[i+1] == "੍") {
-            segmentedStr += str[i+1]
-            i=i+1;
-            continue;
-        }
-		if(!isUnicodeConsonant(str[i+1])) {
-			arrWordBreak.push(segmentedStr)
-			segmentedStr = '';
-		}
-	}
-    return arrWordBreak
+  var arrWordBreak = [];
+  // search and break till next consonant
+  var segmentedStr = '';
+  for (var i = 0; i < str.length; i++) {
+    segmentedStr += str[i];
+    // exception for half character
+    if (str[i + 1] == '੍') {
+      segmentedStr += str[i + 1];
+      i = i + 1;
+      continue;
+    }
+    if (!isUnicodeConsonant(str[i + 1])) {
+      arrWordBreak.push(segmentedStr);
+      segmentedStr = '';
+    }
+  }
+  return arrWordBreak;
 }
 
 function isConsonant(char) {
-	if(allMatrasHalfCharAndNasalSoundChar.indexOf(char) == -1) {
-		return true;
-	} else {
-		return false;
-	}
+  return allMatrasHalfCharAndNasalSoundChar.indexOf(char) == -1;
 }
 
 function isUnicodeConsonant(char) {
-	if(unicodeMatras.indexOf(char) != -1) {
-		return true;
-	} else {
-		return false;
-	}
+  return unicodeMatras.indexOf(char) != -1;
 }
 
 function isSihari(char) {
-	if(char == sihari) {
-		return true;
-	} else {
-		return false;
-	}
+  return char == sihari;
 }
-

@@ -22,15 +22,13 @@ export default class Larivaar extends React.PureComponent {
     return (
       <React.Fragment>
         {enable
-          ? children.split(' ').map(
-              (val, indexVal) => {
-                if(val.indexOf('॥') !== -1 || val.indexOf(']') !== -1) {
-                  return `${val} `
-                } else {
-                  return fixLarivaar(val, unicode, larivaarAssistColor, indexVal)
-                }
+          ? children.split(' ').map((val, indexVal) => {
+              if (val.indexOf('॥') !== -1 || val.indexOf(']') !== -1) {
+                return `${val} `;
+              } else {
+                return fixLarivaar(val, unicode, larivaarAssistColor, indexVal);
               }
-            )
+            })
           : children}
       </React.Fragment>
     );

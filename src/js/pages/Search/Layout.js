@@ -12,7 +12,7 @@ import {
 } from '../../util/analytics';
 import Controls, { supportedMedia } from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
-import Larivaar from '../../components/Larivaar/index';
+import Larivaar from '../../components/Larivaar';
 
 export function Stub() {
   return <div className="spinner" />;
