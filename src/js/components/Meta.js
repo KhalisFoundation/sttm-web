@@ -1,15 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, navLink } from '../util';
+import { LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG, TEXTS } from '../constants';
+import { saveToLocalStorage, isFalsy, toAngURL, navLink } from '../util';
 import Chevron from './Icons/Chevron';
 
+/**
+ *
+ *
+ * @export
+ * @class Meta
+ * @augments {React.PureComponent<MetaProps>}
+ */
 export default class Meta extends React.PureComponent {
   static defaultProps = {
     nav: {},
   };
 
+  /**
+   * @typedef {object} MetaProps
+   * @property {ShabadContentTypes} type
+   * @property {object} info
+   * @property {array} translationLanguages
+   * @property {array} transliterationLanguages
+   * @property {object} nav
+   *
+   * @static
+   * @memberof Meta
+   */
   static propTypes = {
     type: PropTypes.string.isRequired,
     info: PropTypes.object.isRequired,
@@ -114,7 +132,7 @@ export default class Meta extends React.PureComponent {
 
         {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
-            <Link to={link + nav.next}>
+            <Link to={link + nav.next} onClick={this.handleSaveAng}>
               <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
             </Link>
           </div>
@@ -128,4 +146,17 @@ export default class Meta extends React.PureComponent {
       </div>
     );
   }
+
+  /**
+   * Handle SaveAng
+   * @memberof Meta
+   */
+  handleSaveAng = () => {
+    if (this.props.type === 'ang' && this.props.info.source.id === 'G') {
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
+        this.props.nav.next
+      );
+    }
+  };
 }

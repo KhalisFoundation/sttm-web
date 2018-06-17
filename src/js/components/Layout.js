@@ -12,6 +12,7 @@ import {
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
 import ScrollToTop from './ScrollToTop';
+import throttle from 'lodash.throttle';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -131,15 +132,23 @@ class Layout extends React.PureComponent {
     window.removeEventListener('scroll', this.onScroll);
   }
 
-  onScroll = () => {
-    if (window.scrollY > window.innerHeight / 2) {
-      this.setState({ showScrollToTop: true });
-    } else {
-      this.setState({ showScrollToTop: false });
-    }
-  };
+  onScroll = throttle(() => {
+    this.setState(({ showScrollToTop }) => {
+      let newValue = showScrollToTop;
+      if (window.scrollY > window.innerHeight / 2) {
+        newValue = true;
+      } else {
+        newValue = false;
+      }
+
+      return newValue === showScrollToTop
+        ? null
+        : { showScrollToTop: newValue };
+    });
+  }, 500);
 
   onOnline = () => this.props.setOnlineMode(true);
+
   onOffline = () => this.props.setOnlineMode(false);
 
   componentDidUpdate(prevProps, prevState) {

@@ -21,7 +21,7 @@ export default class Actions extends React.PureComponent {
 
   static propTypes = {
     shabad: PropTypes.shape({
-      id: PropTypes.string,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       shabadid: PropTypes.string,
     }),
     disabledActions: PropTypes.arrayOf(PropTypes.oneOf(supportedActions)),
@@ -34,6 +34,7 @@ export default class Actions extends React.PureComponent {
     const actions = {
       openShabad: (
         <Link
+          key={0}
           role="button"
           aria-label="Go to shabad"
           title="Go to shabad"
@@ -45,6 +46,7 @@ export default class Actions extends React.PureComponent {
       ),
       copy: (
         <a
+          key={1}
           className="copy"
           onClick={onCopyClick}
           role="button"
@@ -56,6 +58,7 @@ export default class Actions extends React.PureComponent {
       ),
       tweet: (
         <a
+          key={3}
           className="twitter"
           onClick={onTweetClick}
           role="button"

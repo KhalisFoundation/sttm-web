@@ -59,21 +59,21 @@ export default class ShareButtons extends React.PureComponent {
 
     const mediaMap = {
       embed: (
-        <li className="show-on-desktop">
+        <li key={0} className="show-on-desktop">
           <button onClick={onEmbedClick}>
             <EmbedIcon />
           </button>
         </li>
       ),
       copyAll: (
-        <li>
+        <li key={1}>
           <button onClick={onCopyAllClick}>
             <CopyAllIcon />
           </button>
         </li>
       ),
       whatsapp: (
-        <li className="show-on-mobile">
+        <li key={2} className="show-on-mobile">
           <a title="Share on Whatsapp" onClick={handleWhatsapp}>
             <WhatsAppIcon />
             <span className="sr-only">Share on Whatsapp</span>
@@ -81,7 +81,7 @@ export default class ShareButtons extends React.PureComponent {
         </li>
       ),
       copy: (
-        <li>
+        <li key={3}>
           <a id="copy-short-url" className="copy" onClick={copyShortUrl}>
             <input
               className="short-url-input"

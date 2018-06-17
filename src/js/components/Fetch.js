@@ -25,10 +25,17 @@ export default class Fetch extends React.PureComponent {
     timeout: PropTypes.number,
   };
 
+  _setState = (...args) => this._mounted && this.setState(...args);
+
   componentDidMount() {
+    this._mounted = true;
     const { url, options, transform, timeout } = this.props;
 
     this.fetchData(url, options, transform, timeout);
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
   componentDidUpdate(prevProps) {
@@ -48,7 +55,7 @@ export default class Fetch extends React.PureComponent {
     transform,
     timeout = Fetch.defaultProps.timeout
   ) => {
-    this.setState({ loading: true });
+    this._setState({ loading: true });
 
     const timeoutPromise = new Promise(function(resolve, reject) {
       setTimeout(reject, timeout, TEXTS.TIMEOUT_ERROR);
@@ -59,7 +66,7 @@ export default class Fetch extends React.PureComponent {
       .then(res =>
         transform(res)
           .then(data =>
-            this.setState({
+            this._setState({
               loading: false,
               res,
               data,
@@ -67,7 +74,7 @@ export default class Fetch extends React.PureComponent {
             })
           )
           .catch(error =>
-            this.setState({
+            this._setState({
               loading: false,
               res,
               data: null,
@@ -76,7 +83,7 @@ export default class Fetch extends React.PureComponent {
           )
       )
       .catch(error =>
-        this.setState({
+        this._setState({
           loading: false,
           data: null,
           error,

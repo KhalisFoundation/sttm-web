@@ -13,13 +13,45 @@ import {
 import { clickEvent, ACTIONS } from '../util/analytics';
 import { getNumberFromLocalStorage } from '../util';
 
-const onlyNumbers = str => str.replace(/\D/g, '');
+/**
+ *
+ *
+ * @export
+ * @class SearchForm
+ * @augments {React.PureComponent<SearchFormProps>}
+ */
 export default class SearchForm extends React.PureComponent {
   static defaultProps = {
     defaultQuery: '',
     submitOnChangeOf: [],
   };
 
+  /**
+   * @typedef {object} SearchFormRenderProps
+   * @property {string} pattern attribute of input field
+   * @property {string} title of input field
+   * @property {string} className className of input field
+   * @property {string} action of form
+   * @property {string} name of input field
+   * @property {string} inputType Search type chosen by used
+   * @property {function} setGurmukhiKeyboardVisibilityAs
+   * @property {function} setQueryAs
+   * @property {function} handleSearchChange
+   * @property {function} handleSearchSourceChange
+   * @property {function} handleSearchTypeChange
+   * @property {function} handleSubmit
+   *
+   * @typedef {object} SearchFormProps
+   * @property {SearchFormRenderProps => React.Element} children as a function
+   * @property {string} defaultQuery to initialize with
+   * @property {string} defaultType to initialize with
+   * @property {string} defaultSource to initiaize with
+   * @property {Array<'type'|'source'|'query'>} submitOnChangeOf given fields
+   * @property {function} onSubmit event handler
+   *
+   * @static
+   * @memberof SearchForm
+   */
   static propTypes = {
     children: PropTypes.func.isRequired,
     defaultQuery: PropTypes.string,
@@ -126,9 +158,9 @@ export default class SearchForm extends React.PureComponent {
 
     const [title, pattern] =
       this.state.type === SEARCH_TYPES.ROMANIZED
-        ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
+        ? ['Enter 3 words minimum.', '(\\w+\\W+){2,}\\w+\\W*']
         : this.state.type === SEARCH_TYPES.ANG
-          ? []
+          ? ['Enter numbers only.', '\\d+']
           : ['Enter 2 characters minimum.', '.{2,}'];
 
     const [action, name, inputType] = SearchForm.getFormDetails(
@@ -186,11 +218,10 @@ export default class SearchForm extends React.PureComponent {
 
   setQueryAs = value => () =>
     this.stopPlaceholderAnimation().then(() =>
-      this.setState(({ type }) => ({
-        query: type === SEARCH_TYPES.ANG ? onlyNumbers(value) : value,
+      this.setState(() => ({
+        query: value,
         shouldSubmit:
-          this.props.submitOnChangeOf.includes('query') &&
-          (type === SEARCH_TYPES.ANG ? onlyNumbers(value) : value) !== '',
+          this.props.submitOnChangeOf.includes('query') && value !== '',
       }))
     );
 
@@ -223,10 +254,7 @@ export default class SearchForm extends React.PureComponent {
       this.setState(
         {
           type: parseInt(value, 10),
-          query:
-            parseInt(value, 10) === SEARCH_TYPES.ANG
-              ? onlyNumbers(this.state.query)
-              : this.state.query,
+          query: this.state.query,
           shouldSubmit:
             this.props.submitOnChangeOf.includes('type') &&
             this.state.query !== '',

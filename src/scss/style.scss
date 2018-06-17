@@ -160,8 +160,9 @@ select {
   justify-content: center;
   position: fixed;
   right: 20px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   width: 50px;
-  z-index: 4;
+  z-index: 5;
 
   @keyframes grow {
     from {
@@ -176,5 +177,20 @@ select {
   .dark-mode & {
     background-color: $sttm-darker-grey;
     box-shadow: none;
+  }
+}
+
+.sehaj-paath-link {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+
+  svg {
+    fill: $sttm-light-black;
+    margin-right: 0.5rem;
+
+    .dark-mode & {
+      fill: $sttm-light-grey;
+    }
   }
 }

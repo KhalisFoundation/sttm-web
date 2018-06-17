@@ -31,16 +31,23 @@ class Shabad extends React.PureComponent {
   static defaultProps = {
     random: false,
     nav: {},
+    hideControls: false,
+    hideMeta: false,
+    controlProps: {},
   };
 
   /**
    * @typedef {object} ShabadProps
    * @property {array} gurbani
    * @property {number} highlight LineNo of highlighted shabad line
-   * @property {'shabad'|'ang'|'hukamnama'} type of shabad
+   * @property {ShabadContentTypes} type of shabad
    * @property {{ previous: string, next: string }} nav
    * @property {object} info
+   * @property {boolean} [hideMeta=false]
+   * @property {boolean} [hideControls=false]
+   * @property {{}} controlProps override props passed to <Controls />.
    *
+   * TODO: Refactor code to support render props to allow different configurations.
    *
    * @memberof Shabad
    */
@@ -53,6 +60,9 @@ class Shabad extends React.PureComponent {
       previous: PropTypes.string,
       next: PropTypes.string,
     }),
+    hideMeta: PropTypes.bool,
+    hideControls: PropTypes.bool,
+    controlProps: PropTypes.object,
 
     random: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
@@ -91,24 +101,29 @@ class Shabad extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <Controls
-          media={
-            ['shabad', 'hukamnama', 'ang'].includes(type)
-              ? supportedMedia
-              : supportedMedia.filter(
-                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
-                )
-          }
-          onCopyAllClick={handleCopyAll}
-          onEmbedClick={handleEmbed}
-        />
-        <Meta
-          info={info}
-          nav={nav}
-          type={type}
-          translationLanguages={translationLanguages}
-          transliterationLanguages={transliterationLanguages}
-        />
+        {this.props.hideControls === false && (
+          <Controls
+            media={
+              ['shabad', 'hukamnama', 'ang'].includes(type)
+                ? supportedMedia
+                : supportedMedia.filter(
+                    m => ['embed', 'copyAll', 'copy'].includes(m) === false
+                  )
+            }
+            onCopyAllClick={handleCopyAll}
+            onEmbedClick={handleEmbed}
+            {...this.props.controlProps}
+          />
+        )}
+        {this.props.hideMeta === false && (
+          <Meta
+            info={info}
+            nav={nav}
+            type={type}
+            translationLanguages={translationLanguages}
+            transliterationLanguages={transliterationLanguages}
+          />
+        )}
         <div id="shabad" className="shabad display">
           <div className="shabad-container">
             <Baani
@@ -123,7 +138,9 @@ class Shabad extends React.PureComponent {
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
             />
-            <FootNav info={info} type={type} nav={nav} />
+            {this.props.hideMeta === false && (
+              <FootNav info={info} type={type} nav={nav} />
+            )}
           </div>
         </div>
         <ProgressBar percent={this.state.progress} />

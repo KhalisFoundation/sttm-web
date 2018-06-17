@@ -1,15 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, TYPES } from '../../constants';
-import { toSearchURL } from '../../util';
+import {
+  LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
+  TEXTS,
+  SOURCES,
+  TYPES,
+} from '../../constants';
+import { Link } from 'react-router-dom';
+import { toAngURL, toSearchURL } from '../../util';
 import { pageView } from '../../util/analytics';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Icons/Logo';
+import History from '../../components/Icons/History';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
 
+/**
+ *
+ *
+ * @export
+ * @class Home
+ * @extends {React.PureComponent}
+ */
 export default class Home extends React.PureComponent {
   static propTypes = {
     history: PropTypes.shape({ push: PropTypes.func }),
@@ -19,6 +33,24 @@ export default class Home extends React.PureComponent {
     e.preventDefault();
     handleSubmit();
     this.props.history.push(toSearchURL(data));
+  };
+
+  /**
+   * Functional component
+   */
+  static SehajPaathLink = () => {
+    const previouslyReadAng = parseInt(
+      localStorage.getItem(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG)
+    );
+    return Number.isNaN(previouslyReadAng) === false &&
+      previouslyReadAng > 0 ? (
+      <Link
+        to={toAngURL({ ang: previouslyReadAng, source: 'G' })}
+        className="sehaj-paath-link"
+      >
+        <History /> {TEXTS.SEHAJ_PAATH(previouslyReadAng)}
+      </Link>
+    ) : null;
   };
 
   render() {
@@ -137,6 +169,7 @@ export default class Home extends React.PureComponent {
                       </select>
                     </div>
                   </div>
+                  <Home.SehajPaathLink />
                 </form>
               </div>
             </div>
