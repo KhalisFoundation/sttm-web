@@ -69,13 +69,13 @@ export const setTransliterationLanguages = createAction(
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const setDarkMode = createAction(SET_DARK_MODE);
 
-export const resetDisplayOptionsDispatcher = dispatch => () => {
+export const resetDisplayOptions = () => (dispatch, getState) => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
 }
 
-export const resetFontOptionsDispatcher = dispatch => () => {
+export const resetFontOptions = () => (dispatch, getState) => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
 }

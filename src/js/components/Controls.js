@@ -6,8 +6,8 @@ import {
   setFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
-  resetDisplayOptionsDispatcher,
-  resetFontOptionsDispatcher,
+  resetDisplayOptions,
+  resetFontOptions,
   toggleDisplayOptions,
   toggleFontOptions,
   toggleLarivaarAssistOption,
@@ -18,7 +18,6 @@ import {
   toggleSplitViewOption,
   toggleDarkMode,
 } from '../features/actions';
-import store from '../features/store'
 
 export const supportedMedia = _s;
 
@@ -69,9 +68,6 @@ class Controls extends React.PureComponent {
 
 // TODO: Take exactly what we need.
 const stateToProps = state => state;
-
-const resetFontOptions = resetFontOptionsDispatcher(store.dispatch)
-const resetDisplayOptions = resetDisplayOptionsDispatcher(store.dispatch)
 
 const dispatchToProps = {
   setFontSize,
