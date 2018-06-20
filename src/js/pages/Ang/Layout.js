@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { pageView, errorEvent, ACTIONS } from '../../util/analytics';
-import GenericError, { BalpreetSingh } from '../../components/GenericError';
+import GenericError from '../../components/GenericError';
 import { SOURCES, TEXTS } from '../../constants';
 import ShabadContent from '../../components/ShabadContent';
 import { toAngURL } from '../../util';
@@ -37,7 +37,7 @@ export default class Layout extends React.PureComponent {
               or <Link to="/index"> {TEXTS.INDEX_SECTION}</Link>.
             </React.Fragment>
           }
-          image={BalpreetSingh}
+          image={GenericError.BalpreetSingh}
         />
       );
     }

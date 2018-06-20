@@ -162,7 +162,7 @@ export const getArrayFromLocalStorage = (key, defaultValue = []) => {
 export const getNumberFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
   if (value === null) return defaultValue;
-  return parseFloat(value, 10);
+  return parseFloat(value);
 };
 
 export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
@@ -202,6 +202,14 @@ export const toSearchURL = ({
     offset,
   })}`;
 
+/**
+ *
+ * @param {object} data
+ * @property {{ shabadid: string, id: string }} shabad
+ * @property {string} [q]
+ * @property {string} [type]
+ * @property {string} [source]
+ */
 export const toShabadURL = ({
   shabad: { shabadid: id, id: highlight },
   q,

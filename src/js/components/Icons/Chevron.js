@@ -33,7 +33,7 @@ const getRotationStyles = direction => {
 };
 
 const Chevron = ({
-  direction = 'left',
+  direction = Chevron.DIRECTIONS.LEFT,
   style = {},
   className = '',
   ...props

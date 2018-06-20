@@ -66,6 +66,12 @@ module.exports = {
       },
     },
   },
+  resolve: {
+    alias: {
+      // Client root
+      '@': path.resolve(__dirname, 'src/js/'),
+    },
+  },
   module: {
     rules: [
       {

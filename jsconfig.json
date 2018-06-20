@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "jsx": "react",
+    "checkJs": true,
+    "paths": {
+      "@/*": ["src/js/*"]
+    }
+  },
+  "include": ["src/js/**/*"]
+}

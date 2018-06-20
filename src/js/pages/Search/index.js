@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
 import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
-import GenericError, { SachKaur } from '../../components/GenericError';
+import GenericError from '../../components/GenericError';
 import Layout, { Stub } from './Layout';
 
 export default class Search extends React.PureComponent {
@@ -27,7 +27,7 @@ export default class Search extends React.PureComponent {
         <GenericError
           title={TEXTS.EMPTY_QUERY}
           description={TEXTS.EMPTY_QUERY_DESCRIPTION}
-          image={SachKaur}
+          image={GenericError.SachKaur}
         />
       );
     }

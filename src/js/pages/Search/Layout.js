@@ -2,17 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getHighlightIndices, toShabadURL, toSearchURL } from '../../util';
-import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '../../constants';
-import {
-  ACTIONS,
-  pageView,
-  clickEvent,
-  errorEvent,
-} from '../../util/analytics';
-import Controls, { supportedMedia } from '../../components/Controls';
-import GenericError, { SachKaur } from '../../components/GenericError';
-import Larivaar from '../../components/Larivaar';
+import { getHighlightIndices, toShabadURL, toSearchURL } from '@/util';
+import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '@/constants';
+import { ACTIONS, pageView, clickEvent, errorEvent } from '@/util/analytics';
+import Controls from '@/components/Controls';
+import GenericError from '@/components/GenericError';
+import Larivaar from '@/components/Larivaar';
 
 export function Stub() {
   return <div className="spinner" />;
@@ -91,7 +86,7 @@ class Layout extends React.PureComponent {
               </Link>.
             </React.Fragment>
           }
-          image={SachKaur}
+          image={GenericError.SachKaur}
         />
       );
     }
@@ -107,8 +102,8 @@ class Layout extends React.PureComponent {
         <Controls
           media={
             type === 'shabad'
-              ? supportedMedia
-              : supportedMedia.filter(
+              ? Controls.supportedMedia
+              : Controls.supportedMedia.filter(
                   m => ['embed', 'copyAll', 'copy'].includes(m) === false
                 )
           }
