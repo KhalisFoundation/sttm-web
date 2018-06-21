@@ -85,6 +85,16 @@ export const TEXTS = {
     'Please enter your query in the search bar above to give us a chance to serve you.',
   REDIRECTING: 'Redirecting you to',
   REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
+  RESET: 'Reset',
+  UNICODE: 'Unicode',
+  ASSIST: 'Assist',
+  FONT: 'Font',
+  DISPLAY: 'Display',
+  LARIVAAR: 'Larivaar',
+  TRANSLATION: 'Translation',
+  TRANSLITERATION: 'Transliteration',
+  FONT_SIZE: 'Font Size',
+  DARK_MODE: 'Dark Mode',
 };
 
 export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';

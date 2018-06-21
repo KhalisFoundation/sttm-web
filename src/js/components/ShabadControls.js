@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { toggleItemInArray } from '../util';
 import {
+  TEXTS,
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
 } from '../constants';
@@ -75,7 +76,7 @@ export default class ShabadControls extends React.PureComponent {
             onClick={toggleDisplayOptions}
           >
             <TelevisionIcon />
-            <span>Display</span>
+            <span>{TEXTS.DISPLAY}</span>
           </a>
           <a
             className={`font-options-toggle shabad-controller-toggle ${
@@ -84,14 +85,14 @@ export default class ShabadControls extends React.PureComponent {
             onClick={toggleFontOptions}
           >
             <SlidersIcon />
-            <span>Font</span>
+            <span>{TEXTS.FONT}</span>
           </a>
           <a
             className={`shabad-controller-toggle ${larivaar ? 'active' : ''}`}
             onClick={toggleLarivaarOption}
           >
             <span className="custom-fa">ੳਅ</span>
-            <span>Larivaar</span>
+            <span>{TEXTS.LARIVAAR}</span>
           </a>
           {larivaar && (
             <a
@@ -101,14 +102,14 @@ export default class ShabadControls extends React.PureComponent {
               onClick={toggleLarivaarAssistOption}
             >
               <span className="custom-fa custom-fa-assist">ੳ</span>
-              <span>Assist</span>
+              <span>{TEXTS.ASSIST}</span>
             </a>
           )}
         </div>
         {showDisplayOptions && (
           <div className="display-options">
             <div className="display-option-type">
-              <div className="display-option-header">Transliteration</div>
+              <div className="display-option-header">{TEXTS.TRANSLITERATION}</div>
               <div className="display-option-content">
                 {TRANSLITERATION_LANGUAGES.map(lang => (
                   <a
@@ -128,7 +129,7 @@ export default class ShabadControls extends React.PureComponent {
               </div>
             </div>
             <div className="display-option-type">
-              <div className="display-option-header">Translation</div>
+              <div className="display-option-header">{TEXTS.TRANSLATION}</div>
               <div className="display-option-content">
                 {TRANSLATION_LANGUAGES.map(lang => (
                   <a
@@ -163,7 +164,7 @@ export default class ShabadControls extends React.PureComponent {
               </div>
             )}
             <div className="display-option-type">
-              <div className="display-option-header">Dark Mode</div>
+              <div className="display-option-header">{TEXTS.DARK_MODE}</div>
               <div className="display-option-content">
                 <a
                   className={`display-option-toggle ${
@@ -180,7 +181,7 @@ export default class ShabadControls extends React.PureComponent {
                 className={`display-option-toggle ${darkMode ? 'active' : ''}`}
                 onClick={resetDisplayOptions}
               >
-                Reset
+                {TEXTS.RESET}
               </a>
             </div>
           </div>
@@ -188,18 +189,18 @@ export default class ShabadControls extends React.PureComponent {
         {showFontOptions && (
           <div className="font-options">
             <div className="font-option-type">
-              <div className="font-option-header">Font</div>
+              <div className="font-option-header">{TEXTS.FONT}</div>
               <a
                 className={`shabad-controller-toggle ${
                   unicode ? 'active' : ''
                   }`}
                 onClick={toggleUnicodeOption}
               >
-                Unicode
+                {TEXTS.UNICODE}
               </a>
             </div>
             <div className="font-option-type">
-              <div className="font-option-header">Font Size</div>
+              <div className="font-option-header">{TEXTS.FONT_SIZE}</div>
               <small className="gurbani-font">A</small>
               <input
                 type="range"
@@ -216,7 +217,7 @@ export default class ShabadControls extends React.PureComponent {
                 className={`display-option-toggle ${darkMode ? 'active' : ''}`}
                 onClick={resetFontOptions}
               >
-                Reset
+                {TEXTS.RESET}
               </a>
             </div>
           </div>
