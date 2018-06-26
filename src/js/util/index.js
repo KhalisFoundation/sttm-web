@@ -3,6 +3,7 @@ import {
   DEFAULT_SEARCH_SOURCE,
   SHORT_DOMAIN,
   SEARCH_TYPES,
+  LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
 } from '../constants';
 
 /**
@@ -182,16 +183,6 @@ export const saveToLocalStorage = (key, value) =>
 export const toggleItemInArray = (item, arr) =>
   arr.includes(item) ? arr.filter(k => k !== item) : [...arr, item];
 
-export function navLink(type, source) {
-  switch (type) {
-    case 'hukamnama':
-    case 'shabad':
-      return 'shabad?id=';
-    case 'ang':
-      return `ang?source=${source}&ang=`;
-  }
-}
-
 export const objectToQueryParams = object =>
   Object.entries(object)
     .filter(([, value]) => [undefined, NaN, null, ''].every(n => n !== value))
@@ -289,3 +280,42 @@ export const getHighlightIndices = (baani, query, type) => {
 
   return [start, start === -1 ? 0 : end];
 };
+
+/**
+ * Should save ang to localStorage
+ * @param {object} data
+ * @property {string} type
+ * @property {{ source: { id: string }}} info
+ */
+export const shouldSaveAng = ({ type, info }) =>
+  type === 'ang' && info.source.id === 'G';
+
+/**
+ * Previously read ang
+ * @returns {number}
+ */
+export const readAng = () =>
+  parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG));
+
+/**
+ * Saves ang to localStorage
+ * @param {number} ang
+ */
+export const saveAng = ang =>
+  saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG, ang);
+
+/**
+ * Generates link based on type and source
+ * @param {object} data
+ * @property {string} type
+ * @property {{ source: { id: string }}} info
+ */
+export function toNavURL({ type, info }) {
+  switch (type) {
+    case 'hukamnama':
+    case 'shabad':
+      return 'shabad?id=';
+    case 'ang':
+      return `ang?source=${info.source.id}&ang=`;
+  }
+}

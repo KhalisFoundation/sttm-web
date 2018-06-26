@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG, TEXTS } from '../constants';
-import { saveToLocalStorage, isFalsy, toAngURL, navLink } from '../util';
+import { TEXTS } from '../constants';
+import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng } from '../util';
 import Chevron from './Icons/Chevron';
+import { withRouter } from 'react-router-dom';
 
 /**
  *
@@ -12,7 +13,7 @@ import Chevron from './Icons/Chevron';
  * @class Meta
  * @augments {React.PureComponent<MetaProps>}
  */
-export default class Meta extends React.PureComponent {
+class Meta extends React.PureComponent {
   static defaultProps = {
     nav: {},
   };
@@ -29,6 +30,7 @@ export default class Meta extends React.PureComponent {
    * @memberof Meta
    */
   static propTypes = {
+    history: PropTypes.object.isRequired,
     type: PropTypes.string.isRequired,
     info: PropTypes.object.isRequired,
     translationLanguages: PropTypes.array.isRequired,
@@ -48,7 +50,7 @@ export default class Meta extends React.PureComponent {
       transliterationLanguages,
     } = this.props;
 
-    const link = navLink(type, info.source.id);
+    const link = toNavURL(this.props);
     const Item = ({ children, last = false }) =>
       children ? (
         <React.Fragment>
@@ -132,9 +134,9 @@ export default class Meta extends React.PureComponent {
 
         {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
-            <Link to={link + nav.next} onClick={this.handleSaveAng}>
+            <a role="button" aria-label="next" onClick={this.handleSaveAng}>
               <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-            </Link>
+            </a>
           </div>
         ) : (
           <div className="shabad-nav right disabled-nav">
@@ -152,11 +154,10 @@ export default class Meta extends React.PureComponent {
    * @memberof Meta
    */
   handleSaveAng = () => {
-    if (this.props.type === 'ang' && this.props.info.source.id === 'G') {
-      saveToLocalStorage(
-        LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
-        this.props.nav.next
-      );
-    }
+    const link = toNavURL(this.props);
+    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
+    this.props.history.push(link + this.props.nav.next);
   };
 }
+
+export default withRouter(Meta);

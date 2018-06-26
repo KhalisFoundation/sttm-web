@@ -16,6 +16,7 @@ export const ACTIONS = {
   SEARCH_TYPE: 'search-type',
   NO_RESULTS_FOUND: 'no-results-found',
   ANG_NOT_FOUND: 'ang-not-found',
+  SEHAJ_PAATH_LINK: 'sehaj-paath-link',
 };
 
 export const pageView = page =>
@@ -26,6 +27,10 @@ export const pageView = page =>
     })
   );
 
+/**
+ * Basic event
+ * @param {{ category: string, action: string, label: string }} event
+ */
 export const event = ({ category = '-', action = '-', label = '-' }) =>
   requestAnimationFrame(() =>
     ga('send', {
@@ -36,8 +41,16 @@ export const event = ({ category = '-', action = '-', label = '-' }) =>
     })
   );
 
+/**
+ * Sets category as click
+ * @param {{ action: string, label: string }} event
+ */
 export const clickEvent = ({ action, label }) =>
   event({ category: CATEGORIES.CLICK, action, label });
 
+/**
+ * Sets category as error
+ * @param {{ action: string, label: string }} param0
+ */
 export const errorEvent = ({ action, label }) =>
   event({ category: CATEGORIES.ERROR, action, label });

@@ -11,7 +11,7 @@ import Chevron from './Icons/Chevron';
  */
 export default class ScrollToTop extends React.PureComponent {
   static defaultProps = {
-    disableSmoothScrollingAt: 4000,
+    disableSmoothScrollingAt: 6000,
   };
 
   /**
