@@ -24,6 +24,7 @@ import {
   getBooleanFromLocalStorage,
   getNumberFromLocalStorage,
 } from '../../util';
+import thunk from 'redux-thunk';
 
 const initialState = {
   online: window !== undefined ? window.navigator.onLine : true,
@@ -64,11 +65,16 @@ const initialState = {
     DEFAULT_DARK_MODE
   ),
 };
-const createStoreWithMiddleware = applyMiddleware(
+
+const createStoreWithDebounce = applyMiddleware(
   createDebounce()
 )(createStore);
 
-const store = createStoreWithMiddleware(
+const createStoreWithThunk = applyMiddleware(
+  thunk
+)(createStoreWithDebounce)
+
+const store = createStoreWithThunk(
   reducer,
   initialState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

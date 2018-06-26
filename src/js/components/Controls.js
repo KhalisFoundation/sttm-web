@@ -6,6 +6,8 @@ import {
   setFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
+  resetDisplayOptions,
+  resetFontOptions,
   toggleDisplayOptions,
   toggleFontOptions,
   toggleLarivaarAssistOption,
@@ -71,6 +73,8 @@ const dispatchToProps = {
   setFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
+  resetDisplayOptions,
+  resetFontOptions,
   toggleDisplayOptions,
   toggleFontOptions,
   toggleLarivaarAssistOption,
@@ -83,4 +87,7 @@ const dispatchToProps = {
 };
 
 // TODO: Connect individual components instead of all controls.
-export default connect(stateToProps, dispatchToProps)(Controls);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(Controls);
