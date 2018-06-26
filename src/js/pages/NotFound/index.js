@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { pageView } from '../../util/analytics';
-import { TEXTS } from '../../constants';
+import { pageView } from '@/util/analytics';
+import { TEXTS } from '@/constants';
 
 export default class NotFound extends React.PureComponent {
   static defaultProps = {

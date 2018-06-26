@@ -7,7 +7,8 @@
     "jsx": "react",
     "checkJs": true,
     "paths": {
-      "@/*": ["src/js/*"]
+      "@/*": ["src/js/*"],
+      "_@/*": ["*"]
     }
   },
   "include": ["src/js/**/*"]

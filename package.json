@@ -115,7 +115,8 @@
           "@babel/plugin-proposal-class-properties",
           ["module-resolver", {
             "alias": {
-              "@": "./src/js"
+              "@": "./src/js",
+              "_@": "./"
             }
           }]
         ]

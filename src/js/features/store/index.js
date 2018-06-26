@@ -18,12 +18,12 @@ import {
   DEFAULT_SPLIT_VIEW,
   DEFAULT_FONT_SIZE,
   DEFAULT_DARK_MODE,
-} from '../../constants';
+} from '@/constants';
 import {
   getArrayFromLocalStorage,
   getBooleanFromLocalStorage,
   getNumberFromLocalStorage,
-} from '../../util';
+} from '@/util';
 import thunk from 'redux-thunk';
 
 const initialState = {

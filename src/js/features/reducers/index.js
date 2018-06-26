@@ -24,10 +24,10 @@ import {
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
-} from '../../constants';
-import { saveToLocalStorage } from '../../util';
-import { clickEvent } from '../../util/analytics';
-import { DARK_MODE_COOKIE } from '../../../../common/constants';
+} from '@/constants';
+import { saveToLocalStorage } from '@/util';
+import { clickEvent } from '@/util/analytics';
+import { DARK_MODE_COOKIE } from '_@/common/constants';
 
 export default function reducer(state, action) {
   switch (action.type) {

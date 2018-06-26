@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { pageView, errorEvent, ACTIONS } from '../../util/analytics';
-import GenericError from '../../components/GenericError';
-import { SOURCES, TEXTS } from '../../constants';
-import ShabadContent from '../../components/ShabadContent';
-import { toAngURL } from '../../util';
+import { pageView, errorEvent, ACTIONS } from '@/util/analytics';
+import GenericError from '@/components/GenericError';
+import { SOURCES, TEXTS } from '@/constants';
+import ShabadContent from '@/components/ShabadContent';
+import { toAngURL } from '@/util';
 
 export const Stub = () => <div className="spinner" />;
 

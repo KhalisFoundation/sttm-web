@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
-import PageLoader from '../PageLoader';
+import PageLoader from '@/pages/PageLoader';
 import Layout, { Stub } from './Layout';
 
 export default class Ang extends React.PureComponent {

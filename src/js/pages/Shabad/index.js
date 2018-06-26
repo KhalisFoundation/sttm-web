@@ -2,10 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
-import PageLoader from '../PageLoader';
-import { pageView } from '../../util/analytics';
-import ShabadContent from '../../components/ShabadContent';
-import { toShabadURL } from '../../util';
+import PageLoader from '@/pages/PageLoader';
+import { pageView } from '@/util/analytics';
+import ShabadContent from '@/components/ShabadContent';
+import { toShabadURL } from '@/util';
 
 const Stub = () => <div className="spinner" />;
 

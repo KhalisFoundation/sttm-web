@@ -4,7 +4,7 @@ import {
   SHORT_DOMAIN,
   SEARCH_TYPES,
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
-} from '../constants';
+} from '@/constants';
 
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
@@ -292,7 +292,7 @@ export const getHighlightIndices = (baani, query, type) => {
 /**
  * Should save ang to localStorage
  * @param {object} data
- * @property {string} type
+ * @property {ShabadContentTypes} type
  * @property {{ source: { id: string }}} info
  */
 export const shouldSaveAng = ({ type, info }) =>
@@ -310,12 +310,12 @@ export const readAng = () =>
  * @param {number} ang
  */
 export const saveAng = ang =>
-  saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG, ang);
+  saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG, '' + ang);
 
 /**
  * Generates link based on type and source
  * @param {object} data
- * @property {string} type
+ * @property {ShabadContenShabadContentTypestTypes} type
  * @property {{ source: { id: string }}} info
  */
 export function toNavURL({ type, info }) {

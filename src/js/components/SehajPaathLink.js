@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TEXTS } from '../constants';
-import { ACTIONS, clickEvent } from '../util/analytics';
-import { toAngURL, readAng } from '../util';
 import { withRouter } from 'react-router-dom';
-import History from './Icons/History';
+import { TEXTS } from '@/constants';
+import { toAngURL, readAng } from '@/util';
+import History from '@/components/Icons/History';
+import { ACTIONS, clickEvent } from '@/util/analytics';
 
 /**
  *

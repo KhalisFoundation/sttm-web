@@ -1,9 +1,9 @@
 /* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
-import ShabadContent from '../../components/ShabadContent';
+import ShabadContent from '@/components/ShabadContent';
 import { buildApiUrl } from '@sttm/banidb';
-import { TEXTS } from '../../constants';
+import { TEXTS } from '@/constants';
 
 /**
  *

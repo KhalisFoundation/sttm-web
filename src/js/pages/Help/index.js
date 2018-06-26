@@ -20,10 +20,11 @@ const content = {
         SikhiToTheMax is powered by{' '}
         <a href="http://banidb.com/" target="_blank" rel="noopener noreferrer">
           BaniDB
-        </a>, which follows SGPC's standardized versions of all Baani. Scholars
-        at SGPC have worked for years to come to a conclusion on padchedd
-        spacing and spelling, which is now accepted by the Panth. In order to
-        stay consistent with the Panth and not be biased towards any Jathebandi
+        </a>
+        , which follows SGPC's standardized versions of all Baani. Scholars at
+        SGPC have worked for years to come to a conclusion on padchedd spacing
+        and spelling, which is now accepted by the Panth. In order to stay
+        consistent with the Panth and not be biased towards any Jathebandi
         interpretations, BaniDB and the apps it powers follow SGPC approved
         padchedd and spelling. In case you find any discrepancy, feel free to
         share your
@@ -121,26 +122,41 @@ const content = {
             <code>
               ਮੇਰੇ ਸਾਹਾ ਮੈ ਹਰਿ ਦਰਸਨ ਸੁਖੁ ਹੋਇ ॥ ਹਮਰੀ ਬੇਦਨਿ ਤੂ ਜਾਨਤਾ ਸਾਹਾ ਅਵਰੁ ਕਿਆ
               ਜਾਨੈ ਕੋਇ ॥ ਰਹਾਉ ॥
-            </code>, the shabad id is <code>2555</code>, and the short URL is{' '}
+            </code>
+            , the shabad id is <code>2555</code>, and the short URL is{' '}
             <a href={`http://${SHORT_DOMAIN}/s/2555`}>
               {' '}
-              http://{SHORT_DOMAIN}/s/2555
+              http://
+              {SHORT_DOMAIN}
+              /s/2555
             </a>{' '}
           </li>
           <li>
             In case of ang, for example ang <code>12</code> of Guru Granth Sahib
             Jee, the short URL is{' '}
             <a href={`http://{SHORT_DOMAIN}/a/12`}>
-              http://{SHORT_DOMAIN}/a/12
+              http://
+              {SHORT_DOMAIN}
+              /a/12
             </a>{' '}
           </li>
           <li>
             In case of hukamnama, the short URL is{' '}
-            <a href={`http://${SHORT_DOMAIN}/h`}> http://{SHORT_DOMAIN}/h </a>{' '}
+            <a href={`http://${SHORT_DOMAIN}/h`}>
+              {' '}
+              http://
+              {SHORT_DOMAIN}
+              /h{' '}
+            </a>{' '}
           </li>
           <li>
             In case of random shabad, the short URL is{' '}
-            <a href={`http://${SHORT_DOMAIN}/r`}> http://{SHORT_DOMAIN}/r </a>{' '}
+            <a href={`http://${SHORT_DOMAIN}/r`}>
+              {' '}
+              http://
+              {SHORT_DOMAIN}
+              /r{' '}
+            </a>{' '}
           </li>
         </ul>
       </React.Fragment>,

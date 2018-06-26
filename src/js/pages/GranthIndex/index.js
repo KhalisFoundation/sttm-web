@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { pageView } from '../../util/analytics';
 import PropTypes from 'prop-types';
 import raagIndices from './raagIndices';
 import { toAngURL } from '../../util';

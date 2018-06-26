@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Fetch from '../components/Fetch';
-import { throwError } from '../util';
+import Fetch from '@/components/Fetch';
+import { throwError } from '@/util';
 export default class PageLoader extends React.PureComponent {
   static propTypes = {
     url: PropTypes.string.isRequired,

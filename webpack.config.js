@@ -70,6 +70,8 @@ module.exports = {
     alias: {
       // Client root
       '@': path.resolve(__dirname, 'src/js/'),
+      // Project root
+      '_@': path.resolve(__dirname),
     },
   },
   module: {
