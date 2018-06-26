@@ -1,1 +1,1 @@
-export { default as default } from "./ShabadControls.js";
+export { default } from './ShabadControls.tsx';

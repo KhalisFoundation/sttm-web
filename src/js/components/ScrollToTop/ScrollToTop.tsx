@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chevron from '@/components//Icons/Chevron';
 
+type ScrollToTopProps = {
+  disableSmoothScrollingAt?: number;
+};
+
 /**
  *
  *
@@ -9,18 +13,11 @@ import Chevron from '@/components//Icons/Chevron';
  * @class ScrollToTop
  * @extends {React.PureComponent}
  */
-export default class ScrollToTop extends React.PureComponent {
+export default class ScrollToTop extends React.PureComponent<ScrollToTopProps> {
   static defaultProps = {
     disableSmoothScrollingAt: 6000,
   };
 
-  /**
-   * @typedef {object} ScrollToTopProps
-   * @property {number} [disableSmoothScrollingAt=4000]
-   *
-   * @static
-   * @memberof ScrollToTop
-   */
   static propTypes = {
     disableSmoothScrollingAt: PropTypes.number,
   };

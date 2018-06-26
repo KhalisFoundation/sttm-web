@@ -67,6 +67,7 @@ module.exports = {
     },
   },
   resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       // Client root
       '@': path.resolve(__dirname, 'src/js/'),
@@ -77,7 +78,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(tsx?)|(js)$/,
         loader: 'babel-loader',
       },
     ],
