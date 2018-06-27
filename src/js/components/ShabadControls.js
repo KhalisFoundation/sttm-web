@@ -152,7 +152,7 @@ export default class ShabadControls extends React.PureComponent {
             </div>
             {disableSplitView ? null : (
               <div className="display-option-type">
-                <div className="display-option-header">Split View</div>
+                <div className="display-option-header">{TEXTS.SPLIT_VIEW}</div>
                 <div className="display-option-content">
                   <a
                     className={`display-option-toggle ${
@@ -178,14 +178,18 @@ export default class ShabadControls extends React.PureComponent {
                 </a>
               </div>
             </div>
-            <div className="display-reset-option-content">
-              {TEXTS.RESET} {TEXTS.DISPLAY}
-              <a
-                className={`display-option-toggle ${darkMode ? 'active' : ''}`}
-                onClick={resetDisplayOptions}
-              >
-                {TEXTS.RESET}
-              </a>
+            <div className="display-option-type">
+              <div className="display-option-header">
+                {TEXTS.RESET} {TEXTS.DISPLAY}
+              </div>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle`}
+                  onClick={resetDisplayOptions}
+                >
+                  {TEXTS.RESET}
+                </a>
+              </div>
             </div>
           </div>
         )}
@@ -215,14 +219,18 @@ export default class ShabadControls extends React.PureComponent {
               />
               <big className="gurbani-font">A</big>
             </div>
-            <div className="display-reset-option-content">
-              {TEXTS.RESET} {TEXTS.FONT}
-              <a
-                className={`display-option-toggle ${darkMode ? 'active' : ''}`}
-                onClick={resetFontOptions}
-              >
-                {TEXTS.RESET}
-              </a>
+            <div className="display-option-type">
+              <div className="font-option-header">
+                {TEXTS.RESET} {TEXTS.FONT}
+              </div>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle`}
+                  onClick={resetFontOptions}
+                >
+                  {TEXTS.RESET}
+                </a>
+              </div>
             </div>
           </div>
         )}

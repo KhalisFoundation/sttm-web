@@ -98,6 +98,7 @@ export const TEXTS = {
   REDIRECTING: 'Redirecting you to',
   REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
   RESET: 'Reset',
+  SPLIT_VIEW: 'Split View',
   UNICODE: 'Unicode',
   ASSIST: 'Assist',
   FONT: 'Font',
