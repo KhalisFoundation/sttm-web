@@ -56,6 +56,15 @@ export const DEFAULT_DARK_MODE = false;
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
+  URIS: {
+    HOME: 'Home',
+    ABOUT: 'About',
+    INDEX: 'Index',
+    HELP: 'Help',
+    TOS: 'Terms of Service',
+    SUNDAR_GUTKA: 'Sundar Gutka',
+    SUNDAR_GUTKA_BAANI: 'Baani',
+  },
   SEHAJ_PAATH: ang => `Continue reading Ang ${ang}`,
   SUNDAR_GUTKA_HEADER: `Sundar Gutka Baaniyaan`,
   SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,

@@ -2,8 +2,8 @@
 import React from 'react';
 import { TEXTS } from '../../constants';
 import Viewer from './Viewer';
-import { Link } from 'react-router-dom';
 import { showToast } from '../../util';
+import BreadCrumb from '../../components/Breadcrumb';
 
 /**
  *
@@ -46,9 +46,7 @@ export default class Sync extends React.PureComponent {
   render() {
     return (
       <div className="row" id="content-root">
-        <h4 className="breadcrumb">
-          <Link to="/">Home</Link> » {TEXTS.SYNC}
-        </h4>
+        <BreadCrumb links={[{ title: TEXTS.SYNC }]} />
         <div className="wrapper">
           {this.state.connected ? (
             <Viewer {...this.state} />

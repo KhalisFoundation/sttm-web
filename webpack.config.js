@@ -48,7 +48,7 @@ module.exports = {
     path: path.resolve(__dirname, 'public/assets', 'js'),
     chunkFilename: 'chunks/[name].js',
     filename: '[name].js',
-    publicPath: 'assets/js/',
+    publicPath: '/assets/js/',
   },
   devtool: PRODUCTION ? undefined : 'inline-source-map',
   plugins,

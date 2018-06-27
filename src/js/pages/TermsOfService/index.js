@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { pageView } from '../../util/analytics';
+import BreadCrumb from '../../components/Breadcrumb';
+import { TEXTS } from '../../constants';
 
 export default class TermsOfService extends React.PureComponent {
   render() {
     return (
       <div className="row" id="content-root">
-        <h4 className="breadcrumb">
-          <Link to="/">Home</Link> » Terms of Service
-        </h4>
+        <BreadCrumb links={[{ title: TEXTS.URIS.TOS }]} />
         <div className="wrapper">
           The Khalis Foundation and Affiliates (the “Service”) is freely
           accessible worldwide to anyone with Internet access. Access to and use

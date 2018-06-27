@@ -1,107 +1,115 @@
 /* globals BANIS_API_URL */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { pageView } from '../../util/analytics';
-import { versesToGurbani } from '../../util';
 import PropTypes from 'prop-types';
-import ShabadContent from '../../components/ShabadContent';
-import Fetch from '../../components/Fetch';
 import { TEXTS } from '../../constants';
+import Baani from './Baani';
+import BreadCrumb from '../../components/Breadcrumb';
 
 export default class SundarGutka extends React.PureComponent {
   static propTypes = {
     location: PropTypes.shape({ hash: PropTypes.string }),
+    match: PropTypes.object.isRequired,
   };
 
-  static DEFAULT_BAANI_ID = 0;
+  static HOME_LINKS = [{ title: TEXTS.URIS.SUNDAR_GUTKA }];
+
+  static BAANI_LINKS = [
+    { url: '/sundar-gutka', title: TEXTS.URIS.SUNDAR_GUTKA },
+    { title: TEXTS.URIS.SUNDAR_GUTKA_BAANI },
+  ];
 
   $details = React.createRef();
 
   state = {
     baanies: null,
-    currentBaaniId: SundarGutka.DEFAULT_BAANI_ID,
+    q: '',
   };
 
   render() {
-    const { baanies, currentBaaniId } = this.state;
+    const { baanies, q } = this.state;
+
+    const isSundarGutkaHome = this.props.match.isExact;
+
+    const links = isSundarGutkaHome
+      ? SundarGutka.HOME_LINKS
+      : SundarGutka.BAANI_LINKS;
+
     return (
       <div className="row" id="content-root">
-        <h4 className="breadcrumb">
-          <Link to="/">Home</Link> » Sundar Gutka
-        </h4>
+        <BreadCrumb links={links} />
         <div id="help">
           {baanies === null ? (
             <div className="spinner" />
-          ) : (
-            <React.Fragment>
-              <div id="sidebar">
-                <details ref={this.$details}>
-                  <summary>{TEXTS.SUNDAR_GUTKA_HEADER}</summary>
-                  <ul>
-                    {baanies.map(({ ID, transliteration }) => (
-                      <li key={ID}>
-                        <a onClick={this.handleBaaniClick(ID)}>
-                          {transliteration}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </details>
-                <div className="show-on-mobile">
-                  {TEXTS.SUNDAR_GUTKA_APP}{' '}
-                  <a
-                    href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Android
-                  </a>{' '}
-                  |{' '}
-                  <a
-                    href="https://itunes.apple.com/in/app/sundar-gutka/id431446112?mt=8"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    iOS
-                  </a>
-                </div>
+          ) : isSundarGutkaHome ? (
+            <div className="wrapper">
+              <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
+              <div className="show-on-mobile">
+                {TEXTS.SUNDAR_GUTKA_APP}{' '}
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Android
+                </a>{' '}
+                |{' '}
+                <a
+                  href="https://itunes.apple.com/in/app/sundar-gutka/id431446112?mt=8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  iOS
+                </a>
               </div>
-
-              <main style={{ padding: 0 }}>
-                {currentBaaniId !== SundarGutka.DEFAULT_BAANI_ID && (
-                  <Fetch url={`${BANIS_API_URL}/${currentBaaniId}`}>
-                    {({ data, loading }) =>
-                      loading ? (
-                        <div className="spinner" />
-                      ) : (
-                        <ShabadContent
-                          type="shabad"
-                          info={data.baniInfo}
-                          nav={data.nav}
-                          gurbani={versesToGurbani(data.verses)}
-                          hideMeta
-                          controlProps={{
-                            disableSplitView: true,
-                          }}
-                        />
-                      )
-                    }
-                  </Fetch>
-                )}
-              </main>
-            </React.Fragment>
+              <input
+                type="search"
+                name="baani-query"
+                className="search"
+                autoCorrect="off"
+                value={q}
+                autoFocus={true}
+                autoCapitalize="none"
+                onChange={this.handleSearch}
+                placeholder="Search"
+              />
+              <ul className="list">
+                {baanies
+                  .filter(SundarGutka.filter(q))
+                  .map(({ ID, transliteration, gurmukhiUni }) => (
+                    <Link
+                      to={`/sundar-gutka/${ID}`}
+                      key={ID}
+                      className="list--link"
+                    >
+                      <li className="list--item">
+                        {SundarGutka.sanitize(transliteration)} - {gurmukhiUni}
+                      </li>
+                    </Link>
+                  ))}
+              </ul>
+            </div>
+          ) : (
+            <Route
+              path={this.props.match.url + '/:currentBaaniId'}
+              component={Baani}
+            />
           )}
         </div>
       </div>
     );
   }
 
-  handleBaaniClick = ID => () => {
-    window.scrollTo(0, 0);
-    this.$details.current.setAttribute('close', '');
-    this.$details.current.removeAttribute('open');
-    this.setState({ currentBaaniId: ID });
-  };
+  static filter = q => i =>
+    q === '' ||
+    SundarGutka.sanitize(i.transliteration)
+      .toLowerCase()
+      .includes(q.toLocaleLowerCase());
+
+  static sanitize = t => t.replace(/\(n\)/gi, 'n');
+
+  handleSearch = e => this.setState({ q: e.currentTarget.value });
 
   componentDidMount() {
     pageView('/sundar-gutka');

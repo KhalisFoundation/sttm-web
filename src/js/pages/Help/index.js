@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-key, react/no-unescaped-entities */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { pageView } from '../../util/analytics';
-import { SHORT_DOMAIN } from '../../constants';
+import { SHORT_DOMAIN, TEXTS } from '../../constants';
+import BreadCrumb from '../../components/Breadcrumb';
 
 const content = {
   General: [
@@ -13,7 +13,7 @@ const content = {
         Please reference the following keyboard map:
         <img src="/assets/images/help/web-desktop-keyboard-map.png" />
       </React.Fragment>,
-    ]
+    ],
   ],
   Web: [
     [
@@ -276,10 +276,10 @@ const content = {
       <React.Fragment>
         Akhand Paatth view is currently a beta feature we have added to the
         desktop application. You can enable it in the settings under Display
-        Options.
-        When enabled, it allows you to scroll infinitely past the Shabad you
-        started with. Additionally, you can press the arrows in the menu bar to
-        quickly go to the next/previous Shabad without having to scroll at all.
+        Options. When enabled, it allows you to scroll infinitely past the
+        Shabad you started with. Additionally, you can press the arrows in the
+        menu bar to quickly go to the next/previous Shabad without having to
+        scroll at all.
         <img src="/assets/images/help/desktop-akhand-paatth-view-toggle.png" />
         <img src="/assets/images/help/desktop-akhand-paatth-view.png" />
       </React.Fragment>,
@@ -289,27 +289,26 @@ const content = {
       <React.Fragment>
         You are now able to add a custom slide when using SikhiToTheMax. We
         currently support options for:
-      <ul>
-        <li>
-          Empty Slide: this will display a blank slide
-        </li>
-        <li>
-          Add Waheguru Slide: this will show a blank slide with only "Waheguru"
-          on it
-        </li>
-        <li>
-          Add Dhan Guru ___: this will show a blank slide with "Dhan Guru"
-          followed by the Guru you choose from the dropdown
-        </li>
-        <li>
-          Additionally, you can create a custom announcement slide. By default,
-          it will be written in English, however, there is a toggle for
-          Gurmukhi if you'd like to use that instead.
-        </li>
-      </ul>
-      <img src="/assets/images/help/desktop-custom-slide-button.png" />
-      <img src="/assets/images/help/desktop-custom-slide-controller.png" />
-To get to the "Custom Slides" feature, click on slides icon on the top right when viewing a Shabad.
+        <ul>
+          <li>Empty Slide: this will display a blank slide</li>
+          <li>
+            Add Waheguru Slide: this will show a blank slide with only
+            "Waheguru" on it
+          </li>
+          <li>
+            Add Dhan Guru ___: this will show a blank slide with "Dhan Guru"
+            followed by the Guru you choose from the dropdown
+          </li>
+          <li>
+            Additionally, you can create a custom announcement slide. By
+            default, it will be written in English, however, there is a toggle
+            for Gurmukhi if you'd like to use that instead.
+          </li>
+        </ul>
+        <img src="/assets/images/help/desktop-custom-slide-button.png" />
+        <img src="/assets/images/help/desktop-custom-slide-controller.png" />
+        To get to the "Custom Slides" feature, click on slides icon on the top
+        right when viewing a Shabad.
       </React.Fragment>,
     ],
     [
@@ -355,9 +354,7 @@ export default class Help extends React.Component {
   render() {
     return (
       <div className="row" id="content-root">
-        <h4 className="breadcrumb">
-          <Link to="/">Home</Link> » Help
-        </h4>
+        <BreadCrumb links={[{ title: TEXTS.URIS.HELP }]} />
         <div id="help">
           <div id="sidebar">
             <ul>

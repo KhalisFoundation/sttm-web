@@ -11,7 +11,7 @@ export default ({ bodyClass, title, description }) => marinate`
 
   <meta charset="utf-8">
   <meta name="description" content="${description}">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/manifest.json">
 
   <!-- Preconnect -->
   <link rel="preconnect" href="//cdn.polyfill.io" crossorigin>

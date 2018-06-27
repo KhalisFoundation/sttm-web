@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { pageView } from '../../util/analytics';
+import BreadCrumb from '../../components/Breadcrumb';
+import { TEXTS } from '../../constants';
 
 export default class About extends React.PureComponent {
   render() {
     return (
       <div className="row" id="content-root">
-        <h4 className="breadcrumb">
-          <Link to="/">Home</Link> » About
-        </h4>
+        <BreadCrumb links={[{ title: TEXTS.URIS.ABOUT }]} />
         <div className="wrapper">
           Originally developed by Bhai Tarsem Singh of SHARE charity UK,
           SikhiToTheMax has become a defacto standard for keertans and gurdwaras

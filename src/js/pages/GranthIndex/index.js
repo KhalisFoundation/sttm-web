@@ -4,6 +4,8 @@ import { pageView } from '../../util/analytics';
 import PropTypes from 'prop-types';
 import raagIndices from './raagIndices';
 import { toAngURL } from '../../util';
+import BreadCrumb from '../../components/Breadcrumb';
+import { TEXTS } from '../../constants';
 
 const sanitizeHash = (...args) => args.map(a => a.replace(/ /gi, '')).join('-');
 
@@ -15,9 +17,7 @@ export default class GranthIndex extends React.PureComponent {
   render() {
     return (
       <div className="row" id="content-root">
-        <h4 className="breadcrumb">
-          <Link to="/">Home</Link> » Index
-        </h4>
+        <BreadCrumb links={[{ title: TEXTS.URIS.INDEX }]} />
         <div id="help">
           <div id="sidebar">
             <ul>
