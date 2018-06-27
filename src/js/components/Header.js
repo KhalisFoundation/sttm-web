@@ -32,19 +32,16 @@ export default class Header extends React.PureComponent {
 
   render() {
     const {
-      props: {
-        defaultQuery,
-        isHome,
-        isAng,
-        location: { search },
-      },
+      props: { defaultQuery, isHome, isAng },
       onFormSubmit,
       handleFormSubmit,
     } = this;
     const {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG : null,
-    } = getQueryParams(search);
+    } = getQueryParams(location.search);
+
+    const key = `${defaultQuery}${defaultSource}${defaultType}`;
 
     return (
       <div className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
@@ -55,7 +52,7 @@ export default class Header extends React.PureComponent {
             </div>
           )}
           <SearchForm
-            key={`${defaultQuery}${defaultSource}${defaultType}`}
+            key={key}
             defaultQuery={defaultQuery}
             defaultSource={defaultSource}
             defaultType={defaultType}
