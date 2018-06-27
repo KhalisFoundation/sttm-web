@@ -72,7 +72,7 @@ export default class ShabadControls extends React.PureComponent {
           <a
             className={`display-options-toggle shabad-controller-toggle ${
               showDisplayOptions ? 'active' : ''
-              }`}
+            }`}
             onClick={toggleDisplayOptions}
           >
             <TelevisionIcon />
@@ -81,7 +81,7 @@ export default class ShabadControls extends React.PureComponent {
           <a
             className={`font-options-toggle shabad-controller-toggle ${
               showFontOptions ? 'active' : ''
-              }`}
+            }`}
             onClick={toggleFontOptions}
           >
             <SlidersIcon />
@@ -98,7 +98,7 @@ export default class ShabadControls extends React.PureComponent {
             <a
               className={`shabad-controller-toggle ${
                 larivaarAssist ? 'active' : ''
-                }`}
+              }`}
               onClick={toggleLarivaarAssistOption}
             >
               <span className="custom-fa custom-fa-assist">ੳ</span>
@@ -109,14 +109,16 @@ export default class ShabadControls extends React.PureComponent {
         {showDisplayOptions && (
           <div className="display-options">
             <div className="display-option-type">
-              <div className="display-option-header">{TEXTS.TRANSLITERATION}</div>
+              <div className="display-option-header">
+                {TEXTS.TRANSLITERATION}
+              </div>
               <div className="display-option-content">
                 {TRANSLITERATION_LANGUAGES.map(lang => (
                   <a
                     key={lang}
                     className={`display-option-toggle ${
                       transliterationLanguages.includes(lang) ? 'active' : ''
-                      }`}
+                    }`}
                     onClick={() =>
                       setTransliterationLanguages(
                         toggleItemInArray(lang, transliterationLanguages)
@@ -136,7 +138,7 @@ export default class ShabadControls extends React.PureComponent {
                     key={lang}
                     className={`display-option-toggle ${
                       translationLanguages.includes(lang) ? 'active' : ''
-                      }`}
+                    }`}
                     onClick={() =>
                       setTranslationLanguages(
                         toggleItemInArray(lang, translationLanguages)
@@ -155,7 +157,7 @@ export default class ShabadControls extends React.PureComponent {
                   <a
                     className={`display-option-toggle ${
                       splitView ? 'active' : ''
-                      }`}
+                    }`}
                     onClick={toggleSplitViewOption}
                   >
                     {splitView ? 'Disable' : 'Enable'}
@@ -169,7 +171,7 @@ export default class ShabadControls extends React.PureComponent {
                 <a
                   className={`display-option-toggle ${
                     darkMode ? 'active' : ''
-                    }`}
+                  }`}
                   onClick={toggleDarkMode}
                 >
                   {darkMode ? 'Disable' : 'Enable'}
@@ -177,6 +179,7 @@ export default class ShabadControls extends React.PureComponent {
               </div>
             </div>
             <div className="display-reset-option-content">
+              {TEXTS.RESET} {TEXTS.DISPLAY}
               <a
                 className={`display-option-toggle ${darkMode ? 'active' : ''}`}
                 onClick={resetDisplayOptions}
@@ -193,7 +196,7 @@ export default class ShabadControls extends React.PureComponent {
               <a
                 className={`shabad-controller-toggle ${
                   unicode ? 'active' : ''
-                  }`}
+                }`}
                 onClick={toggleUnicodeOption}
               >
                 {TEXTS.UNICODE}
@@ -213,6 +216,7 @@ export default class ShabadControls extends React.PureComponent {
               <big className="gurbani-font">A</big>
             </div>
             <div className="display-reset-option-content">
+              {TEXTS.RESET} {TEXTS.FONT}
               <a
                 className={`display-option-toggle ${darkMode ? 'active' : ''}`}
                 onClick={resetFontOptions}

@@ -228,11 +228,7 @@ blockquote {
     padding: 0 2rem 0 3rem;
   }
 
-  #share-menu {
-    background-color: $sttm-white;
-
-    .dark-mode & {
-      background-color: $sttm-light-black;
-    }
+  .dark-mode #share-menu {
+    background-color: $sttm-light-black;
   }
 }
