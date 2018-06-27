@@ -1,7 +1,7 @@
 .search {
   border: none;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   margin: 5px 0;
   width: 45vw;
 
@@ -9,11 +9,20 @@
   &:focus,
   &:active {
     border: none;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   }
 
   @media screen and (max-width: 900px) {
     width: 100%;
+  }
+
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+    color: $sttm-dark-white;
+
+    &::placeholder {
+      color: $sttm-dark-grey;
+    }
   }
 }
 
