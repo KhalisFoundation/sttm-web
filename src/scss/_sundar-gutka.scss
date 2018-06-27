@@ -3,17 +3,12 @@
   border-radius: 2px;
   box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   margin: 5px 0;
-  width: 45vw;
 
   &:hover,
   &:focus,
   &:active {
     border: none;
     box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
-  }
-
-  @media screen and (max-width: 900px) {
-    width: 100%;
   }
 
   .dark-mode & {
@@ -27,8 +22,6 @@
 }
 
 .list {
-  display: flex;
-  flex-wrap: wrap;
   margin: 0 -5px;
 
   &--link {
@@ -41,7 +34,7 @@
   }
 
   &--item {
-    border: 1px solid black;
+    border: 1px solid $sttm-light-grey;
     border-radius: 5px;
     list-style: none;
     margin: 10px 5px;
@@ -50,6 +43,14 @@
 
     &:hover {
       box-shadow: 0 0 2px 1px $sttm-light-grey;
+    }
+
+    .dark-mode & {
+      background-color: $sttm-transparent-light-black;
+
+      &:hover {
+        box-shadow: none;
+      }
     }
   }
 }

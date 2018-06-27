@@ -43,7 +43,7 @@ export default class SundarGutka extends React.PureComponent {
           {baanies === null ? (
             <div className="spinner" />
           ) : isSundarGutkaHome ? (
-            <div className="wrapper">
+            <div className="wrapper" style={{ width: '100%' }}>
               <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
               <div className="show-on-mobile">
                 {TEXTS.SUNDAR_GUTKA_APP}{' '}
