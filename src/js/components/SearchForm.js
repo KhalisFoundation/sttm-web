@@ -158,7 +158,7 @@ export default class SearchForm extends React.PureComponent {
 
     const [title, pattern] =
       this.state.type === SEARCH_TYPES.ROMANIZED
-        ? ['Enter 3 words minimum.', '(\\w+\\W+){2,}\\w+\\W*']
+        ? ['Enter 2 words minimum.', '(\\w+\\W+){1,}\\w+\\W*']
         : this.state.type === SEARCH_TYPES.ANG
           ? ['Enter numbers only.', '\\d+']
           : ['Enter 2 characters minimum.', '.{2,}'];
