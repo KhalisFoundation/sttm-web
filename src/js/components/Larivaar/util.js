@@ -1,5 +1,3 @@
-import React from 'react';
-
 const matrasThatAppearAtRightSideOfChar = 'wIuUyYoOW';
 const halfCharThatAppearAtRightSideOfChar = 'Í´R@˜®';
 const nasalSoundCaharacter = 'NMµ';
@@ -11,49 +9,13 @@ const allMatrasHalfCharAndNasalSoundChar =
   nasalSoundCaharacter;
 const unicodeMatras = 'ਾਿੀੁੂੇੈੋੌੰਂ';
 
-export function fixLarivaar(word, unicode, larivaarAssistColor, indexVal) {
-  var breakSupportedCharList = [];
-
-  var segmentedValArr = null;
-  if (unicode) {
-    segmentedValArr = fixLarivaarUnicode(word);
-  } else {
-    segmentedValArr = fixLarivaarGurmukhiFont(word);
-  }
-
-  // Add each segment with wbr in a new span
-  for (let i = 0; i < segmentedValArr.length; i++) {
-    let style = {
-      color: indexVal % 2 === 1 ? larivaarAssistColor : '',
-    };
-    if (segmentedValArr[i].indexOf('´') != -1) {
-      Object.assign(style, { display: 'inline-block' });
-      // handle space break for this special character
-      breakSupportedCharList.push(
-        <span key={i} style={style}>
-          {segmentedValArr[i]}
-          <wbr />
-        </span>
-      );
-    } else {
-      breakSupportedCharList.push(
-        <span key={indexVal + '.' + i} style={style}>
-          <span key={i}>
-            {segmentedValArr[i]}
-            <wbr />
-          </span>
-        </span>
-      );
-    }
-  }
-  return breakSupportedCharList;
-}
 // Look for consonants and break word
-function fixLarivaarGurmukhiFont(str) {
-  var arrWordBreak = [];
+export function fixLarivaarGurmukhiFont(str) {
+  let arrWordBreak = [];
   // search and break till next consonant
-  var segmentedStr = '';
-  for (var i = 0; i < str.length; i++) {
+  let segmentedStr = '';
+
+  for (let i = 0; i < str.length; i++) {
     segmentedStr += str[i];
     // handle sihari exeption
     // add to the segment string and ignore other checks
@@ -71,10 +33,11 @@ function fixLarivaarGurmukhiFont(str) {
 // In unicode All matras are right hand sided
 // and matras comes after main consonant and half character
 // we need to break word after Matras not consonant
-function fixLarivaarUnicode(str) {
-  var arrWordBreak = [];
+export function fixLarivaarUnicode(str) {
+  let arrWordBreak = [];
   // search and break till next consonant
-  var segmentedStr = '';
+  let segmentedStr = '';
+
   for (var i = 0; i < str.length; i++) {
     segmentedStr += str[i];
     // exception for half character
@@ -91,14 +54,7 @@ function fixLarivaarUnicode(str) {
   return arrWordBreak;
 }
 
-function isConsonant(char) {
-  return allMatrasHalfCharAndNasalSoundChar.indexOf(char) == -1;
-}
-
-function isUnicodeConsonant(char) {
-  return unicodeMatras.indexOf(char) != -1;
-}
-
-function isSihari(char) {
-  return char == sihari;
-}
+const isConsonant = char =>
+  allMatrasHalfCharAndNasalSoundChar.includes(char) === false;
+const isUnicodeConsonant = char => unicodeMatras.includes(char) === false;
+const isSihari = char => char === sihari;

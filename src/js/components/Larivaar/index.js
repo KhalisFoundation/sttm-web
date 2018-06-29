@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LARIVAAR_ASSIST_COLOR } from '../../constants';
-import { fixLarivaar } from './util';
+import LarivaarWord from './Word';
 
 export default class Larivaar extends React.PureComponent {
   static defaultProps = {
@@ -19,18 +19,24 @@ export default class Larivaar extends React.PureComponent {
   render() {
     const { larivaarAssist, enable, children, unicode } = this.props;
     const larivaarAssistColor = larivaarAssist ? LARIVAAR_ASSIST_COLOR : '';
-    return (
-      <React.Fragment>
-        {enable
-          ? children.split(' ').map((val, indexVal) => {
-              if (val.indexOf('॥') !== -1 || val.indexOf(']') !== -1) {
-                return `${val} `;
-              } else {
-                return fixLarivaar(val, unicode, larivaarAssistColor, indexVal);
-              }
-            })
-          : children}
-      </React.Fragment>
-    );
+
+    return enable === false
+      ? children
+      : children
+          .split(' ')
+          .map(
+            (word, index) =>
+              ['॥', ']'].some(v => word.includes(v)) ? (
+                `${word} `
+              ) : (
+                <LarivaarWord
+                  key={index}
+                  word={word}
+                  unicode={unicode}
+                  larivaarAssistColor={larivaarAssistColor}
+                  index={index}
+                />
+              )
+          );
   }
 }

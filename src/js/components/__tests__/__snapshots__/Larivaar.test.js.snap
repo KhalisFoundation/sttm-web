@@ -1,167 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Larivaar /> renders children when disabled 1`] = `
-<React.Fragment>
-  Vahi Guru
-</React.Fragment>
-`;
+exports[`<Larivaar /> renders children when disabled 1`] = `"Vahi Guru"`;
 
 exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
-<React.Fragment>
-  <span
-    key="0.0"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    <span
-      key="0"
-    >
-      V
-      <wbr />
-    </span>
-  </span>
-  <span
-    key="0.1"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    <span
-      key="1"
-    >
-      a
-      <wbr />
-    </span>
-  </span>
-  <span
-    key="0.2"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    <span
-      key="2"
-    >
-      h
-      <wbr />
-    </span>
-  </span>
-  <span
-    key="1.0"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    <span
-      key="0"
-    >
-      Gu
-      <wbr />
-    </span>
-  </span>
-  <span
-    key="1.1"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    <span
-      key="1"
-    >
-      ru
-      <wbr />
-    </span>
-  </span>
-</React.Fragment>
+Array [
+  <LarivaarWord
+    index={0}
+    key="0"
+    larivaarAssistColor=""
+    word="Vahi"
+  />,
+  <LarivaarWord
+    index={1}
+    key="1"
+    larivaarAssistColor=""
+    word="Guru"
+  />,
+]
 `;
 
 exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled 1`] = `
-<React.Fragment>
-  <span
-    key="0.0"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    <span
-      key="0"
-    >
-      V
-      <wbr />
-    </span>
-  </span>
-  <span
-    key="0.1"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    <span
-      key="1"
-    >
-      a
-      <wbr />
-    </span>
-  </span>
-  <span
-    key="0.2"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    <span
-      key="2"
-    >
-      h
-      <wbr />
-    </span>
-  </span>
-  <span
-    key="1.0"
-    style={
-      Object {
-        "color": "#f39c1d",
-      }
-    }
-  >
-    <span
-      key="0"
-    >
-      Gu
-      <wbr />
-    </span>
-  </span>
-  <span
-    key="1.1"
-    style={
-      Object {
-        "color": "#f39c1d",
-      }
-    }
-  >
-    <span
-      key="1"
-    >
-      ru
-      <wbr />
-    </span>
-  </span>
-</React.Fragment>
+Array [
+  <LarivaarWord
+    index={0}
+    key="0"
+    larivaarAssistColor="#f39c1d"
+    word="Vahi"
+  />,
+  <LarivaarWord
+    index={1}
+    key="1"
+    larivaarAssistColor="#f39c1d"
+    word="Guru"
+  />,
+]
 `;

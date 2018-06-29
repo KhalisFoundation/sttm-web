@@ -40,6 +40,7 @@ export default class Fetch extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const { url, options, transform, timeout } = this.props;
+
     if (
       prevProps.url !== url ||
       prevProps.options !== options ||
