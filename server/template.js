@@ -80,13 +80,13 @@ export default ({ bodyClass, title, description }) => marinate`
           <a href="/about">About Us</a>
         </li>
         <li>
-          <a href="https://form.jotform.com/80266126732151" target="_blank">Feedback</a>
+          <a href="https://form.jotform.com/80266126732151" target="_blank" rel="noopener noreferrer">Feedback</a>
         </li>
         <li>
           <a href="/terms-of-service">Legal</a>
         </li>
         <li>
-          <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank">Desktop App</a>
+          <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank" rel="noopener noreferrer">Desktop App</a>
         </li>
       </ul>
       <div class="copyright">

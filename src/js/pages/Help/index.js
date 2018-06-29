@@ -14,6 +14,29 @@ const content = {
         <img src="/assets/images/help/web-desktop-keyboard-map.png" />
       </React.Fragment>,
     ],
+    [
+      `Why are there differences between my Gutka Sahib and this website, especially in padchedd and some spellings?`,
+      <React.Fragment>
+        SikhiToTheMax is powered by{' '}
+        <a href="http://banidb.com/" target="_blank" rel="noopener noreferrer">
+          BaniDB
+        </a>, which follows SGPC's standardized versions of all Baani. Scholars
+        at SGPC have worked for years to come to a conclusion on padchedd
+        spacing and spelling, which is now accepted by the Panth. In order to
+        stay consistent with the Panth and not be biased towards any Jathebandi
+        interpretations, BaniDB and the apps it powers follow SGPC approved
+        padchedd and spelling. In case you find any discrepancy, feel free to
+        share your
+        <a
+          href="https://form.jotform.com/80266126732151"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          feedback
+        </a>
+        along with sources.
+      </React.Fragment>,
+    ],
   ],
   Web: [
     [
