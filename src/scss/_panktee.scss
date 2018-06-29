@@ -8,13 +8,13 @@
   }
 
   .highlight {
-    color: $sttm-blue;
+    border-left: 5px solid $sttm-blue;
+    margin: 5px 0;
+    padding-left: 5px;
 
     .dark-mode & {
-      border-left: 5px solid $sttm-orange;
+      border-color: $sttm-orange;
       color: inherit;
-      margin: 5px 0;
-      padding-left: 5px;
     }
   }
 
