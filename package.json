@@ -16,7 +16,6 @@
     "test:lint:js": "eslint src/js server seo common",
     "test:lint:css": "stylelint \"src/scss/*.scss\" --syntax scss",
     "test:unit": "jest --no-cache",
-    "precommit": "npm run pre-push-message && npm run test",
     "prepush": "npm run pre-push-message && npm run test",
     "webpack-stats": "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
     "build": "npm-run-all --parallel build:*",

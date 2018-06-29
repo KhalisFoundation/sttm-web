@@ -77,9 +77,8 @@ class SundarGutka extends React.PureComponent {
                 type="search"
                 name="baani-query"
                 className="search"
-                autoCorrect="off"
                 value={q}
-                autoFocus={true}
+                autoCorrect="off"
                 autoCapitalize="none"
                 onChange={this.handleSearch}
                 placeholder="Search"
