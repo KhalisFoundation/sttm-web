@@ -44,14 +44,15 @@ export default class Sync extends React.PureComponent {
   _mounted = false;
 
   render() {
+    const { connected, error } = this.state;
     return (
       <div className="row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.SYNC }]} />
         <div className="wrapper">
-          {this.state.connected ? (
+          {connected ? (
             <Viewer {...this.state} />
           ) : (
-            <Sync.Form onSubmit={this.handleSubmit} />
+            <Sync.Form onSubmit={this.handleSubmit} error={error} />
           )}
         </div>
       </div>
@@ -91,9 +92,10 @@ export default class Sync extends React.PureComponent {
    * @static
    * @memberof Sync
    */
-  static Form = ({ onSubmit }) => (
+  static Form = ({ onSubmit, error }) => (
     <React.Fragment>
       <p>{TEXTS.SYNC_DESCRIPTION}</p>
+      {error && <h5 className="sync-form-error">{TEXTS.SYNC_ERROR}</h5>}
       <form
         className="sync-form"
         onSubmit={e => {
@@ -127,6 +129,7 @@ export default class Sync extends React.PureComponent {
         } else {
           const { namespaceString } = data;
           this._setState({ connected: true, namespaceString });
+
           showToast(
             TEXTS.SYNC_NOTIFICATION(code),
             Infinity,

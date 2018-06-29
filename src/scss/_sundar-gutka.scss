@@ -2,7 +2,7 @@
   border: none;
   border-radius: 2px;
   box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
-  margin: 5px 0;
+  margin: 10px 0;
 
   &:hover,
   &:focus,
@@ -33,20 +33,33 @@
     }
   }
 
+  @keyframes slide-right {
+    from {
+      transform: translateX(-50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
   &--item {
+    animation: slide-right 0.25s ease-in-out forwards;
     border: 1px solid $sttm-light-grey;
     border-radius: 5px;
     list-style: none;
     margin: 10px 5px;
     padding: 10px;
     text-transform: capitalize;
+    transform: translateX(-50%);
 
     &:hover {
       box-shadow: 0 0 2px 1px $sttm-light-grey;
     }
 
     .dark-mode & {
-      background-color: $sttm-transparent-light-black;
+      background-color: $sttm-transparent-dark-black;
+      border-color: $sttm-dark-grey;
 
       &:hover {
         box-shadow: none;
@@ -57,4 +70,23 @@
 
 .baani {
   width: 100%;
+}
+
+.playstore,
+.appstore {
+  &--icon {
+    height: 1.25em;
+    vertical-align: text-bottom;
+    width: 1.25em;
+
+    .dark-mode & {
+      fill: $sttm-dark-white;
+    }
+  }
+
+  &--link {
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 5px;
+  }
 }

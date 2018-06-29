@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { versesToGurbani } from '../../util';
 import ShabadContent from '../../components/ShabadContent';
 import Fetch from '../../components/Fetch';
+import { pageView } from '../../util/analytics';
 
 /**
  *
@@ -20,8 +21,9 @@ export default class Baani extends React.PureComponent {
    */
 
   static propTypes = {
-    match: PropTypes.shape({ params: { currentBaaniId: PropTypes.string } })
-      .isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({ currentBaaniId: PropTypes.string }),
+    }).isRequired,
   };
 
   render() {
@@ -56,5 +58,15 @@ export default class Baani extends React.PureComponent {
         </Fetch>
       </div>
     );
+  }
+
+  componentDidMount() {
+    const {
+      match: {
+        params: { currentBaaniId },
+      },
+    } = this.props;
+
+    pageView(`/sundar-gutka/${currentBaaniId}`);
   }
 }

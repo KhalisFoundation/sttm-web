@@ -1,14 +1,18 @@
 /* globals BANIS_API_URL */
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { pageView } from '../../util/analytics';
 import PropTypes from 'prop-types';
 import { TEXTS } from '../../constants';
 import Baani from './Baani';
 import BreadCrumb from '../../components/Breadcrumb';
+import Android from '../../components/Icons/Android';
+import AppleiOS from '../../components/Icons/AppleiOS';
 
-export default class SundarGutka extends React.PureComponent {
+class SundarGutka extends React.PureComponent {
   static propTypes = {
+    transliterationLanguages: PropTypes.array.isRequired,
     location: PropTypes.shape({ hash: PropTypes.string }),
     match: PropTypes.object.isRequired,
   };
@@ -28,9 +32,13 @@ export default class SundarGutka extends React.PureComponent {
   };
 
   render() {
-    const { baanies, q } = this.state;
-
-    const isSundarGutkaHome = this.props.match.isExact;
+    const {
+      props: {
+        match: { isExact: isSundarGutkaHome },
+        transliterationLanguages,
+      },
+      state: { baanies, q },
+    } = this;
 
     const links = isSundarGutkaHome
       ? SundarGutka.HOME_LINKS
@@ -45,22 +53,24 @@ export default class SundarGutka extends React.PureComponent {
           ) : isSundarGutkaHome ? (
             <div className="wrapper" style={{ width: '100%' }}>
               <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
-              <div className="show-on-mobile">
+              <div className="show-on-mobile sundar-gutka-app-promo">
                 {TEXTS.SUNDAR_GUTKA_APP}{' '}
                 <a
                   href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
                   target="_blank"
+                  className="playstore--link"
                   rel="noopener noreferrer"
                 >
-                  Android
+                  <Android className="playstore--icon" /> {TEXTS.ANDROID}
                 </a>{' '}
                 |{' '}
                 <a
                   href="https://itunes.apple.com/in/app/sundar-gutka/id431446112?mt=8"
                   target="_blank"
+                  className="playstore--link"
                   rel="noopener noreferrer"
                 >
-                  iOS
+                  <AppleiOS className="appstore--icon" /> {TEXTS.IOS}
                 </a>
               </div>
               <input
@@ -77,14 +87,21 @@ export default class SundarGutka extends React.PureComponent {
               <ul className="list">
                 {baanies
                   .filter(SundarGutka.filter(q))
-                  .map(({ ID, transliteration, gurmukhiUni }) => (
+                  .map(({ ID, transliteration, gurmukhiUni }, i) => (
                     <Link
                       to={`/sundar-gutka/${ID}`}
                       key={ID}
                       className="list--link"
                     >
-                      <li className="list--item">
-                        {SundarGutka.sanitize(transliteration)} - {gurmukhiUni}
+                      <li
+                        className="list--item"
+                        style={{
+                          animationDelay: i < 15 ? `${20 * i}ms` : 0,
+                        }}
+                      >
+                        {gurmukhiUni}{' '}
+                        {transliterationLanguages.includes('english') &&
+                          `- ${SundarGutka.sanitize(transliteration)}`}
                       </li>
                     </Link>
                   ))}
@@ -111,8 +128,16 @@ export default class SundarGutka extends React.PureComponent {
 
   handleSearch = e => this.setState({ q: e.currentTarget.value });
 
+  componentDidUpdate({ match: { isExact: wasExact } }) {
+    if (wasExact === false && this.props.match.isExact) {
+      pageView('/sundar-gutka');
+    }
+  }
+
   componentDidMount() {
-    pageView('/sundar-gutka');
+    if (this.props.match.isExact) {
+      pageView('/sundar-gutka');
+    }
 
     fetch(BANIS_API_URL)
       .then(r => r.json())
@@ -124,3 +149,7 @@ export default class SundarGutka extends React.PureComponent {
       );
   }
 }
+
+export default connect(({ transliterationLanguages }) => ({
+  transliterationLanguages,
+}))(SundarGutka);
