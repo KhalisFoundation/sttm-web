@@ -1,57 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Larivaar /> renders children when disabled 1`] = `
-<React.Fragment>
-  Vahi Guru
-</React.Fragment>
-`;
+exports[`<Larivaar /> renders children when disabled 1`] = `"Vahi Guru"`;
 
 exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
-<React.Fragment>
-  <span
+Array [
+  <LarivaarWord
+    index={0}
     key="0"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    Vahi
-  </span>
-  <span
+    larivaarAssistColor=""
+    word="Vahi"
+  />,
+  <LarivaarWord
+    index={1}
     key="1"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    Guru
-  </span>
-</React.Fragment>
+    larivaarAssistColor=""
+    word="Guru"
+  />,
+]
 `;
 
 exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled 1`] = `
-<React.Fragment>
-  <span
+Array [
+  <LarivaarWord
+    index={0}
     key="0"
-    style={
-      Object {
-        "color": "",
-      }
-    }
-  >
-    Vahi
-  </span>
-  <span
+    larivaarAssistColor="#f39c1d"
+    word="Vahi"
+  />,
+  <LarivaarWord
+    index={1}
     key="1"
-    style={
-      Object {
-        "color": "#f39c1d",
-      }
-    }
-  >
-    Guru
-  </span>
-</React.Fragment>
+    larivaarAssistColor="#f39c1d"
+    word="Guru"
+  />,
+]
 `;

@@ -140,6 +140,7 @@ class Layout extends React.PureComponent {
                         <Larivaar
                           larivaarAssist={larivaarAssist}
                           enable={larivaar}
+                          unicode={unicode}
                         >
                           {larivaar ? (
                             shabad.gurbani.unicode
