@@ -45,11 +45,13 @@ export default class Menu extends React.PureComponent {
               Index
             </Link>
           </li>
+          {/* // TODO Enable when desktop feature is ready
           <li>
             <Link to="/sync" onClick={toggleMenu}>
               Sync
             </Link>
           </li>
+          */}
           <li className="close">
             <span role="button" aria-label="Close menu" onClick={closeMenu}>
               Close
