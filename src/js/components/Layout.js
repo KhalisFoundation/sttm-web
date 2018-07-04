@@ -47,6 +47,7 @@ class Layout extends React.PureComponent {
         image: BalpreetSingh,
       },
     };
+
     switch (error.message) {
       case TEXTS.TIMEOUT_ERROR: {
         newState.errorProps.title = TEXTS.TIMEOUT_ERROR;

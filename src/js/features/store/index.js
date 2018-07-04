@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import createDebounce from 'redux-debounced';
 import reducer from '../reducers';
 import {
@@ -66,18 +66,8 @@ const initialState = {
   ),
 };
 
-const createStoreWithDebounce = applyMiddleware(
-  createDebounce()
-)(createStore);
-
-const createStoreWithThunk = applyMiddleware(
-  thunk
-)(createStoreWithDebounce)
-
-const store = createStoreWithThunk(
-  reducer,
-  initialState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enhancer = composeEnhancers(applyMiddleware(createDebounce(), thunk));
+const store = createStore(reducer, initialState, enhancer);
 
 export default store;
