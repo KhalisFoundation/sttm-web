@@ -3,9 +3,9 @@ import React from 'react';
 
 export default props => (
   <svg
-    width="400"
-    height="87.874"
+    height="86"
     xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 400 110"
     {...props}
   >
     <g fillRule="evenodd">

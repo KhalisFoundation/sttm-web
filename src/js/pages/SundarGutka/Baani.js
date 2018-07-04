@@ -47,7 +47,9 @@ export default class Baani extends React.PureComponent {
                 type="shabad"
                 info={data.baniInfo}
                 nav={data.nav}
-                gurbani={versesToGurbani(data.verses)}
+                gurbani={versesToGurbani(
+                  data.verses.filter(v => v.mangalPosition !== 'above')
+                )}
                 hideMeta
                 controlProps={{
                   disableSplitView: true,
