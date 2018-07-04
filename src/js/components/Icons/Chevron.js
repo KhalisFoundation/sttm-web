@@ -1,11 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Chevron = ({ left = false, style = {}, className, ...props }) => (
+const getRotationStyles = direction => {
+  const { TOP, LEFT, RIGHT, BOTTOM } = Chevron.DIRECTIONS;
+  let transform = '';
+
+  switch (direction) {
+    case TOP: {
+      transform = `rotate(90deg)`;
+      break;
+    }
+    case LEFT: {
+      transform = `rotate(0deg)`;
+      break;
+    }
+    case RIGHT: {
+      transform = `rotate(180deg)`;
+      break;
+    }
+    case BOTTOM: {
+      transform = `rotate(-90deg)`;
+      break;
+    }
+  }
+
+  return {
+    OTransform: transform,
+    WebkitTransform: transform,
+    MozTransform: transform,
+    transform,
+  };
+};
+
+const Chevron = ({
+  direction = 'left',
+  style = {},
+  className = '',
+  ...props
+}) => (
   <svg
     style={{
       ...style,
-      transform: `rotate(${left ? '0deg' : '180deg'})`,
+      ...getRotationStyles(direction),
     }}
     viewBox="0 0 320 512"
     width="1em"
@@ -17,9 +53,14 @@ const Chevron = ({ left = false, style = {}, className, ...props }) => (
   </svg>
 );
 
+Chevron.DIRECTIONS = {
+  TOP: 0,
+  RIGHT: 1,
+  BOTTOM: 2,
+  LEFT: 3,
+};
 Chevron.propTypes = {
-  left: PropTypes.bool,
-  right: PropTypes.bool,
+  direction: PropTypes.oneOf([0, 1, 2, 3]),
   style: PropTypes.object,
   className: PropTypes.string,
 };

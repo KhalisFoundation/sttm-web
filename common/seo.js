@@ -55,4 +55,13 @@ export default {
     title: suffixAppName('Shabad'),
     createDescription: () => `Read shabad online right now.`,
   },
+  '/sync': {
+    title: suffixAppName('Sync'),
+    createDescription: () => ``,
+  },
+  '/sundar-gutka': {
+    title: suffixAppName('Sundar Gutka'),
+    createDescription: () =>
+      `Read nitnem baanies with translations, transliterations and larivaar online right now.`,
+  },
 };

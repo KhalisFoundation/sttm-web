@@ -1,4 +1,4 @@
-![SikhiToTheMax's logo](/assets/images/sttm_logo.png)
+![SikhiToTheMax's logo](/public/assets/images/sttm_logo.png)
 
 # SikhiToTheMax Website
 
@@ -21,7 +21,7 @@ Make sure you've [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installi
 
 Open terminal and follow these steps;
 
-* Step 1: Clone the repo.
+- Step 1: Clone the repo.
 
 ```bash
 git clone https://github.com/KhalisFoundation/SikhiToTheMax-Web/
@@ -33,7 +33,7 @@ You should now see a `SikhiToTheMax-Web` folder in your present working director
 cd SikhiToTheMax-Web/
 ```
 
-* Step 2: Install dependencies.
+- Step 2: Install dependencies.
 
 ```bash
 # `ci` doesn't update package.json, and uses package-lock.json to install intended deps.
@@ -43,7 +43,7 @@ npm ci
 
 This will use `npm` that is included with `nodejs` to install project depedencies.
 
-* Step 3: Start the project.
+- Step 3: Start the project.
 
 ```bash
 npm start
@@ -51,7 +51,7 @@ npm start
 
 This will run a bunch of build tools and a `nodejs` server to deploy the code locally.
 
-* Step 4: Access your local dev environment of the SikhiToTheMax website
+- Step 4: Access your local dev environment of the SikhiToTheMax website
 
 ```bash
 # On mac OS X
@@ -65,6 +65,8 @@ start chrome http://localhost:8080
 
 ## Contributing
 
+[Slack](https://khalis.slack.com/) channel.
+
 Before raising a pull request, please go through [CONTRIBUTING.md](CONTRIBUTING.md). We use `dev` branch as the development branch, while `master` is the production branch. You should branch out from `dev` branch and raise a PR against `dev` branch. You can see your submitted changes on [dev.sikhitothemax.org](http://dev.sikhitothemax.org).
 
 ## Project Overview
@@ -72,7 +74,6 @@ Before raising a pull request, please go through [CONTRIBUTING.md](CONTRIBUTING.
 You can watch this project and code [walkthrough](https://www.youtube.com/watch?v=XNMPiiIQZ2o).
 
 [![Walkthrough](https://img.youtube.com/vi/XNMPiiIQZ2o/0.jpg)](https://www.youtube.com/watch?v=XNMPiiIQZ2o).
-
 
 ## License
 

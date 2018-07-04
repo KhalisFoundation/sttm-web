@@ -11,7 +11,19 @@ import ProgressBar from './ProgressBar';
 import Baani from './Baani';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '../constants';
 
+/**
+ *
+ *
+ * @class Shabad
+ * @augments {React.PureComponent<ShabadProps, ShabadState>}
+ */
 class Shabad extends React.PureComponent {
+  /**
+   * @typedef {object} ShabadState
+   * @property {number} progress of vertical scroll
+   *
+   * @memberof Shabad
+   */
   state = {
     progress: 0,
   };
@@ -19,21 +31,43 @@ class Shabad extends React.PureComponent {
   static defaultProps = {
     random: false,
     nav: {},
+    hideControls: false,
+    hideMeta: false,
+    controlProps: {},
   };
 
+  /**
+   * @typedef {object} ShabadProps
+   * @property {array} gurbani
+   * @property {number} highlight LineNo of highlighted shabad line
+   * @property {ShabadContentTypes} type of shabad
+   * @property {{ previous: string, next: string }} nav
+   * @property {object} info
+   * @property {boolean} [hideMeta=false]
+   * @property {boolean} [hideControls=false]
+   * @property {{}} controlProps override props passed to <Controls />.
+   *
+   * TODO: Refactor code to support render props to allow different configurations.
+   *
+   * @memberof Shabad
+   */
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
     highlight: PropTypes.number,
-    random: PropTypes.bool.isRequired,
-    splitView: PropTypes.bool.isRequired,
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.string,
       next: PropTypes.string,
     }),
+    hideMeta: PropTypes.bool,
+    hideControls: PropTypes.bool,
+    controlProps: PropTypes.object,
+
+    random: PropTypes.bool.isRequired,
+    splitView: PropTypes.bool.isRequired,
+    translationLanguages: PropTypes.array.isRequired,
+    transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
@@ -67,24 +101,29 @@ class Shabad extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <Controls
-          media={
-            ['shabad', 'hukamnama', 'ang'].includes(type)
-              ? supportedMedia
-              : supportedMedia.filter(
-                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
-                )
-          }
-          onCopyAllClick={handleCopyAll}
-          onEmbedClick={handleEmbed}
-        />
-        <Meta
-          info={info}
-          nav={nav}
-          type={type}
-          translationLanguages={translationLanguages}
-          transliterationLanguages={transliterationLanguages}
-        />
+        {this.props.hideControls === false && (
+          <Controls
+            media={
+              ['shabad', 'hukamnama', 'ang'].includes(type)
+                ? supportedMedia
+                : supportedMedia.filter(
+                    m => ['embed', 'copyAll', 'copy'].includes(m) === false
+                  )
+            }
+            onCopyAllClick={handleCopyAll}
+            onEmbedClick={handleEmbed}
+            {...this.props.controlProps}
+          />
+        )}
+        {this.props.hideMeta === false && (
+          <Meta
+            info={info}
+            nav={nav}
+            type={type}
+            translationLanguages={translationLanguages}
+            transliterationLanguages={transliterationLanguages}
+          />
+        )}
         <div id="shabad" className="shabad display">
           <div className="shabad-container">
             <Baani
@@ -99,7 +138,9 @@ class Shabad extends React.PureComponent {
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
             />
-            <FootNav info={info} type={type} nav={nav} />
+            {this.props.hideMeta === false && (
+              <FootNav info={info} type={type} nav={nav} />
+            )}
           </div>
         </div>
         <ProgressBar percent={this.state.progress} />

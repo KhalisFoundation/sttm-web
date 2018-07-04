@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { navLink } from '../util';
+import { withRouter, Link } from 'react-router-dom';
+import { toNavURL, shouldSaveAng, saveAng } from '../util';
 import Chevron from './Icons/Chevron';
 
-export default class FootNav extends React.PureComponent {
+class FootNav extends React.PureComponent {
   static propTypes = {
+    history: PropTypes.object.isRequired,
     info: PropTypes.object.isRequired,
     type: PropTypes.string,
     nav: PropTypes.shape({
@@ -15,41 +16,52 @@ export default class FootNav extends React.PureComponent {
   };
 
   render() {
-    const { info, nav, type } = this.props;
-    const link = navLink(type, info.source.id);
+    const { nav } = this.props;
+    const link = toNavURL(this.props);
     return (
       <div className="pagination">
         {nav.previous ? (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              <Chevron left />
+              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
               <span>Previous</span>
             </Link>
           </div>
         ) : (
           <div className="shabad-nav left disabled-nav">
             <a>
-              <Chevron left />
+              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
               <span>Previous</span>
             </a>
           </div>
         )}
         {nav.next ? (
           <div className="shabad-nav right">
-            <Link to={link + nav.next}>
+            <a role="button" aria-label="next" onClick={this.handleSaveAng}>
               <span>Next</span>
-              <Chevron />
-            </Link>
+              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+            </a>
           </div>
         ) : (
           <div className="shabad-nav right disabled-nav">
             <a>
               <span>Next</span>
-              <Chevron />
+              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
             </a>
           </div>
         )}
       </div>
     );
   }
+
+  /**
+   * Handle SaveAng
+   * @memberof FootNav
+   */
+  handleSaveAng = () => {
+    const link = toNavURL(this.props);
+    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
+    this.props.history.push(link + this.props.nav.next);
+  };
 }
+export default withRouter(FootNav);

@@ -11,6 +11,8 @@ import {
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
+import ScrollToTop from './ScrollToTop';
+import throttle from 'lodash.throttle';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -33,10 +35,29 @@ class Layout extends React.PureComponent {
 
   state = {
     error: null,
+    showScrollToTop: false,
   };
 
   componentDidCatch(error) {
-    this.setState({ error });
+    const newState = {
+      error,
+      errorProps: {
+        title: TEXTS.GENERIC_ERROR,
+        description: TEXTS.GENERIC_ERROR_DESCRIPTION,
+        image: BalpreetSingh,
+      },
+    };
+
+    switch (error.message) {
+      case TEXTS.TIMEOUT_ERROR: {
+        newState.errorProps.title = TEXTS.TIMEOUT_ERROR;
+        newState.errorProps.description = TEXTS.TIMEOUT_ERROR_DESCRIPTION;
+        break;
+      }
+    }
+
+    this.setState(newState);
+
     errorEvent({
       action: ACTIONS.GENERIC_ERROR,
       label: JSON.stringify(error),
@@ -75,14 +96,11 @@ class Layout extends React.PureComponent {
           {...props}
         />
         {this.state.error ? (
-          <GenericError
-            title={TEXTS.GENERIC_ERROR}
-            description={TEXTS.GENERIC_ERROR_DESCRIPTION}
-            image={BalpreetSingh}
-          />
+          <GenericError {...this.state.errorProps} />
         ) : (
           children
         )}
+        {this.state.showScrollToTop && <ScrollToTop />}
       </React.Fragment>
     ) : (
       <div className="content-root">
@@ -104,6 +122,7 @@ class Layout extends React.PureComponent {
   componentDidMount() {
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
+    window.addEventListener('scroll', this.onScroll, { passive: true });
     document.title = this.props.title;
     this.updateTheme();
   }
@@ -111,9 +130,26 @@ class Layout extends React.PureComponent {
   componentWillUnmount() {
     window.removeEventListener('online', this.onOnline);
     window.removeEventListener('offline', this.onOffline);
+    window.removeEventListener('scroll', this.onScroll);
   }
 
+  onScroll = throttle(() => {
+    this.setState(({ showScrollToTop }) => {
+      let newValue = showScrollToTop;
+      if (window.scrollY > window.innerHeight / 2) {
+        newValue = true;
+      } else {
+        newValue = false;
+      }
+
+      return newValue === showScrollToTop
+        ? null
+        : { showScrollToTop: newValue };
+    });
+  }, 500);
+
   onOnline = () => this.props.setOnlineMode(true);
+
   onOffline = () => this.props.setOnlineMode(false);
 
   componentDidUpdate(prevProps, prevState) {

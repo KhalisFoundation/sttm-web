@@ -114,7 +114,6 @@
 @media screen and (max-width: 45.999999em) {
   .share-buttons,
   #share-menu {
-    background-color: $sttm-white;
     margin-left: 1rem !important;
     text-align: left;
     width: calc(100% - 1rem) !important;
@@ -127,13 +126,12 @@
 
 .toast-notification {
   background-color: $sttm-black;
-  color: $sttm-orange;
+  color: $sttm-white;
   font-weight: 400;
   left: 0;
   padding: 0.5rem 1rem;
   position: fixed;
   right: 0;
-  text-shadow: 0 0 0.05rem $sttm-pure-black;
   top: 0;
   z-index: 4;
 
@@ -145,6 +143,9 @@
   .dark-mode & {
     background-color: $sttm-orange;
     color: $sttm-black;
-    text-shadow: none;
+  }
+
+  &-green {
+    background-color: $sttm-green;
   }
 }

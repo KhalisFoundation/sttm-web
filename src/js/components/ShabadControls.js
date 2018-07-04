@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { toggleItemInArray } from '../util';
-import { TRANSLATION_LANGUAGES, TRANSLITERATION_LANGUAGES } from '../constants';
+import {
+  TEXTS,
+  TRANSLATION_LANGUAGES,
+  TRANSLITERATION_LANGUAGES,
+} from '../constants';
 import TelevisionIcon from './Icons/Television';
 import SlidersIcon from './Icons/Sliders';
 
@@ -25,6 +29,8 @@ export default class ShabadControls extends React.PureComponent {
     setFontSize: PropTypes.func.isRequired,
     setTranslationLanguages: PropTypes.func.isRequired,
     setTransliterationLanguages: PropTypes.func.isRequired,
+    resetDisplayOptions: PropTypes.func.isRequired,
+    resetFontOptions: PropTypes.func.isRequired,
     toggleDisplayOptions: PropTypes.func.isRequired,
     toggleFontOptions: PropTypes.func.isRequired,
     toggleLarivaarAssistOption: PropTypes.func.isRequired,
@@ -50,6 +56,8 @@ export default class ShabadControls extends React.PureComponent {
       setFontSize,
       setTranslationLanguages,
       setTransliterationLanguages,
+      resetDisplayOptions,
+      resetFontOptions,
       toggleDisplayOptions,
       toggleFontOptions,
       toggleDarkMode,
@@ -68,7 +76,7 @@ export default class ShabadControls extends React.PureComponent {
             onClick={toggleDisplayOptions}
           >
             <TelevisionIcon />
-            <span>Display</span>
+            <span>{TEXTS.DISPLAY}</span>
           </a>
           <a
             className={`font-options-toggle shabad-controller-toggle ${
@@ -77,14 +85,14 @@ export default class ShabadControls extends React.PureComponent {
             onClick={toggleFontOptions}
           >
             <SlidersIcon />
-            <span>Font</span>
+            <span>{TEXTS.FONT}</span>
           </a>
           <a
             className={`shabad-controller-toggle ${larivaar ? 'active' : ''}`}
             onClick={toggleLarivaarOption}
           >
             <span className="custom-fa">ੳਅ</span>
-            <span>Larivaar</span>
+            <span>{TEXTS.LARIVAAR}</span>
           </a>
           {larivaar && (
             <a
@@ -94,14 +102,16 @@ export default class ShabadControls extends React.PureComponent {
               onClick={toggleLarivaarAssistOption}
             >
               <span className="custom-fa custom-fa-assist">ੳ</span>
-              <span>Assist</span>
+              <span>{TEXTS.ASSIST}</span>
             </a>
           )}
         </div>
         {showDisplayOptions && (
           <div className="display-options">
             <div className="display-option-type">
-              <div className="display-option-header">Transliteration</div>
+              <div className="display-option-header">
+                {TEXTS.TRANSLITERATION}
+              </div>
               <div className="display-option-content">
                 {TRANSLITERATION_LANGUAGES.map(lang => (
                   <a
@@ -121,7 +131,7 @@ export default class ShabadControls extends React.PureComponent {
               </div>
             </div>
             <div className="display-option-type">
-              <div className="display-option-header">Translation</div>
+              <div className="display-option-header">{TEXTS.TRANSLATION}</div>
               <div className="display-option-content">
                 {TRANSLATION_LANGUAGES.map(lang => (
                   <a
@@ -142,7 +152,7 @@ export default class ShabadControls extends React.PureComponent {
             </div>
             {disableSplitView ? null : (
               <div className="display-option-type">
-                <div className="display-option-header">Split View</div>
+                <div className="display-option-header">{TEXTS.SPLIT_VIEW}</div>
                 <div className="display-option-content">
                   <a
                     className={`display-option-toggle ${
@@ -156,7 +166,7 @@ export default class ShabadControls extends React.PureComponent {
               </div>
             )}
             <div className="display-option-type">
-              <div className="display-option-header">Dark Mode</div>
+              <div className="display-option-header">{TEXTS.DARK_MODE}</div>
               <div className="display-option-content">
                 <a
                   className={`display-option-toggle ${
@@ -168,33 +178,59 @@ export default class ShabadControls extends React.PureComponent {
                 </a>
               </div>
             </div>
+            <div className="display-option-type">
+              <div className="display-option-header">
+                {TEXTS.RESET} {TEXTS.DISPLAY}
+              </div>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle`}
+                  onClick={resetDisplayOptions}
+                >
+                  {TEXTS.RESET}
+                </a>
+              </div>
+            </div>
           </div>
         )}
         {showFontOptions && (
           <div className="font-options">
             <div className="font-option-type">
-              <div className="font-option-header">Font</div>
+              <div className="font-option-header">{TEXTS.FONT}</div>
               <a
                 className={`shabad-controller-toggle ${
                   unicode ? 'active' : ''
                 }`}
                 onClick={toggleUnicodeOption}
               >
-                Unicode
+                {TEXTS.UNICODE}
               </a>
             </div>
             <div className="font-option-type">
-              <div className="font-option-header">Font Size</div>
+              <div className="font-option-header">{TEXTS.FONT_SIZE}</div>
               <small className="gurbani-font">A</small>
               <input
                 type="range"
                 min="5"
                 max="50"
-                defaultValue={fontSize * 10}
+                value={fontSize * 10}
                 onChange={e => setFontSize(e.currentTarget.value / 10)}
                 onInput={e => setFontSize(e.currentTarget.value / 10)}
               />
               <big className="gurbani-font">A</big>
+            </div>
+            <div className="display-option-type">
+              <div className="font-option-header">
+                {TEXTS.RESET} {TEXTS.FONT}
+              </div>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle`}
+                  onClick={resetFontOptions}
+                >
+                  {TEXTS.RESET}
+                </a>
+              </div>
             </div>
           </div>
         )}

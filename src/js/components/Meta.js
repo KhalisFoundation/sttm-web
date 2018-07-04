@@ -2,15 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, navLink } from '../util';
+import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng } from '../util';
 import Chevron from './Icons/Chevron';
+import { withRouter } from 'react-router-dom';
 
-export default class Meta extends React.PureComponent {
+/**
+ *
+ *
+ * @export
+ * @class Meta
+ * @augments {React.PureComponent<MetaProps>}
+ */
+class Meta extends React.PureComponent {
   static defaultProps = {
     nav: {},
   };
 
+  /**
+   * @typedef {object} MetaProps
+   * @property {ShabadContentTypes} type
+   * @property {object} info
+   * @property {array} translationLanguages
+   * @property {array} transliterationLanguages
+   * @property {object} nav
+   *
+   * @static
+   * @memberof Meta
+   */
   static propTypes = {
+    history: PropTypes.object.isRequired,
     type: PropTypes.string.isRequired,
     info: PropTypes.object.isRequired,
     translationLanguages: PropTypes.array.isRequired,
@@ -30,7 +50,7 @@ export default class Meta extends React.PureComponent {
       transliterationLanguages,
     } = this.props;
 
-    const link = navLink(type, info.source.id);
+    const link = toNavURL(this.props);
     const Item = ({ children, last = false }) =>
       children ? (
         <React.Fragment>
@@ -48,13 +68,13 @@ export default class Meta extends React.PureComponent {
         {isFalsy(nav.previous) === false ? (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              <Chevron left />
+              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
             </Link>
           </div>
         ) : (
           <div className="shabad-nav left disabled-nav">
             <a>
-              <Chevron left />
+              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
             </a>
           </div>
         )}
@@ -114,18 +134,30 @@ export default class Meta extends React.PureComponent {
 
         {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
-            <Link to={link + nav.next}>
-              <Chevron />
-            </Link>
+            <a role="button" aria-label="next" onClick={this.handleSaveAng}>
+              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+            </a>
           </div>
         ) : (
           <div className="shabad-nav right disabled-nav">
             <a>
-              <Chevron />
+              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
             </a>
           </div>
         )}
       </div>
     );
   }
+
+  /**
+   * Handle SaveAng
+   * @memberof Meta
+   */
+  handleSaveAng = () => {
+    const link = toNavURL(this.props);
+    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
+    this.props.history.push(link + this.props.nav.next);
+  };
 }
+
+export default withRouter(Meta);

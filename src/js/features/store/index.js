@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import createDebounce from 'redux-debounced';
 import reducer from '../reducers';
 import {
@@ -24,6 +24,7 @@ import {
   getBooleanFromLocalStorage,
   getNumberFromLocalStorage,
 } from '../../util';
+import thunk from 'redux-thunk';
 
 const initialState = {
   online: window !== undefined ? window.navigator.onLine : true,
@@ -64,14 +65,9 @@ const initialState = {
     DEFAULT_DARK_MODE
   ),
 };
-const createStoreWithMiddleware = applyMiddleware(
-  createDebounce()
-)(createStore);
 
-const store = createStoreWithMiddleware(
-  reducer,
-  initialState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enhancer = composeEnhancers(applyMiddleware(createDebounce(), thunk));
+const store = createStore(reducer, initialState, enhancer);
 
 export default store;

@@ -11,7 +11,7 @@ export default ({ bodyClass, title, description }) => marinate`
 
   <meta charset="utf-8">
   <meta name="description" content="${description}">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/manifest.json">
 
   <!-- Preconnect -->
   <link rel="preconnect" href="//cdn.polyfill.io" crossorigin>
@@ -22,8 +22,8 @@ export default ({ bodyClass, title, description }) => marinate`
   <link async rel="preload" href="/assets/fonts/AnmolLipiSG.ttf?v=1" as="font">
 
   <!-- Preload JavaScript -->
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad~Sync.js" as="script">
+  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad~Sync.js" as="script">
   <link async rel="preload" href="assets/js/chunks/Search.js" as="script">
   <link async rel="preload" href="assets/js/chunks/Shabad.js" as="script">
 
@@ -80,13 +80,13 @@ export default ({ bodyClass, title, description }) => marinate`
           <a href="/about">About Us</a>
         </li>
         <li>
-          <a href="https://form.jotform.com/80266126732151" target="_blank">Feedback</a>
+          <a href="https://form.jotform.com/80266126732151" target="_blank" rel="noopener noreferrer">Feedback</a>
         </li>
         <li>
           <a href="/terms-of-service">Legal</a>
         </li>
         <li>
-          <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank">Desktop App</a>
+          <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank" rel="noopener noreferrer">Desktop App</a>
         </li>
       </ul>
       <div class="copyright">

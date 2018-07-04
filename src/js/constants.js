@@ -27,6 +27,7 @@ export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
+export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 
 export const PLACEHOLDERS = {
   [SEARCH_TYPES.FIRST_LETTERS]: ['jmTAq'], // first letters
@@ -55,12 +56,35 @@ export const DEFAULT_DARK_MODE = false;
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 
 export const TEXTS = {
+  URIS: {
+    HOME: 'Home',
+    ABOUT: 'About',
+    INDEX: 'Index',
+    HELP: 'Help',
+    TOS: 'Terms of Service',
+    SUNDAR_GUTKA: 'Sundar Gutka',
+    SUNDAR_GUTKA_BAANI: 'Baani',
+  },
+  ANDROID: 'Android',
+  IOS: 'iOS',
+  SEHAJ_PAATH: ang => `Continue reading Ang ${ang}`,
+  SUNDAR_GUTKA_HEADER: `Sundar Gutka Baaniyaan`,
+  SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,
+  SYNC: `Remote Sync`,
+  SYNC_DESCRIPTION: `Remote Sync is a feature of SikhiToTheMax desktop application. It allows you to view the shabad and current line displayed via the Desktop Application on your mobile/device. To get started you need to enter the code below, as shared by the desktop application.`,
+  SYNC_ERROR: `We aren't able to connect to the entered code. Make sure it's correct or try again later.`,
+  SYNC_NOTIFICATION: code => `You're now connected to ${code}. Tap to dismiss.`,
+  SYNC_CONNECTED: code =>
+    `Awesome! You're now connected to the device "${code}" and will start receiving shabads soon! The screen would automatically update now as shabad and the line changes on the desktop.`,
+  SYNC_DISCONNECT: `Are you sure you want to disconnect now? You can re-connect by entering the same code later.`,
   OFFLINE: `It seems you aren't connected to internet`,
   OFFLINE_DESCRIPTION: `Unfortunately we don't support offline mode fully as of now, and you would need to be connected to use SikhiToTheMax.`,
   HELP_SECTION: 'the help section',
   INDEX_SECTION: 'the index page',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
   GENERIC_ERROR_DESCRIPTION: `This is really unusual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
+  TIMEOUT_ERROR: `ਵਾਹਿਗੁਰੂ! Network connection timed out`,
+  TIMEOUT_ERROR_DESCRIPTION: `This usually happens when your internet connection is either down or very slow. Try connecting sometime later?`,
   GO_TO_SHABAD: 'Open Shabad',
   HUKAMNAMA: 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar',
   ANG_NOT_FOUND: `Sorry, we couldn't find the requested ang (page).`,
@@ -85,6 +109,17 @@ export const TEXTS = {
     'Please enter your query in the search bar above to give us a chance to serve you.',
   REDIRECTING: 'Redirecting you to',
   REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
+  RESET: 'Reset',
+  SPLIT_VIEW: 'Split View',
+  UNICODE: 'Unicode',
+  ASSIST: 'Assist',
+  FONT: 'Font',
+  DISPLAY: 'Display',
+  LARIVAAR: 'Larivaar',
+  TRANSLATION: 'Translation',
+  TRANSLITERATION: 'Transliteration',
+  FONT_SIZE: 'Font Size',
+  DARK_MODE: 'Dark Mode',
 };
 
 export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';

@@ -4,12 +4,20 @@ import { SOURCES, TYPES } from '../../constants';
 import { toSearchURL } from '../../util';
 import { pageView } from '../../util/analytics';
 import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
+import SehajPaathLink from '../../components/SehajPaathLink';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Icons/Logo';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
 
+/**
+ *
+ *
+ * @export
+ * @class Home
+ * @extends {React.PureComponent}
+ */
 export default class Home extends React.PureComponent {
   static propTypes = {
     history: PropTypes.shape({ push: PropTypes.func }),
@@ -21,6 +29,9 @@ export default class Home extends React.PureComponent {
     this.props.history.push(toSearchURL(data));
   };
 
+  /**
+   * Functional component
+   */
   render() {
     return (
       <SearchForm>
@@ -137,6 +148,7 @@ export default class Home extends React.PureComponent {
                       </select>
                     </div>
                   </div>
+                  <SehajPaathLink />
                 </form>
               </div>
             </div>
