@@ -17,7 +17,7 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
 
 const plugins = PRODUCTION
   ? [
-      new webpack.DefinePlugin({
+      new webpack.efinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('production'),
         },
