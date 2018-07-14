@@ -4,34 +4,42 @@ exports[`<Larivaar /> renders children when disabled 1`] = `"Vahi Guru"`;
 
 exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
 Array [
-  <LarivaarWord
-    index={0}
+  <span
     key="0"
-    larivaarAssistColor=""
-    word="Vahi"
+    style={
+      Object {
+        "color": "",
+      }
+    }
   />,
-  <LarivaarWord
-    index={1}
+  <span
     key="1"
-    larivaarAssistColor=""
-    word="Guru"
+    style={
+      Object {
+        "color": "",
+      }
+    }
   />,
 ]
 `;
 
 exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled 1`] = `
 Array [
-  <LarivaarWord
-    index={0}
+  <span
     key="0"
-    larivaarAssistColor="#f39c1d"
-    word="Vahi"
+    style={
+      Object {
+        "color": "",
+      }
+    }
   />,
-  <LarivaarWord
-    index={1}
+  <span
     key="1"
-    larivaarAssistColor="#f39c1d"
-    word="Guru"
+    style={
+      Object {
+        "color": "#f39c1d",
+      }
+    }
   />,
 ]
 `;

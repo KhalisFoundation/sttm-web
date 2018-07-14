@@ -136,7 +136,7 @@ class Layout extends React.PureComponent {
                     className="gurbani-font gurbani-display"
                   >
                     {unicode ? (
-                      <div className="unicode">
+                      <div className={`unicode ${larivaar ? 'larivaar' : ''}`}>
                         <Larivaar
                           larivaarAssist={larivaarAssist}
                           enable={larivaar}
@@ -155,7 +155,7 @@ class Layout extends React.PureComponent {
                         </Larivaar>
                       </div>
                     ) : (
-                      <div className="gurlipi">
+                      <div className={`gurlipi ${larivaar ? 'larivaar' : ''}`}>
                         <Larivaar
                           larivaarAssist={larivaarAssist}
                           enable={larivaar}
