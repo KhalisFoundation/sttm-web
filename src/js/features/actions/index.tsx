@@ -6,7 +6,7 @@ import {
   DEFAULT_FONT_SIZE,
 } from '../../constants';
 
-export const createAction = (type, meta) => payload => ({
+export const createAction = (type: string, meta?: any) => (payload: any) => ({
   type,
   meta,
   payload,
@@ -69,13 +69,13 @@ export const setTransliterationLanguages = createAction(
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const setDarkMode = createAction(SET_DARK_MODE);
 
-export const resetDisplayOptions = () => dispatch => {
+export const resetDisplayOptions = () => (dispatch: Function) => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
 };
 
-export const resetFontOptions = () => dispatch => {
+export const resetFontOptions = () => (dispatch: Function) => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
 };
