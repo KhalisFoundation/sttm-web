@@ -80,3 +80,5 @@ You can watch this project and code [walkthrough](https://www.youtube.com/watch?
 [GSL](/LICENSE)
 
 All images and assets not covered under other licenses are covered under full Copyright © 2018 Khalis Foundation.
+
+Site made reliable with help of [<img src=".github/README_IMAGES/browserstack.svg" alt="BrowserStack" height="15px" />](https://www.browserstack.com/open-source)
