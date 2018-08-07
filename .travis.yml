@@ -31,12 +31,12 @@ env:
 deploy:
   # deploy to dev
   - provider: script
-    script: bash scripts/deploy.sh dev
+    script: bash scripts/deploy-dev.sh
     on:
       branch: dev
   # deploy to production
   - provider: script
-    script: bash scripts/deploy.sh prod
+    script: bash scripts/deploy-prod.sh
     on:
       branch: master
 
