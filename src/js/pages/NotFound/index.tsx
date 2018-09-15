@@ -4,13 +4,13 @@ import { pageView } from '@/util/analytics';
 import { TEXTS } from '@/constants';
 
 export default class NotFound extends React.PureComponent {
-  static defaultProps = {
+  public static defaultProps = {
     url: location.href,
   };
-  static propTypes = {
+  public static propTypes = {
     url: PropTypes.string.isRequired,
   };
-  render() {
+  public render() {
     const { url } = this.props;
     return (
       <div className="error-message row" id="content-root">
@@ -28,7 +28,7 @@ export default class NotFound extends React.PureComponent {
       </div>
     );
   }
-  componentDidMount() {
+  public componentDidMount() {
     pageView(`/404?from=${this.props.url}`);
   }
 }

@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-export default class Doodle extends React.PureComponent {
-  static propTypes = {
-    href: PropTypes.string,
-    src: PropTypes.string,
-  };
-  render() {
+type DoodleProps = {
+  href: string;
+  src: string;
+};
+
+export default class Doodle extends React.PureComponent<DoodleProps> {
+  public render() {
     const { href, src } = this.props;
+
     return (
       <a
         className="doodle"

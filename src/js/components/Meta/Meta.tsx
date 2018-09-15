@@ -13,7 +13,7 @@ import Chevron from '@/components/Icons/Chevron';
  * @augments {React.PureComponent<MetaProps>}
  */
 class Meta extends React.PureComponent {
-  static defaultProps = {
+  public static defaultProps = {
     nav: {},
   };
 
@@ -28,7 +28,7 @@ class Meta extends React.PureComponent {
    * @static
    * @memberof Meta
    */
-  static propTypes = {
+  public static propTypes = {
     history: PropTypes.object.isRequired,
     type: PropTypes.string.isRequired,
     info: PropTypes.object.isRequired,
@@ -40,7 +40,7 @@ class Meta extends React.PureComponent {
     }),
   };
 
-  render() {
+  public render() {
     const {
       nav = {},
       type,
@@ -100,7 +100,7 @@ class Meta extends React.PureComponent {
                     source: info.source.id,
                   })}
                 >
-                  {info.source.id == 'G' ? 'AMg' : 'pMnw'} {info.source.pageno}
+                  {info.source.id === 'G' ? 'AMg' : 'pMnw'} {info.source.pageno}
                 </Link>
               )}
             </Item>
@@ -123,7 +123,7 @@ class Meta extends React.PureComponent {
                     source: info.source.id,
                   })}
                 >
-                  {info.source.id == 'G' ? 'Ang' : 'Pannaa'}{' '}
+                  {info.source.id === 'G' ? 'Ang' : 'Pannaa'}{' '}
                   {info.source.pageno}
                 </Link>
               </Item>
@@ -152,9 +152,11 @@ class Meta extends React.PureComponent {
    * Handle SaveAng
    * @memberof Meta
    */
-  handleSaveAng = () => {
+  public handleSaveAng = () => {
     const link = toNavURL(this.props);
-    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
+    if (shouldSaveAng(this.props)) {
+      saveAng(this.props.nav.next);
+    }
     this.props.history.push(link + this.props.nav.next);
   };
 }

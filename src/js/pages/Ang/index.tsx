@@ -5,13 +5,12 @@ import { buildApiUrl } from '@sttm/banidb';
 import PageLoader from '@/pages/PageLoader';
 import Layout, { Stub } from './Layout';
 
-export default class Ang extends React.PureComponent {
-  static propTypes = {
-    ang: PropTypes.number.isRequired,
-    source: PropTypes.string.isRequired,
-    highlight: PropTypes.number,
-  };
-  render() {
+export default class Ang extends React.PureComponent<{
+  ang: number;
+  source: string;
+  highlight?: number;
+}> {
+  public render() {
     const { ang, source, highlight } = this.props;
     const url = buildApiUrl({ ang, source, API_URL });
 

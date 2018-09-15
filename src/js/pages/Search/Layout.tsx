@@ -14,7 +14,7 @@ export function Stub() {
 }
 
 class Layout extends React.PureComponent {
-  static propTypes = {
+  public static propTypes = {
     q: PropTypes.string.isRequired,
     type: PropTypes.number.isRequired,
     source: PropTypes.string.isRequired,
@@ -30,7 +30,7 @@ class Layout extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
   };
 
-  static HiglightedSearch = ({ children, startIndex, endIndex }) =>
+  public static HiglightedSearch = ({ children, startIndex, endIndex }) =>
     children.split(' ').map((word, i) => (
       <span
         key={i}
@@ -42,7 +42,7 @@ class Layout extends React.PureComponent {
       </span>
     ));
 
-  render() {
+  public render() {
     const {
       q,
       type,
@@ -83,7 +83,8 @@ class Layout extends React.PureComponent {
               <Link to="/help#Desktop-i-cant-find-my-shabad.">
                 {' '}
                 {TEXTS.HELP_SECTION}
-              </Link>.
+              </Link>
+              .
             </React.Fragment>
           }
           image={GenericError.SachKaur}
@@ -111,10 +112,10 @@ class Layout extends React.PureComponent {
         />
         <ul className="search-results display">
           {shabads.map(({ shabad }) => {
-            const _source = SOURCES[shabad.source.id];
+            const shabadSource = SOURCES[shabad.source.id];
             const shabadPageNo = shabad.pageno === null ? '' : shabad.pageno;
-            const presentationalSource = _source
-              ? `${_source} - ${shabadPageNo}`
+            const presentationalSource = shabadSource
+              ? `${shabadSource} - ${shabadPageNo}`
               : null;
             const [highlightStartIndex, higlightEndIndex] = getHighlightIndices(
               shabad.gurbani.gurmukhi,
@@ -265,7 +266,7 @@ class Layout extends React.PureComponent {
     );
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const { q, type, offset, source } = this.props;
     pageView(toSearchURL({ q, type, source, offset }));
   }

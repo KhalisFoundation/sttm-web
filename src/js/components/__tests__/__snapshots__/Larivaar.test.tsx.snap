@@ -11,7 +11,9 @@ Array [
         "color": "",
       }
     }
-  />,
+  >
+    Vahi
+  </span>,
   <span
     key="1"
     style={
@@ -19,7 +21,9 @@ Array [
         "color": "",
       }
     }
-  />,
+  >
+    Guru
+  </span>,
 ]
 `;
 
@@ -32,7 +36,9 @@ Array [
         "color": "",
       }
     }
-  />,
+  >
+    Vahi
+  </span>,
   <span
     key="1"
     style={
@@ -40,6 +46,8 @@ Array [
         "color": "#f39c1d",
       }
     }
-  />,
+  >
+    Guru
+  </span>,
 ]
 `;

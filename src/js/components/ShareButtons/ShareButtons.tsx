@@ -31,19 +31,19 @@ const copyShortUrl = () =>
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
 export default class ShareButtons extends React.PureComponent {
-  static supportedMedia = ['copyAll', 'embed', 'whatsapp', 'copy'];
+  public static supportedMedia = ['copyAll', 'embed', 'whatsapp', 'copy'];
 
-  static defaultProps = {
+  public static defaultProps = {
     media: ['whatsapp', 'copy'],
   };
 
-  static propTypes = {
+  public static propTypes = {
     media: PropTypes.arrayOf(PropTypes.oneOf(ShareButtons.supportedMedia)),
     onEmbedClick: PropTypes.func,
     onCopyAllClick: PropTypes.func,
   };
 
-  static handleShare = () =>
+  public static handleShare = () =>
     navigator.share({
       title: document.title,
       description: document
@@ -52,7 +52,7 @@ export default class ShareButtons extends React.PureComponent {
       url: shortenURL(),
     });
 
-  render() {
+  public render() {
     const { media, onEmbedClick, onCopyAllClick } = this.props;
 
     // TODO: Use array to generate this DOM

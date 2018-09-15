@@ -10,13 +10,13 @@ import { toAngURL } from '@/util';
 export const Stub = () => <div className="spinner" />;
 
 export default class Layout extends React.PureComponent {
-  static propTypes = {
+  public static propTypes = {
     ang: PropTypes.number,
     source: PropTypes.oneOf(Object.keys(SOURCES)),
     highlight: PropTypes.number,
     data: PropTypes.object.isRequired,
   };
-  render() {
+  public render() {
     const { ang, source, highlight, data } = this.props;
 
     if (data.page.length === 0) {
@@ -55,7 +55,7 @@ export default class Layout extends React.PureComponent {
     );
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const { ang, source } = this.props;
     pageView(toAngURL({ ang, source }));
   }

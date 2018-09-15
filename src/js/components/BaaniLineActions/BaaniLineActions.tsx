@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { ACTIONS, clickEvent } from '@/util/analytics';
 import { toShabadURL } from '@/util';
 import TwitterIcon from '@/components/Icons/Twitter';
@@ -15,22 +14,19 @@ const openShabad = () =>
     label: ' open-shabad',
   });
 
-export default class Actions extends React.PureComponent {
-  static defaultProps = {
+type ActionsProps = {
+  shabad: Shabad;
+  disabledActions: string[];
+  onCopyClick: (e: MouseEvent) => void;
+  onTweetClick: (e: MouseEvent) => void;
+};
+
+export default class Actions extends React.PureComponent<ActionsProps> {
+  public static defaultProps = {
     disabledActions: [],
   };
 
-  static propTypes = {
-    shabad: PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      shabadid: PropTypes.string,
-    }),
-    disabledActions: PropTypes.arrayOf(PropTypes.oneOf(supportedActions)),
-    onCopyClick: PropTypes.func,
-    onTweetClick: PropTypes.func,
-  };
-
-  render() {
+  public render() {
     const { shabad, disabledActions, onCopyClick, onTweetClick } = this.props;
     const actions = {
       openShabad: (

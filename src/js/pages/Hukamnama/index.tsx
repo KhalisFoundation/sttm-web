@@ -5,7 +5,7 @@ import PageLoader from '@/pages/PageLoader';
 import Layout, { Stub } from './Layout';
 
 export default class Hukamnama extends React.PureComponent {
-  render() {
+  public render() {
     const url = buildApiUrl({ hukam: true, API_URL });
 
     return (

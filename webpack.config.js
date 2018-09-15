@@ -37,7 +37,7 @@ const plugins = PRODUCTION
       }),
     ];
 
-const app = path.resolve(__dirname, 'src', 'js', 'index.js');
+const app = path.resolve(__dirname, 'src', 'js', 'index.tsx');
 
 module.exports = {
   mode: PRODUCTION ? 'production' : 'development',

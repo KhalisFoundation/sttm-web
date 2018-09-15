@@ -2,36 +2,34 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { pageView } from '../../util/analytics';
+import { pageView } from '@/util/analytics';
 import PropTypes from 'prop-types';
-import { TEXTS } from '../../constants';
+import { TEXTS } from '@/constants';
 import Baani from './Baani';
-import BreadCrumb from '../../components/Breadcrumb';
-import Android from '../../components/Icons/Android';
-import AppleiOS from '../../components/Icons/AppleiOS';
+import BreadCrumb from '@/components/Breadcrumb/Breadcrumb';
+import Android from '@/components/Icons/Android';
+import AppleiOS from '@/components/Icons/AppleiOS';
 
 class SundarGutka extends React.PureComponent {
-  static propTypes = {
+  public static propTypes = {
     transliterationLanguages: PropTypes.array.isRequired,
     location: PropTypes.shape({ hash: PropTypes.string }),
     match: PropTypes.object.isRequired,
   };
 
-  static HOME_LINKS = [{ title: TEXTS.URIS.SUNDAR_GUTKA }];
+  public static HOME_LINKS = [{ title: TEXTS.URIS.SUNDAR_GUTKA }];
 
-  static BAANI_LINKS = [
+  public static BAANI_LINKS = [
     { url: '/sundar-gutka', title: TEXTS.URIS.SUNDAR_GUTKA },
     { title: TEXTS.URIS.SUNDAR_GUTKA_BAANI },
   ];
 
-  $details = React.createRef();
-
-  state = {
+  public state = {
     baanies: null,
     q: '',
   };
 
-  render() {
+  public render() {
     const {
       props: {
         match: { isExact: isSundarGutkaHome },
@@ -117,23 +115,23 @@ class SundarGutka extends React.PureComponent {
     );
   }
 
-  static filter = q => i =>
+  public static filter = q => i =>
     q === '' ||
     SundarGutka.sanitize(i.transliteration)
       .toLowerCase()
       .includes(q.toLocaleLowerCase());
 
-  static sanitize = t => t.replace(/\(n\)/gi, 'n');
+  public static sanitize = t => t.replace(/\(n\)/gi, 'n');
 
-  handleSearch = e => this.setState({ q: e.currentTarget.value });
+  public handleSearch = e => this.setState({ q: e.currentTarget.value });
 
-  componentDidUpdate({ match: { isExact: wasExact } }) {
+  public componentDidUpdate({ match: { isExact: wasExact } }) {
     if (wasExact === false && this.props.match.isExact) {
       pageView('/sundar-gutka');
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     if (this.props.match.isExact) {
       pageView('/sundar-gutka');
     }

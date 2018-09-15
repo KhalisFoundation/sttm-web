@@ -1,21 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Larivaar from '@/components/Larivaar';
+import { Store } from '@/features/types';
 
-export default class BaaniLine extends React.PureComponent {
-  static propTypes = {
-    text: PropTypes.shape({
-      unicode: PropTypes.string,
-      gurmukhi: PropTypes.string,
-    }).isRequired,
-    larivaarAssist: PropTypes.bool.isRequired,
-    shouldHighlight: PropTypes.bool.isRequired,
-    larivaar: PropTypes.bool.isRequired,
-    unicode: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired,
+type BaaniLineProps = Store & {
+  shouldHighlight: boolean;
+  text: {
+    unicode: string;
+    gurmukhi: string;
   };
+};
 
-  render() {
+export default class BaaniLine extends React.PureComponent<BaaniLineProps> {
+  public render() {
     const {
       larivaar,
       larivaarAssist,
@@ -24,6 +20,7 @@ export default class BaaniLine extends React.PureComponent {
       unicode,
       text,
     } = this.props;
+
     return (
       <div
         className={`gurmukhi ${

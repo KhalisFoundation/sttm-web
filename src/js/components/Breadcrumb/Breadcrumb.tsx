@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { TEXTS } from '../constants';
+import { TEXTS } from '@/constants';
 
 /**
  *
@@ -10,19 +9,10 @@ import { TEXTS } from '../constants';
  * @class BreadCrumb
  * @augments {React.PureComponent<BreadCrumbProps>}
  */
-export default class BreadCrumb extends React.PureComponent {
-  /**
-   * @typedef {object} BreadCrumbProps
-   * @property {array} links
-   */
-
-  static propTypes = {
-    links: PropTypes.arrayOf(
-      PropTypes.shape({ title: PropTypes.string, url: PropTypes.string })
-    ).isRequired,
-  };
-
-  render() {
+export default class BreadCrumb extends React.PureComponent<{
+  links: Array<{ title: string; url: string }>;
+}> {
+  public render() {
     return (
       <h4 className="breadcrumb">
         {[{ title: TEXTS.URIS.HOME, url: '/' }].concat(this.props.links).map(

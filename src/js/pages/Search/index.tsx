@@ -8,18 +8,18 @@ import GenericError from '@/components/GenericError';
 import Layout, { Stub } from './Layout';
 
 export default class Search extends React.PureComponent {
-  static defaultProps = {
+  public static defaultProps = {
     offset: 0,
   };
 
-  static propTypes = {
+  public static propTypes = {
     q: PropTypes.string.isRequired,
     type: PropTypes.number,
     source: PropTypes.string,
     offset: PropTypes.number,
   };
 
-  render() {
+  public render() {
     const { q, type, source, offset } = this.props;
 
     if (q === '') {

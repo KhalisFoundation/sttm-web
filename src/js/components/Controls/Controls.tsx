@@ -20,25 +20,25 @@ import {
 } from '@/features/actions';
 
 class Controls extends React.PureComponent {
-  state = {
+
+  public static supportedMedia = ShareButtons.supportedMedia;
+  public state = {
     showBorder: false,
   };
 
-  static supportedMedia = ShareButtons.supportedMedia;
-
-  componentDidMount() {
+  public componentDidMount() {
     this.mounted = true;
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     this.mounted = false;
     window.removeEventListener('scroll', this.scrollListener, {
       passive: true,
     });
   }
 
-  scrollListener = () => {
+  public scrollListener = () => {
     if (window.scrollY >= this.$wrapper.offsetTop) {
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });
@@ -50,9 +50,9 @@ class Controls extends React.PureComponent {
     }
   };
 
-  setRef = node => (this.$wrapper = node);
+  public setRef = node => (this.$wrapper = node);
 
-  render() {
+  public render() {
     return (
       <div
         id="controls-wrapper"

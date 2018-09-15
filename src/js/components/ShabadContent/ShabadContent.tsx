@@ -10,25 +10,29 @@ import Meta from '@/components/Meta';
 import ProgressBar from '@/components/ProgressBar';
 import Baani from '@/components/Baani';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
+import { Store } from '@/features/types';
 
-/**
- *
- *
- * @class Shabad
- * @augments {React.PureComponent<ShabadProps, ShabadState>}
- */
-class Shabad extends React.PureComponent {
-  /**
-   * @typedef {object} ShabadState
-   * @property {number} progress of vertical scroll
-   *
-   * @memberof Shabad
-   */
-  state = {
-    progress: 0,
+type ShabadProps = Store & {
+  gurbani: Gurbani;
+  highlight: number;
+  type: ShabadTypes;
+  info: object;
+  nav: {
+    previous: string;
+    next: string;
   };
+  hideMeta: boolean;
+  hideControls: boolean;
+  controlProps: object;
+  random: boolean;
+};
 
-  static defaultProps = {
+type ShabadState = {
+  progress: number;
+};
+
+class Shabad extends React.PureComponent<ShabadProps, ShabadState> {
+  public static defaultProps = {
     random: false,
     nav: {},
     hideControls: false,
@@ -36,45 +40,61 @@ class Shabad extends React.PureComponent {
     controlProps: {},
   };
 
-  /**
-   * @typedef {object} ShabadProps
-   * @property {array} gurbani
-   * @property {number} highlight LineNo of highlighted shabad line
-   * @property {ShabadContentTypes} type of shabad
-   * @property {{ previous: string, next: string }} nav
-   * @property {object} info
-   * @property {boolean} [hideMeta=false]
-   * @property {boolean} [hideControls=false]
-   * @property {{}} controlProps override props passed to <Controls />.
-   *
-   * TODO: Refactor code to support render props to allow different configurations.
-   *
-   * @memberof Shabad
-   */
-  static propTypes = {
-    gurbani: PropTypes.array.isRequired,
-    highlight: PropTypes.number,
-    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
-    info: PropTypes.object.isRequired,
-    nav: PropTypes.shape({
-      previous: PropTypes.string,
-      next: PropTypes.string,
-    }),
-    hideMeta: PropTypes.bool,
-    hideControls: PropTypes.bool,
-    controlProps: PropTypes.object,
-
-    random: PropTypes.bool.isRequired,
-    splitView: PropTypes.bool.isRequired,
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
-    larivaarAssist: PropTypes.bool.isRequired,
-    larivaar: PropTypes.bool.isRequired,
-    unicode: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired,
+  public state = {
+    progress: 0,
   };
 
-  render() {
+  private scrollListener = () => {
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      const maxY =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const progress = parseFloat((y / maxY).toPrecision(2));
+      this.setState({ progress });
+    });
+  };
+
+  private handleCopyAll = () =>
+    Promise.resolve(
+      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).textContent
+    )
+      .then(copyToClipboard)
+      .then(() => showToast(TEXTS.GURBAANI_COPIED))
+      .then(() => clickEvent({ action: ACTIONS.SHARE, label: 'copy-all' }))
+      .catch(({ message: label = '' } = {}) =>
+        errorEvent({ action: 'copy-all-failure', label })
+      );
+
+  private handleEmbed = () => {
+    const { info, type } = this.props;
+
+    clickEvent({ action: ACTIONS.SHARE, label: 'embed' });
+
+    const attrs = [
+      `data-sttm-height="500"`,
+      `data-sttm-width="500"`,
+      type === 'ang'
+        ? `data-sttm-ang="${info.source.pageno}" data-sttm-source="${
+            info.source.id
+          }"`
+        : `data-sttm-id="${info.id}"`,
+    ].join(' ');
+
+    Promise.resolve(
+      `<div ${attrs}><a href="https://sttm.co/embed?id=${
+        info.id
+      }">SikhiToTheMax</a></div><script async src="https://sttm.co/embed.js"></script>`
+    )
+      .then(copyToClipboard)
+      .then(() => showToast(TEXTS.EMBED_COPIED))
+      .catch(() => showToast(TEXTS.EMBED_FAILURE));
+  };
+
+  /*
+   * TODO: Refactor code to support render props to allow different configurations.
+   */
+  public render() {
     const {
       props: {
         gurbani,
@@ -148,62 +168,16 @@ class Shabad extends React.PureComponent {
     );
   }
 
-  scrollListener = () => {
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      const maxY =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const progress = parseFloat((y / maxY).toPrecision(2));
-      this.setState({ progress });
-    });
-  };
-
-  componentDidMount() {
+  public componentDidMount() {
     addEventListener('scroll', this.scrollListener, { passive: true });
     this.scrollListener();
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     removeEventListener('scroll', this.scrollListener);
   }
-
-  handleCopyAll = () =>
-    Promise.resolve(
-      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).textContent
-    )
-      .then(copyToClipboard)
-      .then(() => showToast(TEXTS.GURBAANI_COPIED))
-      .then(() => clickEvent({ action: ACTIONS.SHARE, label: 'copy-all' }))
-      .catch(({ message: label = '' } = {}) =>
-        errorEvent({ action: 'copy-all-failure', label })
-      );
-
-  handleEmbed = () => {
-    const { info, type } = this.props;
-
-    clickEvent({ action: ACTIONS.SHARE, label: 'embed' });
-
-    const attrs = [
-      `data-sttm-height="500"`,
-      `data-sttm-width="500"`,
-      type === 'ang'
-        ? `data-sttm-ang="${info.source.pageno}" data-sttm-source="${
-            info.source.id
-          }"`
-        : `data-sttm-id="${info.id}"`,
-    ].join(' ');
-
-    Promise.resolve(
-      `<div ${attrs}><a href="https://sttm.co/embed?id=${
-        info.id
-      }">SikhiToTheMax</a></div><script async src="https://sttm.co/embed.js"></script>`
-    )
-      .then(copyToClipboard)
-      .then(() => showToast(TEXTS.EMBED_COPIED))
-      .catch(() => showToast(TEXTS.EMBED_FAILURE));
-  };
 }
 
-const stateToProps = state => state;
+const stateToProps = (state: Store) => state;
+
 export default connect(stateToProps)(Shabad);

@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-key, react/no-unescaped-entities */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { pageView } from '../../util/analytics';
-import { SHORT_DOMAIN, TEXTS } from '../../constants';
-import BreadCrumb from '../../components/Breadcrumb';
+import { pageView } from '@/util/analytics';
+import { SHORT_DOMAIN, TEXTS } from '@/constants';
+import BreadCrumb from '@/components/Breadcrumb/Breadcrumb';
 
 const content = {
   General: [
@@ -382,15 +382,15 @@ const contentWithTitle = Object.keys(content).reduce(
 );
 
 export default class Help extends React.Component {
-  static propTypes = {
+  public static propTypes = {
     location: PropTypes.shape({ hash: PropTypes.string }),
   };
 
-  shouldComponentUpdate(nextProps) {
+  public shouldComponentUpdate(nextProps) {
     return this.props.location.hash !== nextProps.location.hash;
   }
 
-  render() {
+  public render() {
     return (
       <div className="row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.URIS.HELP }]} />
@@ -436,7 +436,7 @@ export default class Help extends React.Component {
     );
   }
 
-  scrollToQuestion = () => {
+  public scrollToQuestion = () => {
     const { hash } = this.props.location;
     if (hash.includes('#')) {
       const $item = document.querySelector(`[id="${hash.replace('#', '')}"]`);
@@ -446,12 +446,12 @@ export default class Help extends React.Component {
     }
   };
 
-  componentDidMount() {
+  public componentDidMount() {
     this.scrollToQuestion();
     pageView('/help');
   }
 
-  componentDidUpdate(prevProps) {
+  public componentDidUpdate(prevProps) {
     if (prevProps.location.hash !== this.props.location.hash) {
       this.scrollToQuestion();
     }

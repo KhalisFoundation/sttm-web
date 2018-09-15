@@ -19,12 +19,12 @@ class SehajPaathLink extends React.PureComponent {
    * @property {object} data
    */
 
-  static propTypes = {
+  public static propTypes = {
     history: PropTypes.object.isRequired,
     data: PropTypes.object.isRequired,
   };
 
-  render() {
+  public render() {
     this._previouslyReadAng = readAng();
 
     return Number.isNaN(this._previouslyReadAng) === false &&
@@ -40,7 +40,7 @@ class SehajPaathLink extends React.PureComponent {
     ) : null;
   }
 
-  handleClick = () => {
+  public handleClick = () => {
     clickEvent({
       action: ACTIONS.SEHAJ_PAATH_LINK,
       label: this._previouslyReadAng,

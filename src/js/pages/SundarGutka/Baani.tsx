@@ -2,10 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { versesToGurbani } from '../../util';
-import ShabadContent from '../../components/ShabadContent';
-import Fetch from '../../components/Fetch';
-import { pageView } from '../../util/analytics';
+import { versesToGurbani } from '@/util';
+import ShabadContent from '@/components/ShabadContent';
+import Fetch from '@/components/Fetch';
+import { pageView } from '@/util/analytics';
 
 /**
  *
@@ -20,13 +20,13 @@ export default class Baani extends React.PureComponent {
    * @property {object} data
    */
 
-  static propTypes = {
+  public static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({ currentBaaniId: PropTypes.string }),
     }).isRequired,
   };
 
-  render() {
+  public render() {
     const {
       match: {
         params: { currentBaaniId },
@@ -62,7 +62,7 @@ export default class Baani extends React.PureComponent {
     );
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const {
       match: {
         params: { currentBaaniId },

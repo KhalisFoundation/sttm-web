@@ -1,6 +1,5 @@
 /* globals API_URL */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
 import PageLoader from '@/pages/PageLoader';
 import { pageView } from '@/util/analytics';
@@ -9,14 +8,13 @@ import { toShabadURL } from '@/util';
 
 const Stub = () => <div className="spinner" />;
 
-export default class Shabad extends React.PureComponent {
-  static propTypes = {
-    random: PropTypes.bool,
-    highlight: PropTypes.number,
-    id: PropTypes.string,
-  };
-
-  render() {
+type ShabadProps = {
+  random: boolean;
+  highlight: number;
+  id: string;
+};
+export default class Shabad extends React.PureComponent<ShabadProps> {
+  public render() {
     const { random, id, highlight } = this.props;
     const url = buildApiUrl(
       random ? { random, API_URL } : { random, id, API_URL }
@@ -43,7 +41,8 @@ export default class Shabad extends React.PureComponent {
       </PageLoader>
     );
   }
-  componentDidMount() {
+
+  public componentDidMount() {
     const { random, id, highlight } = this.props;
 
     if (random) {

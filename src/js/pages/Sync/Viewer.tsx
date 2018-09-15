@@ -1,51 +1,45 @@
 /* globals API_URL */
 import React from 'react';
-import PropTypes from 'prop-types';
 import ShabadContent from '@/components/ShabadContent';
 import { buildApiUrl } from '@sttm/banidb';
 import { TEXTS } from '@/constants';
 
-/**
- *
- *
- * @export
- * @class Viewer
- * @augments {React.PureComponent<ViewerProps, { response: object}>}
- */
-export default class Viewer extends React.PureComponent {
-  /**
-   * @typedef {object} ViewerProps
-   * @property {string} namespaceString
-   * @property {{ shabadid: number, highlight: number }} data
-   */
-  static propTypes = {
-    namespaceString: PropTypes.string.isRequired,
-    data: PropTypes.object.isRequired,
-  };
+type ViewerProps = {
+  namespaceString: string;
+  data: Shabad & { highlight: number };
+};
 
-  state = {
+type ViewerState = {
+  response: Shabad | null;
+};
+
+export default class Viewer extends React.PureComponent<
+  ViewerProps,
+  ViewerState
+> {
+  public state = {
     response: null,
   };
 
-  _fetchShabad = id =>
+  private fetchShabad = (id: string) =>
     Promise.resolve(this.setState({ response: null }))
       .then(() => fetch(buildApiUrl({ id, API_URL })))
       .then(r => r.json())
       .then(response => this.setState({ response }));
 
-  componentDidMount() {
+  public componentDidMount() {
     if (Object.keys(this.props.data).length !== 0) {
-      this._fetchShabad(this.props.data.shabadid);
+      this.fetchShabad(this.props.data.shabadid);
     }
   }
 
-  componentDidUpdate(prevProps) {
+  public componentDidUpdate(prevProps: ViewerProps) {
     if (prevProps.data.shabadid !== this.props.data.shabadid) {
-      this._fetchShabad(this.props.data.shabadid);
+      this.fetchShabad(this.props.data.shabadid);
     }
   }
 
-  render() {
+  public render() {
     const {
       props: { namespaceString, data },
       state: { response },

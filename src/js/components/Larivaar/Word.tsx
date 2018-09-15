@@ -18,17 +18,17 @@ export default class LarivaarWord extends React.PureComponent {
    * @property {number} index
    */
 
-  static propTypes = {
+  public static propTypes = {
     word: PropTypes.string.isRequired,
     unicode: PropTypes.bool,
     larivaarAssistColor: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
   };
 
-  render() {
+  public render() {
     const { word, unicode, larivaarAssistColor, index } = this.props;
 
-    let segments = unicode
+    const segments = unicode
       ? fixLarivaarUnicode(word)
       : fixLarivaarGurmukhiFont(word);
 

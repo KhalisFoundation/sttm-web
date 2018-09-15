@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LARIVAAR_ASSIST_COLOR } from '../../constants';
+import { LARIVAAR_ASSIST_COLOR } from '@/constants';
 import LarivaarWord from './Word';
 
 /**
@@ -13,19 +13,19 @@ import LarivaarWord from './Word';
  * @extends {React.PureComponent}
  */
 export default class Larivaar extends React.PureComponent {
-  static defaultProps = {
+  public static defaultProps = {
     larivaarAssist: false,
     enable: true,
   };
 
-  static propTypes = {
+  public static propTypes = {
     larivaarAssist: PropTypes.bool,
     enable: PropTypes.bool,
     unicode: PropTypes.bool,
     children: PropTypes.string.isRequired,
   };
 
-  render() {
+  public render() {
     const { larivaarAssist, enable, children, unicode } = this.props;
     const larivaarAssistColor = larivaarAssist ? LARIVAAR_ASSIST_COLOR : '';
 

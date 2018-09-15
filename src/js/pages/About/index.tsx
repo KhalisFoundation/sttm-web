@@ -1,10 +1,10 @@
 import React from 'react';
-import { pageView } from '../../util/analytics';
-import BreadCrumb from '../../components/Breadcrumb';
-import { TEXTS } from '../../constants';
+import { pageView } from '@/util/analytics';
+import BreadCrumb from '@/components/Breadcrumb/Breadcrumb';
+import { TEXTS } from '@/constants';
 
 export default class About extends React.PureComponent {
-  render() {
+  public render() {
     return (
       <div className="row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.URIS.ABOUT }]} />
@@ -43,7 +43,7 @@ export default class About extends React.PureComponent {
     );
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     pageView('/about');
   }
 }

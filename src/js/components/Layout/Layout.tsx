@@ -8,19 +8,19 @@ import {
   DARK_MODE_CLASS_NAME,
   ONLINE_COLOR,
   OFFLINE_COLOR,
-} from '@/../../common/constants';
+} from '_@/common/constants';
 import { ACTIONS, errorEvent } from '@/util/analytics';
 import { setOnlineMode } from '@/features/actions';
 import ScrollToTop from '@/components/ScrollToTop';
 import throttle from 'lodash.throttle';
 
 class Layout extends React.PureComponent {
-  static defaultProps = {
+  public static defaultProps = {
     isHome: false,
     title: DEFAULT_PAGE_TITLE,
   };
 
-  static propTypes = {
+  public static propTypes = {
     title: PropTypes.string,
     online: PropTypes.bool,
     children: PropTypes.node.isRequired,
@@ -33,12 +33,27 @@ class Layout extends React.PureComponent {
     setOnlineMode: PropTypes.func.isRequired,
   };
 
-  state = {
+  public state = {
     error: null,
     showScrollToTop: false,
   };
 
-  componentDidCatch(error) {
+  public onScroll = throttle(() => {
+    this.setState(({ showScrollToTop }) => {
+      let newValue = showScrollToTop;
+      if (window.scrollY > window.innerHeight / 2) {
+        newValue = true;
+      } else {
+        newValue = false;
+      }
+
+      return newValue === showScrollToTop
+        ? null
+        : { showScrollToTop: newValue };
+    });
+  }, 500);
+
+  public componentDidCatch(error) {
     const newState = {
       error,
       errorProps: {
@@ -62,11 +77,11 @@ class Layout extends React.PureComponent {
       action: ACTIONS.GENERIC_ERROR,
       label: JSON.stringify(error),
     });
-    // eslint-disable-next-line no-console
+    // tslint:disable-next-line no-console
     console.error({ error });
   }
 
-  render() {
+  public render() {
     const {
       online,
       children,
@@ -113,13 +128,13 @@ class Layout extends React.PureComponent {
     );
   }
 
-  updateTheme() {
+  public updateTheme() {
     document.body.classList[this.props.darkMode ? 'add' : 'remove'](
       DARK_MODE_CLASS_NAME
     );
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
     window.addEventListener('scroll', this.onScroll, { passive: true });
@@ -127,32 +142,17 @@ class Layout extends React.PureComponent {
     this.updateTheme();
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     window.removeEventListener('online', this.onOnline);
     window.removeEventListener('offline', this.onOffline);
     window.removeEventListener('scroll', this.onScroll);
   }
 
-  onScroll = throttle(() => {
-    this.setState(({ showScrollToTop }) => {
-      let newValue = showScrollToTop;
-      if (window.scrollY > window.innerHeight / 2) {
-        newValue = true;
-      } else {
-        newValue = false;
-      }
+  public onOnline = () => this.props.setOnlineMode(true);
 
-      return newValue === showScrollToTop
-        ? null
-        : { showScrollToTop: newValue };
-    });
-  }, 500);
+  public onOffline = () => this.props.setOnlineMode(false);
 
-  onOnline = () => this.props.setOnlineMode(true);
-
-  onOffline = () => this.props.setOnlineMode(false);
-
-  componentDidUpdate(prevProps, prevState) {
+  public componentDidUpdate(prevProps, prevState) {
     if (prevProps.darkMode !== this.props.darkMode) {
       this.updateTheme();
     }

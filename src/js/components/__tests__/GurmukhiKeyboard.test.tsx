@@ -1,7 +1,7 @@
 /* global describe, it, expect, jest */
 import React from 'react';
 import { mount } from 'enzyme';
-import GurmukhiKeyboard from '../GurmukhiKeyboard';
+import GurmukhiKeyboard from '@/components/GurmukhiKeyboard';
 import { StaticRouter } from 'react-router-dom';
 
 describe('<GurmukhiKeyboard />', () => {

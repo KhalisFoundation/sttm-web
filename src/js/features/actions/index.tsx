@@ -4,7 +4,8 @@ import {
   DEFAULT_DARK_MODE,
   DEFAULT_UNICODE,
   DEFAULT_FONT_SIZE,
-} from '../../constants';
+} from '@/constants';
+import { Action } from '@/features/types';
 
 export const createAction = (type: string, meta?: any) => (payload: any) => ({
   type,
@@ -69,13 +70,13 @@ export const setTransliterationLanguages = createAction(
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const setDarkMode = createAction(SET_DARK_MODE);
 
-export const resetDisplayOptions = () => (dispatch: Function) => {
+export const resetDisplayOptions = () => (dispatch: (a: Action) => void) => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
 };
 
-export const resetFontOptions = () => (dispatch: Function) => {
+export const resetFontOptions = () => (dispatch: (a: Action) => void) => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
 };

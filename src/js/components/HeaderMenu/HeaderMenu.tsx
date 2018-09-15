@@ -9,9 +9,9 @@ import BarsIcon from '@/components/Icons/Bars';
  * @extends {React.PureComponent}
  */
 export default class Menu extends React.PureComponent {
-  toggleMenu = () => document.body.classList.toggle('menu-open');
-  closeMenu = () => document.body.classList.remove('menu-open');
-  render() {
+  public toggleMenu = () => document.body.classList.toggle('menu-open');
+  public closeMenu = () => document.body.classList.remove('menu-open');
+  public render() {
     const { toggleMenu, closeMenu } = this;
     return (
       <div className="top-bar-right">

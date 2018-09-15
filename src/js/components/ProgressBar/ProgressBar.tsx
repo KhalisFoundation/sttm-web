@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class ProgressBar extends React.PureComponent {
-  static defaultProps = {
+  public static defaultProps = {
     percent: 0,
   };
-  static propTypes = {
+  public static propTypes = {
     percent: PropTypes.number,
   };
 
-  render() {
+  public render() {
     return (
       <div id="progressbar-root">
         <div

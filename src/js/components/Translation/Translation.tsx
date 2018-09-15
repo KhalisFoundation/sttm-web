@@ -4,9 +4,9 @@ import { TRANSLATION_LANGUAGES } from '@/constants';
 
 const PUNJABI = 'punjabi';
 export default class Translation extends React.PureComponent {
-  static defaultProps = { children: '' };
+  public static defaultProps = { children: '' };
 
-  static propTypes = {
+  public static propTypes = {
     type: PropTypes.oneOf(TRANSLATION_LANGUAGES),
     unicode: (props, propName) => {
       if (
@@ -32,7 +32,7 @@ export default class Translation extends React.PureComponent {
     children: PropTypes.string,
   };
 
-  static getTranslationProps = ({
+  public static getTranslationProps = ({
     translationMap,
     language,
     shabad,
@@ -42,7 +42,7 @@ export default class Translation extends React.PureComponent {
       ? { unicode, text: translationMap.punjabi(shabad) }
       : { children: translationMap[language](shabad) };
 
-  render() {
+  public render() {
     const { type, unicode, text } = this.props;
 
     if (type === PUNJABI) {

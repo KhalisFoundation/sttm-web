@@ -2,18 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import raagIndices from './raagIndices';
-import { toAngURL } from '../../util';
-import BreadCrumb from '../../components/Breadcrumb';
-import { TEXTS } from '../../constants';
+import { toAngURL } from '@/util';
+import BreadCrumb from '@/components/Breadcrumb/Breadcrumb';
+import { TEXTS } from '@/constants';
 
 const sanitizeHash = (...args) => args.map(a => a.replace(/ /gi, '')).join('-');
 
 export default class GranthIndex extends React.PureComponent {
-  static propTypes = {
+  public static propTypes = {
     location: PropTypes.shape({ hash: PropTypes.string }),
   };
 
-  render() {
+  public render() {
     return (
       <div className="row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.URIS.INDEX }]} />
@@ -79,7 +79,7 @@ export default class GranthIndex extends React.PureComponent {
     );
   }
 
-  scrollToHash = () => {
+  public scrollToHash = () => {
     const { hash } = this.props.location;
     if (hash.includes('#')) {
       const $item = document.querySelector(`[id="${hash.replace('#', '')}"]`);
@@ -89,7 +89,7 @@ export default class GranthIndex extends React.PureComponent {
     }
   };
 
-  componentDidMount() {
+  public componentDidMount() {
     this.scrollToHash();
     pageView('/index');
   }

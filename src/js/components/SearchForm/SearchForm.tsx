@@ -21,7 +21,7 @@ import { getNumberFromLocalStorage } from '@/util';
  * @augments {React.PureComponent<SearchFormProps>}
  */
 export default class SearchForm extends React.PureComponent {
-  static defaultProps = {
+  public static defaultProps = {
     defaultQuery: '',
     submitOnChangeOf: [],
   };
@@ -52,7 +52,7 @@ export default class SearchForm extends React.PureComponent {
    * @static
    * @memberof SearchForm
    */
-  static propTypes = {
+  public static propTypes = {
     children: PropTypes.func.isRequired,
     defaultQuery: PropTypes.string,
     defaultType: PropTypes.oneOf(Object.keys(TYPES)),
@@ -72,7 +72,7 @@ export default class SearchForm extends React.PureComponent {
     },
   };
 
-  state = {
+  public state = {
     displayGurmukhiKeyboard: false,
     query: this.props.defaultQuery,
     shouldSubmit: false,
@@ -90,39 +90,48 @@ export default class SearchForm extends React.PureComponent {
     isAnimatingPlaceholder: false,
   };
 
-  animatePlaceholder = () => {
+  public animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
 
     const tick = () =>
       (this.timer = setTimeout(
         () =>
-          this._setState(({ isAnimatingPlaceholder, placeholder }) => {
-            if (!isAnimatingPlaceholder) return null;
+          this.safelySetState(
+            ({ isAnimatingPlaceholder, placeholder }) => {
+              if (!isAnimatingPlaceholder) {
+                return null;
+              }
 
-            if (placeholder === finalPlaceholder) {
-              return { isAnimatingPlaceholder: false };
-            } else if (finalPlaceholder[placeholder.length]) {
-              return {
-                placeholder: placeholder + finalPlaceholder[placeholder.length],
-              };
-            }
-          }, () => this.state.isAnimatingPlaceholder && tick()),
+              if (placeholder === finalPlaceholder) {
+                return { isAnimatingPlaceholder: false };
+              } else if (finalPlaceholder[placeholder.length]) {
+                return {
+                  placeholder:
+                    placeholder + finalPlaceholder[placeholder.length],
+                };
+              }
+            },
+            () => this.state.isAnimatingPlaceholder && tick()
+          ),
         2000 / finalPlaceholder.length
       ));
 
     tick();
   };
 
-  beginPlaceholderAnimation = () => {
+  public beginPlaceholderAnimation = () => {
     if (this.state.query === '') {
       clearTimeout(this.timer);
-      this._setState({ isAnimatingPlaceholder: true, placeholder: '' }, () => {
-        requestAnimationFrame(this.animatePlaceholder);
-      });
+      this.safelySetState(
+        { isAnimatingPlaceholder: true, placeholder: '' },
+        () => {
+          requestAnimationFrame(this.animatePlaceholder);
+        }
+      );
     }
   };
 
-  stopPlaceholderAnimation = () =>
+  public stopPlaceholderAnimation = () =>
     new Promise(resolve =>
       this.setState({ isAnimatingPlaceholder: false }, () => {
         clearTimeout(this.timer);
@@ -130,18 +139,19 @@ export default class SearchForm extends React.PureComponent {
       })
     );
 
-  _setState = (...args) => (this._mounted ? this.setState(...args) : null);
+  public safelySetState = (...args) =>
+    this._mounted ? this.setState(...args) : null;
 
-  componentDidMount() {
+  public componentDidMount() {
     this._mounted = true;
     this.beginPlaceholderAnimation();
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     this._mounted = false;
   }
 
-  render() {
+  public render() {
     const {
       state,
       setGurmukhiKeyboardVisibilityAs,
@@ -183,7 +193,7 @@ export default class SearchForm extends React.PureComponent {
       handleSubmit,
     });
   }
-  componentDidUpdate() {
+  public componentDidUpdate() {
     const {
       state: { shouldSubmit, source, type, query },
       props: { onSubmit },
@@ -207,7 +217,7 @@ export default class SearchForm extends React.PureComponent {
   }
 
   // Retuns a function
-  setGurmukhiKeyboardVisibilityAs = value => () =>
+  public setGurmukhiKeyboardVisibilityAs = value => () =>
     value !== this.state.displayGurmukhiKeyboard &&
     this.setState({ displayGurmukhiKeyboard: value }, () => {
       clickEvent({
@@ -216,7 +226,7 @@ export default class SearchForm extends React.PureComponent {
       });
     });
 
-  setQueryAs = value => () =>
+  public setQueryAs = value => () =>
     this.stopPlaceholderAnimation().then(() =>
       this.setState(() => ({
         query: value,
@@ -225,11 +235,11 @@ export default class SearchForm extends React.PureComponent {
       }))
     );
 
-  handleSearchChange = ({ target: { value } }) => {
+  public handleSearchChange = ({ target: { value } }) => {
     this.setQueryAs(value)();
   };
 
-  handleSearchSourceChange = e =>
+  public handleSearchSourceChange = e =>
     this.setState(
       {
         source: e.target.value,
@@ -249,7 +259,7 @@ export default class SearchForm extends React.PureComponent {
       }
     );
 
-  handleSearchTypeChange = ({ currentTarget: { value } }) =>
+  public handleSearchTypeChange = ({ currentTarget: { value } }) =>
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
         {
@@ -270,7 +280,7 @@ export default class SearchForm extends React.PureComponent {
       )
     );
 
-  handleSubmit = () => {
+  public handleSubmit = () => {
     /* Possible Validations, Analytics */
     clickEvent({
       action: ACTIONS.SEARCH_QUERY,
@@ -283,7 +293,7 @@ export default class SearchForm extends React.PureComponent {
    * @param {number} type
    * @memberof SearchForm
    */
-  static getFormDetails = type =>
+  public static getFormDetails = type =>
     type === SEARCH_TYPES.ANG
       ? ['/ang', 'ang', 'number']
       : ['/search', 'q', 'search'];

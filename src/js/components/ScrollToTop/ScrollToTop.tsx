@@ -14,11 +14,11 @@ type ScrollToTopProps = {
  * @extends {React.PureComponent}
  */
 export default class ScrollToTop extends React.PureComponent<ScrollToTopProps> {
-  static defaultProps = {
+  public static defaultProps = {
     disableSmoothScrollingAt: 6000,
   };
 
-  static propTypes = {
+  public static propTypes = {
     disableSmoothScrollingAt: PropTypes.number,
   };
 
@@ -27,7 +27,7 @@ export default class ScrollToTop extends React.PureComponent<ScrollToTopProps> {
    *
    * @memberof ScrollToTop
    */
-  handleClick = () => {
+  public handleClick = () => {
     const prevValue = document.body.style.scrollBehavior;
     // If user has scrolled for 4000 pixels, smooth scrolling would take a lot of time
     if (window.scrollY > this.props.disableSmoothScrollingAt) {
@@ -42,7 +42,7 @@ export default class ScrollToTop extends React.PureComponent<ScrollToTopProps> {
     });
   };
 
-  render() {
+  public render() {
     return (
       <div className="scroll-to-top" onClick={this.handleClick}>
         <Chevron direction={Chevron.DIRECTIONS.TOP} />

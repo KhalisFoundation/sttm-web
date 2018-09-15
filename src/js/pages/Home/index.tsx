@@ -19,11 +19,11 @@ import SearchIcon from '@/components/Icons/Search';
  * @extends {React.PureComponent}
  */
 export default class Home extends React.PureComponent {
-  static propTypes = {
+  public static propTypes = {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
 
-  onSubmit = ({ handleSubmit, ...data }) => e => {
+  public onSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
     handleSubmit();
     this.props.history.push(toSearchURL(data));
@@ -32,7 +32,7 @@ export default class Home extends React.PureComponent {
   /**
    * Functional component
    */
-  render() {
+  public render() {
     return (
       <SearchForm>
         {({
@@ -158,7 +158,7 @@ export default class Home extends React.PureComponent {
     );
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     pageView('/');
   }
 }

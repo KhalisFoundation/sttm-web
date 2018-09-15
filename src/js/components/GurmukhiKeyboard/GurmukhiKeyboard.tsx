@@ -26,35 +26,35 @@ const keyboardGrid = [
 ];
 
 export default class GurmukhiKeyboard extends React.PureComponent {
-  static propTypes = {
+  public static propTypes = {
     value: PropTypes.string.isRequired,
     active: PropTypes.bool.isRequired,
     onKeyClick: PropTypes.func.isRequired,
     onClose: PropTypes.func,
   };
 
-  state = {
+  public state = {
     page: 1,
   };
 
-  handleBackspace = () =>
+  public handleBackspace = () =>
     this.props.onKeyClick(
       this.props.value.substring(0, this.props.value.length - 1)
     );
 
-  handlePageClick = page => () => this.setState({ page });
+  public handlePageClick = page => () => this.setState({ page });
 
-  handleClick = ({
+  public handleClick = ({
     target: {
       dataset: { value },
     },
   }) => this.props.onKeyClick(`${this.props.value}${value}`);
 
-  componentDidMount() {
+  public componentDidMount() {
     addEventListener('click', this.windowEventListener);
   }
 
-  windowEventListener = ({ path }) => {
+  public windowEventListener = ({ path }) => {
     if (
       path.some(
         ({ classList = null }) =>
@@ -67,11 +67,11 @@ export default class GurmukhiKeyboard extends React.PureComponent {
     }
   };
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     removeEventListener('click', this.windowEventListener);
   }
 
-  render() {
+  public render() {
     const meta = (
       <div className="keyboard-row-set">
         <button type="button">{'\u00a0'}</button>

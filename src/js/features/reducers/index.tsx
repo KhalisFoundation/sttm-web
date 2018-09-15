@@ -28,8 +28,9 @@ import {
 import { saveToLocalStorage } from '@/util';
 import { clickEvent } from '@/util/analytics';
 import { DARK_MODE_COOKIE } from '_@/common/constants';
+import { Store, Action } from '@/features/types';
 
-export default function reducer(state, action) {
+export default function reducer(state: Store, action: Action) {
   switch (action.type) {
     case SET_ONLINE_MODE: {
       return {
@@ -157,9 +158,11 @@ export default function reducer(state, action) {
       };
     }
     case SET_FONT_SIZE: {
-      const fontSize = parseFloat(action.payload, 10);
+      const fontSize = parseFloat(action.payload);
 
-      if (fontSize === state.fontSize) return state;
+      if (fontSize === state.fontSize) {
+        return state;
+      }
 
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_FONT_SIZE, action.payload);
       return {

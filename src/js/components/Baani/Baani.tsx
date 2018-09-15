@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Actions from '@/components/BaaniLineActions';
 import Translation from '@/components/Translation';
 import Transliteration from '@/components/Transliteration';
@@ -8,45 +7,43 @@ import { copyToClipboard, showToast, shortenURL } from '@/util';
 import { clickEvent, ACTIONS } from '@/util/analytics';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 
+const getRefProps = (highlight: number, shabad: Shabad, ref: any) =>
+  highlight === parseInt(shabad.id, 10) ? { ref } : undefined;
+
 const transliterationMap = {
-  english: shabad => shabad.transliteration,
+  english: (shabad: Shabad) => shabad.transliteration,
 };
 
 const translationMap = {
-  spanish: shabad => shabad.translation.spanish,
-  english: shabad => shabad.translation.english.ssk,
-  punjabi: shabad => ({
+  spanish: (shabad: Shabad) => shabad.translation.spanish,
+  english: (shabad: Shabad) => shabad.translation.english.ssk,
+  punjabi: (shabad: Shabad) => ({
     ...shabad.translation.punjabi.bms,
     toString: () => shabad.translation.punjabi.bms.unicode,
   }),
 };
 
-/**
- *
- *
- * @export
- * @class Baani
- * @extends {React.PureComponent}
- */
-export default class Baani extends React.PureComponent {
-  static defaultProps = {
+type BaaniProps = {
+  gurbani: Gurbani;
+  type: 'shabad' | 'ang' | 'hukamnama';
+  splitView: boolean;
+  translationLanguages: string[];
+  transliterationLanguages: string[];
+  larivaarAssist: boolean;
+  highlight: number;
+  larivaar: boolean;
+  unicode: boolean;
+  fontSize: number;
+};
+
+export default class Baani extends React.PureComponent<BaaniProps> {
+  public static defaultProps = {
     highlight: null,
   };
 
-  static propTypes = {
-    gurbani: PropTypes.array.isRequired,
-    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
-    splitView: PropTypes.bool.isRequired,
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
-    larivaarAssist: PropTypes.bool.isRequired,
-    highlight: PropTypes.number,
-    larivaar: PropTypes.bool.isRequired,
-    unicode: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired,
-  };
+  private $highlightedBaaniLine = React.createRef();
 
-  getShareLine = shabad => {
+  private getShareLine = (shabad: Shabad) => {
     return [
       shabad.gurbani.unicode,
       ...this.props.transliterationLanguages.map(language =>
@@ -58,7 +55,7 @@ export default class Baani extends React.PureComponent {
     ].join('\n');
   };
 
-  onCopyClick = shabad => () =>
+  private onCopyClick = (shabad: Shabad) => () =>
     copyToClipboard(this.getShareLine(shabad))
       .then(() => showToast(TEXTS.GURBAANI_COPIED))
       .then(() =>
@@ -69,7 +66,7 @@ export default class Baani extends React.PureComponent {
       )
       .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-  onTweetClick = shabad => () => {
+  private onTweetClick = (shabad: Shabad) => () => {
     clickEvent({
       action: ACTIONS.LINE_SHARER,
       label: 'twitter',
@@ -87,10 +84,12 @@ export default class Baani extends React.PureComponent {
     );
   };
 
-  _scrollToHiglight = () => {
-    if (this.$highlightedBaaniLine) {
-      if ('offsetTop' in this.$highlightedBaaniLine) {
-        const { offsetTop, offsetHeight } = this.$highlightedBaaniLine;
+  private scrollToHiglight = () => {
+    const { current: element } = this.$highlightedBaaniLine;
+
+    if (element) {
+      if (element.offsetTop !== undefined) {
+        const { offsetTop, offsetHeight } = element;
 
         requestAnimationFrame(() =>
           window.scrollTo(0, offsetTop - offsetHeight)
@@ -99,17 +98,17 @@ export default class Baani extends React.PureComponent {
     }
   };
 
-  componentDidMount() {
-    this._scrollToHiglight();
+  public componentDidMount() {
+    this.scrollToHiglight();
   }
 
-  componentDidUpdate(prevProps) {
+  public componentDidUpdate(prevProps: BaaniProps) {
     if (this.props.highlight !== prevProps.highlight) {
-      this._scrollToHiglight();
+      this.scrollToHiglight();
     }
   }
 
-  render() {
+  public render() {
     const {
       gurbani,
       splitView,
@@ -130,11 +129,7 @@ export default class Baani extends React.PureComponent {
             key={shabad.id}
             id={`line-${shabad.id}`}
             className="line"
-            ref={node =>
-              highlight === parseInt(shabad.id, 10)
-                ? (this.$highlightedBaaniLine = node)
-                : null
-            }
+            {...getRefProps(highlight, shabad, this.$highlightedBaaniLine)}
           >
             <BaaniLine
               text={shabad.gurbani}
@@ -185,11 +180,7 @@ export default class Baani extends React.PureComponent {
             <div
               key={shabad.id}
               className="line"
-              ref={node =>
-                highlight === parseInt(shabad.id, 10)
-                  ? (this.$highlightedBaaniLine = node)
-                  : null
-              }
+              {...getRefProps(highlight, shabad, this.$highlightedBaaniLine)}
             >
               <BaaniLine
                 text={shabad.gurbani}

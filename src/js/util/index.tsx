@@ -14,24 +14,24 @@ import {
  * @param {*} err
  */
 export const throwError = (msg, err) => {
-  // eslint-disable-next-line no-console
+  // tslint:disable-next-line no-console
   console.warn(err);
   throw new Error(err);
 };
 
-/**
- * URL QueryParam reader
- *
- * @param {string} _name of parameter to read from query params
- * @param {string} [url=window.location.href] to read query params from
- * @returns {string}
- */
-export function getParameterByName(_name, url = window.location.href) {
-  const name = _name.replace(/[[\]]/g, '\\$&');
+export function getParameterByName(
+  paramName: string,
+  url = window.location.href
+) {
+  const name = paramName.replace(/[[\]]/g, '\\$&');
   const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
   const results = regex.exec(url);
-  if (!results) return undefined;
-  if (!results[2]) return '';
+  if (!results) {
+    return undefined;
+  }
+  if (!results[2]) {
+    return '';
+  }
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
@@ -46,6 +46,7 @@ export function getQueryParams(str = document.location.search) {
   const re = /[?&]?([^=]+)=([^&]*)/g;
   let tokens;
 
+  /* tslint:disable-next-line no-conditional-assignment */
   while ((tokens = re.exec(qs))) {
     params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
   }
@@ -161,13 +162,17 @@ export const getArrayFromLocalStorage = (key, defaultValue = []) => {
 
 export const getNumberFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
-  if (value === null) return defaultValue;
+  if (value === null) {
+    return defaultValue;
+  }
   return parseFloat(value);
 };
 
 export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
-  if (value === null) return defaultValue;
+  if (value === null) {
+    return defaultValue;
+  }
   return value === 'true';
 };
 
@@ -202,19 +207,16 @@ export const toSearchURL = ({
     offset,
   })}`;
 
-/**
- *
- * @param {object} data
- * @property {{ shabadid: string, id: string }} shabad
- * @property {string} [q]
- * @property {string} [type]
- * @property {string} [source]
- */
 export const toShabadURL = ({
   shabad: { shabadid: id, id: highlight },
   q,
-  type = undefined,
-  source = undefined,
+  type,
+  source,
+}: {
+  shabad: Shabad;
+  q: string;
+  type?: string;
+  source?: string;
 }) =>
   `/shabad?${objectToQueryParams({
     id,
@@ -224,7 +226,15 @@ export const toShabadURL = ({
     highlight,
   })}`;
 
-export const toAngURL = ({ ang, source, highlight }) =>
+export const toAngURL = ({
+  ang,
+  source,
+  highlight,
+}: {
+  ang: string;
+  source: string;
+  highlight: string;
+}) =>
   `/ang?${objectToQueryParams({
     ang,
     source,
@@ -244,16 +254,13 @@ export const versesToGurbani = verses =>
     },
   }));
 
-/**
- *
- * @param {string} baani
- * @param {string} query
- * @param {number} type
- * @returns {array} of [start, end) indices
- */
-export const getHighlightIndices = (baani, query, type) => {
-  let start = -1,
-    end = -1;
+export const getHighlightIndices = (
+  baani: string,
+  query: string,
+  type: number
+) => {
+  let start = -1;
+  let end = -1;
   let baaniWords = baani.split(' ');
 
   switch (type) {
@@ -289,36 +296,31 @@ export const getHighlightIndices = (baani, query, type) => {
   return [start, start === -1 ? 0 : end];
 };
 
-/**
- * Should save ang to localStorage
- * @param {object} data
- * @property {ShabadContentTypes} type
- * @property {{ source: { id: string }}} info
- */
-export const shouldSaveAng = ({ type, info }) =>
-  type === 'ang' && info.source.id === 'G';
+export const shouldSaveAng = ({
+  type,
+  info,
+}: {
+  type: ShabadTypes;
+  info: { source: { id: string } };
+}) => type === 'ang' && info.source.id === 'G';
 
 /**
  * Previously read ang
  * @returns {number}
  */
 export const readAng = () =>
-  parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG));
+  parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG), 10);
 
-/**
- * Saves ang to localStorage
- * @param {number} ang
- */
-export const saveAng = ang =>
+export const saveAng = (ang: number) =>
   saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG, '' + ang);
 
-/**
- * Generates link based on type and source
- * @param {object} data
- * @property {ShabadContenShabadContentTypestTypes} type
- * @property {{ source: { id: string }}} info
- */
-export function toNavURL({ type, info }) {
+export function toNavURL({
+  type,
+  info,
+}: {
+  type: ShabadTypes;
+  info: { source: { id: string } };
+}) {
   switch (type) {
     case 'hukamnama':
     case 'shabad':

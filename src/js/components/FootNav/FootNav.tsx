@@ -5,7 +5,7 @@ import { toNavURL, shouldSaveAng, saveAng } from '@/util';
 import Chevron from '@/components/Icons/Chevron';
 
 class FootNav extends React.PureComponent {
-  static propTypes = {
+  public static propTypes = {
     history: PropTypes.object.isRequired,
     info: PropTypes.object.isRequired,
     type: PropTypes.string,
@@ -15,7 +15,7 @@ class FootNav extends React.PureComponent {
     }),
   };
 
-  render() {
+  public render() {
     const { nav } = this.props;
     const link = toNavURL(this.props);
     return (
@@ -58,9 +58,11 @@ class FootNav extends React.PureComponent {
    * Handle SaveAng
    * @memberof FootNav
    */
-  handleSaveAng = () => {
+  public handleSaveAng = () => {
     const link = toNavURL(this.props);
-    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
+    if (shouldSaveAng(this.props)) {
+      saveAng(this.props.nav.next);
+    }
     this.props.history.push(link + this.props.nav.next);
   };
 }

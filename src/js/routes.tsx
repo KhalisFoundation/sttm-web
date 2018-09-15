@@ -313,7 +313,7 @@ export default [
                   q={q}
                   type={parseInt(type, 10)}
                   source={source}
-                  offset={parseInt(offset)}
+                  offset={parseInt(offset, 10)}
                   {...props}
                 />
               ) : (

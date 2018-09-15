@@ -1,10 +1,10 @@
 import React from 'react';
-import { pageView } from '../../util/analytics';
-import BreadCrumb from '../../components/Breadcrumb';
-import { TEXTS } from '../../constants';
+import { pageView } from '@/util/analytics';
+import BreadCrumb from '@/components/Breadcrumb/Breadcrumb';
+import { TEXTS } from '@/constants';
 
 export default class TermsOfService extends React.PureComponent {
-  render() {
+  public render() {
     return (
       <div className="row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.URIS.TOS }]} />
@@ -136,7 +136,7 @@ export default class TermsOfService extends React.PureComponent {
       </div>
     );
   }
-  componentDidMount() {
+  public componentDidMount() {
     pageView('/terms-of-service');
   }
 }

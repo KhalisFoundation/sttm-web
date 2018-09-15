@@ -4,17 +4,17 @@ import { TEXTS } from '@/constants';
 import { pageView } from '@/util/analytics';
 
 export default class RedirectExternal extends React.PureComponent {
-  static propTypes = {
+  public static propTypes = {
     to: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   };
 
-  componentDidMount() {
+  public componentDidMount() {
     pageView(this.props.to);
     location.href = this.props.to;
   }
 
-  render() {
+  public render() {
     const { to, name } = this.props;
     return (
       <div className="error-message">

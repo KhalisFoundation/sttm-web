@@ -11,9 +11,9 @@ import KeyboardIcon from '@/components/Icons/Keyboard';
 import SearchIcon from '@/components/Icons/Search';
 
 export default class Header extends React.PureComponent {
-  static defaultProps = { isHome: false, location: { search: '' } };
+  public static defaultProps = { isHome: false, location: { search: '' } };
 
-  static propTypes = {
+  public static propTypes = {
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
     isAng: PropTypes.bool,
@@ -23,15 +23,15 @@ export default class Header extends React.PureComponent {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
 
-  onFormSubmit = ({ handleSubmit, ...data }) => e => {
+  public onFormSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
     handleSubmit();
     this.handleFormSubmit(data);
   };
 
-  handleFormSubmit = data => this.props.history.push(toSearchURL(data));
+  public handleFormSubmit = data => this.props.history.push(toSearchURL(data));
 
-  render() {
+  public render() {
     const {
       props: { defaultQuery, isHome, isAng },
       onFormSubmit,

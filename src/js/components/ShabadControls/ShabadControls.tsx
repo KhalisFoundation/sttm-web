@@ -10,11 +10,11 @@ import TelevisionIcon from '@/components/Icons/Television';
 import SlidersIcon from '@/components/Icons/Sliders';
 
 export default class ShabadControls extends React.PureComponent {
-  static defaultProps = {
+  public static defaultProps = {
     disableSplitView: false,
   };
 
-  static propTypes = {
+  public static propTypes = {
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
@@ -40,7 +40,7 @@ export default class ShabadControls extends React.PureComponent {
     toggleUnicodeOption: PropTypes.func.isRequired,
   };
 
-  render() {
+  public render() {
     const {
       disableSplitView,
       showDisplayOptions,
