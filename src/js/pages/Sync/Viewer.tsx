@@ -49,7 +49,7 @@ export default class Viewer extends React.PureComponent<
       return <h4>{TEXTS.SYNC_CONNECTED(namespaceString)}</h4>;
     }
 
-    if (response) {
+    if (response !== null) {
       return (
         <ShabadContent
           type="shabad"

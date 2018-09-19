@@ -5,54 +5,16 @@ import Viewer from './Viewer';
 import { showToast } from '@/util';
 import BreadCrumb from '@/components/Breadcrumb/Breadcrumb';
 
-/**
- *
- *
- * @export
- * @class Sync
- * @augments {React.PureComponent<SyncProps, SyncState>}
- */
-export default class Sync extends React.PureComponent {
-  /**
-   * Functional Form Component
-   *
-   * @static
-   * @memberof Sync
-   */
-  public static Form = ({ onSubmit }) => (
-    <React.Fragment>
-      <p>{TEXTS.SYNC_DESCRIPTION}</p>
-      <form
-        className="sync-form"
-        onSubmit={e => {
-          e.preventDefault();
-          onSubmit(e.target.code.value, e);
-        }}
-      >
-        <input
-          id="code"
-          className="sync-form--input"
-          name="code"
-          type="text"
-          placeholder="Enter code. Eg. ABC-XYZ"
-        />
-        <button className="sync-form--button">Connect</button>
-      </form>
-    </React.Fragment>
-  );
-  /**
-   * @typedef {object} SyncProps
-   */
+type SyncProps = {};
 
-  /**
-   * @typedef {object} SyncState
-   * @property {boolean} connected
-   * @property {string} namespaceString
-   * @property {any} error
-   * @property {any} data
-   *
-   * @memberof Sync
-   */
+type SyncState = Partial<{
+  connected: boolean;
+  namespaceString: string;
+  error: any;
+  data: Shabad & { highlight: number } | {};
+}>;
+
+export default class Sync extends React.PureComponent<SyncProps, SyncState> {
   public state = {
     connected: false,
     namespaceString: '',
@@ -60,7 +22,7 @@ export default class Sync extends React.PureComponent {
     data: {},
   };
 
-  private socket = null;
+  private socket: Socket | null = null;
   private mounted = false;
 
   /**
@@ -68,9 +30,10 @@ export default class Sync extends React.PureComponent {
    *
    * @memberof Sync
    */
-  private safelySetState = (...args) => this.mounted && this.setState(...args);
+  private safelySetState = (state: SyncState, cb?: () => void) =>
+    this.mounted && this.setState(state, cb);
 
-  private alertOnExit = e => {
+  private alertOnExit = (e: BeforeUnloadEvent) => {
     if (this.state.connected) {
       return (e.returnValue = TEXTS.SYNC_DISCONNECT);
     }
@@ -81,7 +44,7 @@ export default class Sync extends React.PureComponent {
     const { connected, error } = this.state;
     return (
       <div className="row" id="content-root">
-        <BreadCrumb links={[{ title: TEXTS.SYNC }]} />
+        <BreadCrumb links={[{ title: TEXTS.SYNC, url: '' }]} />
         <div className="wrapper">
           {connected ? (
             <Viewer {...this.state} />
@@ -107,7 +70,8 @@ export default class Sync extends React.PureComponent {
 
   public componentWillUnmount() {
     this.mounted = false;
-    if (this.state.connected && this.socket) {
+
+    if (this.state.connected && this.socket !== null) {
       this.socket.disconnect();
     }
     window.removeEventListener('beforeunload', this.alertOnExit);
@@ -166,9 +130,9 @@ export default class Sync extends React.PureComponent {
           if (window.io !== undefined) {
             this.socket = window.io(`${SYNC_API_URL}${namespaceString}`);
 
-            this.socket.on('data', dataFromSocket =>
-              this.safelySetState({ data: dataFromSocket })
-            );
+            this.socket.on('data', (dataFromSocket: SyncState['data']) => {
+              this.safelySetState({ data: dataFromSocket });
+            });
 
             this.socket.on('close', () =>
               this.safelySetState({

@@ -1,30 +1,45 @@
 /* globals BANIS_API_URL */
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { pageView } from '@/util/analytics';
-import PropTypes from 'prop-types';
 import { TEXTS } from '@/constants';
 import Baani from './Baani';
 import BreadCrumb from '@/components/Breadcrumb/Breadcrumb';
 import Android from '@/components/Icons/Android';
 import AppleiOS from '@/components/Icons/AppleiOS';
+import { Store } from '@/features/types';
 
-class SundarGutka extends React.PureComponent {
-  public static propTypes = {
-    transliterationLanguages: PropTypes.array.isRequired,
-    location: PropTypes.shape({ hash: PropTypes.string }),
-    match: PropTypes.object.isRequired,
-  };
-
-  public static HOME_LINKS = [{ title: TEXTS.URIS.SUNDAR_GUTKA }];
+type SundarGutkaProps = {
+  transliterationLanguages: string[];
+  match: { isExact: boolean; url: string };
+  location: { hash: string };
+};
+class SundarGutka extends React.PureComponent<
+  SundarGutkaProps,
+  {
+    currentBaaniId: number;
+    baanies: BaaniType[] | null;
+    q: string;
+  }
+> {
+  public static HOME_LINKS = [{ title: TEXTS.URIS.SUNDAR_GUTKA, url: '' }];
 
   public static BAANI_LINKS = [
     { url: '/sundar-gutka', title: TEXTS.URIS.SUNDAR_GUTKA },
-    { title: TEXTS.URIS.SUNDAR_GUTKA_BAANI },
+    { title: TEXTS.URIS.SUNDAR_GUTKA_BAANI, url: '' },
   ];
 
+  public static filter = (q: string) => (i: BaaniType) =>
+    q === '' ||
+    SundarGutka.sanitize(i.transliteration)
+      .toLowerCase()
+      .includes(q.toLocaleLowerCase());
+
+  public static sanitize = (t: string) => t.replace(/\(n\)/gi, 'n');
+
   public state = {
+    currentBaaniId: -1,
     baanies: null,
     q: '',
   };
@@ -42,49 +57,51 @@ class SundarGutka extends React.PureComponent {
       ? SundarGutka.HOME_LINKS
       : SundarGutka.BAANI_LINKS;
 
-    return (
-      <div className="row" id="content-root">
-        <BreadCrumb links={links} />
-        <div id="help">
-          {baanies === null ? (
-            <div className="spinner" />
-          ) : isSundarGutkaHome ? (
-            <div className="wrapper" style={{ width: '100%' }}>
-              <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
-              <div className="show-on-mobile sundar-gutka-app-promo">
-                {TEXTS.SUNDAR_GUTKA_APP}{' '}
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
-                  target="_blank"
-                  className="playstore--link"
-                  rel="noopener noreferrer"
-                >
-                  <Android className="playstore--icon" /> {TEXTS.ANDROID}
-                </a>{' '}
-                |{' '}
-                <a
-                  href="https://itunes.apple.com/in/app/sundar-gutka/id431446112?mt=8"
-                  target="_blank"
-                  className="playstore--link"
-                  rel="noopener noreferrer"
-                >
-                  <AppleiOS className="appstore--icon" /> {TEXTS.IOS}
-                </a>
-              </div>
-              <input
-                type="search"
-                name="baani-query"
-                className="search"
-                value={q}
-                autoCorrect="off"
-                autoCapitalize="none"
-                onChange={this.handleSearch}
-                placeholder="Search"
-              />
-              <ul className="list">
-                {baanies
-                  .filter(SundarGutka.filter(q))
-                  .map(({ ID, transliteration, gurmukhiUni }, i) => (
+    let content = <div className="spinner" />;
+
+    if (baanies !== null) {
+      if (isSundarGutkaHome) {
+        content = (
+          <div className="wrapper" style={{ width: '100%' }}>
+            <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
+            <div className="show-on-mobile sundar-gutka-app-promo">
+              {TEXTS.SUNDAR_GUTKA_APP}{' '}
+              <a
+                href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
+                target="_blank"
+                className="playstore--link"
+                rel="noopener noreferrer"
+              >
+                <Android className="playstore--icon" /> {TEXTS.ANDROID}
+              </a>{' '}
+              |{' '}
+              <a
+                href="https://itunes.apple.com/in/app/sundar-gutka/id431446112?mt=8"
+                target="_blank"
+                className="playstore--link"
+                rel="noopener noreferrer"
+              >
+                <AppleiOS className="appstore--icon" /> {TEXTS.IOS}
+              </a>
+            </div>
+            <input
+              type="search"
+              name="baani-query"
+              className="search"
+              value={q}
+              autoCorrect="off"
+              autoCapitalize="none"
+              onChange={this.handleSearch}
+              placeholder="Search"
+            />
+            <ul className="list">
+              {baanies
+                .filter(SundarGutka.filter(q))
+                .map(
+                  (
+                    { ID, transliteration, gurmukhiUni }: BaaniType,
+                    i: number
+                  ) => (
                     <Link
                       to={`/sundar-gutka/${ID}`}
                       key={ID}
@@ -93,7 +110,7 @@ class SundarGutka extends React.PureComponent {
                       <li
                         className="list--item"
                         style={{
-                          animationDelay: i < 15 ? `${20 * i}ms` : 0,
+                          animationDelay: i < 15 ? `${20 * i}ms` : '0ms',
                         }}
                       >
                         {gurmukhiUni}{' '}
@@ -101,31 +118,35 @@ class SundarGutka extends React.PureComponent {
                           `- ${SundarGutka.sanitize(transliteration)}`}
                       </li>
                     </Link>
-                  ))}
-              </ul>
-            </div>
-          ) : (
-            <Route
-              path={this.props.match.url + '/:currentBaaniId'}
-              component={Baani}
-            />
-          )}
-        </div>
+                  )
+                )}
+            </ul>
+          </div>
+        );
+      } else {
+        content = (
+          <Route
+            path={this.props.match.url + '/:currentBaaniId'}
+            component={Baani}
+          />
+        );
+      }
+    }
+
+    return (
+      <div className="row" id="content-root">
+        <BreadCrumb links={links} />
+        <div id="help">{content}</div>
       </div>
     );
   }
 
-  public static filter = q => i =>
-    q === '' ||
-    SundarGutka.sanitize(i.transliteration)
-      .toLowerCase()
-      .includes(q.toLocaleLowerCase());
+  public handleSearch = (e: ChangeEvent) =>
+    this.setState({ q: e.currentTarget.value });
 
-  public static sanitize = t => t.replace(/\(n\)/gi, 'n');
-
-  public handleSearch = e => this.setState({ q: e.currentTarget.value });
-
-  public componentDidUpdate({ match: { isExact: wasExact } }) {
+  public componentDidUpdate({
+    match: { isExact: wasExact },
+  }: SundarGutkaProps) {
     if (wasExact === false && this.props.match.isExact) {
       pageView('/sundar-gutka');
     }
@@ -138,7 +159,7 @@ class SundarGutka extends React.PureComponent {
 
     fetch(BANIS_API_URL)
       .then(r => r.json())
-      .then(baanies =>
+      .then((baanies: BaaniType[]) =>
         this.setState({
           baanies,
           currentBaaniId: baanies[0].ID,
@@ -147,6 +168,6 @@ class SundarGutka extends React.PureComponent {
   }
 }
 
-export default connect(({ transliterationLanguages }) => ({
+export default connect(({ transliterationLanguages }: Store) => ({
   transliterationLanguages,
 }))(SundarGutka);

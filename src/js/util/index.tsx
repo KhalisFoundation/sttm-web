@@ -5,6 +5,7 @@ import {
   SEARCH_TYPES,
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
 } from '@/constants';
+import { SOURCES } from '@sttm/banidb';
 
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
@@ -213,8 +214,8 @@ export const toShabadURL = ({
   type,
   source,
 }: {
-  shabad: Shabad;
-  q: string;
+  shabad: { shabadid: string; id: number };
+  q?: string;
   type?: string;
   source?: string;
 }) =>
@@ -231,9 +232,9 @@ export const toAngURL = ({
   source,
   highlight,
 }: {
-  ang: string;
-  source: string;
-  highlight: string;
+  ang: number;
+  source: keyof SOURCES;
+  highlight?: string;
 }) =>
   `/ang?${objectToQueryParams({
     ang,

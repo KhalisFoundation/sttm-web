@@ -1,40 +1,46 @@
 import React from 'react';
 import Header from '@/components/Header';
 import GenericError from '@/components/GenericError';
-import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, TEXTS } from '@/constants';
 import { connect } from 'react-redux';
 import {
   DARK_MODE_CLASS_NAME,
   ONLINE_COLOR,
   OFFLINE_COLOR,
-} from '_@/common/constants';
+} from '../../../../common/constants';
 import { ACTIONS, errorEvent } from '@/util/analytics';
 import { setOnlineMode } from '@/features/actions';
 import ScrollToTop from '@/components/ScrollToTop';
 import throttle from 'lodash.throttle';
+import { Store } from '@/features/types';
 
-class Layout extends React.PureComponent {
+type LayoutState = {
+  error: any;
+  errorProps: { title: string; description: string; image: string } | null;
+  showScrollToTop: boolean;
+};
+
+type LayoutProps = {
+  title: string;
+  online: boolean;
+  children: React.ReactType;
+  darkMode: boolean;
+  location: { pathname: string };
+  defaultQuery: string;
+  isHome: boolean;
+  isAng: boolean;
+  setOnlineMode: (value: boolean) => void;
+};
+
+class Layout extends React.PureComponent<LayoutProps, LayoutState> {
   public static defaultProps = {
     isHome: false,
     title: DEFAULT_PAGE_TITLE,
   };
 
-  public static propTypes = {
-    title: PropTypes.string,
-    online: PropTypes.bool,
-    children: PropTypes.node.isRequired,
-    darkMode: PropTypes.bool.isRequired,
-    location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
-      .isRequired,
-    defaultQuery: PropTypes.string,
-    isHome: PropTypes.bool,
-    isAng: PropTypes.bool,
-    setOnlineMode: PropTypes.func.isRequired,
-  };
-
   public state = {
     error: null,
+    errorProps: null,
     showScrollToTop: false,
   };
 
@@ -53,7 +59,7 @@ class Layout extends React.PureComponent {
     });
   }, 500);
 
-  public componentDidCatch(error) {
+  public componentDidCatch(error: any) {
     const newState = {
       error,
       errorProps: {
@@ -110,7 +116,7 @@ class Layout extends React.PureComponent {
           isAng={isAng}
           {...props}
         />
-        {this.state.error ? (
+        {this.state.error !== null && this.state.errorProps !== null ? (
           <GenericError {...this.state.errorProps} />
         ) : (
           children
@@ -152,7 +158,7 @@ class Layout extends React.PureComponent {
 
   public onOffline = () => this.props.setOnlineMode(false);
 
-  public componentDidUpdate(prevProps, prevState) {
+  public componentDidUpdate(prevProps: LayoutProps, prevState: LayoutState) {
     if (prevProps.darkMode !== this.props.darkMode) {
       this.updateTheme();
     }
@@ -164,7 +170,7 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode }) => ({ online, darkMode }),
+  ({ online, darkMode }: Store) => ({ online, darkMode }),
   {
     setOnlineMode,
   }

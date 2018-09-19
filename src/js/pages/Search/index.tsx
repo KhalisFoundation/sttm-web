@@ -5,7 +5,7 @@ import { buildApiUrl } from '@sttm/banidb';
 import { TEXTS } from '@/constants';
 import PageLoader from '@/pages/PageLoader';
 import GenericError from '@/components/GenericError';
-import Layout, { Stub } from './Layout';
+import Layout, { Stub } from './Search';
 
 export default class Search extends React.PureComponent {
   public static defaultProps = {

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { pageView, errorEvent, ACTIONS } from '@/util/analytics';
 import GenericError from '@/components/GenericError';
@@ -9,13 +8,14 @@ import { toAngURL } from '@/util';
 
 export const Stub = () => <div className="spinner" />;
 
-export default class Layout extends React.PureComponent {
-  public static propTypes = {
-    ang: PropTypes.number,
-    source: PropTypes.oneOf(Object.keys(SOURCES)),
-    highlight: PropTypes.number,
-    data: PropTypes.object.isRequired,
-  };
+type LayoutProps = {
+  ang: number;
+  source: keyof SOURCES;
+  highlight?: number;
+  data: any;
+};
+
+export default class Layout extends React.PureComponent<LayoutProps> {
   public render() {
     const { ang, source, highlight, data } = this.props;
 

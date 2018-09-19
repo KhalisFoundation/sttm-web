@@ -14,10 +14,20 @@ type ShabadProps = {
   id: string;
 };
 export default class Shabad extends React.PureComponent<ShabadProps> {
+  public componentDidMount() {
+    const { random, id, highlight } = this.props;
+
+    if (random) {
+      pageView('/shabad?random');
+    } else {
+      pageView(toShabadURL({ shabad: { shabadid: id, id: highlight } }));
+    }
+  }
+
   public render() {
     const { random, id, highlight } = this.props;
     const url = buildApiUrl(
-      random ? { random, API_URL } : { random, id, API_URL }
+      random ? { random, API_URL } : { random, id: Number(id), API_URL }
     );
 
     return (
@@ -40,15 +50,5 @@ export default class Shabad extends React.PureComponent<ShabadProps> {
         }
       </PageLoader>
     );
-  }
-
-  public componentDidMount() {
-    const { random, id, highlight } = this.props;
-
-    if (random) {
-      pageView('/shabad?random');
-    } else {
-      pageView(toShabadURL({ shabad: { shabadid: id, id: highlight } }));
-    }
   }
 }

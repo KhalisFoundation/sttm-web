@@ -1,13 +1,12 @@
 /* globals API_URL */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { buildApiUrl } from '@sttm/banidb';
+import { buildApiUrl, SOURCES } from '@sttm/banidb';
 import PageLoader from '@/pages/PageLoader';
-import Layout, { Stub } from './Layout';
+import AngLayout, { Stub } from './Ang';
 
 export default class Ang extends React.PureComponent<{
   ang: number;
-  source: string;
+  source: keyof SOURCES;
   highlight?: number;
 }> {
   public render() {
@@ -20,7 +19,7 @@ export default class Ang extends React.PureComponent<{
           loading ? (
             <Stub />
           ) : (
-            <Layout
+            <AngLayout
               data={data}
               highlight={highlight}
               ang={ang}

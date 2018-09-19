@@ -1,21 +1,23 @@
 import React from 'react';
 import Fetch from '@/components/Fetch';
 import { throwError } from '@/util';
-import { FetchState } from '@/components/Fetch/Fetch';
-export default class PageLoader extends React.PureComponent<{
+
+export type PageLoaderProps = {
+  children: (props: { loading: boolean; data: any }) => JSX.Element;
   url: string;
-  children: (s: FetchState) => React.ReactType;
-}> {
+};
+
+export default class PageLoader extends React.PureComponent<PageLoaderProps> {
   public render() {
     const { url, children } = this.props;
     return (
       <Fetch url={url}>
         {({ data, error, loading }) =>
           loading
-            ? children({ loading })
+            ? children({ loading, data })
             : error
               ? throwError("Can't load page", error)
-              : children({ data })
+              : children({ loading: false, data })
         }
       </Fetch>
     );

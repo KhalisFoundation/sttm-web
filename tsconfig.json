@@ -6,11 +6,10 @@
     "declaration": true,
     "outDir": "lib",
     "strict": true,
-    "baseUrl": "./",
     "rootDir": "src/js",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["src/js/*"],
-      "_@/*": ["./"]
+      "@/*": ["./src/js/*"]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true

@@ -22,24 +22,13 @@ const images = {
  * @class GenericError
  * @extends {React.PureComponent<GenericErrorProps>}
  */
-export default class GenericError extends React.PureComponent {
+export default class GenericError extends React.PureComponent<{
+  title: string;
+  description: string;
+  image: keyof typeof images;
+}> {
   public static BalpreetSingh = BalpreetSingh;
   public static SachKaur = SachKaur;
-
-  /**
-   * @typedef {object} GenericErrorProps
-   * @property {*} title
-   * @property {*} description
-   * @property {(BalpreetSingh|SachKaur)} image
-   *
-   * @static
-   * @memberof GenericError
-   */
-  public static propTypes = {
-    title: PropTypes.any,
-    description: PropTypes.node,
-    image: PropTypes.oneOf([SachKaur, BalpreetSingh]),
-  };
 
   public render() {
     const { title, description, image } = this.props;

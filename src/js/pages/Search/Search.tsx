@@ -8,6 +8,7 @@ import { ACTIONS, pageView, clickEvent, errorEvent } from '@/util/analytics';
 import Controls from '@/components/Controls';
 import GenericError from '@/components/GenericError';
 import Larivaar from '@/components/Larivaar';
+import { Store } from '@/features/types';
 
 export function Stub() {
   return <div className="spinner" />;
@@ -272,5 +273,5 @@ class Layout extends React.PureComponent {
   }
 }
 
-const stateToProps = state => state;
+const stateToProps = (state: Store) => state;
 export default connect(stateToProps)(Layout);

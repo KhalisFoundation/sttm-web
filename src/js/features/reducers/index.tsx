@@ -27,7 +27,7 @@ import {
 } from '@/constants';
 import { saveToLocalStorage } from '@/util';
 import { clickEvent } from '@/util/analytics';
-import { DARK_MODE_COOKIE } from '_@/common/constants';
+import { DARK_MODE_COOKIE } from '../../../../common/constants';
 import { Store, Action } from '@/features/types';
 
 export default function reducer(state: Store, action: Action) {
