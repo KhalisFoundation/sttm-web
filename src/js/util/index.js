@@ -64,7 +64,9 @@ export function shortenURL(url = window.location.href) {
 
   switch (path) {
     case '/shabad':
-      return `${URL}/s/${getParameterByName('id')}`;
+      return `${URL}/s/${getParameterByName('id')}/${getParameterByName(
+        'highlight'
+      ) || ''}`;
     case '/ang':
       return `${URL}/a/${getParameterByName('ang')}`;
     case '/hukamnama':
