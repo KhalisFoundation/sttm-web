@@ -36,22 +36,31 @@ export default class Search extends React.PureComponent {
 
     return (
       <PageLoader url={url}>
-        {({ loading, data }) =>
-          loading ? (
-            <Stub />
-          ) : (
+        {({ loading, data }) => {
+          if (loading || data === undefined) return <Stub />;
+
+          const { pageinfo, shabads } = data;
+
+          return (
             <Layout
-              totalResults={data.pageinfo.totalresults || 0}
-              resultsCount={data.pageinfo.pageresults || 0}
+              currentPage={offset}
+              pages={Array.from(
+                Array(
+                  parseInt(pageinfo.totalresults / pageinfo.resultsperpage)
+                ),
+                (_, i) => i + 1
+              )}
+              totalResults={pageinfo.totalresults || 0}
+              resultsCount={pageinfo.pageresults || 0}
               offset={offset}
-              nextPageOffset={data.pageinfo.nextpageoffset}
-              shabads={data.shabads}
+              nextPageOffset={pageinfo.nextpageoffset}
+              shabads={shabads}
               q={q}
               type={type}
               source={source}
             />
-          )
-        }
+          );
+        }}
       </PageLoader>
     );
   }

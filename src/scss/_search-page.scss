@@ -35,3 +35,33 @@
 .search-highlight-word {
   color: $sttm-green;
 }
+
+.searchPagination {
+  display: flex;
+  margin: 10px -5px;
+
+  @media screen and (max-width: 46em) {
+    margin: 10px;
+  }
+
+  &Item {
+    border: 1px solid $sttm-dark-grey;
+    color: $sttm-dark-grey;
+    cursor: pointer;
+    margin: 5px;
+    padding: 10px;
+
+
+    &:hover {
+      background-color: $sttm-blue;
+      border-color: transparent;
+      color: $sttm-white;
+    }
+
+    &Active {
+      background-color: $sttm-blue;
+      border-color: transparent;
+      color: $sttm-white;
+    }
+  }
+}

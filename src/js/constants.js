@@ -99,6 +99,7 @@ export const TEXTS = {
   EMBED_FAILURE: "Sorry, we couldn't copy embed code",
   LINK_COPIED: 'Link has been copied to your clipboard!',
   COPY_FAILURE: "Sorry, we couldn't copy the link. Try copying it manually.",
+  OPEN_PAGE: 'Open Page',
   PREVIOUS_PAGE: 'Previous Page',
   NEXT_PAGE: 'Next Page',
   PAGE_NOT_FOUND_MESSAGE: 'These are not the Singhs you are looking for.',
