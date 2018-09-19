@@ -43,7 +43,7 @@ export default class Search extends React.PureComponent {
 
           return (
             <Layout
-              currentPage={offset}
+              currentPage={offset || 1}
               pages={Array.from(
                 Array(
                   parseInt(pageinfo.totalresults / pageinfo.resultsperpage)

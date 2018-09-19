@@ -38,6 +38,7 @@
 
 .searchPagination {
   display: flex;
+  flex-wrap: wrap;
   margin: 10px -5px;
 
   @media screen and (max-width: 46em) {
@@ -45,11 +46,16 @@
   }
 
   &Item {
+    align-items: center;
     border: 1px solid $sttm-dark-grey;
     color: $sttm-dark-grey;
     cursor: pointer;
+    display: flex;
+    height: 50px;
+    justify-content: center;
     margin: 5px;
     padding: 10px;
+    width: 50px;
 
     &:hover {
       background-color: $sttm-blue;
