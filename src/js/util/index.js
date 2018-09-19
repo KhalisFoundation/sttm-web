@@ -85,11 +85,18 @@ export const showToast = (text, delay = 2500, className = '') =>
   new Promise(resolve => {
     const $notification = document.getElementById('toast-notification');
     $notification.innerText = text;
-    $notification.classList.add(className);
+
+    if (className !== '') {
+      $notification.classList.add(className);
+    }
     $notification.classList.remove('hidden');
+
     const hideToast = () => {
       $notification.classList.add('hidden');
-      $notification.classList.remove(className);
+
+      if (className !== '') {
+        $notification.classList.remove(className);
+      }
       resolve();
     };
 
