@@ -43,7 +43,9 @@ export default class ShareButtons extends React.PureComponent {
     onCopyAllClick: PropTypes.func,
   };
 
-  static handleShare = () =>
+  static handleShare = () => {
+    clickEvent({ action: ACTIONS.SHARE, label: 'web-share' });
+
     navigator.share({
       title: document.title,
       description: document
@@ -51,6 +53,7 @@ export default class ShareButtons extends React.PureComponent {
         .getAttribute('content'),
       url: shortenURL(),
     });
+  };
 
   render() {
     const { media, onEmbedClick, onCopyAllClick } = this.props;

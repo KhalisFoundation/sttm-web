@@ -30,7 +30,6 @@ class Layout extends React.PureComponent {
     source: PropTypes.string.isRequired,
     resultsCount: PropTypes.number.isRequired,
     nextPageOffset: PropTypes.number,
-    currentPage: PropTypes.number,
     pages: PropTypes.array,
     offset: PropTypes.number,
     shabads: PropTypes.array.isRequired,
@@ -234,7 +233,7 @@ class Layout extends React.PureComponent {
             );
           })}
           <Pagination
-            currentPage={this.props.currentPage}
+            currentPage={this.props.offset + 1}
             pages={this.props.pages}
             onPageClick={pageNumber => {
               clickEvent({ action: TEXTS.OPEN_PAGE, label: pageNumber });
