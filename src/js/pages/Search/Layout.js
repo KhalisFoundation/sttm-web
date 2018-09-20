@@ -233,7 +233,7 @@ class Layout extends React.PureComponent {
                   query: q,
                   type,
                   source,
-                  offset: pageNumber,
+                  offset: pageNumber - 1,
                 })
               );
             }}
