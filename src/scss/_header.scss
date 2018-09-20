@@ -277,8 +277,7 @@
 }
 
 #open-mobile-menu {
-  background-color: $sttm-pure-white;
-  border: 1px solid $sttm-blue;
+  background-color: transparent;
   border-radius: 2px;
   font-size: 1rem;
   height: 48px;
@@ -290,10 +289,6 @@
 
   svg {
     fill: $sttm-blue;
-  }
-
-  .dark-mode & {
-    background-color: $sttm-light-black;
   }
 }
 

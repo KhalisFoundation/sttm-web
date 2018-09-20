@@ -45,10 +45,17 @@
     margin: 10px;
   }
 
+  &Wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
   &Item {
     align-items: center;
-    border: 1px solid $sttm-dark-grey;
-    color: $sttm-dark-grey;
+    border: 1px solid $sttm-light-grey;
+    border-radius: 2px;
+    color: $sttm-lighter-black;
     cursor: pointer;
     display: flex;
     height: 50px;
@@ -56,6 +63,11 @@
     margin: 5px;
     padding: 10px;
     width: 50px;
+
+    .dark-mode & {
+      border-color: $sttm-dark-grey;
+      color: $sttm-dark-grey;
+    }
 
     &:hover {
       background-color: $sttm-blue;
@@ -67,6 +79,11 @@
       background-color: $sttm-blue;
       border-color: transparent;
       color: $sttm-white;
+
+      .dark-mode & {
+        border-color: transparent;
+        color: $sttm-white;
+      }
     }
   }
 }

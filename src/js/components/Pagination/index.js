@@ -26,7 +26,7 @@ class Page extends React.PureComponent {
 export default class Pagination extends React.PureComponent {
   static defaultProps = {
     maxPages: 10,
-    minPagesBeforeCurrent: 3,
+    minPagesBeforeCurrent: 5,
   };
 
   static propTypes = {
@@ -46,37 +46,72 @@ export default class Pagination extends React.PureComponent {
       onPageClick,
     } = this.props;
 
-    const pages = _pages.slice(
-      Math.max(currentPage - minPagesBeforeCurrent, 0),
-      Math.min(currentPage + maxPages - minPagesBeforeCurrent, _pages.length)
-    );
+    if (_pages.length < 2) {
+      return null;
+    }
 
     const lastPage = _pages[_pages.length - 1];
+    const leftPage = Math.max(currentPage - minPagesBeforeCurrent, 0) + 1;
+    const rightPage = Math.min(
+      currentPage + maxPages - minPagesBeforeCurrent - 1,
+      lastPage
+    );
 
-    const showEllipsis =
-      currentPage + maxPages - minPagesBeforeCurrent - 1 < _pages.length;
+    const showLeftEllipsis = leftPage > 1;
+    const showRightEllipsis =
+      currentPage + maxPages - minPagesBeforeCurrent - 1 < lastPage;
+
+    const leftEllipsisPage = parseInt(leftPage / 2);
+    const rightEllipsisPage = rightPage + parseInt((lastPage - rightPage) / 2);
+
+    // Instead of showing all the pages, we show a slice of it around currentPage.
+    const pages = _pages.slice(leftPage - 1, rightPage);
 
     return (
-      <div className="searchPagination">
-        {currentPage > minPagesBeforeCurrent && (
-          <React.Fragment>
-            <Page page={1} onClick={() => onPageClick(1)} />
-            <Page page="..." />
-          </React.Fragment>
+      <div className="searchPaginationWrapper">
+        {currentPage === 1 ? (
+          <div />
+        ) : (
+          <Page page="⇦" onClick={() => onPageClick(currentPage - 1)} />
         )}
-        {pages.map(page => (
-          <Page
-            key={page}
-            active={page === currentPage}
-            page={page}
-            onClick={() => onPageClick(page)}
-          />
-        ))}
-        {showEllipsis && (
-          <React.Fragment>
-            <Page page="..." />
-            <Page page={lastPage} onClick={() => onPageClick(lastPage)} />
-          </React.Fragment>
+        <div className="searchPagination">
+          {showLeftEllipsis && (
+            <React.Fragment>
+              <Page page={1} onClick={() => onPageClick(1)} />
+              {leftPage !== 2 && (
+                <Page
+                  title={leftEllipsisPage}
+                  page="..."
+                  onClick={() => onPageClick(leftEllipsisPage)}
+                />
+              )}
+            </React.Fragment>
+          )}
+          {pages.map(page => (
+            <Page
+              key={page}
+              active={page === currentPage}
+              page={page}
+              onClick={() => onPageClick(page)}
+            />
+          ))}
+          {showRightEllipsis && (
+            <React.Fragment>
+              {rightPage !== lastPage - 1 && (
+                <Page
+                  title={rightEllipsisPage}
+                  page="..."
+                  onClick={() => onPageClick(rightEllipsisPage)}
+                />
+              )}
+              <Page page={lastPage} onClick={() => onPageClick(lastPage)} />
+            </React.Fragment>
+          )}
+        </div>
+        {currentPage === lastPage ? (
+          <div />
+        ) : (
+          <Page page="⇨" onClick={() => onPageClick(currentPage + 1)} />
         )}
       </div>
     );
