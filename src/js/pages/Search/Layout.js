@@ -11,7 +11,7 @@ import {
   errorEvent,
 } from '../../util/analytics';
 import Pagination from '../../components/Pagination';
-import Controls, { supportedMedia } from '../../components/Controls';
+import Controls from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Larivaar from '../../components/Larivaar';
 
@@ -109,16 +109,7 @@ class Layout extends React.PureComponent {
 
     return (
       <div className="row" id="content-root">
-        <Controls
-          media={
-            type === 'shabad'
-              ? supportedMedia
-              : supportedMedia.filter(
-                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
-                )
-          }
-          disableSplitView
-        />
+        <Controls media={[]} disableSplitView />
         <ul className="search-results display">
           {shabads.map(({ shabad }) => {
             const _source = SOURCES[shabad.source.id];

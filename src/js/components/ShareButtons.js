@@ -58,6 +58,10 @@ export default class ShareButtons extends React.PureComponent {
   render() {
     const { media, onEmbedClick, onCopyAllClick } = this.props;
 
+    if (media.length === 0) {
+      return null;
+    }
+
     // TODO: Use array to generate this DOM
 
     const mediaMap = {
@@ -113,12 +117,12 @@ export default class ShareButtons extends React.PureComponent {
           </ul>
         </div>
       );
-    } else {
-      return (
-        <div id="share-menu">
-          <ul className="share-buttons">{media.map(item => mediaMap[item])}</ul>
-        </div>
-      );
     }
+
+    return (
+      <div id="share-menu">
+        <ul className="share-buttons">{media.map(item => mediaMap[item])}</ul>
+      </div>
+    );
   }
 }
