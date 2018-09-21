@@ -45,7 +45,7 @@ export default class Header extends React.PureComponent {
 
     return (
       <div className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
-        <div className="row">
+        <div className="top-bar-wrapper row">
           {!isHome && (
             <div className="top-bar-title">
               <Link to="/" />

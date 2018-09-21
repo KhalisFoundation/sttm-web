@@ -4,6 +4,10 @@
   border-bottom: 1px solid $sttm-lighter-grey;
   position: relative;
 
+  &-wrapper {
+    max-width: 78rem;
+  }
+
   &,
   ul {
     background-color: $sttm-white;
@@ -77,7 +81,7 @@
 
 .top-bar-right .menu > li {
   display: inline-block;
-  font-weight: 500;
+  font-weight: 400;
 
   a,
   span {
@@ -380,10 +384,15 @@
   }
 }
 
+// Mobile
 @media screen and (min-width: 46em) {
   .top-bar-title a {
     background-image: url(/assets/images/sttm_icon.png);
     width: 54px;
+  }
+
+  .search-form {
+    max-width: 100%;
   }
 
   .top-bar .top-bar-left,

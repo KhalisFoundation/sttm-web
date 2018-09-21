@@ -72,6 +72,13 @@ export default ({ bodyClass, title, description }) => marinate`
 
   <footer>
     <div class="footer row">
+      <ul class="version">
+        <li>
+          <a href="https://github.com/KhalisFoundation/sttm-web/releases" target="_blank" rel="noopener noreferrer">
+            v${process.env.npm_package_version}
+          </a>
+        </li>
+      </ul>
       <ul class="menu footer-menu">
         <li>
           <a href="/help">Help</a>
