@@ -60,6 +60,8 @@ export const TEXTS = {
   URIS: {
     HOME: 'Home',
     ABOUT: 'About',
+    SHABAD: 'Shabad',
+    ANG: 'Ang',
     INDEX: 'Index',
     HELP: 'Help',
     TOS: 'Terms of Service',

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { TEXTS } from '../constants';
+import { TEXTS } from '../../constants';
 
 /**
  *
@@ -29,10 +29,11 @@ export default class BreadCrumb extends React.PureComponent {
           ({ url, title }, index, { length }) =>
             index < length - 1 ? (
               <React.Fragment key={index}>
-                <Link to={url}>{title}</Link> »{' '}
+                <Link to={url}>{title}</Link>
+                {' › '}
               </React.Fragment>
             ) : (
-              title
+              <span className="breadcrumbLast">{title}</span>
             )
         )}
       </h4>
