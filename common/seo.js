@@ -39,7 +39,7 @@ export default {
   '/index': {
     title: suffixAppName('Index'),
     createDescription: () =>
-      `Index page of Sri Guru Granth Sahib Jee and other Sikh Granths. ${basicDescription}`,
+      `Index page of Sri Guru Granth Sahib Jee, Sri Dasam Granth. Read Asa Ki Vaar, Raag Dhanasari, Ramkali Ki Vaar Rai Balvand, Shalok Sehskritee, Shalok Vaaran Te Vadeek, Salok Mahalla 9, Raag Maala, Akaal Ustat, Vaar Sri Bhagouti Jee kee, Sri Shastar Naam Mala, Zafarnamah, Khalsa Mahima, Sri Charitropakhyan`,
   },
   '/help': {
     title: suffixAppName('Help'),
