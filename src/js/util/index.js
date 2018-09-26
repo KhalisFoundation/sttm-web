@@ -253,8 +253,13 @@ export const versesToGurbani = verses =>
  * @returns {array} of [start, end) indices
  */
 export const getHighlightIndices = (baani, query, type) => {
-  let start = -1,
-    end = -1;
+  let start = -1;
+  let end = -1;
+
+  if (baani === null) {
+    return [start, end];
+  }
+
   let baaniWords = baani.split(' ');
 
   switch (type) {

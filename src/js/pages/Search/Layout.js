@@ -41,8 +41,12 @@ class Layout extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
   };
 
-  static HiglightedSearch = ({ children, startIndex, endIndex }) =>
-    children.split(' ').map((word, i) => (
+  static HiglightedSearch = ({ children, startIndex, endIndex }) => {
+    if (children === null) {
+      return null;
+    }
+
+    return children.split(' ').map((word, i) => (
       <span
         key={i}
         className={
@@ -52,6 +56,7 @@ class Layout extends React.PureComponent {
         {` ${word} `}
       </span>
     ));
+  };
 
   render() {
     const {

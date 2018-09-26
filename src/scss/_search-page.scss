@@ -45,6 +45,11 @@
     justify-content: space-between;
   }
 
+  &Button {
+    cursor: pointer;
+    padding: 10px;
+  }
+
   &Item {
     align-items: center;
     border: 1px solid $sttm-light-grey;

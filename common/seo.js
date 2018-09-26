@@ -7,7 +7,7 @@ const suffixAppName = suffix('SikhiToTheMax');
 
 const getAng = req => req.query.ang;
 const getSource = req => SOURCES[req.query.source || 'G'];
-const basicDescription = `Search Sri Guru Granth Sahib Jee, Sri Dasam Granth Sahib, Bhai Gurdas Vaar, Bhai Nandlal Vaar, Bhai Gurdas Singh Vaar, Tankhanaama, Zafarnaama, Amrit Keertan.`;
+const basicDescription = `Search Sri Guru Granth Sahib Jee, Sri Dasam Granth Sahib, Bhai Gurdas Vaar, Bhai Nandlal Vaar, Bhai Gurdas Singh Vaar, Tankhanaama, Zafarnaama, Amrit Kirtan.`;
 
 export default {
   '/': {
