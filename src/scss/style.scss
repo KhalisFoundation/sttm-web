@@ -68,15 +68,14 @@ select {
 
 .breadcrumb {
   font-size: 1rem;
-  margin: 0 -15rem;
-  padding: 10px 18rem;
+  margin: 5px 3rem;
 
   &Last {
     font-weight: 500;
   }
 
   @media screen and (max-width: 730px) {
-    padding: 10px 17rem;
+    margin: 5px 1rem;
   }
 }
 
