@@ -144,6 +144,7 @@
   },
   "dependencies": {
     "@sttm/banidb": "^1.1.0",
+    "classnames": "^2.2.6",
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
     "esm": "^3.0.27",

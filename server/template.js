@@ -1,7 +1,7 @@
 import marinate from 'marinate';
 import { ONLINE_COLOR } from '../common/constants';
 
-export default ({ bodyClass, title, description }) => marinate`
+export default ({ url, bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,20 +33,21 @@ export default ({ bodyClass, title, description }) => marinate`
 
   <!-- Open Graph and Twitter -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sikhitothemax.org${url}">
   <meta property="og:author" content="https://khalisfoundation.org/">
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${description}">
-  <meta property="og:image" content="/assets/images/sttm_logo.png">
-  <meta property="og:image:width" content="1138">
-  <meta property="og:image:height" content="250">
+  <meta property="og:image" content="/assets/images/sttm_banner.png">
+  <meta property="og:image:width" content="1500">
+  <meta property="og:image:height" content="1000">
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:site" content="@khalisfound">
   <meta property="twitter:creator" content="@khalisfound">
   <meta property="twitter:title" content="${title}">
   <meta property="twitter:description" content="${description}">
-  <meta property="twitter:image:src" content="/assets/images/sttm_logo.png">
-  <meta property="twitter:image:width" content="1138">
-  <meta property="twitter:image:height" content="250">
+  <meta property="twitter:image:src" content="/assets/images/sttm_banner.png">
+  <meta property="twitter:image:width" content="1500">
+  <meta property="twitter:image:height" content="1000">
 
   <!-- Safari iOS config -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -72,6 +73,13 @@ export default ({ bodyClass, title, description }) => marinate`
 
   <footer>
     <div class="footer row">
+      <ul class="version">
+        <li>
+          <a href="https://github.com/KhalisFoundation/sttm-web/releases" target="_blank" rel="noopener noreferrer">
+            v${process.env.npm_package_version}
+          </a>
+        </li>
+      </ul>
       <ul class="menu footer-menu">
         <li>
           <a href="/help">Help</a>

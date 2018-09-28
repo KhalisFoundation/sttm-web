@@ -67,9 +67,16 @@ select {
 }
 
 .breadcrumb {
-  border-bottom: 1px solid grey;
-  margin: 20px;
-  padding-bottom: 10px;
+  font-size: 1rem;
+  margin: 5px 3rem;
+
+  &Last {
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 730px) {
+    margin: 5px 1rem;
+  }
 }
 
 .wrapper {

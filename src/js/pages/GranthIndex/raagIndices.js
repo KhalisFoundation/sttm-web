@@ -223,6 +223,16 @@ export default {
         name: 'Raag Jaijavanti',
         pages: [1352, 1353],
       },
+      {
+        name: 'Salok Mahalla 9',
+        pages: [1426, 1429],
+        highlight: 60214,
+      },
+      {
+        name: 'Raag Maala',
+        pages: [1429, 1430],
+        highlight: 60342,
+      },
     ],
   },
   DG: {

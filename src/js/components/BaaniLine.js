@@ -26,11 +26,12 @@ export default class BaaniLine extends React.PureComponent {
     } = this.props;
     return (
       <div
-        className={`gurmukhi ${
+        className={`gurmukhi gurbani-display gurbani-font ${
           shouldHighlight ? 'highlight' : ''
-        } gurbani-display gurbani-font`}
+        }`}
         style={{ fontSize: `${fontSize}em` }}
       >
+        {'\n'}
         <div
           className={`${larivaar ? 'larivaar' : ''} ${
             unicode ? 'unicode' : 'gurlipi'
@@ -44,6 +45,7 @@ export default class BaaniLine extends React.PureComponent {
             {unicode ? text.unicode : text.gurmukhi}
           </Larivaar>
         </div>
+        {'\n'}
       </div>
     );
   }

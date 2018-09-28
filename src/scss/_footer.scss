@@ -17,6 +17,12 @@ footer {
     display: flex;
     justify-content: space-between;
 
+    .version {
+      list-style: none;
+      margin: 0;
+      margin-right: 15px;
+    }
+
     .copyright {
       font-size: 0.75rem;
       padding: 5px;
@@ -27,7 +33,10 @@ footer {
       display: flex;
       flex-wrap: wrap;
       width: 100%;
+    }
 
+    .menu,
+    .version {
       li a {
         color: $sttm-lighter-black;
         font-size: 0.9em;
@@ -52,21 +61,35 @@ footer {
       align-items: flex-start;
       flex-direction: column;
 
-      .menu li a {
-        padding: 10px 5px;
+      .menu {
+        justify-content: center;
+      }
+
+      .version,
+      .copyright {
+        padding: 5px 0;
+        text-align: center;
+        width: 100%;
+      }
+
+      .menu,
+      .version {
+        li a {
+          padding: 10px 5px;
+        }
       }
     }
 
     @media screen and (max-width: 480px) {
       align-items: center;
 
-      .menu {
-        justify-content: center;
+      .version {
+        font-size: 0.8rem;
+      }
 
-        li a {
-          font-size: 0.8rem;
-          padding: 5px 2px;
-        }
+      .menu li a {
+        font-size: 0.8rem;
+        padding: 5px 2px;
       }
 
       .copyright {

@@ -31,7 +31,7 @@ app
   .get('*', (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    const { path } = req;
+    const { path, url } = req;
 
     const { title: _title, createDescription } = seo[
       seo[path] === undefined ? '/' : path
@@ -47,7 +47,12 @@ app
         ? DARK_MODE_CLASS_NAME
         : '';
 
-    const template = createTemplate({ bodyClass, title, description });
+    const template = createTemplate({
+      url,
+      bodyClass,
+      title,
+      description,
+    });
 
     template(res, { debug: 'off', stringToBufferThreshold: 1000 });
   })
