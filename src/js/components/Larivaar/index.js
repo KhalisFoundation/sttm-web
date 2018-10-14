@@ -11,11 +11,13 @@ export default class Larivaar extends React.PureComponent {
   static propTypes = {
     larivaarAssist: PropTypes.bool,
     enable: PropTypes.bool,
-    children: PropTypes.string.isRequired,
+    children: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+      .isRequired,
   };
 
   render() {
     const { larivaarAssist, enable, children } = this.props;
+
     const larivaarAssistColor = larivaarAssist ? LARIVAAR_ASSIST_COLOR : '';
     return enable === false
       ? children
