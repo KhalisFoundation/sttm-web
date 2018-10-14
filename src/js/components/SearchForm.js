@@ -226,8 +226,8 @@ export default class SearchForm extends React.PureComponent {
     );
 
   handleSearchChange = ({ target }) => {
-    var cursorStart = target.selectionStart,
-      cursorEnd = target.selectionEnd;
+    const cursorStart = target.selectionStart;
+    const cursorEnd = target.selectionEnd;
 
     this.setQueryAs(target.value)()
       .then(() => target.setSelectionRange(cursorStart, cursorEnd))
