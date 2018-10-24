@@ -96,17 +96,21 @@ export default class SearchForm extends React.PureComponent {
     const tick = () =>
       (this.timer = setTimeout(
         () =>
-          this._setState(({ isAnimatingPlaceholder, placeholder }) => {
-            if (!isAnimatingPlaceholder) return null;
+          this._setState(
+            ({ isAnimatingPlaceholder, placeholder }) => {
+              if (!isAnimatingPlaceholder) return null;
 
-            if (placeholder === finalPlaceholder) {
-              return { isAnimatingPlaceholder: false };
-            } else if (finalPlaceholder[placeholder.length]) {
-              return {
-                placeholder: placeholder + finalPlaceholder[placeholder.length],
-              };
-            }
-          }, () => this.state.isAnimatingPlaceholder && tick()),
+              if (placeholder === finalPlaceholder) {
+                return { isAnimatingPlaceholder: false };
+              } else if (finalPlaceholder[placeholder.length]) {
+                return {
+                  placeholder:
+                    placeholder + finalPlaceholder[placeholder.length],
+                };
+              }
+            },
+            () => this.state.isAnimatingPlaceholder && tick()
+          ),
         2000 / finalPlaceholder.length
       ));
 
@@ -225,8 +229,13 @@ export default class SearchForm extends React.PureComponent {
       }))
     );
 
-  handleSearchChange = ({ target: { value } }) => {
-    this.setQueryAs(value)();
+  handleSearchChange = ({ target }) => {
+    const cursorStart = target.selectionStart;
+    const cursorEnd = target.selectionEnd;
+
+    this.setQueryAs(target.value)().then(() =>
+      target.setSelectionRange(cursorStart, cursorEnd)
+    );
   };
 
   handleSearchSourceChange = e =>
