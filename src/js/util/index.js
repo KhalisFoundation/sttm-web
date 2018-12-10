@@ -239,9 +239,13 @@ export const versesToGurbani = verses =>
   verses.map(({ verse, ...v }, i) => ({
     shabad: {
       ...v,
-      gurbani: verse,
+      gurbani: {
+        ...verse,
+        ...verse.verse,
+      },
       id: v.lineNo || '' + i,
-      transliteration: v.transliteration.english,
+      translation: verse.translation,
+      transliteration: verse.transliteration.english,
     },
   }));
 
