@@ -36,7 +36,7 @@ export const PLACEHOLDERS = {
   [SEARCH_TYPES.GURMUKHI_WORD]: ['jo mwgih Twkur Apuny qy'], // gurmukhi
   [SEARCH_TYPES.ENGLISH_WORD]: ['He has extended His power', true], // translation
   [SEARCH_TYPES.ROMANIZED]: ['jo mange thakur apne te soi', true], // romanized
-  [SEARCH_TYPES.ANG]: ['123', true], //ang
+  [SEARCH_TYPES.ANG]: ['123', true], // ang
 };
 
 export const TRANSLATION_LANGUAGES = ['punjabi', 'english', 'spanish'];
@@ -70,14 +70,15 @@ export const TEXTS = {
   },
   ANDROID: 'Android',
   IOS: 'iOS',
-  SEHAJ_PAATH: ang => `Continue reading Ang ${ang}`,
+  SEHAJ_PAATH: (ang: string) => `Continue reading Ang ${ang}`,
   SUNDAR_GUTKA_HEADER: `Sundar Gutka Baaniyaan`,
   SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,
   SYNC: `Remote Sync`,
   SYNC_DESCRIPTION: `Remote Sync is a feature of SikhiToTheMax desktop application. It allows you to view the shabad and current line displayed via the Desktop Application on your mobile/device. To get started you need to enter the code below, as shared by the desktop application.`,
   SYNC_ERROR: `We aren't able to connect to the entered code. Make sure it's correct or try again later.`,
-  SYNC_NOTIFICATION: code => `You're now connected to ${code}. Tap to dismiss.`,
-  SYNC_CONNECTED: code =>
+  SYNC_NOTIFICATION: (code: string) =>
+    `You're now connected to ${code}. Tap to dismiss.`,
+  SYNC_CONNECTED: (code: string) =>
     `Awesome! You're now connected to the device "${code}" and will start receiving shabads soon! The screen would automatically update now as shabad and the line changes on the desktop.`,
   SYNC_DISCONNECT: `Are you sure you want to disconnect now? You can re-connect by entering the same code later.`,
   OFFLINE: `It seems you aren't connected to internet`,
@@ -91,10 +92,10 @@ export const TEXTS = {
   GO_TO_SHABAD: 'Open Shabad',
   HUKAMNAMA: 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar',
   ANG_NOT_FOUND: `Sorry, we couldn't find the requested ang (page).`,
-  ANG_NOT_FOUND_DESCRIPTION: (ang, source) =>
+  ANG_NOT_FOUND_DESCRIPTION: (ang: string, source: string) =>
     `Ang (page) "${ang}" was not found in "${source}". Make sure ang (page) ${ang} is actually present in the selected source. If you still cannot find your shabad, head over to `,
   NO_RESULTS_FOUND: `Sorry, we couldn't find results for your query`,
-  NO_RESULTS_FOUND_DESCRIPTION: (source, type) =>
+  NO_RESULTS_FOUND_DESCRIPTION: (source: string, type: string) =>
     `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above. If you still cannot find your shabad, head over to `,
   GURBAANI_COPIED: 'Gurbaani has been copied to your clipboard!',
   EMBED_COPIED:
@@ -106,7 +107,7 @@ export const TEXTS = {
   PREVIOUS_PAGE: 'Previous Page',
   NEXT_PAGE: 'Next Page',
   PAGE_NOT_FOUND_MESSAGE: 'These are not the Singhs you are looking for.',
-  URL_NOT_FOUND: url =>
+  URL_NOT_FOUND: (url: string) =>
     `The requested URL "${url}" was not found on this server.`,
   EMPTY_QUERY: `Oh no! You can't just search for nothing.`,
   EMPTY_QUERY_DESCRIPTION:
