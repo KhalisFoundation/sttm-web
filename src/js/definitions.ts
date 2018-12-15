@@ -6,6 +6,8 @@ type Socket = {
 // tslint:disable-next-line
 interface Window {
   io: (path: string) => Socket;
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: string;
+  ga: (type: string, options: any) => void;
 }
 
 declare var BANIS_API_URL: string;

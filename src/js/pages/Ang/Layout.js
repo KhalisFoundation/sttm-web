@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { pageView, errorEvent, ACTIONS } from '../../util/analytics';
 import GenericError, { BalpreetSingh } from '../../components/GenericError';
 import { SOURCES, TEXTS } from '../../constants';
-import ShabadContent from '../../components/ShabadContent';
+import ShabadContent from '@/components/ShabadContent';
 import { toAngURL } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
 

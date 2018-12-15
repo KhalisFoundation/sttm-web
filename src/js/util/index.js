@@ -184,7 +184,7 @@ export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
  * Saves to localStorage in next animation frame.
  *
  * @param {string} key
- * @param {string} value
+ * @param {string|number|boolean} value
  */
 export const saveToLocalStorage = (key, value) =>
   requestAnimationFrame(() => localStorage.setItem(key, value));

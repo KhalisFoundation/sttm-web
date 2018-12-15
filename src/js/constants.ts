@@ -25,6 +25,7 @@ export const LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST = 'larivaarAssist';
 export const LOCAL_STORAGE_KEY_FOR_LARIVAAR = 'larivaar';
 export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
+export const LOCAL_STORAGE_KEY_FOR_PARAGRAPH_VIEW = 'paragraphView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
@@ -50,6 +51,7 @@ export const DEFAULT_LARIVAAR = false;
 export const DEFAULT_LARIVAAR_ASSIST = false;
 export const DEFAULT_UNICODE = false;
 export const DEFAULT_SPLIT_VIEW = false;
+export const DEFAULT_PARAGRAPH_VIEW = false;
 export const DEFAULT_FONT_SIZE = 2;
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
@@ -116,6 +118,7 @@ export const TEXTS = {
   REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
   RESET: 'Reset',
   SPLIT_VIEW: 'Split View',
+  PARAGRAPH_VIEW: 'Paragraph View',
   UNICODE: 'Unicode',
   ASSIST: 'Assist',
   FONT: 'Font',

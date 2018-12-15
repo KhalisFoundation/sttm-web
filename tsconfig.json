@@ -12,6 +12,7 @@
     "paths": {
       "@/*": ["./src/js/*"]
     },
+    "lib": ["es2015", "dom"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   }

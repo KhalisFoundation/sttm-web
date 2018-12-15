@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TEXTS } from '../../constants';
 import { pageView } from '../../util/analytics';
-import ShabadContent from '../../components/ShabadContent';
+import ShabadContent from '@/components/ShabadContent';
 import BreadCrumb from '../../components/Breadcrumb';
 
 export const Stub = () => <div className="spinner" />;

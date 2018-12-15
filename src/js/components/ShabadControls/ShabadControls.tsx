@@ -1,48 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { toggleItemInArray } from '../util';
+import { toggleItemInArray } from '@/util';
 import {
   TEXTS,
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
-} from '../constants';
-import TelevisionIcon from './Icons/Television';
-import SlidersIcon from './Icons/Sliders';
+} from '@/constants';
+import TelevisionIcon from '../Icons/Television';
+import SlidersIcon from '../Icons/Sliders';
+import { State, IActionCreators } from '@/features/types';
 
-export default class ShabadControls extends React.PureComponent {
-  static defaultProps = {
+export interface IShabadControlsProps extends State, IActionCreators {
+  disableSplitView: boolean;
+  disableParagraphView: boolean;
+}
+
+export default class ShabadControls extends React.PureComponent<
+  IShabadControlsProps
+> {
+  public static defaultProps = {
     disableSplitView: false,
+    disableParagraphView: true,
   };
 
-  static propTypes = {
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
-    larivaarAssist: PropTypes.bool.isRequired,
-    larivaar: PropTypes.bool.isRequired,
-    unicode: PropTypes.bool.isRequired,
-    darkMode: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired,
-    disableSplitView: PropTypes.bool.isRequired,
-    showDisplayOptions: PropTypes.bool.isRequired,
-    showFontOptions: PropTypes.bool.isRequired,
-    splitView: PropTypes.bool.isRequired,
-    setFontSize: PropTypes.func.isRequired,
-    setTranslationLanguages: PropTypes.func.isRequired,
-    setTransliterationLanguages: PropTypes.func.isRequired,
-    resetDisplayOptions: PropTypes.func.isRequired,
-    resetFontOptions: PropTypes.func.isRequired,
-    toggleDisplayOptions: PropTypes.func.isRequired,
-    toggleFontOptions: PropTypes.func.isRequired,
-    toggleLarivaarAssistOption: PropTypes.func.isRequired,
-    toggleDarkMode: PropTypes.func.isRequired,
-    toggleLarivaarOption: PropTypes.func.isRequired,
-    toggleSplitViewOption: PropTypes.func.isRequired,
-    toggleUnicodeOption: PropTypes.func.isRequired,
-  };
-
-  render() {
+  public render() {
     const {
       disableSplitView,
+      disableParagraphView,
       showDisplayOptions,
       showFontOptions,
       translationLanguages,
@@ -53,6 +36,7 @@ export default class ShabadControls extends React.PureComponent {
       unicode,
       fontSize,
       splitView,
+      paragraphView,
       setFontSize,
       setTranslationLanguages,
       setTransliterationLanguages,
@@ -64,6 +48,7 @@ export default class ShabadControls extends React.PureComponent {
       toggleLarivaarAssistOption,
       toggleLarivaarOption,
       toggleSplitViewOption,
+      toggleParagraphViewOption,
       toggleUnicodeOption,
     } = this.props;
     return (
@@ -73,7 +58,7 @@ export default class ShabadControls extends React.PureComponent {
             className={`display-options-toggle shabad-controller-toggle ${
               showDisplayOptions ? 'active' : ''
             }`}
-            onClick={toggleDisplayOptions}
+            onClick={() => toggleDisplayOptions()}
           >
             <TelevisionIcon />
             <span>{TEXTS.DISPLAY}</span>
@@ -165,6 +150,23 @@ export default class ShabadControls extends React.PureComponent {
                 </div>
               </div>
             )}
+            {disableParagraphView ? null : (
+              <div className="display-option-type">
+                <div className="display-option-header">
+                  {TEXTS.PARAGRAPH_VIEW}
+                </div>
+                <div className="display-option-content">
+                  <a
+                    className={`display-option-toggle ${
+                      paragraphView ? 'active' : ''
+                    }`}
+                    onClick={() => toggleParagraphViewOption()}
+                  >
+                    {paragraphView ? 'Disable' : 'Enable'}
+                  </a>
+                </div>
+              </div>
+            )}
             <div className="display-option-type">
               <div className="display-option-header">{TEXTS.DARK_MODE}</div>
               <div className="display-option-content">
@@ -214,8 +216,8 @@ export default class ShabadControls extends React.PureComponent {
                 min="5"
                 max="50"
                 value={fontSize * 10}
-                onChange={e => setFontSize(e.currentTarget.value / 10)}
-                onInput={e => setFontSize(e.currentTarget.value / 10)}
+                onChange={e => setFontSize(Number(e.currentTarget.value) / 10)}
+                onInput={e => setFontSize(Number(e.currentTarget.value) / 10)}
               />
               <big className="gurbani-font">A</big>
             </div>

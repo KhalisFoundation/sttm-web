@@ -1,80 +1,53 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { clickEvent, ACTIONS, errorEvent } from '../util/analytics';
-import { showToast, copyToClipboard } from '../util';
-import Controls, { supportedMedia } from './Controls';
-import FootNav from './FootNav';
-import Meta from './Meta';
-import ProgressBar from './ProgressBar';
-import Baani from './Baani';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '../constants';
 
-/**
- *
- *
- * @class Shabad
- * @augments {React.PureComponent<ShabadProps, ShabadState>}
- */
-class Shabad extends React.PureComponent {
-  /**
-   * @typedef {object} ShabadState
-   * @property {number} progress of vertical scroll
-   *
-   * @memberof Shabad
-   */
-  state = {
-    progress: 0,
+import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
+import { showToast, copyToClipboard } from '@/util';
+import Controls, { supportedMedia } from '../Controls';
+import FootNav from '../FootNav';
+import Meta from '../Meta';
+import ProgressBar from '../ProgressBar';
+import Baani from '../Baani';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
+import { Gurbani, ShabadTypes } from '@/types';
+import { State } from '@/features/types';
+
+export interface IShabadContentProps extends State {
+  random: boolean;
+  nav: {};
+  gurbani: Gurbani;
+  type: ShabadTypes;
+  highlight?: number;
+  controlProps: {
+    disableSplitView: boolean;
+    disableParagraphView: boolean;
   };
+  hideMeta: boolean;
+  hideControls: boolean;
+  info: {
+    id?: string;
+    source: {
+      id?: string;
+      pageno?: string;
+    };
+  };
+}
 
-  static defaultProps = {
+export default class ShabadContent extends React.PureComponent<
+  IShabadContentProps
+> {
+  public static defaultProps = {
     random: false,
     nav: {},
     hideControls: false,
     hideMeta: false,
-    controlProps: {},
   };
 
-  /**
-   * @typedef {object} ShabadProps
-   * @property {array} gurbani
-   * @property {number} highlight LineNo of highlighted shabad line
-   * @property {ShabadContentTypes} type of shabad
-   * @property {{ previous: string, next: string }} nav
-   * @property {object} info
-   * @property {boolean} [hideMeta=false]
-   * @property {boolean} [hideControls=false]
-   * @property {{}} controlProps override props passed to <Controls />.
-   *
-   * TODO: Refactor code to support render props to allow different configurations.
-   *
-   * @memberof Shabad
-   */
-  static propTypes = {
-    gurbani: PropTypes.array.isRequired,
-    highlight: PropTypes.number,
-    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
-    info: PropTypes.object.isRequired,
-    nav: PropTypes.shape({
-      previous: PropTypes.string,
-      next: PropTypes.string,
-    }),
-    hideMeta: PropTypes.bool,
-    hideControls: PropTypes.bool,
-    controlProps: PropTypes.object,
-
-    random: PropTypes.bool.isRequired,
-    splitView: PropTypes.bool.isRequired,
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
-    larivaarAssist: PropTypes.bool.isRequired,
-    larivaar: PropTypes.bool.isRequired,
-    unicode: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired,
+  public state = {
+    progress: 0,
   };
 
-  render() {
+  public render() {
     const {
       props: {
         gurbani,
@@ -148,7 +121,7 @@ class Shabad extends React.PureComponent {
     );
   }
 
-  scrollListener = () => {
+  public scrollListener = () => {
     requestAnimationFrame(() => {
       const y = window.scrollY;
       const maxY =
@@ -159,27 +132,32 @@ class Shabad extends React.PureComponent {
     });
   };
 
-  componentDidMount() {
+  public componentDidMount() {
     addEventListener('scroll', this.scrollListener, { passive: true });
     this.scrollListener();
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     removeEventListener('scroll', this.scrollListener);
   }
 
-  handleCopyAll = () =>
-    Promise.resolve(
-      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).textContent
-    )
+  public handleCopyAll = () => {
+    const $dom = document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`);
+
+    if ($dom === null || $dom.textContent === null) {
+      return;
+    }
+
+    return Promise.resolve($dom.textContent)
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.GURBAANI_COPIED))
       .then(() => clickEvent({ action: ACTIONS.SHARE, label: 'copy-all' }))
       .catch(({ message: label = '' } = {}) =>
         errorEvent({ action: 'copy-all-failure', label })
       );
+  };
 
-  handleEmbed = () => {
+  public handleEmbed = () => {
     const { info, type } = this.props;
 
     clickEvent({ action: ACTIONS.SHARE, label: 'embed' });
@@ -204,6 +182,3 @@ class Shabad extends React.PureComponent {
       .catch(() => showToast(TEXTS.EMBED_FAILURE));
   };
 }
-
-const stateToProps = state => state;
-export default connect(stateToProps)(Shabad);

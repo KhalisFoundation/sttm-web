@@ -1,37 +1,53 @@
 /* globals BANIS_API_URL */
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 import { Route, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { pageView } from '../../util/analytics';
-import PropTypes from 'prop-types';
-import { TEXTS } from '../../constants';
 import Baani from './Baani';
-import BreadCrumb from '../../components/Breadcrumb';
-import Android from '../../components/Icons/Android';
-import AppleiOS from '../../components/Icons/AppleiOS';
+import { TEXTS } from '@/constants';
+import BreadCrumb from '@/components/Breadcrumb';
+import Android from '@/components/Icons/Android';
+import AppleiOS from '@/components/Icons/AppleiOS';
+import { State } from '@/features/types';
+import { BaaniType } from '@/types';
 
-class SundarGutka extends React.PureComponent {
-  static propTypes = {
-    transliterationLanguages: PropTypes.array.isRequired,
-    location: PropTypes.shape({ hash: PropTypes.string }),
-    match: PropTypes.object.isRequired,
+export interface ISundarGutkaProps {
+  transliterationLanguages: State['transliterationLanguages'];
+  location: { hash: string };
+  match: {
+    isExact: boolean;
+    url: string;
   };
+}
 
-  static HOME_LINKS = [{ title: TEXTS.URIS.SUNDAR_GUTKA }];
+export default class SundarGutka extends React.PureComponent<
+  ISundarGutkaProps,
+  { baanies: BaaniType[] | null; q: string; currentBaaniId?: string }
+> {
+  public static filter = (q: string) => (i: BaaniType) =>
+    q === '' ||
+    SundarGutka.sanitize(i.transliteration)
+      .toLowerCase()
+      .includes(q.toLocaleLowerCase());
 
-  static BAANI_LINKS = [
+  public static sanitize = (t: string) => t.replace(/\(n\)/gi, 'n');
+
+  public static HOME_LINKS = [{ title: TEXTS.URIS.SUNDAR_GUTKA }];
+  public static BAANI_LINKS = [
     { url: '/sundar-gutka', title: TEXTS.URIS.SUNDAR_GUTKA },
     { title: TEXTS.URIS.SUNDAR_GUTKA_BAANI },
   ];
 
-  $details = React.createRef();
-
-  state = {
+  public state = {
     baanies: null,
     q: '',
   };
 
-  render() {
+  private $details = React.createRef();
+
+  private handleSearch: ChangeEventHandler<HTMLInputElement> = e =>
+    this.setState({ q: e.currentTarget.value });
+
+  public render() {
     const {
       props: {
         match: { isExact: isSundarGutkaHome },
@@ -84,7 +100,7 @@ class SundarGutka extends React.PureComponent {
                 placeholder="Search"
               />
               <ul className="list">
-                {baanies
+                {(baanies || [])
                   .filter(SundarGutka.filter(q))
                   .map(({ ID, transliteration, gurmukhiUni }, i) => (
                     <Link
@@ -95,7 +111,7 @@ class SundarGutka extends React.PureComponent {
                       <li
                         className="list--item"
                         style={{
-                          animationDelay: i < 15 ? `${20 * i}ms` : 0,
+                          animationDelay: i < 15 ? `${20 * i}ms` : '0',
                         }}
                       >
                         {gurmukhiUni}{' '}
@@ -117,23 +133,15 @@ class SundarGutka extends React.PureComponent {
     );
   }
 
-  static filter = q => i =>
-    q === '' ||
-    SundarGutka.sanitize(i.transliteration)
-      .toLowerCase()
-      .includes(q.toLocaleLowerCase());
-
-  static sanitize = t => t.replace(/\(n\)/gi, 'n');
-
-  handleSearch = e => this.setState({ q: e.currentTarget.value });
-
-  componentDidUpdate({ match: { isExact: wasExact } }) {
+  public componentDidUpdate({
+    match: { isExact: wasExact },
+  }: ISundarGutkaProps) {
     if (wasExact === false && this.props.match.isExact) {
       pageView('/sundar-gutka');
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     if (this.props.match.isExact) {
       pageView('/sundar-gutka');
     }
@@ -148,7 +156,3 @@ class SundarGutka extends React.PureComponent {
       );
   }
 }
-
-export default connect(({ transliterationLanguages }) => ({
-  transliterationLanguages,
-}))(SundarGutka);

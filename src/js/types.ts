@@ -1,20 +1,22 @@
-type Gurbani = Array<{
+export type Gurbani = {
   shabad: Shabad;
-}>;
+};
 
-type BaaniType = {
+export type BaaniType = {
   ID: number;
   transliteration: string;
   gurmukhiUni: string;
 };
 
-type ShabadTypes = 'shabad' | 'ang' | 'hukamnama';
+export type ShabadTypes = 'shabad' | 'ang' | 'hukamnama';
 
-type Shabad = {
+export type Shabad = {
   shabadid: string;
+  paragraph?: number;
   id: string;
   gurbani: {
     unicode: string;
+    gurmukhi: string;
   };
   transliteration: string;
   translation: {
@@ -25,6 +27,7 @@ type Shabad = {
     punjabi: {
       bms: {
         unicode: string;
+        gurmukhi: string;
       };
     };
   };

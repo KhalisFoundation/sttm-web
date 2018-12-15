@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
 import PageLoader from '../PageLoader';
 import { pageView } from '../../util/analytics';
-import ShabadContent from '../../components/ShabadContent';
+import ShabadContent from '@/components/ShabadContent';
 import { toShabadURL } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
 import { TEXTS } from '../../constants';
