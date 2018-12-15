@@ -48,20 +48,23 @@ export default class GurmukhiKeyboard extends React.PureComponent {
     target: {
       dataset: { value },
     },
-  }) => this.props.onKeyClick(`${this.props.value}${value}`);
+  }) => {
+    this.props.onKeyClick(`${this.props.value}${value}`);
+  };
 
   componentDidMount() {
     addEventListener('click', this.windowEventListener);
   }
 
-  windowEventListener = ({ path }) => {
+  windowEventListener = ({ path = [] }) => {
     if (
       path.some(
         ({ classList = null }) =>
           classList &&
           (classList.contains('gurmukhi-keyboard') ||
             classList.contains('gurmukhi-keyboard-toggle'))
-      ) === false
+      ) === false &&
+      typeof this.props.onClose === 'function'
     ) {
       this.props.onClose();
     }

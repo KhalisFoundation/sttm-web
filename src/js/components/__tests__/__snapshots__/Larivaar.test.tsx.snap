@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Larivaar /> renders children when disabled 1`] = `
+<div>
+  Vahi Guru
+</div>
+`;
+
+exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
+<div>
+  <span>
+    Vahi
+  </span>
+  <span>
+    Guru
+  </span>
+</div>
+`;
+
+exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      Vahi Guru
+    </div>
+    <div>
+      <span>
+        Vahi
+      </span>
+      <span>
+        Guru
+      </span>
+    </div>
+    <div>
+      <span>
+        Vahi
+      </span>
+      <span
+        style="color: rgb(243, 156, 29);"
+      >
+        Guru
+      </span>
+    </div>
+  </body>,
+  "container": <div>
+    <span>
+      Vahi
+    </span>
+    <span
+      style="color: rgb(243, 156, 29);"
+    >
+      Guru
+    </span>
+  </div>,
+  "debug": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllBySelectText": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getAllByValue": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getBySelectText": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "getByValue": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllBySelectText": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryAllByValue": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryBySelectText": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "queryByValue": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
