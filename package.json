@@ -6,7 +6,8 @@
   "scripts": {
     "pre-push-message": "echo \"Before your push gets submitted to remote, we'll like to run some tests to avoid wasting your, reviewers' and CI's time. Thank you for being patient!\"",
     "server": "node -r esm server",
-    "start": "npm run watch",
+    "start": "npm run server",
+    "dev": "npm run watch",
     "watch": "run-p watch:*",
     "watch:webpack": "npm run build:webpack -- --watch",
     "watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss public/assets/css/bundle.css\"",
