@@ -1,3 +1,7 @@
 {
-  "name": "@sttm/web"
+  "name": "@sttm/web",
+  "engines": {
+    "node": "v8.11.2"
+  },
+  "public": true
 }
