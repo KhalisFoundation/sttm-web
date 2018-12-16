@@ -15,6 +15,7 @@ export const TYPES = [..._TYPES, 'Ang'];
 
 export const SHORT_DOMAIN = 'sttm.co';
 
+export const LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE = 'gdpr_notice';
 export const LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE = 'searchSource';
 export const LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE = 'searchType';
 export const LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES =
@@ -68,6 +69,9 @@ export const TEXTS = {
     SUNDAR_GUTKA: 'Sundar Gutka',
     SUNDAR_GUTKA_BAANI: 'Baani',
   },
+  GDPR_NOTICE: `
+    Our website uses Cookies to provide good user experience. By using the service, you consent to use of cookies. If you wish to not allow SikhiToTheMax to use such instruments, please use the website in your browser's private mode. Read more <a href="/help#Web-why-does-sikhitothemax-website-use-cookies-and-loc">here</a>.
+  `,
   ANDROID: 'Android',
   IOS: 'iOS',
   SEHAJ_PAATH: (ang: string) => `Continue reading Ang ${ang}`,
