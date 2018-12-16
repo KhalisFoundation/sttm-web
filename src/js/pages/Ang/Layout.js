@@ -6,6 +6,7 @@ import GenericError, { BalpreetSingh } from '../../components/GenericError';
 import { SOURCES, TEXTS } from '../../constants';
 import ShabadContent from '../../components/ShabadContent';
 import { toAngURL } from '../../util';
+import BreadCrumb from '../../components/Breadcrumb';
 
 export const Stub = () => <div className="spinner" />;
 
@@ -44,6 +45,7 @@ export default class Layout extends React.PureComponent {
 
     return (
       <div className="row" id="content-root">
+        <BreadCrumb links={[{ title: TEXTS.URIS.ANG }]} />
         <ShabadContent
           gurbani={data.page}
           highlight={highlight}

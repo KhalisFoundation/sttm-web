@@ -7,7 +7,9 @@ export default class Root extends React.PureComponent {
     return (
       <Router>
         <Switch>
-          {routes.map((props, key) => <Route key={key} {...props} />)}
+          {routes.map((props, key) => (
+            <Route key={key} {...props} />
+          ))}
           <Route render={() => <NotFound />} />
         </Switch>
       </Router>

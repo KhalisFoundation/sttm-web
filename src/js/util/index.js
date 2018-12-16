@@ -64,7 +64,9 @@ export function shortenURL(url = window.location.href) {
 
   switch (path) {
     case '/shabad':
-      return `${URL}/s/${getParameterByName('id')}`;
+      return `${URL}/s/${getParameterByName('id')}/${getParameterByName(
+        'highlight'
+      ) || ''}`;
     case '/ang':
       return `${URL}/a/${getParameterByName('ang')}`;
     case '/hukamnama':
@@ -85,11 +87,18 @@ export const showToast = (text, delay = 2500, className = '') =>
   new Promise(resolve => {
     const $notification = document.getElementById('toast-notification');
     $notification.innerText = text;
-    $notification.classList.add(className);
+
+    if (className !== '') {
+      $notification.classList.add(className);
+    }
     $notification.classList.remove('hidden');
+
     const hideToast = () => {
       $notification.classList.add('hidden');
-      $notification.classList.remove(className);
+
+      if (className !== '') {
+        $notification.classList.remove(className);
+      }
       resolve();
     };
 
@@ -230,9 +239,13 @@ export const versesToGurbani = verses =>
   verses.map(({ verse, ...v }, i) => ({
     shabad: {
       ...v,
-      gurbani: verse,
+      gurbani: {
+        ...verse,
+        ...verse.verse,
+      },
       id: v.lineNo || '' + i,
-      transliteration: v.transliteration.english,
+      translation: verse.translation,
+      transliteration: verse.transliteration.english,
     },
   }));
 
@@ -244,8 +257,13 @@ export const versesToGurbani = verses =>
  * @returns {array} of [start, end) indices
  */
 export const getHighlightIndices = (baani, query, type) => {
-  let start = -1,
-    end = -1;
+  let start = -1;
+  let end = -1;
+
+  if (baani === null) {
+    return [start, end];
+  }
+
   let baaniWords = baani.split(' ');
 
   switch (type) {

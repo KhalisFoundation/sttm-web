@@ -1,34 +1,37 @@
 {
   "name": "@sttm/web",
-  "version": "1.1.4",
+  "version": "1.1.8",
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
     "pre-push-message": "echo \"Before your push gets submitted to remote, we'll like to run some tests to avoid wasting your, reviewers' and CI's time. Thank you for being patient!\"",
     "server": "node -r esm server",
-    "start": "npm-run-all --parallel watch:*",
-    "watch": "npm-run-all watch:*",
+    "start": "npm run server",
+    "dev": "npm run watch",
+    "watch": "run-p watch:*",
     "watch:webpack": "npm run build:webpack -- --watch",
     "watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss public/assets/css/bundle.css\"",
     "watch:server": "nodemon --watch server/ --exec npm run server",
-    "test": "npm-run-all --parallel test:*",
-    "test:lint": "npm-run-all --parallel test:lint:*",
-    "test:lint:js": "eslint src/js server seo common",
+    "test": "npm-run-all test:*",
+    "test:lint": "run-p test:lint:*",
     "test:lint:css": "stylelint \"src/scss/*.scss\" --syntax scss",
-    "test:unit": "jest --no-cache",
-    "prepush": "npm run pre-push-message && npm run test",
+    "test:lint:js": "run-p test:lint:js:*",
+    "test:lint:js:eslint": "eslint server/ common/",
+    "test:lint:js:ignore:tslint": "tslint --project . -t stylish",
+    "test:unit": "NODE_ENV=test jest --no-cache --config jest/config.js",
     "webpack-stats": "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
-    "build": "npm-run-all --parallel build:*",
+    "build": "run-p build:*",
     "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss public/assets/css/bundle.css",
     "build:webpack": "webpack",
     "deploy": "git checkout dev && git pull origin && git push web",
     "deploy:prod": "npm-run-all deploy:prod:*",
     "deploy:prod:build": "NODE_ENV=production npm run build",
     "deploy:prod:clean": "rm -rf .editorconfig .gitignore .github .stylelintrc .vscode stats.json webpack.config.js src LICENSE CONTRIBUTING.md README.md jest",
-    "deploy:prod:pm2": "pm2 start server --name=\"sttm-prod\" --node-args=\"-r esm\"",
+    "deploy:prod:pm2": "pm2 start server --update-env --name=\"sttm-prod\" --node-args=\"-r esm\"",
     "deploy:dev": "npm-run-all deploy:dev:*",
-    "deploy:dev:build": "npm run build",
-    "deploy:dev:pm2": "NODE_ENV=development pm2 start server --name=\"sttm-dev\" --node-args=\"-r esm\""
+    "deploy:dev:build": "npm run deploy:prod:build",
+    "deploy:dev:clean": "npm run deploy:prod:clean",
+    "deploy:dev:pm2": "pm2 start server --update-env --name=\"sttm-dev\" --node-args=\"-r esm\""
   },
   "repository": {
     "type": "git",
@@ -42,100 +45,50 @@
   },
   "homepage": "https://github.com/KhalisFoundation/SikhiToTheMax-Web#readme",
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.46",
-    "@babel/core": "^7.0.0-beta.46",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.46",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.46",
-    "@babel/plugin-syntax-object-rest-spread": "^7.0.0-beta.46",
-    "@babel/preset-env": "^7.0.0-beta.46",
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-object-rest-spread": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0-beta.46",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/jest": "^23.3.10",
+    "@types/react": "^16.7.17",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-redux": "^6.0.11",
+    "@types/react-router-dom": "^4.3.1",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^8.2.3",
-    "babel-jest": "^22.4.3",
-    "babel-loader": "^8.0.0-beta.2",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "enzyme-to-json": "^3.3.3",
-    "eslint": "^4.19.1",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-react": "^7.7.0",
-    "husky": "^0.14.3",
-    "jest": "^22.4.3",
-    "node-sass": "^4.9.0",
-    "nodemon": "^1.17.3",
-    "npm-run-all": "^4.1.2",
-    "prop-types": "^15.6.1",
-    "regenerator-runtime": "^0.11.1",
-    "replace-in-file": "^3.4.0",
-    "stylelint": "^8.2.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.21",
+    "eslint": "^5.10.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.2.1",
+    "jest": "^23.6.0",
+    "jest-dom": "^3.0.0",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9",
+    "npm-run-all": "^4.1.5",
+    "prop-types": "^15.6.2",
+    "react-testing-library": "^5.3.2",
+    "regenerator-runtime": "^0.13.1",
+    "replace-in-file": "^3.4.2",
+    "stylelint": "^9.9.0",
     "stylelint-config-standard": "^18.0.0",
-    "stylelint-order": "^0.8.1",
-    "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.15"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "coverageDirectory": "<rootDir>/jest/coverage",
-    "coverageReporters": [
-      "html"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "setupFiles": [
-      "<rootDir>/jest/setup.js"
-    ]
-  },
-  "babel": {
-    "env": {
-      "production": {
-        "plugins": [
-          [
-            "transform-react-remove-prop-types",
-            {
-              "mode": "remove",
-              "ignoreFilenames": [
-                "node_modules"
-              ]
-            }
-          ]
-        ]
-      },
-      "test": {
-        "presets": [
-          "@babel/preset-env",
-          "@babel/preset-react"
-        ],
-        "plugins": [
-          "@babel/plugin-proposal-object-rest-spread",
-          "@babel/plugin-proposal-class-properties"
-        ]
-      }
-    },
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "browsers": [
-              "> 1%",
-              "ie 11",
-              "safari 9"
-            ]
-          },
-          "modules": false
-        }
-      ],
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "@babel/plugin-syntax-dynamic-import",
-      "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-proposal-class-properties"
-    ]
+    "stylelint-order": "^2.0.0",
+    "terser-webpack-plugin": "^1.1.0",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.2",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
   },
   "standard": {
     "ignore": [
@@ -144,17 +97,18 @@
   },
   "dependencies": {
     "@sttm/banidb": "^1.1.0",
-    "compression": "^1.7.2",
+    "classnames": "^2.2.6",
+    "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",
-    "esm": "^3.0.27",
-    "express": "^4.16.3",
+    "esm": "^3.0.84",
+    "express": "^4.16.4",
     "lodash.throttle": "^4.1.1",
     "marinate": "^0.1.5",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-redux": "^5.0.7",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^6.0.0",
     "react-router-dom": "^4.2.2",
-    "redux": "^4.0.0",
+    "redux": "^4.0.1",
     "redux-debounced": "^0.5.0",
     "redux-thunk": "^2.3.0"
   },
@@ -162,11 +116,9 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "prepush": {
-    "silent": true,
-    "run": [
-      "pre-push-message",
-      "test"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run pre-push-message && npm run test"
+    }
   }
 }

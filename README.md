@@ -4,12 +4,12 @@
 
 Originally developed by SHARE Charity UK, SikhiToTheMax has become a defacto standard for keertans and gurdwaras around the world to display gurbani on screens for sangat to join into the depth of Gurbani and translations.
 
-SikhiToTheMax is now developed by Khalis Foundation as seva to the panth and is working hard to ensure it lives up to its name.
-Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.
+SikhiToTheMax is now developed by Khalis Foundation as seva to the panth and Khalis Foundation is working hard to ensure it lives up to its name.
+Khalis Foundation Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.
 
 Website: http://www.SikhiToTheMax.org
 
-Developer: Khalis Foundation and sevadars (see commiters for more details)
+Developer: Khalis Foundation and sevadars (see committers for more details)
 
 Acknowledgements: Bhai Tarsem Singh UK, SHARE UK, Khalis Foundation, Khalsa Foundation UK, Dr. Sant Singh Khalsa, Dr. Kulbir Singh Thind
 
@@ -80,3 +80,5 @@ You can watch this project and code [walkthrough](https://www.youtube.com/watch?
 [GSL](/LICENSE)
 
 All images and assets not covered under other licenses are covered under full Copyright © 2018 Khalis Foundation.
+
+Site made reliable with help of [<img src=".github/README_IMAGES/browserstack.svg" alt="BrowserStack" height="15px" />](https://www.browserstack.com/open-source)
