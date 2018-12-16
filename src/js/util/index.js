@@ -86,7 +86,7 @@ export function shortenURL(url = window.location.href) {
 export const showToast = (text, delay = 2500, className = '') =>
   new Promise(resolve => {
     const $notification = document.getElementById('toast-notification');
-    $notification.innerHTML = `${text} <button role="button" aria-label="close" class="toast-notification-close-button">&times;</button>`;
+    $notification.innerHTML = `${text} <button role="button" aria-label="close" class="toast-notification-close-button">&times;</button>`.trim();
 
     if (className !== '') {
       $notification.classList.add(className);
