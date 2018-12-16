@@ -70,7 +70,7 @@ export const TEXTS = {
     SUNDAR_GUTKA_BAANI: 'Baani',
   },
   GDPR_NOTICE: `
-    Our website uses Cookies to provide good user experience. By using the service, you consent to use of cookies. If you wish to not allow SikhiToTheMax to use such instruments, please use the website in your browser's private mode. Read more <a href="/help#Web-why-does-sikhitothemax-website-use-cookies-and-loc">here</a>.
+    Our service uses cookies to remember your preferences to give a great experience. If you do not agree to SikhiToTheMax's use of cookies, please use your browser's private/incognito mode. Otherwise, by continuing the use of the service, you consent to the use of cookies. Read more <a href="/help#Web-why-does-sikhitothemax-website-use-cookies-and-loc">here</a>.
   `,
   ANDROID: 'Android',
   IOS: 'iOS',
