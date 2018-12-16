@@ -9,10 +9,34 @@ exports[`<Larivaar /> renders children when disabled 1`] = `
 exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
 <div>
   <span>
-    Vahi
+    <span>
+      V
+      <wbr />
+    </span>
   </span>
   <span>
-    Guru
+    <span>
+      a
+      <wbr />
+    </span>
+  </span>
+  <span>
+    <span>
+      h
+      <wbr />
+    </span>
+  </span>
+  <span>
+    <span>
+      Gu
+      <wbr />
+    </span>
+  </span>
+  <span>
+    <span>
+      ru
+      <wbr />
+    </span>
   </span>
 </div>
 `;
@@ -26,31 +50,107 @@ Object {
     </div>
     <div>
       <span>
-        Vahi
+        <span>
+          V
+          <wbr />
+        </span>
       </span>
       <span>
-        Guru
+        <span>
+          a
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          h
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          Gu
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          ru
+          <wbr />
+        </span>
       </span>
     </div>
     <div>
       <span>
-        Vahi
+        <span>
+          V
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          a
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          h
+          <wbr />
+        </span>
       </span>
       <span
         style="color: rgb(243, 156, 29);"
       >
-        Guru
+        <span>
+          Gu
+          <wbr />
+        </span>
+      </span>
+      <span
+        style="color: rgb(243, 156, 29);"
+      >
+        <span>
+          ru
+          <wbr />
+        </span>
       </span>
     </div>
   </body>,
   "container": <div>
     <span>
-      Vahi
+      <span>
+        V
+        <wbr />
+      </span>
+    </span>
+    <span>
+      <span>
+        a
+        <wbr />
+      </span>
+    </span>
+    <span>
+      <span>
+        h
+        <wbr />
+      </span>
     </span>
     <span
       style="color: rgb(243, 156, 29);"
     >
-      Guru
+      <span>
+        Gu
+        <wbr />
+      </span>
+    </span>
+    <span
+      style="color: rgb(243, 156, 29);"
+    >
+      <span>
+        ru
+        <wbr />
+      </span>
     </span>
   </div>,
   "debug": [Function],
