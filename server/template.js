@@ -121,7 +121,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
   </script>
 
   <!-- Polyfills -->
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Object.entries,Array.prototype.includes,String.prototype.includes,Map,Set,requestAnimationFrame,Array.prototype.@@iterator"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Object.entries,Array.from,Array.prototype.includes,String.prototype.includes,Map,Set,requestAnimationFrame,Array.prototype.@@iterator"></script>
 
   <script src="/assets/js/chunks/vendor.js"></script>
   <script src="/assets/js/app.js"></script>
