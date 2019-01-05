@@ -76,7 +76,13 @@ export default class SearchResult extends React.PureComponent {
               </div>
             ) : (
               <div className={`gurlipi ${larivaar ? 'larivaar' : ''}`}>
-                <Larivaar larivaarAssist={larivaarAssist} enable={larivaar}>
+                <Larivaar
+                  larivaarAssist={larivaarAssist}
+                  enable={larivaar}
+                  isSearch
+                  startIndex={highlightStartIndex}
+                  endIndex={higlightEndIndex}
+                >
                   {larivaar ? (
                     shabad.gurbani.gurmukhi
                   ) : (
