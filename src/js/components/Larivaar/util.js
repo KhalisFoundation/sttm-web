@@ -46,7 +46,7 @@ export function fixLarivaarUnicode(str) {
       i = i + 1;
       continue;
     }
-    if (!isUnicodeConsonant(str[i + 1])) {
+    if (isUnicodeConsonant(str[i + 1])) {
       arrWordBreak.push(segmentedStr);
       segmentedStr = '';
     }
