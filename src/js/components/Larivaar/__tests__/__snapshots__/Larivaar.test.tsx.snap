@@ -2,7 +2,16 @@
 
 exports[`<Larivaar /> renders children when disabled 1`] = `
 <div>
-  Vahi Guru
+  <span
+    class=""
+  >
+     Vahi 
+  </span>
+  <span
+    class=""
+  >
+     Guru 
+  </span>
 </div>
 `;
 
@@ -46,7 +55,16 @@ Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      Vahi Guru
+      <span
+        class=""
+      >
+         Vahi 
+      </span>
+      <span
+        class=""
+      >
+         Guru 
+      </span>
     </div>
     <div>
       <span>

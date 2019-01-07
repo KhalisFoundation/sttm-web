@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { SOURCES } from '../../constants';
 
 import Larivaar from '../../components/Larivaar';
-import HighlightedResult from './HighlightedResult';
 import { toShabadURL, getHighlightIndices } from '../../util';
 
 export default class SearchResult extends React.PureComponent {
@@ -61,17 +60,10 @@ export default class SearchResult extends React.PureComponent {
                   larivaarAssist={larivaarAssist}
                   enable={larivaar}
                   unicode={unicode}
+                  startIndex={highlightStartIndex}
+                  endIndex={higlightEndIndex}
                 >
-                  {larivaar ? (
-                    shabad.gurbani.unicode
-                  ) : (
-                    <HighlightedResult
-                      startIndex={highlightStartIndex}
-                      endIndex={higlightEndIndex}
-                    >
-                      {shabad.gurbani.unicode}
-                    </HighlightedResult>
-                  )}
+                  {shabad.gurbani.unicode}
                 </Larivaar>
               </div>
             ) : (
@@ -79,20 +71,10 @@ export default class SearchResult extends React.PureComponent {
                 <Larivaar
                   larivaarAssist={larivaarAssist}
                   enable={larivaar}
-                  isSearch
                   startIndex={highlightStartIndex}
                   endIndex={higlightEndIndex}
                 >
-                  {larivaar ? (
-                    shabad.gurbani.gurmukhi
-                  ) : (
-                    <HighlightedResult
-                      startIndex={highlightStartIndex}
-                      endIndex={higlightEndIndex}
-                    >
-                      {shabad.gurbani.gurmukhi}
-                    </HighlightedResult>
-                  )}
+                  {shabad.gurbani.gurmukhi}
                 </Larivaar>
               </div>
             )}
