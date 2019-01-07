@@ -232,3 +232,43 @@ blockquote {
     background-color: $sttm-light-black;
   }
 }
+
+.relatedShabad {
+  border: 1px solid $sttm-light-grey;
+  border-radius: 4px;
+  color: inherit;
+  cursor: pointer;
+  margin: 0.5rem;
+  max-width: 60%;
+  min-width: 60%;
+  padding: 1rem;
+  scroll-margin-left: 0.5rem;
+  scroll-snap-align: start;
+  width: 60%;
+
+  @media screen and (min-width: 46em) {
+    max-width: 40%;
+    min-width: 40%;
+    width: 40%;
+  }
+
+  &:hover {
+    box-shadow: 0 0 10px -4px $sttm-dark-grey;
+    color: inherit;
+  }
+
+  &Container {
+    display: flex;
+    margin: 0.5rem -0.5rem;
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &Wrapper {
+    margin-top: 3rem;
+  }
+}

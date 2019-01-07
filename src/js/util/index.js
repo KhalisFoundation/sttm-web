@@ -214,6 +214,14 @@ export const toSearchURL = ({
     offset,
   })}`;
 
+/**
+ *
+ * @param {object} options
+ * @param {{ shabadid: number, id?: number }} options.shabad
+ * @param {string} [options.q]
+ * @param {string} [options.type]
+ * @param {string} [options.source]
+ */
 export const toShabadURL = ({
   shabad: { shabadid: id, id: highlight },
   q,
