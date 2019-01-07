@@ -23,7 +23,7 @@
     "build": "run-p build:*",
     "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss public/assets/css/bundle.css",
     "build:webpack": "webpack",
-    "build:service-worker": "sed -e \"s/%VERSION/$npm_package_version/g\" public/service-worker-template.js > public/service-worker.js",
+    "build:service-worker": "sed -e \"s/%VERSION/$npm_package_version-$(date +%d%m%Y)/g\" public/service-worker-template.js > public/service-worker.js",
     "deploy": "git checkout dev && git pull origin && git push web",
     "deploy:prod": "npm-run-all deploy:prod:*",
     "deploy:prod:build": "NODE_ENV=production npm run build",
