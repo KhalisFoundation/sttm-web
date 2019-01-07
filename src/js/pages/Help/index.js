@@ -41,6 +41,44 @@ const content = {
   ],
   Web: [
     [
+      'Why does SikhiToTheMax Website use cookies and localStorage?',
+      <React.Fragment>
+        SikhiToTheMax website uses two web technologies to store your
+        preferences.
+        <ol>
+          <li>
+            <h5>
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Cookies
+              </a>
+            </h5>
+            If you choose "Dark Mode", we save that preference in a cookie so as
+            to serve dark mode website to you from the server itself. This
+            preference is naturally shared with our servers.
+          </li>
+
+          <li>
+            <h5>
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                LocalStorage
+              </a>
+            </h5>
+            LocalStorage (not shared with our servers at all) is also used to
+            save your display and font preferences, and other things like
+            previous read page.
+          </li>
+        </ol>
+      </React.Fragment>,
+    ],
+    [
       'How do I search for a shabad?',
       <React.Fragment>
         After launching SikhiToTheMax, by default you can search for a shabad by

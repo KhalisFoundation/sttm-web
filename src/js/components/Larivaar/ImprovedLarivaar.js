@@ -4,9 +4,6 @@ import { LARIVAAR_ASSIST_COLOR } from '../../constants';
 import LarivaarWord from './Word';
 
 /**
- * TODO:
- * This one is improved (Fixes https://github.com/KhalisFoundation/sttm-web/issues/448)
- * However it has bugs https://github.com/KhalisFoundation/sttm-web/issues/528
  *
  * @export
  * @class Larivaar
@@ -33,19 +30,18 @@ export default class Larivaar extends React.PureComponent {
       ? children
       : children
           .split(' ')
-          .map(
-            (word, index) =>
-              ['॥', ']'].some(v => word.includes(v)) ? (
-                `${word} `
-              ) : (
-                <LarivaarWord
-                  key={index}
-                  word={word}
-                  unicode={unicode}
-                  larivaarAssistColor={larivaarAssistColor}
-                  index={index}
-                />
-              )
+          .map((word, index) =>
+            ['॥', ']'].some(v => word.includes(v)) ? (
+              `${word} `
+            ) : (
+              <LarivaarWord
+                key={index}
+                word={word}
+                unicode={unicode}
+                larivaarAssistColor={larivaarAssistColor}
+                index={index}
+              />
+            )
           );
   }
 }
