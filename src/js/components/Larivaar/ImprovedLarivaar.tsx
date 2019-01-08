@@ -5,9 +5,9 @@ import HighlightedSearchResult from '../SearchResults/HighlightedResult';
 
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
-  startIndex: number;
-  endIndex: number;
-  enable?: true;
+  startIndex?: number;
+  endIndex?: number;
+  enable?: boolean;
   unicode: boolean;
   children: string;
 }

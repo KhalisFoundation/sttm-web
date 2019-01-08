@@ -3,6 +3,8 @@ import Fetch from '../Fetch';
 import { TEXTS } from '@/constants';
 import { IStore } from '@/features/types';
 import { toShabadURL } from '@/util';
+import Larivaar from '@/components/Larivaar';
+import { clickEvent, ACTIONS } from '@/util/analytics';
 
 export interface IRelatedShabadData {
   ShabadID: number;
@@ -41,14 +43,15 @@ export interface IRelatedShabadsProps
 const handleShabadClick: MouseEventHandler<HTMLAnchorElement> = e => {
   const id = e.currentTarget.dataset.shabadId;
 
-  // TODO: Analytics?
+  clickEvent({ action: ACTIONS.RELATED_SHABAD, label: String(id) });
 };
 
 function RelatedShabads({
   unicode,
   translationLanguages,
   transliterationLanguages,
-
+  larivaar,
+  larivaarAssist,
   forShabadID,
   count = 4,
 }: IRelatedShabadsProps) {
@@ -69,6 +72,14 @@ function RelatedShabads({
           return null;
         }
 
+        const fontClassName = unicode ? '' : 'gurbani-font';
+
+        const englishTranslation = translationLanguages.includes('english');
+        const punjabiTranslation = translationLanguages.includes('punjabi');
+        const englishTrasliteration = transliterationLanguages.includes(
+          'english'
+        );
+
         return (
           <div className="relatedShabadWrapper">
             <h3>{TEXTS.RELATED_SHABADS}</h3>
@@ -83,38 +94,30 @@ function RelatedShabads({
                   onClick={handleShabadClick}
                 >
                   <div>
-                    {unicode ? (
-                      <h4>{i.GurmukhiUni}</h4>
-                    ) : (
-                      <h4 className="gurbani-font">{i.Gurmukhi}</h4>
-                    )}
-                    {transliterationLanguages.includes('english') && (
-                      <h4>{i.Transliteration}</h4>
-                    )}
+                    <h4 className={fontClassName}>
+                      <Larivaar
+                        enable={larivaar}
+                        larivaarAssist={larivaarAssist}
+                        unicode={unicode}
+                      >
+                        {unicode ? i.GurmukhiUni : i.Gurmukhi}
+                      </Larivaar>
+                    </h4>
+                    {englishTrasliteration && <h4>{i.Transliteration}</h4>}
                   </div>
-                  {translationLanguages.includes('english') && (
-                    <p>{i.English}</p>
-                  )}
-                  {translationLanguages.includes('punjabi') &&
-                    (unicode ? (
-                      <p>{i.PunjabiUni}</p>
-                    ) : (
-                      <p className="gurbani-font">{i.Punjabi}</p>
-                    ))}
-                  {unicode ? (
-                    <p>
-                      {i.SourceUnicode} {i.PageNo}
-                    </p>
-                  ) : (
-                    <p className="gurbani-font">
-                      {i.SourceGurmukhi} {i.PageNo}
+                  {englishTranslation && <p>{i.English}</p>}
+                  {punjabiTranslation && (
+                    <p className={fontClassName}>
+                      {unicode ? i.PunjabiUni : i.Punjabi}
                     </p>
                   )}
-                  {translationLanguages.includes('english') && (
-                    <p>
-                      {i.SourceEnglish} {i.PageNo}
-                    </p>
-                  )}
+                  <p>
+                    <span className={fontClassName}>
+                      {unicode ? i.SourceUnicode : i.SourceGurmukhi} {i.PageNo}
+                    </span>
+                    <br />
+                    {englishTranslation && `${i.SourceEnglish} ${i.PageNo}`}
+                  </p>
                 </a>
               ))}
             </div>
