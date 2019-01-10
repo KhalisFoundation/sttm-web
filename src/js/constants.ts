@@ -60,6 +60,7 @@ export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
 export const NORMAL_SEARCH_COLOR = 'rgba(1, 102, 155, 0.3)';
 
 export const TEXTS = {
+  RELATED_SHABADS: 'Related Shabads',
   URIS: {
     HOME: 'Home',
     ABOUT: 'About',

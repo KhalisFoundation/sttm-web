@@ -17,6 +17,7 @@ export const ACTIONS = {
   NO_RESULTS_FOUND: 'no-results-found',
   ANG_NOT_FOUND: 'ang-not-found',
   SEHAJ_PAATH_LINK: 'sehaj-paath-link',
+  RELATED_SHABAD: 'related-shabad',
 };
 
 export const pageView = page =>
