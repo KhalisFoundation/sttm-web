@@ -56,8 +56,11 @@ export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
 
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
+export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
+export const NORMAL_SEARCH_COLOR = 'rgba(1, 102, 155, 0.3)';
 
 export const TEXTS = {
+  RELATED_SHABADS: 'Related Shabads',
   URIS: {
     HOME: 'Home',
     ABOUT: 'About',
@@ -70,7 +73,7 @@ export const TEXTS = {
     SUNDAR_GUTKA_BAANI: 'Baani',
   },
   GDPR_NOTICE: `
-    Our website uses Cookies to provide good user experience. By using the service, you consent to use of cookies. If you wish to not allow SikhiToTheMax to use such instruments, please use the website in your browser's private mode. Read more <a href="/help#Web-why-does-sikhitothemax-website-use-cookies-and-loc">here</a>.
+    Our service uses cookies to remember your preferences to give a great experience. If you do not agree to SikhiToTheMax's use of cookies, please use your browser's private/incognito mode. Otherwise, by continuing the use of the service, you consent to the use of cookies. Read more <a href="/help#Web-why-does-sikhitothemax-website-use-cookies-and-loc">here</a>.
   `,
   ANDROID: 'Android',
   IOS: 'iOS',
