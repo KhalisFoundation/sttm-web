@@ -25,17 +25,20 @@ export default class BreadCrumb extends React.PureComponent {
   render() {
     return (
       <h4 className="breadcrumb">
-        {[{ title: TEXTS.URIS.HOME, url: '/' }].concat(this.props.links).map(
-          ({ url, title }, index, { length }) =>
+        {[{ title: TEXTS.URIS.HOME, url: '/' }]
+          .concat(this.props.links)
+          .map(({ url, title }, index, { length }) =>
             index < length - 1 ? (
               <React.Fragment key={index}>
                 <Link to={url}>{title}</Link>
                 {' › '}
               </React.Fragment>
             ) : (
-              <span className="breadcrumbLast">{title}</span>
+              <span key={index} className="breadcrumbLast">
+                {title}
+              </span>
             )
-        )}
+          )}
       </h4>
     );
   }

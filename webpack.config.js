@@ -7,7 +7,7 @@ const path = require('path');
 const API_URLS = {
   BANIS: '//api.banidb.com/v2/banis',
   PRODUCTION: '//api.banidb.com/',
-  DEVELOPMENT: '//api.khajana.org/',
+  DEVELOPMENT: '//api.banidb.com/',
   SYNC: {
     PRODUCTION: '//api.sikhitothemax.org/',
     LOCAL: '//api.sikhitothemax.org/',
