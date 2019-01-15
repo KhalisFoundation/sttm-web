@@ -7,9 +7,11 @@ import { copyToClipboard, showToast, shortenURL } from '@/util';
 
 import { IStore } from '@/features/types';
 import { IShabadTypes, IGurbani, IShabad } from '@/types';
-import { transliterationMap, translationMap } from './helpers';
 
-const Mixed = React.lazy(() => import('./types/Mixed'));
+import { transliterationMap, translationMap } from './helpers';
+import Mixed from './types/Mixed';
+
+// This is rarely used, so let's not make majority of our users pay for it.
 const Split = React.lazy(() => import('./types/Split'));
 
 export interface IBaaniProps
