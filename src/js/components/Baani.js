@@ -69,7 +69,22 @@ export default class Baani extends React.PureComponent {
       )
       .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-  onTweetClick = shabad => () => {
+  onFacebookClick = shabad => () => {
+    clickEvent({
+      action: ACTIONS.LINE_SHARER,
+      label: 'facebook',
+    });
+    const text = this.getShareLine(shabad) + '\n#sttm';
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?t=${encodeURIComponent(
+        text
+      )}&u=${encodeURIComponent(shortenURL())}`,
+      '_blank',
+      'noreferrer noopener'
+    );
+  };
+
+  /*onTweetClick = shabad => () => {
     clickEvent({
       action: ACTIONS.LINE_SHARER,
       label: 'twitter',
@@ -85,7 +100,7 @@ export default class Baani extends React.PureComponent {
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`,
       '_blank'
     );
-  };
+  };*/
 
   _scrollToHiglight = () => {
     if (this.$highlightedBaaniLine) {
@@ -122,6 +137,10 @@ export default class Baani extends React.PureComponent {
       fontSize,
       highlight,
     } = this.props;
+
+    const disabledActions = ['ang', 'hukamnama'].includes(type)
+      ? ['tweet']
+      : ['openShabad', 'tweet'];
 
     const mixedViewMarkup = (
       <div className="mixed-view-baani">
@@ -164,11 +183,9 @@ export default class Baani extends React.PureComponent {
             ))}
 
             <Actions
-              disabledActions={
-                ['ang', 'hukamnama'].includes(type) ? [] : ['openShabad']
-              }
+              disabledActions={disabledActions}
               shabad={shabad}
-              onTweetClick={this.onTweetClick(shabad)}
+              onFacebookClick={this.onFacebookClick(shabad)}
               onCopyClick={this.onCopyClick(shabad)}
             />
 
@@ -201,11 +218,9 @@ export default class Baani extends React.PureComponent {
               />
 
               <Actions
-                disabledActions={
-                  ['ang', 'hukamnama'].includes(type) ? [] : ['openShabad']
-                }
+                disabledActions={disabledActions}
                 shabad={shabad}
-                onTweetClick={this.onTweetClick(shabad)}
+                onFacebookClick={this.onFacebookClick(shabad)}
                 onCopyClick={this.onCopyClick(shabad)}
               />
             </div>
