@@ -28,6 +28,52 @@ blockquote {
   }
 }
 
+.baaniLine {
+  display: flex;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &Content {
+    max-width: 100%;
+    min-width: 100%;
+    scroll-snap-align: end;
+  }
+
+  &Actions {
+    align-items: center;
+    background-color: $sttm-transparent-white;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 10px;
+
+    svg {
+      fill: $sttm-dark-grey;
+    }
+
+    .dark-mode & {
+      background-color: $sttm-orange;
+
+      svg {
+        fill: $sttm-black;
+      }
+    }
+
+    &Wrapper {
+      max-width: 25%;
+      min-width: 25%;
+      scroll-snap-align: start;
+
+      @media screen and (min-width: 730px) {
+        display: none;
+      }
+    }
+  }
+}
+
 .shabad-nav {
   a {
     color: $sttm-orange;

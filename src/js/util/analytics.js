@@ -8,6 +8,7 @@ export const CATEGORIES = {
 export const ACTIONS = {
   SHARE: 'share',
   LINE_SHARER: 'line-sharer',
+  MOBILE_LINE_SHARER: 'mobile-line-sharer',
   GENERIC_ERROR: 'generic-error',
   GURMUKHI_KEYBOARD: 'gurmukhi-keyboard',
   COPY_SHORT_URL: 'copy-short-url',

@@ -24,8 +24,8 @@ export interface IBaaniLineActionsProps {
   };
   disabledActions: string[];
   onCopyClick: () => void;
-  onTweetClick: () => void;
-  onFacebookClick: () => void;
+  onTweetClick?: () => void;
+  onFacebookClick?: () => void;
 }
 
 export default class BaaniLineActions extends React.PureComponent<
