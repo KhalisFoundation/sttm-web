@@ -94,7 +94,7 @@ function RelatedShabads({
                   onClick={handleShabadClick}
                 >
                   <div>
-                    <h4 className={fontClassName}>
+                    <h3 className={'relatedShabadTitle ' + fontClassName}>
                       <Larivaar
                         enable={larivaar}
                         larivaarAssist={larivaarAssist}
@@ -102,15 +102,23 @@ function RelatedShabads({
                       >
                         {unicode ? i.GurmukhiUni : i.Gurmukhi}
                       </Larivaar>
-                    </h4>
-                    {englishTrasliteration && <h4>{i.Transliteration}</h4>}
+                    </h3>
+                    {englishTrasliteration && (
+                      <p className="transliteration">{i.Transliteration}</p>
+                    )}
+                    {englishTranslation && (
+                      <blockquote className={'translation english '}>
+                        {i.English}
+                      </blockquote>
+                    )}
+                    {punjabiTranslation && (
+                      <blockquote
+                        className={'translation punjabi ' + fontClassName}
+                      >
+                        {unicode ? i.PunjabiUni : i.Punjabi}
+                      </blockquote>
+                    )}
                   </div>
-                  {englishTranslation && <p>{i.English}</p>}
-                  {punjabiTranslation && (
-                    <p className={fontClassName}>
-                      {unicode ? i.PunjabiUni : i.Punjabi}
-                    </p>
-                  )}
                   <p>
                     <span className={fontClassName}>
                       {unicode ? i.SourceUnicode : i.SourceGurmukhi} {i.PageNo}

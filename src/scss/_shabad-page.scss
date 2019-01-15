@@ -238,6 +238,9 @@ blockquote {
   border-radius: 4px;
   color: inherit;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 0.5rem;
   max-width: 60%;
   min-width: 60%;
@@ -270,5 +273,9 @@ blockquote {
 
   &Wrapper {
     margin-top: 3rem;
+  }
+
+  &Title {
+    font-size: 1.7em;
   }
 }

@@ -140,11 +140,12 @@ class Shabad extends React.PureComponent {
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
             />
-            <RelatedShabads forShabadID={this.props.info.id} />
 
             {this.props.hideMeta === false && (
               <FootNav info={info} type={type} nav={nav} />
             )}
+
+            <RelatedShabads forShabadID={this.props.info.id} />
           </div>
         </div>
         <ProgressBar percent={this.state.progress} />
