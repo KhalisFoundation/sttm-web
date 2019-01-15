@@ -121,15 +121,20 @@ export interface IHukamnamaAPIResponse {
 export interface IKhajanaAPIResponse {
   shabadinfo: {
     id: string;
+    pageno: string;
     source: {
+      english: string;
+      gurmukhi: string;
       pageno: string;
       id: string;
     };
     raag: {
+      english: string;
       unicode: string;
       gurmukhi: string;
     };
     writer: {
+      english: string;
       unicode: string;
       gurmukhi: string;
     };

@@ -114,7 +114,7 @@ export const showToast = (text, delay = 2500, className = '') =>
 
 /**
  * Uses new navigator.clipboard.writeText, fallsback to old-school method
- * @param {string} text to be copied into clipboard
+ * @param {string | null} text to be copied into clipboard
  * @returns {Promise} which resolves if successfuly copied
  */
 export const copyToClipboard = text =>
@@ -236,6 +236,10 @@ export const toShabadURL = ({
     highlight,
   })}`;
 
+/**
+ *
+ * @param {{ ang: string, source: string, highlight?: string }} options
+ */
 export const toAngURL = ({ ang, source, highlight }) =>
   `/ang?${objectToQueryParams({
     ang,
@@ -250,11 +254,12 @@ export const versesToGurbani = verses =>
   verses.map(({ verse, ...v }, i) => ({
     shabad: {
       ...v,
+      shabadid: verse.shabadId,
       gurbani: {
         ...verse,
         ...verse.verse,
       },
-      id: v.lineNo || '' + i,
+      id: verse.verseId || v.id || v.lineNo || '' + i,
       translation: verse.translation,
       transliteration: verse.transliteration.english,
     },
@@ -328,7 +333,7 @@ export const readAng = () =>
 
 /**
  * Saves ang to localStorage
- * @param {number} ang
+ * @param {number | string} ang
  */
 export const saveAng = ang =>
   saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG, ang);

@@ -1,49 +1,44 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng } from '../util';
-import Chevron from './Icons/Chevron';
-import { withRouter } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
-/**
- *
- *
- * @export
- * @class Meta
- * @augments {React.PureComponent<MetaProps>}
- */
-class Meta extends React.PureComponent {
-  static defaultProps = {
-    nav: {},
+import { TEXTS } from '@/constants';
+import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng } from '@/util';
+
+import Chevron from '@/components/Icons/Chevron';
+import { ShabadTypes, IKhajanaAPIResponse } from '@/types';
+import { IStore } from '@/features/types';
+
+const Item = ({
+  children,
+  last = false,
+}: {
+  children: React.ReactNode;
+  last?: boolean;
+}) =>
+  children ? (
+    <React.Fragment>
+      {children}
+      {last ? '' : ' - '}
+    </React.Fragment>
+  ) : null;
+
+export interface IMetaProps extends RouteComponentProps {
+  type: ShabadTypes;
+
+  info: IKhajanaAPIResponse['shabadinfo'];
+  translationLanguages: IStore['translationLanguages'];
+  transliterationLanguages: IStore['transliterationLanguages'];
+  nav: IKhajanaAPIResponse['navigation'];
+}
+
+export default class Meta extends React.PureComponent<IMetaProps> {
+  public static defaultProps = {
+    nav: { previous: '', next: '' },
   };
 
-  /**
-   * @typedef {object} MetaProps
-   * @property {ShabadContentTypes} type
-   * @property {object} info
-   * @property {array} translationLanguages
-   * @property {array} transliterationLanguages
-   * @property {object} nav
-   *
-   * @static
-   * @memberof Meta
-   */
-  static propTypes = {
-    history: PropTypes.object.isRequired,
-    type: PropTypes.string.isRequired,
-    info: PropTypes.object.isRequired,
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
-    nav: PropTypes.shape({
-      previous: PropTypes.string,
-      next: PropTypes.string,
-    }),
-  };
-
-  render() {
+  public render() {
     const {
-      nav = {},
+      nav = Meta.defaultProps.nav,
       type,
       info,
       translationLanguages,
@@ -51,14 +46,6 @@ class Meta extends React.PureComponent {
     } = this.props;
 
     const link = toNavURL(this.props);
-    const Item = ({ children, last = false }) =>
-      children ? (
-        <React.Fragment>
-          {children}
-          {last ? '' : ' - '}
-        </React.Fragment>
-      ) : null;
-
     const shouldShowEnglishInHeader =
       translationLanguages.includes('english') ||
       transliterationLanguages.includes('english');
@@ -101,7 +88,7 @@ class Meta extends React.PureComponent {
                     source: info.source.id,
                   })}
                 >
-                  {info.source.id == 'G' ? 'AMg' : 'pMnw'} {info.source.pageno}
+                  {info.source.id === 'G' ? 'AMg' : 'pMnw'} {info.source.pageno}
                 </Link>
               )}
             </Item>
@@ -124,7 +111,7 @@ class Meta extends React.PureComponent {
                     source: info.source.id,
                   })}
                 >
-                  {info.source.id == 'G' ? 'Ang' : 'Pannaa'}{' '}
+                  {info.source.id === 'G' ? 'Ang' : 'Pannaa'}{' '}
                   {info.source.pageno}
                 </Link>
               </Item>
@@ -153,11 +140,11 @@ class Meta extends React.PureComponent {
    * Handle SaveAng
    * @memberof Meta
    */
-  handleSaveAng = () => {
+  public handleSaveAng = () => {
     const link = toNavURL(this.props);
-    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
+    if (shouldSaveAng(this.props)) {
+      saveAng(this.props.nav.next);
+    }
     this.props.history.push(link + this.props.nav.next);
   };
 }
-
-export default withRouter(Meta);

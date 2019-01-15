@@ -30,7 +30,7 @@ function Hukamnama() {
           source: shabad.shabadInfo.source.sourceId,
         };
 
-        return <Layout data={layoutData} />;
+        return <Layout data={layoutData} date={apiData.date} />;
       }}
     </PageLoader>
   );

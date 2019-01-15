@@ -36,7 +36,7 @@ export interface IRelatedShabadsProps
     | 'unicode'
     | 'transliterationLanguages'
   > {
-  forShabadID: number;
+  forShabadID: string;
   count?: number;
 }
 

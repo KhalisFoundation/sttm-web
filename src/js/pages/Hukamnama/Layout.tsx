@@ -4,20 +4,32 @@ import { TEXTS } from '../../constants';
 import { pageView } from '../../util/analytics';
 import ShabadContent from '../../components/ShabadContent';
 import BreadCrumb from '../../components/Breadcrumb';
-import { Gurbani, IKhajanaAPIResponse } from '@/types';
+import { Gurbani, IKhajanaAPIResponse, IHukamnamaAPIResponse } from '@/types';
 
 export const Stub = () => <div className="spinner" />;
 
 export interface IHukamnamaLayoutProps {
   data: IKhajanaAPIResponse;
+  date?: IHukamnamaAPIResponse['date'];
 }
+
+const getDate = (date?: IHukamnamaAPIResponse['date']) => {
+  if (date && date.gregorian) {
+    return `${date.gregorian.date}/${date.gregorian.month}/${
+      date.gregorian.year
+    }`;
+  }
+  return null;
+};
 
 export default class Layout extends React.PureComponent<IHukamnamaLayoutProps> {
   public render() {
-    const { data } = this.props;
+    const { data, date } = this.props;
     return (
       <div className="row" id="content-root">
-        <BreadCrumb links={[{ title: TEXTS.HUKAMNAMA }]} />
+        <BreadCrumb
+          links={[{ title: TEXTS.HUKAMNAMA + ' - ' + getDate(date) }]}
+        />
         <ShabadContent
           gurbani={data.gurbani}
           info={data.shabadinfo}
