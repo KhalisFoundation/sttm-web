@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+
 const path = require('path');
 
 const API_URLS = {
@@ -26,7 +27,6 @@ const plugins = PRODUCTION
         SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
         BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       }),
-      new UglifyJsPlugin(),
     ]
   : [
       new webpack.DefinePlugin({
@@ -52,9 +52,17 @@ module.exports = {
   },
   devtool: PRODUCTION ? undefined : 'inline-source-map',
   plugins,
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      // Client root
+      '@': path.resolve(__dirname, 'src/js/'),
+    },
+  },
   optimization: {
-    noEmitOnErrors: true, // NoEmitOnErrorsPlugin
-    concatenateModules: true, //ModuleConcatenationPlugin
+    noEmitOnErrors: true,
+    minimizer: [new TerserPlugin()],
+    concatenateModules: true,
     splitChunks: {
       cacheGroups: {
         // All dependencies in `node_modules` become part of vendor chunk
@@ -69,7 +77,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(tsx?)|(js)$/,
         loader: 'babel-loader',
       },
     ],

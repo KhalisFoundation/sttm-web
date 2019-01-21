@@ -86,11 +86,12 @@ export function shortenURL(url = window.location.href) {
 export const showToast = (text, delay = 2500, className = '') =>
   new Promise(resolve => {
     const $notification = document.getElementById('toast-notification');
-    $notification.innerText = text;
+    $notification.innerHTML = `${text} <button role="button" aria-label="close" class="toast-notification-close-button">&times;</button>`.trim();
 
     if (className !== '') {
       $notification.classList.add(className);
     }
+
     $notification.classList.remove('hidden');
 
     const hideToast = () => {
@@ -102,9 +103,11 @@ export const showToast = (text, delay = 2500, className = '') =>
       resolve();
     };
 
-    if (delay === Infinity) {
-      $notification.addEventListener('click', hideToast);
-    } else {
+    document.querySelector(
+      '.toast-notification-close-button'
+    ).onclick = hideToast;
+
+    if (delay !== Infinity) {
       setTimeout(hideToast, delay);
     }
   });
@@ -211,6 +214,14 @@ export const toSearchURL = ({
     offset,
   })}`;
 
+/**
+ *
+ * @param {object} options
+ * @param {{ shabadid: string | number, id?: string | number }} options.shabad
+ * @param {string} [options.q]
+ * @param {string} [options.type]
+ * @param {string} [options.source]
+ */
 export const toShabadURL = ({
   shabad: { shabadid: id, id: highlight },
   q,

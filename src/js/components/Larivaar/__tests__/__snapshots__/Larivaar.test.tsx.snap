@@ -1,0 +1,218 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Larivaar /> renders children when disabled 1`] = `
+<div>
+  <span
+    class=""
+  >
+     Vahi 
+  </span>
+  <span
+    class=""
+  >
+     Guru 
+  </span>
+</div>
+`;
+
+exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
+<div>
+  <span>
+    <span>
+      V
+      <wbr />
+    </span>
+  </span>
+  <span>
+    <span>
+      a
+      <wbr />
+    </span>
+  </span>
+  <span>
+    <span>
+      h
+      <wbr />
+    </span>
+  </span>
+  <span>
+    <span>
+      Gu
+      <wbr />
+    </span>
+  </span>
+  <span>
+    <span>
+      ru
+      <wbr />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`<Larivaar /> renders odd words as orange when larivaarAssist is enabled 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <span
+        class=""
+      >
+         Vahi 
+      </span>
+      <span
+        class=""
+      >
+         Guru 
+      </span>
+    </div>
+    <div>
+      <span>
+        <span>
+          V
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          a
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          h
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          Gu
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          ru
+          <wbr />
+        </span>
+      </span>
+    </div>
+    <div>
+      <span>
+        <span>
+          V
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          a
+          <wbr />
+        </span>
+      </span>
+      <span>
+        <span>
+          h
+          <wbr />
+        </span>
+      </span>
+      <span
+        style="color: rgb(243, 156, 29);"
+      >
+        <span>
+          Gu
+          <wbr />
+        </span>
+      </span>
+      <span
+        style="color: rgb(243, 156, 29);"
+      >
+        <span>
+          ru
+          <wbr />
+        </span>
+      </span>
+    </div>
+  </body>,
+  "container": <div>
+    <span>
+      <span>
+        V
+        <wbr />
+      </span>
+    </span>
+    <span>
+      <span>
+        a
+        <wbr />
+      </span>
+    </span>
+    <span>
+      <span>
+        h
+        <wbr />
+      </span>
+    </span>
+    <span
+      style="color: rgb(243, 156, 29);"
+    >
+      <span>
+        Gu
+        <wbr />
+      </span>
+    </span>
+    <span
+      style="color: rgb(243, 156, 29);"
+    >
+      <span>
+        ru
+        <wbr />
+      </span>
+    </span>
+  </div>,
+  "debug": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllBySelectText": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getAllByValue": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getBySelectText": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "getByValue": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllBySelectText": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryAllByValue": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryBySelectText": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "queryByValue": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

@@ -124,19 +124,43 @@
 }
 
 .toast-notification {
+  animation: flip-open ease-in 0.15s;
   background-color: $sttm-black;
+  border-radius: 0.5em;
+  bottom: 1em;
+  box-shadow: 0 0 1em -0.2em black;
   color: $sttm-white;
   font-weight: 400;
   left: 0;
-  padding: 0.5rem 1rem;
+  margin: 0 auto;
+  padding: 0.8rem 1.8rem;
   position: fixed;
   right: 0;
-  top: 0;
-  z-index: 4;
+  text-align: center;
+  width: 30vw;
+  z-index: 6;
+
+  .toast-notification-close-button {
+    margin: 0.6em;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    &:hover {
+      color: $sttm-orange;
+    }
+  }
+
+  @media screen and (max-width: 100em) {
+    width: 60vw;
+  }
 
   @media screen and (max-width: 45.999999em) {
+    border-radius: 0;
     bottom: 0;
-    top: auto;
+    box-shadow: none;
+    text-align: left;
+    width: 100vw;
   }
 
   .dark-mode & {

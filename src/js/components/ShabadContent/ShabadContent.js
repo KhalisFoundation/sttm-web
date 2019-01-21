@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { clickEvent, ACTIONS, errorEvent } from '../util/analytics';
-import { showToast, copyToClipboard } from '../util';
-import Controls, { supportedMedia } from './Controls';
-import FootNav from './FootNav';
-import Meta from './Meta';
-import ProgressBar from './ProgressBar';
-import Baani from './Baani';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '../constants';
+
+import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
+import { showToast, copyToClipboard } from '@/util';
+import Controls, { supportedMedia } from '@/components/Controls';
+import FootNav from '@/components/FootNav';
+import Meta from '@/components/Meta';
+import ProgressBar from '@/components/ProgressBar';
+import Baani from '@/components/Baani';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
+import RelatedShabads from '@/components/RelatedShabads';
 
 /**
  *
@@ -138,9 +140,12 @@ class Shabad extends React.PureComponent {
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
             />
+
             {this.props.hideMeta === false && (
               <FootNav info={info} type={type} nav={nav} />
             )}
+
+            <RelatedShabads forShabadID={this.props.info.id} />
           </div>
         </div>
         <ProgressBar percent={this.state.progress} />
