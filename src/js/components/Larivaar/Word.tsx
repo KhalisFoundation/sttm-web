@@ -28,18 +28,20 @@ function LarivaarWord(props: ILarivaarWordProps) {
       {segments.map((item, i) => {
         let color;
 
+        // If this isn't a search result
         if (!(startIndex !== undefined && endIndex !== undefined)) {
           color =
             larivaarAssist && index % 2 === 1 ? LARIVAAR_ASSIST_COLOR : '';
         } else {
+          // For search result
           color = NORMAL_SEARCH_COLOR;
-
-          if (larivaarAssist && index % 2 === 1) {
-            color = LARIVAAR_ASSIST_COLOR;
-          }
 
           if (index >= startIndex && index < endIndex) {
             color = HIGHLIGHTED_SEARCH_COLOR;
+          }
+
+          if (larivaarAssist && index % 2 === 1) {
+            color = LARIVAAR_ASSIST_COLOR;
           }
         }
 
