@@ -21,6 +21,7 @@ const plugins = PRODUCTION
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('production'),
+          npm_package_version: JSON.stringify(process.env.npm_package_version),
         },
         PRODUCTION: JSON.stringify(true),
         API_URL: JSON.stringify(API_URLS.PRODUCTION),
@@ -30,6 +31,9 @@ const plugins = PRODUCTION
     ]
   : [
       new webpack.DefinePlugin({
+        'process.env': {
+          npm_package_version: JSON.stringify(process.env.npm_package_version),
+        },
         PRODUCTION: JSON.stringify(false),
         API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
         SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
