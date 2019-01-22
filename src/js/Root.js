@@ -27,7 +27,7 @@ export default class Root extends React.PureComponent {
     if ($a) {
       $a.innerHTML = `v${process.env.npm_package_version}`;
     }
-
+    
     const hasNotAcknolwedged =
       getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, false) ===
       false;
