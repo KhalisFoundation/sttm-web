@@ -202,7 +202,7 @@ const content = {
               {' '}
               http://
               {SHORT_DOMAIN}
-              /r{' '}
+              /sg{' '}
             </a>{' '}
           </li>
         </ul>
@@ -212,7 +212,7 @@ const content = {
               {' '}
               http://
               {SHORT_DOMAIN}
-              /r{' '}
+              /i{' '}
             </a>{' '}
           </li>
       </React.Fragment>,
