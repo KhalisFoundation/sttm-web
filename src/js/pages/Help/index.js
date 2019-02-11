@@ -205,7 +205,6 @@ const content = {
               /sg{' '}
             </a>{' '}
           </li>
-        </ul>
         <li>
             In case of going to the Index, the short URL is{' '}
             <a href={`http://${SHORT_DOMAIN}/i`}>
@@ -215,6 +214,7 @@ const content = {
               /i{' '}
             </a>{' '}
           </li>
+      </ul>
       </React.Fragment>,
     ],
   ],
