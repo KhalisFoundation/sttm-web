@@ -21,7 +21,7 @@ class SehajPaathLink extends React.PureComponent {
 
   static propTypes = {
     history: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
+    data: PropTypes.object,
   };
 
   render() {
