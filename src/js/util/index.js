@@ -278,6 +278,12 @@ export const getHighlightIndices = (baani, query, type) => {
   let baaniWords = baani.split(' ');
 
   switch (type) {
+    case SEARCH_TYPES.ENGLISH_WORD: {
+      start = 0;
+      end = baani.length;
+      break;
+    }
+
     // TODO: This is obviously not the best way to handle it.
     case SEARCH_TYPES.ROMANIZED: {
       query = query

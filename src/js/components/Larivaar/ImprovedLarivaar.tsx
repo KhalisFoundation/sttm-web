@@ -10,6 +10,7 @@ export interface ILarivaarProps {
   enable?: boolean;
   unicode: boolean;
   children: string;
+  query: string;
 }
 
 function Larivaar(props: ILarivaarProps) {
@@ -20,11 +21,16 @@ function Larivaar(props: ILarivaarProps) {
     enable = true,
     children,
     unicode,
+    query,
   } = props;
 
   if (!enable) {
     return (
-      <HighlightedSearchResult startIndex={startIndex} endIndex={endIndex}>
+      <HighlightedSearchResult
+        startIndex={startIndex}
+        endIndex={endIndex}
+        query={query}
+      >
         {children}
       </HighlightedSearchResult>
     );
@@ -37,6 +43,8 @@ function Larivaar(props: ILarivaarProps) {
           return `${word} `;
         }
 
+        const highlight = word.includes(query) ? true : false;
+
         return (
           <LarivaarWord
             startIndex={startIndex}
@@ -46,6 +54,7 @@ function Larivaar(props: ILarivaarProps) {
             unicode={unicode}
             larivaarAssist={larivaarAssist}
             index={index}
+            highlight={highlight}
           />
         );
       })}
