@@ -6,11 +6,11 @@ export default class HighlightedSearchResult extends React.PureComponent {
     children: PropTypes.string,
     startIndex: PropTypes.number,
     endIndex: PropTypes.number,
+    query: PropTypes.string,
   };
 
   render() {
-    const { children, startIndex, endIndex } = this.props;
-
+    const { children, startIndex, endIndex, query } = this.props;
     if (children === null) {
       return null;
     }
@@ -19,7 +19,9 @@ export default class HighlightedSearchResult extends React.PureComponent {
       <span
         key={i}
         className={
-          i >= startIndex && i < endIndex ? 'search-highlight-word' : ''
+          (i >= startIndex && i < endIndex) || word.includes(query)
+            ? 'search-highlight-word'
+            : ''
         }
       >
         {` ${word} `}
