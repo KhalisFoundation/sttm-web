@@ -43,7 +43,7 @@ function Larivaar(props: ILarivaarProps) {
           return `${word} `;
         }
 
-        const highlight = word.includes(query) ? true : false;
+        const highlight = word.includes(query);
 
         return (
           <LarivaarWord
