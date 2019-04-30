@@ -14,10 +14,19 @@ export interface ILarivaarWordProps {
   index: number;
   startIndex?: number;
   endIndex?: number;
+  highlight?: boolean;
 }
 
 function LarivaarWord(props: ILarivaarWordProps) {
-  const { startIndex, endIndex, word, unicode, larivaarAssist, index } = props;
+  const {
+    startIndex,
+    endIndex,
+    word,
+    unicode,
+    larivaarAssist,
+    index,
+    highlight,
+  } = props;
 
   const segments = unicode
     ? fixLarivaarUnicode(word)
@@ -34,7 +43,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
           color =
             larivaarAssist && index % 2 === 1 ? LARIVAAR_ASSIST_COLOR : '';
         } else {
-          if (index >= startIndex && index < endIndex) {
+          if (highlight || (index >= startIndex && index < endIndex)) {
             akharClass = 'search-highlight-word';
           }
 
