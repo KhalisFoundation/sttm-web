@@ -76,7 +76,7 @@ export default class ShabadControls extends React.PureComponent {
             onClick={toggleDisplayOptions}
           >
             <TelevisionIcon />
-            <span>{TEXTS.DISPLAY}</span>
+            <span className='display-options-label'>{TEXTS.DISPLAY}</span>
           </a>
           <a
             className={`font-options-toggle shabad-controller-toggle ${
@@ -85,14 +85,14 @@ export default class ShabadControls extends React.PureComponent {
             onClick={toggleFontOptions}
           >
             <SlidersIcon />
-            <span>{TEXTS.FONT}</span>
+            <span className='display-options-label'>{TEXTS.FONT}</span>
           </a>
           <a
             className={`shabad-controller-toggle ${larivaar ? 'active' : ''}`}
             onClick={toggleLarivaarOption}
           >
             <span className="custom-fa">ੳਅ</span>
-            <span>{TEXTS.LARIVAAR}</span>
+            <span className='display-options-label'>{TEXTS.LARIVAAR}</span>
           </a>
           {larivaar && (
             <a
@@ -102,7 +102,7 @@ export default class ShabadControls extends React.PureComponent {
               onClick={toggleLarivaarAssistOption}
             >
               <span className="custom-fa custom-fa-assist">ੳ</span>
-              <span>{TEXTS.ASSIST}</span>
+              <span className='display-options-label'>{TEXTS.ASSIST}</span>
             </a>
           )}
         </div>

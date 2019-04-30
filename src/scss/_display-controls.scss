@@ -105,7 +105,10 @@
 
   svg {
     fill: $sttm-light-black;
-    margin-right: 0.5em;
+
+    @media screen and (min-width: 30em) {
+      margin-right: 0.5em;
+    }
   }
 
   .dark-mode & {
@@ -149,6 +152,12 @@
     &::after {
       color: $sttm-orange;
       content: 'ਅ';
+    }
+  }
+
+  .display-options-label {
+    @media screen and (max-width: 30em) {
+      display: none;
     }
   }
 }
