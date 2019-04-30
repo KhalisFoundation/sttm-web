@@ -196,7 +196,25 @@ const content = {
               /r{' '}
             </a>{' '}
           </li>
-        </ul>
+          <li>
+            In case of going to Sundar Gutka, the short URL is{' '}
+            <a href={`http://${SHORT_DOMAIN}/sg`}>
+              {' '}
+              http://
+              {SHORT_DOMAIN}
+              /sg{' '}
+            </a>{' '}
+          </li>
+        <li>
+            In case of going to the Index, the short URL is{' '}
+            <a href={`http://${SHORT_DOMAIN}/i`}>
+              {' '}
+              http://
+              {SHORT_DOMAIN}
+              /i{' '}
+            </a>{' '}
+          </li>
+      </ul>
       </React.Fragment>,
     ],
   ],

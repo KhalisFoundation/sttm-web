@@ -1,6 +1,6 @@
 {
   "name": "@sttm/web",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
@@ -40,7 +40,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "GSL",
+  "license": "OSL-3.0",
   "bugs": {
     "url": "https://github.com/KhalisFoundation/SikhiToTheMax-Web/issues"
   },

@@ -14,10 +14,19 @@ export interface ILarivaarWordProps {
   index: number;
   startIndex?: number;
   endIndex?: number;
+  highlight?: boolean;
 }
 
 function LarivaarWord(props: ILarivaarWordProps) {
-  const { startIndex, endIndex, word, unicode, larivaarAssist, index } = props;
+  const {
+    startIndex,
+    endIndex,
+    word,
+    unicode,
+    larivaarAssist,
+    index,
+    highlight,
+  } = props;
 
   const segments = unicode
     ? fixLarivaarUnicode(word)
@@ -27,17 +36,15 @@ function LarivaarWord(props: ILarivaarWordProps) {
     <>
       {segments.map((item, i) => {
         let color;
+        let akharClass;
 
         // If this isn't a search result
         if (!(startIndex !== undefined && endIndex !== undefined)) {
           color =
             larivaarAssist && index % 2 === 1 ? LARIVAAR_ASSIST_COLOR : '';
         } else {
-          // For search result
-          color = NORMAL_SEARCH_COLOR;
-
-          if (index >= startIndex && index < endIndex) {
-            color = HIGHLIGHTED_SEARCH_COLOR;
+          if (highlight || (index >= startIndex && index < endIndex)) {
+            akharClass = 'search-highlight-word';
           }
 
           if (larivaarAssist && index % 2 === 1) {
@@ -58,7 +65,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
         }
 
         return (
-          <span key={key} style={{ color }}>
+          <span key={key} className={akharClass} style={{ color }}>
             <span>
               {item}
               <wbr />

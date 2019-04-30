@@ -62,6 +62,7 @@ export default class SearchResult extends React.PureComponent {
                   unicode={unicode}
                   startIndex={highlightStartIndex}
                   endIndex={higlightEndIndex}
+                  query={q}
                 >
                   {shabad.gurbani.unicode}
                 </Larivaar>
@@ -73,6 +74,7 @@ export default class SearchResult extends React.PureComponent {
                   enable={larivaar}
                   startIndex={highlightStartIndex}
                   endIndex={higlightEndIndex}
+                  query={q}
                 >
                   {shabad.gurbani.gurmukhi}
                 </Larivaar>
