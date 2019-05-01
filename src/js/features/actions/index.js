@@ -4,6 +4,7 @@ import {
   DEFAULT_DARK_MODE,
   DEFAULT_UNICODE,
   DEFAULT_FONT_SIZE,
+  DEFAULT_FONT_FAMILY,
 } from '../../constants';
 
 export const createAction = (type, meta) => payload => ({
@@ -75,7 +76,11 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
 };
 
+export const CHANGE_FONT = 'CHANGE_FONT';
+export const changeFont = createAction(CHANGE_FONT);
+
 export const resetFontOptions = () => dispatch => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
+  dispatch(changeFont(DEFAULT_FONT_FAMILY));
 };

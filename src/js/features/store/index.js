@@ -9,6 +9,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_UNICODE,
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
+  LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
@@ -17,12 +18,14 @@ import {
   DEFAULT_UNICODE,
   DEFAULT_SPLIT_VIEW,
   DEFAULT_FONT_SIZE,
+  DEFAULT_FONT_FAMILY,
   DEFAULT_DARK_MODE,
 } from '../../constants';
 import {
   getArrayFromLocalStorage,
   getBooleanFromLocalStorage,
   getNumberFromLocalStorage,
+  getStringFromLocalStorage,
 } from '../../util';
 import thunk from 'redux-thunk';
 
@@ -59,6 +62,10 @@ const initialState = {
   fontSize: getNumberFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
     DEFAULT_FONT_SIZE
+  ),
+  fontFamily: getStringFromLocalStorage(
+    LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
+    DEFAULT_FONT_FAMILY
   ),
   darkMode: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_DARK_MODE,
