@@ -211,19 +211,21 @@ export default class ShabadControls extends React.PureComponent {
                 {TEXTS.UNICODE}
               </a>
             </div>
-            <div className="font-option-type">
-              <div className="font-option-header">{TEXTS.FONT}</div>
-              <select
-                defaultValue={fontFamily}
-                onChange={e => changeFont(e.currentTarget.value)}
-              >
-                {Object.keys(FONT_OPTIONS).map(key => (
-                  <option key={key} value={key}>
-                    {FONT_OPTIONS[key]}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {!unicode && (
+              <div className="font-option-type">
+                <div className="font-option-header">{TEXTS.FONT_FAMILY}</div>
+                <select
+                  value={fontFamily}
+                  onChange={e => changeFont(e.currentTarget.value)}
+                >
+                  {Object.keys(FONT_OPTIONS).map(key => (
+                    <option key={key} value={key}>
+                      {FONT_OPTIONS[key]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             <div className="font-option-type">
               <div className="font-option-header">{TEXTS.FONT_SIZE}</div>
               <small className="gurbani-font">A</small>

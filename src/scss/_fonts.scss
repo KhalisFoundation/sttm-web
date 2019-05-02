@@ -1,23 +1,23 @@
-@font-face {
-  font-display: block;
-  font-family: gurmukhi_heavy;
-  src: url('/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1');
+/* stylelint-disable at-rule-no-unknown */
+
+@mixin load_fonts($name, $fontfile) {
+  @font-face {
+    font-display: block;
+    font-family: $name;
+    src: url('/assets/fonts/'+$fontfile+'?v=1');
+  }
 }
 
-@font-face {
-  font-display: block;
-  font-family: anmol_lipi;
-  src: url('/assets/fonts/AnmolLipiSG.ttf?v=1');
-}
+$fontlist: (
+  gurmukhi_normal:"GurbaniAkharTrue.ttf",
+  gurmukhi_heavy: "GurbaniAkharHeavyTrue.ttf",
+  gurmukhi_thick: "GurbaniAkharThickTrue.ttf",
+  anmol_lipi: "AnmolLipiSG.ttf",
+  anmol_bold: "AnmolLipiBoldTrue.ttf",
+  notosans:"NotoSansGurmukhiTrue.ttf",
+  notosans_bold: "NotoSansGurmukhiBoldTrue.ttf",
+);
 
-@font-face {
-  font-display: block;
-  font-family: gurmukhi_thick;
-  src: url('/assets/fonts/GurbaniAkharThickTrue.ttf?v=1');
-}
-
-@font-face {
-  font-display: block;
-  font-family: gurmukhi_normal;
-  src: url('/assets/fonts/GurbaniAkharTrue.ttf?v=1');
+@each $name, $file in $fontlist {
+  @include load_fonts($name, $file);
 }

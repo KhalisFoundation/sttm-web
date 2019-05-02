@@ -134,10 +134,14 @@ export const TEXTS = {
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
+  FONT_FAMILY: 'Font family',
 };
 
 export const FONT_OPTIONS = {
   anmol_lipi: 'Anmol Lipi',
+  anmol_bold: 'Anmol Lipi Bold',
+  notosans: 'Noto Sans',
+  notosans_bold: 'Noto Sans Bold',
   gurmukhi_normal: 'Gurbani Akhar',
   gurmukhi_heavy: 'Gurbani Akhar Heavy',
   gurmukhi_thick: 'Gurbani Akhar Thick',
