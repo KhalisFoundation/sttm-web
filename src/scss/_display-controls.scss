@@ -14,6 +14,9 @@
 
   &.with-border {
     box-shadow: 0 8px 6px -10px black;
+    max-width: 75rem;
+    position: fixed;
+    width: 100%;
   }
 
   > div {
@@ -79,8 +82,11 @@
   white-space: nowrap;
 
   .dark-mode & {
-    background-image:
-      linear-gradient(to right, $sttm-light-black, $sttm-light-black),
+    background-image: linear-gradient(
+        to right,
+        $sttm-light-black,
+        $sttm-light-black
+      ),
       linear-gradient(to right, $sttm-light-black, $sttm-light-black),
       linear-gradient(to right, $sttm-black, $sttm-lighter-black),
       linear-gradient(to left, $sttm-black, $sttm-lighter-black);
