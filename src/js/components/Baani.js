@@ -114,8 +114,32 @@ export default class Baani extends React.PureComponent {
     }
   };
 
+  makeSelection = e => {
+    const shareDivs = document.querySelectorAll('.share');
+    shareDivs.forEach(function(sd) {
+      sd.style.display = 'none';
+    });
+    if (window.getSelection().toString()) {
+      const baaniDiv = e.currentTarget;
+      var range = document.createRange();
+      range.selectNode(baaniDiv);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      const shareDiv = baaniDiv.querySelector('.share');
+      shareDiv.style.display = 'block';
+    }
+  };
+
   componentDidMount() {
     this._scrollToHiglight();
+    const lineDivs = document.querySelectorAll('.line');
+    const ms = this.makeSelection;
+    lineDivs.forEach(function(ld) {
+      ld.addEventListener('mouseup', ms);
+      ld.addEventListener('mousedown', () => {
+        window.getSelection().removeAllRanges();
+      });
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -188,8 +212,6 @@ export default class Baani extends React.PureComponent {
               onFacebookClick={this.onFacebookClick(shabad)}
               onCopyClick={this.onCopyClick(shabad)}
             />
-
-            <br />
           </div>
         ))}
       </div>
