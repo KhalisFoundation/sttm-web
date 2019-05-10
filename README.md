@@ -2,14 +2,14 @@
 
 # SikhiToTheMax Website
 
-Originally developed by SHARE Charity UK, SikhiToTheMax has become a defacto standard for keertans and gurdwaras around the world to display gurbani on screens for sangat to join into the depth of Gurbani and translations.
+Originally developed by SHARE Charity UK, SikhiToTheMax has become a defacto standard for Keertans and gurdwaras around the world to display Gurbani on screens for Sangat to join into the depth of Gurbani and translations.
 
-SikhiToTheMax is now developed by Khalis Foundation as seva to the panth and Khalis Foundation is working hard to ensure it lives up to its name.
+SikhiToTheMax is now developed by Khalis Foundation as Seva to the Panth and Khalis Foundation is working hard to ensure it lives up to its name.
 Khalis Foundation Sevadaars are currently working hard to build newer version of SikhiToTheMax website using modern web technologies.
 
 Website: http://www.SikhiToTheMax.org
 
-Developer: Khalis Foundation and sevadars (see committers for more details)
+Developer: Khalis Foundation and Sevadars (see committers for more details)
 
 Acknowledgements: Bhai Tarsem Singh UK, SHARE UK, Khalis Foundation, Khalsa Foundation UK, Dr. Sant Singh Khalsa, Dr. Kulbir Singh Thind
 
@@ -17,7 +17,7 @@ Powered by [<img height="30" src="http://www.banidb.com/wp-content/uploads/2018/
 
 ## Build Instructions
 
-Make sure you've [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) & [`nodejs`](https://nodejs.org/en/) installed in your system. We advise using Node verison 8 or above, and npm version 5.7 or above.
+Make sure you've [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) & [`nodejs`](https://nodejs.org/en/) installed in your system. We advise using Node version 8 or above, and npm version 5.7 or above.
 
 Open terminal and follow these steps;
 
@@ -41,7 +41,7 @@ cd SikhiToTheMax-Web/
 npm ci
 ```
 
-This will use `npm` that is included with `nodejs` to install project depedencies.
+This will use `npm` that is included with `nodejs` to install project dependencies.
 
 - Step 3: Start the project.
 
@@ -79,6 +79,6 @@ You can watch this project and code [walkthrough](https://www.youtube.com/watch?
 
 [GSL](/LICENSE)
 
-All images and assets not covered under other licenses are covered under full Copyright © 2018 Khalis Foundation.
+All images and assets not covered under other licenses are covered under full Copyright © 2019 Khalis Foundation.
 
 Site made reliable with help of [<img src=".github/README_IMAGES/browserstack.svg" alt="BrowserStack" height="15px" />](https://www.browserstack.com/open-source)
