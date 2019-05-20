@@ -256,7 +256,7 @@ export default {
         pages: [1385, 1410],
       },
       {
-        name: 'Salok Vaaran & more',
+        name: 'Salok Vaaran Te Vadeek',
         pages: [1410, 1426],
       },
       {
