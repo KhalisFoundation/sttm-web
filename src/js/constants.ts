@@ -30,6 +30,7 @@ export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
+export const LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW = 'centerAlignView';
 
 export const PLACEHOLDERS = {
   [SEARCH_TYPES.FIRST_LETTERS]: ['jmTAq'], // first letters
@@ -54,6 +55,7 @@ export const DEFAULT_SPLIT_VIEW = false;
 export const DEFAULT_FONT_SIZE = 2;
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
+export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
@@ -132,6 +134,7 @@ export const TEXTS = {
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
+  CENTERALIGN: 'Center-Align',
 };
 
 export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';
