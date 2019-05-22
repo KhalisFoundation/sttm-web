@@ -2,6 +2,8 @@
 jest/coverage/
 /inc/mysql.php
 node_modules/
+public/service-worker.js
+public/assets/js/manifest.json
 public/assets/js/**/*.js
 yarn.lock
 public/assets/css/*.css

@@ -3,10 +3,8 @@ const VERSION = '%VERSION';
 const onCache = cache =>
   cache.addAll([
     '/',
-    '/assets/js/chunks/vendor.js',
-    '/assets/js/app.js',
-    '/assets/css/vendor/foundation.min.css?v=6.2.4',
-    '/assets/css/bundle.css',
+    %JS_ASSETS,
+    %CSS_ASSETS,
     '/assets/images/Sach Kaur.png',
     '/assets/images/404.png',
     '/assets/images/spinner-mandala.png',

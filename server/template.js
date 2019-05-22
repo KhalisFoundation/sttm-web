@@ -1,5 +1,14 @@
 import marinate from 'marinate';
+import fs from 'fs';
+import { resolve } from 'path';
 import { ONLINE_COLOR } from '../common/constants';
+
+const manifest = JSON.parse(
+  fs.readFileSync(
+    resolve(__dirname, '../', 'public', 'assets', 'js', 'manifest.json'),
+    'utf-8'
+  )
+);
 
 export default ({ url, bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
@@ -22,10 +31,8 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <link async rel="preload" href="/assets/fonts/AnmolLipiSG.ttf?v=1" as="font">
 
   <!-- Preload JavaScript -->
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad~Sync.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad~Sync.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Search.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Shabad.js" as="script">
+  <link async rel="preload" href="${manifest['Search.js']}" as="script">
+  <link async rel="preload" href="${manifest['Shabad.js']}" as="script">
 
   <!-- Preload Images -->
   <link async rel="preload" href="/assets/images/sttm_logo.png" as="image">
@@ -122,8 +129,8 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <!-- Polyfills -->
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Object.entries,Array.from,Array.prototype.includes,String.prototype.startsWith,String.prototype.includes,Map,Set,requestAnimationFrame,Array.prototype.@@iterator"></script>
 
-  <script src="/assets/js/chunks/vendor.js"></script>
-  <script src="/assets/js/app.js"></script>
+  <script src="${manifest['vendor.js']}"></script>
+  <script src="${manifest['app.js']}"></script>
 </body>
 
 </html>

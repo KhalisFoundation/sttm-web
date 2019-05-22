@@ -23,7 +23,7 @@
     "build": "run-p build:*",
     "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss public/assets/css/bundle.css",
     "build:webpack": "webpack",
-    "build:service-worker": "sed -e \"s/%VERSION/$npm_package_version-$(date +%d%m%Y)/g\" public/service-worker-template.js > public/service-worker.js",
+    "build:service-worker": "node scripts/generate-sw.js",
     "deploy": "git checkout dev && git pull origin && git push web",
     "deploy:prod": "npm-run-all deploy:prod:*",
     "deploy:prod:build": "NODE_ENV=production npm run build",
@@ -89,7 +89,8 @@
     "typescript": "^3.2.2",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-manifest-plugin": "^2.0.4"
   },
   "standard": {
     "ignore": [
