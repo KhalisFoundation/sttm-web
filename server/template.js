@@ -6,32 +6,21 @@ export default ({ url, bodyClass, title, description }) => marinate`
 <html>
 <head>
   <title>${title}</title>
-  <meta name="theme-color" content="${ONLINE_COLOR}">
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="manifest" href="/manifest.json" />
 
+  ${preconnectHTML}
+  ${preloadFontsHTML}
+  ${preloadScriptsHTML}
+  ${prefetchImagesHTML}
+
+  <!-- Meta Tags -->
   <meta charset="utf-8">
+  <meta name="theme-color" content="${ONLINE_COLOR}">
   <meta name="description" content="${description}">
-  <link rel="manifest" href="/manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Preconnect -->
-  <link rel="preconnect" href="//cdn.polyfill.io" crossorigin>
-  <link rel="preconnect" href="//api.banidb.com" crossorigin>
-
-  <!-- Preload Fonts -->
-  <link async rel="preload" href="/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1" as="font">
-  <link async rel="preload" href="/assets/fonts/AnmolLipiSG.ttf?v=1" as="font">
-
-  <!-- Preload JavaScript -->
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Search~Shabad~Sync.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Ang~Hukamnama~Shabad~Sync.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Search.js" as="script">
-  <link async rel="preload" href="assets/js/chunks/Shabad.js" as="script">
-
-  <!-- Preload Images -->
-  <link async rel="preload" href="/assets/images/sttm_logo.png" as="image">
-  <link async rel="preload" href="/assets/images/logo-192x192.png" as="image">
-
-  <!-- Open Graph and Twitter -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.sikhitothemax.org${url}">
   <meta property="og:author" content="https://khalisfoundation.org/">
@@ -40,6 +29,8 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta property="og:image" content="/assets/images/sttm_banner.png">
   <meta property="og:image:width" content="1500">
   <meta property="og:image:height" content="1000">
+
+  <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:site" content="@khalisfound">
   <meta property="twitter:creator" content="@khalisfound">
@@ -59,11 +50,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="/assets/css/vendor/foundation.min.css?v=6.2.4">
-  <link rel="stylesheet" href="/assets/css/bundle.css">
+  ${stylesheetsHTML}
 </head>
 
 <body class="${bodyClass}">
@@ -103,6 +90,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
     </div>
   </footer>
 
+  <!-- Google Analytics -->
   <script>
     var ga;
     if (document.location.hostname === 'www.sikhitothemax.org') {
@@ -122,9 +110,92 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <!-- Polyfills -->
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Object.entries,Array.from,Array.prototype.includes,String.prototype.startsWith,String.prototype.includes,Map,Set,requestAnimationFrame,Array.prototype.@@iterator"></script>
 
-  <script src="/assets/js/chunks/vendor.js"></script>
-  <script src="/assets/js/app.js"></script>
-</body>
+  <!-- Source Code -->
+  ${scriptsHTML}
 
+  <!-- ServiceWorker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      ${
+        process.env.kill_service_worker
+          ? unregisterServiceWorker
+          : registerServiceWorker
+      }
+    }
+  </script>
+
+  <noscript>
+    ${noScriptHTML}
+  </noscript>
+  
+
+</body>
 </html>
+`;
+
+const preconnect = ['//cdn.polyfill.io', '//api.banidb.com'];
+const preconnectHTML = preconnect
+  .map(
+    d =>
+      `<link rel="preconnect" href="${d}" crossorigin /><link rel="dns-prefetch" href="${d}" />`
+  )
+  .join('');
+
+const prefetchImages = [
+  '/assets/images/sttm_logo.png',
+  '/assets/images/logo-192x192.png',
+];
+const prefetchImagesHTML = prefetchImages
+  .map(i => `<link async rel="prefetch" href="${i}" as="image" />`)
+  .join('');
+
+const preloadFonts = [
+  '/assets/fonts/AnmolLipiSG.ttf?v=1',
+  '/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1',
+];
+const preloadFontsHTML = preloadFonts
+  .map(f => `<link async rel="preload" href="${f}" as="font" crossorigin />`)
+  .join('');
+
+const preloadScripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
+const preloadScriptsHTML = preloadScripts
+  .map(s => `<link async rel="preload" href="${s}" as="script" />`)
+  .join('');
+
+const stylesheets = [
+  '/assets/css/vendor/foundation.min.css?v=6.2.4',
+  '/assets/css/bundle.css',
+];
+const stylesheetsHTML = stylesheets
+  .map(s => `<link href="${s}" rel="stylesheet" />`)
+  .join('');
+
+const scripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
+const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('');
+
+const registerServiceWorker = `
+  navigator.serviceWorker
+    .register('service-worker.js', { scope: './' })
+    .then(reg => console.log('Registration succeeded. Scope is ' + reg.scope))
+    .catch(console.error);
+`;
+
+const unregisterServiceWorker = `
+  navigator.serviceWorker
+    .getRegistrations()
+    .then(sws => sws.forEach(s => s.unregister()))
+`;
+
+const noScriptHTML = `
+<div class="error-message">
+  <div>
+    <h3>JavaScript is essential to use our website. Kindly enable it.</h3>
+    <section>
+      We're sorry for the inconvenience. Follow the instructions <a href="https://www.enable-javascript.com" target="_blank" rel="noreferrer nofollow">here</a> if you're confused how to enable JavaScript.
+    </section>
+  </div>
+  <div>
+    <img src="/assets/images/Sach Kaur.png" alt="Image of a Sikh Girl face-palming">
+  </div>
+</div>
 `;
