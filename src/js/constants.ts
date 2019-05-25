@@ -95,7 +95,7 @@ export const TEXTS = {
   HELP_SECTION: 'the help section',
   INDEX_SECTION: 'the index page',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
-  GENERIC_ERROR_DESCRIPTION: `This is really unusual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
+  GENERIC_ERROR_DESCRIPTION: `This is really unusual. Try <a href="https://www.thewindowsclub.com/clear-cache-cookies-specific-website" target="_blank" rel="noreferrer nofollow">clearing your cache</a>. If you still face the issue, you may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
   TIMEOUT_ERROR: `ਵਾਹਿਗੁਰੂ! Network connection timed out`,
   TIMEOUT_ERROR_DESCRIPTION: `This usually happens when your internet connection is either down or very slow. Try connecting sometime later?`,
   GO_TO_SHABAD: 'Open Shabad',
