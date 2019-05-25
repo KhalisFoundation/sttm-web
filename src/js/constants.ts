@@ -31,6 +31,7 @@ export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
+export const LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW = 'centerAlignView';
 
 export const PLACEHOLDERS = {
   [SEARCH_TYPES.FIRST_LETTERS]: ['jmTAq'], // first letters
@@ -56,6 +57,7 @@ export const DEFAULT_FONT_SIZE = 2;
 export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
+export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
@@ -95,7 +97,7 @@ export const TEXTS = {
   HELP_SECTION: 'the help section',
   INDEX_SECTION: 'the index page',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
-  GENERIC_ERROR_DESCRIPTION: `This is really unusual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
+  GENERIC_ERROR_DESCRIPTION: `This is really unusual. Try <a href="https://www.thewindowsclub.com/clear-cache-cookies-specific-website" target="_blank" rel="noreferrer nofollow">clearing your cache</a>. If you still face the issue, you may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
   TIMEOUT_ERROR: `ਵਾਹਿਗੁਰੂ! Network connection timed out`,
   TIMEOUT_ERROR_DESCRIPTION: `This usually happens when your internet connection is either down or very slow. Try connecting sometime later?`,
   GO_TO_SHABAD: 'Open Shabad',
@@ -135,6 +137,7 @@ export const TEXTS = {
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
   FONT_FAMILY: 'Font family',
+  CENTERALIGN: 'Center-Align',
 };
 
 export const FONT_OPTIONS = {

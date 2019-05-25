@@ -45,6 +45,7 @@ export default class Baani extends React.PureComponent {
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
+    centerAlignGurbani: PropTypes.bool.isRequired,
   };
 
   getShareLine = shabad => {
@@ -138,6 +139,7 @@ export default class Baani extends React.PureComponent {
       fontSize,
       fontFamily,
       highlight,
+      centerAlignGurbani,
     } = this.props;
 
     const disabledActions = ['ang', 'hukamnama'].includes(type)
@@ -259,7 +261,11 @@ export default class Baani extends React.PureComponent {
     );
 
     return (
-      <div className={SHABAD_CONTENT_CLASSNAME}>
+      <div
+        className={`${SHABAD_CONTENT_CLASSNAME} ${
+          centerAlignGurbani ? ' center-align' : ''
+        }`}
+      >
         {splitView ? splitViewMarkup : mixedViewMarkup}
       </div>
     );

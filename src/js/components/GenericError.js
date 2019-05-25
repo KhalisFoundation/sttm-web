@@ -29,7 +29,7 @@ export default class GenericError extends React.PureComponent {
       <div className="error-message">
         <div>
           <h3>{title}</h3>
-          <section>{description}</section>
+          <section dangerouslySetInnerHTML={{ __html: description }} />
         </div>
         <div>
           <img src={url} alt={alt} />

@@ -75,6 +75,7 @@ class Shabad extends React.PureComponent {
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
+    centerAlignGurbani: PropTypes.bool.isRequired,
   };
 
   render() {
@@ -94,6 +95,7 @@ class Shabad extends React.PureComponent {
         unicode,
         fontSize,
         fontFamily,
+        centerAlignGurbani,
       },
       handleEmbed,
       handleCopyAll,
@@ -142,6 +144,7 @@ class Shabad extends React.PureComponent {
               larivaarAssist={larivaarAssist}
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
+              centerAlignGurbani={centerAlignGurbani}
             />
 
             {this.props.hideMeta === false && (

@@ -221,7 +221,43 @@ export default {
       },
       {
         name: 'Raag Jaijavanti',
-        pages: [1352, 1353],
+        pages: [1352, 1352],
+      },
+      {
+        name: 'Salok Sehaskriti Mahalla 1',
+        pages: [1353, 1353],
+      },
+      {
+        name: 'Salok Sehaskriti Mahalla 5',
+        pages: [1353, 1360],
+      },
+      {
+        name: 'Mahalla 5 Gaatha',
+        pages: [1360, 1361],
+      },
+      {
+        name: 'Funehe Mahalla 5',
+        pages: [1361, 1363],
+      },
+      {
+        name: 'Choubole Mahalla 5',
+        pages: [1363, 1364],
+      },
+      {
+        name: 'Salok Bhagat Kabir Jio Ke',
+        pages: [1364, 1377],
+      },
+      {
+        name: 'Salok Seikh Farid Ke',
+        pages: [1377, 1385],
+      },
+      {
+        name: 'Swayyee Sri Mukh Baak Mahalla 5',
+        pages: [1385, 1410],
+      },
+      {
+        name: 'Salok Vaaran Te Vadeek',
+        pages: [1410, 1426],
       },
       {
         name: 'Salok Mahalla 9',

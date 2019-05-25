@@ -18,6 +18,7 @@ import {
   toggleSplitViewOption,
   toggleDarkMode,
   changeFont,
+  toggleCenterAlignOption,
 } from '../features/actions';
 
 export const supportedMedia = _s;
@@ -89,6 +90,7 @@ const dispatchToProps = {
   toggleSplitViewOption,
   toggleDarkMode,
   changeFont,
+  toggleCenterAlignOption,
 };
 
 // TODO: Connect individual components instead of all controls.

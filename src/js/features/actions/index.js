@@ -84,3 +84,6 @@ export const resetFontOptions = () => dispatch => {
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
   dispatch(changeFont(DEFAULT_FONT_FAMILY));
 };
+
+export const TOGGLE_CENTER_ALIGN_OPTION = 'TOGGLE_CENTER_ALIGN_OPTION';
+export const toggleCenterAlignOption = createAction(TOGGLE_CENTER_ALIGN_OPTION);
