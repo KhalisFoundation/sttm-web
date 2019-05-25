@@ -1,75 +1,17 @@
 import marinate from 'marinate';
 import { ONLINE_COLOR } from '../common/constants';
 
-const preloadImages = [
-  '/assets/images/sttm_logo.png',
-  '/assets/images/logo-192x192.png',
-];
-const preloadImagesHTML = preloadImages
-  .map(i => `<link async rel="preload" href="${i}" as="image">`)
-  .join('\n');
-
-const preloadFonts = [
-  '/assets/fonts/AnmolLipiSG.ttf?v=1',
-  '/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1',
-];
-const preloadFontsHTML = preloadFonts
-  .map(f => `<link async rel="preload" href="${f}" as="font"></link>`)
-  .join('\n');
-
-const preloadScripts = [
-  'assets/js/chunks/Ang~Hukamnama~Search~Shabad~Sync.js',
-  'assets/js/chunks/Ang~Hukamnama~Shabad~Sync.js',
-  'assets/js/chunks/Search.js',
-  'assets/js/chunks/Shabad.js',
-];
-const preloadScriptsHTML = preloadScripts
-  .map(s => `<link async rel="preload" href="${s}" as="script">`)
-  .join('\n');
-
-const stylesheets = [
-  '/assets/css/vendor/foundation.min.css?v=6.2.4',
-  '/assets/css/bundle.css',
-];
-const stylesheetsHTML = stylesheets
-  .map(s => `<link href="${s}" rel="stylesheet" />`)
-  .join('\n');
-
-const scripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
-const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('\n');
-
-const registerServiceWorker = `
-  navigator.serviceWorker
-    .register('service-worker.js', { scope: './' })
-    .then(reg => console.log('Registration succeeded. Scope is ' + reg.scope))
-    .catch(console.error);
-`;
-
-const unregisterServiceWorker = `
-  navigator.serviceWorker
-    .getRegistrations()
-    .then(sws => sws.forEach(s => s.unregister()))
-`;
-
 export default ({ url, bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
 <html>
 <head>
   <title>${title}</title>
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="manifest" href="/manifest.json">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="manifest" href="/manifest.json" />
 
-  <!-- Preconnect -->
-  <link rel="preconnect" href="//cdn.polyfill.io" crossorigin>
-  <link rel="preconnect" href="//api.banidb.com" crossorigin>
-
-  <!-- Preload Fonts -->
+  ${preconnectHTML}
   ${preloadFontsHTML}
-
-  <!-- Preload JavaScript -->
   ${preloadScriptsHTML}
-
-  <!-- Preload Images -->
   ${preloadImagesHTML}
 
   <!-- Meta Tags -->
@@ -108,7 +50,6 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
-  <!-- CSS -->
   ${stylesheetsHTML}
 </head>
 
@@ -185,4 +126,59 @@ export default ({ url, bodyClass, title, description }) => marinate`
 
 </body>
 </html>
+`;
+
+const preconnect = ['//cdn.polyfill.io', '//api.banidb.com'];
+const preconnectHTML = preconnect
+  .map(d => `<link rel="preconnect" href="${d}" crossorigin />`)
+  .join('\n');
+
+const preloadImages = [
+  '/assets/images/sttm_logo.png',
+  '/assets/images/logo-192x192.png',
+];
+const preloadImagesHTML = preloadImages
+  .map(i => `<link async rel="preload" href="${i}" as="image" />`)
+  .join('\n');
+
+const preloadFonts = [
+  '/assets/fonts/AnmolLipiSG.ttf?v=1',
+  '/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1',
+];
+const preloadFontsHTML = preloadFonts
+  .map(f => `<link async rel="preload" href="${f}" as="font" />`)
+  .join('\n');
+
+const preloadScripts = [
+  'assets/js/chunks/Ang~Hukamnama~Search~Shabad~Sync.js',
+  'assets/js/chunks/Ang~Hukamnama~Shabad~Sync.js',
+  'assets/js/chunks/Search.js',
+  'assets/js/chunks/Shabad.js',
+];
+const preloadScriptsHTML = preloadScripts
+  .map(s => `<link async rel="preload" href="${s}" as="script" />`)
+  .join('\n');
+
+const stylesheets = [
+  '/assets/css/vendor/foundation.min.css?v=6.2.4',
+  '/assets/css/bundle.css',
+];
+const stylesheetsHTML = stylesheets
+  .map(s => `<link href="${s}" rel="stylesheet" />`)
+  .join('\n');
+
+const scripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
+const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('\n');
+
+const registerServiceWorker = `
+  navigator.serviceWorker
+    .register('service-worker.js', { scope: './' })
+    .then(reg => console.log('Registration succeeded. Scope is ' + reg.scope))
+    .catch(console.error);
+`;
+
+const unregisterServiceWorker = `
+  navigator.serviceWorker
+    .getRegistrations()
+    .then(sws => sws.forEach(s => s.unregister()))
 `;
