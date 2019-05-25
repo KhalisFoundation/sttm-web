@@ -3,8 +3,9 @@ jest/coverage/
 /inc/mysql.php
 node_modules/
 public/assets/js/**/*.js
-yarn.lock
+public/service-worker.js
 public/assets/css/*.css
+yarn.lock
 *.swp
 *.map
 .idea/

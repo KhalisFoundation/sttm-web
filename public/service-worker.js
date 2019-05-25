@@ -1,4 +1,4 @@
-const VERSION = '1.1.8-07012019';
+const VERSION = '1.1.12-25052019';
 
 const onCache = cache =>
   cache.addAll([

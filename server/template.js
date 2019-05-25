@@ -12,7 +12,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
   ${preconnectHTML}
   ${preloadFontsHTML}
   ${preloadScriptsHTML}
-  ${preloadImagesHTML}
+  ${prefetchImagesHTML}
 
   <!-- Meta Tags -->
   <meta charset="utf-8">
@@ -124,40 +124,43 @@ export default ({ url, bodyClass, title, description }) => marinate`
     }
   </script>
 
+  <noscript>
+    ${noScriptHTML}
+  </noscript>
+  
+
 </body>
 </html>
 `;
 
 const preconnect = ['//cdn.polyfill.io', '//api.banidb.com'];
 const preconnectHTML = preconnect
-  .map(d => `<link rel="preconnect" href="${d}" crossorigin />`)
-  .join('\n');
+  .map(
+    d =>
+      `<link rel="preconnect" href="${d}" crossorigin /><link rel="dns-prefetch" href="${d}" />`
+  )
+  .join('');
 
-const preloadImages = [
+const prefetchImages = [
   '/assets/images/sttm_logo.png',
   '/assets/images/logo-192x192.png',
 ];
-const preloadImagesHTML = preloadImages
-  .map(i => `<link async rel="preload" href="${i}" as="image" />`)
-  .join('\n');
+const prefetchImagesHTML = prefetchImages
+  .map(i => `<link async rel="prefetch" href="${i}" as="image" />`)
+  .join('');
 
 const preloadFonts = [
   '/assets/fonts/AnmolLipiSG.ttf?v=1',
   '/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1',
 ];
 const preloadFontsHTML = preloadFonts
-  .map(f => `<link async rel="preload" href="${f}" as="font" />`)
-  .join('\n');
+  .map(f => `<link async rel="preload" href="${f}" as="font" crossorigin />`)
+  .join('');
 
-const preloadScripts = [
-  'assets/js/chunks/Ang~Hukamnama~Search~Shabad~Sync.js',
-  'assets/js/chunks/Ang~Hukamnama~Shabad~Sync.js',
-  'assets/js/chunks/Search.js',
-  'assets/js/chunks/Shabad.js',
-];
+const preloadScripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
 const preloadScriptsHTML = preloadScripts
   .map(s => `<link async rel="preload" href="${s}" as="script" />`)
-  .join('\n');
+  .join('');
 
 const stylesheets = [
   '/assets/css/vendor/foundation.min.css?v=6.2.4',
@@ -165,10 +168,10 @@ const stylesheets = [
 ];
 const stylesheetsHTML = stylesheets
   .map(s => `<link href="${s}" rel="stylesheet" />`)
-  .join('\n');
+  .join('');
 
 const scripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
-const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('\n');
+const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('');
 
 const registerServiceWorker = `
   navigator.serviceWorker
@@ -181,4 +184,18 @@ const unregisterServiceWorker = `
   navigator.serviceWorker
     .getRegistrations()
     .then(sws => sws.forEach(s => s.unregister()))
+`;
+
+const noScriptHTML = `
+<div class="error-message">
+  <div>
+    <h3>JavaScript is essential to use our website. Kindly enable it.</h3>
+    <section>
+      We're sorry for the inconvenience. Follow the instructions <a href="https://www.enable-javascript.com" target="_blank" rel="noreferrer nofollow">here</a> if you're confused how to enable JavaScript.
+    </section>
+  </div>
+  <div>
+    <img src="/assets/images/Sach Kaur.png" alt="Image of a Sikh Girl face-palming">
+  </div>
+</div>
 `;
