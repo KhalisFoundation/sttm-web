@@ -172,10 +172,12 @@ export default function reducer(state, action) {
     }
     case CHANGE_FONT: {
       const fontFamily = action.payload;
-
+      const unicode = fontFamily === 'unicode_font';
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_UNICODE, unicode);
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_FONT_FAMILY, fontFamily);
       return {
         ...state,
+        unicode,
         fontFamily,
       };
     }

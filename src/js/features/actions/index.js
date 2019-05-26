@@ -43,9 +43,6 @@ export const toggleLarivaarAssistOption = createAction(
   TOGGLE_LARIVAAR_ASSIST_OPTION
 );
 
-export const TOGGLE_UNICODE_OPTION = 'TOGGLE_UNICODE_OPTION';
-export const toggleUnicodeOption = createAction(TOGGLE_UNICODE_OPTION);
-
 export const TOGGLE_SPLIT_VIEW_OPTION = 'TOGGLE_SPLIT_VIEW_OPTION';
 export const toggleSplitViewOption = createAction(TOGGLE_SPLIT_VIEW_OPTION);
 

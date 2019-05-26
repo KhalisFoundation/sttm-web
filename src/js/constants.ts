@@ -136,7 +136,6 @@ export const TEXTS = {
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
-  FONT_FAMILY: 'Font family',
   CENTERALIGN: 'Center-Align',
 };
 
@@ -148,6 +147,7 @@ export const FONT_OPTIONS = {
   gurmukhi_normal: 'Gurbani Akhar',
   gurmukhi_heavy: 'Gurbani Akhar Heavy',
   gurmukhi_thick: 'Gurbani Akhar Thick',
+  unicode_font: 'Unicode',
 };
 
 export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';

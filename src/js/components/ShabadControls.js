@@ -40,7 +40,6 @@ export default class ShabadControls extends React.PureComponent {
     toggleDarkMode: PropTypes.func.isRequired,
     toggleLarivaarOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
-    toggleUnicodeOption: PropTypes.func.isRequired,
     changeFont: PropTypes.func.isRequired,
     toggleCenterAlignOption: PropTypes.func.isRequired,
   };
@@ -56,7 +55,6 @@ export default class ShabadControls extends React.PureComponent {
       larivaarAssist,
       larivaar,
       darkMode,
-      unicode,
       fontSize,
       fontFamily,
       splitView,
@@ -72,7 +70,6 @@ export default class ShabadControls extends React.PureComponent {
       toggleLarivaarAssistOption,
       toggleLarivaarOption,
       toggleSplitViewOption,
-      toggleUnicodeOption,
       changeFont,
     } = this.props;
     return (
@@ -218,30 +215,17 @@ export default class ShabadControls extends React.PureComponent {
           <div className="font-options">
             <div className="font-option-type">
               <div className="font-option-header">{TEXTS.FONT}</div>
-              <a
-                className={`shabad-controller-toggle ${
-                  unicode ? 'active' : ''
-                }`}
-                onClick={toggleUnicodeOption}
+              <select
+                value={fontFamily}
+                onChange={e => changeFont(e.currentTarget.value)}
               >
-                {TEXTS.UNICODE}
-              </a>
+                {Object.keys(FONT_OPTIONS).map(key => (
+                  <option key={key} value={key}>
+                    {FONT_OPTIONS[key]}
+                  </option>
+                ))}
+              </select>
             </div>
-            {!unicode && (
-              <div className="font-option-type">
-                <div className="font-option-header">{TEXTS.FONT_FAMILY}</div>
-                <select
-                  value={fontFamily}
-                  onChange={e => changeFont(e.currentTarget.value)}
-                >
-                  {Object.keys(FONT_OPTIONS).map(key => (
-                    <option key={key} value={key}>
-                      {FONT_OPTIONS[key]}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
             <div className="font-option-type">
               <div className="font-option-header">{TEXTS.FONT_SIZE}</div>
               <small className="gurbani-font">A</small>
