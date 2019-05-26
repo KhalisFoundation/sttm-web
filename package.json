@@ -28,7 +28,7 @@
     "deploy:prod": "npm-run-all deploy:prod:*",
     "deploy:prod:build": "NODE_ENV=production npm run build",
     "deploy:prod:clean": "rm -rf .editorconfig .gitignore .github .stylelintrc .vscode stats.json webpack.config.js src LICENSE CONTRIBUTING.md README.md jest",
-    "deploy:prod:pm2": "pm2 start server --update-env --name=\"sttm-prod\" --node-args=\"-r esm\"",
+    "deploy:prod:pm2": "kill_service_worker=1 pm2 start server --update-env --name=\"sttm-prod\" --node-args=\"-r esm\"",
     "deploy:dev": "npm-run-all deploy:dev:*",
     "deploy:dev:build": "npm run deploy:prod:build",
     "deploy:dev:clean": "npm run deploy:prod:clean",
