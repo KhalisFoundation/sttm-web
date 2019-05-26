@@ -45,6 +45,14 @@ This will use `npm` that is included with `nodejs` to install project dependenci
 
 - Step 3: Start the project.
 
+If you are running this project for the first time or did some change, run the following command to create a build and run it:
+
+```bash
+npm run dev
+```
+
+If you want to start a previous build, run the following command.
+
 ```bash
 npm start
 ```
