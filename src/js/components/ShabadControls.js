@@ -15,6 +15,7 @@ export default class ShabadControls extends React.PureComponent {
   };
 
   static propTypes = {
+    centerAlignGurbani: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
@@ -38,10 +39,12 @@ export default class ShabadControls extends React.PureComponent {
     toggleLarivaarOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
     toggleUnicodeOption: PropTypes.func.isRequired,
+    toggleCenterAlignOption: PropTypes.func.isRequired,
   };
 
   render() {
     const {
+      centerAlignGurbani,
       disableSplitView,
       showDisplayOptions,
       showFontOptions,
@@ -57,6 +60,7 @@ export default class ShabadControls extends React.PureComponent {
       setTranslationLanguages,
       setTransliterationLanguages,
       resetDisplayOptions,
+      toggleCenterAlignOption,
       resetFontOptions,
       toggleDisplayOptions,
       toggleFontOptions,
@@ -188,6 +192,18 @@ export default class ShabadControls extends React.PureComponent {
                   onClick={resetDisplayOptions}
                 >
                   {TEXTS.RESET}
+                </a>
+              </div>
+            </div>
+            <div className="display-option-type">
+              <div className="display-option-header">{TEXTS.CENTERALIGN}</div>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle
+                      ${centerAlignGurbani ? ' active' : ''}`}
+                  onClick={toggleCenterAlignOption}
+                >
+                  {centerAlignGurbani ? 'Disable' : 'Enable'}
                 </a>
               </div>
             </div>

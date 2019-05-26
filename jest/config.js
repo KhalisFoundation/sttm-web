@@ -10,6 +10,6 @@ module.exports = {
   },
   setupFiles: ['<rootDir>/jest/setup.js'],
   preset: 'ts-jest',
-  setupTestFrameworkScriptFile: require.resolve('./setup.js'),
+  setupFilesAfterEnv: ['<rootDir>/jest/setup.js'],
   testEnvironment: 'jsdom',
 };
