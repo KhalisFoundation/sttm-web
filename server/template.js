@@ -28,19 +28,6 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="theme-color" content="${ONLINE_COLOR}">
   <meta name="description" content="${description}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Preconnect -->
-  <link rel="preconnect" href="//cdn.polyfill.io" crossorigin>
-  <link rel="preconnect" href="//api.banidb.com" crossorigin>
-
-  <!-- Preload Fonts -->
-  <link async rel="preload" href="/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1" as="font">
-  <link async rel="preload" href="/assets/fonts/AnmolLipiSG.ttf?v=1" as="font">
-
-  <!-- Preload JavaScript -->
-  <link async rel="preload" href="${manifest['Search.js']}" as="script">
-  <link async rel="preload" href="${manifest['Shabad.js']}" as="script">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -179,11 +166,6 @@ const preloadFontsHTML = preloadFonts
   .map(f => `<link async rel="preload" href="${f}" as="font" crossorigin />`)
   .join('');
 
-const preloadScripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
-const preloadScriptsHTML = preloadScripts
-  .map(s => `<link async rel="preload" href="${s}" as="script" />`)
-  .join('');
-
 const stylesheets = [
   '/assets/css/vendor/foundation.min.css?v=6.2.4',
   '/assets/css/bundle.css',
@@ -192,8 +174,11 @@ const stylesheetsHTML = stylesheets
   .map(s => `<link href="${s}" rel="stylesheet" />`)
   .join('');
 
-const scripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
+const scripts = [manifest['vendor.js'], manifest['app.js']];
 const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('');
+const preloadScriptsHTML = scripts
+  .map(s => `<link async rel="preload" href="${s}" as="script" />`)
+  .join('');
 
 const registerServiceWorker = `
   navigator.serviceWorker
