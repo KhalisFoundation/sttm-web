@@ -27,6 +27,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta charset="utf-8">
   <meta name="theme-color" content="${ONLINE_COLOR}">
   <meta name="description" content="${description}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="manifest" href="/manifest.json">
 
   <!-- Preconnect -->
