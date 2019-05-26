@@ -15,6 +15,7 @@ import {
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
+  CHANGE_FONT,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -23,6 +24,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
+  LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
 } from '../../constants';
@@ -166,6 +168,17 @@ export default function reducer(state, action) {
       return {
         ...state,
         fontSize,
+      };
+    }
+    case CHANGE_FONT: {
+      const fontFamily = action.payload;
+      const unicode = fontFamily === 'unicode_font';
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_UNICODE, unicode);
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_FONT_FAMILY, fontFamily);
+      return {
+        ...state,
+        unicode,
+        fontFamily,
       };
     }
     case SET_TRANSLATION_LANGUAGES: {

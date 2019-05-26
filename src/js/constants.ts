@@ -27,6 +27,7 @@ export const LOCAL_STORAGE_KEY_FOR_LARIVAAR = 'larivaar';
 export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
+export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
@@ -53,6 +54,7 @@ export const DEFAULT_LARIVAAR_ASSIST = false;
 export const DEFAULT_UNICODE = false;
 export const DEFAULT_SPLIT_VIEW = false;
 export const DEFAULT_FONT_SIZE = 2;
+export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
 export const DEFAULT_CENTER_ALIGN_GURBANI = false;
@@ -135,6 +137,17 @@ export const TEXTS = {
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
   CENTERALIGN: 'Center-Align',
+};
+
+export const FONT_OPTIONS = {
+  anmol_lipi: 'Anmol Lipi',
+  anmol_bold: 'Anmol Lipi Bold',
+  notosans: 'Noto Sans',
+  notosans_bold: 'Noto Sans Bold',
+  gurmukhi_normal: 'Gurbani Akhar',
+  gurmukhi_heavy: 'Gurbani Akhar Heavy',
+  gurmukhi_thick: 'Gurbani Akhar Thick',
+  unicode_font: 'Unicode',
 };
 
 export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';

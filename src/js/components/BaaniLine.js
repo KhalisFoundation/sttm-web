@@ -13,6 +13,7 @@ export default class BaaniLine extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
   };
 
   render() {
@@ -21,6 +22,7 @@ export default class BaaniLine extends React.PureComponent {
       larivaarAssist,
       shouldHighlight,
       fontSize,
+      fontFamily,
       unicode,
       text,
     } = this.props;
@@ -29,7 +31,7 @@ export default class BaaniLine extends React.PureComponent {
         className={`gurmukhi gurbani-display gurbani-font ${
           shouldHighlight ? 'highlight' : ''
         }`}
-        style={{ fontSize: `${fontSize}em` }}
+        style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}` }}
       >
         {'\n'}
         <div

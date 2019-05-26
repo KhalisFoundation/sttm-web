@@ -14,6 +14,9 @@
 
   &.with-border {
     box-shadow: 0 8px 6px -10px black;
+    max-width: 75rem;
+    position: fixed;
+    width: 100%;
   }
 
   > div {
