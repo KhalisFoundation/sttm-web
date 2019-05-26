@@ -255,7 +255,18 @@ export const versesToGurbani = verses =>
         ...verse.verse,
       },
       id: v.lineNo || '' + i,
-      translation: verse.translation,
+      translation: {
+        english: {
+          ssk: verse.translation.en.bdb,
+        },
+        spanish: verse.translation.es.sn,
+        punjabi: {
+          bms: {
+            gurmukhi: verse.translation.pu.ss.gurmukhi,
+            unicode: verse.translation.pu.ss.unicode,
+          },
+        },
+      },
       transliteration: verse.transliteration.english,
     },
   }));
