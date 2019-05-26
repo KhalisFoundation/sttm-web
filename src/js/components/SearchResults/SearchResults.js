@@ -15,6 +15,7 @@ export default class SearchResults extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
   };
 
   render() {

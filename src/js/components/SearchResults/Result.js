@@ -18,6 +18,7 @@ export default class SearchResult extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
   };
 
   render() {
@@ -26,6 +27,7 @@ export default class SearchResult extends React.PureComponent {
       translationLanguages,
       shabad,
       fontSize,
+      fontFamily,
       q,
       type,
       source,
@@ -50,7 +52,7 @@ export default class SearchResult extends React.PureComponent {
       <React.Fragment key={shabad.id}>
         <li className="search-result">
           <Link
-            style={{ fontSize: `${fontSize}em` }}
+            style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}` }}
             to={toShabadURL({ shabad, q, type, source })}
             className="gurbani-font gurbani-display"
           >
