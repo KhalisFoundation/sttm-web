@@ -32,7 +32,7 @@
     "deploy:dev": "npm-run-all deploy:dev:*",
     "deploy:dev:build": "npm run deploy:prod:build",
     "deploy:dev:clean": "npm run deploy:prod:clean",
-    "deploy:dev:pm2": "pm2 start server --update-env --name=\"sttm-dev\" --node-args=\"-r esm\""
+    "deploy:dev:pm2": "kill_service_worker=1 pm2 start server --update-env --name=\"sttm-dev\" --node-args=\"-r esm\""
   },
   "repository": {
     "type": "git",
