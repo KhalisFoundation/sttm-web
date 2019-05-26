@@ -42,10 +42,6 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <link async rel="preload" href="${manifest['Search.js']}" as="script">
   <link async rel="preload" href="${manifest['Shabad.js']}" as="script">
 
-  <!-- Preload Images -->
-  <link async rel="preload" href="/assets/images/sttm_logo.png" as="image">
-  <link async rel="preload" href="/assets/images/logo-192x192.png" as="image">
-
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.sikhitothemax.org${url}">
@@ -136,14 +132,8 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <!-- Polyfills -->
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Object.entries,Array.from,Array.prototype.includes,String.prototype.startsWith,String.prototype.includes,Map,Set,requestAnimationFrame,Array.prototype.@@iterator"></script>
 
-<<<<<<< HEAD
-  <script src="${manifest['vendor.js']}"></script>
-  <script src="${manifest['app.js']}"></script>
-</body>
-=======
   <!-- Source Code -->
   ${scriptsHTML}
->>>>>>> 169583a2dc05864018ec6e2212109621b9ae8b25
 
   <!-- ServiceWorker -->
   <script>
