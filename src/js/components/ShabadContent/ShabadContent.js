@@ -74,6 +74,7 @@ class Shabad extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
   };
 
@@ -93,6 +94,7 @@ class Shabad extends React.PureComponent {
         highlight,
         unicode,
         fontSize,
+        fontFamily,
         centerAlignGurbani,
       },
       handleEmbed,
@@ -138,6 +140,7 @@ class Shabad extends React.PureComponent {
               highlight={highlight}
               larivaar={larivaar}
               fontSize={fontSize}
+              fontFamily={fontFamily}
               larivaarAssist={larivaarAssist}
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}

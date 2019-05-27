@@ -177,6 +177,12 @@ export const getNumberFromLocalStorage = (key, defaultValue = null) => {
   return parseFloat(value, 10);
 };
 
+export const getStringFromLocalStorage = (key, defaultValue = null) => {
+  const value = localStorage.getItem(key);
+  if (value === null) return defaultValue;
+  return value;
+};
+
 export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
   if (value === null) return defaultValue;
