@@ -206,9 +206,13 @@ class Shabad extends React.PureComponent {
     ].join(' ');
 
     Promise.resolve(
-      `<div ${attrs}><a href="https://sttm.co/embed?id=${
-        info.id
-      }">SikhiToTheMax</a></div><script async src="https://sttm.co/embed.js"></script>`
+      `<div ${attrs}><a href="https://sttm.co/${
+        type === 'ang'
+          ? 'ang?ang=' + info.source.pageno + '&source=' + info.source.id
+          : 'shabad?id=' + info.id
+      }">SikhiToTheMax</a></div><script async src="${
+        window.location.origin
+      }/embed.js"></script>`
     )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.EMBED_COPIED))
