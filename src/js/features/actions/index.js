@@ -5,6 +5,7 @@ import {
   DEFAULT_UNICODE,
   DEFAULT_FONT_SIZE,
   DEFAULT_FONT_FAMILY,
+  DEFAULT_CENTER_ALIGN_GURBANI,
 } from '../../constants';
 
 export const createAction = (type, meta) => payload => ({
@@ -71,6 +72,7 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
+  dispatch(setCenterAlignOption(DEFAULT_CENTER_ALIGN_GURBANI));
 };
 
 export const CHANGE_FONT = 'CHANGE_FONT';
@@ -81,6 +83,9 @@ export const resetFontOptions = () => dispatch => {
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
   dispatch(changeFont(DEFAULT_FONT_FAMILY));
 };
+
+export const SET_CENTER_ALIGN_OPTION = 'SET_CENTER_ALIGN_OPTION';
+export const setCenterAlignOption = createAction(SET_CENTER_ALIGN_OPTION);
 
 export const TOGGLE_CENTER_ALIGN_OPTION = 'TOGGLE_CENTER_ALIGN_OPTION';
 export const toggleCenterAlignOption = createAction(TOGGLE_CENTER_ALIGN_OPTION);

@@ -185,6 +185,18 @@ export default class ShabadControls extends React.PureComponent {
               </div>
             </div>
             <div className="display-option-type">
+              <div className="display-option-header">{TEXTS.CENTERALIGN}</div>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle
+                      ${centerAlignGurbani ? ' active' : ''}`}
+                  onClick={toggleCenterAlignOption}
+                >
+                  {centerAlignGurbani ? 'Disable' : 'Enable'}
+                </a>
+              </div>
+            </div>
+            <div className="display-option-type">
               <div className="display-option-header">
                 {TEXTS.RESET} {TEXTS.DISPLAY}
               </div>
@@ -194,18 +206,6 @@ export default class ShabadControls extends React.PureComponent {
                   onClick={resetDisplayOptions}
                 >
                   {TEXTS.RESET}
-                </a>
-              </div>
-            </div>
-            <div className="display-option-type">
-              <div className="display-option-header">{TEXTS.CENTERALIGN}</div>
-              <div className="display-option-content">
-                <a
-                  className={`display-option-toggle
-                      ${centerAlignGurbani ? ' active' : ''}`}
-                  onClick={toggleCenterAlignOption}
-                >
-                  {centerAlignGurbani ? 'Disable' : 'Enable'}
                 </a>
               </div>
             </div>
