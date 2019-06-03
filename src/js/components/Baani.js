@@ -132,16 +132,12 @@ export default class Baani extends React.PureComponent {
     }
   };
 
+  removeSelection = () => {
+    window.getSelection().removeAllRanges();
+  };
+
   componentDidMount() {
     this._scrollToHiglight();
-    const lineDivs = document.querySelectorAll('.line');
-    const ms = this.makeSelection;
-    lineDivs.forEach(function(ld) {
-      ld.addEventListener('mouseup', ms);
-      ld.addEventListener('mousedown', () => {
-        window.getSelection().removeAllRanges();
-      });
-    });
   }
 
   componentDidUpdate(prevProps) {
@@ -177,6 +173,8 @@ export default class Baani extends React.PureComponent {
             key={shabad.id}
             id={`line-${shabad.id}`}
             className="line"
+            onMouseUp={this.makeSelection}
+            onMouseDown={this.removeSelection}
             ref={node =>
               highlight === parseInt(shabad.id, 10)
                 ? (this.$highlightedBaaniLine = node)
