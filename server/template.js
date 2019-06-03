@@ -1,5 +1,14 @@
 import marinate from 'marinate';
+import fs from 'fs';
+import { resolve } from 'path';
 import { ONLINE_COLOR } from '../common/constants';
+
+const manifest = JSON.parse(
+  fs.readFileSync(
+    resolve(__dirname, '../', 'public', 'assets', 'js', 'manifest.json'),
+    'utf-8'
+  )
+);
 
 export default ({ url, bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
@@ -157,11 +166,6 @@ const preloadFontsHTML = preloadFonts
   .map(f => `<link async rel="preload" href="${f}" as="font" crossorigin />`)
   .join('');
 
-const preloadScripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
-const preloadScriptsHTML = preloadScripts
-  .map(s => `<link async rel="preload" href="${s}" as="script" />`)
-  .join('');
-
 const stylesheets = [
   '/assets/css/vendor/foundation.min.css?v=6.2.4',
   '/assets/css/bundle.css',
@@ -170,8 +174,11 @@ const stylesheetsHTML = stylesheets
   .map(s => `<link href="${s}" rel="stylesheet" />`)
   .join('');
 
-const scripts = ['/assets/js/chunks/vendor.js', '/assets/js/app.js'];
+const scripts = [manifest['vendor.js'], manifest['app.js']];
 const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('');
+const preloadScriptsHTML = scripts
+  .map(s => `<link async rel="preload" href="${s}" as="script" />`)
+  .join('');
 
 const registerServiceWorker = `
   navigator.serviceWorker

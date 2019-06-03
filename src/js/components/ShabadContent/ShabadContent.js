@@ -74,6 +74,7 @@ class Shabad extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
   };
 
@@ -93,6 +94,7 @@ class Shabad extends React.PureComponent {
         highlight,
         unicode,
         fontSize,
+        fontFamily,
         centerAlignGurbani,
       },
       handleEmbed,
@@ -138,6 +140,7 @@ class Shabad extends React.PureComponent {
               highlight={highlight}
               larivaar={larivaar}
               fontSize={fontSize}
+              fontFamily={fontFamily}
               larivaarAssist={larivaarAssist}
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
@@ -203,9 +206,13 @@ class Shabad extends React.PureComponent {
     ].join(' ');
 
     Promise.resolve(
-      `<div ${attrs}><a href="https://sttm.co/embed?id=${
-        info.id
-      }">SikhiToTheMax</a></div><script async src="https://sttm.co/embed.js"></script>`
+      `<div ${attrs}><a href="https://sttm.co/${
+        type === 'ang'
+          ? 'ang?ang=' + info.source.pageno + '&source=' + info.source.id
+          : 'shabad?id=' + info.id
+      }">SikhiToTheMax</a></div><script async src="${
+        window.location.origin
+      }/embed.js"></script>`
     )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.EMBED_COPIED))

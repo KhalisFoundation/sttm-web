@@ -177,6 +177,12 @@ export const getNumberFromLocalStorage = (key, defaultValue = null) => {
   return parseFloat(value, 10);
 };
 
+export const getStringFromLocalStorage = (key, defaultValue = null) => {
+  const value = localStorage.getItem(key);
+  if (value === null) return defaultValue;
+  return value;
+};
+
 export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
   if (value === null) return defaultValue;
@@ -255,7 +261,18 @@ export const versesToGurbani = verses =>
         ...verse.verse,
       },
       id: v.lineNo || '' + i,
-      translation: verse.translation,
+      translation: {
+        english: {
+          ssk: verse.translation.en.bdb,
+        },
+        spanish: verse.translation.es.sn,
+        punjabi: {
+          bms: {
+            gurmukhi: verse.translation.pu.ss.gurmukhi,
+            unicode: verse.translation.pu.ss.unicode,
+          },
+        },
+      },
       transliteration: verse.transliteration.english,
     },
   }));

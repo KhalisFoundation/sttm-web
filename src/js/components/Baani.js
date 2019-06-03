@@ -44,6 +44,7 @@ export default class Baani extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
   };
 
@@ -160,6 +161,7 @@ export default class Baani extends React.PureComponent {
       larivaar,
       unicode,
       fontSize,
+      fontFamily,
       highlight,
       centerAlignGurbani,
     } = this.props;
@@ -188,6 +190,7 @@ export default class Baani extends React.PureComponent {
               larivaar={larivaar}
               larivaarAssist={larivaarAssist}
               fontSize={fontSize}
+              fontFamily={fontFamily}
             />
             {transliterationLanguages.map(language => (
               <Transliteration key={shabad.id + language}>
@@ -239,6 +242,7 @@ export default class Baani extends React.PureComponent {
                 larivaar={larivaar}
                 larivaarAssist={larivaarAssist}
                 fontSize={fontSize}
+                fontFamily={fontFamily}
               />
 
               <Actions
