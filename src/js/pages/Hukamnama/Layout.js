@@ -13,17 +13,26 @@ export default class Layout extends React.PureComponent {
   };
   render() {
     const { data } = this.props;
-    return (
-      <div className="row" id="content-root">
-        <BreadCrumb links={[{ title: TEXTS.HUKAMNAMA }]} />
+    const shabads = [];
+    const { date, month, year } = data.date.gregorian;
+    const dateString = date + '-' + month + '-' + year;
+    data.shabads.forEach(shabad => {
+      shabads.push(
         <ShabadContent
-          gurbani={data.gurbani}
-          info={data.shabadinfo}
-          nav={data.navigation}
+          gurbani={shabad.verses}
+          info={shabad.shabadInfo}
+          nav={shabad.navigation}
           random={false}
           type={'hukamnama'}
-          source={data.source}
+          source={shabad.shabadInfo.source}
         />
+      );
+    });
+
+    return (
+      <div className="row" id="content-root">
+        <BreadCrumb links={[{ title: TEXTS.HUKAMNAMA + ' ' + dateString }]} />
+        {shabads}
       </div>
     );
   }

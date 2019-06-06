@@ -43,7 +43,7 @@ export default class SearchResult extends React.PureComponent {
       : null;
 
     const [highlightStartIndex, higlightEndIndex] = getHighlightIndices(
-      shabad.gurbani.gurmukhi,
+      shabad.verse.gurmukhi,
       q,
       type
     );
@@ -66,7 +66,7 @@ export default class SearchResult extends React.PureComponent {
                   endIndex={higlightEndIndex}
                   query={q}
                 >
-                  {shabad.gurbani.unicode}
+                  {shabad.verse.unicode}
                 </Larivaar>
               </div>
             ) : (
@@ -78,7 +78,7 @@ export default class SearchResult extends React.PureComponent {
                   endIndex={higlightEndIndex}
                   query={q}
                 >
-                  {shabad.gurbani.gurmukhi}
+                  {shabad.verse.gurmukhi}
                 </Larivaar>
               </div>
             )}
@@ -87,18 +87,20 @@ export default class SearchResult extends React.PureComponent {
           <div className="clear" />
 
           {transliterationLanguages.includes('english') && (
-            <p className="transliteration english">{shabad.transliteration}</p>
+            <p className="transliteration english">
+              {shabad.transliteration.english}
+            </p>
           )}
 
           {translationLanguages.includes('punjabi') && (
             <blockquote className="translation punjabi gurbani-font">
               {unicode ? (
                 <div className="unicode">
-                  {shabad.translation.punjabi.bms.unicode}
+                  {shabad.translation.pu.ss.unicode}
                 </div>
               ) : (
                 <div className="gurlipi">
-                  {shabad.translation.punjabi.bms.gurmukhi}
+                  {shabad.translation.pu.ss.gurmukhi}
                 </div>
               )}
             </blockquote>
@@ -106,13 +108,13 @@ export default class SearchResult extends React.PureComponent {
 
           {translationLanguages.includes('english') && (
             <blockquote className="translation english">
-              {shabad.translation.english.ssk}
+              {shabad.translation.en.bdb}
             </blockquote>
           )}
 
           {translationLanguages.includes('spanish') && (
             <blockquote className="translation spanish">
-              {shabad.translation.spanish}
+              {shabad.translation.es.sn}
             </blockquote>
           )}
 

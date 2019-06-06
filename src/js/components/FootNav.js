@@ -10,8 +10,8 @@ class FootNav extends React.PureComponent {
     info: PropTypes.object.isRequired,
     type: PropTypes.string,
     nav: PropTypes.shape({
-      previous: PropTypes.string,
-      next: PropTypes.string,
+      previous: PropTypes.number,
+      next: PropTypes.number,
     }),
   };
 

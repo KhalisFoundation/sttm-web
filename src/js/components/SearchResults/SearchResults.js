@@ -23,8 +23,10 @@ export default class SearchResults extends React.PureComponent {
 
     return (
       <ul className="search-results display">
-        {shabads.map(({ shabad }) => {
-          return <SearchResult key={shabad.id} shabad={shabad} {...props} />;
+        {shabads.map(shabad => {
+          return (
+            <SearchResult key={shabad.shabadId} shabad={shabad} {...props} />
+          );
         })}
       </ul>
     );
