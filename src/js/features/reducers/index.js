@@ -8,7 +8,6 @@ import {
   TOGGLE_UNICODE_OPTION,
   TOGGLE_DARK_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
-  TOGGLE_CENTER_ALIGN_OPTION,
   SET_CENTER_ALIGN_OPTION,
   SET_UNICODE,
   SET_FONT_SIZE,
@@ -223,22 +222,6 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
-      };
-    }
-    case TOGGLE_CENTER_ALIGN_OPTION: {
-      const centerAlignGurbani = !state.centerAlignGurbani;
-      clickEvent({
-        action: TOGGLE_CENTER_ALIGN_OPTION,
-        label: centerAlignGurbani ? 1 : 0,
-      });
-
-      saveToLocalStorage(
-        LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
-        centerAlignGurbani
-      );
-      return {
-        ...state,
-        centerAlignGurbani,
       };
     }
     case SET_CENTER_ALIGN_OPTION: {
