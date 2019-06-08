@@ -32,6 +32,9 @@ class SundarGutka extends React.PureComponent {
   };
 
   render() {
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
     const {
       props: {
         match: { isExact: isSundarGutkaHome },
