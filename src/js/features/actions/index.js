@@ -7,7 +7,6 @@ import {
   DEFAULT_FONT_FAMILY,
   DEFAULT_CENTER_ALIGN_GURBANI,
 } from '../../constants';
-import store from '../../features/store';
 
 export const createAction = (type, meta) => payload => ({
   type,
@@ -88,7 +87,7 @@ export const resetFontOptions = () => dispatch => {
 export const SET_CENTER_ALIGN_OPTION = 'SET_CENTER_ALIGN_OPTION';
 export const setCenterAlignOption = createAction(SET_CENTER_ALIGN_OPTION);
 
-export const toggleCenterAlignOption = () => dispatch => {
-  const state = store.getState();
+export const toggleCenterAlignOption = () => (dispatch, getState) => {
+  const state = getState();
   dispatch(setCenterAlignOption(!state.centerAlignGurbani));
 };
