@@ -130,11 +130,14 @@ class SundarGutka extends React.PureComponent {
 
   handleSearch = e => this.setState({ q: e.currentTarget.value });
 
-  componentDidUpdate({ match: { isExact: wasExact }, location }) {
+  componentDidUpdate({
+    match: { isExact: wasExact },
+    location: { pathname: prevLocation },
+  }) {
     if (wasExact === false && this.props.match.isExact) {
       pageView('/sundar-gutka');
     }
-    if (location.pathname !== this.props.location.pathname) {
+    if (prevLocation !== this.props.location.pathname) {
       window.scrollTo(0, 0);
     }
   }
