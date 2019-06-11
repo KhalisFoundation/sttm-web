@@ -149,6 +149,10 @@ blockquote {
       right: 0;
       top: 0;
 
+      &.showShare {
+        display: block;
+      }
+
       .dark-mode & {
         background-color: $sttm-lighter-black;
       }

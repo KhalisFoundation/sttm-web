@@ -116,19 +116,23 @@ export default class Baani extends React.PureComponent {
     }
   };
 
-  makeSelection = e => {
-    const shareDivs = document.querySelectorAll('.share');
-    shareDivs.forEach(function(sd) {
-      sd.style.display = 'none';
-    });
+  makeSelection = baaniDiv => {
+    window.getSelection().removeAllRanges();
+    var range = document.createRange();
+    range.selectNode(baaniDiv);
+    window.getSelection().addRange(range);
+  };
+
+  showShare = e => {
+    const currentShare = document.querySelector('.showShare');
+    if (currentShare) {
+      currentShare.classList.remove('showShare');
+    }
+    const selectedDiv = e.currentTarget;
     if (window.getSelection().toString()) {
-      const baaniDiv = e.currentTarget;
-      var range = document.createRange();
-      range.selectNode(baaniDiv);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
-      const shareDiv = baaniDiv.querySelector('.share');
-      shareDiv.style.display = 'block';
+      this.makeSelection(selectedDiv);
+      const shareDiv = selectedDiv.querySelector('.share');
+      shareDiv.classList.add('showShare');
     }
   };
 
@@ -173,7 +177,7 @@ export default class Baani extends React.PureComponent {
             key={shabad.id}
             id={`line-${shabad.id}`}
             className="line"
-            onMouseUp={this.makeSelection}
+            onMouseUp={this.showShare}
             onMouseDown={this.removeSelection}
             ref={node =>
               highlight === parseInt(shabad.id, 10)
