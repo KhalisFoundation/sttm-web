@@ -57,6 +57,8 @@ class Controls extends React.PureComponent {
   setRef = node => (this.$wrapper = node);
 
   render() {
+    const hideAlignOption =
+      document.location.pathname.indexOf('search') > -1 ? true : false;
     return (
       <div
         id="controls-wrapper"
@@ -64,7 +66,7 @@ class Controls extends React.PureComponent {
         ref={this.setRef}
       >
         <ShareButtons {...this.props} />
-        <ShabadControls {...this.props} />
+        <ShabadControls {...this.props} hideAlignOption={hideAlignOption} />
       </div>
     );
   }

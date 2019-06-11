@@ -23,6 +23,7 @@ export default class ShabadControls extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    hideAlignOption: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     disableSplitView: PropTypes.bool.isRequired,
@@ -71,6 +72,7 @@ export default class ShabadControls extends React.PureComponent {
       toggleLarivaarOption,
       toggleSplitViewOption,
       changeFont,
+      hideAlignOption,
     } = this.props;
     return (
       <React.Fragment>
@@ -184,18 +186,22 @@ export default class ShabadControls extends React.PureComponent {
                 </a>
               </div>
             </div>
-            <div className="display-option-type">
-              <div className="display-option-header">{TEXTS.CENTERALIGN}</div>
-              <div className="display-option-content">
-                <a
-                  className={`display-option-toggle
-                      ${centerAlignGurbani ? ' active' : ''}`}
-                  onClick={toggleCenterAlignOption}
-                >
-                  {centerAlignGurbani ? 'Disable' : 'Enable'}
-                </a>
+
+            {!hideAlignOption && (
+              <div className="display-option-type">
+                <div className="display-option-header">{TEXTS.CENTERALIGN}</div>
+                <div className="display-option-content">
+                  <a
+                    className={`display-option-toggle
+                          ${centerAlignGurbani ? ' active' : ''}`}
+                    onClick={toggleCenterAlignOption}
+                  >
+                    {centerAlignGurbani ? 'Disable' : 'Enable'}
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
+
             <div className="display-option-type">
               <div className="display-option-header">
                 {TEXTS.RESET} {TEXTS.DISPLAY}
