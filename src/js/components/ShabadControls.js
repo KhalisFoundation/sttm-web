@@ -23,7 +23,7 @@ export default class ShabadControls extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
-    hideAlignOption: PropTypes.bool.isRequired,
+    hideAlignOption: PropTypes.bool,
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     disableSplitView: PropTypes.bool.isRequired,

@@ -83,7 +83,7 @@ class Layout extends React.PureComponent {
 
     return (
       <div className="row" id="content-root">
-        <Controls media={[]} disableSplitView />
+        <Controls media={[]} disableSplitView hideAlignOption={true} />
         <SearchResults
           q={q}
           type={type}
