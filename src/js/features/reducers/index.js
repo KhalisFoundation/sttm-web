@@ -8,7 +8,7 @@ import {
   TOGGLE_UNICODE_OPTION,
   TOGGLE_DARK_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
-  TOGGLE_CENTER_ALIGN_OPTION,
+  SET_CENTER_ALIGN_OPTION,
   SET_UNICODE,
   SET_FONT_SIZE,
   SET_TRANSLATION_LANGUAGES,
@@ -27,6 +27,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
+  LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
 } from '../../constants';
 import { saveToLocalStorage } from '../../util';
 import { clickEvent } from '../../util/analytics';
@@ -223,14 +224,13 @@ export default function reducer(state, action) {
         darkMode,
       };
     }
-    case TOGGLE_CENTER_ALIGN_OPTION: {
-      const centerAlignGurbani = !state.centerAlignGurbani;
-      clickEvent({
-        action: TOGGLE_CENTER_ALIGN_OPTION,
-        label: centerAlignGurbani ? 1 : 0,
-      });
+    case SET_CENTER_ALIGN_OPTION: {
+      const centerAlignGurbani = action.payload;
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW, centerAlignGurbani);
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
+        centerAlignGurbani
+      );
       return {
         ...state,
         centerAlignGurbani,
