@@ -6,7 +6,7 @@ import Transliteration from './Transliteration';
 import BaaniLine from './BaaniLine';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
-import { copyToClipboard, showToast, shortenURL } from '../util';
+import { copyToClipboard, showToast, shortenURL, makeSelection } from '../util';
 
 const transliterationMap = {
   english: shabad => shabad.transliteration,
@@ -116,13 +116,6 @@ export default class Baani extends React.PureComponent {
     }
   };
 
-  makeSelection = baaniDiv => {
-    window.getSelection().removeAllRanges();
-    var range = document.createRange();
-    range.selectNode(baaniDiv);
-    window.getSelection().addRange(range);
-  };
-
   showShare = e => {
     const currentShare = document.querySelector('.showShare');
     if (currentShare) {
@@ -130,7 +123,7 @@ export default class Baani extends React.PureComponent {
     }
     const selectedDiv = e.currentTarget;
     if (window.getSelection().toString()) {
-      this.makeSelection(selectedDiv);
+      makeSelection(selectedDiv);
       const shareDiv = selectedDiv.querySelector('.share');
       shareDiv.classList.add('showShare');
     }
