@@ -13,7 +13,10 @@ import AppleiOS from '../../components/Icons/AppleiOS';
 class SundarGutka extends React.PureComponent {
   static propTypes = {
     transliterationLanguages: PropTypes.array.isRequired,
-    location: PropTypes.shape({ hash: PropTypes.string }),
+    location: PropTypes.shape({
+      hash: PropTypes.string,
+      pathname: PropTypes.string,
+    }),
     match: PropTypes.object.isRequired,
   };
 
@@ -127,9 +130,15 @@ class SundarGutka extends React.PureComponent {
 
   handleSearch = e => this.setState({ q: e.currentTarget.value });
 
-  componentDidUpdate({ match: { isExact: wasExact } }) {
+  componentDidUpdate({
+    match: { isExact: wasExact },
+    location: { pathname: prevLocation },
+  }) {
     if (wasExact === false && this.props.match.isExact) {
       pageView('/sundar-gutka');
+    }
+    if (prevLocation !== this.props.location.pathname) {
+      window.scrollTo(0, 0);
     }
   }
 
