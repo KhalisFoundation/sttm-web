@@ -149,6 +149,10 @@ blockquote {
       right: 0;
       top: 0;
 
+      &.showShare {
+        display: block;
+      }
+
       .dark-mode & {
         background-color: $sttm-lighter-black;
       }
@@ -160,26 +164,27 @@ blockquote {
       }
 
       .copy:hover {
-        color: $sttm-orange;
+        > svg {
+          fill: $sttm-orange;
+        }
       }
 
       .twitter:hover {
-        color: $twitter-blue;
+        > svg {
+          fill: $twitter-blue;
+        }
       }
 
       .facebook:hover {
-        color: $facebook-blue;
+        > svg {
+          fill: $facebook-blue;
+        }
       }
-    }
-
-    &:hover .share {
-      display: block;
     }
   }
 
   .mixed-view-baani {
     .line {
-      margin-bottom: -27px;
       position: relative;
     }
   }
