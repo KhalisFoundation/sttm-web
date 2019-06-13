@@ -29,7 +29,11 @@ export default class GenericError extends React.PureComponent {
       <div className="error-message">
         <div>
           <h3>{title}</h3>
-          <section dangerouslySetInnerHTML={{ __html: description }} />
+          {typeof description === 'string' ? (
+            <section dangerouslySetInnerHTML={{ __html: description }} />
+          ) : (
+            <section>{description}</section>
+          )}
         </div>
         <div>
           <img src={url} alt={alt} />

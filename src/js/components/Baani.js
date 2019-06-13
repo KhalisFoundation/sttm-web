@@ -6,7 +6,7 @@ import Transliteration from './Transliteration';
 import BaaniLine from './BaaniLine';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
-import { copyToClipboard, showToast, shortenURL } from '../util';
+import { copyToClipboard, showToast, shortenURL, makeSelection } from '../util';
 
 const transliterationMap = {
   english: shabad => shabad.transliteration.english,
@@ -116,6 +116,23 @@ export default class Baani extends React.PureComponent {
     }
   };
 
+  showShare = e => {
+    const currentShare = document.querySelector('.showShare');
+    if (currentShare) {
+      currentShare.classList.remove('showShare');
+    }
+    const selectedDiv = e.currentTarget;
+    if (window.getSelection().toString()) {
+      makeSelection(selectedDiv);
+      const shareDiv = selectedDiv.querySelector('.share');
+      shareDiv.classList.add('showShare');
+    }
+  };
+
+  removeSelection = () => {
+    window.getSelection().removeAllRanges();
+  };
+
   componentDidMount() {
     this._scrollToHiglight();
   }
@@ -155,6 +172,8 @@ export default class Baani extends React.PureComponent {
             key={shabad.verseId}
             id={`line-${shabad.verseId}`}
             className="line"
+            onMouseUp={this.showShare}
+            onMouseDown={this.removeSelection}
             ref={node =>
               highlight === parseInt(shabad.verseId, 10)
                 ? (this.$highlightedBaaniLine = node)
@@ -195,8 +214,6 @@ export default class Baani extends React.PureComponent {
               onFacebookClick={this.onFacebookClick(shabad)}
               onCopyClick={this.onCopyClick(shabad)}
             />
-
-            <br />
           </div>
         ))}
       </div>
