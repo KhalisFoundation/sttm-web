@@ -21,7 +21,7 @@ export default class Layout extends React.PureComponent {
     shabads.forEach(s => {
       totalVerses = totalVerses.concat(s.verses);
     });
-    const shabad = shabads[0];
+    const [shabad] = shabads;
     shabad.verses = totalVerses;
 
     return (
