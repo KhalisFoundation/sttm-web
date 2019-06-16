@@ -13,11 +13,20 @@ export default class Layout extends React.PureComponent {
   };
   render() {
     const { data } = this.props;
-    const shabads = [];
+    const { shabads } = data;
     const { date, month, year } = data.date.gregorian;
     const dateString = date + '-' + month + '-' + year;
-    data.shabads.forEach(shabad => {
-      shabads.push(
+    let totalVerses = [];
+
+    shabads.forEach(s => {
+      totalVerses = totalVerses.concat(s.verses);
+    });
+    const shabad = shabads[0];
+    shabad.verses = totalVerses;
+
+    return (
+      <div className="row" id="content-root">
+        <BreadCrumb links={[{ title: TEXTS.HUKAMNAMA + ' ' + dateString }]} />
         <ShabadContent
           gurbani={shabad.verses}
           info={shabad.shabadInfo}
@@ -26,13 +35,6 @@ export default class Layout extends React.PureComponent {
           type={'hukamnama'}
           source={shabad.shabadInfo.source}
         />
-      );
-    });
-
-    return (
-      <div className="row" id="content-root">
-        <BreadCrumb links={[{ title: TEXTS.HUKAMNAMA + ' ' + dateString }]} />
-        {shabads}
       </div>
     );
   }

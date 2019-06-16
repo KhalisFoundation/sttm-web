@@ -163,8 +163,6 @@ export default class Baani extends React.PureComponent {
       ? ['tweet']
       : ['openShabad', 'tweet'];
 
-    console.log(type);
-    console.log(gurbani);
     const mixedViewMarkup = (
       <div className="mixed-view-baani">
         {gurbani.map(shabad => (

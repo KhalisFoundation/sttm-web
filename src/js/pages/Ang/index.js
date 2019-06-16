@@ -13,7 +13,8 @@ export default class Ang extends React.PureComponent {
   };
   render() {
     const { ang, source, highlight } = this.props;
-    const url = buildApiUrl({ ang, source, API_URL });
+    let url = buildApiUrl({ ang, source, API_URL });
+    url = url.replace('ang', 'angs');
 
     return (
       <PageLoader url={url}>

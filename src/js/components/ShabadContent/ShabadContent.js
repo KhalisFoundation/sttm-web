@@ -101,8 +101,6 @@ class Shabad extends React.PureComponent {
       handleCopyAll,
     } = this;
 
-    //console.log(this);
-
     if (random) {
       return <Redirect to={`/shabad?id=${info.shabadId}`} />;
     }
