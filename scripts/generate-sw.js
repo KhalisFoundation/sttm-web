@@ -4,7 +4,7 @@ const package = require('../package.json');
 const manifest = require('../public/assets/js/manifest.json');
 
 const template = fs.readFileSync(
-  resolve(__dirname, '..', 'public', 'sw-self-distruct.js'),
+  resolve(__dirname, '..', 'public', 'sw-self-destroy.js'),
   'utf-8'
 );
 
