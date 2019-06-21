@@ -365,3 +365,15 @@ export function toNavURL({ type, info }) {
       return `ang?source=${info.source.id}&ang=`;
   }
 }
+
+/**
+ * Removes any previous text selection &
+ * Selects the contents of given div
+ * @param {object} selectedDiv
+ */
+export const makeSelection = selectedDiv => {
+  window.getSelection().removeAllRanges();
+  var range = document.createRange();
+  range.selectNode(selectedDiv);
+  window.getSelection().addRange(range);
+};
