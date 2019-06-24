@@ -3,8 +3,11 @@ const fs = require('fs');
 const package = require('../package.json');
 const manifest = require('../public/assets/js/manifest.json');
 
+// Change source to service-worker-template.js for activating the original service worker
+const source = 'sw-self-destroy.js';
+
 const template = fs.readFileSync(
-  resolve(__dirname, '..', 'public', 'service-worker-template.js'),
+  resolve(__dirname, '..', 'public', source),
   'utf-8'
 );
 
