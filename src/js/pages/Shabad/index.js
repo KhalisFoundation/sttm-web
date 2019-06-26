@@ -23,7 +23,6 @@ export default class Shabad extends React.PureComponent {
     let url = buildApiUrl(
       random ? { random, API_URL } : { random, id, API_URL }
     );
-    url = url.replace('shabad', 'shabads');
 
     return (
       <PageLoader url={url}>
