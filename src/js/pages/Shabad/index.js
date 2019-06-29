@@ -20,7 +20,7 @@ export default class Shabad extends React.PureComponent {
 
   render() {
     const { random, id, highlight } = this.props;
-    let url = buildApiUrl(
+    const url = buildApiUrl(
       random ? { random, API_URL } : { random, id, API_URL }
     );
 

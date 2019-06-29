@@ -1,12 +1,12 @@
 /* globals API_URL */
 import React from 'react';
-//import { buildApiUrl } from '@sttm/banidb';
+import { buildApiUrl } from '@sttm/banidb';
 import PageLoader from '../PageLoader';
 import Layout, { Stub } from './Layout';
 
 export default class Hukamnama extends React.PureComponent {
   render() {
-    const url = `${API_URL}hukamnamas`;
+    const url = buildApiUrl({ hukam: true, API_URL });
 
     return (
       <PageLoader url={url}>
