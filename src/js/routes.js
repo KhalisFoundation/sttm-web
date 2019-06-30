@@ -63,7 +63,9 @@ export default [
         <Layout title="Terms Of Service" {...props}>
           <RenderPromise
             promise={() =>
-              import(/* webpackChunkName: "TermsOfService" */ './pages/TermsOfService')
+              import(
+                /* webpackChunkName: "TermsOfService" */ './pages/TermsOfService'
+              )
             }
           >
             {({
@@ -159,7 +161,9 @@ export default [
         <Layout title="Index - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
-              import(/* webpackChunkName: "GranthIndex" */ './pages/GranthIndex')
+              import(
+                /* webpackChunkName: "GranthIndex" */ './pages/GranthIndex'
+              )
             }
           >
             {({ pending, resolved: { default: Index } = {}, rejected }) =>
@@ -184,7 +188,9 @@ export default [
         <Layout title="Sundar Gutka - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
-              import(/* webpackChunkName: "SundarGutka" */ './pages/SundarGutka')
+              import(
+                /* webpackChunkName: "SundarGutka" */ './pages/SundarGutka'
+              )
             }
           >
             {({ pending, resolved: { default: SundarGutka } = {}, rejected }) =>

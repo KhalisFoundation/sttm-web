@@ -229,7 +229,7 @@ export const toSearchURL = ({
  * @param {string} [options.source]
  */
 export const toShabadURL = ({
-  shabad: { shabadid: id, id: highlight },
+  shabad: { shabadId: id, verseId: highlight },
   q,
   type = undefined,
   source = undefined,
@@ -252,7 +252,8 @@ export const toAngURL = ({ ang, source, highlight }) =>
 /**
  * @sttm/banidb API v2 to v1 transformer
  */
-export const versesToGurbani = verses =>
+
+export const versesToGurbani_old = verses =>
   verses.map(({ verse, ...v }, i) => ({
     shabad: {
       ...v,
@@ -275,6 +276,12 @@ export const versesToGurbani = verses =>
       },
       transliteration: verse.transliteration.english,
     },
+  }));
+
+export const versesToGurbani = verses =>
+  verses.map(({ verse, ...v }) => ({
+    ...verse,
+    ...v,
   }));
 
 /**
