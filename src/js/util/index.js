@@ -6,6 +6,8 @@ import {
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
 } from '../constants';
 
+import moment from 'moment';
+
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
  * Calling this function lets you throw an error inline (eg. JSX)
@@ -366,6 +368,7 @@ export const saveAng = ang =>
 export function toNavURL({ type, info }) {
   switch (type) {
     case 'hukamnama':
+      return 'hukamnama?date=';
     case 'shabad':
       return 'shabad?id=';
     case 'ang':
@@ -383,4 +386,30 @@ export const makeSelection = selectedDiv => {
   var range = document.createRange();
   range.selectNode(selectedDiv);
   window.getSelection().addRange(range);
+};
+
+/**
+ * Manipulates the date string
+ * @param {string} inputDate
+ */
+export const dateMath = (inputDate, dateFormat) => {
+  const d = moment(inputDate, dateFormat);
+  return {
+    add: (length, unit) => d.add(length, unit).format(dateFormat),
+    subtract: (length, unit) => d.subtract(length, unit).format(dateFormat),
+    changeFormat: newFormat => d.format(newFormat),
+    isBefore: date => {
+      const newDate = moment(date, dateFormat);
+      return d.isBefore(newDate);
+    },
+    isAfter: date => {
+      const newDate = moment(date, dateFormat);
+      return d.isAfter(newDate);
+    },
+  };
+};
+
+export const getHukamnama = date => {
+  if (date === 'today') {
+  }
 };

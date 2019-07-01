@@ -106,6 +106,7 @@
     "express": "^4.16.4",
     "lodash.throttle": "^4.1.1",
     "marinate": "^0.1.5",
+    "moment": "^2.24.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.0",
