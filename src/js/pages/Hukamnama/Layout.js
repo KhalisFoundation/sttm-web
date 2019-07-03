@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { TEXTS, FIRST_HUKAMNAMA_DATE } from '../../constants';
 import { pageView } from '../../util/analytics';
 import ShabadContent from '../../components/ShabadContent';
 import BreadCrumb from '../../components/Breadcrumb';
-import { dateMath, getHukamnama } from '../../util/index';
+import { dateMath } from '../../util/index';
+import GenericError, { BalpreetSingh } from '../../components/GenericError';
 
 export const Stub = () => <div className="spinner" />;
 
@@ -12,35 +14,67 @@ export default class Layout extends React.PureComponent {
   static propTypes = {
     data: PropTypes.object.isRequired,
   };
+
+  state = {
+    error: false,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = { error: this.props.data.error };
+  }
+
   render() {
     const { data } = this.props;
-    if (data.error) {
-      this.setState('error', true);
+    let expandedDate, shabad, navigation;
+    if (!this.state.error) {
+      const { shabads } = data;
+      const { date, month, year } = data.date.gregorian;
+      const dateFormat = 'YYYY/M/DD';
+      const hukamnamaDate = dateMath(
+        year + '/' + month + '/' + date,
+        dateFormat
+      );
+      expandedDate = hukamnamaDate.changeFormat('DD-MMM-YYYY');
+      let totalVerses = [];
+
+      shabads.forEach(s => {
+        totalVerses = totalVerses.concat(s.verses);
+      });
+      shabad = shabads[0];
+      shabad.verses = totalVerses;
+
+      let prevDate = hukamnamaDate.subtract(1, 'd');
+
+      if (hukamnamaDate.isBefore(FIRST_HUKAMNAMA_DATE)) {
+        prevDate = undefined;
+      }
+
+      //TODO: After API is updated, check if it's latest hukamnama and
+      //      set nextDate to undefined
+
+      const nextDate = hukamnamaDate.add(2, 'd');
+
+      navigation = {
+        previous: prevDate,
+        next: nextDate,
+      };
     }
-    const { shabads } = data;
-    const { date, month, year } = data.date.gregorian;
-    const dateFormat = 'YYYY/M/DD';
-    const hukamnamaDate = dateMath(year + '/' + month + '/' + date, dateFormat);
-    const expandedDate = hukamnamaDate.changeFormat('DD-MMM-YYYY');
-    let totalVerses = [];
 
-    shabads.forEach(s => {
-      totalVerses = totalVerses.concat(s.verses);
-    });
-    const [shabad] = shabads;
-    shabad.verses = totalVerses;
-
-    const prevDate = hukamnamaDate.subtract(1, 'd');
-    const nextDate = hukamnamaDate.add(2, 'd');
-
-    const lastDate = getHukamnama('today');
-
-    const navigation = {
-      previous: prevDate,
-      next: hukamnamaDate.isAfter('2019/6/19') ? undefined : nextDate,
-    };
-
-    return (
+    return this.state.error ? (
+      <GenericError
+        title={data.data.errorDescription}
+        description={
+          <React.Fragment>
+            {TEXTS.HUKAMNAMA_NOT_FOUND_DESCRIPTION}{' '}
+            <Link to="/hukamnama">
+              Click here to go back to recent hukamnama.
+            </Link>
+          </React.Fragment>
+        }
+        image={BalpreetSingh}
+      />
+    ) : (
       <div className="row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.HUKAMNAMA + ' ' + expandedDate }]} />
         <ShabadContent

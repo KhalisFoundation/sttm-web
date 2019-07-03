@@ -408,8 +408,3 @@ export const dateMath = (inputDate, dateFormat) => {
     },
   };
 };
-
-export const getHukamnama = date => {
-  if (date === 'today') {
-  }
-};

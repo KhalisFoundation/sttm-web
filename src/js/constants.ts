@@ -62,6 +62,7 @@ export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
 export const NORMAL_SEARCH_COLOR = 'rgba(1, 102, 155, 0.3)';
+export const FIRST_HUKAMNAMA_DATE = '2002/01/01';
 
 export const TEXTS = {
   RELATED_SHABADS: 'Related Shabads',
@@ -102,7 +103,6 @@ export const TEXTS = {
   TIMEOUT_ERROR_DESCRIPTION: `This usually happens when your internet connection is either down or very slow. Try connecting sometime later?`,
   GO_TO_SHABAD: 'Open Shabad',
   HUKAMNAMA: 'Daily Hukamnama from Sri Harmandir Sahib, Amritsar',
-  FIRST_HUKAMNAMA_DATE: '2002/01/01',
   ANG_NOT_FOUND: `Sorry, we couldn't find the requested ang (page).`,
   ANG_NOT_FOUND_DESCRIPTION: (ang: string, source: string) =>
     `Ang (page) "${ang}" was not found in "${source}". Make sure ang (page) ${ang} is actually present in the selected source. If you still cannot find your shabad, head over to `,
@@ -138,6 +138,8 @@ export const TEXTS = {
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
   CENTERALIGN: 'Center-Align',
+  HUKAMNAMA_NOT_FOUND_DESCRIPTION:
+    "We couldn't find the hukamnama for this date in our database.",
 };
 
 export const FONT_OPTIONS = {
