@@ -43,7 +43,7 @@ export const PLACEHOLDERS = {
 };
 
 export const TRANSLATION_LANGUAGES = ['punjabi', 'english', 'spanish'];
-export const TRANSLITERATION_LANGUAGES = ['english'];
+export const TRANSLITERATION_LANGUAGES = ['english', 'hindi'];
 
 export const DEFAULT_SEARCH_TYPE = SEARCH_TYPES.FIRST_LETTERS;
 export const DEFAULT_SEARCH_SOURCE = 'all';

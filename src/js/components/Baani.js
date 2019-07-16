@@ -10,6 +10,7 @@ import { copyToClipboard, showToast, shortenURL, makeSelection } from '../util';
 
 const transliterationMap = {
   english: shabad => shabad.transliteration.english,
+  hindi: shabad => shabad.transliteration.english,
 };
 
 const translationMap = {
@@ -188,7 +189,7 @@ export default class Baani extends React.PureComponent {
               fontFamily={fontFamily}
             />
             {transliterationLanguages.map(language => (
-              <Transliteration key={shabad.verseId + language}>
+              <Transliteration key={shabad.verseId + language} language={language}>
                 {transliterationMap[language](shabad)}
               </Transliteration>
             ))}

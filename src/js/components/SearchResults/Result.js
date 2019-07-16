@@ -92,6 +92,12 @@ export default class SearchResult extends React.PureComponent {
             </p>
           )}
 
+          {transliterationLanguages.includes('hindi') && (
+            <p className="transliteration hindi">
+              {shabad.transliteration.english}
+            </p>
+          )}
+
           {translationLanguages.includes('punjabi') && (
             <blockquote className="translation punjabi gurbani-font">
               {unicode ? (
