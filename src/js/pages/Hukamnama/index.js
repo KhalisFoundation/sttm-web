@@ -15,8 +15,7 @@ export default class Hukamnama extends React.PureComponent {
     match: PropTypes.object.isRequired,
   };
   render() {
-    let url = buildApiUrl({ hukam: true, API_URL });
-    url = url.replace('today', this.props.date);
+    let url = buildApiUrl({ hukam: this.props.date, API_URL });
 
     return (
       <PageLoader url={url}>
