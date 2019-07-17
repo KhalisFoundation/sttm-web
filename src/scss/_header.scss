@@ -107,7 +107,8 @@
 #search-container {
   background-color: $sttm-pure-white;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 $sttm-transparent-black,
+  box-shadow:
+    0 2px 2px 0 $sttm-transparent-black,
     0 0 0 1px $sttm-transparent-light-black;
   height: 44px;
   margin: 0;
@@ -194,7 +195,8 @@
 .gurmukhi-keyboard {
   background-color: $sttm-pure-white;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 $sttm-transparent-black,
+  box-shadow:
+    0 2px 2px 0 $sttm-transparent-black,
     0 0 0 1px $sttm-transparent-light-black;
   font-size: 0;
   opacity: 0;
@@ -339,9 +341,9 @@
     background-color: $sttm-pure-white;
     border-bottom: 1px solid $sttm-blue;
     height: 0;
-    right: 0;
     overflow: hidden;
     position: fixed;
+    right: 0;
     top: -1px;
     transition: height 400ms ease-out;
     width: 100%;
