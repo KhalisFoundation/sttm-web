@@ -4,7 +4,7 @@ import { TEXTS } from '@/constants';
 import { pageView } from '@/util/analytics';
 import ShabadContent from '@/components/ShabadContent';
 import BreadCrumb from '@/components/Breadcrumb';
-import { getHukamnama, goBack } from '@/util/index';
+import { getHukamnama } from '@/util/index';
 import GenericError, { BalpreetSingh } from '@/components/GenericError';
 
 export const Stub = () => <div className="spinner" />;
@@ -13,6 +13,10 @@ export default class Layout extends React.PureComponent {
   static propTypes = {
     data: PropTypes.object.isRequired,
   };
+
+  static contextTypes = {
+    router: PropTypes.object,
+  }
 
   state = {
     error: this.props.data.error,
@@ -31,7 +35,7 @@ export default class Layout extends React.PureComponent {
         description={
           <React.Fragment>
             {TEXTS.HUKAMNAMA_NOT_FOUND_DESCRIPTION}{' '}
-            <button id="error-link" onClick={goBack}>
+            <button id="error-link" onClick={this.context.router.history.goBack}>
               Click here to go back to previous hukamnama
             </button>
           </React.Fragment>

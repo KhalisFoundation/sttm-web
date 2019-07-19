@@ -387,10 +387,6 @@ export const makeSelection = selectedDiv => {
   window.getSelection().addRange(range);
 };
 
-export const goBack = () => {
-  window.history.back();
-};
-
 /**
  * Manipulates the date string
  */
