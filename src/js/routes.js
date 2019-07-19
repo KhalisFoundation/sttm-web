@@ -236,6 +236,7 @@ export default [
   {
     path: '/hukamnama',
     render(props) {
+      const date = getParameterByName('date') || 'today';
       return (
         <Layout title="Hukamnama - SikhiToTheMax" {...props}>
           <RenderPromise
@@ -245,7 +246,7 @@ export default [
           >
             {({ pending, resolved: { default: Hukamnama } = {}, rejected }) =>
               pending ? null : Hukamnama ? (
-                <Hukamnama {...props} />
+                <Hukamnama date={date} {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,

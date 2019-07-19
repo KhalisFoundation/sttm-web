@@ -59,8 +59,8 @@ class Shabad extends React.PureComponent {
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
-      previous: PropTypes.number,
-      next: PropTypes.number,
+      previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
     hideMeta: PropTypes.bool,
     hideControls: PropTypes.bool,

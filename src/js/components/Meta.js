@@ -36,8 +36,8 @@ class Meta extends React.PureComponent {
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     nav: PropTypes.shape({
-      previous: PropTypes.number,
-      next: PropTypes.number,
+      previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   };
 
