@@ -150,6 +150,14 @@ export const FONT_OPTIONS = {
   gurmukhi_normal: 'Gurbani Akhar',
   gurmukhi_heavy: 'Gurbani Akhar Heavy',
   gurmukhi_thick: 'Gurbani Akhar Thick',
+  prabhki: 'Prabhki',
+  raaj_thin: 'Raaj Thin',
+  raaj_light: 'Raaj Light',
+  raaj_medium: 'Raaj Medium',
+  raaj_black: 'Raaj Black',
+  raaj_bold: 'Raaj Bold',
+  raaj_script_thin: 'Raaj Script Thin',
+  raaj_script_medium: 'Raaj Script Medium',
   unicode_font: 'Unicode',
 };
 
