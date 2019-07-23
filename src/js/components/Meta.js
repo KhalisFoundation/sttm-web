@@ -36,8 +36,8 @@ class Meta extends React.PureComponent {
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     nav: PropTypes.shape({
-      previous: PropTypes.string,
-      next: PropTypes.string,
+      previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   };
 
@@ -81,7 +81,9 @@ class Meta extends React.PureComponent {
         <div className="meta">
           {['hukamnama'].includes(type) && (
             <h4>
-              <Link to={`/shabad?id=${info.id}`}>{TEXTS.GO_TO_SHABAD}</Link>
+              <Link to={`/shabad?id=${info.shabadId}`}>
+                {TEXTS.GO_TO_SHABAD}
+              </Link>
             </h4>
           )}
           <h4 className="gurbani-font">
@@ -97,11 +99,12 @@ class Meta extends React.PureComponent {
               {info.pageno !== null && (
                 <Link
                   to={toAngURL({
-                    ang: info.source.pageno,
-                    source: info.source.id,
+                    ang: info.source.pageNo,
+                    source: info.source.sourceId,
                   })}
                 >
-                  {info.source.id == 'G' ? 'AMg' : 'pMnw'} {info.source.pageno}
+                  {info.source.sourceId == 'G' ? 'AMg' : 'pMnw'}{' '}
+                  {info.source.pageNo}
                 </Link>
               )}
             </Item>
@@ -120,12 +123,12 @@ class Meta extends React.PureComponent {
               <Item last>
                 <Link
                   to={toAngURL({
-                    ang: info.source.pageno,
-                    source: info.source.id,
+                    ang: info.source.pageNo,
+                    source: info.source.sourceId,
                   })}
                 >
-                  {info.source.id == 'G' ? 'Ang' : 'Pannaa'}{' '}
-                  {info.source.pageno}
+                  {info.source.sourceId == 'G' ? 'Ang' : 'Pannaa'}{' '}
+                  {info.source.pageNo}
                 </Link>
               </Item>
             </h4>
