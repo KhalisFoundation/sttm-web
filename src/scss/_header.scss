@@ -6,8 +6,6 @@
   position: relative;
 
   &-wrapper {
-    display: flex;
-    flex-wrap: wrap;
     max-width: 78rem;
   }
 
@@ -52,6 +50,11 @@
   width: 3em;
 }
 
+.top-bar-left {
+  height: 54px;
+  padding-top: 7px;
+}
+
 #search-options {
   clear: both;
   margin-left: 70px;
@@ -60,6 +63,7 @@
 
   select {
     display: inline-block;
+    float: left;
     margin: 0;
     width: calc(50% - 0.5rem);
 
@@ -88,7 +92,7 @@
     font-size: 0.9em;
     justify-content: center;
     margin: 0;
-    padding: 14px;
+    padding: 1rem;
 
     &:hover {
       background-color: $sttm-lighter-grey;
@@ -107,9 +111,7 @@
 #search-container {
   background-color: $sttm-pure-white;
   border-radius: 2px;
-  box-shadow:
-    0 2px 2px 0 $sttm-transparent-black,
-    0 0 0 1px $sttm-transparent-light-black;
+  box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   height: 44px;
   margin: 0;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -195,9 +197,7 @@
 .gurmukhi-keyboard {
   background-color: $sttm-pure-white;
   border-radius: 2px;
-  box-shadow:
-    0 2px 2px 0 $sttm-transparent-black,
-    0 0 0 1px $sttm-transparent-light-black;
+  box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   font-size: 0;
   opacity: 0;
   overflow: hidden;
@@ -302,11 +302,7 @@
   max-height: 50px;
 }
 
-#responsive-menu {
-  width: 100%;
-}
-
-@media screen and (max-width: 55.99em) {
+@media screen and (max-width: 45.999999em) {
   .top-bar-title {
     float: none;
     margin: 50px 0 0;
@@ -341,9 +337,9 @@
     background-color: $sttm-pure-white;
     border-bottom: 1px solid $sttm-blue;
     height: 0;
+    left: 0;
     overflow: hidden;
     position: fixed;
-    right: 0;
     top: -1px;
     transition: height 400ms ease-out;
     width: 100%;
@@ -389,8 +385,8 @@
   }
 }
 
-// Not Mobile
-@media screen and (min-width: 56em) {
+// Mobile
+@media screen and (min-width: 46em) {
   .top-bar-title a {
     background-image: url(/assets/images/sttm_icon.png);
     width: 54px;
@@ -410,16 +406,8 @@
   }
 
   #responsive-menu {
-    align-items: center;
     display: flex;
-    flex-grow: 1;
     justify-content: space-between;
-    width: calc(100% - 70px);
-
-    > .top-bar-right {
-      min-width: 470px;
-      text-align: right;
-    }
   }
 
   #open-mobile-menu,
@@ -435,6 +423,7 @@
 
   .top-bar #search {
     max-width: 400px;
+    width: 334px;
   }
 
   #search-options {

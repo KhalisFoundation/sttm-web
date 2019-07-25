@@ -59,8 +59,8 @@ class Shabad extends React.PureComponent {
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
-      previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      previous: PropTypes.string,
+      next: PropTypes.string,
     }),
     hideMeta: PropTypes.bool,
     hideControls: PropTypes.bool,
@@ -102,7 +102,7 @@ class Shabad extends React.PureComponent {
     } = this;
 
     if (random) {
-      return <Redirect to={`/shabad?id=${info.shabadId}`} />;
+      return <Redirect to={`/shabad?id=${info.id}`} />;
     }
 
     return (
@@ -151,7 +151,7 @@ class Shabad extends React.PureComponent {
               <FootNav info={info} type={type} nav={nav} />
             )}
 
-            <RelatedShabads forShabadID={this.props.info.shabadId} />
+            <RelatedShabads forShabadID={this.props.info.id} />
           </div>
         </div>
         <ProgressBar percent={this.state.progress} />
@@ -202,14 +202,14 @@ class Shabad extends React.PureComponent {
         ? `data-sttm-ang="${info.source.pageno}" data-sttm-source="${
             info.source.id
           }"`
-        : `data-sttm-id="${info.shabadId}"`,
+        : `data-sttm-id="${info.id}"`,
     ].join(' ');
 
     Promise.resolve(
       `<div ${attrs}><a href="https://sttm.co/${
         type === 'ang'
           ? 'ang?ang=' + info.source.pageno + '&source=' + info.source.id
-          : 'shabad?id=' + info.shabadId
+          : 'shabad?id=' + info.id
       }">SikhiToTheMax</a></div><script async src="${
         window.location.origin
       }/embed.js"></script>`
