@@ -1,10 +1,14 @@
 .display {
   .gurbani-display div {
-    margin: 1rem 0;
+    margin-bottom: -0.25rem;
 
     &.larivaar {
       word-break: break-all;
     }
+  }
+
+  .addLineHeight {
+    line-height: 3;
   }
 
   .highlight {

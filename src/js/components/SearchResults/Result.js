@@ -54,7 +54,9 @@ export default class SearchResult extends React.PureComponent {
           <Link
             style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}` }}
             to={toShabadURL({ shabad, q, type, source })}
-            className="gurbani-font gurbani-display"
+            className={`gurbani-font gurbani-display ${
+              fontFamily.match(/raaj/g) ? 'addLineHeight' : ''
+            }`}
           >
             {unicode ? (
               <div className={`unicode ${larivaar ? 'larivaar' : ''}`}>
