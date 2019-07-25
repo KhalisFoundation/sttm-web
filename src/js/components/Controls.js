@@ -25,11 +25,13 @@ export const supportedMedia = _s;
 class Controls extends React.PureComponent {
   state = {
     showBorder: false,
+    offsetTop: 0,
   };
 
   componentDidMount() {
     this.mounted = true;
     window.addEventListener('scroll', this.scrollListener, { passive: true });
+    this.setState({ offsetTop: this.$wrapper.offsetTop });
   }
 
   componentWillUnmount() {
@@ -40,13 +42,14 @@ class Controls extends React.PureComponent {
   }
 
   scrollListener = () => {
-    if (window.scrollY >= this.$wrapper.offsetTop) {
+    if (window.scrollY >= this.state.offsetTop) {
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });
       }
     } else {
       if (this.mounted && this.state.showBorder === true) {
         this.setState({ showBorder: false });
+        this.setState({ offsetTop: this.$wrapper.offsetTop });
       }
     }
   };

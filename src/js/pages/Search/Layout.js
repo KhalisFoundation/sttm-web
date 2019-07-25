@@ -75,7 +75,7 @@ class Layout extends React.PureComponent {
 
     // I'm feeling lucky
     if (parseInt(resultsCount, 10) === 1) {
-      const [shabad] = shabads;
+      const [{ shabad }] = shabads;
       return <Redirect to={toShabadURL({ shabad, q, type, source })} />;
     }
 

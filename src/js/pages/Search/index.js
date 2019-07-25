@@ -39,23 +39,21 @@ export default class Search extends React.PureComponent {
         {({ loading, data }) => {
           if (loading || data === undefined) return <Stub />;
 
-          const { resultsInfo, verses } = data;
+          const { pageinfo, shabads } = data;
 
           return (
             <Layout
               pages={Array.from(
                 Array(
-                  parseInt(
-                    resultsInfo.totalResults / resultsInfo.pages.resultsPerPage
-                  )
+                  parseInt(pageinfo.totalresults / pageinfo.resultsperpage)
                 ),
                 (_, i) => i + 1
               )}
-              totalResults={resultsInfo.totalResults || 0}
-              resultsCount={resultsInfo.pageResults || 0}
+              totalResults={pageinfo.totalresults || 0}
+              resultsCount={pageinfo.pageresults || 0}
               offset={offset}
-              //nextPageOffset={resultsInfo.pages.page}
-              shabads={verses}
+              nextPageOffset={pageinfo.nextpageoffset}
+              shabads={shabads}
               q={q}
               type={type}
               source={source}
