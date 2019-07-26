@@ -75,7 +75,7 @@ class Layout extends React.PureComponent {
 
     // I'm feeling lucky
     if (parseInt(resultsCount, 10) === 1) {
-      const [{ shabad }] = shabads;
+      const [shabad] = shabads;
       return <Redirect to={toShabadURL({ shabad, q, type, source })} />;
     }
 
@@ -83,7 +83,7 @@ class Layout extends React.PureComponent {
 
     return (
       <div className="row" id="content-root">
-        <Controls media={[]} disableSplitView />
+        <Controls media={[]} disableSplitView hideAlignOption />
         <SearchResults
           q={q}
           type={type}

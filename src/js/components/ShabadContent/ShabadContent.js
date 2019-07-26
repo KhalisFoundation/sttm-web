@@ -59,8 +59,8 @@ class Shabad extends React.PureComponent {
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
-      previous: PropTypes.string,
-      next: PropTypes.string,
+      previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
     hideMeta: PropTypes.bool,
     hideControls: PropTypes.bool,
@@ -74,6 +74,8 @@ class Shabad extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
+    centerAlignGurbani: PropTypes.bool.isRequired,
   };
 
   render() {
@@ -92,13 +94,15 @@ class Shabad extends React.PureComponent {
         highlight,
         unicode,
         fontSize,
+        fontFamily,
+        centerAlignGurbani,
       },
       handleEmbed,
       handleCopyAll,
     } = this;
 
     if (random) {
-      return <Redirect to={`/shabad?id=${info.id}`} />;
+      return <Redirect to={`/shabad?id=${info.shabadId}`} />;
     }
 
     return (
@@ -136,16 +140,18 @@ class Shabad extends React.PureComponent {
               highlight={highlight}
               larivaar={larivaar}
               fontSize={fontSize}
+              fontFamily={fontFamily}
               larivaarAssist={larivaarAssist}
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
+              centerAlignGurbani={centerAlignGurbani}
             />
 
             {this.props.hideMeta === false && (
               <FootNav info={info} type={type} nav={nav} />
             )}
 
-            <RelatedShabads forShabadID={this.props.info.id} />
+            <RelatedShabads forShabadID={this.props.info.shabadId} />
           </div>
         </div>
         <ProgressBar percent={this.state.progress} />
@@ -196,13 +202,17 @@ class Shabad extends React.PureComponent {
         ? `data-sttm-ang="${info.source.pageno}" data-sttm-source="${
             info.source.id
           }"`
-        : `data-sttm-id="${info.id}"`,
+        : `data-sttm-id="${info.shabadId}"`,
     ].join(' ');
 
     Promise.resolve(
-      `<div ${attrs}><a href="https://sttm.co/embed?id=${
-        info.id
-      }">SikhiToTheMax</a></div><script async src="https://sttm.co/embed.js"></script>`
+      `<div ${attrs}><a href="https://sttm.co/${
+        type === 'ang'
+          ? 'ang?ang=' + info.source.pageno + '&source=' + info.source.id
+          : 'shabad?id=' + info.shabadId
+      }">SikhiToTheMax</a></div><script async src="${
+        window.location.origin
+      }/embed.js"></script>`
     )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.EMBED_COPIED))

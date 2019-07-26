@@ -36,8 +36,8 @@ export default class Shabad extends React.PureComponent {
                 random={random}
                 type="shabad"
                 highlight={highlight}
-                info={data.shabadinfo}
-                gurbani={data.gurbani}
+                info={data.shabadInfo}
+                gurbani={data.verses}
                 nav={data.navigation}
               />
             </div>

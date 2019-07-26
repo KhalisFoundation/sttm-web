@@ -27,9 +27,11 @@ export const LOCAL_STORAGE_KEY_FOR_LARIVAAR = 'larivaar';
 export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
+export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
+export const LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW = 'centerAlignView';
 
 export const PLACEHOLDERS = {
   [SEARCH_TYPES.FIRST_LETTERS]: ['jmTAq'], // first letters
@@ -52,12 +54,15 @@ export const DEFAULT_LARIVAAR_ASSIST = false;
 export const DEFAULT_UNICODE = false;
 export const DEFAULT_SPLIT_VIEW = false;
 export const DEFAULT_FONT_SIZE = 2;
+export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
+export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
 export const NORMAL_SEARCH_COLOR = 'rgba(1, 102, 155, 0.3)';
+export const FIRST_HUKAMNAMA_DATE = '2002/01/01';
 
 export const TEXTS = {
   RELATED_SHABADS: 'Related Shabads',
@@ -93,7 +98,7 @@ export const TEXTS = {
   HELP_SECTION: 'the help section',
   INDEX_SECTION: 'the index page',
   GENERIC_ERROR: `ਵਾਹਿਗੁਰੂ! Something isn't working correctly`,
-  GENERIC_ERROR_DESCRIPTION: `This is really unusual. You may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
+  GENERIC_ERROR_DESCRIPTION: `This is really unusual. Try <a href="https://www.thewindowsclub.com/clear-cache-cookies-specific-website" target="_blank" rel="noreferrer nofollow">clearing your cache</a>. If you still face the issue, you may want to hit the Feedback button at the bottom of this page, and report this issue to our Sevadaars to fix it before others face it.`,
   TIMEOUT_ERROR: `ਵਾਹਿਗੁਰੂ! Network connection timed out`,
   TIMEOUT_ERROR_DESCRIPTION: `This usually happens when your internet connection is either down or very slow. Try connecting sometime later?`,
   GO_TO_SHABAD: 'Open Shabad',
@@ -132,6 +137,20 @@ export const TEXTS = {
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
+  CENTERALIGN: 'Center-Align',
+  HUKAMNAMA_NOT_FOUND_DESCRIPTION:
+    "We couldn't find the hukamnama for this date in our database.",
+};
+
+export const FONT_OPTIONS = {
+  anmol_lipi: 'Anmol Lipi',
+  anmol_bold: 'Anmol Lipi Bold',
+  notosans: 'Noto Sans',
+  notosans_bold: 'Noto Sans Bold',
+  gurmukhi_normal: 'Gurbani Akhar',
+  gurmukhi_heavy: 'Gurbani Akhar Heavy',
+  gurmukhi_thick: 'Gurbani Akhar Thick',
+  unicode_font: 'Unicode',
 };
 
 export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';

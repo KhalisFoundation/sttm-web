@@ -8,12 +8,14 @@ import {
   TOGGLE_UNICODE_OPTION,
   TOGGLE_DARK_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
+  SET_CENTER_ALIGN_OPTION,
   SET_UNICODE,
   SET_FONT_SIZE,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
+  CHANGE_FONT,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -22,8 +24,10 @@ import {
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
+  LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
+  LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
 } from '../../constants';
 import { saveToLocalStorage } from '../../util';
 import { clickEvent } from '../../util/analytics';
@@ -167,6 +171,17 @@ export default function reducer(state, action) {
         fontSize,
       };
     }
+    case CHANGE_FONT: {
+      const fontFamily = action.payload;
+      const unicode = fontFamily === 'unicode_font';
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_UNICODE, unicode);
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_FONT_FAMILY, fontFamily);
+      return {
+        ...state,
+        unicode,
+        fontFamily,
+      };
+    }
     case SET_TRANSLATION_LANGUAGES: {
       const translationLanguages = action.payload || [];
       clickEvent({
@@ -207,6 +222,18 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
+      };
+    }
+    case SET_CENTER_ALIGN_OPTION: {
+      const centerAlignGurbani = action.payload;
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
+        centerAlignGurbani
+      );
+      return {
+        ...state,
+        centerAlignGurbani,
       };
     }
     default:

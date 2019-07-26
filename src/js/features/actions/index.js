@@ -4,6 +4,8 @@ import {
   DEFAULT_DARK_MODE,
   DEFAULT_UNICODE,
   DEFAULT_FONT_SIZE,
+  DEFAULT_FONT_FAMILY,
+  DEFAULT_CENTER_ALIGN_GURBANI,
 } from '../../constants';
 
 export const createAction = (type, meta) => payload => ({
@@ -42,9 +44,6 @@ export const toggleLarivaarAssistOption = createAction(
   TOGGLE_LARIVAAR_ASSIST_OPTION
 );
 
-export const TOGGLE_UNICODE_OPTION = 'TOGGLE_UNICODE_OPTION';
-export const toggleUnicodeOption = createAction(TOGGLE_UNICODE_OPTION);
-
 export const TOGGLE_SPLIT_VIEW_OPTION = 'TOGGLE_SPLIT_VIEW_OPTION';
 export const toggleSplitViewOption = createAction(TOGGLE_SPLIT_VIEW_OPTION);
 
@@ -73,9 +72,22 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
+  dispatch(setCenterAlignOption(DEFAULT_CENTER_ALIGN_GURBANI));
 };
+
+export const CHANGE_FONT = 'CHANGE_FONT';
+export const changeFont = createAction(CHANGE_FONT);
 
 export const resetFontOptions = () => dispatch => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
+  dispatch(changeFont(DEFAULT_FONT_FAMILY));
+};
+
+export const SET_CENTER_ALIGN_OPTION = 'SET_CENTER_ALIGN_OPTION';
+export const setCenterAlignOption = createAction(SET_CENTER_ALIGN_OPTION);
+
+export const toggleCenterAlignOption = () => (dispatch, getState) => {
+  const state = getState();
+  dispatch(setCenterAlignOption(!state.centerAlignGurbani));
 };

@@ -5,6 +5,7 @@ import {
   TEXTS,
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
+  FONT_OPTIONS,
 } from '../constants';
 import TelevisionIcon from './Icons/Television';
 import SlidersIcon from './Icons/Sliders';
@@ -15,13 +16,16 @@ export default class ShabadControls extends React.PureComponent {
   };
 
   static propTypes = {
+    centerAlignGurbani: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    hideAlignOption: PropTypes.bool,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
     disableSplitView: PropTypes.bool.isRequired,
     showDisplayOptions: PropTypes.bool.isRequired,
     showFontOptions: PropTypes.bool.isRequired,
@@ -37,11 +41,13 @@ export default class ShabadControls extends React.PureComponent {
     toggleDarkMode: PropTypes.func.isRequired,
     toggleLarivaarOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
-    toggleUnicodeOption: PropTypes.func.isRequired,
+    changeFont: PropTypes.func.isRequired,
+    toggleCenterAlignOption: PropTypes.func.isRequired,
   };
 
   render() {
     const {
+      centerAlignGurbani,
       disableSplitView,
       showDisplayOptions,
       showFontOptions,
@@ -50,13 +56,14 @@ export default class ShabadControls extends React.PureComponent {
       larivaarAssist,
       larivaar,
       darkMode,
-      unicode,
       fontSize,
+      fontFamily,
       splitView,
       setFontSize,
       setTranslationLanguages,
       setTransliterationLanguages,
       resetDisplayOptions,
+      toggleCenterAlignOption,
       resetFontOptions,
       toggleDisplayOptions,
       toggleFontOptions,
@@ -64,7 +71,8 @@ export default class ShabadControls extends React.PureComponent {
       toggleLarivaarAssistOption,
       toggleLarivaarOption,
       toggleSplitViewOption,
-      toggleUnicodeOption,
+      changeFont,
+      hideAlignOption,
     } = this.props;
     return (
       <React.Fragment>
@@ -178,6 +186,22 @@ export default class ShabadControls extends React.PureComponent {
                 </a>
               </div>
             </div>
+
+            {!hideAlignOption && (
+              <div className="display-option-type">
+                <div className="display-option-header">{TEXTS.CENTERALIGN}</div>
+                <div className="display-option-content">
+                  <a
+                    className={`display-option-toggle
+                          ${centerAlignGurbani ? ' active' : ''}`}
+                    onClick={toggleCenterAlignOption}
+                  >
+                    {centerAlignGurbani ? 'Disable' : 'Enable'}
+                  </a>
+                </div>
+              </div>
+            )}
+
             <div className="display-option-type">
               <div className="display-option-header">
                 {TEXTS.RESET} {TEXTS.DISPLAY}
@@ -197,14 +221,16 @@ export default class ShabadControls extends React.PureComponent {
           <div className="font-options">
             <div className="font-option-type">
               <div className="font-option-header">{TEXTS.FONT}</div>
-              <a
-                className={`shabad-controller-toggle ${
-                  unicode ? 'active' : ''
-                }`}
-                onClick={toggleUnicodeOption}
+              <select
+                value={fontFamily}
+                onChange={e => changeFont(e.currentTarget.value)}
               >
-                {TEXTS.UNICODE}
-              </a>
+                {Object.keys(FONT_OPTIONS).map(key => (
+                  <option key={key} value={key}>
+                    {FONT_OPTIONS[key]}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="font-option-type">
               <div className="font-option-header">{TEXTS.FONT_SIZE}</div>

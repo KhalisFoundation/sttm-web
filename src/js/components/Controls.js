@@ -14,9 +14,10 @@ import {
   toggleLarivaarOption,
   toggleTranslationOptions,
   toggleTransliterationOptions,
-  toggleUnicodeOption,
   toggleSplitViewOption,
   toggleDarkMode,
+  changeFont,
+  toggleCenterAlignOption,
 } from '../features/actions';
 
 export const supportedMedia = _s;
@@ -81,9 +82,10 @@ const dispatchToProps = {
   toggleLarivaarOption,
   toggleTranslationOptions,
   toggleTransliterationOptions,
-  toggleUnicodeOption,
   toggleSplitViewOption,
   toggleDarkMode,
+  changeFont,
+  toggleCenterAlignOption,
 };
 
 // TODO: Connect individual components instead of all controls.

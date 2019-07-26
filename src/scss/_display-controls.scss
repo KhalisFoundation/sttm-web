@@ -14,6 +14,7 @@
 
   &.with-border {
     box-shadow: 0 8px 6px -10px black;
+    max-width: 75rem;
   }
 
   > div {
@@ -47,11 +48,25 @@
 .font-options {
   align-content: flex-start;
   animation: flip-open 0.25s;
-  background-color: $sttm-white;
+  background-color: $sttm-lighter-grey;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
   width: calc(100% - 2rem);
+
+  input[type='range'] {
+    --webkit-appearance: none;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    background: $sttm-white;
+    border-radius: 4px;
+    height: 4px;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    margin-top: -8px;
+  }
 
   .dark-mode & {
     background-color: $sttm-lighter-black;
@@ -91,6 +106,7 @@
 .display-option-toggle,
 .font-option-toggle {
   align-items: center;
+  background-color: $sttm-white;
   border: 1px solid $sttm-light-grey;
   border-radius: 2px;
   color: $sttm-lighter-black;

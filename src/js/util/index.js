@@ -4,6 +4,7 @@ import {
   SHORT_DOMAIN,
   SEARCH_TYPES,
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
+  FIRST_HUKAMNAMA_DATE,
 } from '../constants';
 
 /**
@@ -177,6 +178,12 @@ export const getNumberFromLocalStorage = (key, defaultValue = null) => {
   return parseFloat(value, 10);
 };
 
+export const getStringFromLocalStorage = (key, defaultValue = null) => {
+  const value = localStorage.getItem(key);
+  if (value === null) return defaultValue;
+  return value;
+};
+
 export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
   const value = localStorage.getItem(key);
   if (value === null) return defaultValue;
@@ -223,7 +230,7 @@ export const toSearchURL = ({
  * @param {string} [options.source]
  */
 export const toShabadURL = ({
-  shabad: { shabadid: id, id: highlight },
+  shabad: { shabadId: id, verseId: highlight },
   q,
   type = undefined,
   source = undefined,
@@ -246,7 +253,8 @@ export const toAngURL = ({ ang, source, highlight }) =>
 /**
  * @sttm/banidb API v2 to v1 transformer
  */
-export const versesToGurbani = verses =>
+
+export const versesToGurbani_old = verses =>
   verses.map(({ verse, ...v }, i) => ({
     shabad: {
       ...v,
@@ -255,9 +263,26 @@ export const versesToGurbani = verses =>
         ...verse.verse,
       },
       id: v.lineNo || '' + i,
-      translation: verse.translation,
+      translation: {
+        english: {
+          ssk: verse.translation.en.bdb,
+        },
+        spanish: verse.translation.es.sn,
+        punjabi: {
+          bms: {
+            gurmukhi: verse.translation.pu.ss.gurmukhi,
+            unicode: verse.translation.pu.ss.unicode,
+          },
+        },
+      },
       transliteration: verse.transliteration.english,
     },
+  }));
+
+export const versesToGurbani = verses =>
+  verses.map(({ verse, ...v }) => ({
+    ...verse,
+    ...v,
   }));
 
 /**
@@ -342,9 +367,82 @@ export const saveAng = ang =>
 export function toNavURL({ type, info }) {
   switch (type) {
     case 'hukamnama':
+      return 'hukamnama?date=';
     case 'shabad':
       return 'shabad?id=';
     case 'ang':
       return `ang?source=${info.source.id}&ang=`;
   }
 }
+
+/**
+ * Removes any previous text selection &
+ * Selects the contents of given div
+ * @param {object} selectedDiv
+ */
+export const makeSelection = selectedDiv => {
+  window.getSelection().removeAllRanges();
+  var range = document.createRange();
+  range.selectNode(selectedDiv);
+  window.getSelection().addRange(range);
+};
+
+/**
+ * Manipulates the date string
+ */
+export const dateMath = {
+  algebra: (inputDate, operator, days) => {
+    const da = new Date(inputDate);
+    let newDay;
+    switch (operator) {
+      case '+':
+      case 'plus':
+        newDay = da.getDate() + days;
+        break;
+      case '-':
+      case 'minus':
+        newDay = da.getDate() - days;
+        break;
+    }
+    da.setDate(newDay);
+    return da.toLocaleDateString('zh-tw'); // yyyy-m-d
+  },
+  isBefore: (date1, date2) => new Date(date1) < new Date(date2),
+  isAfter: (date1, date2) => new Date(date1) > new Date(date2),
+  expand: date => {
+    const inDate = new Date(date);
+    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return inDate.toLocaleDateString('en', options);
+  },
+};
+
+export const getHukamnama = data => {
+  const { shabads } = data;
+  const { date, month, year } = data.date.gregorian;
+  const hukamnamaDate = year + '/' + month + '/' + date;
+  let totalVerses = [];
+
+  shabads.forEach(s => {
+    totalVerses = totalVerses.concat(s.verses);
+  });
+  const [shabad] = shabads;
+  shabad.verses = totalVerses;
+  shabad.expandedDate = dateMath.expand(hukamnamaDate);
+
+  let prevDate = dateMath.algebra(hukamnamaDate, '-', 1);
+
+  if (dateMath.isBefore(prevDate, FIRST_HUKAMNAMA_DATE)) {
+    prevDate = undefined;
+  }
+
+  //TODO: After API is updated, check if it's latest hukamnama and
+  //      set nextDate to undefined
+
+  const nextDate = dateMath.algebra(hukamnamaDate, '+', 1);
+
+  shabad.nav = {
+    previous: prevDate,
+    next: nextDate,
+  };
+  return shabad;
+};
