@@ -63,7 +63,9 @@ export default [
         <Layout title="Terms Of Service" {...props}>
           <RenderPromise
             promise={() =>
-              import(/* webpackChunkName: "TermsOfService" */ './pages/TermsOfService')
+              import(
+                /* webpackChunkName: "TermsOfService" */ './pages/TermsOfService'
+              )
             }
           >
             {({
@@ -159,7 +161,9 @@ export default [
         <Layout title="Index - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
-              import(/* webpackChunkName: "GranthIndex" */ './pages/GranthIndex')
+              import(
+                /* webpackChunkName: "GranthIndex" */ './pages/GranthIndex'
+              )
             }
           >
             {({ pending, resolved: { default: Index } = {}, rejected }) =>
@@ -184,7 +188,9 @@ export default [
         <Layout title="Sundar Gutka - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
-              import(/* webpackChunkName: "SundarGutka" */ './pages/SundarGutka')
+              import(
+                /* webpackChunkName: "SundarGutka" */ './pages/SundarGutka'
+              )
             }
           >
             {({ pending, resolved: { default: SundarGutka } = {}, rejected }) =>
@@ -230,6 +236,7 @@ export default [
   {
     path: '/hukamnama',
     render(props) {
+      const date = getParameterByName('date') || 'today';
       return (
         <Layout title="Hukamnama - SikhiToTheMax" {...props}>
           <RenderPromise
@@ -239,7 +246,7 @@ export default [
           >
             {({ pending, resolved: { default: Hukamnama } = {}, rejected }) =>
               pending ? null : Hukamnama ? (
-                <Hukamnama {...props} />
+                <Hukamnama date={date} {...props} />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,

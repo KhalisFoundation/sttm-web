@@ -7,8 +7,8 @@ const path = require('path');
 
 const API_URLS = {
   BANIS: '//api.banidb.com/v2/banis',
-  PRODUCTION: '//api.banidb.com/',
-  DEVELOPMENT: '//api.khajana.org/',
+  PRODUCTION: '//api.banidb.com/v2/',
+  DEVELOPMENT: '//api.banidb.com/v2/',
   SYNC: {
     PRODUCTION: '//api.sikhitothemax.org/',
     LOCAL: '//api.sikhitothemax.org/',
@@ -38,7 +38,7 @@ const plugins = PRODUCTION
           npm_package_version: JSON.stringify(process.env.npm_package_version),
         },
         PRODUCTION: JSON.stringify(false),
-        API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
+        API_URL: JSON.stringify(API_URLS.PRODUCTION),
         SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
         BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       }),

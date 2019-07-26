@@ -62,6 +62,7 @@ export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
 export const NORMAL_SEARCH_COLOR = 'rgba(1, 102, 155, 0.3)';
+export const FIRST_HUKAMNAMA_DATE = '2002/01/01';
 
 export const TEXTS = {
   RELATED_SHABADS: 'Related Shabads',
@@ -137,6 +138,8 @@ export const TEXTS = {
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
   CENTERALIGN: 'Center-Align',
+  HUKAMNAMA_NOT_FOUND_DESCRIPTION:
+    "We couldn't find the hukamnama for this date in our database.",
 };
 
 export const FONT_OPTIONS = {
