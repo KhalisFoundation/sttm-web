@@ -224,7 +224,7 @@ export const toSearchURL = ({
 /**
  *
  * @param {object} options
- * @param {{ shabadid: string | number, id?: string | number }} options.shabad
+ * @param {{ shabadId: string | number, id?: string | number }} options.shabad
  * @param {string} [options.q]
  * @param {string} [options.type]
  * @param {string} [options.source]
