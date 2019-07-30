@@ -57,7 +57,7 @@ export default class Pagination extends React.PureComponent {
               title="Previous Page"
               role="button"
               direction={Chevron.DIRECTIONS.LEFT}
-              onClick={() => onPageClick(currentPage - 1)}
+              onClick={() => onPageClick(currentPage)}
             />
           </div>
         )}

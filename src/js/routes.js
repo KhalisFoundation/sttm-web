@@ -296,7 +296,7 @@ export default [
         type = DEFAULT_SEARCH_TYPE,
         source = DEFAULT_SEARCH_SOURCE,
         q = '',
-        offset = 0,
+        offset = 1,
       ] = params.map(v => getParameterByName(v, search));
 
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
