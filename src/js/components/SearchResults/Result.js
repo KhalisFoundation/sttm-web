@@ -36,7 +36,7 @@ export default class SearchResult extends React.PureComponent {
       larivaarAssist,
     } = this.props;
 
-    const _source = SOURCES[shabad.source.id];
+    const _source = SOURCES[shabad.source.sourceId];
     const shabadPageNo = shabad.pageno === null ? '' : shabad.pageno;
     const presentationalSource = _source
       ? `${_source} - ${shabadPageNo}`

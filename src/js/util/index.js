@@ -342,7 +342,7 @@ export const getHighlightIndices = (baani, query, type) => {
  * @property {{ source: { id: string }}} info
  */
 export const shouldSaveAng = ({ type, info }) =>
-  type === 'ang' && info.source.id === 'G';
+  type === 'ang' && info.source.sourceId === 'G';
 
 /**
  * Previously read ang
