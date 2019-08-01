@@ -25,6 +25,8 @@ export const supportedMedia = _s;
 class Controls extends React.PureComponent {
   state = {
     showBorder: false,
+    lastScrollPos:0,
+    showControls: true
   };
 
   componentDidMount() {
@@ -44,6 +46,24 @@ class Controls extends React.PureComponent {
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });
       }
+
+      const currentScroll = this.$wrapper.offsetTop;
+
+      if(this.state.lastScrollPos > currentScroll){
+        this.setState({lastScrollPos: currentScroll});
+
+        if (!this.state.showControls) {
+          this.setState({showControls: true});
+        }
+      } else if( this.state.lastScrollPos < currentScroll) {
+        this.setState({lastScrollPos: currentScroll});
+
+        if (this.state.showControls &&
+           !this.props.showDisplayOptions &&
+           !this.props.showFontOptions) {
+          this.setState({showControls: false});
+        }
+      }
     } else {
       if (this.mounted && this.state.showBorder === true) {
         this.setState({ showBorder: false });
@@ -57,7 +77,7 @@ class Controls extends React.PureComponent {
     return (
       <div
         id="controls-wrapper"
-        className={`no-select ${this.state.showBorder ? 'with-border' : ''}`}
+        className={`no-select ${this.state.showBorder ? 'with-border' : ''} ${this.state.showControls ? 'show-controls' : 'hide-controls'}`}
         ref={this.setRef}
       >
         <ShareButtons {...this.props} />

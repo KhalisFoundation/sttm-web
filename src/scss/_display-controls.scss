@@ -5,7 +5,8 @@
   position: -webkit-sticky;
   position: sticky;
   top: calc(-16px - 2em);
-  transition: box-shadow 0.5s;
+  transition: box-shadow 0.5s,
+              opacity 0.2s;
   z-index: 1;
 
   .dark-mode & {
@@ -15,6 +16,19 @@
   &.with-border {
     box-shadow: 0 8px 6px -10px black;
     max-width: 75rem;
+  }
+
+  &.show-controls {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &.hide-controls {
+    opacity: 0;
+    visibility: hidden;
+    > * {
+      visibility: hidden;
+    }
   }
 
   > div {
