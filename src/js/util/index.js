@@ -342,7 +342,7 @@ export const getHighlightIndices = (baani, query, type) => {
  * @property {{ source: { id: string }}} info
  */
 export const shouldSaveAng = ({ type, info }) =>
-  type === 'ang' && info.source.id === 'G';
+  type === 'ang' && info.source.sourceId === 'G';
 
 /**
  * Previously read ang
@@ -362,7 +362,7 @@ export const saveAng = ang =>
  * Generates link based on type and source
  * @param {object} data
  * @property {string} type
- * @property {{ source: { id: string }}} info
+ * @property {{ source: { sourceId: string }}} info
  */
 export function toNavURL({ type, info }) {
   switch (type) {
@@ -371,7 +371,7 @@ export function toNavURL({ type, info }) {
     case 'shabad':
       return 'shabad?id=';
     case 'ang':
-      return `ang?source=${info.source.id}&ang=`;
+      return `ang?source=${info.source.sourceId}&ang=`;
   }
 }
 
