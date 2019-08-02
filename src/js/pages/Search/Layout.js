@@ -79,7 +79,7 @@ class Layout extends React.PureComponent {
       return <Redirect to={toShabadURL({ shabad, q, type, source })} />;
     }
 
-    const currentPage = offset + 1;
+    const currentPage = offset;
 
     return (
       <div className="row" id="content-root">
@@ -104,7 +104,7 @@ class Layout extends React.PureComponent {
   handlePageClick = pageNumber => {
     const { q, type, source, offset } = this.props;
 
-    const currentPage = offset + 1;
+    const currentPage = offset;
 
     if (pageNumber === currentPage) {
       return;
@@ -117,7 +117,7 @@ class Layout extends React.PureComponent {
         query: q,
         type,
         source,
-        offset: pageNumber - 1,
+        offset: pageNumber,
       })
     );
   };

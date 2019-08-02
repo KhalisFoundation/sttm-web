@@ -199,8 +199,8 @@ class Shabad extends React.PureComponent {
       `data-sttm-height="500"`,
       `data-sttm-width="500"`,
       type === 'ang'
-        ? `data-sttm-ang="${info.source.pageno}" data-sttm-source="${
-            info.source.id
+        ? `data-sttm-ang="${info.source.pageNo}" data-sttm-source="${
+            info.source.sourceId
           }"`
         : `data-sttm-id="${info.shabadId}"`,
     ].join(' ');
@@ -208,7 +208,7 @@ class Shabad extends React.PureComponent {
     Promise.resolve(
       `<div ${attrs}><a href="https://sttm.co/${
         type === 'ang'
-          ? 'ang?ang=' + info.source.pageno + '&source=' + info.source.id
+          ? 'ang?ang=' + info.source.pageNo + '&source=' + info.source.sourceId
           : 'shabad?id=' + info.shabadId
       }">SikhiToTheMax</a></div><script async src="${
         window.location.origin
