@@ -11,6 +11,13 @@ export const SEARCH_TYPES = {
   ANG: 5,
 };
 
+export const SOURCES_WITH_ANG = {
+    G: "Guru Granth Sahib Ji",
+    D: "Dasam Granth Sahib",
+    B: "Bhai Gurdas Ji Vaaran",
+    S: "Bhai Gurdas Singh Ji Vaaran"
+}
+
 export const TYPES = [..._TYPES, 'Ang'];
 
 export const SHORT_DOMAIN = 'sttm.co';
