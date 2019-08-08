@@ -169,8 +169,6 @@ export default class SearchForm extends React.PureComponent {
         : typeInt === SEARCH_TYPES.ANG
           ? ['Enter numbers only.', '\\d+']
           : ['Enter 2 characters minimum.', '.{2,}'];
-    
-    this.setState({pattern});
 
     const [action, name, inputType] = SearchForm.getFormDetails(
       this.state.type
