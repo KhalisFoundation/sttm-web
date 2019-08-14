@@ -160,10 +160,12 @@ export default class SearchForm extends React.PureComponent {
 
     const className = useEnglish ? '' : 'gurbani-font';
 
+    const typeInt = parseInt(this.state.type);
+
     const [title, pattern] =
-      this.state.type === SEARCH_TYPES.ROMANIZED
-        ? ['Enter 2 words minimum.', '(\\w+\\W+){1,}\\w+\\W*']
-        : this.state.type === SEARCH_TYPES.ANG
+      typeInt === SEARCH_TYPES.ROMANIZED
+        ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
+        : typeInt === SEARCH_TYPES.ANG
           ? ['Enter numbers only.', '\\d+']
           : ['Enter 2 characters minimum.', '.{2,}'];
 
