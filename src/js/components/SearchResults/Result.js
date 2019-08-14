@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { SOURCES } from '../../constants';
 
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices } from '../../util';
+import { getAng, getSource, getUnicodeVerse,
+         getGurmukhiVerse, translationMap, transliterationMap, getRaag, getWriter } from '@/util/api/shabad';
 
 export default class SearchResult extends React.PureComponent {
   static propTypes = {
@@ -36,8 +37,8 @@ export default class SearchResult extends React.PureComponent {
       larivaarAssist,
     } = this.props;
 
-    const _source = SOURCES[shabad.source.sourceId];
-    const shabadPageNo = shabad.pageno === null ? '' : shabad.pageno;
+    const _source = getSource(shabad);
+    const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
     const presentationalSource = _source
       ? `${_source} - ${shabadPageNo}`
       : null;
@@ -66,7 +67,7 @@ export default class SearchResult extends React.PureComponent {
                   endIndex={higlightEndIndex}
                   query={q}
                 >
-                  {shabad.verse.unicode}
+                  {getUnicodeVerse(shabad)}
                 </Larivaar>
               </div>
             ) : (
@@ -78,7 +79,7 @@ export default class SearchResult extends React.PureComponent {
                   endIndex={higlightEndIndex}
                   query={q}
                 >
-                  {shabad.verse.gurmukhi}
+                  {getGurmukhiVerse(shabad)}
                 </Larivaar>
               </div>
             )}
@@ -88,7 +89,7 @@ export default class SearchResult extends React.PureComponent {
 
           {transliterationLanguages.includes('english') && (
             <p className="transliteration english">
-              {shabad.transliteration.english}
+              {transliterationMap['english'](shabad)}
             </p>
           )}
 
@@ -96,11 +97,11 @@ export default class SearchResult extends React.PureComponent {
             <blockquote className="translation punjabi gurbani-font">
               {unicode ? (
                 <div className="unicode">
-                  {shabad.translation.pu.ss.unicode}
+                  {translationMap["punjabi"](shabad).unicode}
                 </div>
               ) : (
                 <div className="gurlipi">
-                  {shabad.translation.pu.ss.gurmukhi}
+                  {translationMap["punjabi"](shabad).gurmukhi}
                 </div>
               )}
             </blockquote>
@@ -108,26 +109,26 @@ export default class SearchResult extends React.PureComponent {
 
           {translationLanguages.includes('english') && (
             <blockquote className="translation english">
-              {shabad.translation.en.bdb}
+              {translationMap['english'](shabad)}
             </blockquote>
           )}
 
           {translationLanguages.includes('spanish') && (
             <blockquote className="translation spanish">
-              {shabad.translation.es.sn}
+              {translationMap['spanish'](shabad)}
             </blockquote>
           )}
 
           <div className="meta flex wrap">
             {presentationalSource && <a href="#">{presentationalSource}</a>}
 
-            <a href="#">{shabad.writer.english}</a>
+            <a href="#">{getWriter['english'](shabad)}</a>
 
-            {shabad.raag.english === 'No Raag' ||
-            shabad.raag.english === null ? (
+            {getRaag['english'](shabad) === 'No Raag' ||
+            getRaag['english'](shabad) === null ? (
               ''
             ) : (
-              <a href="#">{shabad.raag.english}</a>
+              <a href="#">{getRaag['english'](shabad)}</a>
             )}
           </div>
         </li>

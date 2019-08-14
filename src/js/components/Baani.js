@@ -8,18 +8,7 @@ import { clickEvent, ACTIONS } from '../util/analytics';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
 import { copyToClipboard, showToast, shortenURL, makeSelection } from '../util';
 
-const transliterationMap = {
-  english: shabad => shabad.transliteration.english,
-};
-
-const translationMap = {
-  spanish: shabad => shabad.translation.es.sn,
-  english: shabad => shabad.translation.en.bdb,
-  punjabi: shabad => ({
-    ...shabad.translation.pu.ss,
-    toString: () => shabad.translation.pu.ss.unicode,
-  }),
-};
+import { translationMap, transliterationMap } from '@/util/api/shabad';
 
 /**
  *
