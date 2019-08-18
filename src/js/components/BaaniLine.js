@@ -30,7 +30,7 @@ export default class BaaniLine extends React.PureComponent {
       <div
         className={`gurmukhi gurbani-display gurbani-font ${
           shouldHighlight ? 'highlight' : ''
-        }`}
+        } ${fontFamily.match(/raaj/g) ? 'addLineHeight' : ''} `}
         style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}` }}
       >
         {'\n'}

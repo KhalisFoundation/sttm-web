@@ -9,13 +9,21 @@
 }
 
 $fontlist: (
-  gurmukhi_normal:"GurbaniAkharTrue.ttf",
-  gurmukhi_heavy: "GurbaniAkharHeavyTrue.ttf",
-  gurmukhi_thick: "GurbaniAkharThickTrue.ttf",
-  anmol_lipi: "AnmolLipiSG.ttf",
-  anmol_bold: "AnmolLipiBoldTrue.ttf",
-  notosans:"NotoSansGurmukhiTrue.ttf",
-  notosans_bold: "NotoSansGurmukhiBoldTrue.ttf",
+  gurmukhi_normal: 'GurbaniAkharTrue.ttf',
+  gurmukhi_heavy: 'GurbaniAkharHeavyTrue.ttf',
+  gurmukhi_thick: 'GurbaniAkharThickTrue.ttf',
+  anmol_lipi: 'AnmolLipiSG.ttf',
+  anmol_bold: 'AnmolLipiBoldTrue.ttf',
+  notosans: 'NotoSansGurmukhiTrue.ttf',
+  notosans_bold: 'NotoSansGurmukhiBoldTrue.ttf',
+  prabhki: 'PrabhkiTrue.ttf',
+  raaj_thin: 'raajThinTrue.ttf',
+  raaj_light: 'raajLightTrue.ttf',
+  raaj_medium: 'raajMediumTrue.ttf',
+  raaj_black: 'raajBlackTrue.ttf',
+  raaj_bold: 'raajBoldTrue.ttf',
+  raaj_script_thin: 'raajScriptThinTrue.ttf',
+  raaj_script_medium: 'raajScriptMediumTrue.ttf',
 );
 
 @each $name, $file in $fontlist {
