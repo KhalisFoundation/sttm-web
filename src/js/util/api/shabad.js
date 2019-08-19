@@ -10,6 +10,10 @@ export const getUnicodeVerse = shabad => shabad.verse.unicode;
 
 export const getGurmukhiVerse = shabad => shabad.verse.gurmukhi;
 
+export const getVerseId = shabad => shabad.verseId;
+
+export const getShabadId = shabad => shabad.shabadId;
+
 export const translationMap = {
   spanish: shabad => shabad.translation.es.sn,
   english: shabad => shabad.translation.en.bdb,

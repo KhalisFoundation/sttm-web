@@ -8,7 +8,7 @@ import { clickEvent, ACTIONS } from '../util/analytics';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
 import { copyToClipboard, showToast, shortenURL, makeSelection } from '../util';
 
-import { translationMap, transliterationMap } from '@/util/api/shabad';
+import { translationMap, transliterationMap, getVerseId } from '@/util/api/shabad';
 
 /**
  *
@@ -156,13 +156,13 @@ export default class Baani extends React.PureComponent {
       <div className="mixed-view-baani">
         {gurbani.map(shabad => (
           <div
-            key={shabad.verseId}
-            id={`line-${shabad.verseId}`}
+            key={getVerseId(shabad)}
+            id={`line-${getVerseId(shabad)}`}
             className="line"
             onMouseUp={this.showShare}
             onMouseDown={this.removeSelection}
             ref={node =>
-              highlight === parseInt(shabad.verseId, 10)
+              highlight === parseInt(getVerseId(shabad), 10)
                 ? (this.$highlightedBaaniLine = node)
                 : null
             }
@@ -170,21 +170,21 @@ export default class Baani extends React.PureComponent {
             <BaaniLine
               text={shabad.verse}
               unicode={unicode}
-              shouldHighlight={highlight === parseInt(shabad.verseId, 10)}
+              shouldHighlight={highlight === parseInt(getVerseId(shabad), 10)}
               larivaar={larivaar}
               larivaarAssist={larivaarAssist}
               fontSize={fontSize}
               fontFamily={fontFamily}
             />
             {transliterationLanguages.map(language => (
-              <Transliteration key={shabad.verseId + language}>
+              <Transliteration key={getVerseId(shabad) + language}>
                 {transliterationMap[language](shabad)}
               </Transliteration>
             ))}
 
             {translationLanguages.map(language => (
               <Translation
-                key={shabad.verseId + language}
+                key={getVerseId(shabad) + language}
                 type={language}
                 {...Translation.getTranslationProps({
                   translationMap,
@@ -211,10 +211,10 @@ export default class Baani extends React.PureComponent {
         <div className="split-view-baani-wrapper">
           {gurbani.map(shabad => (
             <div
-              key={shabad.verseId}
+              key={getVerseId(shabad)}
               className="line"
               ref={node =>
-                highlight === parseInt(shabad.verseId, 10)
+                highlight === parseInt(getVerseId(shabad), 10)
                   ? (this.$highlightedBaaniLine = node)
                   : null
               }
@@ -222,7 +222,7 @@ export default class Baani extends React.PureComponent {
               <BaaniLine
                 text={shabad.verse}
                 unicode={unicode}
-                shouldHighlight={highlight === parseInt(shabad.verseId, 10)}
+                shouldHighlight={highlight === parseInt(getVerseId(shabad), 10)}
                 larivaar={larivaar}
                 larivaarAssist={larivaarAssist}
                 fontSize={fontSize}
@@ -241,7 +241,7 @@ export default class Baani extends React.PureComponent {
         {transliterationLanguages.map(language => (
           <div key={language} className="split-view-baani-wrapper">
             {gurbani.map(shabad => (
-              <Transliteration key={shabad.verseId}>
+              <Transliteration key={getVerseId(shabad)}>
                 {transliterationMap[language](shabad)}
               </Transliteration>
             ))}
@@ -251,7 +251,7 @@ export default class Baani extends React.PureComponent {
           <div key={language} className="split-view-baani-wrapper">
             {gurbani.map(shabad => (
               <Translation
-                key={shabad.verseId}
+                key={getVerseId(shabad)}
                 type={language}
                 {...Translation.getTranslationProps({
                   translationMap,
