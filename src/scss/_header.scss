@@ -226,7 +226,7 @@
 
   .keyboard-row-set {
     display: inline-block;
-    width: 50%;
+    width: 100%;
   }
 
   .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1),
@@ -245,7 +245,7 @@
     outline: none;
     position: relative;
     text-align: center;
-    width: 20%;
+    width: 10%;
 
     .dark-mode & {
       color: $sttm-grey;
