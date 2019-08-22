@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES } from '../constants';
 import { Link } from 'react-router-dom';
 import GurmukhiKeyboard from './GurmukhiKeyboard';
+import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
 import { toSearchURL, getQueryParams } from '../util';
 import CrossIcon from './Icons/Times';
@@ -155,7 +156,7 @@ export default class Header extends React.PureComponent {
                                 <SearchIcon />
                               </button>
 
-                              <GurmukhiKeyboard
+                              <EnhancedGurmukhiKeyboard
                                 value={query}
                                 active={displayGurmukhiKeyboard}
                                 onKeyClick={newValue => setQueryAs(newValue)()}
