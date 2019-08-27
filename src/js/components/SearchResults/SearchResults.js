@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SearchResult from './Result';
+import { getVerseId } from '@/util/api/shabad';
 
 export default class SearchResults extends React.PureComponent {
   static propTypes = {
@@ -25,7 +26,7 @@ export default class SearchResults extends React.PureComponent {
       <ul className="search-results display">
         {shabads.map(shabad => {
           return (
-            <SearchResult key={shabad.shabadId} shabad={shabad} {...props} />
+            <SearchResult key={getVerseId(shabad)} shabad={shabad} {...props} />
           );
         })}
       </ul>

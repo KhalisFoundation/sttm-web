@@ -224,7 +224,7 @@ export const toSearchURL = ({
 /**
  *
  * @param {object} options
- * @param {{ shabadid: string | number, id?: string | number }} options.shabad
+ * @param {{ shabadId: string | number, id?: string | number }} options.shabad
  * @param {string} [options.q]
  * @param {string} [options.type]
  * @param {string} [options.source]
@@ -249,35 +249,6 @@ export const toAngURL = ({ ang, source, highlight }) =>
     source,
     highlight,
   })}`;
-
-/**
- * @sttm/banidb API v2 to v1 transformer
- */
-
-export const versesToGurbani_old = verses =>
-  verses.map(({ verse, ...v }, i) => ({
-    shabad: {
-      ...v,
-      gurbani: {
-        ...verse,
-        ...verse.verse,
-      },
-      id: v.lineNo || '' + i,
-      translation: {
-        english: {
-          ssk: verse.translation.en.bdb,
-        },
-        spanish: verse.translation.es.sn,
-        punjabi: {
-          bms: {
-            gurmukhi: verse.translation.pu.ss.gurmukhi,
-            unicode: verse.translation.pu.ss.unicode,
-          },
-        },
-      },
-      transliteration: verse.transliteration.english,
-    },
-  }));
 
 export const versesToGurbani = verses =>
   verses.map(({ verse, ...v }) => ({
@@ -342,7 +313,7 @@ export const getHighlightIndices = (baani, query, type) => {
  * @property {{ source: { id: string }}} info
  */
 export const shouldSaveAng = ({ type, info }) =>
-  type === 'ang' && info.source.id === 'G';
+  type === 'ang' && info.source.sourceId === 'G';
 
 /**
  * Previously read ang
@@ -362,7 +333,7 @@ export const saveAng = ang =>
  * Generates link based on type and source
  * @param {object} data
  * @property {string} type
- * @property {{ source: { id: string }}} info
+ * @property {{ source: { sourceId: string }}} info
  */
 export function toNavURL({ type, info }) {
   switch (type) {
@@ -371,7 +342,7 @@ export function toNavURL({ type, info }) {
     case 'shabad':
       return 'shabad?id=';
     case 'ang':
-      return `ang?source=${info.source.id}&ang=`;
+      return `ang?source=${info.source.sourceId}&ang=`;
   }
 }
 
@@ -409,11 +380,15 @@ export const dateMath = {
   },
   isBefore: (date1, date2) => new Date(date1) < new Date(date2),
   isAfter: (date1, date2) => new Date(date1) > new Date(date2),
-  expand: date => {
+  expand: (date, year=true) => {
     const inDate = new Date(date);
-    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+    let options;
+    year ?
+    options = { year: 'numeric', month: 'short', day: 'numeric' } :
+    options = { month: 'short', day: 'numeric' };
     return inDate.toLocaleDateString('en', options);
   },
+  isFuture: date => dateMath.isBefore(new Date(), date),
 };
 
 export const getHukamnama = data => {
@@ -435,10 +410,13 @@ export const getHukamnama = data => {
     prevDate = undefined;
   }
 
-  //TODO: After API is updated, check if it's latest hukamnama and
-  //      set nextDate to undefined
+  //TODO: After API is updated, check if it's latest hukamnama from API
 
-  const nextDate = dateMath.algebra(hukamnamaDate, '+', 1);
+  let nextDate = dateMath.algebra(hukamnamaDate, '+', 1);
+
+  if (dateMath.isFuture(nextDate)) {
+    nextDate = undefined;
+  }
 
   shabad.nav = {
     previous: prevDate,
