@@ -9,12 +9,13 @@
 
   .top-bar-title {
     float: none;
+    text-align: center;
+    width: 100% !important;
 
     a {
-      background-image: url(/assets/images/sttm_logo.png) !important;
-      background-position: center !important;
-      background-repeat: no-repeat !important;
-      background-size: contain !important;
+      content: url(/assets/images/sttm_logo.png);
+      height: 54px !important;
+      width: auto !important;
     }
   }
 
