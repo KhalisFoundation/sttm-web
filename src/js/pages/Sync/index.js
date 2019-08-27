@@ -81,7 +81,7 @@ export default class Sync extends React.PureComponent {
   componentWillUnmount() {
     this._mounted = false;
     if (this.state.connected && this._socket) {
-      this._socket.disconnect();
+      //this._socket.disconnect();
     }
     window.removeEventListener('beforeunload', this._alertOnExit);
   }
