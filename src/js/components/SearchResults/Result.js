@@ -122,13 +122,13 @@ export default class SearchResult extends React.PureComponent {
           <div className="meta flex wrap">
             {presentationalSource && <a href="#">{presentationalSource}</a>}
 
-            <a href="#">{getWriter['english'](shabad)}</a>
+            <a href="#">{getWriter(shabad)['english']}</a>
 
-            {getRaag['english'](shabad) === 'No Raag' ||
-            getRaag['english'](shabad) === null ? (
+            {getRaag(shabad)['english'] === 'No Raag' ||
+            getRaag(shabad)['english'] === null ? (
               ''
             ) : (
-              <a href="#">{getRaag['english'](shabad)}</a>
+              <a href="#">{getRaag(shabad)['english']}</a>
             )}
           </div>
         </li>

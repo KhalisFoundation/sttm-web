@@ -27,14 +27,14 @@ export const transliterationMap = {
   english: shabad => shabad.transliteration.english,
 };
 
-export const getRaag = {
-  english: shabad => shabad.raag.english,
-  gurmukhi: shabad => shabad.raag.gurmukhi,
-  unicode: shabad => shabad.raag.unicode,
-};
+export const getRaag = (shabad) => ({
+  english: shabad.raag.english,
+  gurmukhi: shabad.raag.gurmukhi,
+  unicode: shabad.raag.unicode,
+});
 
-export const getWriter = {
-  english: shabad => shabad.writer.english,
-  gurmukhi: shabad => shabad.writer.gurmukhi,
-  unicode: shabad => shabad.writer.unicode,
-};
+export const getWriter = (shabad) => ({
+  english: shabad.writer.english,
+  gurmukhi: shabad.writer.gurmukhi,
+  unicode: shabad.writer.unicode,
+});
