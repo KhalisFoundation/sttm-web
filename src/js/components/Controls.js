@@ -48,22 +48,27 @@ class Controls extends React.PureComponent {
       }
 
       const currentScroll = this.$wrapper.offsetTop;
+      const { showDisplayOptions, showFontOptions } = this.props;
+      this.setState(prevState => {
+        const { showControls, lastScrollPos } = prevState;
 
-      if(this.state.lastScrollPos > currentScroll){
-        this.setState({lastScrollPos: currentScroll});
-
-        if (!this.state.showControls) {
-          this.setState({showControls: true});
+        if(lastScrollPos > currentScroll) {
+          return {
+            lastScrollPos: currentScroll,
+            showControls: !showControls
+            ? true
+            : showControls
+          };
         }
-      } else if( this.state.lastScrollPos < currentScroll) {
-        this.setState({lastScrollPos: currentScroll});
-
-        if (this.state.showControls &&
-           !this.props.showDisplayOptions &&
-           !this.props.showFontOptions) {
-          this.setState({showControls: false});
-        }
-      }
+        return {
+          lastScrollPos: currentScroll,
+          showControls: showControls &&
+          !showDisplayOptions &&
+          !showFontOptions ?
+          false :
+          showControls
+        };
+      });
     } else {
       if (this.mounted && this.state.showBorder === true) {
         this.setState({ showBorder: false });
