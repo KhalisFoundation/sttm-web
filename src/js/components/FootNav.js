@@ -51,7 +51,7 @@ class FootNav extends React.PureComponent {
               {type === 'hukamnama' ? (
                 <Hour24 direction='Next' />
               ) : (
-                <Chevron direction={Chevron.DIRECTIONS.Right} />
+                <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
               )}
             </a>
           </div>
