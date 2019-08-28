@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng } from '../util';
+import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng, dateMath } from '../util';
 import Chevron from './Icons/Chevron';
+import Hour24 from './Icons/Hour24';
 import { withRouter } from 'react-router-dom';
 
 /**
@@ -68,13 +69,24 @@ class Meta extends React.PureComponent {
         {isFalsy(nav.previous) === false ? (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              {type === 'hukamnama' ? (
+                <div className='hukamnama-nav-icon'>
+                  <Hour24 direction='previous' />
+                  <span>{dateMath.expand(nav.previous, false)}</span>
+                </div>
+              ) : (
+                <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              )}
             </Link>
           </div>
         ) : (
           <div className="shabad-nav left disabled-nav">
             <a>
-              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              {type === 'hukamnama' ? (
+                <Hour24 direction='previous' />
+              ) : (
+                <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              )}
             </a>
           </div>
         )}
@@ -138,13 +150,24 @@ class Meta extends React.PureComponent {
         {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
             <a role="button" aria-label="next" onClick={this.handleSaveAng}>
-              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              {type === 'hukamnama' ? (
+                <div className='hukamnama-nav-icon'>
+                  <Hour24 direction='next' />
+                  <span>{dateMath.expand(nav.next, false)}</span>
+                </div>
+              ) : (
+                <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              )}
             </a>
           </div>
         ) : (
           <div className="shabad-nav right disabled-nav">
             <a>
-              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              {type === 'hukamnama' ? (
+                <Hour24 direction='next' />
+              ) : (
+                <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              )}
             </a>
           </div>
         )}
