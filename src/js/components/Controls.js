@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 import ShabadControls from './ShabadControls';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
@@ -25,7 +26,7 @@ export const supportedMedia = _s;
 class Controls extends React.PureComponent {
   state = {
     showBorder: false,
-    lastScrollPos:0,
+    lastScrollPos: 0,
     showControls: true
   };
 
@@ -52,21 +53,21 @@ class Controls extends React.PureComponent {
       this.setState(prevState => {
         const { showControls, lastScrollPos } = prevState;
 
-        if(lastScrollPos > currentScroll) {
+        if (lastScrollPos > currentScroll) {
           return {
             lastScrollPos: currentScroll,
             showControls: !showControls
-            ? true
-            : showControls
+              ? true
+              : showControls
           };
         }
         return {
           lastScrollPos: currentScroll,
           showControls: showControls &&
-          !showDisplayOptions &&
-          !showFontOptions ?
-          false :
-          showControls
+            !showDisplayOptions &&
+            !showFontOptions ?
+            false :
+            showControls
         };
       });
     } else {
@@ -79,10 +80,17 @@ class Controls extends React.PureComponent {
   setRef = node => (this.$wrapper = node);
 
   render() {
+    const { showBorder, showControls } = this.state;
+    const classNames = cx({
+      'no-select': true,
+      'with-border': showBorder,
+      'show-controls': showControls,
+      'hide-controls': !showControls,
+    });
     return (
       <div
         id="controls-wrapper"
-        className={`no-select ${this.state.showBorder ? 'with-border' : ''} ${this.state.showControls ? 'show-controls' : 'hide-controls'}`}
+        className={classNames}
         ref={this.setRef}
       >
         <ShareButtons {...this.props} />
