@@ -102,7 +102,7 @@
     "classnames": "^2.2.6",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",
-    "esm": "^3.0.84",
+    "esm": "^3.1.0",
     "express": "^4.16.4",
     "lodash.throttle": "^4.1.1",
     "marinate": "^0.1.5",
