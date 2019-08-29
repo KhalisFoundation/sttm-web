@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ArrowIcon from './Icons/Arrow';
 
-const ButtonList = ({ onButtonClick, buttons = [] }) =>
+const ButtonList = ({ query, onButtonClick, buttons = [] }) =>
   buttons.map((button, i) => (
     <button key={i} data-value={button} type="button" onClick={onButtonClick}>
-      {Object.keys(matraAkhar).includes(button) ? matraAkhar[button] : button}
+      {Object.keys(defaultMatraValue).includes(button) ? matraAkhar(button, query) : button}
     </button>
   ));
 
@@ -17,19 +17,19 @@ const defaultMatraValue = {
   u: 'au',
   U: 'aU',
   y: 'ey',
-  Y: 'Ay',
+  Y: 'AY',
   o: 'Ao',
   O: 'AO',
 };
 
-const matraAkhar = matra => {
-  const inputValue = document.querySelector("#search").value;
-  const lastChar = inputValue[inputValue.length - 1];
-  if (Object.keys(defaultMatraValue).includes(lastChar)) {
-    return defaultMatraValue[matra];
+const matraAkhar = (matra, query) => {
+  const lastChar = query[query.length - 1];
+  const matraValue = defaultMatraValue[matra];
+  if (query.length) {
+    const notMatraRegex = new RegExp("[^"+matra+"]", "g");
+    return matraValue.replace(notMatraRegex, lastChar);
   } else {
-    const defaultVal = defaultMatraValue[matra];
-    return defaultVal.replace
+    return defaultMatraValue[matra];
   }
 }
 
@@ -127,6 +127,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
                     <ButtonList
                       onButtonClick={this.handleClick}
                       buttons={chars}
+                      query={this.props.value}
                     />
                   </div>
                 </div>
