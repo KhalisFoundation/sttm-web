@@ -26,7 +26,7 @@ const matraAkhar = (matra, query) => {
   const lastChar = query[query.length - 1];
   const matraValue = defaultMatraValue[matra];
   if (query.length) {
-    const notMatraRegex = new RegExp("[^"+matra+"]", "g");
+    const notMatraRegex = new RegExp("[^" + matra + "]", "g");
     return matraValue.replace(notMatraRegex, lastChar);
   } else {
     return defaultMatraValue[matra];
@@ -43,7 +43,7 @@ const keyboardGrid = [
   ],
   [
     [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]],
-    [['N', 'W',  '~', '˜', '´', 'Í', 'Ï']],
+    [['N', 'W', '~', '˜', '´', 'Í', 'Ï']],
     [['ç', 'E', '^', '\u00a0', '\u00a0']],
   ],
 ];
@@ -110,31 +110,31 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
       <div
         className={`gurmukhi-keyboard gurbani-font ${
           this.props.active ? 'active' : ''
-        }`}
+          }`}
         onClick={this.click}
       >
-      {keyboardGrid.map(
-        (rows, index) =>
+        {keyboardGrid.map(
+          (rows, index) =>
             index + 1 === this.state.page && (
               <div
                 className="page"
                 key={index}
                 id={`gurmukhi-keyboard-page-${index + 1}`}
               >
-              {rows.map( (chars, rowIndex) => (
-                <div key={`${index}-${rowIndex}`} className="keyboard-row">
-                  <div className="keyboard-row-set">
-                    <ButtonList
-                      onButtonClick={this.handleClick}
-                      buttons={chars}
-                      query={this.props.value}
-                    />
+                {rows.map((chars, rowIndex) => (
+                  <div key={`${index}-${rowIndex}`} className="keyboard-row">
+                    <div className="keyboard-row-set">
+                      <ButtonList
+                        onButtonClick={this.handleClick}
+                        buttons={chars}
+                        query={this.props.value}
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
               </div>
             )
-      )}
+        )}
       </div>
     );
   }
