@@ -11,6 +11,13 @@ export const SEARCH_TYPES = {
   ANG: 5,
 };
 
+export const BANI_LENGTH_COLS = {
+  short: 'existsSGPC',
+  medium: 'existsMedium',
+  long: 'existsTaksal',
+  extralong: 'existsBuddhaDal',
+};
+
 export const TYPES = [..._TYPES, 'Ang'];
 
 export const SHORT_DOMAIN = 'sttm.co';

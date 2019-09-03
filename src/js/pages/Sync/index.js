@@ -52,8 +52,8 @@ export default class Sync extends React.PureComponent {
           {connected ? (
             <Viewer {...this.state} />
           ) : (
-            <Sync.Form onSubmit={this.handleSubmit} error={error} />
-          )}
+              <Sync.Form onSubmit={this.handleSubmit} error={error} />
+            )}
         </div>
       </div>
     );

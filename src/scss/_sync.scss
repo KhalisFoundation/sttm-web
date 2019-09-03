@@ -41,3 +41,53 @@
     padding: 0 1rem;
   }
 }
+
+.sync-controls {
+  align-items: center;
+  background-color: $sttm-dark-blue;
+  border-radius: 16px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 1rem 2rem 1rem 3rem;
+  text-align: center;
+
+  > div {
+    flex-grow: 1;
+    padding: 10px;
+  }
+
+  > .sync-id {
+    background-color: $sttm-blue;
+    border-bottom-left-radius: inherit;
+    border-top-left-radius: inherit;
+
+    > p {
+      font-size: 12px;
+      margin: 0;
+
+      &.sync-id {
+        color: $sttm-orange;
+        font-size: 32px;
+      }
+    }
+  }
+
+  > .exit-button {
+    > button {
+      background-color: $sttm-orange;
+      border-radius: 8px;
+      font-size: 32px;
+      padding: 12px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+@media screen and (max-width: 46em) {
+  .sync-controls {
+    margin: 1rem;
+  }
+}

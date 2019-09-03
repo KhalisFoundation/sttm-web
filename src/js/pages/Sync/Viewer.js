@@ -35,18 +35,18 @@ export default class Viewer extends React.PureComponent {
       .then(r => r.json())
       .then(res => this.setState({ response: res }));
 
-  
+
   _fetchBani = id =>
     Promise.resolve(this.setState({ response: null }))
       .then(() => fetch(`${BANIS_API_URL}/${id}`))
       .then(r => r.json())
-      .then(res => this.setState({ res }));
+      .then(res => this.setState({ response: res }));
 
   fetch = data => {
     const { type } = data;
-    if ( type === 'bani') {
+    if (type === 'bani') {
       return this._fetchBani(data.id);
-    } else if ( type === 'shabad' ) {
+    } else if (type === 'shabad') {
       return this._fetchShabad(data.id);
     }
   }
@@ -75,39 +75,41 @@ export default class Viewer extends React.PureComponent {
       return <h4>{TEXTS.SYNC_CONNECTED(namespaceString)}</h4>;
     }
 
-    if(response){
-      console.log(response);
-      console.log('data', data);
+    if (response) {
       return (
         <div className='sync-viewer'>
-        <div className='sync-controls'>
-          <div className='sync-id'>
-            <p>Sync Mode</p>
-            <p className='sync-id'>{namespaceString}</p>
+          <div className='sync-controls'>
+            <div className='sync-id'>
+              <p>Sync Mode</p>
+              <p className='sync-id'>{namespaceString}</p>
+            </div>
+            <div className='full-screen'>
+              <label htmlFor='fullscreen-control'>Full screen</label>
+              <input type='checkbox' id='fullscreen-control' />
+            </div>
+            <div className='exit-button'>
+              <button>Exit</button>
+            </div>
           </div>
-          <div className='full-screen'>
-            <label htmlFor='fullscreen-control'>Full screen</label>
-            <input type='checkbox' id='fullscreen-control'/>
-          </div>
-          <div className='exit-button'>
-            <button>Exit</button>
-          </div>
-        </div>
-        { data.type === 'bani' ? (
-          <ShabadContent
-            type="sync"
-            highlight={data.highlight}
-            gurbani={versesToGurbani(response.verses.filter(v => v.mangalPosition !== 'above'))}
-            info={ response.baniInfo }
-          />
-        ) : (
-          <ShabadContent
-            type="sync"
-            highlight={ data.highlight }
-            gurbani={ response.verses }
-            info={ response.shabadInfo }
-          />
-        )}
+          {response.baniInfo ? (
+            <ShabadContent
+              type="sync"
+              highlight={data.highlight}
+              gurbani={
+                versesToGurbani(
+                  response.verses.filter(v => v.mangalPosition !== 'above'),
+                  data.baniLength)
+              }
+              info={response.baniInfo}
+            />
+          ) : (
+              <ShabadContent
+                type="sync"
+                highlight={data.highlight}
+                gurbani={response.verses}
+                info={response.shabadInfo}
+              />
+            )}
         </div>
       );
     }

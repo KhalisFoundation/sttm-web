@@ -306,49 +306,6 @@
   width: 100%;
 }
 
-.sync-controls {
-  align-items: center;
-  background-color: $sttm-dark-blue;
-  border-radius: 15px;
-  color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 1rem 2rem 1rem 3rem;
-  text-align: center;
-
-  > div {
-    flex-grow: 1;
-    margin-right: 20px;
-    padding: 10px;
-  }
-
-  > .sync-id {
-    background-color: $sttm-blue;
-    border-bottom-left-radius: inherit;
-    border-top-left-radius: inherit;
-
-    > p {
-      font-size: 12px;
-      margin: 0;
-
-      &.sync-id {
-        color: $sttm-orange;
-        font-size: 32px;
-      }
-    }
-  }
-
-  > .exit-button {
-    > button {
-      background-color: $sttm-orange;
-      font-size: 32px;
-      padding: 12px;
-      text-transform: uppercase;
-    }
-  }
-}
-
 @media screen and (max-width: 55.99em) {
   .top-bar-title {
     float: none;
