@@ -50,13 +50,32 @@ export default class Sync extends React.PureComponent {
         <BreadCrumb links={[{ title: TEXTS.SYNC }]} />
         <div className="wrapper">
           {connected ? (
-            <Viewer {...this.state} />
+            <div className='sync-viewer'>
+              <div className='sync-controls'>
+                <div className='sync-id'>
+                  <p>Sync Mode</p>
+                  <p className='sync-id'>{this.state.namespaceString}</p>
+                </div>
+                <div className='full-screen'>
+                  <label htmlFor='fullscreen-control'>Full screen</label>
+                  <input type='checkbox' id='fullscreen-control' />
+                </div>
+                <div className='exit-button'>
+                  <button onClick={this.stopSync}>Exit</button>
+                </div>
+              </div>
+              <Viewer {...this.state} />
+            </div>
           ) : (
               <Sync.Form onSubmit={this.handleSubmit} error={error} />
             )}
         </div>
       </div>
     );
+  }
+
+  stopSync = () => {
+    this.setState({ connected: false });
   }
 
   componentDidMount() {

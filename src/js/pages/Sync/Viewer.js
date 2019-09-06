@@ -77,40 +77,25 @@ export default class Viewer extends React.PureComponent {
 
     if (response) {
       return (
-        <div className='sync-viewer'>
-          <div className='sync-controls'>
-            <div className='sync-id'>
-              <p>Sync Mode</p>
-              <p className='sync-id'>{namespaceString}</p>
-            </div>
-            <div className='full-screen'>
-              <label htmlFor='fullscreen-control'>Full screen</label>
-              <input type='checkbox' id='fullscreen-control' />
-            </div>
-            <div className='exit-button'>
-              <button>Exit</button>
-            </div>
-          </div>
-          {response.baniInfo ? (
+        response.baniInfo ? (
+          <ShabadContent
+            type="sync"
+            highlight={data.highlight}
+            gurbani={
+              versesToGurbani(
+                response.verses.filter(v => v.mangalPosition !== 'above'),
+                data.baniLength)
+            }
+            info={response.baniInfo}
+          />
+        ) : (
             <ShabadContent
               type="sync"
               highlight={data.highlight}
-              gurbani={
-                versesToGurbani(
-                  response.verses.filter(v => v.mangalPosition !== 'above'),
-                  data.baniLength)
-              }
-              info={response.baniInfo}
+              gurbani={response.verses}
+              info={response.shabadInfo}
             />
-          ) : (
-              <ShabadContent
-                type="sync"
-                highlight={data.highlight}
-                gurbani={response.verses}
-                info={response.shabadInfo}
-              />
-            )}
-        </div>
+          )
       );
     }
 
