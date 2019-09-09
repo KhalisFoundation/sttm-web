@@ -1,6 +1,6 @@
-import { SOURCES, TYPES as _TYPES } from '@sttm/banidb';
+import { SOURCES, SOURCES_WITH_ANG, TYPES as _TYPES } from '@sttm/banidb';
 
-export { SOURCES };
+export { SOURCES, SOURCES_WITH_ANG };
 
 export const SEARCH_TYPES = {
   FIRST_LETTERS: 0,
