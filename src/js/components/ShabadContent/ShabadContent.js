@@ -114,8 +114,8 @@ class Shabad extends React.PureComponent {
               ['shabad', 'hukamnama', 'ang'].includes(type)
                 ? supportedMedia
                 : supportedMedia.filter(
-                    m => ['embed', 'copyAll', 'copy'].includes(m) === false
-                  )
+                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
+                )
             }
             onCopyAllClick={handleCopyAll}
             onEmbedClick={handleEmbed}
@@ -201,18 +201,18 @@ class Shabad extends React.PureComponent {
       `data-sttm-width="500"`,
       type === 'ang'
         ? `data-sttm-ang="${getAng(info.source)}" data-sttm-source="${
-            getSourceId(info)
-          }"`
+        getSourceId(info)
+        }"`
         : `data-sttm-id="${getShabadId(info)}"`,
     ].join(' ');
 
     Promise.resolve(
       `<div ${attrs}><a href="https://sttm.co/${
-        type === 'ang'
-          ? 'ang?ang=' + getAng(info.source) + '&source=' + getSourceId(info)
-          : 'shabad?id=' + getShabadId(info)
+      type === 'ang'
+        ? 'ang?ang=' + getAng(info.source) + '&source=' + getSourceId(info)
+        : 'shabad?id=' + getShabadId(info)
       }">SikhiToTheMax</a></div><script async src="${
-        window.location.origin
+      window.location.origin
       }/embed.js"></script>`
     )
       .then(copyToClipboard)
