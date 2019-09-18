@@ -75,6 +75,17 @@
     }
   }
 
+  > .full-screen {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    label {
+      height: 30px;
+      width: 60px;
+    }
+  }
+
   > .exit-button {
     > button {
       background-color: $sttm-orange;
@@ -83,6 +94,48 @@
       padding: 12px;
       text-transform: uppercase;
     }
+  }
+}
+
+/* Styles for a toggle switch */
+.toggle-label {
+  background: $sttm-grey;
+  border-radius: 100px;
+  display: block;
+  position: relative;
+  text-indent: -9999px;
+
+  &::after {
+    background: #fff;
+    border-radius: 50%;
+    content: '';
+    height: 90%;
+    left: 2.5%;
+    position: absolute;
+    top: 5%;
+    transition: 0.2s;
+    width: 45%;
+  }
+
+  &:active {
+    &::after {
+      width: 65%;
+    }
+  }
+}
+
+.toggle-checkbox {
+  height: 0;
+  visibility: hidden;
+  width: 0;
+
+  &:checked + .toggle-label {
+    background: $sttm-orange;
+  }
+
+  &:checked + .toggle-label::after {
+    left: 97.5%;
+    transform: translateX(-100%);
   }
 }
 
