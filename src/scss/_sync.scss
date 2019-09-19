@@ -41,3 +41,106 @@
     padding: 0 1rem;
   }
 }
+
+.sync-controls {
+  align-items: center;
+  background-color: $sttm-dark-blue;
+  border-radius: 16px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 1rem 2rem 1rem 3rem;
+  text-align: center;
+
+  > div {
+    flex-grow: 1;
+    padding: 10px;
+  }
+
+  > .sync-id {
+    background-color: $sttm-blue;
+    border-bottom-left-radius: inherit;
+    border-top-left-radius: inherit;
+
+    > p {
+      font-size: 12px;
+      margin: 0;
+
+      &.sync-id {
+        color: $sttm-orange;
+        font-size: 32px;
+      }
+    }
+  }
+
+  > .full-screen {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    label {
+      height: 30px;
+      width: 60px;
+    }
+  }
+
+  > .exit-button {
+    > button {
+      background-color: $sttm-orange;
+      border-radius: 8px;
+      font-size: 32px;
+      padding: 12px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+/* Styles for a toggle switch */
+.toggle-label {
+  background: $sttm-grey;
+  border-radius: 100px;
+  display: block;
+  position: relative;
+  text-indent: -9999px;
+
+  &::after {
+    background: #fff;
+    border-radius: 50%;
+    content: '';
+    height: 90%;
+    left: 2.5%;
+    position: absolute;
+    top: 5%;
+    transition: 0.2s;
+    width: 45%;
+  }
+
+  &:active {
+    &::after {
+      width: 65%;
+    }
+  }
+}
+
+.toggle-checkbox {
+  height: 0;
+  visibility: hidden;
+  width: 0;
+
+  &:checked + .toggle-label {
+    background: $sttm-orange;
+  }
+
+  &:checked + .toggle-label::after {
+    left: 97.5%;
+    transform: translateX(-100%);
+  }
+}
+
+@media screen and (max-width: 46em) {
+  .sync-controls {
+    margin: 1rem;
+  }
+}

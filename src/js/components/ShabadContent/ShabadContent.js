@@ -57,7 +57,7 @@ class Shabad extends React.PureComponent {
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
     highlight: PropTypes.number,
-    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
+    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

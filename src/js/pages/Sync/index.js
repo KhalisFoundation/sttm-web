@@ -50,13 +50,40 @@ export default class Sync extends React.PureComponent {
         <BreadCrumb links={[{ title: TEXTS.SYNC }]} />
         <div className="wrapper">
           {connected ? (
-            <Viewer {...this.state} />
+            <div className='sync-viewer'>
+              <div className='sync-controls'>
+                <div className='sync-id'>
+                  <p>Sync Mode</p>
+                  <p className='sync-id'>{this.state.namespaceString}</p>
+                </div>
+                <div className='full-screen'>
+                  <span>Full screen</span>
+                  <input type='checkbox'
+                    id='fullscreen-control'
+                    className="toggle-checkbox"
+                    onChange={this.fullScreenView} />
+                  <label className="toggle-label" htmlFor='fullscreen-control'></label>
+                </div>
+                <div className='exit-button'>
+                  <button onClick={this.stopSync}>Exit</button>
+                </div>
+              </div>
+              <Viewer {...this.state} />
+            </div>
           ) : (
-            <Sync.Form onSubmit={this.handleSubmit} error={error} />
-          )}
+              <Sync.Form onSubmit={this.handleSubmit} error={error} />
+            )}
         </div>
       </div>
     );
+  }
+
+  fullScreenView = () => {
+    console.log("You changed something");
+  }
+
+  stopSync = () => {
+    this.setState({ connected: false });
   }
 
   componentDidMount() {
@@ -81,7 +108,7 @@ export default class Sync extends React.PureComponent {
   componentWillUnmount() {
     this._mounted = false;
     if (this.state.connected && this._socket) {
-      this._socket.disconnect();
+      //this._socket.disconnect();
     }
     window.removeEventListener('beforeunload', this._alertOnExit);
   }
