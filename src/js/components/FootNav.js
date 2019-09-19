@@ -27,23 +27,23 @@ class FootNav extends React.PureComponent {
               {type === 'hukamnama' ? (
                 <Hour24 direction='previous' />
               ) : (
-                <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-              )}
+                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                )}
               <span>{type === 'hukamnama' ? dateMath.expand(nav.previous, false) : 'Previous'}</span>
             </Link>
           </div>
         ) : (
-          <div className="shabad-nav left disabled-nav">
-            <a>
-              {type === 'hukamnama' ? (
-                <Hour24 direction='previous' />
-              ) : (
-                <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-              )}
-              <span>{type === 'hukamnama' ? '' : 'Previous'}</span>
-            </a>
-          </div>
-        )}
+            <div className="shabad-nav left disabled-nav">
+              <a>
+                {type === 'hukamnama' ? (
+                  <Hour24 direction='previous' />
+                ) : (
+                    <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                  )}
+                <span>{type === 'hukamnama' ? '' : 'Previous'}</span>
+              </a>
+            </div>
+          )}
         {nav.next ? (
           <div className="shabad-nav right">
             <a role="button" aria-label="next" onClick={this.handleSaveAng}>
@@ -51,22 +51,22 @@ class FootNav extends React.PureComponent {
               {type === 'hukamnama' ? (
                 <Hour24 direction='Next' />
               ) : (
-                <Chevron direction={Chevron.DIRECTIONS.Right} />
-              )}
+                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                )}
             </a>
           </div>
         ) : (
-          <div className="shabad-nav right disabled-nav">
-            <a>
-              <span>{type === 'hukamnama' ? '' : 'Next'}</span>
-              {type === 'hukamnama' ? (
-                <Hour24 direction='next' />
-              ) : (
-                <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-              )}
-            </a>
-          </div>
-        )}
+            <div className="shabad-nav right disabled-nav">
+              <a>
+                <span>{type === 'hukamnama' ? '' : 'Next'}</span>
+                {type === 'hukamnama' ? (
+                  <Hour24 direction='next' />
+                ) : (
+                    <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                  )}
+              </a>
+            </div>
+          )}
       </div>
     );
   }
