@@ -56,14 +56,14 @@ export default class Sync extends React.PureComponent {
                   <p>Sync Mode</p>
                   <p className='sync-id'>{this.state.namespaceString}</p>
                 </div>
-                <div className='full-screen'>
+                {/*<div className='full-screen'>
                   <span>Full screen</span>
                   <input type='checkbox'
                     id='fullscreen-control'
                     className="toggle-checkbox"
                     onChange={this.fullScreenView} />
                   <label className="toggle-label" htmlFor='fullscreen-control'></label>
-                </div>
+                </div>*/}
                 <div className='exit-button'>
                   <button onClick={this.stopSync}>Exit</button>
                 </div>
@@ -127,7 +127,7 @@ export default class Sync extends React.PureComponent {
         className="sync-form"
         onSubmit={e => {
           e.preventDefault();
-          onSubmit(e.target.code.value, e);
+          onSubmit(e.target.code.value.toUpperCase(), e);
         }}
       >
         <input
@@ -136,6 +136,7 @@ export default class Sync extends React.PureComponent {
           name="code"
           type="text"
           placeholder="Enter code. Eg. ABC-XYZ"
+          pattern="[A-Z,a-z]{3}-[A-Z,a-z]{3}"
         />
         <button className="sync-form--button">Connect</button>
       </form>
@@ -157,11 +158,11 @@ export default class Sync extends React.PureComponent {
           const { namespaceString } = data;
           this._setState({ connected: true, namespaceString });
 
-          showToast(
+          /*showToast(
             TEXTS.SYNC_NOTIFICATION(code),
             Infinity,
             'toast-notification-green'
-          );
+          );*/
 
           if (window.io !== undefined) {
             this._socket = window.io(`${SYNC_API_URL}${namespaceString}`);

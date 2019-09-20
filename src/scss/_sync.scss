@@ -6,6 +6,10 @@
   justify-content: center;
   text-align: center;
 
+  input {
+    text-transform: uppercase;
+  }
+
   .dark-mode & {
     color: $sttm-white;
   }
