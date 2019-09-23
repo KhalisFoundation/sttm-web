@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ShabadContent from '../../components/ShabadContent';
 import { buildApiUrl } from '@sttm/banidb';
-import { TEXTS } from '../../constants';
+import { TEXTS, SYNC_TYPES } from '../../constants';
 import { versesToGurbani } from '../../util';
 
 /**
@@ -84,7 +84,7 @@ export default class Viewer extends React.PureComponent {
     }
 
     if (response) {
-      if (type === "bani") {
+      if (type === SYNC_TYPES.BANI) {
         return (
           <ShabadContent
             type="sync"
@@ -97,7 +97,7 @@ export default class Viewer extends React.PureComponent {
             info={response.baniInfo}
           />
         )
-      } else if (type === "shabad") {
+      } else if (type === SYNC_TYPES.SHABAD) {
         return (
           <ShabadContent
             type="sync"
@@ -106,7 +106,7 @@ export default class Viewer extends React.PureComponent {
             info={response.shabadInfo}
           />
         )
-      } else if (type === "ceremony") {
+      } else if (type === SYNC_TYPES.CEREMONY) {
         return (
           <h4>{response}</h4>
         )

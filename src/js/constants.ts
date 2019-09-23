@@ -18,6 +18,12 @@ export const BANI_LENGTH_COLS = {
   extralong: 'existsBuddhaDal',
 };
 
+export const SYNC_TYPES = {
+  SHABAD: "shabad",
+  CEREMONY: "ceremony",
+  BANI: "bani"
+};
+
 export const TYPES = [..._TYPES, 'Ang'];
 
 export const SHORT_DOMAIN = 'sttm.co';
