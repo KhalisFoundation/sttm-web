@@ -1,6 +1,6 @@
-import { SOURCES, TYPES as _TYPES } from '@sttm/banidb';
+import { SOURCES, SOURCES_WITH_ANG, TYPES as _TYPES } from '@sttm/banidb';
 
-export { SOURCES };
+export { SOURCES, SOURCES_WITH_ANG };
 
 export const SEARCH_TYPES = {
   FIRST_LETTERS: 0,
@@ -9,6 +9,19 @@ export const SEARCH_TYPES = {
   ENGLISH_WORD: 3,
   ROMANIZED: 4,
   ANG: 5,
+};
+
+export const BANI_LENGTH_COLS = {
+  short: 'existsSGPC',
+  medium: 'existsMedium',
+  long: 'existsTaksal',
+  extralong: 'existsBuddhaDal',
+};
+
+export const SYNC_TYPES = {
+  SHABAD: "shabad",
+  CEREMONY: "ceremony",
+  BANI: "bani"
 };
 
 export const TYPES = [..._TYPES, 'Ang'];
