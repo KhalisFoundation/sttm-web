@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ShabadContent from '../../components/ShabadContent';
 import { buildApiUrl } from '@sttm/banidb';
-import { TEXTS } from '../../constants';
+import { TEXTS, SYNC_TYPES } from '../../constants';
 import { versesToGurbani } from '../../util';
 
 /**
@@ -27,6 +27,7 @@ export default class Viewer extends React.PureComponent {
 
   state = {
     response: null,
+    type: null,
   };
 
   _fetchShabad = id =>
@@ -44,10 +45,13 @@ export default class Viewer extends React.PureComponent {
 
   fetch = data => {
     const { type } = data;
+    this.setState({ type });
     if (type === 'bani') {
       return this._fetchBani(data.id);
     } else if (type === 'shabad') {
       return this._fetchShabad(data.id);
+    } else if (type === 'ceremony') {
+      this.setState({ response: "Ceremonies coming soon." });
     }
   }
 
@@ -59,7 +63,8 @@ export default class Viewer extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.data.id !== this.props.data.id) {
+    if (prevProps.data.id !== this.props.data.id ||
+      prevProps.data.type !== this.props.data.type) {
       this.setState({ response: null });
       this.fetch(this.props.data);
     }
@@ -68,7 +73,7 @@ export default class Viewer extends React.PureComponent {
   render() {
     const {
       props: { namespaceString, data },
-      state: { response },
+      state: { response, type },
     } = this;
 
     console.log("data", data);
@@ -79,8 +84,8 @@ export default class Viewer extends React.PureComponent {
     }
 
     if (response) {
-      return (
-        response.baniInfo ? (
+      if (type === SYNC_TYPES.BANI) {
+        return (
           <ShabadContent
             type="sync"
             highlight={data.highlight}
@@ -91,15 +96,21 @@ export default class Viewer extends React.PureComponent {
             }
             info={response.baniInfo}
           />
-        ) : (
-            <ShabadContent
-              type="sync"
-              highlight={data.highlight}
-              gurbani={response.verses}
-              info={response.shabadInfo}
-            />
-          )
-      );
+        )
+      } else if (type === SYNC_TYPES.SHABAD) {
+        return (
+          <ShabadContent
+            type="sync"
+            highlight={data.highlight}
+            gurbani={response.verses}
+            info={response.shabadInfo}
+          />
+        )
+      } else if (type === SYNC_TYPES.CEREMONY) {
+        return (
+          <h4>{response}</h4>
+        )
+      }
     }
 
     return <div className="spinner" />;
