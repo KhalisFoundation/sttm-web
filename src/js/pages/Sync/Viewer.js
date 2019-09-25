@@ -23,6 +23,7 @@ export default class Viewer extends React.PureComponent {
   static propTypes = {
     namespaceString: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
+    showFullScreen: PropTypes.bool,
   };
 
   state = {
@@ -72,7 +73,7 @@ export default class Viewer extends React.PureComponent {
 
   render() {
     const {
-      props: { namespaceString, data },
+      props: { namespaceString, data, showFullScreen },
       state: { response, type },
     } = this;
 
@@ -95,6 +96,7 @@ export default class Viewer extends React.PureComponent {
                 data.baniLength)
             }
             info={response.baniInfo}
+            showFullScreen={showFullScreen}
           />
         )
       } else if (type === SYNC_TYPES.SHABAD) {
@@ -104,6 +106,7 @@ export default class Viewer extends React.PureComponent {
             highlight={data.highlight}
             gurbani={response.verses}
             info={response.shabadInfo}
+            showFullScreen={showFullScreen}
           />
         )
       } else if (type === SYNC_TYPES.CEREMONY) {

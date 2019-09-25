@@ -24,7 +24,7 @@ export default class Baani extends React.PureComponent {
 
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
-    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
+    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -35,6 +35,7 @@ export default class Baani extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
+    showFullScreen: PropTypes.bool,
   };
 
   getShareLine = shabad => {
@@ -146,6 +147,7 @@ export default class Baani extends React.PureComponent {
       fontFamily,
       highlight,
       centerAlignGurbani,
+      showFullScreen,
     } = this.props;
 
     const disabledActions = ['ang', 'hukamnama'].includes(type)
@@ -202,6 +204,56 @@ export default class Baani extends React.PureComponent {
               onCopyClick={this.onCopyClick(shabad)}
             />
           </div>
+        ))}
+      </div>
+    );
+
+    const fullScreenMarkup = (
+      <div className="mixed-view-baani">
+        {gurbani.map(shabad => (
+          highlight === parseInt(getVerseId(shabad), 10) ?
+            <div
+              key={getVerseId(shabad)}
+              id={`line-${getVerseId(shabad)}`}
+              className="line"
+              onMouseUp={this.showShare}
+              onMouseDown={this.removeSelection}
+            >
+              <BaaniLine
+                text={shabad.verse}
+                unicode={unicode}
+                shouldHighlight={false}
+                larivaar={larivaar}
+                larivaarAssist={larivaarAssist}
+                fontSize={fontSize}
+                fontFamily={fontFamily}
+              />
+              {transliterationLanguages.map(language => (
+                <Transliteration key={getVerseId(shabad) + language}>
+                  {transliterationMap[language](shabad)}
+                </Transliteration>
+              ))}
+
+              {translationLanguages.map(language => (
+                <Translation
+                  key={getVerseId(shabad) + language}
+                  type={language}
+                  {...Translation.getTranslationProps({
+                    translationMap,
+                    language,
+                    shabad,
+                    unicode,
+                  })}
+                />
+              ))}
+
+              <Actions
+                disabledActions={disabledActions}
+                shabad={shabad}
+                onFacebookClick={this.onFacebookClick(shabad)}
+                onCopyClick={this.onCopyClick(shabad)}
+              />
+            </div> : ''
         ))}
       </div>
     );
@@ -269,10 +321,10 @@ export default class Baani extends React.PureComponent {
     return (
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${
-          centerAlignGurbani ? ' center-align' : ''
-        }`}
+          centerAlignGurbani || showFullScreen ? ' center-align' : ''
+          }`}
       >
-        {splitView ? splitViewMarkup : mixedViewMarkup}
+        {showFullScreen ? fullScreenMarkup : splitView ? splitViewMarkup : mixedViewMarkup}
       </div>
     );
   }
