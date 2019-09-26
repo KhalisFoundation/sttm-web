@@ -89,7 +89,7 @@ export default class Viewer extends React.PureComponent {
         return (
           <ShabadContent
             type="sync"
-            highlight={data.highlight}
+            highlight={parseInt(data.highlight)}
             gurbani={
               versesToGurbani(
                 response.verses.filter(v => v.mangalPosition !== 'above'),
@@ -103,7 +103,7 @@ export default class Viewer extends React.PureComponent {
         return (
           <ShabadContent
             type="sync"
-            highlight={data.highlight}
+            highlight={parseInt(data.highlight)}
             gurbani={response.verses}
             info={response.shabadInfo}
             showFullScreen={showFullScreen}

@@ -209,7 +209,7 @@ export default class Baani extends React.PureComponent {
     );
 
     const fullScreenMarkup = (
-      <div className="mixed-view-baani">
+      <div className="full-screen-baani">
         {gurbani.map(shabad => (
           highlight === parseInt(getVerseId(shabad), 10) ?
             <div
