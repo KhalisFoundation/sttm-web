@@ -126,10 +126,10 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <script>
     if ("serviceWorker" in navigator) {
       ${
-        process.env.kill_service_worker
-          ? unregisterServiceWorker
-          : registerServiceWorker
-      }
+  process.env.kill_service_worker
+    ? unregisterServiceWorker
+    : registerServiceWorker
+  }
     }
   </script>
 
