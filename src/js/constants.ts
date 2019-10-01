@@ -104,7 +104,7 @@ export const TEXTS = {
   SYNC_NOTIFICATION: (code: string) =>
     `You're now connected to ${code}. Tap to dismiss.`,
   SYNC_CONNECTED: (code: string) =>
-    `Awesome! You're now connected to the device "${code}" and will start receiving shabads soon! The screen would automatically update now as shabad and the line changes on the desktop.`,
+    `Awesome! You're now connected to the device "${code}" and will start receiving shabads soon! The screen will automatically update now as shabads and lines change on the desktop.`,
   SYNC_DISCONNECT: `Are you sure you want to disconnect now? You can re-connect by entering the same code later.`,
   OFFLINE: `It seems you aren't connected to internet`,
   OFFLINE_DESCRIPTION: `Unfortunately we don't support offline mode fully as of now, and you would need to be connected to use SikhiToTheMax.`,
