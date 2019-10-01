@@ -154,6 +154,46 @@ export default class Baani extends React.PureComponent {
       ? ['tweet']
       : ['openShabad', 'tweet'];
 
+    const getBaniLine = shabad => (
+      <BaaniLine
+        text={shabad.verse}
+        unicode={unicode}
+        shouldHighlight={showFullScreen ? false : highlight === parseInt(getVerseId(shabad), 10)}
+        larivaar={larivaar}
+        larivaarAssist={larivaarAssist}
+        fontSize={fontSize}
+        fontFamily={fontFamily}
+      />
+    );
+
+    const getTransliterations = shabad => transliterationLanguages.map(language => (
+      <Transliteration key={getVerseId(shabad) + language}>
+        {transliterationMap[language](shabad)}
+      </Transliteration>
+    ));
+
+    const getActions = shabad => (
+      <Actions
+        disabledActions={disabledActions}
+        shabad={shabad}
+        onFacebookClick={this.onFacebookClick(shabad)}
+        onCopyClick={this.onCopyClick(shabad)}
+      />
+    );
+
+    const getTranslations = shabad => translationLanguages.map(language => (
+      <Translation
+        key={getVerseId(shabad) + language}
+        type={language}
+        {...Translation.getTranslationProps({
+          translationMap,
+          language,
+          shabad,
+          unicode,
+        })}
+      />
+    ));
+
     const mixedViewMarkup = (
       <div className="mixed-view-baani">
         {gurbani.map(shabad => (
@@ -169,40 +209,10 @@ export default class Baani extends React.PureComponent {
                 : null
             }
           >
-            <BaaniLine
-              text={shabad.verse}
-              unicode={unicode}
-              shouldHighlight={highlight === parseInt(getVerseId(shabad), 10)}
-              larivaar={larivaar}
-              larivaarAssist={larivaarAssist}
-              fontSize={fontSize}
-              fontFamily={fontFamily}
-            />
-            {transliterationLanguages.map(language => (
-              <Transliteration key={getVerseId(shabad) + language}>
-                {transliterationMap[language](shabad)}
-              </Transliteration>
-            ))}
-
-            {translationLanguages.map(language => (
-              <Translation
-                key={getVerseId(shabad) + language}
-                type={language}
-                {...Translation.getTranslationProps({
-                  translationMap,
-                  language,
-                  shabad,
-                  unicode,
-                })}
-              />
-            ))}
-
-            <Actions
-              disabledActions={disabledActions}
-              shabad={shabad}
-              onFacebookClick={this.onFacebookClick(shabad)}
-              onCopyClick={this.onCopyClick(shabad)}
-            />
+            {getBaniLine(shabad)}
+            {getTransliterations(shabad)}
+            {getTranslations(shabad)}
+            {getActions(shabad)}
           </div>
         ))}
       </div>
@@ -219,40 +229,10 @@ export default class Baani extends React.PureComponent {
               onMouseUp={this.showShare}
               onMouseDown={this.removeSelection}
             >
-              <BaaniLine
-                text={shabad.verse}
-                unicode={unicode}
-                shouldHighlight={false}
-                larivaar={larivaar}
-                larivaarAssist={larivaarAssist}
-                fontSize={fontSize}
-                fontFamily={fontFamily}
-              />
-              {transliterationLanguages.map(language => (
-                <Transliteration key={getVerseId(shabad) + language}>
-                  {transliterationMap[language](shabad)}
-                </Transliteration>
-              ))}
-
-              {translationLanguages.map(language => (
-                <Translation
-                  key={getVerseId(shabad) + language}
-                  type={language}
-                  {...Translation.getTranslationProps({
-                    translationMap,
-                    language,
-                    shabad,
-                    unicode,
-                  })}
-                />
-              ))}
-
-              <Actions
-                disabledActions={disabledActions}
-                shabad={shabad}
-                onFacebookClick={this.onFacebookClick(shabad)}
-                onCopyClick={this.onCopyClick(shabad)}
-              />
+              {getBaniLine(shabad)}
+              {getTransliterations(shabad)}
+              {getTranslations(shabad)}
+              {getActions(shabad)}
             </div> : ''
         ))}
       </div>
@@ -271,22 +251,8 @@ export default class Baani extends React.PureComponent {
                   : null
               }
             >
-              <BaaniLine
-                text={shabad.verse}
-                unicode={unicode}
-                shouldHighlight={highlight === parseInt(getVerseId(shabad), 10)}
-                larivaar={larivaar}
-                larivaarAssist={larivaarAssist}
-                fontSize={fontSize}
-                fontFamily={fontFamily}
-              />
-
-              <Actions
-                disabledActions={disabledActions}
-                shabad={shabad}
-                onFacebookClick={this.onFacebookClick(shabad)}
-                onCopyClick={this.onCopyClick(shabad)}
-              />
+              {getBaniLine(shabad)}
+              {getActions(shabad)}
             </div>
           ))}
         </div>
@@ -318,13 +284,23 @@ export default class Baani extends React.PureComponent {
       </div>
     );
 
+    const getMarkup = () => {
+      if (showFullScreen) {
+        return fullScreenMarkup;
+      } else if (splitView) {
+        return splitViewMarkup;
+      } else {
+        return mixedViewMarkup;
+      }
+    }
+
     return (
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${
           centerAlignGurbani || showFullScreen ? ' center-align' : ''
           }`}
       >
-        {showFullScreen ? fullScreenMarkup : splitView ? splitViewMarkup : mixedViewMarkup}
+        {getMarkup()}
       </div>
     );
   }
