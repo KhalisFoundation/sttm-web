@@ -137,9 +137,16 @@ export default class Sync extends React.PureComponent {
           type="text"
           placeholder="Enter code. Eg. ABC-XYZ"
           pattern="[A-Z,a-z]{3}-[A-Z,a-z]{3}"
+          onKeyUp={e => {
+            let typedValue = e.currentTarget.value;
+            if (typedValue.length === 3) {
+              e.currentTarget.value = typedValue + '-';
+            }
+          }}
         />
         <button className="sync-form--button">Connect</button>
       </form>
+
     </React.Fragment>
   );
 
