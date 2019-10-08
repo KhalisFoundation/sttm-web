@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES } from '../constants';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../constants';
 import { Link } from 'react-router-dom';
 import GurmukhiKeyboard from './GurmukhiKeyboard';
 import SearchForm from './SearchForm';
@@ -183,17 +183,32 @@ export default class Header extends React.PureComponent {
                         </option>
                       ))}
                     </select>
-                    <select
-                      name="source"
-                      value={source}
-                      onChange={handleSearchSourceChange}
-                    >
-                      {Object.entries(SOURCES).map(([value, children]) => (
-                        <option key={value} value={value}>
-                          {children}
-                        </option>
+                    {type === SEARCH_TYPES['ANG'] ? (
+                      <select
+                        name="source"
+                        value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
+                        onChange={handleSearchSourceChange}
+                      >
+                      {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
+                          <option key={value} value={value}>
+                            {children}
+                          </option>
                       ))}
-                    </select>
+                      </select>
+                    ) : (
+                      <select
+                        name="source"
+                        value={source}
+                        onChange={handleSearchSourceChange}
+                      >
+                      {Object.entries(SOURCES).map(([value, children]) => (
+                          <option key={value} value={value}>
+                            {children}
+                          </option>
+                      ))}
+                      </select>
+                    )
+                    }
                   </div>
                 )}
               </React.Fragment>
