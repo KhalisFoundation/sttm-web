@@ -5,6 +5,7 @@ import {
   SEARCH_TYPES,
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
   FIRST_HUKAMNAMA_DATE,
+  BANI_LENGTH_COLS,
 } from '../constants';
 
 /**
@@ -250,11 +251,11 @@ export const toAngURL = ({ ang, source, highlight }) =>
     highlight,
   })}`;
 
-export const versesToGurbani = verses =>
+export const versesToGurbani = (verses, baniLength = 'extralong') =>
   verses.map(({ verse, ...v }) => ({
     ...verse,
     ...v,
-  }));
+  })).filter(v => v[BANI_LENGTH_COLS[baniLength]]);
 
 /**
  *
@@ -380,12 +381,12 @@ export const dateMath = {
   },
   isBefore: (date1, date2) => new Date(date1) < new Date(date2),
   isAfter: (date1, date2) => new Date(date1) > new Date(date2),
-  expand: (date, year=true) => {
+  expand: (date, year = true) => {
     const inDate = new Date(date);
     let options;
     year ?
-    options = { year: 'numeric', month: 'short', day: 'numeric' } :
-    options = { month: 'short', day: 'numeric' };
+      options = { year: 'numeric', month: 'short', day: 'numeric' } :
+      options = { month: 'short', day: 'numeric' };
     return inDate.toLocaleDateString('en', options);
   },
   isFuture: date => dateMath.isBefore(new Date(), date),

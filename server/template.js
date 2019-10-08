@@ -91,6 +91,9 @@ export default ({ url, bodyClass, title, description }) => marinate`
         <li>
           <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank" rel="noopener noreferrer">Desktop App</a>
         </li>
+        <li>
+          <a href="https://khalisfoundation.org/donate/" target="_blank" rel="noopener noreferrer">Donate</a>
+        </li>
       </ul>
       <div class="copyright">
         Copyright © 2018 Khalis Foundation
@@ -126,10 +129,10 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <script>
     if ("serviceWorker" in navigator) {
       ${
-        process.env.kill_service_worker
-          ? unregisterServiceWorker
-          : registerServiceWorker
-      }
+  process.env.kill_service_worker
+    ? unregisterServiceWorker
+    : registerServiceWorker
+  }
     }
   </script>
 
