@@ -6,7 +6,7 @@ import Transliteration from './Transliteration';
 import BaaniLine from './BaaniLine';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
-import { copyToClipboard, showToast, shortenURL, makeSelection } from '../util';
+import { copyToClipboard, showToast, shortenURL } from '../util';
 
 import { translationMap, transliterationMap, getVerseId } from '@/util/api/shabad';
 
@@ -112,7 +112,6 @@ export default class Baani extends React.PureComponent {
     }
     const selectedDiv = e.currentTarget;
     if (window.getSelection().toString()) {
-      makeSelection(selectedDiv);
       const shareDiv = selectedDiv.querySelector('.share');
       shareDiv.classList.add('showShare');
     }
@@ -270,7 +269,7 @@ export default class Baani extends React.PureComponent {
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${
           centerAlignGurbani ? ' center-align' : ''
-        }`}
+          }`}
       >
         {splitView ? splitViewMarkup : mixedViewMarkup}
       </div>
