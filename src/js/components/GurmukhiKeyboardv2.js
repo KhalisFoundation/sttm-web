@@ -5,7 +5,7 @@ import ArrowIcon from './Icons/Arrow';
 
 const ButtonList = ({ query, onButtonClick, buttons = [] }) =>
   buttons.map((button, i) => (
-    <button key={i} data-value={button} type="button" onClick={onButtonClick}>
+    <button key={i} data-value={getButtonValue(button, query)} type="button" onClick={onButtonClick}>
       {Object.keys(defaultMatraValue).includes(button) ? matraAkhar(button, query) : button}
     </button>
   ));
@@ -20,31 +20,50 @@ const defaultMatraValue = {
   Y: 'AY',
   o: 'Ao',
   O: 'AO',
+  M: ' M',
+  '`': ' `',
+  R: ' R',
+  H: ' H'
 };
+
+let matras = Object.keys(defaultMatraValue);
+matras.push('a');
+
+const getButtonValue = (button, query) => {
+  const labelVal = Object.keys(defaultMatraValue).includes(button) ?
+    matraAkhar(button, query) : button;
+  const lastChar = query[query.length - 1];
+  if (lastChar && lastChar.includes(labelVal)) {
+    return button;
+  } else {
+    return labelVal;
+  }
+}
 
 const matraAkhar = (matra, query) => {
   const lastChar = query[query.length - 1];
   const matraValue = defaultMatraValue[matra];
-  if (query.length) {
-    const notMatraRegex = new RegExp("[^" + matra + "]", "g");
+  const notMatraRegex = new RegExp("[^" + matra + "]", "g");
+
+  if (query.length && !matras.includes(lastChar)) {
     return matraValue.replace(notMatraRegex, lastChar);
   } else {
-    return defaultMatraValue[matra];
+    return matraValue;
   }
 }
 
 const keyboardGrid = [
   [
-    Object.keys(defaultMatraValue),
+    ['w', 'i', 'I', 'u', 'U', 'y', 'Y', 'o', 'O', '<-'],
     ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', 'M'],
     ['c', 'C', 'j', 'J', 't', 'T', 'f', 'F', 'x', '`'],
     ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
     ['X', 'r', 'l', 'v', 'V', 'R', 'H', '^']
   ],
   [
-    [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]],
-    [['N', 'W', '~', '˜', '´', 'Í', 'Ï']],
-    [['ç', 'E', '^', '\u00a0', '\u00a0']],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    ['N', 'W', '~', '˜', '´', 'Í', 'Ï'],
+    ['ç', 'E', '^', '\u00a0', '\u00a0'],
   ],
 ];
 
@@ -72,7 +91,15 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
       dataset: { value },
     },
   }) => {
-    this.props.onKeyClick(`${this.props.value}${value}`);
+    const currentValue = this.props.value;
+    const lastChar = currentValue[currentValue.length - 1];
+    let newValue;
+    if (!matras.includes(lastChar) && value.includes(lastChar)) {
+      newValue = `${currentValue.substring(0, currentValue.length - 1)}${value}`;
+    } else {
+      newValue = `${currentValue}${value}`;
+    }
+    this.props.onKeyClick(newValue);
   };
 
   componentDidMount() {
@@ -106,6 +133,31 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
   }
 
   render() {
+    const meta = (
+      <div className="keyboard-row-set">
+        <button type="button">{'\u00a0'}</button>
+        {[1, 2].map(page => (
+          <button
+            key={page}
+            type="button"
+            data-action={`page-${page}`}
+            title={`Page ${page}`}
+            onClick={this.handlePageClick(page)}
+            className={this.state.page === page ? 'active' : ''}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          type="button"
+          data-action="bksp"
+          title="Backspace"
+          onClick={this.handleBackspace}
+        >
+          <ArrowIcon />
+        </button>
+      </div>
+    );
     return (
       <div
         className={`gurmukhi-keyboard gurbani-font ${
@@ -130,6 +182,17 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
                         query={this.props.value}
                       />
                     </div>
+
+                    {rowIndex === length - 1 ? (
+                      meta
+                    ) : (
+                        <div className="keyboard-row-set">
+                          <ButtonList
+                            onButtonClick={this.handleClick}
+                            buttons={chars}
+                          />
+                        </div>
+                      )}
                   </div>
                 ))}
               </div>
