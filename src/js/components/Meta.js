@@ -80,17 +80,17 @@ class Meta extends React.PureComponent {
                 )}
             </Link>
           </div>
-        ) : (
-            <div className="shabad-nav left disabled-nav">
-              <a>
-                {type === 'hukamnama' ? (
-                  <Hour24 direction='previous' />
-                ) : (
-                    <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                  )}
-              </a>
-            </div>
-          )}
+        ) : type !== 'sync' ? (
+          <div className="shabad-nav left disabled-nav">
+            <a>
+              {type === 'hukamnama' ? (
+                <Hour24 direction='previous' />
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                )}
+            </a>
+          </div>
+        ) : ''}
         <div className="meta">
           {['hukamnama'].includes(type) && (
             <h4>
@@ -163,17 +163,17 @@ class Meta extends React.PureComponent {
                 )}
             </a>
           </div>
-        ) : (
-            <div className="shabad-nav right disabled-nav">
-              <a>
-                {type === 'hukamnama' ? (
-                  <Hour24 direction='next' />
-                ) : (
-                    <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-                  )}
-              </a>
-            </div>
-          )}
+        ) : type !== 'sync' ? (
+          <div className="shabad-nav right disabled-nav">
+            <a>
+              {type === 'hukamnama' ? (
+                <Hour24 direction='next' />
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                )}
+            </a>
+          </div>
+        ) : ''}
       </div>
     );
   }
