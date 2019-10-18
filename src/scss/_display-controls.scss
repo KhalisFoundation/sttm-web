@@ -100,7 +100,8 @@
   white-space: nowrap;
 
   .dark-mode & {
-    background-image: linear-gradient(
+    background-image:
+      linear-gradient(
         to right,
         $sttm-light-black,
         $sttm-light-black
