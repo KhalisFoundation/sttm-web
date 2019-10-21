@@ -190,7 +190,7 @@ export default function reducer(state, action) {
       });
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
-        JSON.stringify(translationLanguages.payload)
+        JSON.stringify(translationLanguages)
       );
       return {
         ...state,

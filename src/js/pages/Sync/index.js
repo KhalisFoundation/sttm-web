@@ -32,6 +32,7 @@ export default class Sync extends React.PureComponent {
     namespaceString: '',
     error: null,
     data: {},
+    showFullScreen: false,
   };
 
   /**
@@ -57,14 +58,14 @@ export default class Sync extends React.PureComponent {
                   <p>Sync Mode</p>
                   <p className='sync-id'>{this.state.namespaceString}</p>
                 </div>
-                {/*<div className='full-screen'>
+                {<div className='full-screen'>
                   <span>Full screen</span>
                   <input type='checkbox'
                     id='fullscreen-control'
                     className="toggle-checkbox"
                     onChange={this.fullScreenView} />
                   <label className="toggle-label" htmlFor='fullscreen-control'></label>
-                </div>*/}
+                </div>}
                 <div className='exit-button'>
                   <button onClick={this.stopSync}>Exit</button>
                 </div>
@@ -79,8 +80,8 @@ export default class Sync extends React.PureComponent {
     );
   }
 
-  fullScreenView = () => {
-    console.log("You changed something");
+  fullScreenView = (event) => {
+    this.setState({ showFullScreen: event.currentTarget.checked });
   }
 
   stopSync = () => {
