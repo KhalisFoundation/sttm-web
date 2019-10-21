@@ -34,8 +34,8 @@ export default class BreadCrumb extends React.PureComponent {
                 {' › '}
               </React.Fragment>
             ) : (
-              <span className="breadcrumbLast">{title}</span>
-            )
+                <span key={`breadcrumbLast${index}`} className="breadcrumbLast">{title}</span>
+              )
           )}
       </h4>
     );
