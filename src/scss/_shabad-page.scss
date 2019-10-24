@@ -188,6 +188,16 @@ blockquote {
       position: relative;
     }
   }
+
+  .full-screen-baani {
+    padding: 60px 10px;
+
+    .line {
+      div {
+        padding-bottom: 10px;
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 350px) {

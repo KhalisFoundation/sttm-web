@@ -77,6 +77,7 @@ class Shabad extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
+    showFullScreen: PropTypes.bool,
   };
 
   render() {
@@ -97,6 +98,7 @@ class Shabad extends React.PureComponent {
         fontSize,
         fontFamily,
         centerAlignGurbani,
+        showFullScreen,
       },
       handleEmbed,
       handleCopyAll,
@@ -146,6 +148,7 @@ class Shabad extends React.PureComponent {
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
               centerAlignGurbani={centerAlignGurbani}
+              showFullScreen={showFullScreen}
             />
 
             {this.props.hideMeta === false && (
