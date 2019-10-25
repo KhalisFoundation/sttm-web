@@ -53,7 +53,7 @@ class Controls extends React.PureComponent {
       this.setState(prevState => {
         const { showControls, lastScrollPos } = prevState;
 
-        if (lastScrollPos > currentScroll) {
+        if (lastScrollPos >= currentScroll) {
           return {
             lastScrollPos: currentScroll,
             showControls: !showControls
