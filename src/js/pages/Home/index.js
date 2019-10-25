@@ -4,6 +4,7 @@ import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../../constants'
 import { toSearchURL } from '../../util';
 import { pageView } from '../../util/analytics';
 import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
+// import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SehajPaathLink from '../../components/SehajPaathLink';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Icons/Logo';
@@ -114,6 +115,7 @@ export default class Home extends React.PureComponent {
                       </button>
                       <EnhancedGurmukhiKeyboard
                         value={query}
+                        searchType={type}
                         active={displayGurmukhiKeyboard}
                         onKeyClick={newValue => setQueryAs(newValue)()}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}

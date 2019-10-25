@@ -239,13 +239,16 @@
   }
 
   button {
+    border: 1px solid $sttm-lighter-black;
+    border-radius: 5px;
     color: $sttm-black;
     font-size: 1rem;
     line-height: 2;
+    margin: 2px;
     outline: none;
     position: relative;
     text-align: center;
-    width: 10%;
+    width: calc(10% - 4px);
 
     .dark-mode & {
       color: $sttm-grey;
