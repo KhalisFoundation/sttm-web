@@ -99,20 +99,23 @@ export default class Home extends React.PureComponent {
                       >
                         <CrossIcon />
                       </button>
-                      <button
-                        type="button"
-                        className={`gurmukhi-keyboard-toggle ${
-                          displayGurmukhiKeyboard ? 'active' : ''
-                          }`}
-                        onClick={setGurmukhiKeyboardVisibilityAs(
-                          !displayGurmukhiKeyboard
-                        )}
-                      >
-                        <KeyboardIcon />
-                      </button>
+                      {type > 2 ? '' : (
+                        <button
+                          type="button"
+                          className={`gurmukhi-keyboard-toggle ${
+                            displayGurmukhiKeyboard ? 'active' : ''
+                            }`}
+                          onClick={setGurmukhiKeyboardVisibilityAs(
+                            !displayGurmukhiKeyboard
+                          )}
+                        >
+                          <KeyboardIcon />
+                        </button>
+                      )}
                       <button type="submit">
                         <SearchIcon />
                       </button>
+
                       <EnhancedGurmukhiKeyboard
                         value={query}
                         searchType={type}
@@ -120,6 +123,7 @@ export default class Home extends React.PureComponent {
                         onKeyClick={newValue => setQueryAs(newValue)()}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
                       />
+
                     </div>
                     <div className="search-options">
                       <div className="search-option">

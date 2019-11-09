@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ArrowIcon from './Icons/Arrow';
 
-const ButtonList = ({ query, onButtonClick, buttons = [] }) =>
-  buttons.map((button, i) => (
-    <button key={i} data-value={getButtonValue(button, query)} type="button" onClick={onButtonClick}>
-      {Object.keys(defaultMatraValue).includes(button) ? matraAkhar(button, query) : button}
-    </button>
-  ));
-
 const defaultMatraValue = {
   w: 'Aw',
   i: 'ie',
@@ -53,10 +46,10 @@ const matraAkhar = (matra, query) => {
 }
 
 const withoutMatra = [
-  ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G'],
-  ['c', 'C', 'j', 'J', 't', 'T', 'f', 'F', 'x'],
+  ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', '|'],
+  ['c', 'C', 'j', 'J', '\\', 't', 'T', 'f', 'F', 'x'],
   ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
-  ['X', 'r', 'l', 'v', 'V'],
+  ['X', 'r', 'l', 'v', 'V', 'meta'],
 ];
 
 const withMatra = [
@@ -64,28 +57,22 @@ const withMatra = [
   ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', 'M'],
   ['c', 'C', 'j', 'J', 't', 'T', 'f', 'F', 'x', '`'],
   ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
-  ['X', 'r', 'l', 'v', 'V', 'R', 'H', '^'],
+  ['X', 'r', 'l', 'v', 'V', 'R', 'H', '^', 'meta'],
 ];
 
-const onlyNumbers = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9],
-]
-
 const keyboardGrid = [
-  [withoutMatra],
-  [withoutMatra],
-  [withMatra],
-  [],
-  [],
-  [onlyNumbers],
+  [withoutMatra], // Keyboard for First letter each word from start (Gurmukhi)
+  [withoutMatra], // Keyboard for First letter each word from Anywhere (Gurmukhi)
+  [withMatra], // Keyboard for Full Word (Gurmukhi)
+  [], // Keyboard for Full Word Translation (English)
+  [], // Keyboard for Romanized Gurmukhi (English)
+  [], // Keyboard for Ang
 ];
 
 export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
   static propTypes = {
     value: PropTypes.string.isRequired,
-    searchType: PropTypes.string.isRequired,
+    searchType: PropTypes.number.isRequired,
     active: PropTypes.bool.isRequired,
     onKeyClick: PropTypes.func.isRequired,
     onClose: PropTypes.func,
@@ -105,13 +92,15 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
       dataset: { value },
     },
   }) => {
-    const currentValue = this.props.value;
-    const lastChar = currentValue[currentValue.length - 1];
+    const currentQuery = this.props.value;
+    const lastChar = currentQuery[currentQuery.length - 1];
     let newValue;
-    if (!matras.includes(lastChar) && value.includes(lastChar)) {
-      newValue = `${currentValue.substring(0, currentValue.length - 1)}${value}`;
+    if (!matras.includes(lastChar) &&
+      value.includes(lastChar) &&
+      value !== lastChar) {
+      newValue = `${currentQuery.substring(0, currentQuery.length - 1)}${value}`;
     } else {
-      newValue = `${currentValue}${value}`;
+      newValue = `${currentQuery}${value}`;
     }
     this.props.onKeyClick(newValue);
   };
@@ -148,8 +137,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
 
   render() {
     const meta = (
-      <div className="keyboard-row-set">
-        <button type="button">{'\u00a0'}</button>
+      <span>
         <button
           type="button"
           data-action="bksp"
@@ -161,7 +149,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
         <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
           <button type="button">?</button>
         </Link>
-      </div>
+      </span>
     );
     return (
       <div
@@ -182,14 +170,28 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
                   {rows.map((chars, rowIndex) => (
                     <div key={`${index}-${rowIndex}`} className="keyboard-row">
                       <div className="keyboard-row-set">
-                        <ButtonList
-                          onButtonClick={this.handleClick}
-                          buttons={chars}
-                          query={this.props.value}
-                        />
+                        {
+                          chars.map((button, i) => {
+                            if (button === 'meta') {
+                              return meta;
+                            }
+                            return (
+                              <button key={i}
+                                data-value={getButtonValue(button, this.props.value)}
+                                type="button"
+                                className={
+                                  Object.keys(defaultMatraValue).includes(button) ? 'matra-button' : ''
+                                }
+                                onClick={this.handleClick}>
+                                {
+                                  Object.keys(defaultMatraValue).includes(button) ?
+                                    matraAkhar(button, this.props.value) : button
+                                }
+                              </button>
+                            )
+                          })
+                        }
                       </div>
-                      {rowIndex === rows.length - 1 ?
-                        meta : ''}
                     </div>
                   ))}
                 </div>
