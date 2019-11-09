@@ -97,7 +97,7 @@ export default class SearchResult extends React.PureComponent {
 
           {transliterationLanguages.includes('hindi') && (
             <p className="transliteration hindi">
-              {shabad.transliteration.english}
+              {shabad.transliteration.hindi}
             </p>
           )}
 
