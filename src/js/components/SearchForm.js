@@ -9,6 +9,7 @@ import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
   SEARCH_TYPES,
+  SOURCES_WITH_ANG,
 } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import { getNumberFromLocalStorage } from '../util';
@@ -160,10 +161,12 @@ export default class SearchForm extends React.PureComponent {
 
     const className = useEnglish ? '' : 'gurbani-font';
 
+    const typeInt = parseInt(this.state.type);
+
     const [title, pattern] =
-      this.state.type === SEARCH_TYPES.ROMANIZED
-        ? ['Enter 2 words minimum.', '(\\w+\\W+){1,}\\w+\\W*']
-        : this.state.type === SEARCH_TYPES.ANG
+      typeInt === SEARCH_TYPES.ROMANIZED
+        ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
+        : typeInt === SEARCH_TYPES.ANG
           ? ['Enter numbers only.', '\\d+']
           : ['Enter 2 characters minimum.', '.{2,}'];
 
@@ -263,6 +266,9 @@ export default class SearchForm extends React.PureComponent {
       this.setState(
         {
           type: parseInt(value, 10),
+          source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
+            !Object.keys(SOURCES_WITH_ANG).includes(this.state.source) ?
+            'G' : this.state.source,
           query: this.state.query,
           shouldSubmit:
             this.props.submitOnChangeOf.includes('type') &&
@@ -273,6 +279,10 @@ export default class SearchForm extends React.PureComponent {
           localStorage.setItem(
             LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
             this.state.type
+          );
+          localStorage.setItem(
+            LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
+            this.state.source
           );
           requestAnimationFrame(this.beginPlaceholderAnimation);
         }

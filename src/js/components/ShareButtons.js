@@ -8,6 +8,7 @@ import EmbedIcon from './Icons/Embed';
 import CopyAllIcon from './Icons/CopyAll';
 import WhatsAppIcon from './Icons/WhatsApp';
 import ClipboardIcon from './Icons/Clipboard';
+import PrinterIcon from './Icons/Printer';
 
 const handleWhatsapp = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
@@ -30,7 +31,7 @@ const copyShortUrl = () =>
     )
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-export const supportedMedia = ['copyAll', 'embed', 'whatsapp', 'copy'];
+export const supportedMedia = ['print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 export default class ShareButtons extends React.PureComponent {
   static defaultProps = {
@@ -98,6 +99,14 @@ export default class ShareButtons extends React.PureComponent {
             />
             <ClipboardIcon className="short-url-icon" />
             <span className="sr-only">Copy URL</span>
+          </a>
+        </li>
+      ),
+      print: (
+        <li key={4}>
+          <a id="print-shabad" onClick={window.print}>
+            <PrinterIcon />
+            <span className="sr-only">Print Shabad</span>
           </a>
         </li>
       ),

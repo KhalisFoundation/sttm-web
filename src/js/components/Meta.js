@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng } from '../util';
+import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng, dateMath } from '../util';
 import Chevron from './Icons/Chevron';
+import Hour24 from './Icons/Hour24';
 import { withRouter } from 'react-router-dom';
+import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
 
 /**
  *
@@ -36,8 +38,8 @@ class Meta extends React.PureComponent {
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     nav: PropTypes.shape({
-      previous: PropTypes.number,
-      next: PropTypes.number,
+      previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   };
 
@@ -68,16 +70,27 @@ class Meta extends React.PureComponent {
         {isFalsy(nav.previous) === false ? (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              {type === 'hukamnama' ? (
+                <div className='hukamnama-nav-icon'>
+                  <Hour24 direction='previous' />
+                  <span>{dateMath.expand(nav.previous, false)}</span>
+                </div>
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                )}
             </Link>
           </div>
-        ) : (
+        ) : type !== 'sync' ? (
           <div className="shabad-nav left disabled-nav">
             <a>
-              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              {type === 'hukamnama' ? (
+                <Hour24 direction='previous' />
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                )}
             </a>
           </div>
-        )}
+        ) : ''}
         <div className="meta">
           {['hukamnama'].includes(type) && (
             <h4>
@@ -88,49 +101,51 @@ class Meta extends React.PureComponent {
           )}
           <h4 className="gurbani-font">
             <Item>
-              {info.raag &&
-                info.raag.gurmukhi &&
-                info.raag.gurmukhi !== 'null' &&
-                info.raag.gurmukhi}
+              {getRaag(info) &&
+                getRaag(info)['gurmukhi'] &&
+                getRaag(info)['gurmukhi'] !== 'null' &&
+                getRaag(info)['gurmukhi']}
             </Item>
-            <Item>{info.writer && info.writer.gurmukhi}</Item>
+            <Item>{getWriter(info) && getWriter(info)['gurmukhi']}</Item>
             <Item>{info.source.gurmukhi}</Item>
-            <Item last>
-              {info.pageno !== null && (
+            {info.source.pageNo !== null && (
+              <Item last>
                 <Link
                   to={toAngURL({
                     ang: info.source.pageNo,
-                    source: info.source.sourceId,
+                    source: getSourceId(info),
                   })}
                 >
-                  {info.source.sourceId == 'G' ? 'AMg' : 'pMnw'}{' '}
+                  {getSourceId(info) == 'G' ? 'AMg' : 'pMnw'}{' '}
                   {info.source.pageNo}
                 </Link>
-              )}
-            </Item>
+              </Item>
+            )}
           </h4>
 
           {shouldShowEnglishInHeader && (
             <h4>
               <Item>
-                {info.raag &&
-                  info.raag.english &&
-                  info.raag.english !== 'null' &&
-                  info.raag.english}
+                {getRaag(info) &&
+                  getRaag(info)['english'] &&
+                  getRaag(info)['english'] !== 'null' &&
+                  getRaag(info)['english']}
               </Item>
-              <Item>{info.writer && info.writer.english}</Item>
+              <Item>{getWriter(info) && getWriter(info)['english']}</Item>
               <Item>{info.source.english}</Item>
-              <Item last>
-                <Link
-                  to={toAngURL({
-                    ang: info.source.pageNo,
-                    source: info.source.sourceId,
-                  })}
-                >
-                  {info.source.sourceId == 'G' ? 'Ang' : 'Pannaa'}{' '}
-                  {info.source.pageNo}
-                </Link>
-              </Item>
+              {info.source.pageNo !== null && (
+                <Item last>
+                  <Link
+                    to={toAngURL({
+                      ang: info.source.pageNo,
+                      source: getSourceId(info),
+                    })}
+                  >
+                    {getSourceId(info) == 'G' ? 'Ang' : 'Pannaa'}{' '}
+                    {info.source.pageNo}
+                  </Link>
+                </Item>
+              )}
             </h4>
           )}
         </div>
@@ -138,16 +153,27 @@ class Meta extends React.PureComponent {
         {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
             <a role="button" aria-label="next" onClick={this.handleSaveAng}>
-              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              {type === 'hukamnama' ? (
+                <div className='hukamnama-nav-icon'>
+                  <Hour24 direction='next' />
+                  <span>{dateMath.expand(nav.next, false)}</span>
+                </div>
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                )}
             </a>
           </div>
-        ) : (
+        ) : type !== 'sync' ? (
           <div className="shabad-nav right disabled-nav">
             <a>
-              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              {type === 'hukamnama' ? (
+                <Hour24 direction='next' />
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                )}
             </a>
           </div>
-        )}
+        ) : ''}
       </div>
     );
   }

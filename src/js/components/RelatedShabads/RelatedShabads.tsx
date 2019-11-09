@@ -88,7 +88,7 @@ function RelatedShabads({
                 <a
                   key={i.ShabadID}
                   className="relatedShabad"
-                  href={toShabadURL({ shabad: { shabadid: i.ShabadID } })}
+                  href={toShabadURL({ shabad: { shabadId: i.ShabadID } })}
                   target="_blank"
                   data-shabad-id={i.ShabadID}
                   onClick={handleShabadClick}

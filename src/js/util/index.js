@@ -4,6 +4,8 @@ import {
   SHORT_DOMAIN,
   SEARCH_TYPES,
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
+  FIRST_HUKAMNAMA_DATE,
+  BANI_LENGTH_COLS,
 } from '../constants';
 
 /**
@@ -223,7 +225,7 @@ export const toSearchURL = ({
 /**
  *
  * @param {object} options
- * @param {{ shabadid: string | number, id?: string | number }} options.shabad
+ * @param {{ shabadId: string | number, id?: string | number }} options.shabad
  * @param {string} [options.q]
  * @param {string} [options.type]
  * @param {string} [options.source]
@@ -249,40 +251,11 @@ export const toAngURL = ({ ang, source, highlight }) =>
     highlight,
   })}`;
 
-/**
- * @sttm/banidb API v2 to v1 transformer
- */
-
-export const versesToGurbani_old = verses =>
-  verses.map(({ verse, ...v }, i) => ({
-    shabad: {
-      ...v,
-      gurbani: {
-        ...verse,
-        ...verse.verse,
-      },
-      id: v.lineNo || '' + i,
-      translation: {
-        english: {
-          ssk: verse.translation.en.bdb,
-        },
-        spanish: verse.translation.es.sn,
-        punjabi: {
-          bms: {
-            gurmukhi: verse.translation.pu.ss.gurmukhi,
-            unicode: verse.translation.pu.ss.unicode,
-          },
-        },
-      },
-      transliteration: verse.transliteration.english,
-    },
-  }));
-
-export const versesToGurbani = verses =>
+export const versesToGurbani = (verses, baniLength = 'extralong') =>
   verses.map(({ verse, ...v }) => ({
     ...verse,
     ...v,
-  }));
+  })).filter(v => v[BANI_LENGTH_COLS[baniLength]]);
 
 /**
  *
@@ -341,7 +314,7 @@ export const getHighlightIndices = (baani, query, type) => {
  * @property {{ source: { id: string }}} info
  */
 export const shouldSaveAng = ({ type, info }) =>
-  type === 'ang' && info.source.id === 'G';
+  type === 'ang' && info.source.sourceId === 'G';
 
 /**
  * Previously read ang
@@ -361,15 +334,16 @@ export const saveAng = ang =>
  * Generates link based on type and source
  * @param {object} data
  * @property {string} type
- * @property {{ source: { id: string }}} info
+ * @property {{ source: { sourceId: string }}} info
  */
 export function toNavURL({ type, info }) {
   switch (type) {
     case 'hukamnama':
+      return 'hukamnama?date=';
     case 'shabad':
       return 'shabad?id=';
     case 'ang':
-      return `ang?source=${info.source.id}&ang=`;
+      return `ang?source=${info.source.sourceId}&ang=`;
   }
 }
 
@@ -383,4 +357,71 @@ export const makeSelection = selectedDiv => {
   var range = document.createRange();
   range.selectNode(selectedDiv);
   window.getSelection().addRange(range);
+};
+
+/**
+ * Manipulates the date string
+ */
+export const dateMath = {
+  algebra: (inputDate, operator, days) => {
+    const da = new Date(inputDate);
+    let newDay;
+    switch (operator) {
+      case '+':
+      case 'plus':
+        newDay = da.getDate() + days;
+        break;
+      case '-':
+      case 'minus':
+        newDay = da.getDate() - days;
+        break;
+    }
+    da.setDate(newDay);
+    return da.toLocaleDateString('zh-tw'); // yyyy-m-d
+  },
+  isBefore: (date1, date2) => new Date(date1) < new Date(date2),
+  isAfter: (date1, date2) => new Date(date1) > new Date(date2),
+  expand: (date, year = true) => {
+    const inDate = new Date(date);
+    let options;
+    year ?
+      options = { year: 'numeric', month: 'short', day: 'numeric' } :
+      options = { month: 'short', day: 'numeric' };
+    return inDate.toLocaleDateString('en', options);
+  },
+  isFuture: date => dateMath.isBefore(new Date(), date),
+};
+
+export const getHukamnama = data => {
+  const { shabads } = data;
+  const { date, month, year } = data.date.gregorian;
+  const hukamnamaDate = year + '/' + month + '/' + date;
+  let totalVerses = [];
+
+  shabads.forEach(s => {
+    totalVerses = totalVerses.concat(s.verses);
+  });
+  const [shabad] = shabads;
+  shabad.verses = totalVerses;
+  shabad.expandedDate = dateMath.expand(hukamnamaDate);
+
+  let prevDate = dateMath.algebra(hukamnamaDate, '-', 1);
+
+  if (dateMath.isBefore(prevDate, FIRST_HUKAMNAMA_DATE)) {
+    prevDate = undefined;
+  }
+
+  //TODO: After API is updated, check if it's latest hukamnama from API
+
+  let nextDate = dateMath.algebra(hukamnamaDate, '+', 1);
+
+  if (dateMath.isFuture(nextDate)) {
+    nextDate = undefined;
+  }
+
+  shabad.nav = {
+    previous: prevDate,
+    next: nextDate,
+  };
+  return shabad;
 };

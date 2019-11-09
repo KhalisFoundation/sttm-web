@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 import ShabadControls from './ShabadControls';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
@@ -25,13 +26,13 @@ export const supportedMedia = _s;
 class Controls extends React.PureComponent {
   state = {
     showBorder: false,
-    offsetTop: 0,
+    lastScrollPos: 0,
+    showControls: true
   };
 
   componentDidMount() {
     this.mounted = true;
     window.addEventListener('scroll', this.scrollListener, { passive: true });
-    this.setState({ offsetTop: this.$wrapper.offsetTop });
   }
 
   componentWillUnmount() {
@@ -42,14 +43,36 @@ class Controls extends React.PureComponent {
   }
 
   scrollListener = () => {
-    if (window.scrollY >= this.state.offsetTop) {
+    if (window.scrollY >= this.$wrapper.offsetTop) {
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });
       }
+
+      const currentScroll = this.$wrapper.offsetTop;
+      const { showDisplayOptions, showFontOptions } = this.props;
+      this.setState(prevState => {
+        const { showControls, lastScrollPos } = prevState;
+
+        if (lastScrollPos >= currentScroll) {
+          return {
+            lastScrollPos: currentScroll,
+            showControls: !showControls
+              ? true
+              : showControls
+          };
+        }
+        return {
+          lastScrollPos: currentScroll,
+          showControls: showControls &&
+            !showDisplayOptions &&
+            !showFontOptions ?
+            false :
+            showControls
+        };
+      });
     } else {
       if (this.mounted && this.state.showBorder === true) {
         this.setState({ showBorder: false });
-        this.setState({ offsetTop: this.$wrapper.offsetTop });
       }
     }
   };
@@ -57,10 +80,17 @@ class Controls extends React.PureComponent {
   setRef = node => (this.$wrapper = node);
 
   render() {
+    const { showBorder, showControls } = this.state;
+    const classNames = cx({
+      'no-select': true,
+      'with-border': showBorder,
+      'show-controls': showControls,
+      'hide-controls': !showControls,
+    });
     return (
       <div
         id="controls-wrapper"
-        className={`no-select ${this.state.showBorder ? 'with-border' : ''}`}
+        className={classNames}
         ref={this.setRef}
       >
         <ShareButtons {...this.props} />

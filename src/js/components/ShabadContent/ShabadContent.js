@@ -12,6 +12,7 @@ import ProgressBar from '@/components/ProgressBar';
 import Baani from '@/components/Baani';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
+import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
 
 /**
  *
@@ -56,11 +57,11 @@ class Shabad extends React.PureComponent {
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
     highlight: PropTypes.number,
-    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama']).isRequired,
+    type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
-      previous: PropTypes.number,
-      next: PropTypes.number,
+      previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
     hideMeta: PropTypes.bool,
     hideControls: PropTypes.bool,
@@ -76,6 +77,7 @@ class Shabad extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
+    showFullScreen: PropTypes.bool,
   };
 
   render() {
@@ -96,13 +98,14 @@ class Shabad extends React.PureComponent {
         fontSize,
         fontFamily,
         centerAlignGurbani,
+        showFullScreen,
       },
       handleEmbed,
       handleCopyAll,
     } = this;
 
     if (random) {
-      return <Redirect to={`/shabad?id=${info.shabadId}`} />;
+      return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
 
     return (
@@ -113,8 +116,8 @@ class Shabad extends React.PureComponent {
               ['shabad', 'hukamnama', 'ang'].includes(type)
                 ? supportedMedia
                 : supportedMedia.filter(
-                    m => ['embed', 'copyAll', 'copy'].includes(m) === false
-                  )
+                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
+                )
             }
             onCopyAllClick={handleCopyAll}
             onEmbedClick={handleEmbed}
@@ -145,13 +148,14 @@ class Shabad extends React.PureComponent {
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
               centerAlignGurbani={centerAlignGurbani}
+              showFullScreen={showFullScreen}
             />
 
             {this.props.hideMeta === false && (
               <FootNav info={info} type={type} nav={nav} />
             )}
 
-            <RelatedShabads forShabadID={this.props.info.shabadId} />
+            <RelatedShabads forShabadID={getShabadId(this.props.info)} />
           </div>
         </div>
         <ProgressBar percent={this.state.progress} />
@@ -199,19 +203,19 @@ class Shabad extends React.PureComponent {
       `data-sttm-height="500"`,
       `data-sttm-width="500"`,
       type === 'ang'
-        ? `data-sttm-ang="${info.source.pageno}" data-sttm-source="${
-            info.source.id
-          }"`
-        : `data-sttm-id="${info.shabadId}"`,
+        ? `data-sttm-ang="${getAng(info.source)}" data-sttm-source="${
+        getSourceId(info)
+        }"`
+        : `data-sttm-id="${getShabadId(info)}"`,
     ].join(' ');
 
     Promise.resolve(
       `<div ${attrs}><a href="https://sttm.co/${
-        type === 'ang'
-          ? 'ang?ang=' + info.source.pageno + '&source=' + info.source.id
-          : 'shabad?id=' + info.shabadId
+      type === 'ang'
+        ? 'ang?ang=' + getAng(info.source) + '&source=' + getSourceId(info)
+        : 'shabad?id=' + getShabadId(info)
       }">SikhiToTheMax</a></div><script async src="${
-        window.location.origin
+      window.location.origin
       }/embed.js"></script>`
     )
       .then(copyToClipboard)
