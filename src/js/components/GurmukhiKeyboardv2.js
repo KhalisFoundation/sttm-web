@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ArrowIcon from './Icons/Arrow';
+import SpaceBar from './Icons/Spacebar';
 
 const defaultMatraValue = {
   w: 'Aw',
@@ -16,7 +17,8 @@ const defaultMatraValue = {
   M: ' M',
   '`': ' `',
   R: ' R',
-  H: ' H'
+  H: ' H',
+  ' ': ' '
 };
 
 let matras = Object.keys(defaultMatraValue);
@@ -53,11 +55,11 @@ const withoutMatra = [
 ];
 
 const withMatra = [
-  ['w', 'i', 'I', 'u', 'U', 'y', 'Y', 'o', 'O'],
-  ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', 'M'],
-  ['c', 'C', 'j', 'J', 't', 'T', 'f', 'F', 'x', '`'],
+  ['w', 'i', 'I', 'u', 'U', 'y', 'Y', 'o', 'O', 'M'],
+  ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', '`'],
+  ['c', 'C', 'j', 'J', 't', 'T', 'f', 'F', 'x', 'H'],
   ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
-  ['X', 'r', 'l', 'v', 'V', 'R', 'H', '^', 'meta'],
+  ['X', 'r', 'l', 'v', 'V', 'R', '^', 'space', 'meta'],
 ];
 
 const keyboardGrid = [
@@ -85,6 +87,11 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
   handleBackspace = () =>
     this.props.onKeyClick(
       this.props.value.substring(0, this.props.value.length - 1)
+    );
+
+  handleSpace = () =>
+    this.props.onKeyClick(
+      this.props.value + " "
     );
 
   handleClick = ({
@@ -136,6 +143,17 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
   }
 
   render() {
+    const spaceKey = (
+      <button
+        type="button"
+        data-action="space"
+        title="Space"
+        onClick={this.handleSpace}
+      >
+        <SpaceBar />
+      </button>
+    );
+
     const meta = (
       <span>
         <button
@@ -174,6 +192,8 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
                           chars.map((button, i) => {
                             if (button === 'meta') {
                               return meta;
+                            } else if (button === 'space') {
+                              return spaceKey;
                             }
                             return (
                               <button key={i}
