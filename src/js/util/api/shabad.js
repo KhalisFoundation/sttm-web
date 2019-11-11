@@ -24,8 +24,10 @@ export const translationMap = {
 };
 
 export const transliterationMap = {
-  english: shabad => shabad.transliteration.english,
-  hindi: shabad => shabad.transliteration.hindi,
+  english: shabad => shabad.transliteration.en,
+  hindi: shabad => shabad.transliteration.hi,
+  urdu: shabad => shabad.transliteration.ur,
+  IPA: shabad => shabad.transliteration.ipa,
 };
 
 export const getRaag = (shabad) => ({

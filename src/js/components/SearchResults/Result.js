@@ -97,7 +97,19 @@ export default class SearchResult extends React.PureComponent {
 
           {transliterationLanguages.includes('hindi') && (
             <p className="transliteration hindi">
-              {shabad.transliteration.hindi}
+              {transliterationMap['hindi'](shabad)}
+            </p>
+          )}
+
+          {transliterationLanguages.includes('urdu') && (
+            <p className="transliteration urdu">
+              {transliterationMap['urdu'](shabad)}
+            </p>
+          )}
+
+          {transliterationLanguages.includes('IPA') && (
+            <p className="transliteration IPA">
+              {transliterationMap['IPA'](shabad)}
             </p>
           )}
 
