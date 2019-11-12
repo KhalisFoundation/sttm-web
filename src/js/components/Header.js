@@ -140,17 +140,19 @@ export default class Header extends React.PureComponent {
                                   <CrossIcon />
                                 </button>
 
-                                <button
-                                  className={`gurmukhi-keyboard-toggle ${
-                                    displayGurmukhiKeyboard ? 'active' : ''
-                                    }`}
-                                  type="button"
-                                  onClick={setGurmukhiKeyboardVisibilityAs(
-                                    !displayGurmukhiKeyboard
-                                  )}
-                                >
-                                  <KeyboardIcon />
-                                </button>
+                                {type > 2 ? '' : (
+                                  <button
+                                    type="button"
+                                    className={`gurmukhi-keyboard-toggle ${
+                                      displayGurmukhiKeyboard ? 'active' : ''
+                                      }`}
+                                    onClick={setGurmukhiKeyboardVisibilityAs(
+                                      !displayGurmukhiKeyboard
+                                    )}
+                                  >
+                                    <KeyboardIcon />
+                                  </button>
+                                )}
 
                                 <button type="submit">
                                   <SearchIcon />

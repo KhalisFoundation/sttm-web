@@ -126,7 +126,6 @@
     display: inline-block;
     height: 44px;
     outline: none;
-    padding: 0.5rem;
     width: 44px;
   }
 
@@ -266,7 +265,8 @@
       color: $sttm-orange;
     }
 
-    .dark-mode &[data-action='bksp'] {
+    .dark-mode &[data-action='bksp'],
+    .dark-mode &[data-action='space'] {
       fill: $sttm-grey;
     }
 
