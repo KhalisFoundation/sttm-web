@@ -1,6 +1,6 @@
-import { SOURCES, TYPES as _TYPES } from '@sttm/banidb';
+import { SOURCES, SOURCES_WITH_ANG, TYPES as _TYPES } from '@sttm/banidb';
 
-export { SOURCES };
+export { SOURCES, SOURCES_WITH_ANG };
 
 export const SEARCH_TYPES = {
   FIRST_LETTERS: 0,
@@ -9,6 +9,19 @@ export const SEARCH_TYPES = {
   ENGLISH_WORD: 3,
   ROMANIZED: 4,
   ANG: 5,
+};
+
+export const BANI_LENGTH_COLS = {
+  short: 'existsSGPC',
+  medium: 'existsMedium',
+  long: 'existsTaksal',
+  extralong: 'existsBuddhaDal',
+};
+
+export const SYNC_TYPES = {
+  SHABAD: "shabad",
+  CEREMONY: "ceremony",
+  BANI: "bani"
 };
 
 export const TYPES = [..._TYPES, 'Ang'];
@@ -32,6 +45,7 @@ export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
 export const LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW = 'centerAlignView';
+export const LOCAL_STORAGE_KEY_FOR_SYNC_CODE = 'previous-sync';
 
 export const PLACEHOLDERS = {
   [SEARCH_TYPES.FIRST_LETTERS]: ['jmTAq'], // first letters
@@ -43,7 +57,7 @@ export const PLACEHOLDERS = {
 };
 
 export const TRANSLATION_LANGUAGES = ['punjabi', 'english', 'spanish'];
-export const TRANSLITERATION_LANGUAGES = ['english'];
+export const TRANSLITERATION_LANGUAGES = ['english', 'hindi', 'shahmukhi'];
 
 export const DEFAULT_SEARCH_TYPE = SEARCH_TYPES.FIRST_LETTERS;
 export const DEFAULT_SEARCH_SOURCE = 'all';
@@ -91,7 +105,7 @@ export const TEXTS = {
   SYNC_NOTIFICATION: (code: string) =>
     `You're now connected to ${code}. Tap to dismiss.`,
   SYNC_CONNECTED: (code: string) =>
-    `Awesome! You're now connected to the device "${code}" and will start receiving shabads soon! The screen would automatically update now as shabad and the line changes on the desktop.`,
+    `Awesome! You're now connected to the device "${code}" and will start receiving shabads soon! The screen will automatically update now as shabads and lines change on the desktop.`,
   SYNC_DISCONNECT: `Are you sure you want to disconnect now? You can re-connect by entering the same code later.`,
   OFFLINE: `It seems you aren't connected to internet`,
   OFFLINE_DESCRIPTION: `Unfortunately we don't support offline mode fully as of now, and you would need to be connected to use SikhiToTheMax.`,

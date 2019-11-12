@@ -9,6 +9,7 @@ import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
   SEARCH_TYPES,
+  SOURCES_WITH_ANG,
 } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import { getNumberFromLocalStorage } from '../util';
@@ -265,6 +266,9 @@ export default class SearchForm extends React.PureComponent {
       this.setState(
         {
           type: parseInt(value, 10),
+          source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
+            !Object.keys(SOURCES_WITH_ANG).includes(this.state.source) ?
+            'G' : this.state.source,
           query: this.state.query,
           shouldSubmit:
             this.props.submitOnChangeOf.includes('type') &&
@@ -275,6 +279,10 @@ export default class SearchForm extends React.PureComponent {
           localStorage.setItem(
             LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
             this.state.type
+          );
+          localStorage.setItem(
+            LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
+            this.state.source
           );
           requestAnimationFrame(this.beginPlaceholderAnimation);
         }

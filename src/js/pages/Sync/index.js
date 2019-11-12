@@ -1,9 +1,10 @@
 /* globals SYNC_API_URL */
 import React from 'react';
-import { TEXTS } from '../../constants';
+import { TEXTS, LOCAL_STORAGE_KEY_FOR_SYNC_CODE } from '../../constants';
 import Viewer from './Viewer';
 import { showToast } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
+import { saveToLocalStorage, getStringFromLocalStorage } from '@/util'
 
 /**
  *
@@ -31,6 +32,7 @@ export default class Sync extends React.PureComponent {
     namespaceString: '',
     error: null,
     data: {},
+    showFullScreen: false,
   };
 
   /**
@@ -50,13 +52,40 @@ export default class Sync extends React.PureComponent {
         <BreadCrumb links={[{ title: TEXTS.SYNC }]} />
         <div className="wrapper">
           {connected ? (
-            <Viewer {...this.state} />
+            <div className='sync-viewer'>
+              <div className='sync-controls'>
+                <div className='sync-id'>
+                  <p>Sync Mode</p>
+                  <p className='sync-id'>{this.state.namespaceString}</p>
+                </div>
+                {<div className='full-screen'>
+                  <span>Full screen</span>
+                  <input type='checkbox'
+                    id='fullscreen-control'
+                    className="toggle-checkbox"
+                    onChange={this.fullScreenView} />
+                  <label className="toggle-label" htmlFor='fullscreen-control'></label>
+                </div>}
+                <div className='exit-button'>
+                  <button onClick={this.stopSync}>Exit</button>
+                </div>
+              </div>
+              <Viewer {...this.state} />
+            </div>
           ) : (
-            <Sync.Form onSubmit={this.handleSubmit} error={error} />
-          )}
+              <Sync.Form onSubmit={this.handleSubmit} error={error} getCode={this.getPrevCode} />
+            )}
         </div>
       </div>
     );
+  }
+
+  fullScreenView = (event) => {
+    this.setState({ showFullScreen: event.currentTarget.checked });
+  }
+
+  stopSync = () => {
+    this.setState({ connected: false });
   }
 
   componentDidMount() {
@@ -81,10 +110,12 @@ export default class Sync extends React.PureComponent {
   componentWillUnmount() {
     this._mounted = false;
     if (this.state.connected && this._socket) {
-      this._socket.disconnect();
+      // this._socket.disconnect();
     }
     window.removeEventListener('beforeunload', this._alertOnExit);
   }
+
+  getPrevCode = () => getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_SYNC_CODE);
 
   /**
    * Functional Form Component
@@ -92,7 +123,7 @@ export default class Sync extends React.PureComponent {
    * @static
    * @memberof Sync
    */
-  static Form = ({ onSubmit, error }) => (
+  static Form = ({ onSubmit, error, getCode }) => (
     <React.Fragment>
       <p>{TEXTS.SYNC_DESCRIPTION}</p>
       {error && <h5 className="sync-form-error">{TEXTS.SYNC_ERROR}</h5>}
@@ -100,7 +131,7 @@ export default class Sync extends React.PureComponent {
         className="sync-form"
         onSubmit={e => {
           e.preventDefault();
-          onSubmit(e.target.code.value, e);
+          onSubmit(e.target.code.value.toUpperCase(), e);
         }}
       >
         <input
@@ -109,9 +140,24 @@ export default class Sync extends React.PureComponent {
           name="code"
           type="text"
           placeholder="Enter code. Eg. ABC-XYZ"
+          pattern="[A-Z,a-z]{3}-[A-Z,a-z]{3}"
+          onKeyUp={e => {
+            const typedValue = e.currentTarget.value;
+            const typedChar = e.key;
+            const parsedValue = typedValue.match('^[A-Z,a-z]{3}');
+            const d = parsedValue ? parsedValue[0] === typedValue : false;
+            if (d && typedChar !== 'Backspace') {
+              e.currentTarget.value = typedValue + '-';
+            }
+          }}
         />
         <button className="sync-form--button">Connect</button>
       </form>
+      {getCode() ? (
+        <button className="reconnect-btn hollow button secondary"
+          onClick={() => { onSubmit(getCode()) }}>Reconnect to {getCode()}</button>
+      ) : ''}
+
     </React.Fragment>
   );
 
@@ -130,11 +176,13 @@ export default class Sync extends React.PureComponent {
           const { namespaceString } = data;
           this._setState({ connected: true, namespaceString });
 
-          showToast(
+          /*showToast(
             TEXTS.SYNC_NOTIFICATION(code),
             Infinity,
             'toast-notification-green'
-          );
+          );*/
+
+          saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SYNC_CODE, code);
 
           if (window.io !== undefined) {
             this._socket = window.io(`${SYNC_API_URL}${namespaceString}`);

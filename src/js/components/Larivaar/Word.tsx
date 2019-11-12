@@ -1,11 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { fixLarivaarUnicode, fixLarivaarGurmukhiFont } from './util';
-import {
-  HIGHLIGHTED_SEARCH_COLOR,
-  LARIVAAR_ASSIST_COLOR,
-  NORMAL_SEARCH_COLOR,
-} from '@/constants';
 
 export interface ILarivaarWordProps {
   word: string;
@@ -35,22 +30,24 @@ function LarivaarWord(props: ILarivaarWordProps) {
   return (
     <>
       {segments.map((item, i) => {
-        let color;
-        let akharClass;
+        let akharClass = '';
+        let assistLarivaar;
+
+        if (index % 2 === 1) {
+          akharClass += 'larivaar-word';
+        }
 
         // If this isn't a search result
         if (!(startIndex !== undefined && endIndex !== undefined)) {
-          color =
-            larivaarAssist && index % 2 === 1 ? LARIVAAR_ASSIST_COLOR : '';
+          assistLarivaar = larivaarAssist && index % 2 === 1;
         } else {
           if (highlight || (index >= startIndex && index < endIndex)) {
-            akharClass = 'search-highlight-word';
+            akharClass += ' search-highlight-word';
           }
-
-          if (larivaarAssist && index % 2 === 1) {
-            color = LARIVAAR_ASSIST_COLOR;
-          }
+          assistLarivaar = larivaarAssist && index % 2 === 1;
         }
+
+        akharClass += assistLarivaar ? ' larivaar-assist-word' : '';
 
         const key = `${index}.${i}`;
 
@@ -65,7 +62,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
         }
 
         return (
-          <span key={key} className={akharClass} style={{ color }}>
+          <span key={key} className={akharClass}>
             <span>
               {item}
               <wbr />

@@ -1,16 +1,21 @@
 @media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+  }
+
   .top-bar {
     border-bottom: none;
   }
 
   .top-bar-title {
     float: none;
+    text-align: center;
+    width: 100% !important;
 
     a {
-      background-image: url(/assets/images/sttm_logo.png) !important;
-      background-position: center !important;
-      background-repeat: no-repeat !important;
-      background-size: contain !important;
+      content: url(/assets/images/sttm_logo.png);
+      height: 54px !important;
+      width: auto !important;
     }
   }
 
@@ -18,15 +23,48 @@
   #search-options,
   #controls-wrapper,
   footer,
-  .shabad .line:hover .share {
+  .breadcrumb,
+  .shabad-nav,
+  .pagniation,
+  .relatedShabadWrapper,
+  .toast-notification,
+  .scroll-to-top,
+  .shabad .line:hover .share,
+  .sync-controls {
     display: none !important;
+  }
+
+  .display .highlight {
+    border-left: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .translation,
+  .gurlipi {
+    color: #8a8a8a !important;
+  }
+
+  .transliteration,
+  .gurmukhi {
+    color: #0a0a0a !important;
+  }
+
+  .shabad {
+    display: block !important;
+    line-height: 1.5 !important;
   }
 
   a[href] {
     text-decoration: none;
 
     &::after {
-      content: "";
+      content: '';
     }
+  }
+
+  @page {
+    margin-bottom: 60px;
+    margin-top: 60px;
   }
 }
