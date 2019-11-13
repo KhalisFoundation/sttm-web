@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ArrowIcon from './Icons/Arrow';
 import SpaceBar from './Icons/Spacebar';
+import { SEARCH_TYPES } from '@/constants.ts'
 
 const defaultMatraValue = {
   w: 'Aw',
@@ -60,15 +61,6 @@ const withMatra = [
   ['c', 'C', 'j', 'J', 't', 'T', 'f', 'F', 'x', 'H'],
   ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
   ['X', 'r', 'l', 'v', 'V', 'R', '^', 'space', 'meta'],
-];
-
-const keyboardGrid = [
-  [withoutMatra], // Keyboard for First letter each word from start (Gurmukhi)
-  [withoutMatra], // Keyboard for First letter each word from Anywhere (Gurmukhi)
-  [withMatra], // Keyboard for Full Word (Gurmukhi)
-  [], // Keyboard for Full Word Translation (English)
-  [], // Keyboard for Romanized Gurmukhi (English)
-  [], // Keyboard for Ang
 ];
 
 export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
@@ -154,6 +146,11 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
       </button>
     );
 
+    const keys = parseInt(this.props.searchType) === SEARCH_TYPES['GURMUKHI_WORD']
+      ? withMatra : withoutMatra;
+
+    const keyboardGrid = [keys];
+
     const meta = (
       <span>
         <button
@@ -169,6 +166,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
         </Link>
       </span>
     );
+
     return (
       <div
         className={`gurmukhi-keyboard gurbani-font ${
@@ -177,7 +175,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
         onClick={this.click}
       >
         {
-          keyboardGrid[parseInt(this.props.searchType)].map(
+          keyboardGrid.map(
             (rows, index) => {
               return (
                 <div
