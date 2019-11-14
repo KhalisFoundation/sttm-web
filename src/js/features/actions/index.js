@@ -6,6 +6,7 @@ import {
   DEFAULT_FONT_SIZE,
   DEFAULT_FONT_FAMILY,
   DEFAULT_CENTER_ALIGN_GURBANI,
+  DEFAULT_SPLIT_VIEW,
 } from '../../constants';
 
 export const createAction = (type, meta) => payload => ({
@@ -68,11 +69,15 @@ export const setTransliterationLanguages = createAction(
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const setDarkMode = createAction(SET_DARK_MODE);
 
+export const SET_SPLIT_VIEW = 'SET_SPLIT_VIEW';
+export const setSplitView = createAction(SET_SPLIT_VIEW);
+
 export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
   dispatch(setCenterAlignOption(DEFAULT_CENTER_ALIGN_GURBANI));
+  dispatch(setSplitView(DEFAULT_SPLIT_VIEW));
 };
 
 export const CHANGE_FONT = 'CHANGE_FONT';
