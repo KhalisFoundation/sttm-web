@@ -164,6 +164,7 @@ export const FONT_OPTIONS = {
   gurmukhi_normal: 'Gurbani Akhar',
   gurmukhi_heavy: 'Gurbani Akhar Heavy',
   gurmukhi_thick: 'Gurbani Akhar Thick',
+  prabhki: 'Prabhki',
   unicode_font: 'Unicode',
 };
 
