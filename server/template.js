@@ -89,14 +89,24 @@ export default ({ url, bodyClass, title, description }) => marinate`
           <a href="/terms-of-service">Legal</a>
         </li>
         <li>
-          <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank" rel="noopener noreferrer">Desktop App</a>
-        </li>
-        <li>
           <a href="https://khalisfoundation.org/donate/" target="_blank" rel="noopener noreferrer">Donate</a>
         </li>
+        <li>
+        <span class="footer-seperator">|</span>
+        </li>
+        <li>
+          <a class="download-icon" target="_blank" href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/"><img src="/assets/images/app-desktop.png" alt="Desktop icon"/></span></a>
+        </li>
+        <li>
+          <a class="download-icon" target="_blank" href="https://apps.apple.com/us/app/sikhitothemax/id1370303478"><img src="/assets/images/app-ios.png" alt="iOS icon"/></span></a>
+        </li>
+        <li>
+          <a class="download-icon" target="_blank" href="https://play.google.com/store/apps/details?id=com.nest.sttm&hl=en_US"><img src="/assets/images/app-android.png" alt="Android icon"/></span></a>
+        </li>
+        </ul>
       </ul>
       <div class="copyright">
-        Copyright © 2018 Khalis Foundation
+        Copyright © 2019 Khalis Foundation
         <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
       </div>
     </div>
@@ -139,7 +149,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <noscript>
     ${noScriptHTML}
   </noscript>
-  
+
 
 </body>
 </html>
