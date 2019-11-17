@@ -106,7 +106,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
         </ul>
       </ul>
       <div class="copyright">
-        Copyright © 2019 Khalis Foundation
+        Copyright © <span id="year" /> Khalis Foundation
         <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
       </div>
     </div>
@@ -144,6 +144,11 @@ export default ({ url, bodyClass, title, description }) => marinate`
     : registerServiceWorker
   }
     }
+  </script>
+
+  <script>
+    var d = new Date();
+    document.getElementById("year").innerHTML = d.getFullYear();
   </script>
 
   <noscript>
