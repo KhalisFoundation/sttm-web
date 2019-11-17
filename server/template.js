@@ -106,7 +106,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
         </ul>
       </ul>
       <div class="copyright">
-        Copyright © <span id="year" /> Khalis Foundation
+        Copyright © <span id="year"></span> Khalis Foundation
         <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
       </div>
     </div>
