@@ -131,9 +131,18 @@
 
   button[type='submit'] {
     background-color: $sttm-blue;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: $sttm-orange;
+    }
 
     .dark-mode & {
       background-color: $sttm-blue;
+
+      &:hover {
+        background-color: $sttm-orange;
+      }
     }
   }
 
