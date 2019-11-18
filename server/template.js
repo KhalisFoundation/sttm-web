@@ -187,6 +187,8 @@ const preloadFontsHTML = preloadFonts
 const stylesheets = [
   '/assets/css/vendor/foundation.min.css?v=6.2.4',
   '/assets/css/bundle.css',
+  'https://fonts.googleapis.com/css?family=Muli:300&display=swap',
+  'https://fonts.googleapis.com/css?family=Lato&display=swap',
 ];
 const stylesheetsHTML = stylesheets
   .map(s => `<link href="${s}" rel="stylesheet" />`)
