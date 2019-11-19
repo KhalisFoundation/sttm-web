@@ -8,7 +8,7 @@ const path = require('path');
 const API_URLS = {
   BANIS: '//api.banidb.com/v2/banis',
   PRODUCTION: '//api.banidb.com/v2/',
-  DEVELOPMENT: '//api.banidb.com/v2/',
+  DEVELOPMENT: '//api.khajana.org/v2/',
   SYNC: {
     PRODUCTION: '//api.sikhitothemax.org/',
     LOCAL: '//api.sikhitothemax.org/',
@@ -21,28 +21,28 @@ const commonPlugins = [new ManifestPlugin()];
 
 const plugins = PRODUCTION
   ? commonPlugins.concat([
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production'),
-          npm_package_version: JSON.stringify(process.env.npm_package_version),
-        },
-        PRODUCTION: JSON.stringify(true),
-        API_URL: JSON.stringify(API_URLS.PRODUCTION),
-        SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
-        BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
-      }),
-    ])
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+        npm_package_version: JSON.stringify(process.env.npm_package_version),
+      },
+      PRODUCTION: JSON.stringify(true),
+      API_URL: JSON.stringify(API_URLS.PRODUCTION),
+      SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
+      BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
+    }),
+  ])
   : commonPlugins.concat([
-      new webpack.DefinePlugin({
-        'process.env': {
-          npm_package_version: JSON.stringify(process.env.npm_package_version),
-        },
-        PRODUCTION: JSON.stringify(false),
-        API_URL: JSON.stringify(API_URLS.PRODUCTION),
-        SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
-        BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
-      }),
-    ]);
+    new webpack.DefinePlugin({
+      'process.env': {
+        npm_package_version: JSON.stringify(process.env.npm_package_version),
+      },
+      PRODUCTION: JSON.stringify(false),
+      API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
+      SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
+      BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
+    }),
+  ]);
 
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');
 
