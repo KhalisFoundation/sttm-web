@@ -96,6 +96,7 @@
 
     .dark-mode & {
       color: $sttm-dark-white;
+      transition: 0.2s;
 
       &:hover {
         background-color: $sttm-lighter-black;
