@@ -89,6 +89,7 @@
     justify-content: center;
     margin: 0;
     padding: 14px;
+    transition: 0.2s;
 
     &:hover {
       background-color: $sttm-lighter-grey;
@@ -96,7 +97,6 @@
 
     .dark-mode & {
       color: $sttm-dark-white;
-      transition: 0.2s;
 
       &:hover {
         background-color: $sttm-lighter-black;
