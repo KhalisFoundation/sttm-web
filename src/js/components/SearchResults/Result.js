@@ -79,18 +79,18 @@ export default class SearchResult extends React.PureComponent {
                 </Larivaar>
               </div>
             ) : (
-              <div className={`gurlipi ${larivaar ? 'larivaar' : ''}`}>
-                <Larivaar
-                  larivaarAssist={larivaarAssist}
-                  enable={larivaar}
-                  startIndex={highlightStartIndex}
-                  endIndex={higlightEndIndex}
-                  query={q}
-                >
-                  {getGurmukhiVerse(shabad)}
-                </Larivaar>
-              </div>
-            )}
+                <div className={`gurlipi ${larivaar ? 'larivaar' : ''}`}>
+                  <Larivaar
+                    larivaarAssist={larivaarAssist}
+                    enable={larivaar}
+                    startIndex={highlightStartIndex}
+                    endIndex={higlightEndIndex}
+                    query={q}
+                  >
+                    {getGurmukhiVerse(shabad)}
+                  </Larivaar>
+                </div>
+              )}
           </Link>
 
           <div className="clear" />
@@ -126,10 +126,10 @@ export default class SearchResult extends React.PureComponent {
                   {translationMap['punjabi'](shabad).unicode}
                 </div>
               ) : (
-                <div className="gurlipi">
-                  {translationMap['punjabi'](shabad).gurmukhi}
-                </div>
-              )}
+                  <div className="gurlipi">
+                    {translationMap['punjabi'](shabad).gurmukhi}
+                  </div>
+                )}
             </blockquote>
           )}
 
@@ -151,11 +151,11 @@ export default class SearchResult extends React.PureComponent {
             <a href="#">{getWriter(shabad)['english']}</a>
 
             {getRaag(shabad)['english'] === 'No Raag' ||
-            getRaag(shabad)['english'] === null ? (
-              ''
-            ) : (
-              <a href="#">{getRaag(shabad)['english']}</a>
-            )}
+              getRaag(shabad)['english'] === null ? (
+                ''
+              ) : (
+                <a href="#">{getRaag(shabad)['english']}</a>
+              )}
           </div>
         </li>
       </React.Fragment>

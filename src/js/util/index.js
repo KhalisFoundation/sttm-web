@@ -1,3 +1,4 @@
+/* globals API_URL */
 import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
@@ -8,6 +9,7 @@ import {
   BANI_LENGTH_COLS,
 } from '../constants';
 
+import { buildApiUrl } from '@sttm/banidb';
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
  * Calling this function lets you throw an error inline (eg. JSX)
@@ -425,3 +427,34 @@ export const getHukamnama = data => {
   };
   return shabad;
 };
+
+
+export const getShabadList = (input, { type, source }) => {
+
+  const q = input;
+  const offset = 1;
+  const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL }));
+  const savedData = getArrayFromLocalStorage('autocomplete-suggestion');
+
+  return new Promise((resolve, reject) => {
+    const localSearch = savedData.filter(obj => obj.query.includes(q));
+    if (localSearch.length) {
+      resolve(localSearch);
+    } else {
+      const json = fetch(url).then((response) => response.json());
+      json.then((data) => {
+        const { verses } = data;
+        let panktiList = [];
+        for (const shabad of verses) {
+          panktiList.push({
+            pankti: shabad.verse.gurmukhi,
+            query: q,
+            url: toShabadURL({ shabad, q, type, source })
+          })
+        }
+        saveToLocalStorage('autocomplete-suggestion', JSON.stringify(panktiList));
+        resolve(panktiList);
+      }, (error) => { reject(error); });
+    }
+  });
+}
