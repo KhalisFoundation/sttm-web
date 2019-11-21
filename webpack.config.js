@@ -5,8 +5,10 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 
 const path = require('path');
 
+const PRODUCTION = process.env.NODE_ENV === 'production';
+
 const API_URLS = {
-  BANIS: '//api.banidb.com/v2/banis',
+  BANIS: PRODUCTION ? '//api.banidb.com/v2/banis' : "//api.khajana.org/v2/banis",
   PRODUCTION: '//api.banidb.com/v2/',
   DEVELOPMENT: '//api.khajana.org/v2/',
   SYNC: {
@@ -14,8 +16,6 @@ const API_URLS = {
     LOCAL: '//api.sikhitothemax.org/',
   },
 };
-
-const PRODUCTION = process.env.NODE_ENV === 'production';
 
 const commonPlugins = [new ManifestPlugin()];
 
