@@ -29,23 +29,28 @@ class Autocomplete extends Component {
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
+      suggestionTimeout: 0,
     };
   }
 
   onChange = e => {
     const { getSuggestions, searchOptions } = this.props;
     const userInput = e.target.value;
+    clearTimeout(this.state.suggestionTimeout);
 
     if (userInput.length > 3) {
-      const data = getSuggestions(userInput, searchOptions);
+      const suggestionTimeout = setTimeout(() => {
+        const data = getSuggestions(userInput, searchOptions);
 
-      data.then(suggestions => {
-        this.setState({
-          activeSuggestion: 0,
-          filteredSuggestions: suggestions,
-          showSuggestions: true
+        data.then(suggestions => {
+          this.setState({
+            activeSuggestion: 0,
+            filteredSuggestions: suggestions,
+            showSuggestions: true
+          });
         });
-      });
+      }, 400);
+      this.setState({ suggestionTimeout });
     } else {
       this.setState({
         activeSuggestion: 0,
