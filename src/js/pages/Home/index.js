@@ -74,10 +74,8 @@ export default class Home extends React.PureComponent {
                     </div>
 
                     <div id="search-container">
-                      <Autocomplete
-                        getSuggestions={getShabadList}
+                      <input
                         autoFocus={true}
-                        searchOptions={{ query, type, source }}
                         name={name}
                         id="search"
                         type={inputType}
@@ -123,6 +121,12 @@ export default class Home extends React.PureComponent {
                         active={displayGurmukhiKeyboard}
                         onKeyClick={newValue => setQueryAs(newValue)()}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                      />
+
+                      <Autocomplete
+                        getSuggestions={getShabadList}
+                        searchOptions={{ query, type, source }}
+                        value={query}
                       />
 
                     </div>

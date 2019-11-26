@@ -194,7 +194,12 @@
 
     > li {
       border-bottom: 1px solid $sttm-grey;
-      padding: 10px;
+
+      > a {
+        display: block;
+        padding: 10px;
+        width: 100%;
+      }
     }
 
     > .suggestion-active {

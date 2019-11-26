@@ -4,22 +4,8 @@ import PropTypes from "prop-types";
 class Autocomplete extends Component {
   static propTypes = {
     getSuggestions: PropTypes.func.isRequired,
-    autoFocus: PropTypes.bool,
-    name: PropTypes.string,
     searchOptions: PropTypes.object,
-    id: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    autoCapitalize: PropTypes.string,
-    autoComplete: PropTypes.string,
-    autoCorrect: PropTypes.string,
-    spellCheck: PropTypes.bool,
-    required: PropTypes.string,
     value: PropTypes.string,
-    onChange: PropTypes.func,
-    className: PropTypes.string,
-    placeholder: PropTypes.string,
-    title: PropTypes.string,
-    pattern: PropTypes.string,
   };
 
   constructor(props) {
@@ -32,41 +18,6 @@ class Autocomplete extends Component {
       suggestionTimeout: 0,
     };
   }
-
-  onChange = e => {
-    const { getSuggestions, searchOptions } = this.props;
-    const userInput = e.target.value;
-    clearTimeout(this.state.suggestionTimeout);
-
-    if (userInput.length > 3) {
-      const suggestionTimeout = setTimeout(() => {
-        const data = getSuggestions(userInput, searchOptions);
-
-        data.then(suggestions => {
-          this.setState({
-            activeSuggestion: 0,
-            filteredSuggestions: suggestions,
-            showSuggestions: true
-          });
-        });
-      }, 400);
-      this.setState({ suggestionTimeout });
-    } else {
-      this.setState({
-        activeSuggestion: 0,
-        showSuggestions: false,
-      })
-    }
-    this.props.onChange(e);
-  };
-
-  onClick = () => {
-    this.setState({
-      activeSuggestion: 0,
-      filteredSuggestions: [],
-      showSuggestions: false,
-    });
-  };
 
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions } = this.state;
@@ -101,36 +52,46 @@ class Autocomplete extends Component {
   componentDidUpdate(prevProps) {
     const prevInput = prevProps.value;
     if (this.props.value !== prevInput) {
-      this.onChange({
-        target: document.querySelector(`#${this.props.id}`),
-      });
+      const { getSuggestions, searchOptions } = this.props;
+      const userInput = this.props.value;
+      clearTimeout(this.state.suggestionTimeout);
+
+      if (userInput.length > 3) {
+        const suggestionTimeout = setTimeout(() => {
+          const data = getSuggestions(userInput, searchOptions);
+
+          data.then(suggestions => {
+            this.setState({
+              activeSuggestion: 0,
+              filteredSuggestions: suggestions,
+              showSuggestions: true
+            });
+          });
+        }, 400);
+        this.setState({ suggestionTimeout });
+      } else {
+        this.setState({
+          activeSuggestion: 0,
+          showSuggestions: false,
+        })
+      }
+    }
+    if (this.state.showSuggestions) {
+      document.addEventListener('keydown', this.onKeyDown);
+    } else {
+      document.removeEventListener('keydown', this.onKeyDown);
     }
   }
 
   render() {
     const {
-      onChange,
-      onKeyDown,
       state: {
         activeSuggestion,
         filteredSuggestions,
         showSuggestions,
       },
       props: {
-        autoFocus,
-        name,
-        id,
-        type,
-        autoCapitalize,
-        autoComplete,
-        autoCorrect,
-        spellCheck,
-        required,
-        className,
-        placeholder,
         value,
-        title,
-        pattern,
       }
     } = this;
 
@@ -139,7 +100,7 @@ class Autocomplete extends Component {
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul id="suggestions">
+          <ul id="suggestions" onKeyDown={this.onKeyDown}>
             {filteredSuggestions.map((suggestion, index) => {
               let className = "gurbani-font ";
 
@@ -151,6 +112,9 @@ class Autocomplete extends Component {
                 <li
                   className={className}
                   key={suggestion.url}
+                  onMouseOver={() => {
+                    this.setState({ activeSuggestion: index });
+                  }}
                 >
                   <a href={suggestion.url}>{suggestion.pankti}</a>
                 </li>
@@ -163,24 +127,6 @@ class Autocomplete extends Component {
 
     return (
       <Fragment>
-        <input
-          type={type}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          value={value}
-          autoFocus={autoFocus}
-          name={name}
-          id={id}
-          autoCapitalize={autoCapitalize}
-          autoComplete={autoComplete}
-          autoCorrect={autoCorrect}
-          spellCheck={spellCheck}
-          required={required}
-          className={className}
-          placeholder={placeholder}
-          title={title}
-          pattern={pattern}
-        />
         {suggestionsListComponent}
       </Fragment>
     );
