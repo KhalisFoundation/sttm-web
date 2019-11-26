@@ -430,31 +430,23 @@ export const getHukamnama = data => {
 
 
 export const getShabadList = (input, { type, source }) => {
-
   const q = input;
   const offset = 1;
   const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL }));
-  const savedData = getArrayFromLocalStorage('autocomplete-suggestion');
 
   return new Promise((resolve, reject) => {
-    const localSearch = savedData.filter(obj => obj.query.includes(q));
-    if (localSearch.length) {
-      resolve(localSearch);
-    } else {
-      const json = fetch(url).then((response) => response.json());
-      json.then((data) => {
-        const { verses } = data;
-        let panktiList = [];
-        for (const shabad of verses) {
-          panktiList.push({
-            pankti: shabad.verse.gurmukhi,
-            query: q,
-            url: toShabadURL({ shabad, q, type, source })
-          })
-        }
-        saveToLocalStorage('autocomplete-suggestion', JSON.stringify(panktiList));
-        resolve(panktiList);
-      }, (error) => { reject(error); });
-    }
+    const json = fetch(url).then((response) => response.json());
+    json.then((data) => {
+      const { verses } = data;
+      let panktiList = [];
+      for (const shabad of verses) {
+        panktiList.push({
+          pankti: shabad.verse.gurmukhi,
+          query: q,
+          url: toShabadURL({ shabad, q, type, source })
+        })
+      }
+      resolve(panktiList);
+    }, (error) => { reject(error); });
   });
 }

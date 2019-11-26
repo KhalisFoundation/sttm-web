@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-// import Fetch from '@/components/Fetch';
 
 class Autocomplete extends Component {
   static propTypes = {
@@ -30,42 +29,37 @@ class Autocomplete extends Component {
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: ""
     };
   }
 
   onChange = e => {
     const { getSuggestions, searchOptions } = this.props;
-    const userInput = e.currentTarget.value;
+    const userInput = e.target.value;
 
     if (userInput.length > 3) {
       const data = getSuggestions(userInput, searchOptions);
 
       data.then(suggestions => {
-
-        const filteredSuggestions = suggestions.filter(
-          suggestion =>
-            suggestion.query.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-        );
-
         this.setState({
           activeSuggestion: 0,
-          filteredSuggestions,
+          filteredSuggestions: suggestions,
           showSuggestions: true
         });
       });
+    } else {
+      this.setState({
+        activeSuggestion: 0,
+        showSuggestions: false,
+      })
     }
-    this.setState({ userInput: e.currentTarget.value });
     this.props.onChange(e);
   };
 
-  onClick = e => {
-
+  onClick = () => {
     this.setState({
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: e.currentTarget.innerText
     });
   };
 
@@ -73,29 +67,40 @@ class Autocomplete extends Component {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     if (e.keyCode === 13) {
+      if (activeSuggestion) {
+        e.preventDefault();
+        window.location = filteredSuggestions[activeSuggestion].url;
+      }
       this.setState({
         activeSuggestion: 0,
-        showSuggestions: false,
-        userInput: filteredSuggestions[activeSuggestion]
+        filteredSuggestions: [],
+        showSuggestions: false
       });
-    }
-
-    else if (e.keyCode === 38) {
-      if (activeSuggestion === 0) {
-        return;
+    } else if (e.keyCode === 38) {
+      e.preventDefault();
+      if (activeSuggestion !== 0) {
+        this.setState({ activeSuggestion: activeSuggestion - 1 });
+        const newScroll = document.querySelector('.suggestion-active').offsetHeight;
+        document.getElementById('suggestions').scrollBy(0, -newScroll);
       }
-
-      this.setState({ activeSuggestion: activeSuggestion - 1 });
-    }
-
-    else if (e.keyCode === 40) {
-      if (activeSuggestion - 1 === filteredSuggestions.length) {
-        return;
+    } else if (e.keyCode === 40) {
+      e.preventDefault();
+      if (activeSuggestion + 1 < filteredSuggestions.length) {
+        this.setState({ activeSuggestion: activeSuggestion + 1 });
+        const newScroll = document.querySelector('.suggestion-active').offsetHeight;
+        document.getElementById('suggestions').scrollBy(0, newScroll);
       }
-
-      this.setState({ activeSuggestion: activeSuggestion + 1 });
     }
   };
+
+  componentDidUpdate(prevProps) {
+    const prevInput = prevProps.value;
+    if (this.props.value !== prevInput) {
+      this.onChange({
+        target: document.querySelector(`#${this.props.id}`),
+      });
+    }
+  }
 
   render() {
     const {
@@ -105,7 +110,6 @@ class Autocomplete extends Component {
         activeSuggestion,
         filteredSuggestions,
         showSuggestions,
-        userInput
       },
       props: {
         autoFocus,
@@ -119,6 +123,7 @@ class Autocomplete extends Component {
         required,
         className,
         placeholder,
+        value,
         title,
         pattern,
       }
@@ -126,7 +131,7 @@ class Autocomplete extends Component {
 
     let suggestionsListComponent;
 
-    if (showSuggestions && userInput) {
+    if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
           <ul id="suggestions">
@@ -157,7 +162,7 @@ class Autocomplete extends Component {
           type={type}
           onChange={onChange}
           onKeyDown={onKeyDown}
-          value={userInput}
+          value={value}
           autoFocus={autoFocus}
           name={name}
           id={id}

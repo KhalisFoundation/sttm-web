@@ -126,8 +126,6 @@ export default class Home extends React.PureComponent {
                       />
 
                     </div>
-                    <div id="autocomplete-suggestions">
-                    </div>
                     <div className="search-options">
                       <div className="search-option">
                         <select

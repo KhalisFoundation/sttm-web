@@ -176,10 +176,31 @@
   }
 
   > #suggestions {
-    background-color: $sttm-grey;
+    background-color: $sttm-white;
+    box-shadow:
+      0 2px 2px 0 $sttm-transparent-black,
+      0 0 0 1px $sttm-transparent-light-black;
     list-style-type: none;
     margin: 44px 0;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-top: 8px;
     position: absolute;
+
+    .dark-mode & {
+      background-color: $sttm-lighter-black;
+      color: $sttm-white;
+    }
+
+    > li {
+      border-bottom: 1px solid $sttm-grey;
+      padding: 10px;
+    }
+
+    > .suggestion-active {
+      background-color: $sttm-blue;
+      > a { color: white; }
+    }
   }
 }
 

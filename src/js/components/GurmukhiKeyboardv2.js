@@ -152,7 +152,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
     const keyboardGrid = [keys];
 
     const meta = (
-      <span>
+      <React.Fragment>
         <button
           type="button"
           data-action="bksp"
@@ -164,7 +164,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
         <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
           <button type="button">?</button>
         </Link>
-      </span>
+      </React.Fragment>
     );
 
     return (
