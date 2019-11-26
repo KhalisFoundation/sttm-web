@@ -10,7 +10,7 @@ import Logo from '../../components/Icons/Logo';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
-import Autocomplete from '@/components/Autocomplete'
+import Autocomplete from '@/components/Autocomplete';
 /**
  *
  *

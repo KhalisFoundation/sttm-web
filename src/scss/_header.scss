@@ -186,6 +186,7 @@
     overflow-y: auto;
     padding-top: 8px;
     position: absolute;
+    z-index: 2;
 
     .dark-mode & {
       background-color: $sttm-lighter-black;
@@ -193,9 +194,8 @@
     }
 
     > li {
-      border-bottom: 1px solid $sttm-grey;
-
       > a {
+        color: $sttm-light-black;
         display: block;
         padding: 10px;
         width: 100%;
@@ -203,8 +203,7 @@
     }
 
     > .suggestion-active {
-      background-color: $sttm-blue;
-      > a { color: white; }
+      background-color: $sttm-lighter-grey;
     }
   }
 }
