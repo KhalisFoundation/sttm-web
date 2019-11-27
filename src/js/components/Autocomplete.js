@@ -23,10 +23,8 @@ class Autocomplete extends Component {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     if (e.keyCode === 13) {
-      if (activeSuggestion) {
-        e.preventDefault();
-        window.location = filteredSuggestions[activeSuggestion].url;
-      }
+      e.preventDefault();
+      window.location = filteredSuggestions[activeSuggestion].url;
       this.setState({
         activeSuggestion: 0,
         filteredSuggestions: [],

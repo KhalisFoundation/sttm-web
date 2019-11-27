@@ -122,14 +122,12 @@ export default class Home extends React.PureComponent {
                         onKeyClick={newValue => setQueryAs(newValue)()}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
                       />
-
-                      <Autocomplete
-                        getSuggestions={getShabadList}
-                        searchOptions={{ query, type, source }}
-                        value={query}
-                      />
-
                     </div>
+                    <Autocomplete
+                      getSuggestions={getShabadList}
+                      searchOptions={{ query, type, source }}
+                      value={query}
+                    />
                     <div className="search-options">
                       <div className="search-option">
                         <select

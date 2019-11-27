@@ -166,13 +166,14 @@ export default class Header extends React.PureComponent {
                                   onKeyClick={newValue => setQueryAs(newValue)()}
                                   onClose={setGurmukhiKeyboardVisibilityAs(false)}
                                 />
-
-                                <Autocomplete
-                                  getSuggestions={getShabadList}
-                                  searchOptions={{ query, type, source }}
-                                  value={query}
-                                />
                               </div>
+
+
+                              <Autocomplete
+                                getSuggestions={getShabadList}
+                                searchOptions={{ query, type, source }}
+                                value={query}
+                              />
                             </li>
                           </ul>
                         </form>
