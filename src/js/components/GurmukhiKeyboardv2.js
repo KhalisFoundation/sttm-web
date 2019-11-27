@@ -140,6 +140,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
         type="button"
         data-action="space"
         title="Space"
+        key="space-key"
         onClick={this.handleSpace}
       >
         <SpaceBar />
@@ -152,17 +153,18 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
     const keyboardGrid = [keys];
 
     const meta = (
-      <React.Fragment>
+      <React.Fragment key="meta-key">
         <button
           type="button"
           data-action="bksp"
           title="Backspace"
+          key="backspace-key"
           onClick={this.handleBackspace}
         >
           <ArrowIcon />
         </button>
         <Link to="/help#Web-how-to-type-gurmukhi-with-keyboard">
-          <button type="button">?</button>
+          <button type="button" key="help-key">?</button>
         </Link>
       </React.Fragment>
     );

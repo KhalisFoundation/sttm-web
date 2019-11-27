@@ -429,8 +429,7 @@ export const getHukamnama = data => {
 };
 
 
-export const getShabadList = (input, { type, source }) => {
-  const q = input;
+export const getShabadList = (q, { type, source }) => {
   const offset = 1;
   const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL }));
 

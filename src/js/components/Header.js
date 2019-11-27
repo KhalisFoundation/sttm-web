@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../constants';
 import { Link } from 'react-router-dom';
-// import GurmukhiKeyboard from './GurmukhiKeyboard';
 import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
 import { toSearchURL, getQueryParams, getShabadList } from '../util';
@@ -161,7 +160,7 @@ export default class Header extends React.PureComponent {
 
                                 <EnhancedGurmukhiKeyboard
                                   value={query}
-                                  searchType={type}
+                                  searchType={parseInt(type)}
                                   active={displayGurmukhiKeyboard}
                                   onKeyClick={newValue => setQueryAs(newValue)()}
                                   onClose={setGurmukhiKeyboardVisibilityAs(false)}
@@ -171,7 +170,7 @@ export default class Header extends React.PureComponent {
 
                               <Autocomplete
                                 getSuggestions={getShabadList}
-                                searchOptions={{ query, type, source }}
+                                searchOptions={{ type: parseInt(type), source }}
                                 value={query}
                               />
                             </li>

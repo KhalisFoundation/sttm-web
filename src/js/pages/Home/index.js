@@ -125,7 +125,7 @@ export default class Home extends React.PureComponent {
                     </div>
                     <Autocomplete
                       getSuggestions={getShabadList}
-                      searchOptions={{ query, type, source }}
+                      searchOptions={{ type, source }}
                       value={query}
                     />
                     <div className="search-options">

@@ -5,8 +5,8 @@ import Larivaar from '../components/Larivaar';
 class Autocomplete extends Component {
   static propTypes = {
     getSuggestions: PropTypes.func.isRequired,
-    searchOptions: PropTypes.object,
-    value: PropTypes.string,
+    searchOptions: PropTypes.object.isRequired,
+    value: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -48,6 +48,10 @@ class Autocomplete extends Component {
     }
   };
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
+  }
+
   componentDidUpdate(prevProps) {
     const prevInput = prevProps.value;
     if (this.props.value !== prevInput) {
@@ -72,7 +76,7 @@ class Autocomplete extends Component {
         this.setState({
           activeSuggestion: 0,
           showSuggestions: false,
-        })
+        });
       }
     }
     if (this.state.showSuggestions) {
@@ -122,7 +126,7 @@ class Autocomplete extends Component {
                       unicode={false}
                       startIndex={suggestion.startIndex}
                       endIndex={suggestion.endIndex}
-                      query={suggestion.pankti}
+                      query={suggestion.query}
                     >
                       {suggestion.pankti}
                     </Larivaar>
