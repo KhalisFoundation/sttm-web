@@ -440,10 +440,17 @@ export const getShabadList = (input, { type, source }) => {
       const { verses } = data;
       let panktiList = [];
       for (const shabad of verses) {
+        const [highlightStartIndex, highlightEndIndex] = getHighlightIndices(
+          shabad.verse.gurmukhi,
+          q,
+          type
+        );
         panktiList.push({
           pankti: shabad.verse.gurmukhi,
           query: q,
-          url: toShabadURL({ shabad, q, type, source })
+          url: toShabadURL({ shabad, q, type, source }),
+          startIndex: highlightStartIndex,
+          endIndex: highlightEndIndex,
         })
       }
       resolve(panktiList);

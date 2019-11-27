@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
+import Larivaar from '../components/Larivaar';
 
 class Autocomplete extends Component {
   static propTypes = {
@@ -98,7 +99,7 @@ class Autocomplete extends Component {
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul id="suggestions" onKeyDown={this.onKeyDown}>
+          <ul className="search-result" id="suggestions" onKeyDown={this.onKeyDown}>
             {filteredSuggestions.map((suggestion, index) => {
               let className = "gurbani-font ";
 
@@ -114,7 +115,18 @@ class Autocomplete extends Component {
                     this.setState({ activeSuggestion: index });
                   }}
                 >
-                  <a href={suggestion.url}>{suggestion.pankti}</a>
+                  <a href={suggestion.url}>
+                    <Larivaar
+                      larivaarAssist={false}
+                      enable={false}
+                      unicode={false}
+                      startIndex={suggestion.startIndex}
+                      endIndex={suggestion.endIndex}
+                      query={suggestion.pankti}
+                    >
+                      {suggestion.pankti}
+                    </Larivaar>
+                  </a>
                 </li>
               );
             })}

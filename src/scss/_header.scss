@@ -178,6 +178,7 @@
 
 #suggestions {
   background-color: $sttm-white;
+  border: none;
   box-shadow:
     0 2px 2px 0 $sttm-transparent-black,
     0 0 0 1px $sttm-transparent-light-black;
@@ -185,12 +186,19 @@
   margin: 0;
   max-height: 250px;
   overflow-y: auto;
-  padding-top: 8px;
+  padding: 8px 0 0 0;
   z-index: 2;
 
   .dark-mode & {
     background-color: $sttm-lighter-black;
-    color: $sttm-white;
+
+    > li > a {
+      color: $sttm-white;
+    }
+
+    > .suggestion-active {
+      background-color: $sttm-transparent-black;
+    }
   }
 
   .menu > li > & {
