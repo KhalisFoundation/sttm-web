@@ -89,16 +89,27 @@ export default ({ url, bodyClass, title, description }) => marinate`
           <a href="/terms-of-service">Legal</a>
         </li>
         <li>
-          <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/" target="_blank" rel="noopener noreferrer">Desktop App</a>
-        </li>
-        <li>
           <a href="https://khalisfoundation.org/donate/" target="_blank" rel="noopener noreferrer">Donate</a>
         </li>
+        <li>
+        <span class="footer-seperator">|</span>
+        </li>
+        <li>
+          <a class="download-icon" target="_blank" href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/"><img src="/assets/images/app-desktop.png" alt="Desktop icon"/></a>
+        </li>
+        <li>
+          <a class="download-icon" target="_blank" href="https://apps.apple.com/us/app/sikhitothemax/id1370303478"><img src="/assets/images/app-ios.png" alt="iOS icon"/></a>
+        </li>
+        <li>
+          <a class="download-icon" target="_blank" href="https://play.google.com/store/apps/details?id=com.nest.sttm&hl=en_US"><img src="/assets/images/app-android.png" alt="Android icon"/></a>
+        </li>
+        </ul>
       </ul>
       <div class="copyright">
-        Copyright © 2018 Khalis Foundation
+        Copyright © <span id="year"></span> Khalis Foundation
         <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
       </div>
+
     </div>
   </footer>
 
@@ -136,10 +147,16 @@ export default ({ url, bodyClass, title, description }) => marinate`
     }
   </script>
 
+  <script>
+    var d = new Date();
+    document.getElementById("year").innerHTML = d.getFullYear();
+  </script>
+<link rel="stylesheet" href="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.css">
+<script src="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.js"></script>
   <noscript>
     ${noScriptHTML}
   </noscript>
-  
+
 
 </body>
 </html>
@@ -172,6 +189,8 @@ const preloadFontsHTML = preloadFonts
 const stylesheets = [
   '/assets/css/vendor/foundation.min.css?v=6.2.4',
   '/assets/css/bundle.css',
+  'https://fonts.googleapis.com/css?family=Muli:300&display=swap',
+  'https://fonts.googleapis.com/css?family=Lato&display=swap',
 ];
 const stylesheetsHTML = stylesheets
   .map(s => `<link href="${s}" rel="stylesheet" />`)

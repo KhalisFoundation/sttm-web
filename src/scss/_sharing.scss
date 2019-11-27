@@ -3,7 +3,6 @@
 */
 #share-menu {
   border-radius: 2px;
-  float: right;
   height: calc(10px + 2em);
   margin-bottom: 0.5rem;
   margin-right: 35px;
@@ -18,14 +17,13 @@
     }
   }
 
-  @media screen and (max-width: 45.999999em) {
+  @media screen and (max-width: 46em) {
     margin-right: 0 !important;
     padding: 0 !important;
   }
 }
 
 .share-buttons {
-  float: right;
   list-style: none;
   margin: auto -20px;
   padding: 5px 0;
@@ -51,7 +49,6 @@
   }
 
   @media screen and (max-width: 45.999999em) {
-    float: none !important;
     margin: auto !important;
     overflow: hidden;
     text-align: center;

@@ -15,6 +15,7 @@ import {
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
+  SET_SPLIT_VIEW,
   CHANGE_FONT,
 } from '../actions';
 import {
@@ -190,7 +191,7 @@ export default function reducer(state, action) {
       });
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
-        JSON.stringify(translationLanguages.payload)
+        JSON.stringify(translationLanguages)
       );
       return {
         ...state,
@@ -222,6 +223,18 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
+      };
+    }
+    case SET_SPLIT_VIEW: {
+      const splitView = action.payload || false;
+      clickEvent({
+        action: SET_SPLIT_VIEW,
+        label: splitView ? true : false,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW, splitView);
+      return {
+        ...state,
+        splitView,
       };
     }
     case SET_CENTER_ALIGN_OPTION: {
