@@ -46,7 +46,7 @@ class FootNav extends React.PureComponent {
         ) : ''}
         {nav.next ? (
           <div className="shabad-nav right">
-            <a role="button" aria-label="next" onClick={this.handleSaveAng}>
+            <a role="button" aria-label="next" onClick={this.goToNextAng}>
               <span>{type === 'hukamnama' ? dateMath.expand(nav.next, false) : 'Next'}</span>
               {type === 'hukamnama' ? (
                 <Hour24 direction='Next' />
@@ -75,9 +75,8 @@ class FootNav extends React.PureComponent {
    * Handle SaveAng
    * @memberof FootNav
    */
-  handleSaveAng = () => {
+  goToNextAng = () => {
     const link = toNavURL(this.props);
-    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
     this.props.history.push(link + this.props.nav.next);
   };
 }
