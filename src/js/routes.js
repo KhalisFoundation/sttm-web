@@ -33,11 +33,11 @@ export function NotFound() {
           pending ? null : NotFoundLayout ? (
             <NotFoundLayout />
           ) : (
-            throwError(
-              `We are having trouble in rendering this route.`,
-              rejected
+              throwError(
+                `We are having trouble in rendering this route.`,
+                rejected
+              )
             )
-          )
         }
       </RenderPromise>
     </Layout>
@@ -76,11 +76,11 @@ export default [
               pending ? null : TermsOfService ? (
                 <TermsOfService {...props} />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -101,11 +101,11 @@ export default [
               pending ? null : About ? (
                 <About {...props} />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -143,11 +143,11 @@ export default [
                   {...props}
                 />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -170,11 +170,11 @@ export default [
               pending ? null : Index ? (
                 <Index {...props} />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -197,11 +197,11 @@ export default [
               pending ? null : SundarGutka ? (
                 <SundarGutka {...props} />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -222,11 +222,11 @@ export default [
               pending ? null : Help ? (
                 <Help {...props} />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -248,11 +248,11 @@ export default [
               pending ? null : Hukamnama ? (
                 <Hukamnama date={date} {...props} />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -273,11 +273,11 @@ export default [
               pending ? null : Sync ? (
                 <Sync {...props} />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -324,11 +324,11 @@ export default [
                   {...props}
                 />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>
@@ -374,11 +374,11 @@ export default [
               pending ? null : Shabad ? (
                 <Shabad {...otherProps} {...props} />
               ) : (
-                throwError(
-                  `We are having trouble in rendering this route.`,
-                  rejected
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
                 )
-              )
             }
           </RenderPromise>
         </Layout>

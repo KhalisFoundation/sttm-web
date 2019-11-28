@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../constants';
 import { Link } from 'react-router-dom';
-// import GurmukhiKeyboard from './GurmukhiKeyboard';
 import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
-import { toSearchURL, getQueryParams } from '../util';
+import { toSearchURL, getQueryParams, getShabadList } from '../util';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
+import Autocomplete from '@/components/Autocomplete';
 export default class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
 
@@ -114,7 +114,7 @@ export default class Header extends React.PureComponent {
                               />
                             </li>
                             <li>
-                              <div id="search-container">
+                              <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
                                 <input
                                   type={inputType}
                                   id="search"
@@ -160,10 +160,16 @@ export default class Header extends React.PureComponent {
 
                                 <EnhancedGurmukhiKeyboard
                                   value={query}
-                                  searchType={type}
+                                  searchType={parseInt(type)}
                                   active={displayGurmukhiKeyboard}
                                   onKeyClick={newValue => setQueryAs(newValue)()}
                                   onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                                />
+
+                                <Autocomplete
+                                  getSuggestions={getShabadList}
+                                  searchOptions={{ type: parseInt(type), source }}
+                                  value={query}
                                 />
                               </div>
                             </li>

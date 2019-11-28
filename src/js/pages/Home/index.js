@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../../constants';
-import { toSearchURL } from '../../util';
+import { toSearchURL, getShabadList } from '../../util';
 import { pageView } from '../../util/analytics';
 import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
-// import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
 import SehajPaathLink from '../../components/SehajPaathLink';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Icons/Logo';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
-
+import Autocomplete from '@/components/Autocomplete';
 /**
  *
  *
@@ -74,7 +73,7 @@ export default class Home extends React.PureComponent {
                       </div>
                     </div>
 
-                    <div id="search-container">
+                    <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
                       <input
                         autoFocus={true}
                         name={name}
@@ -83,7 +82,7 @@ export default class Home extends React.PureComponent {
                         autoCapitalize="none"
                         autoComplete="off"
                         autoCorrect="off"
-                        spellCheck="false"
+                        spellCheck={false}
                         required="required"
                         value={query}
                         onChange={handleSearchChange}
@@ -123,8 +122,12 @@ export default class Home extends React.PureComponent {
                         onKeyClick={newValue => setQueryAs(newValue)()}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
                       />
-
                     </div>
+                    <Autocomplete
+                      getSuggestions={getShabadList}
+                      searchOptions={{ type, source }}
+                      value={query}
+                    />
                     <div className="search-options">
                       <div className="search-option">
                         <select

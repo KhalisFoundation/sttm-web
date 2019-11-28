@@ -1,3 +1,4 @@
+/* globals API_URL */
 import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
@@ -8,6 +9,7 @@ import {
   BANI_LENGTH_COLS,
 } from '../constants';
 
+import { buildApiUrl } from '@sttm/banidb';
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
  * Calling this function lets you throw an error inline (eg. JSX)
@@ -425,3 +427,32 @@ export const getHukamnama = data => {
   };
   return shabad;
 };
+
+
+export const getShabadList = (q, { type, source }) => {
+  const offset = 1;
+  const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL }));
+
+  return new Promise((resolve, reject) => {
+    const json = fetch(url).then((response) => response.json());
+    json.then((data) => {
+      const { verses } = data;
+      let panktiList = [];
+      for (const shabad of verses) {
+        const [highlightStartIndex, highlightEndIndex] = getHighlightIndices(
+          shabad.verse.gurmukhi,
+          q,
+          type
+        );
+        panktiList.push({
+          pankti: shabad.verse.gurmukhi,
+          query: q,
+          url: toShabadURL({ shabad, q, type, source }),
+          startIndex: highlightStartIndex,
+          endIndex: highlightEndIndex,
+        })
+      }
+      resolve(panktiList);
+    }, (error) => { reject(error); });
+  });
+}
