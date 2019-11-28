@@ -171,7 +171,9 @@ export default class Header extends React.PureComponent {
                         </form>
                       )}
                     </div>
-                    <Menu />
+                    <Menu
+                      isHome={isHome}
+                    />
                   </div>
                   {!isHome && (
                     <div id="search-options">

@@ -325,6 +325,10 @@
   svg {
     fill: $sttm-blue;
   }
+
+  .top-bar-left > & {
+    left: 0.5rem;
+  }
 }
 
 .open-search-options #search-options {
