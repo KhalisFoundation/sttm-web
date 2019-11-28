@@ -114,7 +114,7 @@ export default class Header extends React.PureComponent {
                               />
                             </li>
                             <li>
-                              <div id="search-container">
+                              <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
                                 <input
                                   type={inputType}
                                   id="search"
@@ -165,14 +165,13 @@ export default class Header extends React.PureComponent {
                                   onKeyClick={newValue => setQueryAs(newValue)()}
                                   onClose={setGurmukhiKeyboardVisibilityAs(false)}
                                 />
+
+                                <Autocomplete
+                                  getSuggestions={getShabadList}
+                                  searchOptions={{ type: parseInt(type), source }}
+                                  value={query}
+                                />
                               </div>
-
-
-                              <Autocomplete
-                                getSuggestions={getShabadList}
-                                searchOptions={{ type: parseInt(type), source }}
-                                value={query}
-                              />
                             </li>
                           </ul>
                         </form>

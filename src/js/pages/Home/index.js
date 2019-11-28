@@ -73,7 +73,7 @@ export default class Home extends React.PureComponent {
                       </div>
                     </div>
 
-                    <div id="search-container">
+                    <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
                       <input
                         autoFocus={true}
                         name={name}
