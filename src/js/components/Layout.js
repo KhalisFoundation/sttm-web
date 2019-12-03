@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import Banner from './Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
@@ -89,6 +90,7 @@ class Layout extends React.PureComponent {
 
     return online || pathname !== '/' ? (
       <React.Fragment>
+        <Banner />
         <Header
           defaultQuery={this.props.defaultQuery}
           isHome={isHome}
@@ -98,19 +100,19 @@ class Layout extends React.PureComponent {
         {this.state.error ? (
           <GenericError {...this.state.errorProps} />
         ) : (
-          children
-        )}
+            children
+          )}
         {this.state.showScrollToTop && <ScrollToTop />}
       </React.Fragment>
     ) : (
-      <div className="content-root">
-        <GenericError
-          title={TEXTS.OFFLINE}
-          description={TEXTS.OFFLINE_DESCRIPTION}
-          image={SachKaur}
-        />
-      </div>
-    );
+        <div className="content-root">
+          <GenericError
+            title={TEXTS.OFFLINE}
+            description={TEXTS.OFFLINE_DESCRIPTION}
+            image={SachKaur}
+          />
+        </div>
+      );
   }
 
   updateTheme() {
