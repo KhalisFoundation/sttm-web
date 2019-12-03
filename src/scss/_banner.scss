@@ -1,24 +1,20 @@
 .banner {
-    height: 55px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 55px;
+  justify-content: center;
+  width: 100%;
 
-    &.attention {
-        background-color: $sttm-attention-background;
-        color: $sttm-red;
-    }
+  &.attention {
+    background-color: $sttm-attention-background;
+    color: $sttm-red;
+  }
 
-    // &.notice {
-    //   background-color: $sttm-notice-background;
-    // }
-
-    &.toggled {
-        position: absolute;
-        width: 100px;
-        right: 0;
-        background-color: unset;
-        z-index: 1;
-    }
+  &.toggled {
+    background-color: unset;
+    position: absolute;
+    right: 0;
+    width: 100px;
+    z-index: 1;
+  }
 }
