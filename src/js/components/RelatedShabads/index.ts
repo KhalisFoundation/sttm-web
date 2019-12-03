@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import RelatedShabads, { IRelatedShabadsProps } from './RelatedShabads';
 import { IStore } from '@/features/types';
 
-export { IRelatedShabadsProps };
+export type IRelatedShabadsProps = IRelatedShabadsProps;
 
 export default connect(
   ({
