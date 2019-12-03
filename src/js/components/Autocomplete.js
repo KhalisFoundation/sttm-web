@@ -29,7 +29,7 @@ class Autocomplete extends Component {
       this.setState({
         activeSuggestion: 0,
         filteredSuggestions: [],
-        showSuggestions: false
+        showSuggestions: false,
       });
     } else if (e.keyCode === 38) {
       e.preventDefault();
@@ -59,7 +59,7 @@ class Autocomplete extends Component {
       const userInput = this.props.value;
       clearTimeout(this.state.suggestionTimeout);
 
-      if (userInput.length > 3) {
+      if (userInput.length > 2) {
         const suggestionTimeout = setTimeout(() => {
           const data = getSuggestions(userInput, searchOptions);
 
@@ -67,7 +67,7 @@ class Autocomplete extends Component {
             this.setState({
               activeSuggestion: 0,
               filteredSuggestions: suggestions,
-              showSuggestions: true
+              showSuggestions: true,
             });
           });
         }, 400);
@@ -136,6 +136,12 @@ class Autocomplete extends Component {
             })}
           </ul>
         );
+      } else {
+        suggestionsListComponent = (
+          <ul className="search-result" id="suggestions">
+            <li><a>No matched results.</a></li>
+          </ul>
+        )
       }
     }
 
