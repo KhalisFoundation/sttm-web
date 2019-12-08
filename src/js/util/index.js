@@ -9,6 +9,8 @@ import {
   BANI_LENGTH_COLS,
 } from '../constants';
 
+import { translationMap, getGurmukhiVerse } from './api/shabad';
+
 import { buildApiUrl } from '@sttm/banidb';
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
@@ -304,6 +306,25 @@ export const getHighlightIndices = (baani, query, type) => {
       end = start + q.length;
       break;
     }
+    case SEARCH_TYPES.ENGLISH_WORD: {
+      const shabadLower = baani.toLowerCase();
+      const queryLower = query.toLowerCase();
+
+      const startChar = shabadLower.indexOf(queryLower);
+      let manualCount = 0;
+      if (startChar !== -1) {
+        for (const wordcount in baaniWords) {
+          [...baaniWords[wordcount]].forEach(() => {
+            if (manualCount === startChar) {
+              start = parseInt(wordcount, 10);
+            }
+            manualCount++;
+          });
+          manualCount++; // Counts the space in baani string
+        }
+        end = start + query.split(" ").length;
+      }
+    }
   }
 
   return [start, start === -1 ? 0 : end];
@@ -439,13 +460,15 @@ export const getShabadList = (q, { type, source }) => {
       const { verses } = data;
       let panktiList = [];
       for (const shabad of verses) {
+        const highlightPankti = type === 3 ? translationMap["english"](shabad) : getGurmukhiVerse(shabad);
         const [highlightStartIndex, highlightEndIndex] = getHighlightIndices(
-          shabad.verse.gurmukhi,
+          highlightPankti,
           q,
           type
         );
         panktiList.push({
-          pankti: shabad.verse.gurmukhi,
+          pankti: getGurmukhiVerse(shabad),
+          translation: translationMap["english"](shabad),
           query: q,
           url: toShabadURL({ shabad, q, type, source }),
           startIndex: highlightStartIndex,

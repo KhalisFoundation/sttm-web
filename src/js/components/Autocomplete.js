@@ -95,6 +95,7 @@ class Autocomplete extends Component {
       },
       props: {
         value,
+        searchOptions,
       }
     } = this;
 
@@ -105,7 +106,7 @@ class Autocomplete extends Component {
         suggestionsListComponent = (
           <ul className="search-result" id="suggestions" onKeyDown={this.onKeyDown}>
             {filteredSuggestions.map((suggestion, index) => {
-              let className = "gurbani-font ";
+              let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
 
               if (index === activeSuggestion) {
                 className += "suggestion-active";
@@ -127,9 +128,12 @@ class Autocomplete extends Component {
                       startIndex={suggestion.startIndex}
                       endIndex={suggestion.endIndex}
                       query={suggestion.query}
+                      type={searchOptions.type}
                     >
-                      {suggestion.pankti}
+                      {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                     </Larivaar>
+                    {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
+
                   </a>
                 </li>
               );
