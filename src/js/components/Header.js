@@ -39,7 +39,7 @@ export default class Header extends React.PureComponent {
     } = this;
     const {
       source: defaultSource = null,
-      type: defaultType = isAng ? SEARCH_TYPES.ANG : null,
+      type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
     } = getQueryParams(location.search);
 
     const key = `${defaultQuery}${defaultSource}${defaultType}`;
