@@ -29,7 +29,7 @@ class Autocomplete extends Component {
       this.setState({
         activeSuggestion: 0,
         filteredSuggestions: [],
-        showSuggestions: false
+        showSuggestions: false,
       });
     } else if (e.keyCode === 38) {
       e.preventDefault();
@@ -59,7 +59,7 @@ class Autocomplete extends Component {
       const userInput = this.props.value;
       clearTimeout(this.state.suggestionTimeout);
 
-      if (userInput.length > 3) {
+      if (userInput.length >= 2) {
         const suggestionTimeout = setTimeout(() => {
           const data = getSuggestions(userInput, searchOptions);
 
@@ -67,7 +67,7 @@ class Autocomplete extends Component {
             this.setState({
               activeSuggestion: 0,
               filteredSuggestions: suggestions,
-              showSuggestions: true
+              showSuggestions: true,
             });
           });
         }, 400);
@@ -95,6 +95,7 @@ class Autocomplete extends Component {
       },
       props: {
         value,
+        searchOptions,
       }
     } = this;
 
@@ -105,7 +106,7 @@ class Autocomplete extends Component {
         suggestionsListComponent = (
           <ul className="search-result" id="suggestions" onKeyDown={this.onKeyDown}>
             {filteredSuggestions.map((suggestion, index) => {
-              let className = "gurbani-font ";
+              let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
 
               if (index === activeSuggestion) {
                 className += "suggestion-active";
@@ -127,15 +128,24 @@ class Autocomplete extends Component {
                       startIndex={suggestion.startIndex}
                       endIndex={suggestion.endIndex}
                       query={suggestion.query}
+                      type={searchOptions.type}
                     >
-                      {suggestion.pankti}
+                      {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                     </Larivaar>
+                    {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
+
                   </a>
                 </li>
               );
             })}
           </ul>
         );
+      } else {
+        suggestionsListComponent = (
+          <ul className="search-result" id="suggestions">
+            <li><a>No matched results.</a></li>
+          </ul>
+        )
       }
     }
 
