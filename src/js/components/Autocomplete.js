@@ -59,7 +59,7 @@ class Autocomplete extends Component {
       const userInput = this.props.value;
       clearTimeout(this.state.suggestionTimeout);
 
-      if (userInput.length > 2) {
+      if (userInput.length >= 2) {
         const suggestionTimeout = setTimeout(() => {
           const data = getSuggestions(userInput, searchOptions);
 
