@@ -392,7 +392,7 @@
 @media screen and (max-width: 55.99em) {
   .top-bar-title {
     float: none;
-    margin: 50px 0 0;
+    margin: 5px 0 0;
     text-align: center;
     width: 100%;
   }
@@ -421,15 +421,17 @@
   }
 
   .top-bar-right ul.menu {
-    background-color: $sttm-pure-white;
+    background-color: $sttm-light-blue;
     border-bottom: 1px solid $sttm-blue;
     height: 0;
+    opacity: 0.95;
     overflow: hidden;
     position: fixed;
     right: 0;
     top: -1px;
-    transition: height 400ms ease-out;
+    transition: height 400ms ease;
     width: 100%;
+    z-index: 3;
 
     .dark-mode & {
       background-color: $sttm-light-black;
@@ -440,18 +442,12 @@
   body.menu-open .top-bar-right ul.menu {
     height: calc(100% + 1px);
     top: 0;
-    z-index: 3;
   }
 
   .top-bar-right {
     .menu li {
-      border-bottom: 1px solid $sttm-blue;
       display: block;
       text-align: center;
-
-      .dark-mode & {
-        border-color: $sttm-light-blue;
-      }
 
       a,
       span {
@@ -460,6 +456,11 @@
         height: 4rem;
         line-height: 2.6rem;
         margin: 0;
+
+        &:hover {
+          background-color: $sttm-dark-blue;
+          color: $sttm-white;
+        }
       }
     }
   }
