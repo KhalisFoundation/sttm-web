@@ -52,15 +52,15 @@ export default class Pagination extends React.PureComponent {
         {currentPage === 1 ? (
           <div />
         ) : (
-          <div className="searchPaginationButton">
-            <Chevron
-              title="Previous Page"
-              role="button"
-              direction={Chevron.DIRECTIONS.LEFT}
-              onClick={() => onPageClick(currentPage)}
-            />
-          </div>
-        )}
+            <div className="searchPaginationButton">
+              <Chevron
+                title="Previous Page"
+                role="button"
+                direction={Chevron.DIRECTIONS.LEFT}
+                onClick={() => onPageClick(currentPage)}
+              />
+            </div>
+          )}
         <div className="searchPagination">
           {showLeftEllipsis && (
             <React.Fragment>
@@ -98,15 +98,15 @@ export default class Pagination extends React.PureComponent {
         {currentPage === lastPage ? (
           <div />
         ) : (
-          <div className="searchPaginationButton">
-            <Chevron
-              title="Next Page"
-              role="button"
-              direction={Chevron.DIRECTIONS.RIGHT}
-              onClick={() => onPageClick(currentPage + 1)}
-            />
-          </div>
-        )}
+            <div className="searchPaginationButton">
+              <Chevron
+                title="Next Page"
+                role="button"
+                direction={Chevron.DIRECTIONS.RIGHT}
+                onClick={() => onPageClick(currentPage + 1)}
+              />
+            </div>
+          )}
       </div>
     );
   }

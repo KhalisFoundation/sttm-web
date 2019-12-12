@@ -5,7 +5,6 @@ import {
   TOGGLE_TRANSLITERATION_OPTIONS,
   TOGGLE_LARIVAAR_ASSIST_OPTION,
   TOGGLE_LARIVAAR_OPTION,
-  TOGGLE_UNICODE_OPTION,
   TOGGLE_DARK_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   SET_CENTER_ALIGN_OPTION,
@@ -111,18 +110,6 @@ export default function reducer(state, action) {
       return {
         ...state,
         splitView,
-      };
-    }
-    case TOGGLE_UNICODE_OPTION: {
-      const unicode = !state.unicode;
-      clickEvent({
-        action: TOGGLE_UNICODE_OPTION,
-        label: unicode ? 1 : 0,
-      });
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_UNICODE, unicode);
-      return {
-        ...state,
-        unicode,
       };
     }
     case TOGGLE_LARIVAAR_OPTION: {

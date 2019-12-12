@@ -117,6 +117,20 @@
   margin: 0;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
 
+  &.kb-active {
+    height: inherit;
+  }
+
+  .menu > li > &.kb-active {
+    @media screen and (min-width: 55.99em) {
+      height: 44px;
+    }
+  }
+
+  > #suggestions {
+    width: 100%;
+  }
+
   .dark-mode & {
     background-color: $sttm-lighter-black;
     box-shadow: 0 2px 2px 0 $sttm-black, 0 0 0 1px $sttm-black;
@@ -176,6 +190,40 @@
   }
 }
 
+#suggestions {
+  background-color: $sttm-white;
+  border: none;
+  box-shadow:
+    0 2px 2px 0 $sttm-transparent-black,
+    0 0 0 1px $sttm-transparent-light-black;
+  list-style-type: none;
+  margin: 0;
+  max-height: 250px;
+  overflow-y: scroll;
+  padding: 8px 0 0 0;
+  z-index: 2;
+
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+
+    > .suggestion-active {
+      background-color: $sttm-transparent-black;
+    }
+  }
+
+  > li {
+    > a {
+      display: block;
+      padding: 10px;
+      width: 100%;
+    }
+  }
+
+  > .suggestion-active {
+    background-color: $sttm-lighter-grey;
+  }
+}
+
 #search {
   background: transparent;
   border: none;
@@ -210,6 +258,7 @@
     0 2px 2px 0 $sttm-transparent-black,
     0 0 0 1px $sttm-transparent-light-black;
   font-size: 0;
+  height: 0;
   opacity: 0;
   overflow: hidden;
   pointer-events: none;
@@ -231,6 +280,7 @@
   }
 
   &.active {
+    height: initial;
     opacity: 1;
     pointer-events: auto;
     transform: rotateX(0deg);
@@ -325,6 +375,10 @@
   svg {
     fill: $sttm-blue;
   }
+
+  .top-bar-left > & {
+    left: 0.5rem;
+  }
 }
 
 .open-search-options #search-options {
@@ -338,7 +392,7 @@
 @media screen and (max-width: 55.99em) {
   .top-bar-title {
     float: none;
-    margin: 50px 0 0;
+    margin: 5px 0 0;
     text-align: center;
     width: 100%;
   }
@@ -367,15 +421,17 @@
   }
 
   .top-bar-right ul.menu {
-    background-color: $sttm-pure-white;
+    background-color: $sttm-light-blue;
     border-bottom: 1px solid $sttm-blue;
     height: 0;
+    opacity: 0.95;
     overflow: hidden;
     position: fixed;
     right: 0;
     top: -1px;
-    transition: height 400ms ease-out;
+    transition: height 400ms ease;
     width: 100%;
+    z-index: 3;
 
     .dark-mode & {
       background-color: $sttm-light-black;
@@ -386,18 +442,12 @@
   body.menu-open .top-bar-right ul.menu {
     height: calc(100% + 1px);
     top: 0;
-    z-index: 3;
   }
 
   .top-bar-right {
     .menu li {
-      border-bottom: 1px solid $sttm-blue;
       display: block;
       text-align: center;
-
-      .dark-mode & {
-        border-color: $sttm-light-blue;
-      }
 
       a,
       span {
@@ -406,6 +456,11 @@
         height: 4rem;
         line-height: 2.6rem;
         margin: 0;
+
+        &:hover {
+          background-color: $sttm-dark-blue;
+          color: $sttm-white;
+        }
       }
     }
   }

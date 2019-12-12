@@ -1,6 +1,6 @@
 {
   "name": "@sttm/web",
-  "version": "1.5.4",
+  "version": "1.6.0",
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
@@ -98,7 +98,7 @@
     ]
   },
   "dependencies": {
-    "@sttm/banidb": "^2.2.2",
+    "@sttm/banidb": "^2.2.3",
     "classnames": "^2.2.6",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",

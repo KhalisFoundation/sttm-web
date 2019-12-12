@@ -152,7 +152,7 @@ class Meta extends React.PureComponent {
 
         {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
-            <a role="button" aria-label="next" onClick={this.handleSaveAng}>
+            <a role="button" aria-label="next" onClick={this.goToNextAng}>
               {type === 'hukamnama' ? (
                 <div className='hukamnama-nav-icon'>
                   <Hour24 direction='next' />
@@ -182,9 +182,8 @@ class Meta extends React.PureComponent {
    * Handle SaveAng
    * @memberof Meta
    */
-  handleSaveAng = () => {
+  goToNextAng = () => {
     const link = toNavURL(this.props);
-    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
     this.props.history.push(link + this.props.nav.next);
   };
 }

@@ -1,1 +1,4 @@
-export { default, IFetchProps } from './Fetch';
+import Fetch, { IFetchProps } from './Fetch';
+
+export type IFetchProps = IFetchProps;
+export default Fetch;

@@ -1,3 +1,4 @@
+/* globals API_URL */
 import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
@@ -8,6 +9,9 @@ import {
   BANI_LENGTH_COLS,
 } from '../constants';
 
+import { translationMap, getGurmukhiVerse } from './api/shabad';
+
+import { buildApiUrl } from '@sttm/banidb';
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
  * Calling this function lets you throw an error inline (eg. JSX)
@@ -302,6 +306,25 @@ export const getHighlightIndices = (baani, query, type) => {
       end = start + q.length;
       break;
     }
+    case SEARCH_TYPES.ENGLISH_WORD: {
+      const shabadLower = baani.toLowerCase();
+      const queryLower = query.toLowerCase();
+
+      const startChar = shabadLower.indexOf(queryLower);
+      let manualCount = 0;
+      if (startChar !== -1) {
+        for (const wordcount in baaniWords) {
+          [...baaniWords[wordcount]].forEach(() => {
+            if (manualCount === startChar) {
+              start = parseInt(wordcount, 10);
+            }
+            manualCount++;
+          });
+          manualCount++; // Counts the space in baani string
+        }
+        end = start + query.split(" ").length;
+      }
+    }
   }
 
   return [start, start === -1 ? 0 : end];
@@ -425,3 +448,35 @@ export const getHukamnama = data => {
   };
   return shabad;
 };
+
+
+export const getShabadList = (q, { type, source }) => {
+  const offset = 1;
+  const livesearch = true;
+  const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL, livesearch }));
+
+  return new Promise((resolve, reject) => {
+    const json = fetch(url).then((response) => response.json());
+    json.then((data) => {
+      const { verses } = data;
+      let panktiList = [];
+      for (const shabad of verses) {
+        const highlightPankti = type === 3 ? translationMap["english"](shabad) : getGurmukhiVerse(shabad);
+        const [highlightStartIndex, highlightEndIndex] = getHighlightIndices(
+          highlightPankti,
+          q,
+          type
+        );
+        panktiList.push({
+          pankti: getGurmukhiVerse(shabad),
+          translation: translationMap["english"](shabad),
+          query: q,
+          url: toShabadURL({ shabad, q, type, source }),
+          startIndex: highlightStartIndex,
+          endIndex: highlightEndIndex,
+        })
+      }
+      resolve(panktiList);
+    }, (error) => { reject(error); });
+  });
+}

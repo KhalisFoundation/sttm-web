@@ -46,7 +46,7 @@ export default class Search extends React.PureComponent {
               pages={Array.from(
                 Array(
                   parseInt(
-                    resultsInfo.totalResults / resultsInfo.pages.resultsPerPage
+                    resultsInfo.pages.totalPages
                   )
                 ),
                 (_, i) => i + 1
