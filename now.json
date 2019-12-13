@@ -2,7 +2,7 @@
   "version": 1,
   "name": "@sttm/web",
   "engines": {
-    "node": "v8.11.3"
+    "node": "12.x"
   },
   "public": true
 }
