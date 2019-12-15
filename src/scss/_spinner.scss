@@ -1,8 +1,8 @@
 .spinner {
-  -webkit-animation: spin 4s linear infinite;
-  -moz-animation: spin 4s linear infinite;
-  animation: spin 4s linear infinite;
-  background-image: url(/assets/images/spinner-mandala.png);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: shadow-pulse 1s infinite;
+  background-image: url(/assets/images/banidblogo.png);
   background-size: 200px 200px;
   height: 200px;
   left: 50%;
@@ -10,25 +10,17 @@
   position: relative;
   width: 200px;
   z-index: 1;
+
+@keyframes shadow-pulse
+{
+     0% {
+          box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+     }
+     100% {
+          box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+     }
 }
 
-@-moz-keyframes spin {
-  100% {
-    -moz-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
 }
 
 @media screen and (max-width: 45.999999em) {
