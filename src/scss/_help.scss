@@ -1,6 +1,5 @@
 #help {
-  display: flex;
-  flex-wrap: wrap;
+  display: block;
   width: 100%;
 
   h2 {
@@ -50,6 +49,18 @@
 
       li {
         cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2em;
+
+        & li {
+         font-weight:normal;
+         font-size: 0.9em;
+        }
+
+      }
+
+      a {
+      color: $sttm-blue;
       }
 
       .dark-mode & {
@@ -70,12 +81,11 @@
 
 @media screen and (min-width: 46em) {
   #help {
-    display: flex;
-    flex-wrap: nowrap;
+    display: block;
     width: 100%;
 
     #sidebar {
-      width: 23%;
+      width: 100%;
     }
 
     .video {
