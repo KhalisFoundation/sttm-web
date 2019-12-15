@@ -79,12 +79,12 @@
 
       &-icon {
         box-shadow: -5px 0 7px -6px $sttm-grey;
+        cursor: copy;
         height: 0.8em;
         position: absolute;
         right: 0;
         top: -14px;
         width: 0.8em;
-        cursor: copy;
 
         .dark-mode & {
           box-shadow: -5px 0 7px -6px $sttm-light-black;

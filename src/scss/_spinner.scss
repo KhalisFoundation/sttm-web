@@ -1,26 +1,25 @@
 .spinner {
-  border-radius: 50%;
-  opacity: 0.5;
   animation: shadow-pulse 1s infinite;
   background-image: url(/assets/images/banidblogo.png);
   background-size: 200px 200px;
+  border-radius: 50%;
   height: 200px;
   left: 50%;
   margin: 10% 0 0 -60px;
+  opacity: 0.5;
   position: relative;
   width: 200px;
   z-index: 1;
 
-@keyframes shadow-pulse
-{
-     0% {
-          box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
-     }
-     100% {
-          box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
-     }
-}
+  @keyframes shadow-pulse {
+    0% {
+      box-shadow: 0 rgba(0, 0, 0, 0.2);
+    }
 
+    100% {
+      box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+    }
+  }
 }
 
 @media screen and (max-width: 45.999999em) {
