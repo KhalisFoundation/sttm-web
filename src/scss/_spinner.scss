@@ -10,22 +10,22 @@
   position: relative;
   width: 200px;
   z-index: 1;
+}
 
-  @keyframes shadow-pulse {
-    0% {
-      box-shadow: 0 rgba(0, 0, 0, 0.2);
-    }
+@keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 1px rgba(250, 130, 2, 1);
+  }
 
-    100% {
-      box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
-    }
+  100% {
+    box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
   }
 }
 
 @media screen and (max-width: 45.999999em) {
   .spinner {
-    background-size: 100px 100px;
-    height: 100px;
-    width: 100px;
+    background-size: 150px 150px;
+    height: 150px;
+    width: 150px;
   }
 }
