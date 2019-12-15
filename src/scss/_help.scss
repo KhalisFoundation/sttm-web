@@ -49,18 +49,17 @@
 
       li {
         cursor: pointer;
-        font-weight: bold;
         font-size: 1.2em;
+        font-weight: bold;
 
         & li {
-         font-weight:normal;
-         font-size: 0.9em;
+          font-size: 0.9em;
+          font-weight: normal;
         }
-
       }
 
       a {
-      color: $sttm-blue;
+        color: $sttm-blue;
       }
 
       .dark-mode & {
