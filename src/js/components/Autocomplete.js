@@ -13,7 +13,7 @@ class Autocomplete extends Component {
     super(props);
 
     this.state = {
-      activeSuggestion: 0,
+      activeSuggestion: -1,
       filteredSuggestions: [],
       showSuggestions: false,
       suggestionTimeout: 0,
@@ -24,16 +24,16 @@ class Autocomplete extends Component {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     if (e.keyCode === 13) {
-      e.preventDefault();
+      activeSuggestion !== -1 && e.preventDefault();
       window.location = filteredSuggestions[activeSuggestion].url;
       this.setState({
-        activeSuggestion: 0,
+        activeSuggestion: -1,
         filteredSuggestions: [],
         showSuggestions: false,
       });
     } else if (e.keyCode === 38) {
       e.preventDefault();
-      if (activeSuggestion !== 0) {
+      if (activeSuggestion !== -1) {
         this.setState({ activeSuggestion: activeSuggestion - 1 });
         const newScroll = document.querySelector('.suggestion-active').offsetHeight;
         document.getElementById('suggestions').scrollBy(0, -newScroll);
@@ -66,7 +66,7 @@ class Autocomplete extends Component {
 
           data.then(suggestions => {
             this.setState({
-              activeSuggestion: 0,
+              activeSuggestion: -1,
               filteredSuggestions: suggestions,
               showSuggestions: true,
             });
@@ -75,7 +75,7 @@ class Autocomplete extends Component {
         this.setState({ suggestionTimeout });
       } else {
         this.setState({
-          activeSuggestion: 0,
+          activeSuggestion: -1,
           showSuggestions: false,
         });
       }
