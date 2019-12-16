@@ -195,7 +195,7 @@ export default class Header extends React.PureComponent {
                           </option>
                         ))}
                       </select>
-                      {type === SEARCH_TYPES['ANG'] ? (
+                      {parseInt(type) === SEARCH_TYPES['ANG'] ? (
                         <select
                           name="source"
                           value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
