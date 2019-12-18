@@ -43,7 +43,7 @@ class Autocomplete extends Component {
       if (activeSuggestion + 1 < filteredSuggestions.length) {
         this.setState({ activeSuggestion: activeSuggestion + 1 });
         const newScroll = document.querySelector('.suggestion-active').offsetHeight;
-        document.getElementById('suggestions').scrollBy(0, newScroll);
+        activeSuggestion + 1 !== 0 && document.getElementById('suggestions').scrollBy(0, newScroll);
       }
     }
   };
