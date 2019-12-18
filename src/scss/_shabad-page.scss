@@ -15,11 +15,11 @@ blockquote {
 
 #metadata {
   align-items: center;
-  border: 1px solid $sttm-light-grey;
+  background-color: #e9e9e9;
   border-radius: 2px;
   display: flex;
   margin: 1rem;
-  padding: 1rem;
+  padding: 1rem 1rem 0.5rem;
   text-align: center;
   width: calc(100% - 2rem);
 
@@ -28,7 +28,7 @@ blockquote {
   }
 
   .dark-mode & {
-    border-color: $sttm-dark-grey;
+    background-color: #111;
   }
 }
 
