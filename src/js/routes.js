@@ -12,6 +12,7 @@ import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
 import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
+import AdminSyncPage from './pages/adminSync'
 import {
   DEFAULT_SEARCH_SOURCE,
   DEFAULT_SEARCH_TYPE,
@@ -389,6 +390,16 @@ export default [
     path: '/random',
     render() {
       return <Redirect to="/shabad?random" />;
+    },
+  },
+  {
+    path: '/admin',
+    render(props) {
+      return (
+        <Layout title="Admin Sync - SikhiToTheMax" isHome={true} {...props} >
+          <AdminSyncPage />
+        </ Layout>
+      )
     },
   },
   {

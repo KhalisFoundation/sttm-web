@@ -98,19 +98,19 @@ class Layout extends React.PureComponent {
         {this.state.error ? (
           <GenericError {...this.state.errorProps} />
         ) : (
-          children
-        )}
+            children
+          )}
         {this.state.showScrollToTop && <ScrollToTop />}
       </React.Fragment>
     ) : (
-      <div className="content-root">
-        <GenericError
-          title={TEXTS.OFFLINE}
-          description={TEXTS.OFFLINE_DESCRIPTION}
-          image={SachKaur}
-        />
-      </div>
-    );
+        <div className="content-root">
+          <GenericError
+            title={TEXTS.OFFLINE}
+            description={TEXTS.OFFLINE_DESCRIPTION}
+            image={SachKaur}
+          />
+        </div>
+      );
   }
 
   updateTheme() {
