@@ -123,7 +123,7 @@ export const TEXTS = {
   NO_RESULTS_FOUND: `Sorry, we couldn't find results for your query`,
   NO_RESULTS_FOUND_DESCRIPTION: (source: string, type: string) =>
     `Are you sure you want to search in "${source}" with search type of "${type}"? If not, try changing your search settings from above. If you still cannot find your shabad, head over to `,
-  GURBAANI_COPIED: 'Gurbaani has been copied to your clipboard!',
+  GURBAANI_COPIED: 'Gurbani has been copied to your clipboard!',
   EMBED_COPIED:
     'Embedding code has been copied. Paste it in a rich editor usually found in forums',
   EMBED_FAILURE: "Sorry, we couldn't copy embed code",

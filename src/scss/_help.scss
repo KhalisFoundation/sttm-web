@@ -1,6 +1,5 @@
 #help {
-  display: flex;
-  flex-wrap: wrap;
+  display: block;
   width: 100%;
 
   h2 {
@@ -36,7 +35,6 @@
     border: 1px solid $sttm-light-grey;
     border-radius: 2px;
     font-size: 0.9em;
-    margin: 1rem;
     padding: 1rem;
     width: 100%;
 
@@ -50,6 +48,17 @@
 
       li {
         cursor: pointer;
+        font-size: 1.2em;
+        font-weight: bold;
+
+        & li {
+          font-size: 0.9em;
+          font-weight: normal;
+        }
+      }
+
+      a {
+        color: $sttm-blue;
       }
 
       .dark-mode & {
@@ -70,12 +79,11 @@
 
 @media screen and (min-width: 46em) {
   #help {
-    display: flex;
-    flex-wrap: nowrap;
+    display: block;
     width: 100%;
 
     #sidebar {
-      width: 23%;
+      width: 100%;
     }
 
     .video {
@@ -84,7 +92,6 @@
 
     main {
       padding: 0;
-      width: 77%;
     }
   }
 }

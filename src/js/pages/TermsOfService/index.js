@@ -9,6 +9,7 @@ export default class TermsOfService extends React.PureComponent {
       <div className="row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.URIS.TOS }]} />
         <div className="wrapper">
+        <h1>Terms of Service</h1>
           The Khalis Foundation and Affiliates (the “Service”) is freely
           accessible worldwide to anyone with Internet access. Access to and use
           of the Service is subject to the Terms and Conditions listed below and
@@ -108,20 +109,9 @@ export default class TermsOfService extends React.PureComponent {
           <hr />
           <h3 id="copyright">Copyright</h3>
           All images and assets not covered under other licenses are covered
-          under full Copyright © 2018 Khalis Foundation.
+          under full Copyright © 2019 Khalis Foundation.
           <hr />
           <h3 id="acknowledgements">Legal Acknowledgements</h3>
-          <section>
-            <a
-              href="https://www.vexels.com/vectors/preview/77606/floral-mandala-vector"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {' '}
-              Floral mandala vector{' '}
-            </a>{' '}
-            | designed by Vexels.
-          </section>
           <section>
             <a
               href="https://fontawesome.com/license"
