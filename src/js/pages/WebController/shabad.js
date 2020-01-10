@@ -16,10 +16,18 @@ export default class ControllerShabad extends React.PureComponent {
   static propTypes = {
     data: PropTypes.object,
     highlight: PropTypes.number,
+    socket: PropTypes.object,
+    controllerPin: PropTypes.number,
   };
 
-  handlePanktiClick = verseId => {
-    console.log(verseId);
+  handlePanktiClick = (verseId, shabadId) => {
+    this.props.socket.emit('data', {
+      host: "sttm-web",
+      type: "shabad",
+      pin: this.props.controllerPin,
+      shabadId,
+      verseId,
+    });
   }
 
   render() {

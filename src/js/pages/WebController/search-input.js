@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
@@ -22,9 +22,10 @@ import { getNumberFromLocalStorage } from '../../util';
 import ControllerSearch from './search';
 
 export default class SearchInput extends React.PureComponent {
-  // static propTypes = {
-  //   socket: PropTypes.object
-  // };
+  static propTypes = {
+    socket: PropTypes.object,
+    controllerPin: PropTypes.number,
+  };
 
   constructor(props) {
     super(props);
@@ -188,6 +189,8 @@ export default class SearchInput extends React.PureComponent {
                   type={this.state.type}
                   source={this.state.source}
                   offset={this.state.offset}
+                  socket={this.props.socket}
+                  controllerPin={this.props.controllerPin}
                 />
               )}
             </React.Fragment>

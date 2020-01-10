@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import BaaniLine from '@/components/BaaniLine';
 import { SHABAD_CONTENT_CLASSNAME } from '@/constants';
 
-import { getVerseId } from '@/util/api/shabad';
+import { getVerseId, getShabadId } from '@/util/api/shabad';
 import HomeIcon from '@/components/Icons/Home';
 
 /**
@@ -52,11 +52,11 @@ export default class Pankti extends React.PureComponent {
     }
   }
 
-  clickedPankti(e, verse) {
+  clickedPankti(e, verse, shabad) {
     const clickedPankti = e.currentTarget;
     document.querySelector(".active").classList.remove("active");
     clickedPankti.classList.add("visited", "active");
-    this.props.onPanktiClick(verse);
+    this.props.onPanktiClick(verse, shabad);
   }
 
   render() {
@@ -92,7 +92,7 @@ export default class Pankti extends React.PureComponent {
             ? (this.$highlightedBaaniLine = node)
             : null
         }
-        onClick={e => this.clickedPankti(e, getVerseId(shabad))}
+        onClick={e => this.clickedPankti(e, getVerseId(shabad), getShabadId(shabad))}
       >
         {getBaniLine(shabad)}
         {highlight === parseInt(getVerseId(shabad), 10) && (<HomeIcon />)}

@@ -14,11 +14,12 @@ export default class WebControllerPage extends React.PureComponent {
       connected: false,
       accessGranted: false,
       namespaceString: '',
+      socket: null,
+      controllerPin: 0,
     };
   }
 
   _socket = null;
-  _mounted = false;
 
   _alertOnExit = e => {
     if (this.state.connected) {
@@ -39,6 +40,7 @@ export default class WebControllerPage extends React.PureComponent {
 
           if (window.io !== undefined) {
             this._socket = window.io(`${SYNC_API_URL}${namespaceString}`);
+            this.setState({ socket: this._socket });
 
             this._socket.on('close', () =>
               this.setState({
@@ -50,27 +52,21 @@ export default class WebControllerPage extends React.PureComponent {
             );
 
             this._socket.on('data', data => {
-              console.log(data);
+              if (data.host === 'sttm-desktop' && data['type'] === 'response-control') {
+                this.setState({ accessGranted: data['success'] });
+                if (data['success']) {
+                  this.setState({ controllerPin: pin });
+                } else {
+                  alert("Wrong pin");
+                }
+              }
             });
 
-            this._socket.on('xyz', data => {
-              console.log(data);
+            this._socket.emit('data', {
+              host: "sttm-web",
+              type: "request-control",
+              pin,
             });
-
-            console.log(this._socket);
-
-            setInterval(() => {
-              this._socket.emit('xyz', {
-                abc: "123",
-                pin,
-              });
-            }, 5000);
-
-            setInterval(() => {
-              this._socket.emit('data', {
-                abc: "123"
-              });
-            }, 5000);
           }
         }
       })
@@ -82,8 +78,8 @@ export default class WebControllerPage extends React.PureComponent {
       <div className="row controller-row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.CONTROLLER }]} />
         <div className="wrapper">
-          {this.state.connected ? (
-            <SearchInput />
+          {this.state.accessGranted ? (
+            <SearchInput socket={this.state.socket} controllerPin={this.state.controllerPin} />
           ) : (
               <React.Fragment>
                 <form

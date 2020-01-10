@@ -38,6 +38,8 @@ export default class ControllerSearch extends React.PureComponent {
     type: PropTypes.number,
     source: PropTypes.string,
     offset: PropTypes.number,
+    socket: PropTypes.object,
+    controllerPin: PropTypes.number,
   };
 
   handlePageClick = e => {
@@ -45,6 +47,13 @@ export default class ControllerSearch extends React.PureComponent {
   }
 
   onShabadClick = (shabadId, verseId) => {
+    this.props.socket.emit('data', {
+      host: "sttm-web",
+      type: "shabad",
+      pin: this.props.controllerPin,
+      shabadId,
+      verseId,
+    });
     this.setState({ verseId, shabadId, openShabad: true });
   }
 
@@ -124,7 +133,10 @@ export default class ControllerSearch extends React.PureComponent {
             );
           } else {
             return (
-              <ControllerShabad data={data} highlight={this.state.verseId} />
+              <ControllerShabad data={data}
+                socket={this.props.socket}
+                highlight={this.state.verseId}
+                controllerPin={this.props.controllerPin} />
             )
           }
         }}
