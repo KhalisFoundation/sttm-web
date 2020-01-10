@@ -29,6 +29,7 @@ class Layout extends React.PureComponent {
       .isRequired,
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
+    isController: PropTypes.bool,
     isAng: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
   };
@@ -72,6 +73,7 @@ class Layout extends React.PureComponent {
       children,
       isAng = false,
       isHome = false,
+      isController = false,
       location: { pathname = '/' } = {},
       ...props
     } = this.props;
@@ -93,6 +95,7 @@ class Layout extends React.PureComponent {
           defaultQuery={this.props.defaultQuery}
           isHome={isHome}
           isAng={isAng}
+          isController={isController}
           {...props}
         />
         {this.state.error ? (

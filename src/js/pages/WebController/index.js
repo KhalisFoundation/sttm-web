@@ -74,12 +74,15 @@ export default class WebControllerPage extends React.PureComponent {
   };
 
   render() {
+    const { socket, controllerPin, accessGranted } = this.state;
+
     return (
       <div className="row controller-row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.CONTROLLER }]} />
         <div className="wrapper">
-          {this.state.accessGranted ? (
-            <SearchInput socket={this.state.socket} controllerPin={this.state.controllerPin} />
+          {accessGranted ? (
+            <SearchInput socket={socket}
+              controllerPin={controllerPin} />
           ) : (
               <React.Fragment>
                 <form
@@ -113,7 +116,7 @@ export default class WebControllerPage extends React.PureComponent {
                     type="password"
                     placeholder="Enter the controller password"
                   />
-                  <button className="sync-form--button">Submit</button>
+                  <button className="sync-form--button">Connect to Desktop</button>
                 </form>
               </React.Fragment>
             )}

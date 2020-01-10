@@ -396,7 +396,7 @@ export default [
     path: '/control',
     render(props) {
       return (
-        <Layout title="Web Controller - SikhiToTheMax" isHome={true} isController={true} {...props} >
+        <Layout title="Web Controller - SikhiToTheMax" isController={true} {...props} >
           <WebControllerPage />
         </ Layout>
       )

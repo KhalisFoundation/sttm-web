@@ -4,12 +4,24 @@
   }
 
   .wrapper {
+    padding: 2rem;
+
     ul {
       margin: auto;
       max-width: 625px;
 
       li {
         cursor: pointer;
+      }
+    }
+
+    > .sync-form {
+      display: block;
+      margin: auto;
+      max-width: 625px;
+
+      input {
+        max-width: 100%;
       }
     }
   }

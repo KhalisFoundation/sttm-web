@@ -16,6 +16,7 @@ export default class Header extends React.PureComponent {
   static propTypes = {
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
+    isController: PropTypes.bool,
     isAng: PropTypes.bool,
     location: PropTypes.shape({
       search: PropTypes.string,
@@ -33,7 +34,7 @@ export default class Header extends React.PureComponent {
 
   render() {
     const {
-      props: { defaultQuery, isHome, isAng },
+      props: { defaultQuery, isHome, isAng, isController },
       onFormSubmit,
       handleFormSubmit,
     } = this;
@@ -82,7 +83,7 @@ export default class Header extends React.PureComponent {
                 <React.Fragment>
                   <div id="responsive-menu">
                     <div className="top-bar-left">
-                      {!isHome && (
+                      {!isHome && !isController && (
                         <form
                           action={action}
                           id="top-bar-search-form"
@@ -181,7 +182,7 @@ export default class Header extends React.PureComponent {
                       isHome={isHome}
                     />
                   </div>
-                  {!isHome && (
+                  {!isHome && !isController && (
                     <div id="search-options">
                       <select
                         name="type"
