@@ -12,7 +12,7 @@ import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
 import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
-import AdminSyncPage from './pages/adminSync'
+import WebControllerPage from './pages/WebController'
 import {
   DEFAULT_SEARCH_SOURCE,
   DEFAULT_SEARCH_TYPE,
@@ -393,11 +393,11 @@ export default [
     },
   },
   {
-    path: '/admin',
+    path: '/control',
     render(props) {
       return (
-        <Layout title="Admin Sync - SikhiToTheMax" isHome={true} {...props} >
-          <AdminSyncPage />
+        <Layout title="Web Controller - SikhiToTheMax" isHome={true} isController={true} {...props} >
+          <WebControllerPage />
         </ Layout>
       )
     },

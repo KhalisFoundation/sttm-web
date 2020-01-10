@@ -1,24 +1,51 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+// import PropTypes from 'prop-types';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
-import Autocomplete from '@/components/Autocomplete';
+// import SlideControls from './slide-controls';
 import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
 import SearchForm from '../../components/SearchForm';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../../constants';
-import { toSearchURL, getShabadList } from '../../util';
+
+import {
+  SOURCES,
+  SEARCH_TYPES,
+  TYPES,
+  SOURCES_WITH_ANG,
+  LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+  DEFAULT_SEARCH_TYPE,
+  LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
+  DEFAULT_SEARCH_SOURCE,
+} from '../../constants';
+
+import { getNumberFromLocalStorage } from '../../util';
+import ControllerSearch from './search';
 
 export default class SearchInput extends React.PureComponent {
-  static propTypes = {
-    history: PropTypes.shape({ push: PropTypes.func }),
-  };
+  // static propTypes = {
+  //   socket: PropTypes.object
+  // };
 
-  onSubmit = ({ handleSubmit, ...data }) => e => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: '',
+      type:
+        getNumberFromLocalStorage(
+          LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+          DEFAULT_SEARCH_TYPE
+        ),
+      source:
+        localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
+        DEFAULT_SEARCH_SOURCE,
+      offset: 0,
+    };
+  }
+
+  onSubmit = ({ handleSubmit, query, type, source }) => e => {
     e.preventDefault();
     handleSubmit();
-    this.props.history.push(toSearchURL(data));
+    this.setState({ query, type, source, offset: 0, });
   };
 
   render() {
@@ -107,11 +134,6 @@ export default class SearchInput extends React.PureComponent {
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
                       />
                     </div>
-                    <Autocomplete
-                      getSuggestions={getShabadList}
-                      searchOptions={{ type, source }}
-                      value={query}
-                    />
                     <div className="search-options">
                       <div className="search-option">
                         <select
@@ -159,6 +181,15 @@ export default class SearchInput extends React.PureComponent {
                   </form>
                 </div>
               </div>
+              {/* <SlideControls /> */}
+              {this.state.query && (
+                <ControllerSearch
+                  q={this.state.query}
+                  type={this.state.type}
+                  source={this.state.source}
+                  offset={this.state.offset}
+                />
+              )}
             </React.Fragment>
           )}
       </SearchForm>
