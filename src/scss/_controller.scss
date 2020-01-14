@@ -1,10 +1,38 @@
+#controller-bar {
+  background-color: $sttm-dark-blue;
+  border: none;
+}
+
+.controller-header {
+  .top-bar-title {
+    align-items: center;
+    display: flex;
+  }
+
+  .logo-text {
+    color: $sttm-orange;
+    font-size: 28px;
+    text-indent: 8px;
+    text-transform: uppercase;
+
+    > .bolder {
+      font-weight: bolder;
+    }
+  }
+
+  #sync-logo {
+    background-image: url('/assets/images/sttm_icon.png');
+    width: 32px;
+  }
+}
+
 .controller-row {
   .search-page {
     padding-top: 20px;
   }
 
   .wrapper {
-    padding: 2rem;
+    padding: 1rem;
 
     ul {
       margin: auto;
@@ -21,21 +49,36 @@
       max-width: 625px;
 
       input {
+        background-color: $sttm-white;
+        color: $sttm-dark-blue;
+        font-weight: 700;
         max-width: 100%;
+      }
+
+      button {
+        background-color: $sttm-white;
+        color: $sttm-black;
       }
     }
   }
 }
 
 .control-section {
+  background-color: $sttm-white;
+  position: sticky;
+  text-align: center;
+  top: 0;
+
   > .slide-type {
     border: 1px solid black;
+    cursor: pointer;
     display: inline-block;
-    height: 100px;
     margin: 5px;
+    padding: 10px 20px;
     width: 150px;
 
     > p {
+      margin: 0;
       text-align: center;
     }
   }

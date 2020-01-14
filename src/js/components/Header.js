@@ -45,6 +45,25 @@ export default class Header extends React.PureComponent {
 
     const key = `${defaultQuery}${defaultSource}${defaultType}`;
 
+    const controllerHeader = (
+      <div className="top-bar no-select" id="controller-bar">
+        <div className="top-bar-wrapper row controller-header">
+          <div className="top-bar-title">
+            <Link id="sync-logo" to="/" />
+            <span className="logo-text"><span className="bolder">Desktop</span> Sync</span>
+          </div>
+          <div id="responsive-menu">
+            {/* <Menu isHome={isHome} /> */}
+          </div>
+        </div>
+      </div>
+    );
+
+    if (isController) {
+      return controllerHeader;
+    }
+
+
     return (
       <div className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
         <div className="top-bar-wrapper row">
@@ -83,7 +102,7 @@ export default class Header extends React.PureComponent {
                 <React.Fragment>
                   <div id="responsive-menu">
                     <div className="top-bar-left">
-                      {!isHome && !isController && (
+                      {!isHome && (
                         <form
                           action={action}
                           id="top-bar-search-form"
@@ -182,7 +201,7 @@ export default class Header extends React.PureComponent {
                       isHome={isHome}
                     />
                   </div>
-                  {!isHome && !isController && (
+                  {!isHome && (
                     <div id="search-options">
                       <select
                         name="type"

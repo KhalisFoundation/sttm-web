@@ -16,6 +16,7 @@ import {
   getUnicodeVerse,
   getShabadId,
   getVerseId,
+  getGurmukhiVerse,
 } from '@/util/api/shabad';
 
 export default class ControllerSearch extends React.PureComponent {
@@ -46,13 +47,14 @@ export default class ControllerSearch extends React.PureComponent {
     this.setState({ offset: e });
   }
 
-  onShabadClick = (shabadId, verseId) => {
+  onShabadClick = (shabadId, verseId, gurmukhi) => {
     this.props.socket.emit('data', {
       host: "sttm-web",
       type: "shabad",
       pin: this.props.controllerPin,
       shabadId,
       verseId,
+      gurmukhi,
     });
     this.setState({ verseId, shabadId, openShabad: true });
   }
@@ -99,7 +101,7 @@ export default class ControllerSearch extends React.PureComponent {
 
               results.push(
                 <li className="search-result" key={shabad.verseId}
-                  onClick={() => { this.onShabadClick(getShabadId(shabad), getVerseId(shabad)); }}>
+                  onClick={() => { this.onShabadClick(getShabadId(shabad), getVerseId(shabad), getGurmukhiVerse(shabad)); }}>
                   <Larivaar
                     key={shabad.id}
                     larivaarAssist={false}

@@ -6,16 +6,18 @@ import { TEXTS } from '../../constants';
 import { pageView } from '../../util/analytics';
 import BreadCrumb from '@/components/Breadcrumb';
 import SearchInput from './search-input';
+import SlideControls from './slide-controls';
+import ControllerSearch from './search';
 
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       connected: false,
-      accessGranted: false,
       namespaceString: '',
       socket: null,
       controllerPin: 0,
+      searchData: {},
     };
   }
 
@@ -28,6 +30,10 @@ export default class WebControllerPage extends React.PureComponent {
     return null;
   };
 
+  handleSearch = data => {
+    this.setState({ searchData: data });
+  }
+
   handleSubmit = (code, pin) => {
     fetch(`${SYNC_API_URL}sync/join/${code}`)
       .then(r => r.json())
@@ -36,36 +42,40 @@ export default class WebControllerPage extends React.PureComponent {
           this.setState({ error, data, connected: false });
         } else {
           const { namespaceString } = data;
-          this.setState({ connected: true, namespaceString });
 
           if (window.io !== undefined) {
             this._socket = window.io(`${SYNC_API_URL}${namespaceString}`);
-            this.setState({ socket: this._socket });
-
-            this._socket.on('close', () =>
-              this.setState({
-                connected: false,
-                data: {},
-                error: null,
-                namespaceString: '',
-              })
-            );
-
-            this._socket.on('data', data => {
-              if (data.host === 'sttm-desktop' && data['type'] === 'response-control') {
-                this.setState({ accessGranted: data['success'] });
-                if (data['success']) {
-                  this.setState({ controllerPin: pin });
-                } else {
-                  alert("Wrong pin");
-                }
-              }
-            });
 
             this._socket.emit('data', {
               host: "sttm-web",
               type: "request-control",
               pin,
+            });
+
+            this._socket.on('close', () =>
+              this.setState({
+                connected: false,
+                error: null,
+                namespaceString: '',
+                socket: null,
+              })
+            );
+
+            this._socket.on('data', data => {
+              console.log(data);
+              if (data['type'] === 'response-control') {
+                data['success'] ?
+                  this.setState({
+                    connected: true,
+                    namespaceString,
+                    controllerPin: parseInt(pin),
+                    socket: this._socket
+                  }) :
+                  this.setState({
+                    connected: false,
+                    error: true,
+                  });
+              }
             });
           }
         }
@@ -74,15 +84,30 @@ export default class WebControllerPage extends React.PureComponent {
   };
 
   render() {
-    const { socket, controllerPin, accessGranted } = this.state;
+    const { socket, controllerPin, connected, searchData } = this.state;
+    const { query, type, source, offset } = searchData;
 
     return (
       <div className="row controller-row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.CONTROLLER }]} />
         <div className="wrapper">
-          {accessGranted ? (
-            <SearchInput socket={socket}
-              controllerPin={controllerPin} />
+          {connected ? (
+            <React.Fragment>
+              <SearchInput onSearch={this.handleSearch} />
+              <SlideControls
+                socket={socket}
+                controllerPin={controllerPin} />
+              {query && (
+                <ControllerSearch
+                  q={query}
+                  type={type}
+                  source={source}
+                  offset={offset}
+                  socket={socket}
+                  controllerPin={controllerPin}
+                />
+              )}
+            </React.Fragment>
           ) : (
               <React.Fragment>
                 <form
