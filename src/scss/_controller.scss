@@ -4,9 +4,15 @@
 }
 
 .controller-header {
+  align-items: center;
+
   .top-bar-title {
     align-items: center;
     display: flex;
+  }
+
+  .responsive-menu {
+    flex-grow: 1;
   }
 
   .logo-text {
@@ -114,6 +120,32 @@
 
     > svg {
       opacity: 0.6;
+    }
+  }
+}
+
+@media screen and (max-width: 55.99em) {
+  .top-bar-title {
+    margin: 0;
+  }
+
+  #open-mobile-menu {
+    line-height: 30px;
+  }
+}
+
+@media screen and (min-width: 55.99em) {
+  .controller-header {
+    .menu {
+      background-color: transparent;
+
+      > li > a {
+        color: $sttm-white;
+
+        &:hover {
+          background-color: $sttm-blue;
+        }
+      }
     }
   }
 }

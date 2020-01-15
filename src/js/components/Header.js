@@ -52,8 +52,8 @@ export default class Header extends React.PureComponent {
             <Link id="sync-logo" to="/" />
             <span className="logo-text"><span className="bolder">Desktop</span> Sync</span>
           </div>
-          <div id="responsive-menu">
-            {/* <Menu isHome={isHome} /> */}
+          <div className="responsive-menu">
+            <Menu isHome={true} />
           </div>
         </div>
       </div>
