@@ -139,7 +139,7 @@ export default class WebControllerPage extends React.PureComponent {
                     className="sync-form--input"
                     name="syncPassword"
                     type="password"
-                    placeholder="Enter the controller password"
+                    placeholder="Enter PIN EG. 1234"
                   />
                   <button className="sync-form--button">Connect to Desktop</button>
                 </form>
