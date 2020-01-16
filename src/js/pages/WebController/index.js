@@ -110,7 +110,9 @@ export default class WebControllerPage extends React.PureComponent {
             </React.Fragment>
           ) : (
               <React.Fragment>
-                <form
+              <h1>{TEXTS.CONTROLLER_TITLE}</h1>
+              <p>{TEXTS.CONTROLLER_DESC}</p>
+              <form
                   className="sync-form"
                   onSubmit={e => {
                     e.preventDefault();
@@ -143,6 +145,7 @@ export default class WebControllerPage extends React.PureComponent {
                   />
                   <button className="sync-form--button">Connect to Desktop</button>
                 </form>
+                <hr /><h3>Instructions</h3><ol><li>Make sure both your mobile device and the computer running SikhiToTheMax are connected to the internet. They do <b>not</b> need to be on the same WiFi network meaning you could control SikhiToTheMax from anywhere in the world with just an internet connection.</li><li>Click on the controller icon <img src="/assets/images/sync-icon.png" width="28px" /> in SikhiToTheMax destop application. You can find this in SikhiToTheMax near the bottom-left corner.</li><li>Take a note of the code and PIN number displayed.<br /><img src="/assets/images/sync-code.png" width="125px" /></li><li>Open any browser on your mobile device and go to <a href="http://sttm.co/control" target="_blank">sttm.co/control</a>.</li><li>Enter in the code and PIN number in the fields at the top of this page and click "Connect to Desktop" button.</li><li>Search for any Shabad and control! Click on the individual Panktees (lines) to display it on your projector or external monitor.</li></ol>
               </React.Fragment>
             )}
         </div>
