@@ -38,8 +38,6 @@
   }
 
   .wrapper {
-    padding: 1rem;
-
     ul {
       margin: auto;
       max-width: 625px;
@@ -47,6 +45,12 @@
       li {
         cursor: pointer;
       }
+    }
+
+    .active-slide {
+      background-color: $sttm-blue;
+      border-radius: 0;
+      color: $sttm-white;
     }
 
     > .sync-form {
@@ -70,13 +74,18 @@
 }
 
 .control-section {
-  background-color: $sttm-white;
+  background-color: $sttm-dark-white;
   position: sticky;
   text-align: center;
   top: 0;
+  transition: 0.1s background-color ease;
 
   > .slide-type {
-    border: 1px solid black;
+    background-color: $sttm-white;
+    box-shadow:
+      0 2px 2px 0 $sttm-transparent-black,
+      0 0 0 1px $sttm-transparent-light-black;
+    color: $sttm-dark-blue;
     cursor: pointer;
     display: inline-block;
     margin: 5px;
@@ -87,6 +96,10 @@
       margin: 0;
       text-align: center;
     }
+  }
+
+  &.with-border {
+    box-shadow: 0 8px 6px -10px black;
   }
 }
 
@@ -106,10 +119,9 @@
       background-color: $sttm-light-grey;
     }
 
-    &.active {
+    &.active-slide {
       background-color: $sttm-blue;
       border-radius: 0;
-      color: $sttm-white;
     }
 
     .highlight {
@@ -125,6 +137,10 @@
 }
 
 @media screen and (max-width: 55.99em) {
+  .controller-row .search-page {
+    padding-top: 5px;
+  }
+
   .top-bar-title {
     margin: 0;
   }

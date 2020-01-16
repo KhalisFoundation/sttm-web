@@ -54,8 +54,9 @@ export default class Pankti extends React.PureComponent {
 
   clickedPankti(e, verse, shabad) {
     const clickedPankti = e.currentTarget;
-    document.querySelector(".active").classList.remove("active");
-    clickedPankti.classList.add("visited", "active");
+
+    document.querySelector(".active-slide").classList.remove("active-slide");
+    clickedPankti.classList.add("visited", "active-slide");
     this.props.onPanktiClick(verse, shabad);
   }
 
@@ -86,7 +87,7 @@ export default class Pankti extends React.PureComponent {
       <div
         key={getVerseId(shabad)}
         id={`line-${getVerseId(shabad)}`}
-        className={`line ${highlight === parseInt(getVerseId(shabad), 10) ? 'visited active' : ''}`}
+        className={`line ${highlight === parseInt(getVerseId(shabad), 10) ? 'visited active-slide' : ''}`}
         ref={node =>
           highlight === parseInt(getVerseId(shabad), 10)
             ? (this.$highlightedBaaniLine = node)
