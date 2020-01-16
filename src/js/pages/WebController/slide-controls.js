@@ -1,14 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 export default class SlideControls extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showBorder: false,
+    };
+  }
+
   static propTypes = {
     socket: PropTypes.object,
     controllerPin: PropTypes.number,
   };
 
   sendSlide = e => {
-    const slideType = e.currentTarget.id;
+    const activeSlide = e.currentTarget;
+
+    const prevSlide = document.querySelector(".active-slide");
+    prevSlide && prevSlide.classList.remove("active-slide");
+    activeSlide.classList.add("active-slide");
 
     const slideText = {
       'waheguru-slide': 'vwihgurU',
@@ -20,15 +32,39 @@ export default class SlideControls extends React.PureComponent {
       host: "sttm-web",
       type: "text",
       pin: this.props.controllerPin,
-      text: slideText[slideType],
+      text: slideText[activeSlide.id],
       isGurmukhi: true,
       isAnnouncement: true,
     });
   }
 
+  setRef = node => (this.$wrapper = node);
+
+  scrollListener = () => {
+    if (this.mounted) {
+      this.setState({ showBorder: window.scrollY >= this.$wrapper.offsetTop });
+    }
+  };
+
+  componentDidMount() {
+    this.mounted = true;
+    window.addEventListener('scroll', this.scrollListener, { passive: true });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    window.removeEventListener('scroll', this.scrollListener, {
+      passive: true,
+    });
+  }
+
   render() {
+    const classNames = cx({
+      'control-section': true,
+      'with-border': this.state.showBorder,
+    });
     return (
-      <div className="control-section" id="slide-container">
+      <div className={classNames} id="slide-container" ref={this.setRef}>
         <div className="slide-type" id="waheguru-slide" onClick={this.sendSlide}>
           <p className="gurbani-font">vwihgurU</p>
         </div>
@@ -41,5 +77,4 @@ export default class SlideControls extends React.PureComponent {
       </div>
     );
   }
-
 }

@@ -48,6 +48,9 @@ export default class ControllerSearch extends React.PureComponent {
   }
 
   onShabadClick = (shabadId, verseId, gurmukhi) => {
+    const prevSlide = document.querySelector(".active-slide");
+    prevSlide && prevSlide.classList.remove("active-slide");
+
     this.props.socket.emit('data', {
       host: "sttm-web",
       type: "shabad",
