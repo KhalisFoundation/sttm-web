@@ -1,0 +1,167 @@
+#controller-bar {
+  background-color: $sttm-dark-blue;
+  border: none;
+}
+
+.controller-header {
+  align-items: center;
+
+  .top-bar-title {
+    align-items: center;
+    display: flex;
+  }
+
+  .responsive-menu {
+    flex-grow: 1;
+  }
+
+  .logo-text {
+    color: $sttm-orange;
+    font-size: 28px;
+    text-indent: 8px;
+    text-transform: uppercase;
+
+    > .bolder {
+      font-weight: bolder;
+    }
+  }
+
+  #sync-logo {
+    background-image: url('/assets/images/sttm_icon.png');
+    width: 32px;
+  }
+}
+
+.controller-row {
+  .search-page {
+    padding-top: 20px;
+  }
+
+  .wrapper {
+    ul {
+      margin: auto;
+      max-width: 625px;
+
+      li {
+        cursor: pointer;
+      }
+    }
+
+    .active-slide {
+      background-color: $sttm-blue;
+      border-radius: 0;
+      color: $sttm-white;
+    }
+
+    > .sync-form {
+      display: block;
+      margin: auto;
+      max-width: 625px;
+
+      input {
+        background-color: $sttm-white;
+        color: $sttm-dark-blue;
+        font-weight: 700;
+        max-width: 100%;
+      }
+
+      button {
+        background-color: $sttm-white;
+        color: $sttm-black;
+      }
+    }
+  }
+}
+
+.control-section {
+  background-color: $sttm-dark-white;
+  position: sticky;
+  text-align: center;
+  top: 0;
+  transition: 0.1s background-color ease;
+
+  > .slide-type {
+    background-color: $sttm-white;
+    box-shadow:
+      0 2px 2px 0 $sttm-transparent-black,
+      0 0 0 1px $sttm-transparent-light-black;
+    color: $sttm-dark-blue;
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    width: 150px;
+
+    > p {
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  &.with-border {
+    box-shadow: 0 8px 6px -10px black;
+  }
+}
+
+.controller-shabad {
+  .line {
+    align-items: center;
+    background-color: $sttm-light-blue-30;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 8px;
+    padding: 12px;
+
+    &.visited {
+      background-color: $sttm-light-grey;
+    }
+
+    &.active-slide {
+      background-color: $sttm-blue;
+      border-radius: 0;
+    }
+
+    .highlight {
+      border: none;
+      display: inline-block;
+      padding-left: 0;
+    }
+
+    > svg {
+      opacity: 0.6;
+    }
+  }
+}
+
+@media screen and (max-width: 55.99em) {
+  .controller-row .search-page {
+    padding-top: 5px;
+  }
+
+  .top-bar-title {
+    margin: 0;
+  }
+
+  #open-mobile-menu {
+    line-height: 30px;
+  }
+}
+
+@media screen and (min-width: 55.99em) {
+  .controller-header {
+    .menu {
+      background-color: transparent;
+
+      > li > a {
+        color: $sttm-white;
+
+        &:hover {
+          background-color: $sttm-blue;
+        }
+      }
+    }
+  }
+}
