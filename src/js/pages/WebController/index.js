@@ -8,6 +8,7 @@ import BreadCrumb from '@/components/Breadcrumb';
 import SearchInput from './search-input';
 import SlideControls from './slide-controls';
 import ControllerSearch from './search';
+import { Stub } from '../Search/Layout';
 
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
@@ -22,6 +23,8 @@ export default class WebControllerPage extends React.PureComponent {
       error: false,
       pinError: false,
       codeError: false,
+
+      loading: false,
     };
   }
 
@@ -34,16 +37,22 @@ export default class WebControllerPage extends React.PureComponent {
     return null;
   };
 
+  finishLoading = () => {
+    this.setState({ loading: false });
+  }
+
   handleSearch = data => {
     this.setState({ searchData: data });
   }
 
   handleSubmit = (code, pin) => {
+    this.setState({ loading: true });
     fetch(`${SYNC_API_URL}sync/join/${code}`)
       .then(r => r.json())
       .then(({ data, error }) => {
         if (error || data === undefined) {
-          this.setState({ error, codeError: true, pinError: false, data, connected: false });
+          this.setState({ error, codeError: true, pinError: false, data, connected: false },
+            this.finishLoading);
         } else {
           const { namespaceString } = data;
 
@@ -75,19 +84,25 @@ export default class WebControllerPage extends React.PureComponent {
                     socket: this._socket,
                     pinError: false,
                     codeError: false,
-                  }) :
+                  }, this.finishLoading) :
                   this.setState({
                     connected: false,
                     error: true,
                     pinError: true,
                     codeError: false,
-                  });
+                  }, this.finishLoading);
               }
             });
           }
         }
       })
-      .catch(error => this.setState({ error, pinError: false, codeError: false, data: null, connected: false }));
+      .catch(error => this.setState({
+        error,
+        pinError: false,
+        codeError: false,
+        data: null,
+        connected: false
+      }), this.finishLoading);
   };
 
   render() {
@@ -110,6 +125,8 @@ export default class WebControllerPage extends React.PureComponent {
         codeError && TEXTS.CONTROLLER_ERROR('code') ||
         TEXTS.CONTROLLER_ERROR();
     }
+
+    if (this.state.loading) return (<Stub />);
 
     return (
       <div className="row controller-row" id="content-root">
@@ -158,6 +175,8 @@ export default class WebControllerPage extends React.PureComponent {
                     })}
                     name="code"
                     type="text"
+                    value={namespaceString}
+                    onChange={e => this.setState({ namespaceString: e.target.value })}
                     placeholder="Enter code. Eg. ABC-XYZ"
                     pattern="[A-Z,a-z]{3}-[A-Z,a-z]{3}"
                     onKeyUp={e => {
