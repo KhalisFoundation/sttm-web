@@ -131,7 +131,7 @@ export default class WebControllerPage extends React.PureComponent {
     return (
       <div className="row controller-row" id="content-root">
         <BreadCrumb links={[{
-          title: namespaceString ?
+          title: connected ?
             `${TEXTS.CONTROLLER} (Connected to ${namespaceString})`
             : TEXTS.CONTROLLER
         }]} />
@@ -176,7 +176,7 @@ export default class WebControllerPage extends React.PureComponent {
                     name="code"
                     type="text"
                     value={namespaceString}
-                    onChange={e => this.setState({ namespaceString: e.target.value })}
+                    onChange={e => this.setState({ namespaceString: e.target.value.toUpperCase() })}
                     placeholder="Enter code. Eg. ABC-XYZ"
                     pattern="[A-Z,a-z]{3}-[A-Z,a-z]{3}"
                     onKeyUp={e => {

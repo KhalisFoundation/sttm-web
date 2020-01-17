@@ -119,6 +119,12 @@
 }
 
 .controller-shabad {
+  .home-button {
+    fill: $sttm-orange;
+    outline: none;
+    right: 80px;
+  }
+
   .line {
     align-items: center;
     background-color: $sttm-light-blue-30;

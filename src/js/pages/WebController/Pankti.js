@@ -101,11 +101,20 @@ export default class Pankti extends React.PureComponent {
     ));
 
     return (
-      <div
-        className={`${SHABAD_CONTENT_CLASSNAME}`}
-      >
-        {markup}
-      </div>
+      <React.Fragment>
+        <div
+          className={`${SHABAD_CONTENT_CLASSNAME}`}
+        >
+          {markup}
+        </div>
+        <button className="scroll-to-top home-button"
+          onClick={() => {
+            window.scrollTo(0, this.$highlightedBaaniLine.offsetTop - 70);
+            this.$highlightedBaaniLine.click();
+          }}>
+          <HomeIcon />
+        </button>
+      </React.Fragment >
     );
   }
 }
