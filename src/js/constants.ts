@@ -101,7 +101,10 @@ export const TEXTS = {
   SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,
   SYNC: `Remote Sync`,
   CONTROLLER: 'Bani Controller',
-  SYNC_DESCRIPTION: `Remote Sync is a feature of SikhiToTheMax desktop application. It allows you to view the shabad and current line displayed via the Desktop Application on your mobile/device. To get started you need to enter the code below, as shared by the desktop application.`,
+  CONTROLLER_TITLE: 'Take Control of SikhiToTheMax',
+  CONTROLLER_DESC:'Bani Controller lets you control SikhiToTheMax from your mobile devices allowing you to be able to leave your computer running and control SikhiToTheMax without having to be physically near it. Sit anywhere in the Darbar Hall with the sangat or with the Keertani whilst still being able to control SikhiToTheMax. Go to the langar hall for a break while still controlling SikhiToTheMax. Bani Controller adds much more flexibility and mobility to project Gurbani on to the big screen.',
+  SYNC_TITLE:'Sync your phone to SikhiToTheMax',
+  SYNC_DESCRIPTION: `Sangat Sync allows you to view the Shabad and current line displayed, via our Desktop Application, on your mobile device. Just enter the code below displayed on the screen by the desktop application and you will have the ability to choose what you want displayed such as translations, transliterations, larivaar and more.`,
   SYNC_ERROR: `We aren't able to connect to the entered code. Make sure it's correct or try again later.`,
   SYNC_NOTIFICATION: (code: string) =>
     `You're now connected to ${code}. Tap to dismiss.`,

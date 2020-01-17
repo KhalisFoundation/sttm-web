@@ -63,11 +63,18 @@
         color: $sttm-dark-blue;
         font-weight: 700;
         max-width: 100%;
+
+        &::placeholder {
+          color: #999;
+        }
       }
 
       button {
-        background-color: $sttm-white;
-        color: $sttm-black;
+        background-color: $sttm-orange;
+        border: none;
+        border-radius: 5px;
+        color: $sttm-white;
+        font-weight: 900;
       }
     }
   }
