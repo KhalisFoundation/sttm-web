@@ -61,11 +61,15 @@
       input {
         background-color: $sttm-white;
         color: $sttm-dark-blue;
-        font-weight: 700;
         max-width: 100%;
 
         &::placeholder {
           color: #999;
+        }
+
+        &.error-input {
+          background-color: $sttm-light-red;
+          border-color: $sttm-red;
         }
       }
 
@@ -88,13 +92,17 @@
   transition: 0.1s background-color ease;
   z-index: 99;
 
+  .dark-mode & {
+    background-color: $sttm-light-black;
+  }
+
   > .slide-type {
     background-color: $sttm-white;
     border-radius: 12px;
     box-shadow:
       0 2px 2px 0 $sttm-transparent-black,
       0 0 0 1px $sttm-transparent-light-black;
-    color: $sttm-dark-blue;
+    color: inherit;
     cursor: pointer;
     display: inline-block;
     margin: 5px;
@@ -118,6 +126,12 @@
 }
 
 .controller-shabad {
+  .home-button {
+    fill: $sttm-orange;
+    outline: none;
+    right: 80px;
+  }
+
   .line {
     align-items: center;
     background-color: $sttm-light-blue-30;
