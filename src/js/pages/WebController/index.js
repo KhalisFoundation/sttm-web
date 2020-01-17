@@ -1,5 +1,7 @@
 /* globals SYNC_API_URL */
 import React from 'react';
+import cx from 'classnames';
+
 import { TEXTS } from '../../constants';
 import { pageView } from '../../util/analytics';
 import BreadCrumb from '@/components/Breadcrumb';
@@ -16,6 +18,10 @@ export default class WebControllerPage extends React.PureComponent {
       socket: null,
       controllerPin: 0,
       searchData: {},
+
+      error: false,
+      pinError: false,
+      codeError: false,
     };
   }
 
@@ -37,7 +43,7 @@ export default class WebControllerPage extends React.PureComponent {
       .then(r => r.json())
       .then(({ data, error }) => {
         if (error || data === undefined) {
-          this.setState({ error, data, connected: false });
+          this.setState({ error, codeError: true, pinError: false, data, connected: false });
         } else {
           const { namespaceString } = data;
 
@@ -53,37 +59,57 @@ export default class WebControllerPage extends React.PureComponent {
             this._socket.on('close', () =>
               this.setState({
                 connected: false,
-                error: null,
+                error: false,
                 namespaceString: '',
                 socket: null,
               })
             );
 
             this._socket.on('data', data => {
-              console.log(data);
               if (data['type'] === 'response-control') {
                 data['success'] ?
                   this.setState({
                     connected: true,
                     namespaceString,
                     controllerPin: parseInt(pin),
-                    socket: this._socket
+                    socket: this._socket,
+                    pinError: false,
+                    codeError: false,
                   }) :
                   this.setState({
                     connected: false,
                     error: true,
+                    pinError: true,
+                    codeError: false,
                   });
               }
             });
           }
         }
       })
-      .catch(error => this.setState({ error, data: null, connected: false }));
+      .catch(error => this.setState({ error, pinError: false, codeError: false, data: null, connected: false }));
   };
 
   render() {
-    const { socket, controllerPin, connected, searchData, namespaceString } = this.state;
+    const {
+      socket,
+      controllerPin,
+      connected,
+      searchData,
+      namespaceString,
+      error,
+      pinError,
+      codeError
+    } = this.state;
+
     const { query, type, source, offset } = searchData;
+    let errorMessage;
+
+    if (error) {
+      errorMessage = pinError && TEXTS.CONTROLLER_ERROR('pin') ||
+        codeError && TEXTS.CONTROLLER_ERROR('code') ||
+        TEXTS.CONTROLLER_ERROR();
+    }
 
     return (
       <div className="row controller-row" id="content-root">
@@ -114,6 +140,9 @@ export default class WebControllerPage extends React.PureComponent {
               <React.Fragment>
                 <h1>{TEXTS.CONTROLLER_TITLE}</h1>
                 <p>{TEXTS.CONTROLLER_DESC}</p>
+                <p className="sync-form-error">
+                  {errorMessage}
+                </p>
                 <form
                   className="sync-form"
                   onSubmit={e => {
@@ -123,7 +152,10 @@ export default class WebControllerPage extends React.PureComponent {
                 >
                   <input
                     id="code"
-                    className="sync-form--input"
+                    className={cx({
+                      'sync-form--input': true,
+                      'error-input': codeError,
+                    })}
                     name="code"
                     type="text"
                     placeholder="Enter code. Eg. ABC-XYZ"
@@ -137,13 +169,18 @@ export default class WebControllerPage extends React.PureComponent {
                         e.currentTarget.value = typedValue + '-';
                       }
                     }}
+                    required
                   />
                   <input
                     id="syncPassword"
-                    className="sync-form--input"
+                    className={cx({
+                      'sync-form--input': true,
+                      'error-input': pinError,
+                    })}
                     name="syncPassword"
                     type="password"
                     placeholder="Enter PIN EG. 1234"
+                    required
                   />
                   <button className="sync-form--button">Connect to Desktop</button>
                 </form>

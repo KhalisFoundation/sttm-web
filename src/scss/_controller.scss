@@ -61,11 +61,15 @@
       input {
         background-color: $sttm-white;
         color: $sttm-dark-blue;
-        font-weight: 700;
         max-width: 100%;
 
         &::placeholder {
           color: #999;
+        }
+
+        &.error-input {
+          background-color: $sttm-light-red;
+          border-color: $sttm-red;
         }
       }
 
