@@ -1,7 +1,5 @@
 /* globals SYNC_API_URL */
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
 import { TEXTS } from '../../constants';
 import { pageView } from '../../util/analytics';
 import BreadCrumb from '@/components/Breadcrumb';
@@ -84,12 +82,16 @@ export default class WebControllerPage extends React.PureComponent {
   };
 
   render() {
-    const { socket, controllerPin, connected, searchData } = this.state;
+    const { socket, controllerPin, connected, searchData, namespaceString } = this.state;
     const { query, type, source, offset } = searchData;
 
     return (
       <div className="row controller-row" id="content-root">
-        <BreadCrumb links={[{ title: TEXTS.CONTROLLER }]} />
+        <BreadCrumb links={[{
+          title: namespaceString ?
+            `${TEXTS.CONTROLLER} (Connected to ${namespaceString})`
+            : TEXTS.CONTROLLER
+        }]} />
         <div className="wrapper">
           {connected ? (
             <React.Fragment>
@@ -110,9 +112,9 @@ export default class WebControllerPage extends React.PureComponent {
             </React.Fragment>
           ) : (
               <React.Fragment>
-              <h1>{TEXTS.CONTROLLER_TITLE}</h1>
-              <p>{TEXTS.CONTROLLER_DESC}</p>
-              <form
+                <h1>{TEXTS.CONTROLLER_TITLE}</h1>
+                <p>{TEXTS.CONTROLLER_DESC}</p>
+                <form
                   className="sync-form"
                   onSubmit={e => {
                     e.preventDefault();

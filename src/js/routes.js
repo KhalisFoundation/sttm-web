@@ -18,6 +18,7 @@ import {
   DEFAULT_SEARCH_TYPE,
   SEARCH_TYPES,
   SOURCES,
+  TEXTS,
 } from './constants';
 
 // TODO: Rely on `../../seo/` for titles.
@@ -396,7 +397,7 @@ export default [
     path: '/control',
     render(props) {
       return (
-        <Layout title="Bani Controller - SikhiToTheMax" isController={true} {...props} >
+        <Layout title={`${TEXTS.CONTROLLER} - SikhiToTheMax`} isController={true} {...props} >
           <WebControllerPage />
         </ Layout>
       )
