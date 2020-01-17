@@ -90,6 +90,7 @@
 
   > .slide-type {
     background-color: $sttm-white;
+    border-radius: 12px;
     box-shadow:
       0 2px 2px 0 $sttm-transparent-black,
       0 0 0 1px $sttm-transparent-light-black;
@@ -99,12 +100,11 @@
     margin: 5px;
     padding: 5px 20px;
     width: 150px;
-    border-radius: 12px;
 
-     @media screen and (max-width: 730px) {
-    font-size: 0.6em;
-    width:110px;
-  }
+    @media screen and (max-width: 730px) {
+      font-size: 0.6em;
+      width: 110px;
+    }
 
     > p {
       margin: 0;
