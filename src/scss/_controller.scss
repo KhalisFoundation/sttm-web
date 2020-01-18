@@ -98,12 +98,13 @@
     cursor: pointer;
     display: inline-block;
     margin: 5px;
-    padding: 5px 20px;
+    padding: 5px 10px;
     width: 150px;
 
     @media screen and (max-width: 730px) {
       font-size: 0.6em;
-      width: 110px;
+      width: 85px;
+      width: 85px;
     }
 
     > p {
