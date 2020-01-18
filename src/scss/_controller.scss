@@ -74,11 +74,16 @@
       }
 
       button {
-        background-color: $sttm-orange;
+        background-color: $sttm-blue;
         border: none;
         border-radius: 5px;
         color: $sttm-white;
         font-weight: 900;
+        transition: 0.2s;
+
+        &:hover {
+          background-color: $sttm-orange;
+        }
       }
     }
   }
@@ -106,12 +111,12 @@
     cursor: pointer;
     display: inline-block;
     margin: 5px;
-    padding: 5px 20px;
+    padding: 5px 10px;
     width: 150px;
 
     @media screen and (max-width: 730px) {
       font-size: 0.6em;
-      width: 110px;
+      width: 85px;
     }
 
     > p {
@@ -129,7 +134,8 @@
   .home-button {
     fill: $sttm-orange;
     outline: none;
-    right: 80px;
+    right: 90px;
+    z-index: 100;
   }
 
   .line {
