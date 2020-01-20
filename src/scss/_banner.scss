@@ -1,0 +1,20 @@
+.banner {
+  align-items: center;
+  display: flex;
+  height: 55px;
+  justify-content: center;
+  width: 100%;
+
+  &.attention {
+    background-color: $sttm-attention-background;
+    color: $sttm-red;
+  }
+
+  &.toggled {
+    background-color: unset;
+    position: absolute;
+    right: 0;
+    width: 100px;
+    z-index: 1;
+  }
+}
