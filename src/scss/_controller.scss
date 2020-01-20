@@ -107,7 +107,7 @@
     box-shadow:
       0 2px 2px 0 $sttm-transparent-black,
       0 0 0 1px $sttm-transparent-light-black;
-    color: inherit;
+    color: $sttm-light-black;
     cursor: pointer;
     display: inline-block;
     margin: 5px;
@@ -151,10 +151,18 @@
 
     &.visited {
       background-color: $sttm-light-grey;
+
+      .dark-mode & {
+        color: $sttm-light-black;
+      }
     }
 
     &.active-slide {
       background-color: $sttm-blue;
+
+      .dark-mode & {
+        color: $sttm-white;
+      }
     }
 
     .highlight {
