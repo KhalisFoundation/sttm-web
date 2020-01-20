@@ -1,20 +1,29 @@
-.banner {
+.banner.toggled {
   align-items: center;
   display: flex;
   height: 55px;
-  justify-content: center;
   width: 100%;
-
+  justify-content: space-between;
+  align-items: center;
+  opacity: .60;
   &.attention {
     background-color: $sttm-attention-background;
     color: $sttm-red;
   }
 
-  &.toggled {
-    background-color: unset;
-    position: absolute;
-    right: 0;
-    width: 100px;
-    z-index: 1;
-  }
 }
+.banner-text{
+  color: white;
+  margin-left: 2%;
+  align-items: center;
+}
+.banner-cross-bg{
+  background-color: $sttm-blue;
+  height: 30px;
+  width: 30px;
+  margin-right: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
