@@ -2,28 +2,28 @@
   align-items: center;
   display: flex;
   height: 55px;
-  width: 100%;
   justify-content: space-between;
-  align-items: center;
-  opacity: .60;
+  opacity: 0.6;
+  width: 100%;
+
   &.attention {
     background-color: $sttm-attention-background;
     color: $sttm-red;
   }
-
 }
-.banner-text{
+
+.banner-text {
+  align-items: center;
   color: white;
   margin-left: 2%;
-  align-items: center;
-}
-.banner-cross-bg{
-  background-color: $sttm-blue;
-  height: 30px;
-  width: 30px;
-  margin-right: 2%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
+.banner-cross-bg {
+  align-items: center;
+  background-color: $sttm-blue;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  margin-right: 2%;
+  width: 30px;
+}
