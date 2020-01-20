@@ -188,11 +188,23 @@
     .menu {
       background-color: transparent;
 
-      > li > a {
-        color: $sttm-white;
+      .dark-mode & {
+        background-color: transparent;
+      }
 
-        &:hover {
-          background-color: $sttm-blue;
+      li.submenu > .submenu-items {
+        background-color: $sttm-dark-blue;
+        border-color: transparent;
+      }
+
+      > li {
+        a,
+        p {
+          color: $sttm-white;
+
+          &:hover {
+            background-color: $sttm-blue;
+          }
         }
       }
     }
