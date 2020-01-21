@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import Banner from './Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
@@ -91,6 +92,7 @@ class Layout extends React.PureComponent {
 
     return online || pathname !== '/' ? (
       <React.Fragment>
+        <Banner />
         <Header
           defaultQuery={this.props.defaultQuery}
           isHome={isHome}

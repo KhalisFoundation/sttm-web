@@ -49,7 +49,7 @@
 
     .active-slide {
       background-color: $sttm-blue;
-      border-radius: 0;
+      border-radius: 12px;
       color: $sttm-white;
     }
 
@@ -61,13 +61,29 @@
       input {
         background-color: $sttm-white;
         color: $sttm-dark-blue;
-        font-weight: 700;
         max-width: 100%;
+
+        &::placeholder {
+          color: #999;
+        }
+
+        &.error-input {
+          background-color: $sttm-light-red;
+          border-color: $sttm-red;
+        }
       }
 
       button {
-        background-color: $sttm-white;
-        color: $sttm-black;
+        background-color: $sttm-blue;
+        border: none;
+        border-radius: 5px;
+        color: $sttm-white;
+        font-weight: 900;
+        transition: 0.2s;
+
+        &:hover {
+          background-color: $sttm-orange;
+        }
       }
     }
   }
@@ -79,18 +95,29 @@
   text-align: center;
   top: 0;
   transition: 0.1s background-color ease;
+  z-index: 99;
+
+  .dark-mode & {
+    background-color: $sttm-light-black;
+  }
 
   > .slide-type {
     background-color: $sttm-white;
+    border-radius: 12px;
     box-shadow:
       0 2px 2px 0 $sttm-transparent-black,
       0 0 0 1px $sttm-transparent-light-black;
-    color: $sttm-dark-blue;
+    color: $sttm-light-black;
     cursor: pointer;
     display: inline-block;
     margin: 5px;
-    padding: 10px 20px;
+    padding: 5px 10px;
     width: 150px;
+
+    @media screen and (max-width: 730px) {
+      font-size: 0.6em;
+      width: 85px;
+    }
 
     > p {
       margin: 0;
@@ -104,6 +131,13 @@
 }
 
 .controller-shabad {
+  .home-button {
+    fill: $sttm-orange;
+    outline: none;
+    right: 90px;
+    z-index: 100;
+  }
+
   .line {
     align-items: center;
     background-color: $sttm-light-blue-30;
@@ -117,11 +151,18 @@
 
     &.visited {
       background-color: $sttm-light-grey;
+
+      .dark-mode & {
+        color: $sttm-light-black;
+      }
     }
 
     &.active-slide {
       background-color: $sttm-blue;
-      border-radius: 0;
+
+      .dark-mode & {
+        color: $sttm-white;
+      }
     }
 
     .highlight {
@@ -155,11 +196,23 @@
     .menu {
       background-color: transparent;
 
-      > li > a {
-        color: $sttm-white;
+      .dark-mode & {
+        background-color: transparent;
+      }
 
-        &:hover {
-          background-color: $sttm-blue;
+      li.submenu > .submenu-items {
+        background-color: $sttm-dark-blue;
+        border-color: transparent;
+      }
+
+      > li {
+        a,
+        p {
+          color: $sttm-white;
+
+          &:hover {
+            background-color: $sttm-blue;
+          }
         }
       }
     }
