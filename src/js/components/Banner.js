@@ -23,10 +23,11 @@ export default class Banner extends React.PureComponent {
     fetch(`http://api.sikhitothemax.org/messages/web/${$yr}-${$month}-${$day}`)
       .then(r => r.json())
       .then(messages => {
-        if (messages.rows.length === 0 || getBooleanFromLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`)) {
+        const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`, false);
+        if (messages.rows.length === 0 || hasSeenMsg === true) {
           this.setState({ toggleBannerVisibilty: false });
         } else if (
-          getBooleanFromLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`) === null || getBooleanFromLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`) === false) {
+          hasSeenMsg === null || hasSeenMsg === false) {
           this.setState({
             toggleBannerVisibilty: true,
             title: messages.rows[0].Title,
