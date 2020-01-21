@@ -1,0 +1,28 @@
+.banner.toggled {
+  align-items: center;
+  display: flex;
+  height: 55px;
+  justify-content: space-between;
+  width: 100%;
+
+  &.attention {
+    background-color: $sttm-attention-background;
+    color: $sttm-red;
+  }
+}
+
+.banner-text {
+  align-items: center;
+  color: white;
+  margin-left: 2%;
+}
+
+.banner-cross-bg {
+  align-items: center;
+  background-color: $sttm-blue;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  margin-right: 2%;
+  width: 30px;
+}
