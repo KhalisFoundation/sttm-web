@@ -95,7 +95,6 @@
   text-align: center;
   top: 0;
   transition: 0.1s background-color ease;
-  z-index: 99;
 
   .dark-mode & {
     background-color: $sttm-light-black;
