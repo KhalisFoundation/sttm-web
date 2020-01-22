@@ -52,22 +52,17 @@ export default class Banner extends React.PureComponent {
   setSeenForDay = () => {
     saveToLocalStorage(`SeenBanner-${this.state.date}-${this.state.index}`, true);
   }
-  componentDidUpdate() {
-    const { toggleBannerVisibilty, type } = this.state;
-    if (toggleBannerVisibilty === true) {
-      document.querySelector('.banner.attention.toggled').className += ` ${type}`;
-    }
-  }
   render() {
-    const { toggleBannerVisibilty } = this.state;
-    const classNames =
+    const { toggleBannerVisibilty, type } = this.state;
+    const checkType = toggleBannerVisibilty ? `${type}` : false;
+    let classes =
       cx({
         'banner': true,
         'attention': true,
         'toggled': toggleBannerVisibilty,
-      });
+      }, checkType);
     return (
-      <div className={classNames}>
+      <div className={classes}>
         {
           toggleBannerVisibilty === true && this.state.message &&
           <>
