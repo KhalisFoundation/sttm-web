@@ -1,13 +1,25 @@
 .banner.toggled {
   align-items: center;
   display: flex;
-  height: 55px;
+  height: auto;
   justify-content: space-between;
+  opacity: 0.6;
   width: 100%;
 
   &.attention {
     background-color: $sttm-attention-background;
-    color: $sttm-red;
+
+    &.message {
+      color: $sttm-orange;
+    }
+
+    &.warning {
+      color: $sttm-red;
+    }
+
+    &.announcement {
+      color: $sttm-blue;
+    }
   }
 }
 
@@ -19,7 +31,6 @@
 
 .banner-cross-bg {
   align-items: center;
-  background-color: $sttm-blue;
   display: flex;
   height: 30px;
   justify-content: center;

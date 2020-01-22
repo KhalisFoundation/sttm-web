@@ -9,25 +9,28 @@ export default class Banner extends React.PureComponent {
     title: '',
     message: '',
     toggleBannerVisibilty: false,
-    year: 0,
-    day: 0,
-    month: 0,
+    date: 0,
+    mysqlDate: 0,
+    index: 0,
   };
 
   componentDidMount() {
-    const d = new Date();
-    const $yr = d.getFullYear();
-    const $month = d.getMonth();
-    const $day = d.getDate();
-    this.setState({ year: $yr, day: $day, month: $month })
-    fetch(`http://api.sikhitothemax.org/messages/web/${$yr}-${$month}-${$day}`)
+    const $mysqlDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const $date = $mysqlDate.slice(0, 10);
+    console.log($date);
+    this.setState({ mysqlDate: $mysqlDate, date: $date });
+    fetch(`https://api.sikhitothemax.org/messages/web/${$date}`)
       .then(r => r.json())
       .then(messages => {
-        const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`, false);
+
+        const $index = messages.rows.length;
+        this.setState({ index: $index });
+        const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${$date}-${$index}`, false);
+        // const $msgDate = messages.rows[0].Created; || $mysqlDate > $msgDate && $mysqlDate < $msgDate
+
         if (messages.rows.length === 0 || hasSeenMsg === true) {
           this.setState({ toggleBannerVisibilty: false });
-        } else if (
-          hasSeenMsg === null || hasSeenMsg === false) {
+        } else if (hasSeenMsg === false) {
           this.setState({
             toggleBannerVisibilty: true,
             title: messages.rows[0].Title,
@@ -45,22 +48,22 @@ export default class Banner extends React.PureComponent {
     })
   }
   setSeenForDay = () => {
-    saveToLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`, true);
+    saveToLocalStorage(`SeenBanner-${this.state.date}-${this.state.index}`, true);
   }
   render() {
-    const { toggleBannerVisibilty } = this.state;
+    const { toggleBannerVisibilty, type } = this.state;
     const classNames = cx({
       'banner': true,
       'attention': true,
-      'toggled': toggleBannerVisibilty
-    });
+      'toggled': toggleBannerVisibilty,
+    }, `${type}`);
     return (
       <div className={classNames}>
         {
           toggleBannerVisibilty === true && this.state.message &&
           <>
             <div className='banner-text'>
-              <text>{this.state.title + ": "}</text>
+              <text>{this.state.title.toUpperCase() + ": "}</text>
               <text>{this.state.message}</text>
             </div>
             <button
