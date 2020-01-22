@@ -20,7 +20,7 @@ export default class Banner extends React.PureComponent {
     const $date = $mysqlDate.slice(0, 10);
 
     this.setState({ mysqlDate: $mysqlDate, date: $date });
-    fetch(`https://api.sikhitothemax.org/messages/web/${$date}`)
+    fetch(`//api.sikhitothemax.org/messages/web/${$date}`)
       .then(r => r.json())
       .then(messages => {
 
