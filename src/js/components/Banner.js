@@ -1,3 +1,4 @@
+/* globals BANNERS_URL */
 import React from 'react';
 import CrossIcon from './Icons/Times';
 import cx from 'classnames';
@@ -20,7 +21,7 @@ export default class Banner extends React.PureComponent {
     const $date = $mysqlDate.slice(0, 10);
 
     this.setState({ mysqlDate: $mysqlDate, date: $date });
-    fetch(`//api.sikhitothemax.org/messages/web/${$date}`)
+    fetch(`${BANNERS_URL}/${$date}`)
       .then(r => r.json())
       .then(messages => {
 
