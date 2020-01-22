@@ -15,9 +15,10 @@ export default class Banner extends React.PureComponent {
   };
 
   componentDidMount() {
-    const $mysqlDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const d = new Date();
+    const $mysqlDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ":" + d.getSeconds();
     const $date = $mysqlDate.slice(0, 10);
-    console.log($date);
+
     this.setState({ mysqlDate: $mysqlDate, date: $date });
     fetch(`https://api.sikhitothemax.org/messages/web/${$date}`)
       .then(r => r.json())
@@ -26,11 +27,11 @@ export default class Banner extends React.PureComponent {
         const $index = messages.rows.length;
         this.setState({ index: $index });
         const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${$date}-${$index}`, false);
-        // const $msgDate = messages.rows[0].Created; || $mysqlDate > $msgDate && $mysqlDate < $msgDate
+        const $msgDate = messages.rows[0].Created;
 
-        if (messages.rows.length === 0 || hasSeenMsg === true) {
+        if (messages.rows.length === 0 || hasSeenMsg === true || $mysqlDate > $msgDate) {
           this.setState({ toggleBannerVisibilty: false });
-        } else if (hasSeenMsg === false) {
+        } else if (hasSeenMsg === false && $mysqlDate < $msgDate) {
           this.setState({
             toggleBannerVisibilty: true,
             title: messages.rows[0].Title,

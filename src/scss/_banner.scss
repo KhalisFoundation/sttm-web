@@ -7,18 +7,16 @@
   width: 100%;
 
   &.attention {
-    background-color: $sttm-attention-background;
-
     &.message {
-      color: $sttm-orange;
+      background-color: $sttm-orange;
     }
 
     &.warning {
-      color: $sttm-red;
+      background-color: $sttm-red;
     }
 
     &.announcement {
-      color: $sttm-blue;
+      background-color: $sttm-blue;
     }
   }
 }
