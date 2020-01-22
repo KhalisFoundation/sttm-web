@@ -3,7 +3,7 @@ import React from 'react';
 import CrossIcon from './Icons/Times';
 import cx from 'classnames';
 import { saveToLocalStorage, getBooleanFromLocalStorage } from '@/util';
-
+import { dateMath } from '../util/index.js';
 export default class Banner extends React.PureComponent {
 
   state = {
@@ -11,7 +11,6 @@ export default class Banner extends React.PureComponent {
     message: '',
     toggleBannerVisibilty: false,
     date: 0,
-    mysqlDate: 0,
     index: 0,
   };
 
@@ -20,7 +19,7 @@ export default class Banner extends React.PureComponent {
     const $mysqlDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ":" + d.getSeconds();
     const $date = $mysqlDate.slice(0, 10);
 
-    this.setState({ mysqlDate: $mysqlDate, date: $date });
+    this.setState({ date: $date });
     fetch(`${BANNERS_URL}/${$date}`)
       .then(r => r.json())
       .then(messages => {
@@ -30,9 +29,9 @@ export default class Banner extends React.PureComponent {
         const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${$date}-${$index}`, false);
         const $msgDateExp = messages.rows[0].Expires;
 
-        if (messages.rows.length === 0 || hasSeenMsg === true || $mysqlDate > $msgDateExp) {
+        if (messages.rows.length === 0 || hasSeenMsg === true || dateMath.isAfter($mysqldate, $msgDateExp)) {
           this.setState({ toggleBannerVisibilty: false });
-        } else if (hasSeenMsg === false && $mysqlDate < $msgDateExp) {
+        } else if (hasSeenMsg === false && dateMath.isBefore($mysqldate, $msgDateExp)) {
           this.setState({
             toggleBannerVisibilty: true,
             title: messages.rows[0].Title,
