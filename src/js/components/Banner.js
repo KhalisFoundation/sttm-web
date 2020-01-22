@@ -54,11 +54,18 @@ export default class Banner extends React.PureComponent {
   }
   render() {
     const { toggleBannerVisibilty, type } = this.state;
-    const classNames = cx({
-      'banner': true,
-      'attention': true,
-      'toggled': toggleBannerVisibilty,
-    }, `${type}`);
+    const classNames = toggleBannerVisibilty ?
+      cx({
+        'banner': true,
+        'attention': true,
+        'toggled': toggleBannerVisibilty,
+      })
+      :
+      cx({
+        'banner': true,
+        'attention': true,
+        'toggled': toggleBannerVisibilty,
+      }, `${type}`);
     return (
       <div className={classNames}>
         {
