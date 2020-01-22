@@ -25,18 +25,19 @@ export default class Banner extends React.PureComponent {
       .then(messages => {
 
         const $index = messages.rows.length;
+        const row = messages.rows[0];
         this.setState({ index: $index });
         const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${$date}-${$index}`, false);
-        const $msgDateExp = messages.rows[0].Expires;
+        const $msgDateExp = messages.rows[0].length !== 0 ? row.Expires : null;
 
-        if (messages.rows.length === 0 || hasSeenMsg === true || dateMath.isAfter($mysqldate, $msgDateExp)) {
+        if (messages.rows.length === 0 || hasSeenMsg === true || dateMath.isAfter($mysqlDate, $msgDateExp)) {
           this.setState({ toggleBannerVisibilty: false });
-        } else if (hasSeenMsg === false && dateMath.isBefore($mysqldate, $msgDateExp)) {
+        } else if (hasSeenMsg === false && dateMath.isBefore($mysqlDate, $msgDateExp)) {
           this.setState({
             toggleBannerVisibilty: true,
-            title: messages.rows[0].Title,
-            message: messages.rows[0].Content,
-            type: messages.rows[0].Type,
+            title: row.Title,
+            message: row.Content,
+            type: row.Type,
           });
         }
       }
