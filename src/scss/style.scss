@@ -17,7 +17,8 @@
   "sundar-gutka",
   "help",
   "controller",
-  "banner";
+  "banner",
+  "vishraam";
 
 html,
 body {
@@ -36,6 +37,8 @@ body {
     background-color: $sttm-light-black;
     color: $sttm-white;
   }
+
+  @include vishraamStyles($sttm-vishraam-red, $sttm-vishraam-yellow);
 }
 
 select {
