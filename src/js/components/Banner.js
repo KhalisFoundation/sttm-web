@@ -14,7 +14,7 @@ export default class Banner extends React.PureComponent {
 
   componentDidMount() {
     const currentDate = new Date();
-    const date = currentDate.toISOString().slice(0, 10);
+    const date = currentDate.toLocaleDateString('zh-tw').replace(/\//g, "-");
 
     fetch(`${BANNERS_URL}/${date}`)
       .then(r => r.json())
