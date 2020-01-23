@@ -1,88 +1,64 @@
 /* globals BANNERS_URL */
 import React from 'react';
-import CrossIcon from './Icons/Times';
-import cx from 'classnames';
-import { saveToLocalStorage, getBooleanFromLocalStorage } from '@/util';
+
+import { saveToLocalStorage, getStringFromLocalStorage } from '@/util';
 import { dateMath } from '../util/index.js';
+import CrossIcon from './Icons/Times';
+
 export default class Banner extends React.PureComponent {
 
   state = {
-    title: '',
-    message: '',
-    toggleBannerVisibilty: false,
+    notifications: [],
     date: 0,
-    index: 0,
   };
 
   componentDidMount() {
-    const d = new Date();
-    const $mysqlDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ":" + d.getSeconds();
-    const $date = $mysqlDate.slice(0, 10);
+    const currentDate = new Date();
+    const date = currentDate.toLocaleDateString('zh-tw').replace(/\//g, "-");
 
-    this.setState({ date: $date });
-    fetch(`${BANNERS_URL}/${$date}`)
+    fetch(`${BANNERS_URL}/${date}`)
       .then(r => r.json())
       .then(messages => {
+        const { rows } = messages;
 
-        const $index = messages.rows.length;
-        const row = messages.rows[0];
-        this.setState({ index: $index });
-        const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${$date}-${$index}`, false);
-        const $msgDateExp = messages.rows[0].length !== 0 ? row.Expires : null;
+        const unreadNotifications = rows.filter(notification => {
+          const { ID } = notification;
+          const lastSeen = getStringFromLocalStorage(`banner-${ID}`);
 
-        if (messages.rows.length === 0 || hasSeenMsg === true || dateMath.isAfter($mysqlDate, $msgDateExp)) {
-          this.setState({ toggleBannerVisibilty: false });
-        } else if (hasSeenMsg === false && dateMath.isBefore($mysqlDate, $msgDateExp)) {
-          this.setState({
-            toggleBannerVisibilty: true,
-            title: row.Title,
-            message: row.Content,
-            type: row.Type,
-          });
-        }
+          if (lastSeen) return dateMath.isAfter(date, lastSeen);
+
+          return true;
+        });
+
+        this.setState({ date, notifications: unreadNotifications });
       }
       );
   }
 
-  toggleBanner = () => {
-    this.setState({
-      toggleBannerVisibilty: !this.state.toggleBannerVisibilty
-    })
+  updateLastSeen = (e, id) => {
+    e.currentTarget.parentElement.remove();
+    saveToLocalStorage(`banner-${id}`, this.state.date);
   }
-  setSeenForDay = () => {
-    saveToLocalStorage(`SeenBanner-${this.state.date}-${this.state.index}`, true);
-  }
+
   render() {
-    const { toggleBannerVisibilty, type } = this.state;
-    const checkType = toggleBannerVisibilty ? `${type}` : false;
-    let classes =
-      cx({
-        'banner': true,
-        'attention': true,
-        'toggled': toggleBannerVisibilty,
-      }, checkType);
+
+    const { notifications } = this.state;
+
     return (
-      <div className={classes}>
-        {
-          toggleBannerVisibilty === true && this.state.message &&
-          <>
-            <div className='banner-text'>
-              <span className='banner-title'>{this.state.title + ": "}</span>
-              <span>{this.state.message}</span>
+      <div className="banner attention">
+        {notifications.map(notif => {
+          return (
+            <div key={notif.ID} className={`notification ${notif.Type}`}>
+              <div className="banner-text">
+                <span className="banner-title">{notif.Title} : </span>
+                <span>{notif.Content}</span>
+              </div>
+              <button className="banner-cross-bg" onClick={(e) => this.updateLastSeen(e, notif.ID)}>
+                <CrossIcon className="banner-cross" />
+              </button>
             </div>
-            <button
-              role="button"
-              aria-label="close"
-              className="banner-cross-bg"
-              onClick={() => {
-                this.toggleBanner();
-                this.setSeenForDay();
-              }}
-            >
-              x
-            </button>
-          </>
-        }
+          );
+        })}
       </div>
     );
   }

@@ -1,34 +1,41 @@
-.banner.toggled {
+.banner {
   align-items: center;
   display: flex;
-  height: auto;
+  flex-flow: column;
   justify-content: space-between;
   width: 100%;
 
-  &.attention {
+  .notification {
+    display: flex;
+    padding: 10px 25px;
+    width: 100vw;
+
+    .banner-text {
+      align-items: center;
+      color: white;
+      font-size: 1rem;
+      margin: 5px 5% 10px;
+      max-width: 75rem;
+
+      @media screen and (max-width: 45.999999em) {
+        font-size: 0.8rem;
+      }
+    }
+
     &.message {
       background-color: $sttm-orange;
+      color: $sttm-black;
     }
 
     &.warning {
       background-color: $sttm-red;
+      color: $sttm-white;
     }
 
     &.announcement {
       background-color: $sttm-blue;
+      color: $sttm-white;
     }
-  }
-}
-
-.banner-text {
-  align-items: center;
-  color: white;
-  font-size: 1rem;
-  margin: 5px 5% 10px;
-  max-width: 75rem;
-
-  @media screen and (max-width: 45.999999em) {
-    font-size: 0.8rem;
   }
 }
 
@@ -43,9 +50,6 @@
   height: 30px;
   justify-content: center;
   margin: 0.6em;
-  position: absolute;
-  right: 0;
-  top: 0;
   width: 30px;
 
   &:hover {
