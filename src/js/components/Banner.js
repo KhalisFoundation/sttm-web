@@ -9,18 +9,12 @@ export default class Banner extends React.PureComponent {
 
   state = {
     notifications: [],
-    title: '',
-    message: '',
-    toggleBannerVisibilty: false,
     date: 0,
-    index: 0,
   };
 
   componentDidMount() {
-    const currentDate = new Date("2020-01-22");
+    const currentDate = new Date();
     const date = currentDate.toISOString().slice(0, 10);
-
-    this.setState({ date });
 
     fetch(`${BANNERS_URL}/${date}`)
       .then(r => r.json())
@@ -34,7 +28,7 @@ export default class Banner extends React.PureComponent {
           return dateMath.isAfter(date, lastSeen);
         });
 
-        this.setState({ notifications: unreadNotifications });
+        this.setState({ date, notifications: unreadNotifications });
       }
       );
   }
