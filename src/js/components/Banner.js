@@ -28,10 +28,9 @@ export default class Banner extends React.PureComponent {
         const row = messages.rows[0];
         this.setState({ index: $index });
         const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${$date}-${$index}`, false);
-        console.log(hasSeenMsg);
         const $msgDateExp = messages.rows[0].length !== 0 ? row.Expires : null;
 
-        if (messages.rows.length === 0 || hasSeenMsg === true || dateMath.isAfter($mysqlDate, $msgDateExp)) {
+        if (Object.keys(messages.rows[0]).length === 0 || hasSeenMsg === true || dateMath.isAfter($mysqlDate, $msgDateExp)) {
           this.setState({ toggleBannerVisibilty: false });
         } else if (hasSeenMsg === false && dateMath.isBefore($mysqlDate, $msgDateExp)) {
           this.setState({
