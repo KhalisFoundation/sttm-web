@@ -3,7 +3,6 @@
   display: flex;
   height: auto;
   justify-content: space-between;
-  opacity: 0.6;
   width: 100%;
 
   &.attention {
@@ -24,14 +23,32 @@
 .banner-text {
   align-items: center;
   color: white;
-  margin-left: 2%;
+  font-size: 1rem;
+  margin: 5px 5% 10px;
+  max-width: 75rem;
+
+  @media screen and (max-width: 45.999999em) {
+    font-size: 0.8rem;
+  }
+}
+
+.banner-title {
+  font-weight: bold;
 }
 
 .banner-cross-bg {
   align-items: center;
+  color: $sttm-white;
   display: flex;
   height: 30px;
   justify-content: center;
-  margin-right: 2%;
+  margin: 0.6em;
+  position: absolute;
+  right: 0;
+  top: 0;
   width: 30px;
+
+  &:hover {
+    color: black;
+  }
 }
