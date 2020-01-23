@@ -67,18 +67,19 @@ export default class Banner extends React.PureComponent {
           toggleBannerVisibilty === true && this.state.message &&
           <>
             <div className='banner-text'>
-              <>{this.state.title.toUpperCase() + ": "}</>
-              <>{this.state.message}</>
+              <span className='banner-title'>{this.state.title + ": "}</span>
+              <span>{this.state.message}</span>
             </div>
             <button
-              type="button"
+              role="button"
+              aria-label="close"
               className="banner-cross-bg"
               onClick={() => {
                 this.toggleBanner();
                 this.setSeenForDay();
               }}
             >
-              <CrossIcon className="banner-cross" />
+              x
             </button>
           </>
         }
