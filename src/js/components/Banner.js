@@ -67,8 +67,8 @@ export default class Banner extends React.PureComponent {
           toggleBannerVisibilty === true && this.state.message &&
           <>
             <div className='banner-text'>
-              <text>{this.state.title.toUpperCase() + ": "}</text>
-              <text>{this.state.message}</text>
+              <>{this.state.title.toUpperCase() + ": "}</>
+              <>{this.state.message}</>
             </div>
             <button
               type="button"
