@@ -25,7 +25,9 @@ export default class Banner extends React.PureComponent {
           const { ID } = notification;
           const lastSeen = getStringFromLocalStorage(`banner-${ID}`);
 
-          return dateMath.isAfter(date, lastSeen);
+          if (lastSeen) return dateMath.isAfter(date, lastSeen);
+
+          return true;
         });
 
         this.setState({ date, notifications: unreadNotifications });
