@@ -1,38 +1,43 @@
+/* globals BANNERS_URL */
 import React from 'react';
 import CrossIcon from './Icons/Times';
 import cx from 'classnames';
 import { saveToLocalStorage, getBooleanFromLocalStorage } from '@/util';
-
+import { dateMath } from '../util/index.js';
 export default class Banner extends React.PureComponent {
 
   state = {
     title: '',
     message: '',
     toggleBannerVisibilty: false,
-    year: 0,
-    day: 0,
-    month: 0,
+    date: 0,
+    index: 0,
   };
 
   componentDidMount() {
     const d = new Date();
-    const $yr = d.getFullYear();
-    const $month = d.getMonth();
-    const $day = d.getDate();
-    this.setState({ year: $yr, day: $day, month: $month })
-    fetch(`http://api.sikhitothemax.org/messages/web/${$yr}-${$month}-${$day}`)
+    const $mysqlDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ":" + d.getSeconds();
+    const $date = $mysqlDate.slice(0, 10);
+
+    this.setState({ date: $date });
+    fetch(`${BANNERS_URL}/${$date}`)
       .then(r => r.json())
       .then(messages => {
-        const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`, false);
-        if (messages.rows.length === 0 || hasSeenMsg === true) {
+
+        const $index = messages.rows.length;
+        const row = messages.rows[0];
+        this.setState({ index: $index });
+        const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${$date}-${$index}`, false);
+        const $msgDateExp = messages.rows[0].length !== 0 ? row.Expires : null;
+
+        if (messages.rows.length === 0 || hasSeenMsg === true || dateMath.isAfter($mysqlDate, $msgDateExp)) {
           this.setState({ toggleBannerVisibilty: false });
-        } else if (
-          hasSeenMsg === null || hasSeenMsg === false) {
+        } else if (hasSeenMsg === false && dateMath.isBefore($mysqlDate, $msgDateExp)) {
           this.setState({
             toggleBannerVisibilty: true,
-            title: messages.rows[0].Title,
-            message: messages.rows[0].Content,
-            type: messages.rows[0].Type,
+            title: row.Title,
+            message: row.Content,
+            type: row.Type,
           });
         }
       }
@@ -45,22 +50,24 @@ export default class Banner extends React.PureComponent {
     })
   }
   setSeenForDay = () => {
-    saveToLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`, true);
+    saveToLocalStorage(`SeenBanner-${this.state.date}-${this.state.index}`, true);
   }
   render() {
-    const { toggleBannerVisibilty } = this.state;
-    const classNames = cx({
-      'banner': true,
-      'attention': true,
-      'toggled': toggleBannerVisibilty
-    });
+    const { toggleBannerVisibilty, type } = this.state;
+    const checkType = toggleBannerVisibilty ? `${type}` : false;
+    let classes =
+      cx({
+        'banner': true,
+        'attention': true,
+        'toggled': toggleBannerVisibilty,
+      }, checkType);
     return (
-      <div className={classNames}>
+      <div className={classes}>
         {
           toggleBannerVisibilty === true && this.state.message &&
           <>
             <div className='banner-text'>
-              <text>{this.state.title + ": "}</text>
+              <text>{this.state.title.toUpperCase() + ": "}</text>
               <text>{this.state.message}</text>
             </div>
             <button
