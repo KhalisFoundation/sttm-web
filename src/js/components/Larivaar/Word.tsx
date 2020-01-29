@@ -54,7 +54,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
         if (item.includes('´')) {
           // handle space break for this special character
           return (
-            <span key={key} style={{ display: 'inline-block' }}>
+            <span key={key} className={akharClass} style={{ display: 'inline-block' }}>
               {item}
               <wbr />
             </span>
