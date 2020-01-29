@@ -7,10 +7,12 @@ export default class HighlightedSearchResult extends React.PureComponent {
     startIndex: PropTypes.number,
     endIndex: PropTypes.number,
     query: PropTypes.string,
+    visraams: PropTypes.bool,
+    visraamIndices: PropTypes.array,
   };
 
   render() {
-    const { children, startIndex, endIndex, query } = this.props;
+    const { children, startIndex, endIndex, query, visraamIndices, visraams } = this.props;
     if (children === null) {
       return null;
     }
@@ -20,8 +22,8 @@ export default class HighlightedSearchResult extends React.PureComponent {
         key={i}
         className={
           (i >= startIndex && i < endIndex) || word.includes(query)
-            ? 'search-highlight-word'
-            : ''
+            ? 'search-highlight-word' && visraams && visraamIndices && visraamIndices.includes(i) ? ' visraam-word' : ''
+            : visraams && visraamIndices && visraamIndices.includes(i) ? ' visraam-word' : ''
         }
       >
         {` ${word} `}

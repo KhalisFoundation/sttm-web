@@ -149,6 +149,7 @@ export default class Baani extends React.PureComponent {
       centerAlignGurbani,
       showFullScreen,
       onPanktiClick,
+      visraams
     } = this.props;
 
     const disabledActions = ['ang', 'hukamnama'].includes(type)
@@ -165,6 +166,8 @@ export default class Baani extends React.PureComponent {
         fontSize={fontSize}
         fontFamily={fontFamily}
         onPanktiClick={onPanktiClick}
+        visraamData={shabad.visraam}
+        visraams={visraams}
       />
     );
 

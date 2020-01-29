@@ -10,6 +10,7 @@ export interface ILarivaarWordProps {
   startIndex?: number;
   endIndex?: number;
   highlight?: boolean;
+  visraamHighlight: boolean;
 }
 
 function LarivaarWord(props: ILarivaarWordProps) {
@@ -21,6 +22,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
     larivaarAssist,
     index,
     highlight,
+    visraamHighlight,
   } = props;
 
   const segments = unicode
@@ -49,12 +51,20 @@ function LarivaarWord(props: ILarivaarWordProps) {
 
         akharClass += assistLarivaar ? ' larivaar-assist-word' : '';
 
+        if (visraamHighlight) {
+          akharClass += ' visraam-word';
+        }
+
         const key = `${index}.${i}`;
 
         if (item.includes('´')) {
           // handle space break for this special character
           return (
-            <span key={key} className={akharClass} style={{ display: 'inline-block' }}>
+            <span
+              key={key}
+              className={akharClass}
+              style={{ display: 'inline-block' }}
+            >
               {item}
               <wbr />
             </span>

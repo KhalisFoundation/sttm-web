@@ -11,6 +11,8 @@ export interface ILarivaarProps {
   unicode: boolean;
   children: string;
   query: string;
+  visraams: boolean;
+  visraamIndices: number[];
 }
 
 function Larivaar(props: ILarivaarProps) {
@@ -22,6 +24,8 @@ function Larivaar(props: ILarivaarProps) {
     children,
     unicode,
     query,
+    visraams,
+    visraamIndices,
   } = props;
 
   if (!enable) {
@@ -30,6 +34,8 @@ function Larivaar(props: ILarivaarProps) {
         startIndex={startIndex}
         endIndex={endIndex}
         query={query}
+        visraams={visraams}
+        visraamIndices={visraamIndices}
       >
         {children}
       </HighlightedSearchResult>
@@ -41,6 +47,14 @@ function Larivaar(props: ILarivaarProps) {
       {children.split(' ').map((word, index) => {
         if (['॥', ']'].some(v => word.includes(v))) {
           return `${word} `;
+        }
+        let visraamHighlight = false;
+        if (visraamIndices && visraamIndices.length !== 0) {
+          visraamHighlight = visraams
+            ? visraamIndices.includes(index)
+              ? true
+              : false
+            : false;
         }
 
         const highlight = word.includes(query);
@@ -55,6 +69,7 @@ function Larivaar(props: ILarivaarProps) {
             larivaarAssist={larivaarAssist}
             index={index}
             highlight={highlight}
+            visraamHighlight={visraamHighlight}
           />
         );
       })}
