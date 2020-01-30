@@ -480,3 +480,25 @@ export const getShabadList = (q, { type, source }) => {
     }, (error) => { reject(error); });
   });
 }
+
+
+export const getVisraamClass = (verse, word, visraams) => {
+  const words = verse.split(' ');
+  const akharIndex = words.findIndex((element) => element === word);
+  let visraamClass = '';
+
+  if (visraams) {
+    Object.keys(visraams).forEach((visraamSource) => {
+      if (visraams[visraamSource]) {
+        visraams[visraamSource].forEach((visraam) => {
+          if (visraam.p === akharIndex) {
+            visraamClass += visraam.t === 'v' ?
+              ` visraam-${visraamSource}-main ` :
+              ` visraam-${visraamSource}-yamki `;
+          }
+        });
+      }
+    });
+  }
+  return visraamClass;
+}

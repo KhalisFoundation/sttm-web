@@ -10,6 +10,7 @@ export interface ILarivaarWordProps {
   startIndex?: number;
   endIndex?: number;
   highlight?: boolean;
+  visraamClass: string;
 }
 
 function LarivaarWord(props: ILarivaarWordProps) {
@@ -21,6 +22,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
     larivaarAssist,
     index,
     highlight,
+    visraamClass,
   } = props;
 
   const segments = unicode
@@ -30,7 +32,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
   return (
     <>
       {segments.map((item, i) => {
-        let akharClass = '';
+        let akharClass = visraamClass + ' ';
         let assistLarivaar;
 
         if (index % 2 === 1) {
