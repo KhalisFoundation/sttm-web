@@ -28,6 +28,7 @@ export default class BaaniLine extends React.PureComponent {
       text,
       visraam,
     } = this.props;
+
     return (
       <div
         className={`gurmukhi gurbani-display gurbani-font ${
