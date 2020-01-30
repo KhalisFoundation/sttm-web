@@ -30,9 +30,9 @@ function LarivaarWord(props: ILarivaarWordProps) {
     : fixLarivaarGurmukhiFont(word);
 
   return (
-    <>
+    <span className={visraamClass}>
       {segments.map((item, i) => {
-        let akharClass = visraamClass + ' ';
+        let akharClass = '';
         let assistLarivaar;
 
         if (index % 2 === 1) {
@@ -72,7 +72,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
           </span>
         );
       })}
-    </>
+    </span>
   );
 }
 

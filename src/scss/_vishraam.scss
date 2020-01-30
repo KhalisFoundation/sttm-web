@@ -7,11 +7,11 @@
 
   @each $source in $visraam-sources {
     &.display-visraams.vishraam-vishraam-options-colored-words.vishraam-vishraam-source-#{$source} .gurlipi {
-      .visraam-main.visraam-#{$source} {
+      .visraam-#{$source}-main {
         color: $visraam-main;
       }
 
-      .visraam-yamki.visraam-#{$source} {
+      .visraam-#{$source}-yamki {
         color: $visraam-yamki;
       }
     }
@@ -21,12 +21,12 @@
         border-radius: 15px;
       }
 
-      .padchhed .visraam-main.visraam-#{$source},
-      .padchhed .visraam-yamki.visraam-#{$source} {
+      .padchhed .visraam-#{$source}-main,
+      .padchhed .visraam-#{$source}-yamki {
         padding-right: 5px;
       }
 
-      .visraam-main.visraam-#{$source} {
+      .visraam-#{$source}-main {
         background:
           linear-gradient(
             to right,
@@ -35,7 +35,7 @@
           );
       }
 
-      .visraam-yamki.visraam-#{$source} {
+      .visraam-#{$source}-yamki {
         background:
           linear-gradient(
             to right,
