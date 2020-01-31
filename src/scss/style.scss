@@ -15,7 +15,9 @@
   "sync",
   "spinner",
   "sundar-gutka",
-  "help";
+  "help",
+  "controller",
+  "banner";
 
 html,
 body {
@@ -200,5 +202,16 @@ select {
     .dark-mode & {
       fill: $sttm-light-grey;
     }
+  }
+}
+
+.logo-center {
+  margin-top: 10px;
+
+  a img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
   }
 }

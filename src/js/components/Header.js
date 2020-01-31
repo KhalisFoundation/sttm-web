@@ -16,6 +16,7 @@ export default class Header extends React.PureComponent {
   static propTypes = {
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
+    isController: PropTypes.bool,
     isAng: PropTypes.bool,
     location: PropTypes.shape({
       search: PropTypes.string,
@@ -33,7 +34,7 @@ export default class Header extends React.PureComponent {
 
   render() {
     const {
-      props: { defaultQuery, isHome, isAng },
+      props: { defaultQuery, isHome, isAng, isController },
       onFormSubmit,
       handleFormSubmit,
     } = this;
@@ -43,6 +44,25 @@ export default class Header extends React.PureComponent {
     } = getQueryParams(location.search);
 
     const key = `${defaultQuery}${defaultSource}${defaultType}`;
+
+    const controllerHeader = (
+      <div className="top-bar no-select" id="controller-bar">
+        <div className="top-bar-wrapper row controller-header">
+          <div className="top-bar-title">
+            <Link id="sync-logo" to="/" />
+            <span className="logo-text"><span className="bolder">Bani</span> Controller</span>
+          </div>
+          <div className="responsive-menu">
+            <Menu isHome={true} />
+          </div>
+        </div>
+      </div>
+    );
+
+    if (isController) {
+      return controllerHeader;
+    }
+
 
     return (
       <div className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
@@ -195,7 +215,7 @@ export default class Header extends React.PureComponent {
                           </option>
                         ))}
                       </select>
-                      {type === SEARCH_TYPES['ANG'] ? (
+                      {parseInt(type) === SEARCH_TYPES['ANG'] ? (
                         <select
                           name="source"
                           value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}

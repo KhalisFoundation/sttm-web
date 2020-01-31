@@ -66,10 +66,17 @@ export default class Menu extends React.PureComponent {
                 Index
               </Link>
             </li>
-            <li>
-              <Link to="/sync" onClick={toggleMenu}>
-                Sync
-              </Link>
+            <li className="submenu">
+              <p>Sync
+              <BackIcon /></p>
+              <div className="submenu-items">
+                <Link to="/sync" onClick={toggleMenu}>
+                  Sangat Sync
+                </Link>
+                <Link to="/control" onClick={toggleMenu}>
+                  Bani Controller
+                </Link>
+              </div>
             </li>
             <li className="close">
               <span role="button" aria-label="Close menu" onClick={closeMenu}>

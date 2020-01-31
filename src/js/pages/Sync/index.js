@@ -125,6 +125,7 @@ export default class Sync extends React.PureComponent {
    */
   static Form = ({ onSubmit, error, getCode }) => (
     <React.Fragment>
+      <h1>{TEXTS.SYNC_TITLE}</h1>
       <p>{TEXTS.SYNC_DESCRIPTION}</p>
       {error && <h5 className="sync-form-error">{TEXTS.SYNC_ERROR}</h5>}
       <form

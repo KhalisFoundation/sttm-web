@@ -45,7 +45,7 @@ export default class Layout extends React.PureComponent {
     ) : (
       <div className="row" id="content-root">
         <BreadCrumb
-          links={[{ title: TEXTS.HUKAMNAMA + ' ' + shabad.expandedDate }]}
+          links={[{ title: TEXTS.HUKAMNAMA + ' | ' + shabad.expandedDate }]}
         />
         <ShabadContent
           gurbani={shabad.verses}

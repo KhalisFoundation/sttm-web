@@ -11,6 +11,7 @@ const API_URLS = {
   BANIS: PRODUCTION ? '//api.banidb.com/v2/banis' : "//api.khajana.org/v2/banis",
   PRODUCTION: '//api.banidb.com/v2/',
   DEVELOPMENT: '//api.khajana.org/v2/',
+  BANNERS: '//api.sikhitothemax.org/messages/web',
   SYNC: {
     PRODUCTION: '//api.sikhitothemax.org/',
     LOCAL: '//api.sikhitothemax.org/',
@@ -30,6 +31,7 @@ const plugins = PRODUCTION
       API_URL: JSON.stringify(API_URLS.PRODUCTION),
       SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
       BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
+      BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
     }),
   ])
   : commonPlugins.concat([
@@ -41,6 +43,7 @@ const plugins = PRODUCTION
       API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
       SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
       BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
+      BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
     }),
   ]);
 

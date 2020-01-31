@@ -12,11 +12,13 @@ import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
 import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
+import WebControllerPage from './pages/WebController'
 import {
   DEFAULT_SEARCH_SOURCE,
   DEFAULT_SEARCH_TYPE,
   SEARCH_TYPES,
   SOURCES,
+  TEXTS,
 } from './constants';
 
 // TODO: Rely on `../../seo/` for titles.
@@ -389,6 +391,16 @@ export default [
     path: '/random',
     render() {
       return <Redirect to="/shabad?random" />;
+    },
+  },
+  {
+    path: '/control',
+    render(props) {
+      return (
+        <Layout title={`${TEXTS.CONTROLLER} - SikhiToTheMax`} isController={true} {...props} >
+          <WebControllerPage />
+        </ Layout>
+      )
     },
   },
   {
