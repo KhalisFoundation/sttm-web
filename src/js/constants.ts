@@ -104,8 +104,7 @@ export const TEXTS = {
   SYNC: `Remote Sync`,
   CONTROLLER: 'Bani Controller',
   CONTROLLER_TITLE: 'Take Control of SikhiToTheMax',
-  CONTROLLER_DESC:
-    'Control SikhiToTheMax on your computer using your mobile device. Sit anywhere in the Darbar Hall with the sangat or Keertani while still being able to control SikhiToTheMax. Bani Controller adds more flexibility and mobility to project Gurbani on to the big screen.',
+  CONTROLLER_DESC: 'Control SikhiToTheMax on your computer using your mobile device. Sit anywhere in the Darbar Hall with the sangat or Keertani while still being able to control SikhiToTheMax. Bani Controller adds more flexibility and mobility to project Gurbani on to the big screen.',
   CONTROLLER_ERROR: (type: string = 'code/pin') =>
     `We aren't able to connect to the desktop with the entered ${type}. Make sure it's correct or try again later.`,
   SYNC_TITLE: 'Sync your phone to SikhiToTheMax',

@@ -98,8 +98,7 @@ class Shabad extends React.PureComponent {
         fontSize,
         fontFamily,
         centerAlignGurbani,
-        showFullScreen,
-        visraams
+        showFullScreen
       },
       handleEmbed,
       handleCopyAll,
@@ -150,7 +149,6 @@ class Shabad extends React.PureComponent {
               transliterationLanguages={transliterationLanguages}
               centerAlignGurbani={centerAlignGurbani}
               showFullScreen={showFullScreen}
-              visraams={visraams}
             />
 
             {this.props.hideMeta === false && (
