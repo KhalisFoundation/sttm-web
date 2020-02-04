@@ -14,6 +14,7 @@ import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
 import ScrollToTop from './ScrollToTop';
 import throttle from 'lodash.throttle';
+import { addVisraamClass } from '../util';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -130,6 +131,7 @@ class Layout extends React.PureComponent {
     window.addEventListener('scroll', this.onScroll, { passive: true });
     document.title = this.props.title;
     this.updateTheme();
+    addVisraamClass();
   }
 
   componentWillUnmount() {

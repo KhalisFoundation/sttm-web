@@ -98,7 +98,7 @@ class Shabad extends React.PureComponent {
         fontSize,
         fontFamily,
         centerAlignGurbani,
-        showFullScreen
+        showFullScreen,
       },
       handleEmbed,
       handleCopyAll,

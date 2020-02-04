@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { toggleItemInArray } from '../util';
+import { toggleItemInArray, clearVisraamClass } from '../util';
 import {
   TEXTS,
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
   FONT_OPTIONS,
+  VISRAAM_CONSTANTS,
 } from '../constants';
 import TelevisionIcon from './Icons/Television';
 import SlidersIcon from './Icons/Sliders';
@@ -24,6 +25,8 @@ export default class ShabadControls extends React.PureComponent {
     unicode: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
     visraams: PropTypes.bool.isRequired,
+    visraamSource: PropTypes.string.isRequired,
+    visraamStyle: PropTypes.string.isRequired,
     hideAlignOption: PropTypes.bool,
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
@@ -45,7 +48,29 @@ export default class ShabadControls extends React.PureComponent {
     changeFont: PropTypes.func.isRequired,
     toggleCenterAlignOption: PropTypes.func.isRequired,
     toggleVisraams: PropTypes.func.isRequired,
+    setVisraamSource: PropTypes.func.isRequired,
+    setVisraamStyle: PropTypes.func.isRequired,
   };
+
+  componentDidUpdate() {
+    clearVisraamClass();
+    document.body.classList[this.props.visraams ? 'add' : 'remove'](
+      VISRAAM_CONSTANTS.CLASS_NAME,
+      VISRAAM_CONSTANTS.SOURCE_CLASS(this.props.visraamSource),
+      VISRAAM_CONSTANTS.TYPE_CLASS(this.props.visraamStyle)
+    );
+  }
+
+  createSelectFromObj = (obj, defaultValue, changeFun) => {
+    const options = Object.keys(obj).map(key =>
+      <option key={key} value={key}>{obj[key]}</option>
+    )
+    return (
+      <select value={defaultValue} onChange={(e) => {
+        changeFun(e.currentTarget.value);
+      }}> {options} </select>
+    )
+  }
 
   render() {
     const {
@@ -59,6 +84,8 @@ export default class ShabadControls extends React.PureComponent {
       larivaar,
       darkMode,
       visraams,
+      visraamSource,
+      visraamStyle,
       fontSize,
       fontFamily,
       splitView,
@@ -75,6 +102,8 @@ export default class ShabadControls extends React.PureComponent {
       toggleLarivaarOption,
       toggleSplitViewOption,
       toggleVisraams,
+      setVisraamSource,
+      setVisraamStyle,
       changeFont,
       hideAlignOption,
     } = this.props;
@@ -204,6 +233,22 @@ export default class ShabadControls extends React.PureComponent {
                 </a>
               </div>
             </div>
+            {visraams && (
+              <>
+                <div className="display-option-type">
+                  <div className="display-option-header">Vishraam Options</div>
+                  <div className="display-option-content">
+                    {this.createSelectFromObj(VISRAAM_CONSTANTS.TYPES, visraamStyle, setVisraamStyle)}
+                  </div>
+                </div>
+                <div className="display-option-type">
+                  <div className="display-option-header">Vishraam Source</div>
+                  <div className="display-option-content">
+                    {this.createSelectFromObj(VISRAAM_CONSTANTS.SOURCES, visraamSource, setVisraamSource)}
+                  </div>
+                </div>
+              </>
+            )}
 
             {!hideAlignOption && (
               <div className="display-option-type">

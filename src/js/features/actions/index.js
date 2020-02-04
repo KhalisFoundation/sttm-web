@@ -3,6 +3,8 @@ import {
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_DARK_MODE,
   DEFAULT_VISRAAMS,
+  DEFAULT_VISRAAM_SOURCE,
+  DEFAULT_VISRAAM_STYLE,
   DEFAULT_UNICODE,
   DEFAULT_FONT_SIZE,
   DEFAULT_FONT_FAMILY,
@@ -52,6 +54,12 @@ export const toggleLarivaarAssistOption = createAction(
 export const TOGGLE_SPLIT_VIEW_OPTION = 'TOGGLE_SPLIT_VIEW_OPTION';
 export const toggleSplitViewOption = createAction(TOGGLE_SPLIT_VIEW_OPTION);
 
+export const SET_VISRAAM_SOURCE = 'SET_VISRAAM_SOURCE';
+export const setVisraamSource = createAction(SET_VISRAAM_SOURCE);
+
+export const SET_VISRAAM_STYLE = 'SET_VISRAAM_STYLE';
+export const setVisraamStyle = createAction(SET_VISRAAM_STYLE);
+
 export const SET_UNICODE = 'SET_UNICODE';
 export const setUnicode = createAction(SET_UNICODE);
 
@@ -84,6 +92,8 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
   dispatch(setVisraams(DEFAULT_VISRAAMS));
+  dispatch(setVisraamSource(DEFAULT_VISRAAM_SOURCE));
+  dispatch(setVisraamStyle(DEFAULT_VISRAAM_STYLE));
   dispatch(setCenterAlignOption(DEFAULT_CENTER_ALIGN_GURBANI));
   dispatch(setSplitView(DEFAULT_SPLIT_VIEW));
 };

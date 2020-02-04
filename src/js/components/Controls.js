@@ -18,6 +18,8 @@ import {
   toggleSplitViewOption,
   toggleDarkMode,
   toggleVisraams,
+  setVisraamSource,
+  setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
 } from '../features/actions';
@@ -119,6 +121,8 @@ const dispatchToProps = {
   toggleSplitViewOption,
   toggleDarkMode,
   toggleVisraams,
+  setVisraamSource,
+  setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
 };

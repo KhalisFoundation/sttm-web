@@ -7,6 +7,10 @@ import {
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
   FIRST_HUKAMNAMA_DATE,
   BANI_LENGTH_COLS,
+  VISRAAM_CONSTANTS,
+  LOCAL_STORAGE_KEY_FOR_VISRAAMS,
+  LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
+  LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
 } from '../constants';
 
 import { translationMap, getGurmukhiVerse } from './api/shabad';
@@ -501,4 +505,22 @@ export const getVisraamClass = (verse, word, visraams) => {
     });
   }
   return visraamClass;
+}
+
+export const clearVisraamClass = () => {
+  Object.keys(VISRAAM_CONSTANTS.SOURCES).forEach(element => {
+    document.body.classList.remove(VISRAAM_CONSTANTS.SOURCE_CLASS(element));
+  });
+  Object.keys(VISRAAM_CONSTANTS.TYPES).forEach(element => {
+    document.body.classList.remove(VISRAAM_CONSTANTS.TYPE_CLASS(element));
+  });
+}
+
+export const addVisraamClass = () => {
+  clearVisraamClass();
+  document.body.classList[getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS) ? 'add' : 'remove'](
+    VISRAAM_CONSTANTS.CLASS_NAME,
+    VISRAAM_CONSTANTS.SOURCE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE)),
+    VISRAAM_CONSTANTS.TYPE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE))
+  );
 }

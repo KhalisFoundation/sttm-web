@@ -24,6 +24,10 @@ import {
   DEFAULT_DARK_MODE,
   DEFAULT_VISRAAMS,
   DEFAULT_CENTER_ALIGN_GURBANI,
+  LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
+  DEFAULT_VISRAAM_SOURCE,
+  LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
+  DEFAULT_VISRAAM_STYLE,
 } from '../../constants';
 import {
   getArrayFromLocalStorage,
@@ -78,6 +82,15 @@ const initialState = {
   visraams: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_VISRAAMS,
     DEFAULT_VISRAAMS
+  ),
+  visraamSource: getStringFromLocalStorage(
+    LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
+    DEFAULT_VISRAAM_SOURCE
+  ),
+
+  visraamStyle: getStringFromLocalStorage(
+    LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
+    DEFAULT_VISRAAM_STYLE
   ),
   centerAlignGurbani: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,

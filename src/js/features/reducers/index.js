@@ -8,6 +8,8 @@ import {
   TOGGLE_DARK_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
+  SET_VISRAAM_SOURCE,
+  SET_VISRAAM_STYLE,
   SET_CENTER_ALIGN_OPTION,
   SET_UNICODE,
   SET_FONT_SIZE,
@@ -26,6 +28,8 @@ import {
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
+  LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
+  LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
   LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
@@ -108,11 +112,30 @@ export default function reducer(state, action) {
         action: TOGGLE_VISRAAMS,
         label: visraams ? 1 : 0,
       });
-
+      const larivaarAssist = state.larivaarAssist && !visraams;
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS, visraams);
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST, larivaarAssist);
       return {
         ...state,
         visraams,
+        larivaarAssist,
+      };
+    }
+    case SET_VISRAAM_SOURCE: {
+      const visraamSource = action.payload;
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE, visraamSource);
+      return {
+        ...state,
+        visraamSource,
+      };
+    }
+
+    case SET_VISRAAM_STYLE: {
+      const visraamStyle = action.payload;
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE, visraamStyle);
+      return {
+        ...state,
+        visraamStyle,
       };
     }
     case TOGGLE_SPLIT_VIEW_OPTION: {
@@ -146,10 +169,13 @@ export default function reducer(state, action) {
         action: TOGGLE_LARIVAAR_ASSIST_OPTION,
         label: larivaarAssist ? 1 : 0,
       });
+      const visraams = state.visraams && !larivaarAssist;
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST, larivaarAssist);
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS, visraams);
       return {
         ...state,
         larivaarAssist,
+        visraams,
       };
     }
     case SET_UNICODE: {

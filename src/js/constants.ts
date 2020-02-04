@@ -43,6 +43,8 @@ export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
 export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAMS = 'visraams';
+export const LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE = 'visraamSource';
+export const LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE = 'visraamStyle';
 export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
 export const LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW = 'centerAlignView';
@@ -74,6 +76,8 @@ export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
 export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 export const DEFAULT_VISRAAMS = false;
+export const DEFAULT_VISRAAM_SOURCE = 'sttm';
+export const DEFAULT_VISRAAM_STYLE = 'colored-words';
 
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
@@ -178,3 +182,18 @@ export const FONT_OPTIONS = {
 };
 
 export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';
+
+export const VISRAAM_CONSTANTS = {
+  CLASS_NAME: 'display-visraams',
+  SOURCES: {
+    sttm2: 'STTM 2',
+    igurbani: 'iGurbani',
+    sttm: 'BaniDB Living',
+  },
+  TYPES: {
+    'colored-words': 'Colored Words',
+    'gradient-bg': 'Gradient Background',
+  },
+  SOURCE_CLASS: (source: string) => `vishraam-vishraam-source-${source}`,
+  TYPE_CLASS: (type: string) => `vishraam-vishraam-options-${type}`
+}
