@@ -165,6 +165,7 @@ export default class Baani extends React.PureComponent {
         fontSize={fontSize}
         fontFamily={fontFamily}
         onPanktiClick={onPanktiClick}
+        visraam={shabad.visraam}
       />
     );
 

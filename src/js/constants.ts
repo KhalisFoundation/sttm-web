@@ -19,9 +19,9 @@ export const BANI_LENGTH_COLS = {
 };
 
 export const SYNC_TYPES = {
-  SHABAD: "shabad",
-  CEREMONY: "ceremony",
-  BANI: "bani"
+  SHABAD: 'shabad',
+  CEREMONY: 'ceremony',
+  BANI: 'bani',
 };
 
 export const TYPES = [..._TYPES, 'Ang'];
@@ -42,6 +42,9 @@ export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
 export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
+export const LOCAL_STORAGE_KEY_FOR_VISRAAMS = 'visraams';
+export const LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE = 'visraamSource';
+export const LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE = 'visraamStyle';
 export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
 export const LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW = 'centerAlignView';
@@ -72,6 +75,9 @@ export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
 export const DEFAULT_CENTER_ALIGN_GURBANI = false;
+export const DEFAULT_VISRAAMS = false;
+export const DEFAULT_VISRAAM_SOURCE = 'sttm';
+export const DEFAULT_VISRAAM_STYLE = 'colored-words';
 
 export const LARIVAAR_ASSIST_COLOR = '#f39c1d';
 export const HIGHLIGHTED_SEARCH_COLOR = 'rgb(1, 102, 155)';
@@ -103,8 +109,9 @@ export const TEXTS = {
   CONTROLLER: 'Bani Controller',
   CONTROLLER_TITLE: 'Take Control of SikhiToTheMax',
   CONTROLLER_DESC: 'Control SikhiToTheMax on your computer using your mobile device. Sit anywhere in the Darbar Hall with the sangat or Keertani while still being able to control SikhiToTheMax. Bani Controller adds more flexibility and mobility to project Gurbani on to the big screen.',
-  CONTROLLER_ERROR: (type: string = 'code/pin') => `We aren't able to connect to the desktop with the entered ${type}. Make sure it's correct or try again later.`,
-  SYNC_TITLE:'Sync your phone to SikhiToTheMax',
+  CONTROLLER_ERROR: (type: string = 'code/pin') =>
+    `We aren't able to connect to the desktop with the entered ${type}. Make sure it's correct or try again later.`,
+  SYNC_TITLE: 'Sync your phone to SikhiToTheMax',
   SYNC_DESCRIPTION: `Sangat Sync allows you to view the Shabad and current line displayed, via our Desktop Application, on your mobile device. Just enter the code below displayed on the screen by the desktop application and you will have the ability to choose what you want displayed such as translations, transliterations, larivaar and more.`,
   SYNC_ERROR: `We aren't able to connect to the entered code. Make sure it's correct or try again later.`,
   SYNC_NOTIFICATION: (code: string) =>
@@ -156,6 +163,7 @@ export const TEXTS = {
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
+  VISRAAMS: 'Visraams',
   CENTERALIGN: 'Center-Align',
   HUKAMNAMA_NOT_FOUND_DESCRIPTION:
     "We couldn't find the hukamnama for this date in our database.",
@@ -174,3 +182,18 @@ export const FONT_OPTIONS = {
 };
 
 export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';
+
+export const VISRAAM_CONSTANTS = {
+  CLASS_NAME: 'display-visraams',
+  SOURCES: {
+    sttm2: 'STTM 2',
+    igurbani: 'iGurbani',
+    sttm: 'BaniDB Living',
+  },
+  TYPES: {
+    'colored-words': 'Colored Words',
+    'gradient-bg': 'Gradient Background',
+  },
+  SOURCE_CLASS: (source: string) => `vishraam-vishraam-source-${source}`,
+  TYPE_CLASS: (type: string) => `vishraam-vishraam-options-${type}`
+}

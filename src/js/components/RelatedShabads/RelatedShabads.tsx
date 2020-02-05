@@ -29,12 +29,12 @@ export interface IRelatedShabadData {
 
 export interface IRelatedShabadsProps
   extends Pick<
-    IStore,
-    | 'translationLanguages'
-    | 'larivaar'
-    | 'larivaarAssist'
-    | 'unicode'
-    | 'transliterationLanguages'
+  IStore,
+  | 'translationLanguages'
+  | 'larivaar'
+  | 'larivaarAssist'
+  | 'unicode'
+  | 'transliterationLanguages'
   > {
   forShabadID: number;
   count?: number;
