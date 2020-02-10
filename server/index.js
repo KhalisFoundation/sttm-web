@@ -43,7 +43,7 @@ app
 
     const bodyClass =
       DARK_MODE_COOKIE in req.cookies &&
-      parseInt(req.cookies[DARK_MODE_COOKIE], 10) === 1
+        parseInt(req.cookies[DARK_MODE_COOKIE], 10) === 1
         ? DARK_MODE_CLASS_NAME
         : '';
 
@@ -58,4 +58,4 @@ app
   })
 
   // Listen on port
-  .listen(port, () => console.log(`Server started on port:${port}`));
+  .listen(process.env.PORT || port, () => console.log(`Server started on port:${port}`));
