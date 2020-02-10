@@ -186,9 +186,9 @@ export const SHABAD_CONTENT_CLASSNAME = 'shabad-content';
 export const VISRAAM_CONSTANTS = {
   CLASS_NAME: 'display-visraams',
   SOURCES: {
-    sttm2: 'STTM 2',
+    sttm: 'Default',
     igurbani: 'iGurbani',
-    sttm: 'BaniDB Living',
+    sttm2: 'STTM (Legacy)',
   },
   TYPES: {
     'colored-words': 'Colored Words',
