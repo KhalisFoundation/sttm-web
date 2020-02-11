@@ -56,6 +56,10 @@
 .larivaar:hover {
   .larivaar-word {
     color: #f39c1d;
+
+    .display-visraams & {
+      color: initial;
+    }
   }
 }
 
