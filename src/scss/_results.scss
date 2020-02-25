@@ -58,7 +58,11 @@
     color: #f39c1d;
 
     .display-visraams & {
-      color: initial;
+      color: inherit;
+
+      &.search-highlight-word {
+        color: #01669b;
+      }
     }
   }
 }
