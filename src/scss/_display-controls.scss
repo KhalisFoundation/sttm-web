@@ -53,49 +53,9 @@
   }
 }
 
-.display-options,
-.font-options {
-  animation: flip-open 0.25s;
-  background-color: $sttm-lighter-grey;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 auto 0.5rem 0;
-  padding: 0 2rem 0 3rem;
-  width: calc(100% - 2rem);
-
-  input[type='range'] {
-    --webkit-appearance: none;
-  }
-
-  input[type='range']::-webkit-slider-runnable-track {
-    background: $sttm-white;
-    border-radius: 4px;
-    height: 4px;
-  }
-
-  input[type='range']::-webkit-slider-thumb {
-    margin-top: -8px;
-  }
-
-  .dark-mode & {
-    background-color: $sttm-lighter-black;
-  }
-}
-
-.display-options-toggle span,
-.font-options-toggle span {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
-  background-origin: content-box;
-  background-position: right -1rem center;
-  background-repeat: no-repeat;
-  background-size: 9px 6px;
-  padding-right: 1rem;
-}
-
 #shabad-controllers {
   display: flex;
   flex-grow: 1;
-  height: 32px;
   overflow-x: auto;
   white-space: nowrap;
 
@@ -110,97 +70,171 @@
       linear-gradient(to right, $sttm-black, $sttm-lighter-black),
       linear-gradient(to left, $sttm-black, $sttm-lighter-black);
   }
-}
 
-.shabad-controller-toggle,
-.display-option-toggle,
-.font-option-toggle {
-  align-items: center;
-  background-color: $sttm-white;
-  border: 1px solid $sttm-light-grey;
-  border-radius: 2px;
-  color: $sttm-lighter-black;
-  display: flex;
-  font-size: 1rem;
-  line-height: 1.4;
-  margin-right: 5px;
-  padding: 4px 10px;
-  text-transform: capitalize;
-  transition: all 0.25s;
-  vertical-align: baseline;
+  .controller-option {
+    cursor: pointer;
+    height: 100%;
+    margin-right: 10px;
 
-  svg {
-    fill: $sttm-light-black;
+    &.multiselect_checkbox {
+      background-color: $sttm-white;
+      border: 1px solid $sttm-light-grey;
+      border-radius: 8px;
 
-    @media screen and (min-width: 30em) {
-      margin-right: 0.5em;
-    }
-  }
+      p {
+        line-height: 40px;
+        margin-bottom: 0;
+        padding: 0 1rem;
+      }
 
-  .dark-mode & {
-    background-color: $sttm-light-black;
-    border-color: $sttm-lighter-black;
-    color: $sttm-grey;
+      ul {
+        background-color: $sttm-white;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+        list-style-type: none;
+        margin: 0;
+        position: absolute;
 
-    svg {
-      fill: $sttm-grey;
-    }
-  }
+        &.hidden {
+          display: none;
+        }
 
-  &:hover {
-    border-color: $sttm-blue;
-    color: $sttm-blue;
-
-    .dark-mode & {
-      border-color: $sttm-blue;
-      color: $sttm-blue;
-    }
-  }
-
-  &.active,
-  &.active:hover {
-    background-color: $sttm-blue;
-    border-color: $sttm-blue;
-    color: $sttm-pure-white;
-
-    .dark-mode & {
-      background-color: $sttm-blue;
-      border-color: $sttm-blue;
-    }
-  }
-
-  i,
-  .custom-fa {
-    margin-right: 4px;
-  }
-
-  .custom-fa-assist {
-    &::after {
-      color: $sttm-orange;
-      content: 'ਅ';
-    }
-  }
-
-  .display-options-label {
-    @media screen and (max-width: 30em) {
-      display: none;
+        li {
+          padding: 0.5rem 1rem;
+          text-transform: capitalize;
+        }
+      }
     }
   }
 }
 
-.display-option-content {
-  display: flex;
-}
+// .shabad-controller-toggle,
+// .display-option-toggle,
+// .font-option-toggle {
+//   align-items: center;
+//   background-color: $sttm-white;
+//   border: 1px solid $sttm-light-grey;
+//   border-radius: 2px;
+//   color: $sttm-lighter-black;
+//   display: flex;
+//   font-size: 1rem;
+//   line-height: 1.4;
+//   margin-right: 5px;
+//   padding: 4px 10px;
+//   text-transform: capitalize;
+//   transition: all 0.25s;
+//   vertical-align: baseline;
 
-.display-option-type,
-.font-option-type {
-  margin: 1rem;
+//   svg {
+//     fill: $sttm-light-black;
 
-  big,
-  small {
-    margin: 5px;
-  }
-}
+//     @media screen and (min-width: 30em) {
+//       margin-right: 0.5em;
+//     }
+//   }
+
+//   .dark-mode & {
+//     background-color: $sttm-light-black;
+//     border-color: $sttm-lighter-black;
+//     color: $sttm-grey;
+
+//     svg {
+//       fill: $sttm-grey;
+//     }
+//   }
+
+//   &:hover {
+//     border-color: $sttm-blue;
+//     color: $sttm-blue;
+
+//     .dark-mode & {
+//       border-color: $sttm-blue;
+//       color: $sttm-blue;
+//     }
+//   }
+
+//   &.active,
+//   &.active:hover {
+//     background-color: $sttm-blue;
+//     border-color: $sttm-blue;
+//     color: $sttm-pure-white;
+
+//     .dark-mode & {
+//       background-color: $sttm-blue;
+//       border-color: $sttm-blue;
+//     }
+//   }
+
+//   i,
+//   .custom-fa {
+//     margin-right: 4px;
+//   }
+
+//   .custom-fa-assist {
+//     &::after {
+//       color: $sttm-orange;
+//       content: 'ਅ';
+//     }
+//   }
+
+//   .display-options-label {
+//     @media screen and (max-width: 30em) {
+//       display: none;
+//     }
+//   }
+// }
+
+// .display-option-content {
+//   display: flex;
+// }
+
+// .display-option-type,
+// .font-option-type {
+//   margin: 1rem;
+
+//   big,
+//   small {
+//     margin: 5px;
+//   }
+// }
+
+// .display-options,
+// .font-options {
+//   animation: flip-open 0.25s;
+//   background-color: $sttm-lighter-grey;
+//   display: flex;
+//   flex-wrap: wrap;
+//   margin: 0 auto 0.5rem 0;
+//   padding: 0 2rem 0 3rem;
+//   width: calc(100% - 2rem);
+
+//   input[type='range'] {
+//     --webkit-appearance: none;
+//   }
+
+//   input[type='range']::-webkit-slider-runnable-track {
+//     background: $sttm-white;
+//     border-radius: 4px;
+//     height: 4px;
+//   }
+
+//   input[type='range']::-webkit-slider-thumb {
+//     margin-top: -8px;
+//   }
+
+//   .dark-mode & {
+//     background-color: $sttm-lighter-black;
+//   }
+// }
+
+// .display-options-toggle span,
+// .font-options-toggle span {
+//   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
+//   background-origin: content-box;
+//   background-position: right -1rem center;
+//   background-repeat: no-repeat;
+//   background-size: 9px 6px;
+//   padding-right: 1rem;
+// }
 
 /* Remove Microsoft Edge X icon from search bar */
 input::-ms-clear,

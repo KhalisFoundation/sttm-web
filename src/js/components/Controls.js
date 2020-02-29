@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cx from 'classnames';
-import ShabadControls from './ShabadControls';
+import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
   setFontSize,
