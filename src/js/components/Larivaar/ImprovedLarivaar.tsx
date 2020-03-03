@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 
 import LarivaarWord from './Word';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
+import { getVisraamClass } from '@/util/index';
 
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
@@ -11,6 +12,7 @@ export interface ILarivaarProps {
   unicode: boolean;
   children: string;
   query: string;
+  visraam: object;
 }
 
 function Larivaar(props: ILarivaarProps) {
@@ -22,6 +24,7 @@ function Larivaar(props: ILarivaarProps) {
     children,
     unicode,
     query,
+    visraam,
   } = props;
 
   if (!enable) {
@@ -30,6 +33,7 @@ function Larivaar(props: ILarivaarProps) {
         startIndex={startIndex}
         endIndex={endIndex}
         query={query}
+        visraams={visraam}
       >
         {children}
       </HighlightedSearchResult>
@@ -44,6 +48,7 @@ function Larivaar(props: ILarivaarProps) {
         }
 
         const highlight = word.includes(query);
+        const visraamClass = getVisraamClass(children, word, visraam);
 
         return (
           <LarivaarWord
@@ -55,6 +60,7 @@ function Larivaar(props: ILarivaarProps) {
             larivaarAssist={larivaarAssist}
             index={index}
             highlight={highlight}
+            visraamClass={visraamClass}
           />
         );
       })}

@@ -80,6 +80,7 @@ export default class Pankti extends React.PureComponent {
         larivaarAssist={larivaarAssist}
         fontSize={fontSize}
         fontFamily={fontFamily}
+        visraam={shabad.visraam}
       />
     );
 

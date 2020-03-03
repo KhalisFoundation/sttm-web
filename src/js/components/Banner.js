@@ -1,80 +1,64 @@
+/* globals BANNERS_URL */
 import React from 'react';
+
+import { saveToLocalStorage, getStringFromLocalStorage } from '@/util';
+import { dateMath } from '../util/index.js';
 import CrossIcon from './Icons/Times';
-import cx from 'classnames';
-import { saveToLocalStorage, getBooleanFromLocalStorage } from '@/util';
 
 export default class Banner extends React.PureComponent {
 
   state = {
-    title: '',
-    message: '',
-    toggleBannerVisibilty: false,
-    year: 0,
-    day: 0,
-    month: 0,
+    notifications: [],
+    date: 0,
   };
 
   componentDidMount() {
-    const d = new Date();
-    const $yr = d.getFullYear();
-    const $month = d.getMonth();
-    const $day = d.getDate();
-    this.setState({ year: $yr, day: $day, month: $month })
-    fetch(`http://api.sikhitothemax.org/messages/web/${$yr}-${$month}-${$day}`)
+    const currentDate = new Date();
+    const date = currentDate.toLocaleDateString('zh-tw').replace(/\//g, "-");
+
+    fetch(`${BANNERS_URL}/${date}`)
       .then(r => r.json())
       .then(messages => {
-        const hasSeenMsg = getBooleanFromLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`, false);
-        if (messages.rows.length === 0 || hasSeenMsg === true) {
-          this.setState({ toggleBannerVisibilty: false });
-        } else if (
-          hasSeenMsg === null || hasSeenMsg === false) {
-          this.setState({
-            toggleBannerVisibilty: true,
-            title: messages.rows[0].Title,
-            message: messages.rows[0].Content,
-            type: messages.rows[0].Type,
-          });
-        }
+        const { rows } = messages;
+
+        const unreadNotifications = rows.filter(notification => {
+          const { ID } = notification;
+          const lastSeen = getStringFromLocalStorage(`banner-${ID}`);
+
+          if (lastSeen) return dateMath.isAfter(date, lastSeen);
+
+          return true;
+        });
+
+        this.setState({ date, notifications: unreadNotifications });
       }
       );
   }
 
-  toggleBanner = () => {
-    this.setState({
-      toggleBannerVisibilty: !this.state.toggleBannerVisibilty
-    })
+  updateLastSeen = (e, id) => {
+    e.currentTarget.parentElement.remove();
+    saveToLocalStorage(`banner-${id}`, this.state.date);
   }
-  setSeenForDay = () => {
-    saveToLocalStorage(`SeenBanner-${this.state.month}/${this.state.day}`, true);
-  }
+
   render() {
-    const { toggleBannerVisibilty } = this.state;
-    const classNames = cx({
-      'banner': true,
-      'attention': true,
-      'toggled': toggleBannerVisibilty
-    });
+
+    const { notifications } = this.state;
+
     return (
-      <div className={classNames}>
-        {
-          toggleBannerVisibilty === true && this.state.message &&
-          <>
-            <div className='banner-text'>
-              <text>{this.state.title + ": "}</text>
-              <text>{this.state.message}</text>
+      <div className="banner attention">
+        {notifications.map(notif => {
+          return (
+            <div key={notif.ID} className={`notification ${notif.Type}`}>
+              <div className="banner-text">
+                <span className="banner-title">{notif.Title} : </span>
+                <span>{notif.Content}</span>
+              </div>
+              <button className="banner-cross-bg" onClick={(e) => this.updateLastSeen(e, notif.ID)}>
+                <CrossIcon className="banner-cross" />
+              </button>
             </div>
-            <button
-              type="button"
-              className="banner-cross-bg"
-              onClick={() => {
-                this.toggleBanner();
-                this.setSeenForDay();
-              }}
-            >
-              <CrossIcon className="banner-cross" />
-            </button>
-          </>
-        }
+          );
+        })}
       </div>
     );
   }

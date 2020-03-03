@@ -54,8 +54,16 @@
 }
 
 .larivaar:hover {
-  > .larivaar-word {
+  .larivaar-word {
     color: #f39c1d;
+
+    .display-visraams & {
+      color: inherit;
+
+      &.search-highlight-word {
+        color: #01669b;
+      }
+    }
   }
 }
 

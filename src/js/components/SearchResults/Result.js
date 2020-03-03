@@ -74,6 +74,7 @@ export default class SearchResult extends React.PureComponent {
                   startIndex={highlightStartIndex}
                   endIndex={higlightEndIndex}
                   query={q}
+                  visraam={shabad.visraam}
                 >
                   {getUnicodeVerse(shabad)}
                 </Larivaar>
@@ -86,6 +87,7 @@ export default class SearchResult extends React.PureComponent {
                     startIndex={highlightStartIndex}
                     endIndex={higlightEndIndex}
                     query={q}
+                    visraam={shabad.visraam}
                   >
                     {getGurmukhiVerse(shabad)}
                   </Larivaar>
