@@ -51,7 +51,7 @@ export default class SearchResult extends React.PureComponent {
       ? `${_source} - ${shabadPageNo}`
       : null;
 
-    const [highlightStartIndex, higlightEndIndex] = getHighlightIndices(
+    const highlightIndex = getHighlightIndices(
       shabad.verse.gurmukhi,
       q,
       type
@@ -71,8 +71,7 @@ export default class SearchResult extends React.PureComponent {
                   larivaarAssist={larivaarAssist}
                   enable={larivaar}
                   unicode={unicode}
-                  startIndex={highlightStartIndex}
-                  endIndex={higlightEndIndex}
+                  highlightIndex={highlightIndex}
                   query={q}
                   visraam={shabad.visraam}
                 >
@@ -84,8 +83,7 @@ export default class SearchResult extends React.PureComponent {
                   <Larivaar
                     larivaarAssist={larivaarAssist}
                     enable={larivaar}
-                    startIndex={highlightStartIndex}
-                    endIndex={higlightEndIndex}
+                    highlightIndex={highlightIndex}
                     query={q}
                     visraam={shabad.visraam}
                   >

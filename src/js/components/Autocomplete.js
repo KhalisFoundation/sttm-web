@@ -126,8 +126,7 @@ class Autocomplete extends Component {
                       larivaarAssist={false}
                       enable={false}
                       unicode={false}
-                      startIndex={suggestion.startIndex}
-                      endIndex={suggestion.endIndex}
+                      highlightIndex={suggestion.highlightIndex}
                       query={suggestion.query}
                       type={searchOptions.type}
                     >
