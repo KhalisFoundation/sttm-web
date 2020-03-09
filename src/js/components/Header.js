@@ -74,7 +74,7 @@ export default class Header extends React.PureComponent {
           )}
           <SearchForm
             key={key}
-            defaultQuery={defaultQuery}
+            defaultQuery={decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
             defaultType={defaultType}
             submitOnChangeOf={['type', 'source']}

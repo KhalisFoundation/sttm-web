@@ -216,7 +216,7 @@ export const toggleItemInArray = (item, arr) =>
 export const objectToQueryParams = object =>
   Object.entries(object)
     .filter(([, value]) => [undefined, NaN, null, ''].every(n => n !== value))
-    .map(([key, value]) => `${key}=${value}`)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
 
 export const toSearchURL = ({
@@ -283,7 +283,7 @@ export const getHighlightIndices = (baani, query, type) => {
   let mainQuery = query.replace(/"/g, '');
 
   //Handles - search operator
-  mainQuery = mainQuery.replace(/[-][\w,),(]*/g, '');
+  mainQuery = mainQuery.replace(/[-][ ,\w,),(]*/g, '');
 
   if (baani === null) {
     return [start, end];
@@ -303,12 +303,22 @@ export const getHighlightIndices = (baani, query, type) => {
     case SEARCH_TYPES.FIRST_LETTERS_ANYWHERE: {
       // remove i from start of words
       baaniWords = baaniWords.map(w => (w.startsWith('i') ? w.slice(1) : w));
-      start = baaniWords
-        .map(word => word[0])
-        .join('')
-        .indexOf(mainQuery);
-      end = start + mainQuery.length;
-      highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
+      const baaniLetters = baaniWords.map(word => word[0]).join('');
+      let q = mainQuery.split('+');
+      q.forEach(subQuery => {
+        if (subQuery.includes('*')) {
+          let subWords = subQuery.split('*');
+          subWords.forEach(sw => {
+            start = baaniLetters.indexOf(sw);
+            end = start + sw.length;
+            highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
+          });
+        } else {
+          start = baaniLetters.indexOf(subQuery);
+          end = start + subQuery.length;
+          highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
+        }
+      });
       break;
     }
 
