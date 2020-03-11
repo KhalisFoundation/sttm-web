@@ -70,7 +70,8 @@ export default class Header extends React.PureComponent {
           {!isHome && (
             <div className="top-bar-title">
               {dateMath.isFuture(DOODLE['date']) ?
-                (<Link to="/" title={DOODLE['title']} className="doodle-link" />) :
+                (<Link to="/" title={DOODLE['title']} className="doodle-link"
+                  style={{ backgroundImage: `url(${DOODLE['smallImage']}) ` }} />) :
                 (<Link to="/" />)
               }
             </div>
