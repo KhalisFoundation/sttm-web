@@ -216,7 +216,7 @@ export const toggleItemInArray = (item, arr) =>
 export const objectToQueryParams = object =>
   Object.entries(object)
     .filter(([, value]) => [undefined, NaN, null, ''].every(n => n !== value))
-    .map(([key, value]) => `${key}=${value}`)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
 
 export const toSearchURL = ({
@@ -277,6 +277,13 @@ export const versesToGurbani = (verses, baniLength = 'extralong') =>
 export const getHighlightIndices = (baani, query, type) => {
   let start = -1;
   let end = -1;
+  let highlightIndices = [];
+
+  // Handles " search operator
+  let mainQuery = query.replace(/"/g, '');
+
+  //Handles - search operator
+  mainQuery = mainQuery.replace(/[-][ ,\w,),(]*/g, '');
 
   if (baani === null) {
     return [start, end];
@@ -287,7 +294,7 @@ export const getHighlightIndices = (baani, query, type) => {
   switch (type) {
     // TODO: This is obviously not the best way to handle it.
     case SEARCH_TYPES.ROMANIZED: {
-      query = query
+      mainQuery = mainQuery
         .split(' ')
         .map(w => w[0])
         .join('');
@@ -296,45 +303,84 @@ export const getHighlightIndices = (baani, query, type) => {
     case SEARCH_TYPES.FIRST_LETTERS_ANYWHERE: {
       // remove i from start of words
       baaniWords = baaniWords.map(w => (w.startsWith('i') ? w.slice(1) : w));
-
-      start = baaniWords
-        .map(word => word[0])
-        .join('')
-        .indexOf(query);
-      end = start + query.length;
-      break;
-    }
-    case SEARCH_TYPES.GURMUKHI_WORD: {
-      const q = query.split(' ');
-      start = baaniWords.indexOf(q[0]);
-      start =
-        start === -1 ? baaniWords.findIndex(w => w.includes(q[0])) : start;
-      end = start + q.length;
-      break;
-    }
-    case SEARCH_TYPES.ENGLISH_WORD: {
-      const shabadLower = baani.toLowerCase();
-      const queryLower = query.toLowerCase();
-
-      const startChar = shabadLower.indexOf(queryLower);
-      let manualCount = 0;
-      if (startChar !== -1) {
-        for (const wordcount in baaniWords) {
-          [...baaniWords[wordcount]].forEach(() => {
-            if (manualCount === startChar) {
-              start = parseInt(wordcount, 10);
-            }
-            manualCount++;
+      const baaniLetters = baaniWords.map(word => word[0]).join('');
+      let q = mainQuery.split('+');
+      q.forEach(subQuery => {
+        if (subQuery.includes('*')) {
+          let subWords = subQuery.split('*');
+          subWords.forEach(sw => {
+            start = baaniLetters.indexOf(sw);
+            end = start + sw.length;
+            highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
           });
-          manualCount++; // Counts the space in baani string
+        } else {
+          start = baaniLetters.indexOf(subQuery);
+          end = start + subQuery.length;
+          highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
         }
-        end = start + query.split(" ").length;
+      });
+      break;
+    }
+
+    case SEARCH_TYPES.ENGLISH_WORD: // eslint-disable-line no-fallthrough
+    case SEARCH_TYPES.GURMUKHI_WORD: {
+      if (type == SEARCH_TYPES.ENGLISH_WORD) {
+        mainQuery = mainQuery.toLowerCase();
+        baani = baani.toLowerCase();
+        baaniWords = baani.split(" ");
       }
+
+      let q = mainQuery.split('+');
+      q = q.map(r => r.trim());
+      q.forEach(subQuery => {
+        if (subQuery.includes('*')) {
+          let subWords = subQuery.split('*');
+          subWords = subWords.map(sw => sw.trim());
+          subWords = subWords.filter(w => w.length > 0);
+          subWords.forEach(akhar => {
+            let location = baaniWords.indexOf(akhar);
+            location = location === -1 ? baaniWords.findIndex(w => w.includes(akhar)) : location;
+            baaniWords[location] = '';
+            highlightIndices.push(location);
+          });
+        } else {
+          const [start, end] = getHighlightingEndpoints(baani, subQuery);
+          if (start !== -1) {
+            highlightIndices = highlightIndices.concat(numbersRange(start, end, 1));
+          }
+        }
+      });
+      break;
     }
   }
 
-  return [start, start === -1 ? 0 : end];
+  return highlightIndices;
 };
+
+const getHighlightingEndpoints = (baani, query) => {
+  const startChar = baani.indexOf(query);
+  let start;
+  let end;
+  const baaniWords = baani.split(' ');
+  let manualCount = 0;
+  if (startChar !== -1) {
+    for (const wordcount in baaniWords) {
+      [...baaniWords[wordcount]].forEach(() => {
+        if (manualCount === startChar) {
+          start = parseInt(wordcount, 10);
+        }
+        manualCount++;
+      });
+      manualCount++; // Counts the space in baani string
+    }
+    end = start + (query.split(" ").length - 1);
+    return [start, end];
+  }
+  return [-1, -1]
+}
+
+export const numbersRange = (start, stop, step) =>
+  Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step));
 
 /**
  * Should save ang to localStorage
@@ -468,7 +514,7 @@ export const getShabadList = (q, { type, source }) => {
       let panktiList = [];
       for (const shabad of verses) {
         const highlightPankti = type === 3 ? translationMap["english"](shabad) : getGurmukhiVerse(shabad);
-        const [highlightStartIndex, highlightEndIndex] = getHighlightIndices(
+        const highlightIndex = getHighlightIndices(
           highlightPankti,
           q,
           type
@@ -478,8 +524,7 @@ export const getShabadList = (q, { type, source }) => {
           translation: translationMap["english"](shabad),
           query: q,
           url: toShabadURL({ shabad, q, type, source }),
-          startIndex: highlightStartIndex,
-          endIndex: highlightEndIndex,
+          highlightIndex,
         })
       }
       resolve(panktiList);
