@@ -46,6 +46,9 @@
   display: inline-block;
   height: 54px;
   width: 100%;
+  &.doodle-link {
+     background-image: url(/assets/images/doodle_hola_mahalla_sm.png);
+  }
 }
 
 .top-bar-logo-small {
@@ -509,6 +512,10 @@
   .top-bar-title a {
     background-image: url(/assets/images/sttm_icon.png);
     width: 54px;
+
+    &.doodle-link {
+      background-image: url(/assets/images/sttm_icon.png);
+    }
   }
 
   .search-form {
