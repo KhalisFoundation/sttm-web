@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../../constants';
-import { toSearchURL, getShabadList } from '../../util';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, DOODLE } from '../../constants';
+import { toSearchURL, getShabadList, dateMath } from '../../util';
 import { pageView } from '../../util/analytics';
 import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
 import SehajPaathLink from '../../components/SehajPaathLink';
@@ -33,6 +33,7 @@ export default class Home extends React.PureComponent {
    * Functional component
    */
   render() {
+    const showDoodle = dateMath.isFuture(DOODLE['date']);
     return (
       <SearchForm>
         {({
@@ -56,7 +57,8 @@ export default class Home extends React.PureComponent {
         }) => (
             <React.Fragment>
               <div className="row" id="content-root">
-                <div className="search-page">
+                <div className={showDoodle ?
+                  "search-page doodle-logo-page" : "search-page"}>
                   <form
                     className="search-form"
                     action={action}
@@ -69,7 +71,7 @@ export default class Home extends React.PureComponent {
                   >
                     <div className="flex justify-center align-center">
                       <div>
-                        <Logo className="logo-long" />
+                        <Logo className="logo-long" doodle={DOODLE} showDoodle={showDoodle} />
                       </div>
                     </div>
 
@@ -176,6 +178,9 @@ export default class Home extends React.PureComponent {
                   </form>
                 </div>
               </div>
+              {showDoodle && (
+                <p className="doodle-credit" dangerouslySetInnerHTML={{ __html: DOODLE['credit'] }}></p>
+              )}
             </React.Fragment>
           )}
       </SearchForm>

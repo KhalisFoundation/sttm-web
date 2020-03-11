@@ -319,7 +319,7 @@ export default [
             {({ pending, resolved: { default: Search } = {}, rejected }) =>
               pending ? null : Search ? (
                 <Search
-                  q={decodeURIComponent(q)}
+                  q={q && decodeURIComponent(q)}
                   type={parseInt(type, 10)}
                   source={source}
                   offset={parseInt(offset)}

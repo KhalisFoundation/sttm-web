@@ -509,6 +509,10 @@
   .top-bar-title a {
     background-image: url(/assets/images/sttm_icon.png);
     width: 54px;
+
+    &.doodle-link {
+      background-image: url(/assets/images/sttm_icon.png) !important;
+    }
   }
 
   .search-form {

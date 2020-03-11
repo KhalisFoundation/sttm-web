@@ -6,6 +6,16 @@
   .search-form {
     max-width: 625px;
   }
+
+  &.doodle-logo-page {
+    padding-top: 6vh;
+  }
+}
+
+.doodle-credit {
+  color: $sttm-dark-grey;
+  font-size: 14px;
+  text-align: center;
 }
 
 /*

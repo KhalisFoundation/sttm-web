@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../constants';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, DOODLE } from '../constants';
 import { Link } from 'react-router-dom';
 import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
-import { toSearchURL, getQueryParams, getShabadList } from '../util';
+import { toSearchURL, getQueryParams, getShabadList, dateMath } from '../util';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
@@ -69,12 +69,16 @@ export default class Header extends React.PureComponent {
         <div className="top-bar-wrapper row">
           {!isHome && (
             <div className="top-bar-title">
-              <Link to="/" />
+              {dateMath.isFuture(DOODLE['date']) ?
+                (<Link to="/" title={DOODLE['title']} className="doodle-link"
+                  style={{ backgroundImage: `url(${DOODLE['smallImage']}) ` }} />) :
+                (<Link to="/" />)
+              }
             </div>
           )}
           <SearchForm
             key={key}
-            defaultQuery={decodeURIComponent(defaultQuery)}
+            defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
             defaultType={defaultType}
             submitOnChangeOf={['type', 'source']}
