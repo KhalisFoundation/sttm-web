@@ -7,16 +7,14 @@ export interface ILarivaarWordProps {
   unicode: boolean;
   larivaarAssist?: boolean;
   index: number;
-  startIndex?: number;
-  endIndex?: number;
+  highlightIndex?: Array<number>;
   highlight?: boolean;
   visraamClass: string;
 }
 
 function LarivaarWord(props: ILarivaarWordProps) {
   const {
-    startIndex,
-    endIndex,
+    highlightIndex,
     word,
     unicode,
     larivaarAssist,
@@ -40,10 +38,10 @@ function LarivaarWord(props: ILarivaarWordProps) {
         }
 
         // If this isn't a search result
-        if (!(startIndex !== undefined && endIndex !== undefined)) {
+        if (!(highlightIndex !== undefined)) {
           assistLarivaar = larivaarAssist && index % 2 === 1;
         } else {
-          if (highlight || (index >= startIndex && index < endIndex)) {
+          if (highlight || (highlightIndex.includes(index))) {
             akharClass += ' search-highlight-word';
           }
           assistLarivaar = larivaarAssist && index % 2 === 1;

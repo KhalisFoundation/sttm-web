@@ -20,41 +20,49 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
   <span
     class=""
   >
-    <span>
-      V
-      <wbr />
+    <span
+      class=""
+    >
+      <span>
+        V
+        <wbr />
+      </span>
+    </span>
+    <span
+      class=""
+    >
+      <span>
+        a
+        <wbr />
+      </span>
+    </span>
+    <span
+      class=""
+    >
+      <span>
+        h
+        <wbr />
+      </span>
     </span>
   </span>
   <span
     class=""
   >
-    <span>
-      a
-      <wbr />
+    <span
+      class="larivaar-word"
+    >
+      <span>
+        Gu
+        <wbr />
+      </span>
     </span>
-  </span>
-  <span
-    class=""
-  >
-    <span>
-      h
-      <wbr />
-    </span>
-  </span>
-  <span
-    class="larivaar-word"
-  >
-    <span>
-      Gu
-      <wbr />
-    </span>
-  </span>
-  <span
-    class="larivaar-word"
-  >
-    <span>
-      ru
-      <wbr />
+    <span
+      class="larivaar-word"
+    >
+      <span>
+        ru
+        <wbr />
+      </span>
     </span>
   </span>
 </div>
@@ -80,41 +88,49 @@ Object {
       <span
         class=""
       >
-        <span>
-          V
-          <wbr />
+        <span
+          class=""
+        >
+          <span>
+            V
+            <wbr />
+          </span>
+        </span>
+        <span
+          class=""
+        >
+          <span>
+            a
+            <wbr />
+          </span>
+        </span>
+        <span
+          class=""
+        >
+          <span>
+            h
+            <wbr />
+          </span>
         </span>
       </span>
       <span
         class=""
       >
-        <span>
-          a
-          <wbr />
+        <span
+          class="larivaar-word"
+        >
+          <span>
+            Gu
+            <wbr />
+          </span>
         </span>
-      </span>
-      <span
-        class=""
-      >
-        <span>
-          h
-          <wbr />
-        </span>
-      </span>
-      <span
-        class="larivaar-word"
-      >
-        <span>
-          Gu
-          <wbr />
-        </span>
-      </span>
-      <span
-        class="larivaar-word"
-      >
-        <span>
-          ru
-          <wbr />
+        <span
+          class="larivaar-word"
+        >
+          <span>
+            ru
+            <wbr />
+          </span>
         </span>
       </span>
     </div>
@@ -122,41 +138,49 @@ Object {
       <span
         class=""
       >
-        <span>
-          V
-          <wbr />
+        <span
+          class=""
+        >
+          <span>
+            V
+            <wbr />
+          </span>
+        </span>
+        <span
+          class=""
+        >
+          <span>
+            a
+            <wbr />
+          </span>
+        </span>
+        <span
+          class=""
+        >
+          <span>
+            h
+            <wbr />
+          </span>
         </span>
       </span>
       <span
         class=""
       >
-        <span>
-          a
-          <wbr />
+        <span
+          class="larivaar-word larivaar-assist-word"
+        >
+          <span>
+            Gu
+            <wbr />
+          </span>
         </span>
-      </span>
-      <span
-        class=""
-      >
-        <span>
-          h
-          <wbr />
-        </span>
-      </span>
-      <span
-        class="larivaar-word larivaar-assist-word"
-      >
-        <span>
-          Gu
-          <wbr />
-        </span>
-      </span>
-      <span
-        class="larivaar-word larivaar-assist-word"
-      >
-        <span>
-          ru
-          <wbr />
+        <span
+          class="larivaar-word larivaar-assist-word"
+        >
+          <span>
+            ru
+            <wbr />
+          </span>
         </span>
       </span>
     </div>
@@ -165,41 +189,49 @@ Object {
     <span
       class=""
     >
-      <span>
-        V
-        <wbr />
+      <span
+        class=""
+      >
+        <span>
+          V
+          <wbr />
+        </span>
+      </span>
+      <span
+        class=""
+      >
+        <span>
+          a
+          <wbr />
+        </span>
+      </span>
+      <span
+        class=""
+      >
+        <span>
+          h
+          <wbr />
+        </span>
       </span>
     </span>
     <span
       class=""
     >
-      <span>
-        a
-        <wbr />
+      <span
+        class="larivaar-word larivaar-assist-word"
+      >
+        <span>
+          Gu
+          <wbr />
+        </span>
       </span>
-    </span>
-    <span
-      class=""
-    >
-      <span>
-        h
-        <wbr />
-      </span>
-    </span>
-    <span
-      class="larivaar-word larivaar-assist-word"
-    >
-      <span>
-        Gu
-        <wbr />
-      </span>
-    </span>
-    <span
-      class="larivaar-word larivaar-assist-word"
-    >
-      <span>
-        ru
-        <wbr />
+      <span
+        class="larivaar-word larivaar-assist-word"
+      >
+        <span>
+          ru
+          <wbr />
+        </span>
       </span>
     </span>
   </div>,

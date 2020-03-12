@@ -96,7 +96,7 @@ export default class ControllerSearch extends React.PureComponent {
             const results = [];
 
             verses.map(shabad => {
-              const [highlightStartIndex, higlightEndIndex] = getHighlightIndices(
+              const highlightIndex = getHighlightIndices(
                 shabad.verse.gurmukhi,
                 q,
                 type
@@ -110,8 +110,7 @@ export default class ControllerSearch extends React.PureComponent {
                     larivaarAssist={false}
                     enable={false}
                     unicode={false}
-                    startIndex={highlightStartIndex}
-                    endIndex={higlightEndIndex}
+                    highlightIndex={highlightIndex}
                     query={q}
                   >
                     {getUnicodeVerse(shabad)}

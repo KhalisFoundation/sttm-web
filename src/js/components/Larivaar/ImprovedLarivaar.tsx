@@ -6,8 +6,7 @@ import { getVisraamClass } from '@/util/index';
 
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
-  startIndex?: number;
-  endIndex?: number;
+  highlightIndex?: Array<number>;
   enable?: boolean;
   unicode: boolean;
   children: string;
@@ -17,8 +16,7 @@ export interface ILarivaarProps {
 
 function Larivaar(props: ILarivaarProps) {
   const {
-    startIndex,
-    endIndex,
+    highlightIndex,
     larivaarAssist = false,
     enable = true,
     children,
@@ -30,8 +28,7 @@ function Larivaar(props: ILarivaarProps) {
   if (!enable) {
     return (
       <HighlightedSearchResult
-        startIndex={startIndex}
-        endIndex={endIndex}
+        highlightIndex={highlightIndex}
         query={query}
         visraams={visraam}
       >
@@ -52,8 +49,7 @@ function Larivaar(props: ILarivaarProps) {
 
         return (
           <LarivaarWord
-            startIndex={startIndex}
-            endIndex={endIndex}
+            highlightIndex={highlightIndex}
             key={index}
             word={word}
             unicode={unicode}
