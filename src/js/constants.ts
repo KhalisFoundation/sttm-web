@@ -203,5 +203,5 @@ export const DOODLE = {
   smallImage: `/assets/images/doodle_hola_mahalla_sm.png`,
   title: `Celebrating the 319th Hola Mahalla this month of March`,
   credit: `Special thanks to <a target="_blank" href="https://instagram.com/immersedinyou">@immersedinyou</a> for the amazing artwork`,
-  date: new Date('4-1-2020'), //will stop showing after 1st april 2020
+  date: new Date('April 1, 2020'), //will stop showing after 1st april 2020
 }
