@@ -14,11 +14,11 @@ export class MultiSelect extends React.PureComponent {
 
     return (
       <>
-        <p onClick={(e) => {
-          e.currentTarget.nextSibling.classList.toggle('hidden');
-        }}>{label}</p>
+        <span className="" onClick={(e) => {
+          e.currentTarget.nextSibling.classList.toggle('collapsed');
+        }}>{label} <img src="/assets/images/down-arrow.svg" width="12px" /></span>
 
-        <ul className="hidden">
+        <ul className="collapsed">
           {options.map(op => (
             <li key={op}>
               <input type="checkbox"
@@ -26,7 +26,10 @@ export class MultiSelect extends React.PureComponent {
                 id={`checkbox-${label}-${op}`}
                 onChange={() => { action(op) }}
                 checked={checkedValues.includes(op)} />
-              <label htmlFor={`checkbox-${label}-${op}`}>{op} </label>
+              <span className="fake-checkbox" onClick={e => {
+                e.currentTarget.previousSibling.click();
+              }}></span>
+              <label htmlFor={`checkbox-${label}-${op}`}> {op} </label>
             </li>
           ))}
         </ul>
