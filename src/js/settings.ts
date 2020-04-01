@@ -5,7 +5,16 @@ import {
 
 import { toggleItemInArray } from './util';
 import { toggleLarivaarAssistOption } from '@/features/actions';
-import { LarivaarIcon, LarivaarAssistIcon } from '@/components/Icons/Larivaar';
+import {
+  LarivaarIcon,
+  LarivaarAssistIcon,
+  FontPlus,
+  CurrentFont,
+  FontMinus,
+  AlignCenterIcon,
+  AlignLeftIcon,
+  SplitViewIcon,
+} from '@/components/Icons/CustomIcons';
 
 export const QUICK_SETTINGS = (
   translationLanguages: Array<string>,
@@ -20,6 +29,12 @@ export const QUICK_SETTINGS = (
   visraams: Boolean,
   larivaarAssist: Boolean,
   larivaar: Boolean,
+  setFontSize: Function,
+  fontSize: number,
+  toggleCenterAlignOption: Function,
+  centerAlignGurbani: Boolean,
+  toggleSplitViewOption: Function,
+  splitView: Boolean,
 ) => [
     {
       type: 'multiselect_checkbox',
@@ -43,6 +58,64 @@ export const QUICK_SETTINGS = (
         )
       },
     },
+    {
+      type: 'icon-toggle',
+      label: 'Font Size',
+      iconList: [
+        {
+          icon: FontMinus,
+          action: () => {
+            fontSize >= 1.6 && setFontSize(parseFloat((fontSize - 0.4).toFixed(1)));
+          },
+          value: Math.floor(fontSize * 10)
+        },
+        {
+          icon: CurrentFont,
+          action: (size) => { setFontSize(parseFloat((size / 10).toFixed(1))); },
+          value: Math.floor(fontSize * 10),
+        },
+        {
+          icon: FontPlus,
+          action: () => {
+            fontSize < 3.2 && setFontSize(parseFloat((fontSize + 0.4).toFixed(1)));
+          },
+          value: Math.floor(fontSize * 10)
+        },
+      ],
+    },
+    { type: 'separator' },
+    {
+      type: 'icon-toggle',
+      label: 'Text Align',
+      iconList: [
+        {
+          icon: AlignLeftIcon,
+          action: () => {
+            centerAlignGurbani && toggleCenterAlignOption();
+          },
+          value: !centerAlignGurbani,
+        },
+        {
+          icon: AlignCenterIcon,
+          action: () => {
+            !centerAlignGurbani && toggleCenterAlignOption();
+          },
+          value: centerAlignGurbani,
+        },
+      ],
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Split',
+      iconList: [
+        {
+          icon: SplitViewIcon,
+          action: toggleSplitViewOption,
+          value: splitView,
+        },
+      ],
+    },
+    { type: 'separator' },
     {
       type: 'icon-toggle',
       label: 'Larivaar',
@@ -72,33 +145,13 @@ export const QUICK_SETTINGS = (
         }
       ],
     },
-
-    // {
-    //   type: 'icon-toggle',
-    //   label: 'Font Size',
-    //   iconList: [
-    //     {
-    //       icon: 'fontsize1.png',
-    //       action: toggleLarivaarOption,
-    //     },
-    //     {
-    //       icon: 'fontsize2.png',
-    //       action: toggleLarivaarAssistOption,
-    //     },
-    //     {
-    //       icon: 'fontsize3.png',
-    //       action: toggleLarivaarAssistOption,
-    //     },
-    //   ],
-    // },
-
     {
       type: 'toggle-option',
       label: 'Vishraams',
       checked: visraams,
       action: toggleVisraams,
     },
-
+    { type: 'separator' },
     {
       type: 'text-option',
       label: 'Reset',
@@ -107,11 +160,11 @@ export const QUICK_SETTINGS = (
         resetFontOptions();
       },
     },
-    // {
-    //   type: 'text-option',
-    //   label: 'Advanced',
-    //   action: () => {
-    //     console.log("will open advanced settings");
-    //   },
-    // }
+    {
+      type: 'text-option',
+      label: 'Advanced',
+      action: () => {
+        console.log("will open advanced settings");
+      },
+    }
   ]

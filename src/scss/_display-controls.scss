@@ -57,7 +57,8 @@
   align-items: flex-end;
   display: flex;
   flex-grow: 1;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  overflow-y: visible;
   white-space: nowrap;
 
   .dark-mode & {
@@ -77,10 +78,18 @@
     height: 100%;
     margin-right: 10px;
 
+    &.separator {
+      background-color: $sttm-grey;
+      height: 32px;
+      margin-bottom: 4px;
+      width: 1px;
+    }
+
     &.multiselect_checkbox {
       background-color: $sttm-white;
       border: 1px solid $sttm-light-grey;
       border-radius: 8px;
+      position: relative;
 
       > span {
         display: inline-block;
@@ -101,8 +110,9 @@
         overflow: hidden;
         padding: 8px 0;
         position: absolute;
-        transition: 0.15s height linear;
+        transition: 0.1s all linear;
         visibility: visible;
+        width: 100%;
         z-index: -1;
 
         &.collapsed {
@@ -171,11 +181,17 @@
         color: $sttm-dark-grey;
         display: inline-block;
         padding: 4px;
+        > svg {
+          vertical-align: middle;
+        }
 
         &.enabled {
           background-color: $facebook-blue;
           border-color: $facebook-blue;
           color: $sttm-white;
+          > svg {
+            fill: $sttm-white;
+          }
         }
       }
 
@@ -195,8 +211,8 @@
     }
 
     &.text-option {
-      align-self: center;
       color: $sttm-orange;
+      margin-bottom: 8px;
     }
   }
 }

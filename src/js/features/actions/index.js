@@ -64,11 +64,7 @@ export const SET_UNICODE = 'SET_UNICODE';
 export const setUnicode = createAction(SET_UNICODE);
 
 export const SET_FONT_SIZE = 'SET_FONT_SIZE';
-export const setFontSize = createAction(SET_FONT_SIZE, {
-  debounce: {
-    time: 300,
-  },
-});
+export const setFontSize = createAction(SET_FONT_SIZE);
 
 export const SET_TRANSLATION_LANGUAGES = 'SET_TRANSLATION_LANGUAGES';
 export const setTranslationLanguages = createAction(SET_TRANSLATION_LANGUAGES);

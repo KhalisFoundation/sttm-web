@@ -16,9 +16,10 @@ export class MultiSelect extends React.PureComponent {
       <>
         <span className="" onClick={(e) => {
           e.currentTarget.nextSibling.classList.toggle('collapsed');
+          e.currentTarget.nextSibling.classList.toggle('expanded');
         }}>{label} <img src="/assets/images/down-arrow.svg" width="12px" /></span>
 
-        <ul className="collapsed">
+        <ul className='collapsed'>
           {options.map(op => (
             <li key={op}>
               <input type="checkbox"

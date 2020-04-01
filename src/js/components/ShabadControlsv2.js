@@ -15,6 +15,9 @@ export default class ShabadControls extends React.PureComponent {
     toggleVisraams: PropTypes.func.isRequired,
     toggleLarivaarOption: PropTypes.func.isRequired,
     toggleLarivaarAssistOption: PropTypes.func.isRequired,
+    setFontSize: PropTypes.func.isRequired,
+    toggleCenterAlignOption: PropTypes.func.isRequired,
+    toggleSplitViewOption: PropTypes.func.isRequired,
 
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -23,6 +26,9 @@ export default class ShabadControls extends React.PureComponent {
     visraamStyle: PropTypes.string.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
+    fontSize: PropTypes.number.isRequired,
+    centerAlignGurbani: PropTypes.bool.isRequired,
+    splitView: PropTypes.bool.isRequired,
   };
 
   bake_settings = settingsObj => {
@@ -57,7 +63,7 @@ export default class ShabadControls extends React.PureComponent {
         iconsMarkup = settingsObj.iconList.map((i, x) => {
           const Icon = i.icon;
           return (
-            <Icon className={i.value ? 'enabled' : ''} key={'icon-toggle' + x} onClick={i.action} />
+            <Icon value={i.value} key={'icon-toggle' + x} onClick={i.action} />
           );
         });
         return (
@@ -67,6 +73,10 @@ export default class ShabadControls extends React.PureComponent {
               {iconsMarkup}
             </>
           </>
+        )
+      case 'separator':
+        return (
+          <span className="separator"></span>
         )
     }
   }
@@ -87,6 +97,7 @@ export default class ShabadControls extends React.PureComponent {
       visraams,
       setTranslationLanguages,
       setTransliterationLanguages,
+      setFontSize,
       resetDisplayOptions,
       resetFontOptions,
       toggleVisraams,
@@ -94,6 +105,11 @@ export default class ShabadControls extends React.PureComponent {
       toggleLarivaarAssistOption,
       larivaarAssist,
       larivaar,
+      fontSize,
+      toggleCenterAlignOption,
+      centerAlignGurbani,
+      toggleSplitViewOption,
+      splitView,
     } = this.props;
 
     const settings = QUICK_SETTINGS(
@@ -109,6 +125,12 @@ export default class ShabadControls extends React.PureComponent {
       visraams,
       larivaarAssist,
       larivaar,
+      setFontSize,
+      fontSize,
+      toggleCenterAlignOption,
+      centerAlignGurbani,
+      toggleSplitViewOption,
+      splitView,
     );
 
     return (

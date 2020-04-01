@@ -96,7 +96,7 @@ class Controls extends React.PureComponent {
         className={classNames}
         ref={this.setRef}
       >
-        <ShareButtons {...this.props} />
+        {/* <ShareButtons {...this.props} /> */}
         <ShabadControls {...this.props} />
       </div>
     );
