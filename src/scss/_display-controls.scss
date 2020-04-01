@@ -181,6 +181,7 @@
         color: $sttm-dark-grey;
         display: inline-block;
         padding: 4px;
+
         > svg {
           vertical-align: middle;
         }
@@ -189,6 +190,7 @@
           background-color: $facebook-blue;
           border-color: $facebook-blue;
           color: $sttm-white;
+
           > svg {
             fill: $sttm-white;
           }
