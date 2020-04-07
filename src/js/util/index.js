@@ -70,6 +70,17 @@ export function getQueryParams(str = document.location.search) {
  *
  * @param {string} url
  */
+
+const shortURLSource = (source) => {
+  const urlSource = {
+    'G': 'g',
+    'D': 'd',
+    'B': 'v',
+    'S': 'gs'
+  }
+  return urlSource[source];
+}
+
 export function shortenURL(url = window.location.href) {
   const path = window.location.pathname;
   const URL = `http://${SHORT_DOMAIN}`;
@@ -80,7 +91,7 @@ export function shortenURL(url = window.location.href) {
         'highlight'
       ) || ''}`;
     case '/ang':
-      return `${URL}/a/${getParameterByName('ang')}`;
+      return `${URL}/${shortURLSource(getParameterByName('source'))}/${getParameterByName('ang')}`;
     case '/hukamnama':
       return `${URL}/h`;
     default:
