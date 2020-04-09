@@ -11,6 +11,10 @@
     max-width: 78rem;
   }
 
+  .fullscreen-view & {
+    display: none;
+  }
+
   &,
   ul {
     background-color: $sttm-white;

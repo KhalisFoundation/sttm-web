@@ -84,6 +84,10 @@ select {
   @media screen and (max-width: 730px) {
     margin: 5px 1rem;
   }
+
+  .fullscreen-view & {
+    display: none;
+  }
 }
 
 .wrapper {
@@ -178,6 +182,14 @@ select {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   width: 50px;
   z-index: 5;
+
+  &.fullscreen {
+    right: 28px;
+
+    & + .scroll-to-top {
+      right: 84px;
+    }
+  }
 
   @keyframes grow {
     from {
