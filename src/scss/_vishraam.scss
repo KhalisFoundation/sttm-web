@@ -6,42 +6,48 @@
   $visraam-sources: ('sttm', 'sttm2', 'igurbani');
 
   @each $source in $visraam-sources {
-    &.display-visraams.vishraam-vishraam-options-colored-words.vishraam-vishraam-source-#{$source} .gurlipi {
-      .visraam-#{$source}-main {
-        color: $visraam-main;
-      }
+    &.display-visraams.vishraam-vishraam-options-colored-words.vishraam-vishraam-source-#{$source} {
+      .gurlipi,
+      .unicode {
+        .visraam-#{$source}-main {
+          color: $visraam-main;
+        }
 
-      .visraam-#{$source}-yamki {
-        color: $visraam-yamki;
+        .visraam-#{$source}-yamki {
+          color: $visraam-yamki;
+        }
       }
     }
 
-    &.display-visraams.vishraam-vishraam-options-gradient-bg.vishraam-vishraam-source-#{$source} .gurlipi {
-      span {
-        border-radius: 15px;
-      }
+    &.display-visraams.vishraam-vishraam-options-gradient-bg.vishraam-vishraam-source-#{$source} {
+      .gurlipi,
+      .unicode {
+        span {
+          border-radius: 15px;
+        }
 
-      .padchhed .visraam-#{$source}-main,
-      .padchhed .visraam-#{$source}-yamki {
-        padding-right: 5px;
-      }
+        .padchhed .visraam-#{$source}-main,
+        .padchhed .visraam-#{$source}-yamki {
+          padding-right: 5px;
+        }
 
-      .visraam-#{$source}-main {
-        background:
-          linear-gradient(
-            to right,
-            rgba(229, 229, 229, 0) 20%,
-            rgba($visraam-main, 0.7) 100%
-          );
-      }
+        .visraam-#{$source}-main {
+          background:
+            linear-gradient(
+              to right,
+              rgba(229, 229, 229, 0) 20%,
+              rgba($visraam-main, 0.7) 100%
+            );
+        }
 
-      .visraam-#{$source}-yamki {
-        background:
-          linear-gradient(
-            to right,
-            rgba(229, 229, 229, 0) 20%,
-            rgba($visraam-yamki, 0.7) 100%
-          );
+        .visraam-#{$source}-yamki {
+          background:
+            linear-gradient(
+              to right,
+              rgba(229, 229, 229, 0) 20%,
+              rgba($visraam-yamki, 0.7) 100%
+            );
+        }
       }
     }
   }
