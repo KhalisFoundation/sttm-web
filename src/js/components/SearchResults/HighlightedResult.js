@@ -17,7 +17,7 @@ export default class HighlightedSearchResult extends React.PureComponent {
     }
 
     return children.split(' ').map((word, i) => {
-      let akharClass = getVisraamClass(children, word, visraams);
+      let akharClass = getVisraamClass(children, i, visraams);
       akharClass += (highlightIndex && highlightIndex.includes(i)) || word.includes(query)
         ? 'search-highlight-word'
         : ''

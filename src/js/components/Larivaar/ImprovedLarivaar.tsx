@@ -45,7 +45,7 @@ function Larivaar(props: ILarivaarProps) {
         }
 
         const highlight = word.includes(query);
-        const visraamClass = getVisraamClass(children, word, visraam);
+        const visraamClass = getVisraamClass(children, index, visraam);
 
         return (
           <LarivaarWord
