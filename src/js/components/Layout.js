@@ -13,6 +13,7 @@ import {
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
 import ScrollToTop from './ScrollToTop';
+import FullScreen from './FullScreen';
 import throttle from 'lodash.throttle';
 import { addVisraamClass } from '../util';
 
@@ -106,6 +107,9 @@ class Layout extends React.PureComponent {
         ) : (
             children
           )}
+        {(pathname === '/shabad' ||
+          pathname === '/hukamnama' ||
+          pathname === '/ang') && <FullScreen />}
         {this.state.showScrollToTop && <ScrollToTop />}
       </React.Fragment>
     ) : (
