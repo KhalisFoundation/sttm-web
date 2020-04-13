@@ -256,10 +256,6 @@ blockquote {
   }
 }
 
-.fullscreen-view .relatedShabadWrapper {
-  display: none;
-}
-
 .relatedShabad {
   border: 1px solid $sttm-light-grey;
   border-radius: 4px;
@@ -300,6 +296,10 @@ blockquote {
 
   &Wrapper {
     margin-top: 3rem;
+
+    .fullscreen-view & {
+      display: none;
+    }
   }
 
   &Title {
