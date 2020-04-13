@@ -540,9 +540,9 @@ export const getVisraamClass = (verse, word, visraams) => {
 
   if (visraams) {
     Object.keys(visraams).forEach((visraamSource) => {
-      if (visraams[visraamSource]) {
+      if (visraams[visraamSource].length) {
         visraams[visraamSource].forEach((visraam) => {
-          if (visraam.p === akharIndex) {
+          if (parseInt(visraam.p, 10) === akharIndex) {
             visraamClass += visraam.t === 'v' ?
               ` visraam-${visraamSource}-main ` :
               ` visraam-${visraamSource}-yamki `;
