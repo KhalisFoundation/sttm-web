@@ -533,9 +533,7 @@ export const getShabadList = (q, { type, source }) => {
 }
 
 
-export const getVisraamClass = (verse, word, visraams) => {
-  const words = verse.split(' ');
-  const akharIndex = words.findIndex((element) => element === word);
+export const getVisraamClass = (verse, akharIndex, visraams) => {
   let visraamClass = '';
 
   if (visraams) {
