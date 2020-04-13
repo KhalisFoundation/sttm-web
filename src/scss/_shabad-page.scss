@@ -62,6 +62,10 @@ blockquote {
       }
     }
   }
+
+  .fullscreen-view & {
+    display: none;
+  }
 }
 
 .meta {
@@ -250,6 +254,10 @@ blockquote {
   .dark-mode #share-menu {
     background-color: $sttm-light-black;
   }
+}
+
+.fullscreen-view .relatedShabadWrapper {
+  display: none;
 }
 
 .relatedShabad {
