@@ -99,26 +99,35 @@
         padding: 0 1rem;
       }
 
-      ul {
+      .list-wrapper {
         background-color: $sttm-white;
         border-radius: 8px;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-        height: 160px;
-        list-style-type: none;
-        margin: -8px 0 0 0;
-        opacity: 1;
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+        height: 180px;
+        justify-content: space-around;
         overflow: hidden;
-        padding: 8px 0;
         position: absolute;
         transition: 0.1s all linear;
-        visibility: visible;
-        width: 100%;
-        z-index: -1;
+        width: 320px;
 
         &.collapsed {
           height: 0;
           opacity: 0;
-          visibility: hidden;
+        }
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        opacity: 1;
+        padding: 8px 0;
+        visibility: visible;
+
+        p {
+          margin-bottom: 0;
         }
 
         li {
@@ -181,6 +190,16 @@
         color: $sttm-dark-grey;
         display: inline-block;
         padding: 4px;
+
+        &.fontsize-icon {
+          background-color: transparent;
+          border: none;
+          font-size: 16px;
+
+          &:hover {
+            color: $facebook-blue;
+          }
+        }
 
         > svg {
           vertical-align: middle;

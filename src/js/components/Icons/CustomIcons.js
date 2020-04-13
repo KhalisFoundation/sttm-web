@@ -9,8 +9,8 @@ const props = {
 
 export const FontPlus = props => (
   <span onClick={props.onClick}
-    className={`custom-fa ${props.className}`}>
-    <span style={{ 'fontSize': '18px' }}>ਅ</span>+
+    className={`custom-fa ${props.className} fontsize-icon`}>
+    +
   </span>
 );
 FontPlus.propTypes = props;
@@ -37,8 +37,8 @@ CurrentFont.propTypes = props;
 
 export const FontMinus = props => (
   <span onClick={props.onClick}
-    className={`custom-fa ${props.className}`}>
-    <span style={{ 'fontSize': '14px' }}>ਅ</span>-
+    className={`custom-fa ${props.className} fontsize-icon`}>
+    -
   </span>
 )
 FontMinus.propTypes = props;

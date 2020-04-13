@@ -37,10 +37,7 @@ export default class ShabadControls extends React.PureComponent {
       case 'multiselect_checkbox':
         return (
           <MultiSelect
-            options={settingsObj.options}
-            label={settingsObj.label}
-            action={settingsObj.action}
-            checkedValues={settingsObj.checked}
+            collections={settingsObj.collections}
           />
         )
       case 'text-option':

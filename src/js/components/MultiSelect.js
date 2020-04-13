@@ -3,30 +3,24 @@ import PropTypes from 'prop-types';
 
 export class MultiSelect extends React.PureComponent {
   static propTypes = {
-    options: PropTypes.array.isRequired,
-    checkedValues: PropTypes.array.isRequired,
-    label: PropTypes.string,
-    action: PropTypes.func,
+    collections: PropTypes.array.isRequired,
   };
 
   render() {
-    const { options, action, label, checkedValues } = this.props;
+    const { collections } = this.props;
 
-    return (
-      <>
-        <span className="" onClick={(e) => {
-          e.currentTarget.nextSibling.classList.toggle('collapsed');
-          e.currentTarget.nextSibling.classList.toggle('expanded');
-        }}>{label} <img src="/assets/images/down-arrow.svg" width="12px" /></span>
-
-        <ul className='collapsed'>
+    const collectionsMarkup = collections.map(c => {
+      const { options, action, label, checked } = c;
+      return (
+        <ul key={label}>
+          <p>{label}</p>
           {options.map(op => (
             <li key={op}>
               <input type="checkbox"
                 value={op}
                 id={`checkbox-${label}-${op}`}
                 onChange={() => { action(op) }}
-                checked={checkedValues.includes(op)} />
+                checked={checked.includes(op)} />
               <span className="fake-checkbox" onClick={e => {
                 e.currentTarget.previousSibling.click();
               }}></span>
@@ -34,6 +28,19 @@ export class MultiSelect extends React.PureComponent {
             </li>
           ))}
         </ul>
+      )
+    });
+
+    return (
+      <>
+        <span className="" onClick={(e) => {
+          e.currentTarget.nextSibling.classList.toggle('collapsed');
+          e.currentTarget.nextSibling.classList.toggle('expanded');
+        }}>Display Options <img src="/assets/images/down-arrow.svg" width="12px" /></span>
+
+        <div className='collapsed list-wrapper'>
+          {collectionsMarkup}
+        </div>
       </>
     )
   }
