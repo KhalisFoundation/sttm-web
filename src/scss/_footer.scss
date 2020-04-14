@@ -13,6 +13,10 @@ footer {
     border-top: 1px solid $sttm-lighter-black;
   }
 
+  .fullscreen-view & {
+    display: none;
+  }
+
   .footer {
     align-items: center;
     display: flex;

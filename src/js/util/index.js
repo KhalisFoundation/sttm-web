@@ -70,6 +70,17 @@ export function getQueryParams(str = document.location.search) {
  *
  * @param {string} url
  */
+
+const shortURLSource = (source) => {
+  const urlSource = {
+    'G': 'g',
+    'D': 'd',
+    'B': 'v',
+    'S': 'gs'
+  }
+  return urlSource[source];
+}
+
 export function shortenURL(url = window.location.href) {
   const path = window.location.pathname;
   const URL = `http://${SHORT_DOMAIN}`;
@@ -80,7 +91,7 @@ export function shortenURL(url = window.location.href) {
         'highlight'
       ) || ''}`;
     case '/ang':
-      return `${URL}/a/${getParameterByName('ang')}`;
+      return `${URL}/${shortURLSource(getParameterByName('source'))}/${getParameterByName('ang')}`;
     case '/hukamnama':
       return `${URL}/h`;
     default:
@@ -533,16 +544,14 @@ export const getShabadList = (q, { type, source }) => {
 }
 
 
-export const getVisraamClass = (verse, word, visraams) => {
-  const words = verse.split(' ');
-  const akharIndex = words.findIndex((element) => element === word);
+export const getVisraamClass = (verse, akharIndex, visraams) => {
   let visraamClass = '';
 
   if (visraams) {
     Object.keys(visraams).forEach((visraamSource) => {
-      if (visraams[visraamSource]) {
+      if (visraams[visraamSource].length) {
         visraams[visraamSource].forEach((visraam) => {
-          if (visraam.p === akharIndex) {
+          if (parseInt(visraam.p, 10) === akharIndex) {
             visraamClass += visraam.t === 'v' ?
               ` visraam-${visraamSource}-main ` :
               ` visraam-${visraamSource}-yamki `;
