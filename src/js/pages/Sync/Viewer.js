@@ -1,5 +1,6 @@
 /* globals API_URL */
 /* globals BANIS_API_URL */
+/* globals CEREMONIES_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import ShabadContent from '../../components/ShabadContent';
@@ -44,6 +45,12 @@ export default class Viewer extends React.PureComponent {
       .then(r => r.json())
       .then(res => this.setState({ response: res }));
 
+  _fetchCeremony = id =>
+    Promise.resolve(this.setState({ response: null }))
+      .then(() => fetch(`${CEREMONIES_URL}${id}`))
+      .then(r => r.json())
+      .then(res => this.setState({ response: res }));
+
   fetch = data => {
     const { type } = data;
     this.setState({ type });
@@ -52,7 +59,8 @@ export default class Viewer extends React.PureComponent {
     } else if (type === 'shabad') {
       return this._fetchShabad(data.id);
     } else if (type === 'ceremony') {
-      this.setState({ response: "Ceremonies coming soon." });
+      return this._fetchCeremony(data.id);
+      // this.setState({ response: "Ceremonies coming soon." });
     }
   }
 
@@ -111,7 +119,13 @@ export default class Viewer extends React.PureComponent {
         )
       } else if (type === SYNC_TYPES.CEREMONY) {
         return (
-          <h4>{response}</h4>
+          <ShabadContent
+            type="sync"
+            highlight={parseInt(data.highlight)}
+            gurbani={versesToGurbani(response.verses)}
+            info={response.ceremonyInfo}
+            showFullScreen={showFullScreen}
+          />
         )
       }
     }

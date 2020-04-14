@@ -213,6 +213,7 @@ export default class Baani extends React.PureComponent {
             }
             onClick={() => onPanktiClick(getVerseId(shabad))}
           >
+            {console.log(shabad)}
             {getBaniLine(shabad)}
             {getTransliterations(shabad)}
             {getTranslations(shabad)}
