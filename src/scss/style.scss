@@ -85,6 +85,10 @@ select {
   @media screen and (max-width: 730px) {
     margin: 5px 1rem;
   }
+
+  .fullscreen-view & {
+    display: none;
+  }
 }
 
 .wrapper {
@@ -180,6 +184,19 @@ select {
   width: 50px;
   z-index: 5;
 
+  .dark-mode & {
+    background-color: $sttm-darker-grey;
+    box-shadow: none;
+  }
+
+  &.fullscreen {
+    right: 28px;
+
+    & + .scroll-to-top {
+      right: 84px;
+    }
+  }
+
   @keyframes grow {
     from {
       transform: scale(0);
@@ -188,11 +205,6 @@ select {
     to {
       transform: scale(1);
     }
-  }
-
-  .dark-mode & {
-    background-color: $sttm-darker-grey;
-    box-shadow: none;
   }
 }
 
