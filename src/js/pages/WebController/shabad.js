@@ -10,6 +10,7 @@ export default class ControllerShabad extends React.PureComponent {
       connected: false,
       namespaceString: '',
       error: null,
+      highlightId: null,
     }
   }
 
@@ -30,6 +31,12 @@ export default class ControllerShabad extends React.PureComponent {
     });
   }
 
+  componentDidMount() {
+    const { socket, highlight } = this.props;
+    this.setState({ highlightId: highlight });
+    socket.on('data', data => this.setState({ highlightId: data.highlight }));
+  }
+
   render() {
     const { data, highlight } = this.props;
     return (
@@ -38,7 +45,7 @@ export default class ControllerShabad extends React.PureComponent {
           <Pankti
             type="shabad"
             gurbani={data.verses}
-            highlight={highlight}
+            highlight={this.state.highlightId}
             splitView={false}
             unicode={false}
             larivaar={false}
