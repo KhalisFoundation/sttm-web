@@ -27,7 +27,7 @@ export default class SlideControls extends React.PureComponent {
         host: "sttm-web",
         type: "ceremony",
         ceremonyId: 3,
-        verseId: 39128,
+        verseId: 26106,
         pin: this.props.controllerPin,
       });
     } else {

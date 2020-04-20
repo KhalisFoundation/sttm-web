@@ -85,9 +85,6 @@ export default class Viewer extends React.PureComponent {
       state: { response, type },
     } = this;
 
-    console.log("data", data);
-    console.log("response", response);
-
     if (Object.keys(data).length === 0) {
       return <h4>{TEXTS.SYNC_CONNECTED(namespaceString)}</h4>;
     }
@@ -122,7 +119,7 @@ export default class Viewer extends React.PureComponent {
           <ShabadContent
             type="sync"
             highlight={parseInt(data.highlight)}
-            gurbani={versesToGurbani(response.verses)}
+            gurbani={versesToGurbani(response.verses, false)}
             info={response.ceremonyInfo}
             showFullScreen={showFullScreen}
           />

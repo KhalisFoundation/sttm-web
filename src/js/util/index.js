@@ -273,10 +273,15 @@ export const toAngURL = ({ ang, source, highlight }) =>
   })}`;
 
 export const versesToGurbani = (verses, baniLength = 'extralong') =>
-  verses.map(({ verse, ...v }) => ({
-    ...verse,
-    ...v,
-  })).filter(v => v[BANI_LENGTH_COLS[baniLength]]);
+  baniLength ?
+    verses.map(({ verse, ...v }) => ({
+      ...verse,
+      ...v,
+    })).filter(v => v[BANI_LENGTH_COLS[baniLength]]) :
+    verses.map(({ verse, ...v }) => ({
+      ...verse,
+      ...v,
+    }));
 
 /**
  *
