@@ -1,4 +1,5 @@
 /* globals SYNC_API_URL */
+/* globals CEREMONIES_URL */
 import React from 'react';
 import cx from 'classnames';
 
@@ -9,6 +10,8 @@ import SearchInput from './search-input';
 import SlideControls from './slide-controls';
 import ControllerSearch from './search';
 import { Stub } from '../Search/Layout';
+import ControllerShabad from '@/pages/WebController/shabad';
+import { versesToGurbani } from '@/util';
 
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
@@ -19,6 +22,7 @@ export default class WebControllerPage extends React.PureComponent {
       socket: null,
       controllerPin: 0,
       searchData: {},
+      ceremonyData: null,
 
       error: false,
       pinError: false,
@@ -43,6 +47,19 @@ export default class WebControllerPage extends React.PureComponent {
 
   handleSearch = data => {
     this.setState({ searchData: data });
+  }
+
+  handleCeremony = ceremonyID => {
+    fetch(`${CEREMONIES_URL}${ceremonyID}`)
+      .then(r => r.json())
+      .then((data) => {
+        if (data) {
+          const processedData = data;
+          processedData.verses = versesToGurbani(data.verses, false);
+          this.setState({ ceremonyData: processedData })
+        }
+      }
+    );
   }
 
   handleSubmit = (code, pin) => {
@@ -114,7 +131,8 @@ export default class WebControllerPage extends React.PureComponent {
       namespaceString,
       error,
       pinError,
-      codeError
+      codeError,
+      ceremonyData,
     } = this.state;
 
     const { query, type, source, offset } = searchData;
@@ -141,7 +159,17 @@ export default class WebControllerPage extends React.PureComponent {
               <SearchInput onSearch={this.handleSearch} />
               <SlideControls
                 socket={socket}
+                specialHandler = {this.handleCeremony}
                 controllerPin={controllerPin} />
+
+              {ceremonyData && (
+                <ControllerShabad
+                  data = {ceremonyData}
+                  socket = {socket}
+                  controllerPin={controllerPin}
+                />
+              )}
+
               {query && (
                 <ControllerSearch
                   q={query}

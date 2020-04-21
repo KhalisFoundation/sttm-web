@@ -12,6 +12,7 @@ export default class SlideControls extends React.PureComponent {
 
   static propTypes = {
     socket: PropTypes.object,
+    specialHandler: PropTypes.func,
     controllerPin: PropTypes.number,
   };
 
@@ -30,6 +31,7 @@ export default class SlideControls extends React.PureComponent {
         verseId: 26106,
         pin: this.props.controllerPin,
       });
+      this.props.specialHandler(3);
     } else {
       const slideText = {
         'waheguru-slide': 'vwihgurU',
