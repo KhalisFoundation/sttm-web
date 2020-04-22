@@ -46,7 +46,7 @@ export default class WebControllerPage extends React.PureComponent {
   }
 
   handleSearch = data => {
-    this.setState({ searchData: data });
+    this.setState({ searchData: data, ceremonyData: null });
   }
 
   handleCeremony = ceremonyID => {
