@@ -167,6 +167,7 @@ export default class WebControllerPage extends React.PureComponent {
                   data = {ceremonyData}
                   socket = {socket}
                   controllerPin={controllerPin}
+                  resultType = {'ceremony'}
                 />
               )}
 
@@ -178,6 +179,7 @@ export default class WebControllerPage extends React.PureComponent {
                   offset={offset}
                   socket={socket}
                   controllerPin={controllerPin}
+                  resultType = {'shabad'}
                 />
               )}
             </React.Fragment>
