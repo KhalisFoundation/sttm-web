@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { VISRAAM_CONSTANTS } from '../constants';
 import { clearVisraamClass } from '../util';
-import { QUICK_SETTINGS } from '../settings';
+import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
 import { MultiSelect } from '../components/MultiSelect';
 
 export default class ShabadControls extends React.PureComponent {
@@ -18,6 +18,10 @@ export default class ShabadControls extends React.PureComponent {
     setFontSize: PropTypes.func.isRequired,
     toggleCenterAlignOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
+    setVisraamSource: PropTypes.func.isRequired,
+    setVisraamStyle: PropTypes.func.isRequired,
+    changeFont: PropTypes.func.isRequired,
 
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -29,10 +33,20 @@ export default class ShabadControls extends React.PureComponent {
     fontSize: PropTypes.number.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
+    darkMode: PropTypes.bool.isRequired,
+    fontFamily: PropTypes.string.isRequired,
   };
 
+  state = {
+    showAdvancedOptions: false,
+  }
+
+  toggleAdvancedOptions = () => {
+    this.setState({ showAdvancedOptions: !this.state.showAdvancedOptions });
+  }
+
   bake_settings = settingsObj => {
-    let iconsMarkup;
+    let iconsMarkup, options;
     switch (settingsObj.type) {
       case 'multiselect_checkbox':
         return (
@@ -75,6 +89,18 @@ export default class ShabadControls extends React.PureComponent {
         return (
           <span className="separator"></span>
         )
+      case 'dropdown':
+        options = Object.keys(settingsObj.options).map(key =>
+          <option key={key} value={key}>{settingsObj.options[key]}</option>
+        )
+        return (
+          <>
+            <p className="toggle-text">{settingsObj.label}</p>
+            <select value={settingsObj.value} onChange={(e) => {
+              settingsObj.action(e.currentTarget.value);
+            }}> {options} </select>
+          </>
+        )
     }
   }
 
@@ -88,47 +114,8 @@ export default class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    const {
-      translationLanguages,
-      transliterationLanguages,
-      visraams,
-      setTranslationLanguages,
-      setTransliterationLanguages,
-      setFontSize,
-      resetDisplayOptions,
-      resetFontOptions,
-      toggleVisraams,
-      toggleLarivaarOption,
-      toggleLarivaarAssistOption,
-      larivaarAssist,
-      larivaar,
-      fontSize,
-      toggleCenterAlignOption,
-      centerAlignGurbani,
-      toggleSplitViewOption,
-      splitView,
-    } = this.props;
-
-    const settings = QUICK_SETTINGS(
-      translationLanguages,
-      transliterationLanguages,
-      setTranslationLanguages,
-      setTransliterationLanguages,
-      resetDisplayOptions,
-      resetFontOptions,
-      toggleVisraams,
-      toggleLarivaarOption,
-      toggleLarivaarAssistOption,
-      visraams,
-      larivaarAssist,
-      larivaar,
-      setFontSize,
-      fontSize,
-      toggleCenterAlignOption,
-      centerAlignGurbani,
-      toggleSplitViewOption,
-      splitView,
-    );
+    const settings = QUICK_SETTINGS(this.props, this.toggleAdvancedOptions);
+    const advanced = ADVANCED_SETTINGS(this.props);
 
     return (
       <React.Fragment>
@@ -138,6 +125,15 @@ export default class ShabadControls extends React.PureComponent {
               {this.bake_settings(element)}
             </div>
           ))}
+          {this.state.showAdvancedOptions && (
+            <div className="advanced-options">
+              {advanced.map((element, i) => (
+                <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
+                  {this.bake_settings(element)}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </React.Fragment>
     );

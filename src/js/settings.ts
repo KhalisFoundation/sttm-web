@@ -1,10 +1,12 @@
 import {
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
+  FONT_OPTIONS,
+  VISRAAM_CONSTANTS,
 } from './constants';
 
 import { toggleItemInArray } from './util';
-import { toggleLarivaarAssistOption } from '@/features/actions';
+
 import {
   LarivaarIcon,
   LarivaarAssistIcon,
@@ -16,9 +18,7 @@ import {
   SplitViewIcon,
 } from '@/components/Icons/CustomIcons';
 
-export const QUICK_SETTINGS = (
-  translationLanguages: Array<string>,
-  transliterationLanguages: Array<string>,
+export interface SETTING_ACTIONS {
   setTranslationLanguages: Function,
   setTransliterationLanguages: Function,
   resetDisplayOptions: Function,
@@ -26,16 +26,49 @@ export const QUICK_SETTINGS = (
   toggleVisraams: Function,
   toggleLarivaarOption: Function,
   toggleLarivaarAssistOption: Function,
+  setFontSize: Function,
+  toggleCenterAlignOption: Function,
+  toggleSplitViewOption: Function,
+  toggleDarkMode: Function,
+  setVisraamSource: Function,
+  setVisraamStyle: Function,
+  changeFont: Function,
+
+  translationLanguages: Array<string>,
+  transliterationLanguages: Array<string>,
   visraams: Boolean,
+  visraamSource: String,
+  visraamStyle: String,
   larivaarAssist: Boolean,
   larivaar: Boolean,
-  setFontSize: Function,
-  fontSize: number,
-  toggleCenterAlignOption: Function,
+  fontSize: any,
   centerAlignGurbani: Boolean,
-  toggleSplitViewOption: Function,
   splitView: Boolean,
-) => [
+  darkMode: Boolean,
+  fontFamily: String,
+}
+
+export const QUICK_SETTINGS = ({
+  setTranslationLanguages,
+  setTransliterationLanguages,
+  resetDisplayOptions,
+  resetFontOptions,
+  toggleVisraams,
+  toggleLarivaarOption,
+  toggleLarivaarAssistOption,
+  setFontSize,
+  toggleCenterAlignOption,
+  toggleSplitViewOption,
+
+  translationLanguages,
+  transliterationLanguages,
+  visraams,
+  larivaarAssist,
+  larivaar,
+  fontSize,
+  centerAlignGurbani,
+  splitView,
+}: SETTING_ACTIONS, toggleAdvancedOptions: Function) => [
     {
       type: 'multiselect_checkbox',
       collections: [{
@@ -72,7 +105,7 @@ export const QUICK_SETTINGS = (
         },
         {
           icon: CurrentFont,
-          action: (size) => { setFontSize(parseFloat((size / 10).toFixed(1))); },
+          action: (size: any) => { setFontSize(parseFloat((size / 10).toFixed(1))); },
           value: Math.floor(fontSize * 10),
         },
         {
@@ -164,8 +197,46 @@ export const QUICK_SETTINGS = (
     {
       type: 'text-option',
       label: 'Advanced',
-      action: () => {
-        console.log("will open advanced settings");
-      },
-    }
+      action: toggleAdvancedOptions,
+    },
+  ]
+
+export const ADVANCED_SETTINGS = ({
+  toggleDarkMode,
+  setVisraamSource,
+  setVisraamStyle,
+  changeFont,
+
+  visraamSource,
+  visraamStyle,
+  darkMode,
+  fontFamily,
+}: SETTING_ACTIONS) => [
+    {
+      type: 'dropdown',
+      label: 'Visraam Source',
+      value: visraamSource,
+      action: setVisraamSource,
+      options: VISRAAM_CONSTANTS.SOURCES,
+    },
+    {
+      type: 'dropdown',
+      label: 'Visraam Style',
+      value: visraamStyle,
+      action: setVisraamStyle,
+      options: VISRAAM_CONSTANTS.TYPES,
+    },
+    {
+      type: 'dropdown',
+      label: 'Font Family',
+      value: fontFamily,
+      action: changeFont,
+      options: FONT_OPTIONS,
+    },
+    {
+      type: 'toggle-option',
+      label: 'Dark Mode',
+      checked: darkMode,
+      action: toggleDarkMode,
+    },
   ]
