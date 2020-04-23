@@ -19,13 +19,16 @@ export default class ControllerShabad extends React.PureComponent {
     highlight: PropTypes.number,
     socket: PropTypes.object,
     controllerPin: PropTypes.number,
+    resultType: PropTypes.string,
   };
 
   handlePanktiClick = (verseId, shabadId) => {
+    const isItCeremony = this.props.data.ceremonyInfo;
     this.props.socket.emit('data', {
       host: "sttm-web",
-      type: "shabad",
+      type: this.props.resultType,
       pin: this.props.controllerPin,
+      ceremonyId : isItCeremony ? isItCeremony.ceremonyID : null,
       shabadId,
       verseId,
     });

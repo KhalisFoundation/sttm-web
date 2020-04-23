@@ -12,7 +12,7 @@ export const getGurmukhiVerse = shabad => shabad.verse.gurmukhi;
 
 export const getVerseId = shabad => shabad.verseId;
 
-export const getShabadId = shabad => shabad.shabadId;
+export const getShabadId = shabad => shabad.shabadId || shabad.ceremonyID;
 
 export const translationMap = {
   spanish: shabad => shabad.translation.es.sn,
@@ -24,7 +24,7 @@ export const translationMap = {
 };
 
 export const transliterationMap = {
-  english: shabad => shabad.transliteration.en,
+  english: shabad => { console.log(shabad); return shabad.transliteration.en; },
   hindi: shabad => shabad.transliteration.hi,
   shahmukhi: shabad => shabad.transliteration.ur,
   IPA: shabad => shabad.transliteration.ipa,
