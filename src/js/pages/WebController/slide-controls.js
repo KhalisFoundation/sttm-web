@@ -12,6 +12,7 @@ export default class SlideControls extends React.PureComponent {
 
   static propTypes = {
     socket: PropTypes.object,
+    specialHandler: PropTypes.func,
     controllerPin: PropTypes.number,
   };
 
@@ -22,20 +23,31 @@ export default class SlideControls extends React.PureComponent {
     prevSlide && prevSlide.classList.remove("active-slide");
     activeSlide.classList.add("active-slide");
 
-    const slideText = {
-      'waheguru-slide': 'vwihgurU',
-      'moolmantra-slide': '<> siq nwmu krqw purKu inrBau inrvYru Akwl mUriq AjUnI sYBM gur pRswid ]',
-      'blank-slide': ''
-    }
+    if (activeSlide.id === 'anand-slide') {
+      this.props.socket.emit('data', {
+        host: "sttm-web",
+        type: "ceremony",
+        ceremonyId: 3,
+        verseId: 26106,
+        pin: this.props.controllerPin,
+      });
+      this.props.specialHandler(3);
+    } else {
+      const slideText = {
+        'waheguru-slide': 'vwihgurU',
+        'moolmantra-slide': '<> siq nwmu krqw purKu inrBau inrvYru Akwl mUriq AjUnI sYBM gur pRswid ]',
+        'blank-slide': ''
+      }
 
-    this.props.socket.emit('data', {
-      host: "sttm-web",
-      type: "text",
-      pin: this.props.controllerPin,
-      text: slideText[activeSlide.id],
-      isGurmukhi: true,
-      isAnnouncement: true,
-    });
+      this.props.socket.emit('data', {
+        host: "sttm-web",
+        type: "text",
+        pin: this.props.controllerPin,
+        text: slideText[activeSlide.id],
+        isGurmukhi: true,
+        isAnnouncement: true,
+      });
+    }
   }
 
   setRef = node => (this.$wrapper = node);
@@ -73,6 +85,9 @@ export default class SlideControls extends React.PureComponent {
         </div>
         <div className="slide-type" id="blank-slide" onClick={this.sendSlide}>
           <p>Blank Slide</p>
+        </div>
+        <div className="slide-type" id="anand-slide" onClick={this.sendSlide}>
+          <p>Anand Sahib</p>
         </div>
       </div>
     );
