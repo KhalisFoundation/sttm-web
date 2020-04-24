@@ -117,14 +117,22 @@ export default class ShabadControls extends React.PureComponent {
     const settings = QUICK_SETTINGS(this.props, this.toggleAdvancedOptions);
     const advanced = ADVANCED_SETTINGS(this.props);
 
+    const quickSettingsPanel = (
+      <>
+        {settings.map((element, i) => (
+          <div key={`settings-${i}`} className={`qs-option controller-option ${element.type}`}>
+            {this.bake_settings(element)}
+          </div>
+        ))}
+      </>
+    );
+
     return (
       <React.Fragment>
         <div id="shabad-controllers">
-          {settings.map((element, i) => (
-            <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
-              {this.bake_settings(element)}
-            </div>
-          ))}
+          <div className="quick-settings">
+            {quickSettingsPanel}
+          </div>
           {this.state.showAdvancedOptions && (
             <div className="advanced-options">
               {advanced.map((element, i) => (
@@ -132,6 +140,7 @@ export default class ShabadControls extends React.PureComponent {
                   {this.bake_settings(element)}
                 </div>
               ))}
+              {quickSettingsPanel}
             </div>
           )}
         </div>

@@ -58,6 +58,10 @@
 }
 
 #shabad-controllers {
+  width: 100%;
+}
+
+.quick-settings {
   align-items: flex-end;
   display: flex;
   flex-grow: 1;
@@ -204,8 +208,8 @@
 
     .toggle-label {
       height: 25px;
-      margin-bottom: 10px;
       margin-right: 8px;
+      margin-top: 10px;
       width: 50px;
     }
   }
@@ -310,8 +314,89 @@
   padding: 1rem;
   width: calc(100% - 2rem);
 
+  .controller-option {
+    margin: 10px;
+  }
+
   .dark-mode & {
     background-color: $sttm-lighter-black;
+  }
+
+  .qs-option {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .quick-settings > .controller-option {
+    &:nth-last-child(3),
+    &:nth-last-child(4),
+    &:nth-last-child(5) {
+      display: none;
+    }
+  }
+
+  .advanced-options {
+    .qs-option {
+      &:nth-last-of-type(3),
+      &:nth-last-of-type(4),
+      &:nth-last-of-type(5) {
+        display: block;
+
+        &.separator {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .quick-settings > .controller-option {
+    &:nth-last-child(6),
+    &:nth-last-child(7),
+    &:nth-last-child(8) {
+      display: none;
+    }
+  }
+
+  .advanced-options {
+    .qs-option {
+      &:nth-last-of-type(6),
+      &:nth-last-of-type(7),
+      &:nth-last-of-type(8) {
+        display: block;
+
+        &.separator {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .quick-settings > .controller-option {
+    &:nth-last-child(9) {
+      display: none;
+    }
+  }
+
+  .advanced-options {
+    .qs-option {
+      &:nth-last-of-type(9) {
+        display: block;
+
+        &.separator {
+          display: none;
+        }
+      }
+    }
+
+    .dropdown {
+      margin: auto;
+      width: 80%;
+    }
   }
 }
 
