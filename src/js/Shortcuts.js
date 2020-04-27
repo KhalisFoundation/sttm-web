@@ -1,7 +1,7 @@
 import store from './features/store'
 import { toggleItemInArray } from './util'
 
-const Shortcuts = { 
+const ViewerShortcuts = { 
     toggleLarivar: {
       name: 'Toggle Larivar',
       sequences: ['l']
@@ -87,5 +87,5 @@ const ShortcutHanders = {
   }
 }
 
-export default Shortcuts;
-export {ShortcutHanders}
+// export default Shortcuts;
+export {ShortcutHanders, ViewerShortcuts}

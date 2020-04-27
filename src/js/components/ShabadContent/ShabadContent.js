@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {HotKeys} from 'react-hotkeys';
 
 import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
 import { showToast, copyToClipboard } from '@/util';
@@ -13,6 +14,8 @@ import Baani from '@/components/Baani';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
 import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
+import { ViewerShortcuts, ShortcutHanders } from '../../Shortcuts';
+
 
 /**
  *
@@ -109,7 +112,10 @@ class Shabad extends React.PureComponent {
     }
 
     return (
+      <HotKeys keyMap={ViewerShortcuts} handlers={ShortcutHanders}>
+
       <React.Fragment>
+        
         {this.props.hideControls === false && (
           <Controls
             media={
@@ -160,6 +166,7 @@ class Shabad extends React.PureComponent {
         </div>
         <ProgressBar percent={this.state.progress} />
       </React.Fragment>
+      </HotKeys>
     );
   }
 
