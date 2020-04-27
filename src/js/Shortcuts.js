@@ -1,79 +1,91 @@
 import store from './features/store'
-
-const TranslitMap = {
-  name: 'Transliteration',
-  map: [
-   'English',
-   'Shahmukhi',
-   'Hindi'
-  ],
-  baseKey: 'mod+t'
-}
-
-const TranslationMap = {
-  name: 'Translation',
-  map: [
-   'English',
-   'Punjabi',
-   'Spanish'
-  ],
-  baseKey: 'mod+m'
-}
-
-const maps = [TranslitMap, TranslationMap];
-
-const mapToShortcut = (keyMap) => {
-  const {name, map, baseKey} = keyMap;
-
-  return map.reduce((acc, currentName) => {
-    const keyName = `toggle${currentName}${name}`;
-    const sequence = `${baseKey}+${currentName[0]}`
-
-    return {...acc, 
-      [keyName]: { 
-      name: `Toggle ${currentName} ${name} `,
-      sequence: sequence
-    }}
-  }, {})
-}
+import { toggleItemInArray } from './util'
 
 const Shortcuts = { 
     toggleLarivar: {
       name: 'Toggle Larivar',
-      sequence: 'l'
+      sequences: ['l']
     },
    toggleVishraams: {
      name: 'Toggle Vishraams',
-     sequence: 'v',
+     sequences: ['v'],
    },
    centerAlign: {
      name: 'Center Align',
-     sequence: 'meta+shift+e'
+     sequences: ['meta+shift+c', 'ctrl+shift+c']
    },
+   toggleEngTranslation: {
+     name: 'Toggle English Translation',
+     sequences: ['meta+alt+e', 'ctrl+alt+e'],
+   },
+   togglePunjabiTranslation: {
+     name: 'Toggle Punjabi Translation',
+     sequences: ['meta+alt+t', 'ctrl+alt+t']
+   },
+   toggleSpanishTranslation: {
+    name: 'Toggle Spanish Translation',
+    sequences: ['meta+alt+s', 'ctrl+alt+s'],
+   },
+   toggleEngTranslit: {
+     name: 'Toggle English Transliteration',
+     sequences: ['meta+alt+shift+e', 'ctrl+alt+shift+e']
+   },
+   toggleShahTranslit: {
+    name: 'Toggle Shahmukhi Transliteration',
+    sequences: ['meta+alt+shift+s', 'ctrl+alt+shift+t+s']
+   },
+   toggleHinTranslit: {
+    name: 'Toggle Hindi Transliteration',
+    sequences: ['meta+alt+shift+h', 'ctrl+alt+shift+h']
+   }
 
-  // ...maps.map(shortcutType => mapToShortcut(shortcutType)),
-
- 
 }
 
-const ShortcutHanders = 
-{  
+const ShortcutHanders = {  
   toggleLarivar: (e) => {
     e.preventDefault();
     store.dispatch({type: "TOGGLE_LARIVAAR_OPTION"})},
   toggleVishraams: (e) => {
     e.preventDefault();
     store.dispatch({type: "TOGGLE_VISRAAMS"}) },
-    centerAlign: () => {
+    centerAlign: (e) => {
+      e.preventDefault();
       const state = store.getState();
     store.dispatch({type: "SET_CENTER_ALIGN_OPTION", payload:!state.centerAlignGurbani }) 
   },
 
-  // toggleEnglishTranslation: (e) => {
-  //    e.preventDefault();
-  //    },
-
+  toggleEngTranslation: (e) => {
+     e.preventDefault();
+     const state = store.getState();
+     store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('english', state.translationLanguages)})
+  },
+  togglePunjabiTranslation: (e) => {
+    e.preventDefault();
+    const state = store.getState();
+    store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('punjabi', state.translationLanguages)})
+  },
+  toggleSpanishTranslation: (e) => {
+    e.preventDefault();
+    const state = store.getState();
+    store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('spanish', state.translationLanguages)})
+  },
+  //transliterationLanguages
+  toggleEngTranslit: (e) => {
+    e.stopPropagation();
+    const state = store.getState();
+    store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('english', state.transliterationLanguages)})
+  },
+  toggleShahTranslit: (e) => {
+    e.stopPropagation();
+    const state = store.getState();
+    store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('shahmukhi', state.transliterationLanguages)})
+  },
+  toggleHinTranslit: (e) => {
+    e.stopPropagation();
+    const state = store.getState();
+    store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('hindi', state.transliterationLanguages)})
+  }
 }
 
 export default Shortcuts;
-export {ShortcutHanders, maps, mapToShortcut}
+export {ShortcutHanders}
