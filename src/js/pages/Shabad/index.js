@@ -8,7 +8,8 @@ import ShabadContent from '../../components/ShabadContent';
 import { toShabadURL } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
 import { TEXTS } from '../../constants';
-
+import {HotKeys} from 'react-hotkeys';
+import Shortcuts, { ShortcutHanders } from '../../Shortcuts';
 const Stub = () => <div className="spinner" />;
 
 export default class Shabad extends React.PureComponent {
@@ -25,11 +26,13 @@ export default class Shabad extends React.PureComponent {
     );
 
     return (
+     
       <PageLoader url={url}>
         {({ data, loading }) =>
           loading ? (
             <Stub />
           ) : (
+            <HotKeys keyMap={Shortcuts} handlers={ShortcutHanders}>
             <div className="row" id="content-root">
               <BreadCrumb links={[{ title: TEXTS.URIS.SHABAD }]} />
               <ShabadContent
@@ -41,6 +44,8 @@ export default class Shabad extends React.PureComponent {
                 nav={data.navigation}
               />
             </div>
+          </HotKeys>
+
           )
         }
       </PageLoader>
