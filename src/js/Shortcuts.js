@@ -54,35 +54,44 @@ const GlobalHandlers = {
   }
 }
 const ViewerShortcutHanders = {  
-  toggleLarivar: () => {
+  toggleLarivar: (e) => {
+    e.preventDefault();
     store.dispatch({type: "TOGGLE_LARIVAAR_OPTION"})},
-  toggleVishraams: () => {
+  toggleVishraams: (e) => {
+    e.preventDefault();
     store.dispatch({type: "TOGGLE_VISRAAMS"}) },
-    centerAlign: () => {
+    centerAlign: (e) => {
+    e.preventDefault();
       const state = store.getState();
     store.dispatch({type: "SET_CENTER_ALIGN_OPTION", payload:!state.centerAlignGurbani }) 
   },
-  toggleEngTranslation: () => {
+  toggleEngTranslation: (e) => {
+    e.preventDefault();
      const state = store.getState();
      store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('english', state.translationLanguages)})
   },
-  togglePunjabiTranslation: () => {
+  togglePunjabiTranslation: (e) => {
+    e.preventDefault();
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('punjabi', state.translationLanguages)})
   },
-  toggleSpanishTranslation: () => {
+  toggleSpanishTranslation: (e) => {
+    e.preventDefault();
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('spanish', state.translationLanguages)})
   },
-  toggleEngTranslit: () => {
+  toggleEngTranslit: (e) => {
+    e.preventDefault();
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('english', state.transliterationLanguages)})
   },
-  toggleShahTranslit: () => {
+  toggleShahTranslit: (e) => {
+    e.preventDefault();
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('shahmukhi', state.transliterationLanguages)})
   },
-  toggleHinTranslit: () => {
+  toggleHinTranslit: (e) => {
+    e.preventDefault();
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('hindi', state.transliterationLanguages)})
   }
