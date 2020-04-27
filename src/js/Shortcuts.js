@@ -37,55 +37,56 @@ const ViewerShortcuts = {
    toggleHinTranslit: {
     name: 'Toggle Hindi Transliteration',
     sequences: ['meta+alt+shift+h', 'ctrl+alt+shift+h']
-   }
+   },
 
 }
+const GlobalShortcuts = {
+  toggleSearchBar: {
+    name: 'activate search bar',
+    sequences: ['meta+/', 'ctrl+/']
+  }
+}
 
-const ShortcutHanders = {  
-  toggleLarivar: (e) => {
+const GlobalHandlers = {
+  toggleSearchBar: (e) => {
     e.preventDefault();
+    document.querySelector('#search').focus();
+  }
+}
+const ViewerShortcutHanders = {  
+  toggleLarivar: () => {
     store.dispatch({type: "TOGGLE_LARIVAAR_OPTION"})},
-  toggleVishraams: (e) => {
-    e.preventDefault();
+  toggleVishraams: () => {
     store.dispatch({type: "TOGGLE_VISRAAMS"}) },
-    centerAlign: (e) => {
-      e.preventDefault();
+    centerAlign: () => {
       const state = store.getState();
     store.dispatch({type: "SET_CENTER_ALIGN_OPTION", payload:!state.centerAlignGurbani }) 
   },
-
-  toggleEngTranslation: (e) => {
-     e.preventDefault();
+  toggleEngTranslation: () => {
      const state = store.getState();
      store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('english', state.translationLanguages)})
   },
-  togglePunjabiTranslation: (e) => {
-    e.preventDefault();
+  togglePunjabiTranslation: () => {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('punjabi', state.translationLanguages)})
   },
-  toggleSpanishTranslation: (e) => {
-    e.preventDefault();
+  toggleSpanishTranslation: () => {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('spanish', state.translationLanguages)})
   },
-  //transliterationLanguages
-  toggleEngTranslit: (e) => {
-    e.stopPropagation();
+  toggleEngTranslit: () => {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('english', state.transliterationLanguages)})
   },
-  toggleShahTranslit: (e) => {
-    e.stopPropagation();
+  toggleShahTranslit: () => {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('shahmukhi', state.transliterationLanguages)})
   },
-  toggleHinTranslit: (e) => {
-    e.stopPropagation();
+  toggleHinTranslit: () => {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('hindi', state.transliterationLanguages)})
   }
 }
 
 // export default Shortcuts;
-export {ShortcutHanders, ViewerShortcuts}
+export {ViewerShortcutHanders, ViewerShortcuts, GlobalHandlers, GlobalShortcuts}

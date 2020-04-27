@@ -7,17 +7,21 @@ import {
   saveToLocalStorage,
 } from './util';
 import { LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, TEXTS } from './constants';
+import { GlobalHotKeys } from 'react-hotkeys';
+import { GlobalHandlers, GlobalShortcuts } from './Shortcuts';
 
 export default class Root extends React.PureComponent {
   render() {
     return (
       <Router>
+        <GlobalHotKeys keyMap={GlobalShortcuts} handlers={GlobalHandlers}>
         <Switch>
           {routes.map((props, key) => (
             <Route key={key} {...props} />
           ))}
           <Route render={() => <NotFound />} />
         </Switch>
+        </GlobalHotKeys>
       </Router>
     );
   }
