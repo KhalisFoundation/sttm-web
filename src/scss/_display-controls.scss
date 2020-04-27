@@ -82,6 +82,65 @@
   }
 }
 
+.custom-fa {
+  background-color: $sttm-white;
+  border: 1px solid $sttm-light-grey;
+  border-radius: 4px;
+  color: $sttm-dark-grey;
+  display: inline-block;
+  line-height: 32px;
+  min-height: 32px;
+  padding: 4px;
+
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+    border-color: $sttm-light-black;
+    color: $sttm-white;
+  }
+
+  &.fontsize-icon {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+
+    &:hover {
+      color: $facebook-blue;
+    }
+  }
+
+  > svg {
+    vertical-align: middle;
+
+    .dark-mode & {
+      fill: $sttm-white;
+    }
+  }
+
+  &.gear-icon {
+    border: none;
+    border-radius: 0;
+    height: 100%;
+    line-height: 46px;
+  }
+
+  &.enabled {
+    background-color: $facebook-blue;
+    border-color: $facebook-blue;
+    color: $sttm-white;
+
+    > svg {
+      fill: $sttm-white;
+    }
+  }
+}
+
+.custom-fa-assist {
+  &::after {
+    color: $sttm-orange;
+    content: 'ਅ';
+  }
+}
+
 .controller-option {
   cursor: pointer;
   height: 100%;
@@ -214,60 +273,6 @@
     }
   }
 
-  &.icon-toggle {
-    .custom-fa {
-      background-color: $sttm-white;
-      border: 1px solid $sttm-light-grey;
-      border-radius: 4px;
-      color: $sttm-dark-grey;
-      display: inline-block;
-      line-height: 32px;
-      min-height: 32px;
-      padding: 4px;
-
-      .dark-mode & {
-        background-color: $sttm-lighter-black;
-        border-color: $sttm-light-black;
-        color: $sttm-white;
-      }
-
-      &.fontsize-icon {
-        background-color: transparent;
-        border: none;
-        font-size: 16px;
-
-        &:hover {
-          color: $facebook-blue;
-        }
-      }
-
-      > svg {
-        vertical-align: middle;
-
-        .dark-mode & {
-          fill: $sttm-white;
-        }
-      }
-
-      &.enabled {
-        background-color: $facebook-blue;
-        border-color: $facebook-blue;
-        color: $sttm-white;
-
-        > svg {
-          fill: $sttm-white;
-        }
-      }
-    }
-
-    .custom-fa-assist {
-      &::after {
-        color: $sttm-orange;
-        content: 'ਅ';
-      }
-    }
-  }
-
   .toggle-text {
     color: $sttm-orange;
     font-size: 14px;
@@ -302,6 +307,34 @@
       }
     }
   }
+
+  &.icon-text-toggle {
+    align-items: center;
+    background-color: $sttm-white;
+    border-radius: 8px;
+    color: $sttm-light-black;
+    display: flex;
+    justify-content: center;
+    line-height: 46px;
+    min-height: 42px;
+    overflow: hidden;
+
+    span {
+      padding: 0 6px;
+
+      &.enabled {
+        background-color: $facebook-blue;
+        border-color: $facebook-blue;
+        color: $sttm-white;
+      }
+    }
+
+    .dark-mode & {
+      background-color: $sttm-lighter-black;
+      border-color: $sttm-light-black;
+      color: $sttm-white;
+    }
+  }
 }
 
 .advanced-options {
@@ -327,7 +360,7 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 840px) {
   .quick-settings > .controller-option {
     &:nth-last-child(3),
     &:nth-last-child(4),
@@ -342,6 +375,7 @@
       &:nth-last-of-type(4),
       &:nth-last-of-type(5) {
         display: block;
+        order: -1;
 
         &.separator {
           display: none;
@@ -351,12 +385,13 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   .quick-settings > .controller-option {
     &:nth-last-child(6),
     &:nth-last-child(7),
     &:nth-last-child(8) {
       display: none;
+      order: -1;
     }
   }
 
@@ -366,6 +401,7 @@
       &:nth-last-of-type(7),
       &:nth-last-of-type(8) {
         display: block;
+        order: -1;
 
         &.separator {
           display: none;
@@ -375,7 +411,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 540px) {
   .quick-settings > .controller-option {
     &:nth-last-child(9) {
       display: none;
@@ -394,8 +430,34 @@
     }
 
     .dropdown {
-      margin: auto;
       width: 80%;
+    }
+  }
+
+  .icon-text-toggle {
+    .custom-fa {
+      padding: 0 5px;
+    }
+
+    .icon-label {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .quick-settings > .controller-option {
+    &:nth-last-child(2) {
+      display: none;
+    }
+  }
+
+  .advanced-options {
+    .qs-option {
+      &:nth-last-of-type(2) {
+        display: block;
+        line-height: 64px;
+      }
     }
   }
 }

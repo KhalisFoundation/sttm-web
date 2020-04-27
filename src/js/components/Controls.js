@@ -9,8 +9,7 @@ import {
   setTransliterationLanguages,
   resetDisplayOptions,
   resetFontOptions,
-  toggleDisplayOptions,
-  toggleFontOptions,
+  toggleAdvancedOptions,
   toggleLarivaarAssistOption,
   toggleLarivaarOption,
   toggleTranslationOptions,
@@ -52,7 +51,7 @@ class Controls extends React.PureComponent {
       }
 
       const currentScroll = this.$wrapper.offsetTop;
-      const { showDisplayOptions, showFontOptions } = this.props;
+      const { showAdvancedOptions } = this.props;
       this.setState(prevState => {
         const { showControls, lastScrollPos } = prevState;
 
@@ -67,8 +66,7 @@ class Controls extends React.PureComponent {
         return {
           lastScrollPos: currentScroll,
           showControls: showControls &&
-            !showDisplayOptions &&
-            !showFontOptions ?
+            !showAdvancedOptions ?
             false :
             showControls
         };
@@ -91,14 +89,16 @@ class Controls extends React.PureComponent {
       'hide-controls': !showControls,
     });
     return (
-      <div
-        id="controls-wrapper"
-        className={classNames}
-        ref={this.setRef}
-      >
-        {/* <ShareButtons {...this.props} /> */}
-        <ShabadControls {...this.props} />
-      </div>
+      <>
+        <ShareButtons {...this.props} />
+        <div
+          id="controls-wrapper"
+          className={classNames}
+          ref={this.setRef}
+        >
+          <ShabadControls {...this.props} />
+        </div>
+      </>
     );
   }
 }
@@ -112,8 +112,7 @@ const dispatchToProps = {
   setTransliterationLanguages,
   resetDisplayOptions,
   resetFontOptions,
-  toggleDisplayOptions,
-  toggleFontOptions,
+  toggleAdvancedOptions,
   toggleLarivaarAssistOption,
   toggleLarivaarOption,
   toggleTranslationOptions,

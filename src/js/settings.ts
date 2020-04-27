@@ -16,6 +16,7 @@ import {
   AlignCenterIcon,
   AlignLeftIcon,
   SplitViewIcon,
+  GearsIcon,
 } from '@/components/Icons/CustomIcons';
 
 export interface SETTING_ACTIONS {
@@ -33,6 +34,7 @@ export interface SETTING_ACTIONS {
   setVisraamSource: Function,
   setVisraamStyle: Function,
   changeFont: Function,
+  toggleAdvancedOptions: Function,
 
   translationLanguages: Array<string>,
   transliterationLanguages: Array<string>,
@@ -46,6 +48,7 @@ export interface SETTING_ACTIONS {
   splitView: Boolean,
   darkMode: Boolean,
   fontFamily: String,
+  showAdvancedOptions: Boolean,
 }
 
 export const QUICK_SETTINGS = ({
@@ -59,6 +62,7 @@ export const QUICK_SETTINGS = ({
   setFontSize,
   toggleCenterAlignOption,
   toggleSplitViewOption,
+  toggleAdvancedOptions,
 
   translationLanguages,
   transliterationLanguages,
@@ -68,7 +72,8 @@ export const QUICK_SETTINGS = ({
   fontSize,
   centerAlignGurbani,
   splitView,
-}: SETTING_ACTIONS, toggleAdvancedOptions: Function) => [
+  showAdvancedOptions,
+}: SETTING_ACTIONS) => [
     {
       type: 'multiselect_checkbox',
       collections: [{
@@ -192,11 +197,15 @@ export const QUICK_SETTINGS = ({
       action: () => {
         resetDisplayOptions();
         resetFontOptions();
+        larivaarAssist && toggleLarivaarAssistOption();
+        larivaar && toggleLarivaarOption();
       },
     },
     {
-      type: 'text-option',
+      type: 'icon-text-toggle',
+      icon: GearsIcon,
       label: 'Advanced',
+      value: showAdvancedOptions,
       action: toggleAdvancedOptions,
     },
   ]

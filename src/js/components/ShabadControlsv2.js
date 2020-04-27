@@ -22,6 +22,7 @@ export default class ShabadControls extends React.PureComponent {
     setVisraamSource: PropTypes.func.isRequired,
     setVisraamStyle: PropTypes.func.isRequired,
     changeFont: PropTypes.func.isRequired,
+    toggleAdvancedOptions: PropTypes.func.isRequired,
 
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -35,18 +36,11 @@ export default class ShabadControls extends React.PureComponent {
     splitView: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
     fontFamily: PropTypes.string.isRequired,
+    showAdvancedOptions: PropTypes.bool.isRequired,
   };
 
-  state = {
-    showAdvancedOptions: false,
-  }
-
-  toggleAdvancedOptions = () => {
-    this.setState({ showAdvancedOptions: !this.state.showAdvancedOptions });
-  }
-
   bake_settings = settingsObj => {
-    let iconsMarkup, options;
+    let iconsMarkup, options, Icon;
     switch (settingsObj.type) {
       case 'multiselect_checkbox':
         return (
@@ -101,6 +95,14 @@ export default class ShabadControls extends React.PureComponent {
             }}> {options} </select>
           </>
         )
+      case 'icon-text-toggle':
+        Icon = settingsObj.icon;
+        return (
+          <>
+            <Icon value={settingsObj.value} onClick={settingsObj.action} />
+            <span onClick={settingsObj.action} className={`icon-label ${settingsObj.value ? 'enabled' : ''}`}>{settingsObj.label}</span>
+          </>
+        )
     }
   }
 
@@ -114,7 +116,7 @@ export default class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    const settings = QUICK_SETTINGS(this.props, this.toggleAdvancedOptions);
+    const settings = QUICK_SETTINGS(this.props);
     const advanced = ADVANCED_SETTINGS(this.props);
 
     const quickSettingsPanel = (
@@ -133,7 +135,7 @@ export default class ShabadControls extends React.PureComponent {
           <div className="quick-settings">
             {quickSettingsPanel}
           </div>
-          {this.state.showAdvancedOptions && (
+          {this.props.showAdvancedOptions && (
             <div className="advanced-options">
               {advanced.map((element, i) => (
                 <div key={`settings-${i}`} className={`controller-option ${element.type}`}>

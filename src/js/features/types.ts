@@ -1,7 +1,6 @@
 export interface IStore {
   online: boolean;
-  showDisplayOptions: boolean;
-  showFontOptions: boolean;
+  showAdvancedOptions: boolean;
   showTransliterationOptions: boolean;
   showTranslationOptions: boolean;
   translationLanguages: ['english', 'punjabi', 'spanish'];
