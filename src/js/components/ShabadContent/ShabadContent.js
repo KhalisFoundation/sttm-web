@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {HotKeys} from 'react-hotkeys';
+import {GlobalHotKeys} from 'react-hotkeys';
 
 import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
 import { showToast, copyToClipboard } from '@/util';
@@ -85,7 +85,6 @@ class Shabad extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.containerRef = React.createRef();
   }
   render() {
     const {
@@ -116,7 +115,7 @@ class Shabad extends React.PureComponent {
     }
 
     return (
-      <HotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root innerRef={this.containerRef}>
+      <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
 
       <React.Fragment >
         
@@ -170,7 +169,7 @@ class Shabad extends React.PureComponent {
         </div>
         <ProgressBar percent={this.state.progress} />
       </React.Fragment>
-      </HotKeys>
+      </GlobalHotKeys>
     );
   }
 
@@ -186,7 +185,6 @@ class Shabad extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.containerRef.current.focus();
     addEventListener('scroll', this.scrollListener, { passive: true });
     this.scrollListener();
   }

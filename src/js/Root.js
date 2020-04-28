@@ -18,7 +18,7 @@ export default class Root extends React.PureComponent {
       // logLevel: 'debug', use this when hotkeys break
       defaultKeyEvent: 'keydown',
       defaultComponent: 'div',
-      ignoreTags: [],
+      ignoreTags: ['input'],
       defaultTabIndex: -1
     })
   }
