@@ -7,10 +7,17 @@ import {
   saveToLocalStorage,
 } from './util';
 import { LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, TEXTS } from './constants';
-import { GlobalHotKeys } from 'react-hotkeys';
+import { GlobalHotKeys, configure } from 'react-hotkeys';
 import { GlobalHandlers, GlobalShortcuts } from './Shortcuts';
 
 export default class Root extends React.PureComponent {
+  constructor() {
+    super();
+
+    configure({
+      logLevel: 'debug',
+    })
+  }
   render() {
     return (
       <Router>

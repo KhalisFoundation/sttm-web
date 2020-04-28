@@ -16,15 +16,15 @@ const ViewerShortcuts = {
    },
    toggleEngTranslation: {
      name: 'Toggle English Translation',
-     sequences: ['meta+alt+e', 'ctrl+alt+e'],
+     sequences: ['shift+e'], // alt + e = Dead, accoring to hotkeys handler
    },
    togglePunjabiTranslation: {
      name: 'Toggle Punjabi Translation',
-     sequences: ['meta+alt+t', 'ctrl+alt+t']
+     sequences: ['shift+t']
    },
    toggleSpanishTranslation: {
     name: 'Toggle Spanish Translation',
-    sequences: ['meta+alt+s', 'ctrl+alt+s'],
+    sequences: ['shift+s'],
    },
    toggleEngTranslit: {
      name: 'Toggle English Transliteration',
@@ -80,18 +80,15 @@ const ViewerShortcutHanders = {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('spanish', state.translationLanguages)})
   },
-  toggleEngTranslit: (e) => {
-    e.preventDefault();
+  toggleEngTranslit: () => {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('english', state.transliterationLanguages)})
   },
-  toggleShahTranslit: (e) => {
-    e.preventDefault();
+  toggleShahTranslit: () => {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('shahmukhi', state.transliterationLanguages)})
   },
-  toggleHinTranslit: (e) => {
-    e.preventDefault();
+  toggleHinTranslit: () => {
     const state = store.getState();
     store.dispatch({type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('hindi', state.transliterationLanguages)})
   }
