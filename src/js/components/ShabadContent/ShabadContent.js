@@ -83,6 +83,10 @@ class Shabad extends React.PureComponent {
     showFullScreen: PropTypes.bool,
   };
 
+  constructor(props) {
+    super(props);
+    this.containerRef = React.createRef();
+  }
   render() {
     const {
       props: {
@@ -112,9 +116,9 @@ class Shabad extends React.PureComponent {
     }
 
     return (
-      <HotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root>
+      <HotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root innerRef={this.containerRef}>
 
-      <React.Fragment>
+      <React.Fragment >
         
         {this.props.hideControls === false && (
           <Controls
@@ -182,6 +186,7 @@ class Shabad extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.containerRef.current.focus();
     addEventListener('scroll', this.scrollListener, { passive: true });
     this.scrollListener();
   }
