@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {GlobalHotKeys} from 'react-hotkeys';
+import {HotKeys} from 'react-hotkeys';
 
 import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
 import { showToast, copyToClipboard } from '@/util';
@@ -112,7 +112,7 @@ class Shabad extends React.PureComponent {
     }
 
     return (
-      <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root>
+      <HotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root>
 
       <React.Fragment>
         
@@ -166,7 +166,7 @@ class Shabad extends React.PureComponent {
         </div>
         <ProgressBar percent={this.state.progress} />
       </React.Fragment>
-      </GlobalHotKeys>
+      </HotKeys>
     );
   }
 

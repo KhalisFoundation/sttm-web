@@ -1,3 +1,7 @@
+div[tabindex="-1"]:focus { // remove focus outline from the HotKeys containder div
+  outline: 0;
+}
+
 blockquote {
   border: none;
   margin: 0 0 0.1rem;
