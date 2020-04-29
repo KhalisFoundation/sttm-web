@@ -101,10 +101,12 @@
   &.fontsize-icon {
     background-color: transparent;
     border: none;
-    font-size: 16px;
+    font-size: 24px;
+    height: 44px;
 
-    &:hover {
-      color: $facebook-blue;
+    &:active {
+      background-color: $sttm-lighter-grey;
+      color: $sttm-blue;
     }
   }
 
@@ -124,8 +126,8 @@
   }
 
   &.enabled {
-    background-color: $facebook-blue;
-    border-color: $facebook-blue;
+    background-color: $sttm-blue;
+    border-color: $sttm-blue;
     color: $sttm-white;
 
     > svg {
@@ -146,6 +148,11 @@
   height: 100%;
   margin-right: 10px;
   min-height: 42px;
+  transition: 0.2s all ease;
+
+  span {
+    transition: 0.2s all ease;
+  }
 
   &.separator {
     background-color: $sttm-grey;
@@ -156,6 +163,7 @@
     background-color: $sttm-white;
     border: 1px solid $sttm-light-grey;
     border-radius: 8px;
+    height: 42px;
     position: relative;
 
     .dark-mode & {
@@ -289,8 +297,18 @@
   }
 
   &.text-option {
+    border-radius: 8px;
     color: $sttm-orange;
-    line-height: 46px;
+    line-height: 42px;
+    padding: 0 6px;
+
+    &:active {
+      background-color: $sttm-lighter-grey;
+
+      .dark-mode & {
+        background-color: $sttm-lighter-black;
+      }
+    }
   }
 
   &.dropdown {
@@ -310,29 +328,28 @@
 
   &.icon-text-toggle {
     align-items: center;
-    background-color: $sttm-white;
     border-radius: 8px;
-    color: $sttm-light-black;
+    color: $sttm-orange;
     display: flex;
     justify-content: center;
-    line-height: 46px;
+    line-height: 42px;
     min-height: 42px;
     overflow: hidden;
 
     span {
       padding: 0 6px;
 
-      &.enabled {
-        background-color: $facebook-blue;
-        border-color: $facebook-blue;
-        color: $sttm-white;
+      &.custom-fa {
+        display: none;
       }
-    }
 
-    .dark-mode & {
-      background-color: $sttm-lighter-black;
-      border-color: $sttm-light-black;
-      color: $sttm-white;
+      &.icon-label:active {
+        background-color: $sttm-lighter-grey;
+
+        .dark-mode & {
+          background-color: $sttm-lighter-black;
+        }
+      }
     }
   }
 }
@@ -360,7 +377,7 @@
   }
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 900px) {
   .quick-settings > .controller-option {
     &:nth-last-child(3),
     &:nth-last-child(4),
@@ -385,7 +402,7 @@
   }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 710px) {
   .quick-settings > .controller-option {
     &:nth-last-child(6),
     &:nth-last-child(7),
@@ -411,7 +428,7 @@
   }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 560px) {
   .quick-settings > .controller-option {
     &:nth-last-child(9) {
       display: none;
@@ -422,6 +439,7 @@
     .qs-option {
       &:nth-last-of-type(9) {
         display: block;
+        order: -1;
 
         &.separator {
           display: none;
@@ -433,21 +451,12 @@
       width: 80%;
     }
   }
-
-  .icon-text-toggle {
-    .custom-fa {
-      padding: 0 5px;
-    }
-
-    .icon-label {
-      display: none;
-    }
-  }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
   .quick-settings > .controller-option {
-    &:nth-last-child(2) {
+    &:nth-last-child(2),
+    &:nth-last-child(10) {
       display: none;
     }
   }
@@ -457,7 +466,19 @@
       &:nth-last-of-type(2) {
         display: block;
         line-height: 64px;
+        order: -1;
       }
+    }
+  }
+
+  .controller-option.icon-text-toggle {
+    span.custom-fa {
+      display: block;
+      padding: 0 5px;
+    }
+
+    .icon-label {
+      display: none;
     }
   }
 }

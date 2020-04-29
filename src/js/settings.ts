@@ -63,6 +63,7 @@ export const QUICK_SETTINGS = ({
   toggleCenterAlignOption,
   toggleSplitViewOption,
   toggleAdvancedOptions,
+  toggleDarkMode,
 
   translationLanguages,
   transliterationLanguages,
@@ -73,9 +74,11 @@ export const QUICK_SETTINGS = ({
   centerAlignGurbani,
   splitView,
   showAdvancedOptions,
+  darkMode,
 }: SETTING_ACTIONS) => [
     {
       type: 'multiselect_checkbox',
+      label: 'Display',
       collections: [{
         label: 'Transliteration',
         options: TRANSLITERATION_LANGUAGES,
@@ -154,7 +157,6 @@ export const QUICK_SETTINGS = ({
         },
       ],
     },
-    { type: 'separator' },
     {
       type: 'icon-toggle',
       label: 'Larivaar',
@@ -184,6 +186,13 @@ export const QUICK_SETTINGS = ({
         }
       ],
     },
+    { type: 'separator' },
+    {
+      type: 'toggle-option',
+      label: 'Dark Mode',
+      checked: darkMode,
+      action: toggleDarkMode,
+    },
     {
       type: 'toggle-option',
       label: 'Vishraams',
@@ -211,14 +220,12 @@ export const QUICK_SETTINGS = ({
   ]
 
 export const ADVANCED_SETTINGS = ({
-  toggleDarkMode,
   setVisraamSource,
   setVisraamStyle,
   changeFont,
 
   visraamSource,
   visraamStyle,
-  darkMode,
   fontFamily,
 }: SETTING_ACTIONS) => [
     {
@@ -241,11 +248,5 @@ export const ADVANCED_SETTINGS = ({
       value: fontFamily,
       action: changeFont,
       options: FONT_OPTIONS,
-    },
-    {
-      type: 'toggle-option',
-      label: 'Dark Mode',
-      checked: darkMode,
-      action: toggleDarkMode,
     },
   ]

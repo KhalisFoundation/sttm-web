@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DownArrowIcon } from '@/components/Icons/CustomIcons';
 
 export class MultiSelect extends React.PureComponent {
   static propTypes = {
     collections: PropTypes.array.isRequired,
+    dropdownLabel: PropTypes.string.isRequired,
   };
 
   render() {
-    const { collections } = this.props;
+    const { collections, dropdownLabel } = this.props;
 
     const collectionsMarkup = collections.map(c => {
       const { options, action, label, checked } = c;
@@ -36,7 +38,7 @@ export class MultiSelect extends React.PureComponent {
         <span className="" onClick={(e) => {
           e.currentTarget.nextSibling.classList.toggle('collapsed');
           e.currentTarget.nextSibling.classList.toggle('expanded');
-        }}>Display Options <img src="/assets/images/down-arrow.svg" width="12px" /></span>
+        }}>{dropdownLabel} <DownArrowIcon /> </span>
 
         <div className='collapsed list-wrapper'>
           {collectionsMarkup}

@@ -18,7 +18,7 @@ FontPlus.propTypes = props;
 export const CurrentFont = props => (
   <select
     className={`custom-fa ${props.className}`}
-    style={{ 'width': 'inherit', 'marginBottom': '0' }}
+    style={{ 'width': 'inherit', 'height': '42px', 'marginBottom': '0' }}
     onChange={(e) => {
       const updatedSize = e.currentTarget.value;
       props.onClick(updatedSize)
@@ -83,7 +83,7 @@ export const SplitViewIcon = props => (
   <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>
     <svg version="1.1" id="Capa_1"
     viewBox="0 0 512 512" enableBackground="new 0 0 512 512;" width="25" height="25"
-    style={{'transform': 'rotate(90deg)'}}>
+    style={{'transform': 'rotate(90deg)', 'padding': '2px'}}>
     <g><g>
       <path d="M506.24,243.712l-96-80c-4.768-3.968-11.424-4.8-17.024-2.176C387.584,164.128,384,169.792,384,176v64h-64V16
 			c0-8.832-7.168-16-16-16c-8.832,0-16,7.168-16,16v480c0,8.832,7.168,16,16,16c8.832,0,16-7.168,16-16V272h64v64
@@ -117,3 +117,11 @@ GearsIcon.propTypes =  {
   ...props,
   value: PropTypes.bool,
 };
+
+export const DownArrowIcon = () => (
+  <span className={`downarrow-key`}>
+    <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='10' height='10' viewBox='0 0 32 24'>
+      <polygon points='0,0 32,0 16,24' style={{ 'fill': '#797979' }}></polygon>
+    </svg>
+  </span>
+)

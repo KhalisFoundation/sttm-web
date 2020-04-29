@@ -46,6 +46,7 @@ export default class ShabadControls extends React.PureComponent {
         return (
           <MultiSelect
             collections={settingsObj.collections}
+            dropdownLabel={settingsObj.label}
           />
         )
       case 'text-option':
