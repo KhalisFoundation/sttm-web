@@ -11,6 +11,7 @@ export default class ControllerShabad extends React.PureComponent {
       namespaceString: '',
       error: null,
       highlightId: null,
+      homeId: null,
     }
   }
 
@@ -36,7 +37,7 @@ export default class ControllerShabad extends React.PureComponent {
 
   componentDidMount() {
     const { socket, highlight } = this.props;
-    this.setState({ highlightId: highlight });
+    this.setState({ highlightId: highlight, homeId: highlight });
     socket.on('data', data => this.setState({ highlightId: data.highlight }));
   }
 
@@ -49,6 +50,7 @@ export default class ControllerShabad extends React.PureComponent {
             type="shabad"
             gurbani={data.verses}
             highlight={this.state.highlightId}
+            homeId={this.state.homeId}
             splitView={false}
             unicode={false}
             larivaar={false}
