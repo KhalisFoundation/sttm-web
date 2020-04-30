@@ -71,7 +71,7 @@ export default class Home extends React.PureComponent {
                   >
                     <div className="flex justify-center align-center">
                       <div>
-                        <Logo className="logo-long" doodle={DOODLE} showDoodle={showDoodle} />
+                        <Logo className="logo-long" doodle={DOODLE} />
                       </div>
                     </div>
 
