@@ -24,7 +24,7 @@ export const translationMap = {
 };
 
 export const transliterationMap = {
-  english: shabad => {  return shabad.transliteration.en; },
+  english: shabad => shabad.transliteration.en,
   hindi: shabad => shabad.transliteration.hi,
   shahmukhi: shabad => shabad.transliteration.ur,
   IPA: shabad => shabad.transliteration.ipa,
