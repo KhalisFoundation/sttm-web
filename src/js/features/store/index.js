@@ -39,8 +39,7 @@ import thunk from 'redux-thunk';
 
 const initialState = {
   online: window !== undefined ? window.navigator.onLine : true,
-  showDisplayOptions: false,
-  showFontOptions: false,
+  showAdvancedOptions: false,
   showTransliterationOptions: false,
   showTranslationOptions: false,
   translationLanguages: getArrayFromLocalStorage(

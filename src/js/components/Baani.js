@@ -36,7 +36,6 @@ export default class Baani extends React.PureComponent {
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
-    onPanktiClick: PropTypes.func,
   };
 
   getShareLine = shabad => {
@@ -148,7 +147,6 @@ export default class Baani extends React.PureComponent {
       highlight,
       centerAlignGurbani,
       showFullScreen,
-      onPanktiClick,
     } = this.props;
 
     const disabledActions = ['ang', 'hukamnama'].includes(type)
@@ -164,7 +162,6 @@ export default class Baani extends React.PureComponent {
         larivaarAssist={larivaarAssist}
         fontSize={fontSize}
         fontFamily={fontFamily}
-        onPanktiClick={onPanktiClick}
         visraam={shabad.visraam}
       />
     );
@@ -211,9 +208,7 @@ export default class Baani extends React.PureComponent {
                 ? (this.$highlightedBaaniLine = node)
                 : null
             }
-            onClick={() => onPanktiClick(getVerseId(shabad))}
           >
-            {console.log(shabad)}
             {getBaniLine(shabad)}
             {getTransliterations(shabad)}
             {getTranslations(shabad)}

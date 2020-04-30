@@ -1,6 +1,5 @@
 import {
-  TOGGLE_DISPLAY_OPTIONS,
-  TOGGLE_FONT_OPTIONS,
+  TOGGLE_ADVANCED_OPTIONS,
   TOGGLE_TRANSLATION_OPTIONS,
   TOGGLE_TRANSLITERATION_OPTIONS,
   TOGGLE_LARIVAAR_ASSIST_OPTION,
@@ -70,26 +69,15 @@ export default function reducer(state, action) {
         showTranslationOptions,
       };
     }
-    case TOGGLE_DISPLAY_OPTIONS: {
-      const showDisplayOptions = !state.showDisplayOptions;
+    case TOGGLE_ADVANCED_OPTIONS: {
+      const showAdvancedOptions = !state.showAdvancedOptions;
       clickEvent({
-        action: TOGGLE_DISPLAY_OPTIONS,
-        label: showDisplayOptions ? 1 : 0,
+        action: TOGGLE_ADVANCED_OPTIONS,
+        label: showAdvancedOptions ? 1 : 0,
       });
       return {
         ...state,
-        showDisplayOptions,
-      };
-    }
-    case TOGGLE_FONT_OPTIONS: {
-      const showFontOptions = !state.showFontOptions;
-      clickEvent({
-        action: TOGGLE_FONT_OPTIONS,
-        label: showFontOptions ? 1 : 0,
-      });
-      return {
-        ...state,
-        showFontOptions,
+        showAdvancedOptions,
       };
     }
     case TOGGLE_DARK_MODE: {

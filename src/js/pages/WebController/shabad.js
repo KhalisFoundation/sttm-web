@@ -28,7 +28,7 @@ export default class ControllerShabad extends React.PureComponent {
       host: "sttm-web",
       type: this.props.resultType,
       pin: this.props.controllerPin,
-      ceremonyId : isItCeremony ? isItCeremony.ceremonyID : null,
+      ceremonyId: isItCeremony ? isItCeremony.ceremonyID : null,
       shabadId,
       verseId,
     });
@@ -41,7 +41,7 @@ export default class ControllerShabad extends React.PureComponent {
   }
 
   render() {
-    const { data, highlight } = this.props;
+    const { data } = this.props;
     return (
       <div id="shabad" className="controller-shabad shabad display">
         <div className="shabad-container">
