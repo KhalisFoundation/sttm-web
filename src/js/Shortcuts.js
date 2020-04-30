@@ -28,15 +28,15 @@ const ViewerShortcuts = {
    },
    toggleEngTranslit: {
      name: 'Toggle English Transliteration',
-     sequences: ['meta+alt+shift+e', 'ctrl+alt+shift+e']
+     sequences: ['alt+shift+´']
    },
    toggleShahTranslit: {
     name: 'Toggle Shahmukhi Transliteration',
-    sequences: ['meta+alt+shift+s', 'ctrl+alt+shift+t+s']
+    sequences: ['alt+shift+Í']
    },
    toggleHinTranslit: {
     name: 'Toggle Hindi Transliteration',
-    sequences: ['meta+alt+shift+h', 'ctrl+alt+shift+h']
+    sequences: ['alt+shift+Ó']
    },
 
 }
