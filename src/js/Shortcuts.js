@@ -16,27 +16,27 @@ const ViewerShortcuts = {
    },
    toggleEngTranslation: {
      name: 'Toggle English Translation',
-     sequences: ['shift+e'], // alt + e = Dead, accoring to hotkeys handler
+     sequences: ['e'], // alt + e = Dead, accoring to hotkeys handler
    },
    togglePunjabiTranslation: {
      name: 'Toggle Punjabi Translation',
-     sequences: ['shift+t']
+     sequences: ['t']
    },
    toggleSpanishTranslation: {
     name: 'Toggle Spanish Translation',
-    sequences: ['shift+s'],
+    sequences: ['s'],
    },
    toggleEngTranslit: {
      name: 'Toggle English Transliteration',
-     sequences: ['alt+shift+´']
+     sequences: ['shift+e']
    },
    toggleShahTranslit: {
     name: 'Toggle Shahmukhi Transliteration',
-    sequences: ['alt+shift+Í']
+    sequences: ['shift+s']
    },
    toggleHinTranslit: {
     name: 'Toggle Hindi Transliteration',
-    sequences: ['alt+shift+Ó']
+    sequences: ['shift+h']
    },
 
 }
