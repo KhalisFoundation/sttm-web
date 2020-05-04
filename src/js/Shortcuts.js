@@ -2,10 +2,14 @@ import store from './features/store'
 import { toggleItemInArray } from './util'
 
 const ViewerShortcuts = { 
-    toggleLarivar: {
+  toggleLarivar: {
       name: 'Toggle Larivar',
       sequences: ['l']
-    },
+  },
+  toggleLarivarAssist: {
+    name: "Toggle Larivar Assist",
+     sequences: ['shift+l']
+   },
    toggleVishraams: {
      name: 'Toggle Vishraams',
      sequences: ['v'],
@@ -54,14 +58,15 @@ const GlobalHandlers = {
   }
 }
 const ViewerShortcutHanders = {  
-  toggleLarivar: (e) => {
-    e.preventDefault();
+  toggleLarivar: () => {
     store.dispatch({type: "TOGGLE_LARIVAAR_OPTION"})},
-  toggleVishraams: (e) => {
-    e.preventDefault();
+    toggleLarivarAssist: () => {
+      const state = store.getState();
+      store.dispatch({type: 'TOGGLE_LARIVAAR_ASSIST_OPTION', payload:!state.larivaarAssist})
+    },
+  toggleVishraams: () => {
     store.dispatch({type: "TOGGLE_VISRAAMS"}) },
-    centerAlign: (e) => {
-    e.preventDefault();
+    centerAlign: () => {
       const state = store.getState();
     store.dispatch({type: "SET_CENTER_ALIGN_OPTION", payload:!state.centerAlignGurbani }) 
   },
