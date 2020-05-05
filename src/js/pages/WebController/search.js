@@ -140,7 +140,8 @@ export default class ControllerSearch extends React.PureComponent {
               <ControllerShabad data={data}
                 socket={this.props.socket}
                 highlight={this.state.verseId}
-                controllerPin={this.props.controllerPin} />
+                controllerPin={this.props.controllerPin}
+                resultType='shabad' />
             )
           }
         }}
@@ -148,12 +149,3 @@ export default class ControllerSearch extends React.PureComponent {
     );
   }
 }
-/**
- * 1. SlideControls (silde-controls.js) - send function showCeremony as a prop from index.js (where this component is called) :DONE"
- * 2. slide-controls.js - click on anand sahib - call showCeremony(ceremonyID) :DONE:
- * 3. index.js - new state variable - ceremonyData = false and add API url from global variables in index.js :DONE:
- * 4. in showCeremony() in index.js
- * 4.1 : Fetch data from API URL (API syntax)
- * 4.2 : set the ceremonyData state as result from API
- * 5. In render function of index.js use state as conditionally render ControllerShabad component, send data, highlight, socket, controllerPin as prop. 
- */

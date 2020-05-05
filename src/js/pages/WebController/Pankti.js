@@ -28,6 +28,7 @@ export default class Pankti extends React.PureComponent {
     fontFamily: PropTypes.string.isRequired,
     larivaar: PropTypes.bool.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
+    homeId: PropTypes.number,
   };
 
   _scrollToHiglight = () => {
@@ -69,6 +70,7 @@ export default class Pankti extends React.PureComponent {
       larivaarAssist,
       fontSize,
       fontFamily,
+      homeId,
     } = this.props;
 
     const getBaniLine = shabad => (
@@ -90,14 +92,14 @@ export default class Pankti extends React.PureComponent {
         id={`line-${getVerseId(shabad)}`}
         className={`line ${highlight === parseInt(getVerseId(shabad), 10) ? 'visited active-slide' : ''}`}
         ref={node =>
-          highlight === parseInt(getVerseId(shabad), 10)
+          homeId === parseInt(getVerseId(shabad), 10)
             ? (this.$highlightedBaaniLine = node)
             : null
         }
         onClick={e => this.clickedPankti(e, getVerseId(shabad), getShabadId(shabad))}
       >
         {getBaniLine(shabad)}
-        {highlight === parseInt(getVerseId(shabad), 10) && (<HomeIcon />)}
+        {homeId === parseInt(getVerseId(shabad), 10) && (<HomeIcon />)}
       </div>
     ));
 
