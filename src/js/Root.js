@@ -7,17 +7,32 @@ import {
   saveToLocalStorage,
 } from './util';
 import { LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, TEXTS } from './constants';
+import { GlobalHotKeys, configure } from 'react-hotkeys';
+import { GlobalHandlers, GlobalShortcuts } from './Shortcuts';
 
 export default class Root extends React.PureComponent {
+  constructor() {
+    super();
+
+    configure({
+      // logLevel: 'debug', use this when hotkeys break
+      defaultKeyEvent: 'keydown',
+      defaultComponent: 'div',
+      ignoreTags: ['input'],
+      defaultTabIndex: -1
+    })
+  }
   render() {
     return (
       <Router>
+        <GlobalHotKeys keyMap={GlobalShortcuts} handlers={GlobalHandlers}>
         <Switch>
           {routes.map((props, key) => (
             <Route key={key} {...props} />
           ))}
           <Route render={() => <NotFound />} />
         </Switch>
+        </GlobalHotKeys>
       </Router>
     );
   }
