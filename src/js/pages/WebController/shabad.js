@@ -9,15 +9,14 @@ export default class ControllerShabad extends React.PureComponent {
     this.state = {
       connected: false,
       namespaceString: '',
-      error: null,
-      highlightId: null,
-      homeId: null,
+      error: null
     }
   }
 
   static propTypes = {
     data: PropTypes.object,
     highlight: PropTypes.number,
+    homeId: PropTypes.number,
     socket: PropTypes.object,
     controllerPin: PropTypes.number,
     resultType: PropTypes.string,
@@ -35,22 +34,16 @@ export default class ControllerShabad extends React.PureComponent {
     });
   }
 
-  componentDidMount() {
-    const { socket, highlight } = this.props;
-    this.setState({ highlightId: highlight, homeId: highlight });
-    socket.on('data', data => this.setState({ highlightId: data.highlight }));
-  }
-
   render() {
-    const { data } = this.props;
+    const { socket, data, homeId, highlight } = this.props;
     return (
       <div id="shabad" className="controller-shabad shabad display">
         <div className="shabad-container">
           <Pankti
             type="shabad"
             gurbani={data.verses}
-            highlight={this.state.highlightId}
-            homeId={this.state.homeId}
+            highlight={highlight}
+            homeId={homeId}
             splitView={false}
             unicode={false}
             larivaar={false}
@@ -61,6 +54,7 @@ export default class ControllerShabad extends React.PureComponent {
             transliterationLanguages={[]}
             centerAlignGurbani={true}
             onPanktiClick={this.handlePanktiClick}
+            socket={socket}
           />
         </div>
       </div>
