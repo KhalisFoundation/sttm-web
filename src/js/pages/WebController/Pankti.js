@@ -60,10 +60,6 @@ export default class Pankti extends React.PureComponent {
     });
   }
 
-  componentWillUnmount() {
-    this.props.socket.disconnect();
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if (this.props.highlight !== prevProps.highlight ||
       this.state.highlightId !== prevState.highlightId) {

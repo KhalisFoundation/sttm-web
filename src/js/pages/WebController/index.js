@@ -95,7 +95,6 @@ export default class WebControllerPage extends React.PureComponent {
             );
 
             this._socket.on('data', data => {
-              console.log(data);
               if (data['type'] === 'response-control') {
                 data['success'] ?
                   this.setState({
