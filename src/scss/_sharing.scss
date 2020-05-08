@@ -5,6 +5,10 @@
   border-radius: 2px;
   margin: -27px 2rem 0 auto;
 
+  .fullscreen-view & {
+    display: none;
+  }
+
   a {
     background-color: transparent !important;
     color: $sttm-blue;
@@ -14,7 +18,7 @@
     }
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 730px) {
     margin: 0 1rem 0 1rem;
 
     .share-buttons {
