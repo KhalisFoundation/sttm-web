@@ -19,6 +19,7 @@
     "test:lint:js:eslint": "eslint server/ common/",
     "test:lint:js:ignore:tslint": "tslint --project . -t stylish",
     "test:unit": "NODE_ENV=test jest --no-cache --config jest/config.js",
+    "updatetest": "NODE_ENV=test jest --no-cache --config jest/config.js --updateSnapshot",
     "webpack-stats": "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
     "build": "run-p build:*",
     "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss public/assets/css/bundle.css",
