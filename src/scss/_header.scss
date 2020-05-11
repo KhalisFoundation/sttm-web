@@ -86,6 +86,7 @@
 
   &.submenu {
     position: relative;
+    z-index: 10;
 
     p {
       display: inline-block;
