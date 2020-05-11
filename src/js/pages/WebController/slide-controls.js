@@ -14,6 +14,7 @@ export default class SlideControls extends React.PureComponent {
     socket: PropTypes.object,
     specialHandler: PropTypes.func,
     controllerPin: PropTypes.number,
+    default: PropTypes.any,
   };
 
   sendSlide = e => {
@@ -61,6 +62,13 @@ export default class SlideControls extends React.PureComponent {
   componentDidMount() {
     this.mounted = true;
     window.addEventListener('scroll', this.scrollListener, { passive: true });
+  }
+
+  componentDidUpdate() {
+    if (this.props.default === 3) {
+      const activeSlide = document.querySelector("#anand-slide");
+      activeSlide.classList.add("active-slide");
+    }
   }
 
   componentWillUnmount() {

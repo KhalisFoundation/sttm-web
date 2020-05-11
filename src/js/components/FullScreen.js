@@ -21,11 +21,11 @@ export default class FullScreen extends React.PureComponent {
   };
 
   handleFullScreen = () => {
-    this.setState({ isFullScreen: document.fullscreen });
+    this.setState({ isFullScreen: document.fullscreen || document.webkitIsFullScreen });
   }
 
   componentDidMount() {
-    this.setState({ isFullScreen: document.fullscreen });
+    this.setState({ isFullScreen: document.fullscreen || document.webkitIsFullScreen || false });
     document.addEventListener('fullscreenchange', this.handleFullScreen);
   }
 

@@ -24,7 +24,8 @@ export const SYNC_TYPES = {
   BANI: 'bani',
 };
 
-export const TYPES = [..._TYPES, 'Ang'];
+export const TYPES = _TYPES.filter((value, index) =>
+  Object.values(SEARCH_TYPES).includes(index));
 
 export const SHORT_DOMAIN = 'sttm.co';
 
