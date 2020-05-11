@@ -34,8 +34,6 @@ export default class Home extends React.PureComponent {
    */
   render() {
     const showDoodle = dateMath.isFuture(DOODLE['date']);
-    console.log("From home page");
-    console.log(SEARCH_TYPES, TYPES);
     return (
       <SearchForm>
         {({

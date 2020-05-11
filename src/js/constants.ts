@@ -27,9 +27,6 @@ export const SYNC_TYPES = {
 export const TYPES = _TYPES.filter((value, index) =>
   Object.values(SEARCH_TYPES).includes(index));
 
-console.log('From constants file');
-console.log(SEARCH_TYPES, _TYPES, TYPES);
-
 export const SHORT_DOMAIN = 'sttm.co';
 
 export const LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE = 'gdpr_notice';
