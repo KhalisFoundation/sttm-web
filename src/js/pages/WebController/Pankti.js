@@ -14,6 +14,12 @@ import HomeIcon from '@/components/Icons/Home';
  * @extends {React.PureComponent}
  */
 export default class Pankti extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      highlightId: props.highlight
+    }
+  }
   static defaultProps = {
     highlight: null,
   };
@@ -29,6 +35,7 @@ export default class Pankti extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
     homeId: PropTypes.number,
+    socket: PropTypes.object.isRequired,
   };
 
   _scrollToHiglight = () => {
@@ -44,11 +51,18 @@ export default class Pankti extends React.PureComponent {
   };
 
   componentDidMount() {
+    const { socket } = this.props;
     this._scrollToHiglight();
+    socket.on('data', data => {
+      if (data['host'] !== 'sttm-web') {
+        !data.homeId && this.setState({ highlightId: data.highlight })
+      }
+    });
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.highlight !== prevProps.highlight) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.highlight !== prevProps.highlight ||
+      this.state.highlightId !== prevState.highlightId) {
       this._scrollToHiglight();
     }
   }
@@ -61,10 +75,17 @@ export default class Pankti extends React.PureComponent {
     this.props.onPanktiClick(verse, shabad);
   }
 
+  baniLineCategory(node, shabad) {
+    if (this.state.highlightId === parseInt(getVerseId(shabad), 10)) {
+      this.$highlightedBaaniLine = node;
+    } else if (this.props.homeId === parseInt(getVerseId(shabad), 10)) {
+      this.$homeBaaniLine = node;
+    }
+  }
+
   render() {
     const {
       gurbani,
-      highlight,
       unicode,
       larivaar,
       larivaarAssist,
@@ -72,6 +93,7 @@ export default class Pankti extends React.PureComponent {
       fontFamily,
       homeId,
     } = this.props;
+    const highlight = this.state.highlightId;
 
     const getBaniLine = shabad => (
       <BaaniLine
@@ -91,11 +113,7 @@ export default class Pankti extends React.PureComponent {
         key={getVerseId(shabad)}
         id={`line-${getVerseId(shabad)}`}
         className={`line ${highlight === parseInt(getVerseId(shabad), 10) ? 'visited active-slide' : ''}`}
-        ref={node =>
-          homeId === parseInt(getVerseId(shabad), 10)
-            ? (this.$highlightedBaaniLine = node)
-            : null
-        }
+        ref={node => this.baniLineCategory(node, shabad)}
         onClick={e => this.clickedPankti(e, getVerseId(shabad), getShabadId(shabad))}
       >
         {getBaniLine(shabad)}
@@ -112,8 +130,8 @@ export default class Pankti extends React.PureComponent {
         </div>
         <button className="scroll-to-top home-button"
           onClick={() => {
-            window.scrollTo(0, this.$highlightedBaaniLine.offsetTop - 70);
-            this.$highlightedBaaniLine.click();
+            window.scrollTo(0, this.$homeBaaniLine.offsetTop - 70);
+            this.$homeBaaniLine.click();
           }}>
           <HomeIcon />
         </button>
