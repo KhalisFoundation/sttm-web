@@ -51,18 +51,16 @@ export default class WebControllerPage extends React.PureComponent {
   }
 
   handleCeremony = (ceremonyID, highlight) => {
-    console.log('ceremonies chlu');
     fetch(`${CEREMONIES_URL}${ceremonyID}`)
       .then(r => r.json())
       .then((data) => {
         if (data) {
-          console.log(data);
           const processedData = data;
           processedData.verses = versesToGurbani(data.verses, false, 'ceremony');
           processedData.type = 'ceremony';
           processedData.highlight = highlight || processedData.verses[0].verseId;
           processedData.homeId = processedData.verses[0].verseId;
-          this.setState({ searchData: null, shabadData: processedData })
+          this.setState({ searchData: null, shabadData: processedData }, this.finishLoading);
         }
       }
       );
@@ -78,7 +76,7 @@ export default class WebControllerPage extends React.PureComponent {
           processedData.type = 'bani';
           processedData.highlight = highlight || processedData.verses[0].verseId;
           processedData.homeId = processedData.verses[0].verseId;
-          this.setState({ searchData: null, shabadData: processedData })
+          this.setState({ searchData: null, shabadData: processedData }, this.finishLoading);
         }
       }
       );
@@ -114,7 +112,6 @@ export default class WebControllerPage extends React.PureComponent {
             );
 
             this._socket.on('data', data => {
-              console.log(data);
               if (data['type'] === 'response-control') {
                 data['success'] ?
                   this.setState({

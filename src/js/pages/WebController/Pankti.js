@@ -69,7 +69,7 @@ export default class Pankti extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.highlight !== prevProps.highlight) {
-      this.setState({ highlightId: this.props.highlight });
+      this.setState({ highlightId: this.props.highlight, visited: [this.props.highlight] });
       this._scrollToHiglight();
     }
   }
