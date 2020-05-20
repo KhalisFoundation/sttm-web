@@ -92,6 +92,8 @@ export default class Home extends React.PureComponent {
                         placeholder={placeholder}
                         title={title}
                         pattern={pattern}
+                        min={name === 'ang' && 1}
+                        max={name === 'ang' && 1430}
                       />
                       <button
                         type="button"

@@ -154,6 +154,8 @@ export default class Header extends React.PureComponent {
                                   placeholder={placeholder}
                                   title={title}
                                   pattern={pattern}
+                                  min={name === 'ang' && 1}
+                                  max={name === 'ang' && 1430}
                                 />
 
                                 <button
