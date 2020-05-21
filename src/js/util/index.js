@@ -272,16 +272,19 @@ export const toAngURL = ({ ang, source, highlight }) =>
     highlight,
   })}`;
 
-export const versesToGurbani = (verses, baniLength = 'extralong') =>
-  baniLength ?
-    verses.map(({ verse, ...v }) => ({
+export const versesToGurbani = (verses, baniLength = 'extralong', mangalPosition = 'current') => {
+  const processedVerses = mangalPosition === 'ceremony' ?
+    verses : verses.filter(v => v.mangalPosition === mangalPosition || v.mangalPosition === null);
+  return baniLength ?
+    processedVerses.map(({ verse, ...v }) => ({
       ...verse,
       ...v,
     })).filter(v => v[BANI_LENGTH_COLS[baniLength]]) :
-    verses.map(({ verse, ...v }) => ({
+    processedVerses.map(({ verse, ...v }) => ({
       ...verse,
       ...v,
     }));
+}
 
 /**
  *

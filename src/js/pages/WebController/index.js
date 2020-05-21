@@ -1,5 +1,6 @@
 /* globals SYNC_API_URL */
 /* globals CEREMONIES_URL */
+/* globals BANIS_API_URL */
 import React from 'react';
 import cx from 'classnames';
 
@@ -49,17 +50,33 @@ export default class WebControllerPage extends React.PureComponent {
     this.setState({ searchData: data, shabadData: null });
   }
 
-  handleCeremony = (ceremonyID, highlight, homeId) => {
+  handleCeremony = (ceremonyID, highlight) => {
     fetch(`${CEREMONIES_URL}${ceremonyID}`)
       .then(r => r.json())
       .then((data) => {
         if (data) {
           const processedData = data;
-          processedData.verses = versesToGurbani(data.verses, false);
+          processedData.verses = versesToGurbani(data.verses, false, 'ceremony');
           processedData.type = 'ceremony';
-          processedData.highlight = highlight;
-          processedData.homeId = homeId;
-          this.setState({ shabadData: processedData })
+          processedData.highlight = highlight || processedData.verses[0].verseId;
+          processedData.homeId = processedData.verses[0].verseId;
+          this.setState({ searchData: null, shabadData: processedData }, this.finishLoading);
+        }
+      }
+      );
+  }
+
+  handleBani = (baniID, highlight, baniLength, mangalPosition) => {
+    fetch(`${BANIS_API_URL}/${baniID}`)
+      .then(r => r.json())
+      .then((data) => {
+        if (data) {
+          const processedData = data;
+          processedData.verses = versesToGurbani(data.verses, baniLength, mangalPosition);
+          processedData.type = 'bani';
+          processedData.highlight = highlight || processedData.verses[0].verseId;
+          processedData.homeId = processedData.verses[0].verseId;
+          this.setState({ searchData: null, shabadData: processedData }, this.finishLoading);
         }
       }
       );
@@ -111,11 +128,13 @@ export default class WebControllerPage extends React.PureComponent {
                     pinError: true,
                     codeError: false,
                   }, this.finishLoading);
-              } else if (data['type'] === 'shabad' && data['host'] !== 'sttm-web') {
-                data.homeId &&
+              } else if (!data.verseChange && data['host'] !== 'sttm-web') {
+                data['type'] === 'shabad' &&
                   this.setState({ searchData: data, shabadData: null });
-              } else if (data['type'] === 'ceremony' && data['host'] !== 'sttm-web') {
-                this.handleCeremony(data.id, data.highlight, data.homeId);
+                data['type'] === 'ceremony' &&
+                  this.handleCeremony(data.id, data.highlight);
+                data['type'] === 'bani' &&
+                  this.handleBani(data.id, data.highlight, data.baniLength, data.mangalPosition);
               }
             });
           }
@@ -168,7 +187,7 @@ export default class WebControllerPage extends React.PureComponent {
                 socket={socket}
                 specialHandler={this.handleCeremony}
                 controllerPin={controllerPin}
-                default={shabadData ? shabadData.ceremonyInfo.ceremonyID : null} />
+                default={(shabadData && shabadData.type === 'ceremony') ? shabadData.ceremonyInfo.ceremonyID : null} />
 
               {shabadData && (
                 <ControllerShabad

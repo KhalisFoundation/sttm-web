@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BaaniLine from '@/components/BaaniLine';
 import { SHABAD_CONTENT_CLASSNAME } from '@/constants';
-
+import cx from 'classnames';
 import { getVerseId, getShabadId } from '@/util/api/shabad';
 import HomeIcon from '@/components/Icons/Home';
 
@@ -17,7 +17,8 @@ export default class Pankti extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      highlightId: props.highlight
+      highlightId: props.highlight,
+      visited: [props.highlight],
     }
   }
   static defaultProps = {
@@ -54,15 +55,21 @@ export default class Pankti extends React.PureComponent {
     const { socket } = this.props;
     this._scrollToHiglight();
     socket.on('data', data => {
-      if (data['host'] !== 'sttm-web') {
-        !data.homeId && this.setState({ highlightId: data.highlight })
+      if (data['host'] !== 'sttm-web' &&
+        data['verseChange'] &&
+        this.state.highlightId !== data.highlight
+      ) {
+        let visitedPanktis = this.state.visited;
+        !visitedPanktis.includes(data.highlight) && visitedPanktis.push(data.highlight);
+        !data.homeId && this.setState({ highlightId: data.highlight, visited: visitedPanktis });
+        this._scrollToHiglight();
       }
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.highlight !== prevProps.highlight ||
-      this.state.highlightId !== prevState.highlightId) {
+  componentDidUpdate(prevProps) {
+    if (this.props.highlight !== prevProps.highlight) {
+      this.setState({ highlightId: this.props.highlight, visited: [this.props.highlight] });
       this._scrollToHiglight();
     }
   }
@@ -71,8 +78,15 @@ export default class Pankti extends React.PureComponent {
     const clickedPankti = e.currentTarget;
 
     document.querySelector(".active-slide").classList.remove("active-slide");
-    clickedPankti.classList.add("visited", "active-slide");
+    clickedPankti.classList.add("active-slide");
     this.props.onPanktiClick(verse, shabad);
+
+    let visitedPanktis = this.state.visited;
+
+    if (!visitedPanktis.includes(verse)) {
+      visitedPanktis.push(verse);
+      this.setState({ highlightId: verse, visited: visitedPanktis });
+    }
   }
 
   baniLineCategory(node, shabad) {
@@ -107,12 +121,15 @@ export default class Pankti extends React.PureComponent {
         visraam={shabad.visraam}
       />
     );
-
     const markup = gurbani.map(shabad => (
       <div
         key={getVerseId(shabad)}
         id={`line-${getVerseId(shabad)}`}
-        className={`line ${highlight === parseInt(getVerseId(shabad), 10) ? 'visited active-slide' : ''}`}
+        className={cx({
+          'line': true,
+          'active-slide': highlight === parseInt(getVerseId(shabad), 10),
+          'visited': this.state.visited.includes(getVerseId(shabad))
+        })}
         ref={node => this.baniLineCategory(node, shabad)}
         onClick={e => this.clickedPankti(e, getVerseId(shabad), getShabadId(shabad))}
       >
@@ -130,7 +147,6 @@ export default class Pankti extends React.PureComponent {
         </div>
         <button className="scroll-to-top home-button"
           onClick={() => {
-            window.scrollTo(0, this.$homeBaaniLine.offsetTop - 70);
             this.$homeBaaniLine.click();
           }}>
           <HomeIcon />
