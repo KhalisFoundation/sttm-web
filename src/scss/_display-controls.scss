@@ -114,6 +114,7 @@
   }
 
   > svg {
+    fill: $sttm-dark-grey;
     vertical-align: middle;
 
     .dark-mode & {
@@ -285,7 +286,7 @@
   }
 
   .toggle-text {
-    color: $sttm-orange;
+    color: $sttm-blue;
     font-size: 14px;
     margin-bottom: 0;
     text-align: center;
@@ -301,10 +302,14 @@
 
   &.text-option {
     border-radius: 8px;
-    color: $sttm-orange;
+    color: $sttm-blue;
     font-size: 16px;
     line-height: 42px;
     padding: 0 6px;
+
+    .dark-mode & {
+      color: $sttm-orange;
+    }
 
     &:active {
       background-color: $sttm-lighter-grey;
@@ -333,7 +338,7 @@
   &.icon-text-toggle {
     align-items: center;
     border-radius: 8px;
-    color: $sttm-orange;
+    color: $sttm-blue;
     display: flex;
     font-size: 16px;
     justify-content: center;
@@ -346,6 +351,10 @@
 
       &.custom-fa {
         display: none;
+      }
+
+      .dark-mode & {
+        color: $sttm-orange;
       }
 
       &.icon-label:active {
