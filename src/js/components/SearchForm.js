@@ -174,8 +174,6 @@ export default class SearchForm extends React.PureComponent {
       typeInt
     );
 
-    console.log(name, inputType, typeInt, 'search form')
-
     return this.props.children({
       ...state,
       pattern,
