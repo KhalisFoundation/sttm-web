@@ -1,4 +1,5 @@
-div[tabindex="-1"]:focus { // remove focus outline from the HotKeys containder div
+div[tabindex='-1']:focus {
+  // remove focus outline from the HotKeys containder div
   outline: 0;
 }
 
@@ -263,33 +264,38 @@ blockquote {
 .relatedShabad {
   border: 1px solid $sttm-light-grey;
   border-radius: 4px;
-  color: inherit;
+  color: $sttm-black;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 0.5rem;
-  max-width: 60%;
-  min-width: 60%;
-  padding: 1rem;
+  margin: 0 30px 30px 0;
+  max-width: calc(50% - 30px);
+  width: 100%;
+  padding: 5px;
   scroll-margin-left: 0.5rem;
   scroll-snap-align: start;
-  width: 60%;
+  background-color: $sttm-pure-white;
+  box-shadow: 0 0 10px 1px $sttm-grey;
 
-  @media screen and (min-width: 46em) {
-    max-width: 40%;
-    min-width: 40%;
-    width: 40%;
+  @media screen and (max-width: 700px) {
+    max-width: 100%;
+    margin-right: 0;
   }
 
   &:hover {
-    box-shadow: 0 0 10px -4px $sttm-dark-grey;
     color: inherit;
+  }
+
+  &Inner {
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 
   &Container {
     display: flex;
-    margin: 0.5rem -0.5rem;
+    flex-wrap: wrap;
     overflow: auto;
     scroll-snap-type: x mandatory;
 
@@ -307,6 +313,79 @@ blockquote {
   }
 
   &Title {
-    font-size: 1.7em;
+    font-size: 1.6em;
+    line-height: 1.2;
+    margin-bottom: 0;
+  }
+
+  &Transliteration,
+  &Quote {
+    color: $sttm-pure-black;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  &Content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 8px;
+
+    &Footer {
+      display: flex;
+      align-items: center;
+      margin: 0;
+
+      @media screen and (max-width: 800px) {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      @media screen and (max-width: 700px) {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+  }
+
+  &Source {
+    color: $sttm-pure-black;
+    margin-right: 8px;
+    font-size: 16px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &AvgRating {
+    flex-shrink: 0;
+    margin-right: 4px;
+    width: 8px;
+    height: 100%;
+    position: relative;
+    background-color: $sttm-grey;
+
+    &Excellent {
+      background-color: $sttm-green;
+    }
+
+    &Good {
+      background-color: $sttm-orange;
+    }
+
+    &Poor {
+      background-color: $sttm-red;
+    }
+  }
+
+  &AvgRatingMeter {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom;
+    transition: transform 0.1s ease-in-out;
   }
 }

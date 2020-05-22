@@ -2,9 +2,9 @@ import React, { memo, MouseEventHandler } from 'react';
 import Fetch from '../Fetch';
 import { TEXTS } from '@/constants';
 import { IStore } from '@/features/types';
-import { toShabadURL } from '@/util';
 import Larivaar from '@/components/Larivaar';
 import { clickEvent, ACTIONS } from '@/util/analytics';
+import { toShabadURL, getClassnamesForShabadRatings } from '@/util';
 
 export interface IRelatedShabadData {
   ShabadID: number;
@@ -29,18 +29,18 @@ export interface IRelatedShabadData {
 
 export interface IRelatedShabadsProps
   extends Pick<
-  IStore,
-  | 'translationLanguages'
-  | 'larivaar'
-  | 'larivaarAssist'
-  | 'unicode'
-  | 'transliterationLanguages'
+    IStore,
+    | 'translationLanguages'
+    | 'larivaar'
+    | 'larivaarAssist'
+    | 'unicode'
+    | 'transliterationLanguages'
   > {
   forShabadID: number;
   count?: number;
 }
 
-const handleShabadClick: MouseEventHandler<HTMLAnchorElement> = e => {
+const handleShabadClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
   const id = e.currentTarget.dataset.shabadId;
 
   clickEvent({ action: ACTIONS.RELATED_SHABAD, label: String(id) });
@@ -84,7 +84,7 @@ function RelatedShabads({
           <div className="relatedShabadWrapper">
             <h3>{TEXTS.RELATED_SHABADS}</h3>
             <div className="relatedShabadContainer">
-              {items.map(i => (
+              {items.map((i) => (
                 <a
                   key={i.ShabadID}
                   className="relatedShabad"
@@ -93,39 +93,69 @@ function RelatedShabads({
                   data-shabad-id={i.ShabadID}
                   onClick={handleShabadClick}
                 >
-                  <div>
-                    <h3 className={'relatedShabadTitle ' + fontClassName}>
-                      <Larivaar
-                        enable={larivaar}
-                        larivaarAssist={larivaarAssist}
-                        unicode={unicode}
-                      >
-                        {unicode ? i.GurmukhiUni : i.Gurmukhi}
-                      </Larivaar>
-                    </h3>
-                    {englishTrasliteration && (
-                      <p className="transliteration">{i.Transliteration}</p>
-                    )}
-                    {englishTranslation && (
-                      <blockquote className={'translation english '}>
-                        {i.English}
-                      </blockquote>
-                    )}
-                    {punjabiTranslation && (
-                      <blockquote
-                        className={'translation punjabi ' + fontClassName}
-                      >
-                        {unicode ? i.PunjabiUni : i.Punjabi}
-                      </blockquote>
-                    )}
+                  <div className="relatedShabadInner">
+                    <div className="relatedShabadAvgRating">
+                      <div
+                        style={{
+                          transform: `scaleY(${i.AvgScore / 100})`,
+                        }}
+                        className={`relatedShabadAvgRatingMeter relatedShabadAvgRating${getClassnamesForShabadRatings(
+                          i.AvgScore
+                        )}`}
+                      />
+                    </div>
+                    <div className="relatedShabadContent">
+                      <div className="relatedShabadContentBody">
+                        <h3 className={'relatedShabadTitle ' + fontClassName}>
+                          <Larivaar
+                            enable={larivaar}
+                            larivaarAssist={larivaarAssist}
+                            unicode={unicode}
+                          >
+                            {unicode ? i.GurmukhiUni : i.Gurmukhi}
+                          </Larivaar>
+                        </h3>
+                        {englishTrasliteration && (
+                          <p className="relatedShabadTransliteration transliteration">
+                            {i.Transliteration}
+                          </p>
+                        )}
+                        {englishTranslation && (
+                          <blockquote
+                            className={
+                              'relatedShabadQuote translation english '
+                            }
+                          >
+                            {i.English}
+                          </blockquote>
+                        )}
+                        {punjabiTranslation && (
+                          <blockquote
+                            className={
+                              'relatedShabadQuote translation punjabi ' +
+                              fontClassName
+                            }
+                          >
+                            {unicode ? i.PunjabiUni : i.Punjabi}
+                          </blockquote>
+                        )}
+                      </div>
+                      <p className="relatedShabadContentFooter">
+                        <span
+                          className={`relatedShabadSource ${fontClassName}`}
+                        >
+                          {unicode ? i.SourceUnicode : i.SourceGurmukhi}{' '}
+                          {i.PageNo}
+                        </span>
+                        {englishTranslation && (
+                          <span className="relatedShabadSource">
+                            {' '}
+                            {` |  ${i.SourceEnglish} ${i.PageNo}`}
+                          </span>
+                        )}
+                      </p>
+                    </div>
                   </div>
-                  <p>
-                    <span className={fontClassName}>
-                      {unicode ? i.SourceUnicode : i.SourceGurmukhi} {i.PageNo}
-                    </span>
-                    <br />
-                    {englishTranslation && `${i.SourceEnglish} ${i.PageNo}`}
-                  </p>
                 </a>
               ))}
             </div>
