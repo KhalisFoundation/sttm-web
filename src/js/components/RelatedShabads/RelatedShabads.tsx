@@ -29,12 +29,12 @@ export interface IRelatedShabadData {
 
 export interface IRelatedShabadsProps
   extends Pick<
-    IStore,
-    | 'translationLanguages'
-    | 'larivaar'
-    | 'larivaarAssist'
-    | 'unicode'
-    | 'transliterationLanguages'
+  IStore,
+  | 'translationLanguages'
+  | 'larivaar'
+  | 'larivaarAssist'
+  | 'unicode'
+  | 'transliterationLanguages'
   > {
   forShabadID: number;
   count?: number;
@@ -148,7 +148,7 @@ function RelatedShabads({
                           {i.PageNo}
                         </span>
                         {englishTranslation && (
-                          <span className="relatedShabadSource">
+                          <span className="relatedShabadSource englishSource">
                             {' '}
                             {` |  ${i.SourceEnglish} ${i.PageNo}`}
                           </span>
