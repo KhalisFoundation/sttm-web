@@ -296,7 +296,6 @@ blockquote {
   &Container {
     display: flex;
     flex-wrap: wrap;
-    overflow: auto;
     scroll-snap-type: x mandatory;
 
     &::-webkit-scrollbar {
@@ -316,6 +315,10 @@ blockquote {
     font-size: 1.6em;
     line-height: 1.2;
     margin-bottom: 0;
+
+    @media screen and (max-width: 800px) {
+      font-weight: 400;
+    }
   }
 
   &Transliteration,
@@ -337,14 +340,14 @@ blockquote {
       display: flex;
       margin: 0;
 
-      @media screen and (max-width: 800px) {
-        align-items: start;
-        flex-direction: column;
-      }
-
       @media screen and (max-width: 700px) {
         align-items: center;
         flex-direction: row;
+      }
+
+      @media screen and (min-width: 701px) and  (max-width: 900px), (max-width: 500px) {
+        align-items: start;
+        flex-direction: column;
       }
     }
   }
@@ -361,7 +364,6 @@ blockquote {
 
     &.englishSource {
       color: $sttm-pure-black;
-      font-weight: 700;
       opacity: 1;
     }
   }
