@@ -40,7 +40,7 @@ export interface IRelatedShabadsProps
   count?: number;
 }
 
-const handleShabadClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
+const handleShabadClick: MouseEventHandler<HTMLAnchorElement> = e => {
   const id = e.currentTarget.dataset.shabadId;
 
   clickEvent({ action: ACTIONS.RELATED_SHABAD, label: String(id) });
@@ -84,7 +84,7 @@ function RelatedShabads({
           <div className="relatedShabadWrapper">
             <h3>{TEXTS.RELATED_SHABADS}</h3>
             <div className="relatedShabadContainer">
-              {items.map((i) => (
+              {items.map(i => (
                 <a
                   key={i.ShabadID}
                   className="relatedShabad"
