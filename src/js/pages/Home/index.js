@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, DOODLE } from '../../constants';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, DOODLE, SOURCE_ANGS } from '../../constants';
 import { toSearchURL, getShabadList, dateMath } from '../../util';
 import { pageView } from '../../util/analytics';
 import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
@@ -93,7 +93,7 @@ export default class Home extends React.PureComponent {
                         title={title}
                         pattern={pattern}
                         min={name === 'ang' && 1}
-                        max={name === 'ang' && 1430}
+                        max={name === 'ang' && SOURCE_ANGS[source]}
                       />
                       <button
                         type="button"

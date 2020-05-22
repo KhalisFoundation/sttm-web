@@ -199,6 +199,13 @@ export const VISRAAM_CONSTANTS = {
   TYPE_CLASS: (type: string) => `vishraam-vishraam-options-${type}`
 }
 
+export const SOURCE_ANGS = {
+  G: 1430,
+  D: 1428,
+  B: 40,
+  S: 28
+}
+
 export const DOODLE = {
   largeImage: `/assets/images/doodle_hola_mahalla.png`,
   smallImage: `/assets/images/doodle_hola_mahalla_sm.png`,
