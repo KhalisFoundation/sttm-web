@@ -199,7 +199,7 @@ export const VISRAAM_CONSTANTS = {
   TYPE_CLASS: (type: string) => `vishraam-vishraam-options-${type}`
 }
 
-export const SOURCE_ANGS = {
+export const MAX_ANGS = {
   G: 1430,
   D: 1428,
   B: 40,
