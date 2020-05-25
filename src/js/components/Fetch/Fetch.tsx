@@ -26,7 +26,7 @@ export interface IFetchProps extends Required<typeof defaultProps> {
 export default class Fetch extends React.PureComponent<
   IFetchProps,
   IFetchState
-> {
+  > {
   public static defaultProps = defaultProps;
 
   public state = {
@@ -75,6 +75,7 @@ export default class Fetch extends React.PureComponent<
       setTimeout(reject, timeout, TEXTS.TIMEOUT_ERROR)
     );
 
+    console.log(url, options, ' url in the fetch, options')
     // If timeoutPromise completes before fetch the top level catch is executed
     return Promise.race([timeoutPromise, fetch(url, options)])
       .then(res =>

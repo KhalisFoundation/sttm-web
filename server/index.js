@@ -6,6 +6,7 @@ import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
+import { createMetadataFromRequest } from './utils/';
 
 const hostname = _hostname().substr(0, 3);
 const port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
@@ -32,14 +33,24 @@ app
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     const { path, url } = req;
+    const pathWithoutSlash = path.slice(1);
+    let title = '', description = '';
 
-    const { title: _title, createDescription } = seo[
+    console.log(path, req, 'path from req')
+
+    const { createTitle, createDescription } = seo[
       seo[path] === undefined ? '/' : path
     ];
 
-    const title = typeof _title === 'function' ? _title(req) : _title;
+    const isRequestForShabad = path.includes('shabad');
 
-    const description = createDescription(req);
+    // get the title/description from API call if needed.
+    if (isRequestForShabad) {
+      const metaData = createMetadataFromRequest(req);
+    } else {
+      title = createTitle();
+      description = createDescription(req);
+    }
 
     const bodyClass =
       DARK_MODE_COOKIE in req.cookies &&
