@@ -2,6 +2,8 @@ import { buildApiUrl } from '@sttm/banidb';
 import axios from 'axios';
 import querystring from 'querystring';
 
+import { API_URL } from '../../common/constants';
+
 const getAng = req => req.query.ang;
 const getSource = req => SOURCES[req.query.source || 'G'];
 
@@ -15,7 +17,7 @@ export const createMetadataFromRequest = (req) => {
   //   '/shabad':
   // }
   const queryParams = querystring.parse(req.query);
-  url = buildApiUrl({ id: query.id, API_URL });
+  const url = buildApiUrl({ id: query.id, API_URL });
   console.log(url, "query params id");
   // switch (path) {
   //   case '/shabad': return axios.get()

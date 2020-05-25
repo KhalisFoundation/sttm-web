@@ -4,11 +4,11 @@ const TerserPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 const path = require('path');
-const CONSTANTS = require('./common/api-urls-constants.js');
+const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
-console.log(CONSTANTS, "")
+console.log(API_URLS, "")
 
 const commonPlugins = [new ManifestPlugin()];
 
