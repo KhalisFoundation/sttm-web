@@ -6,7 +6,7 @@ import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
-import { createMetadataFromRequest } from './utils/';
+import { getMetaDataFromApi } from './utils/';
 
 const hostname = _hostname().substr(0, 3);
 const port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
@@ -45,27 +45,33 @@ app
     const isRequestForShabad = path.includes('shabad');
 
     // get the title/description from API call if needed.
-    if (isRequestForShabad) {
-      const metaData = createMetadataFromRequest(req);
-    } else {
-      title = createTitle();
-      description = createDescription(req);
-    }
-
     const bodyClass =
       DARK_MODE_COOKIE in req.cookies &&
         parseInt(req.cookies[DARK_MODE_COOKIE], 10) === 1
         ? DARK_MODE_CLASS_NAME
         : '';
 
-    const template = createTemplate({
-      url,
-      bodyClass,
-      title,
-      description,
-    });
+    if (isRequestForShabad) {
+      getMetadataFromApi(req)
+        .then(data => {
 
-    template(res, { debug: 'off', stringToBufferThreshold: 1000 });
+        }).catch(err => {
+
+        });
+    } else {
+      title = createTitle();
+      description = createDescription(req);
+
+
+      const template = createTemplate({
+        url,
+        bodyClass,
+        title,
+        description,
+      });
+
+      template(res, { debug: 'off', stringToBufferThreshold: 1000 });
+    }
   })
 
   // Listen on port

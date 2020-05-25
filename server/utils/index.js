@@ -1,2 +1,2 @@
-export * from './create-metadata-from-request';
+export * from './get-metadata-from-api';
 export * from './suffix-app-name';
