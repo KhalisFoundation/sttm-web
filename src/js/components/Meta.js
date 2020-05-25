@@ -8,6 +8,8 @@ import Hour24 from './Icons/Hour24';
 import { withRouter } from 'react-router-dom';
 import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
 
+import { PAGE_NAME_CONSTANTS } from '../constants';
+
 /**
  *
  *
@@ -27,6 +29,7 @@ class Meta extends React.PureComponent {
    * @property {array} translationLanguages
    * @property {array} transliterationLanguages
    * @property {object} nav
+   * @property {boolean} isUnicode
    *
    * @static
    * @memberof Meta
@@ -37,6 +40,7 @@ class Meta extends React.PureComponent {
     info: PropTypes.object.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
+    isUnicode: PropTypes.bool.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -48,6 +52,7 @@ class Meta extends React.PureComponent {
       nav = {},
       type,
       info,
+      isUnicode,
       translationLanguages,
       transliterationLanguages,
     } = this.props;
@@ -64,6 +69,8 @@ class Meta extends React.PureComponent {
     const shouldShowEnglishInHeader =
       translationLanguages.includes('english') ||
       transliterationLanguages.includes('english');
+
+    const contentType = isUnicode ? 'unicode' : 'gurmukhi'
 
     return (
       <div id="metadata">
@@ -102,12 +109,12 @@ class Meta extends React.PureComponent {
           <h4 className="gurbani-font">
             <Item>
               {getRaag(info) &&
-                getRaag(info)['gurmukhi'] &&
-                getRaag(info)['gurmukhi'] !== 'null' &&
-                getRaag(info)['gurmukhi']}
+                getRaag(info)[contentType] &&
+                getRaag(info)[contentType] !== 'null' &&
+                getRaag(info)[contentType]}
             </Item>
-            <Item>{getWriter(info) && getWriter(info)['gurmukhi']}</Item>
-            <Item>{info.source.gurmukhi}</Item>
+            <Item>{getWriter(info) && getWriter(info)[contentType]}</Item>
+            <Item>{info.source[contentType]}</Item>
             {info.source.pageNo !== null && (
               <Item last>
                 <Link
@@ -116,7 +123,7 @@ class Meta extends React.PureComponent {
                     source: getSourceId(info),
                   })}
                 >
-                  {getSourceId(info) == 'G' ? 'AMg' : 'pMnw'}{' '}
+                  {getSourceId(info) == 'G' ? PAGE_NAME_CONSTANTS.ANG[contentType] : PAGE_NAME_CONSTANTS.PANNA[contentType]}{' '}
                   {info.source.pageNo}
                 </Link>
               </Item>
