@@ -120,7 +120,7 @@ function RelatedShabads({
                             {i.Transliteration}
                           </p>
                         )}
-                        {englishTranslation && (
+                        {/*englishTranslation && (
                           <blockquote
                             className={
                               'relatedShabadQuote translation english '
@@ -138,7 +138,7 @@ function RelatedShabads({
                           >
                             {unicode ? i.PunjabiUni : i.Punjabi}
                           </blockquote>
-                        )}
+                          )*/}
                       </div>
                       <p className="relatedShabadContentFooter">
                         <span
