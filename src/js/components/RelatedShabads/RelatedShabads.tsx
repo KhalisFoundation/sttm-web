@@ -1,4 +1,4 @@
-import React, { memo, MouseEventHandler } from 'react';
+import React, { memo } from 'react';
 import Fetch from '../Fetch';
 import { TEXTS } from '@/constants';
 import { IStore } from '@/features/types';
@@ -44,12 +44,6 @@ interface IRelatedShabadsState {
   visibleShabads: number;
 }
 
-const handleShabadClick: MouseEventHandler<HTMLAnchorElement> = e => {
-  const id = e.currentTarget.dataset.shabadId;
-
-  clickEvent({ action: ACTIONS.RELATED_SHABAD, label: String(id) });
-};
-
 class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedShabadsState> {
 
   static showMoreShabads = 4;
@@ -70,6 +64,10 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
       }
     })
   }
+
+  handleShabadClick = (shabadId: number) => () => {
+    clickEvent({ action: ACTIONS.RELATED_SHABAD, label: String(shabadId) });
+  };
 
   handleShowMore = (totalShabads: number) => () => {
     const shabadsToShow = Math.min(totalShabads, this.state.visibleShabads + RelatedShabads.showMoreShabads);
@@ -130,7 +128,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                       href={toShabadURL({ shabad: { shabadId: s.ShabadID } })}
                       target="_blank"
                       data-shabad-id={s.ShabadID}
-                      onClick={handleShabadClick}
+                      onClick={this.handleShabadClick(s.ShabadID)}
                     >
                       <div className="relatedShabadInner">
                         <div title={`${s.AvgScore.toString()}%`} className="relatedShabadAvgRating">
