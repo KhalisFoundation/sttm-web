@@ -131,7 +131,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                       onClick={this.handleShabadClick(s.ShabadID)}
                     >
                       <div className="relatedShabadInner">
-                        <div title={`${s.AvgScore.toString()}%`} className="relatedShabadAvgRating">
+                        <div title={`${s.AvgScore.toString()}% matches`} className="relatedShabadAvgRating">
                           <div
                             style={{
                               transform: `scaleY(${s.AvgScore / 100})`,
