@@ -33,13 +33,10 @@ app
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     const { path, url } = req;
-    const pathWithoutSlash = path.slice(1);
 
     const { createTitle, createDescription } = seo[
       seo[path] === undefined ? '/' : path
     ];
-
-    const isRequestForShabad = path.includes('shabad');
 
     // get the title/description from API call if needed.
     const bodyClass =

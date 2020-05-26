@@ -5,7 +5,6 @@ import { suffixAppName } from './suffix-app-name';
  **/
 export const createMetadataFromResponse = (req, apiResponse) => {
   const { path, query } = req;
-  console.log(path, apiResponse.data, 'api response')
   switch (path) {
     case '/shabad':
       const { shabadInfo } = apiResponse.data;
