@@ -199,6 +199,15 @@ export const VISRAAM_CONSTANTS = {
   TYPE_CLASS: (type: string) => `vishraam-vishraam-options-${type}`
 }
 
+export const PAGE_NAME_CONSTANTS = {
+  ANG: {
+    gurmukhi: 'AMg', unicode: 'ਅੰਗ'
+  },
+  PANNA: {
+    gurmukhi: 'pMnw', unicode: 'ਪੰਨਾ'
+  }
+}
+
 export const MAX_ANGS = {
   G: 1430,
   D: 1428,
