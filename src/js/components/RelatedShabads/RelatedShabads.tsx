@@ -115,12 +115,12 @@ function RelatedShabads({
                             {unicode ? i.GurmukhiUni : i.Gurmukhi}
                           </Larivaar>
                         </h3>
-                        {englishTrasliteration && (
+                        {/*englishTrasliteration && (
                           <p className="relatedShabadTransliteration transliteration">
                             {i.Transliteration}
                           </p>
-                        )}
-                        {/*englishTranslation && (
+                        )*/}
+                        {englishTranslation && (
                           <blockquote
                             className={
                               'relatedShabadQuote translation english '
@@ -138,7 +138,7 @@ function RelatedShabads({
                           >
                             {unicode ? i.PunjabiUni : i.Punjabi}
                           </blockquote>
-                          )*/}
+                        )}
                       </div>
                       <p className="relatedShabadContentFooter">
                         <span
