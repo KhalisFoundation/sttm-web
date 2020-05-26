@@ -1,5 +1,5 @@
 export const getClassnamesForShabadRatings = (avgScore: number): string => {
-  if (avgScore >= 80) {
+  if (avgScore >= 75) {
     return 'Excellent'
   } else if (avgScore >= 40) {
     return 'Good';

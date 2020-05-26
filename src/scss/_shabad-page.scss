@@ -352,6 +352,16 @@ blockquote {
     }
   }
 
+  &ShowMoreBtn {
+    color: $sttm-orange;
+    outline: none;
+    float: right;
+    margin-bottom: 30px;
+    &::after {
+      clear: right;
+    }
+  }
+
   &Source {
     color: $sttm-lighter-black;
     font-size: 16px;
