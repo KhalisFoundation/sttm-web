@@ -1,7 +1,5 @@
 import { suffixAppName } from '../server/utils/';
 import { BASIC_META_DESCRIPTION } from './constants';
-const getAng = req => req.query.ang;
-const getSource = req => SOURCES[req.query.source || 'G'];
 
 export default {
   '/': {
@@ -52,8 +50,8 @@ export default {
   },
   '/shabad': {
     createTitle: () => suffixAppName('Shabad'),
-    createDescription: () =>
-      `Read shabad online right now. ${BASIC_META_DESCRIPTION}`,
+    createDescription: (description = 'Read shabad ') =>
+      `${description} - ${BASIC_META_DESCRIPTION}`,
   },
   '/sync': {
     createTitle: () => suffixAppName('Sync'),

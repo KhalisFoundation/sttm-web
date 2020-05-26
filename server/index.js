@@ -6,7 +6,7 @@ import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
-import { getMetaDataFromApi } from './utils/';
+import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 
 const hostname = _hostname().substr(0, 3);
 const port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
@@ -34,9 +34,6 @@ app
 
     const { path, url } = req;
     const pathWithoutSlash = path.slice(1);
-    let title = '', description = '';
-
-    console.log(path, req, 'path from req')
 
     const { createTitle, createDescription } = seo[
       seo[path] === undefined ? '/' : path
@@ -51,27 +48,26 @@ app
         ? DARK_MODE_CLASS_NAME
         : '';
 
-    if (isRequestForShabad) {
-      getMetadataFromApi(req)
-        .then(data => {
+    getMetadataFromRequest(req)
+      .then(data => {
+        const metaData = createMetadataFromResponse(req, data);
+        return Promise.resolve(metaData);
+      }).catch(err => {
+        console.error('err.message', err.message);
+      }).then(metaData => {
+        //always executed
+        const title = createTitle(metaData && metaData.title);
+        const description = createDescription(metaData && metaData.description);
 
-        }).catch(err => {
-
+        const template = createTemplate({
+          url,
+          bodyClass,
+          title,
+          description,
         });
-    } else {
-      title = createTitle();
-      description = createDescription(req);
 
-
-      const template = createTemplate({
-        url,
-        bodyClass,
-        title,
-        description,
-      });
-
-      template(res, { debug: 'off', stringToBufferThreshold: 1000 });
-    }
+        template(res, { debug: 'off', stringToBufferThreshold: 1000 });
+      })
   })
 
   // Listen on port

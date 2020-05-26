@@ -8,8 +8,6 @@ const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
-console.log(API_URLS, "")
-
 const commonPlugins = [new ManifestPlugin()];
 
 const plugins = PRODUCTION
