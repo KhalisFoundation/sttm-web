@@ -208,6 +208,13 @@ export const PAGE_NAME_CONSTANTS = {
   }
 }
 
+export const MAX_ANGS = {
+  G: 1430,
+  D: 1428,
+  B: 40,
+  S: 28
+}
+
 export const DOODLE = {
   largeImage: `/assets/images/doodle_hola_mahalla.png`,
   smallImage: `/assets/images/doodle_hola_mahalla_sm.png`,

@@ -57,8 +57,8 @@ export default class ControllerSearch extends React.PureComponent {
   }
 
   componentDidMount() {
-    const searchData = this.props;
-    if (searchData.homeId) {
+    const { searchData } = this.props;
+    if (!searchData.verseChange && searchData.id) {
       this.setState({
         openShabad: true,
         shabadId: searchData.id,
@@ -71,7 +71,7 @@ export default class ControllerSearch extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       const { searchData } = this.props;
-      if (searchData.homeId) {
+      if (!searchData.verseChange && searchData.id) {
         this.setState({
           openShabad: true,
           shabadId: searchData.id,
@@ -85,11 +85,11 @@ export default class ControllerSearch extends React.PureComponent {
   }
 
   render() {
-    const { offset } = this.state;
+    const { offset, shabadId } = this.state;
     const { searchData } = this.props;
     let url;
 
-    if (this.state.openShabad || searchData.id) {
+    if (shabadId || searchData.id) {
       url = buildApiUrl({ id: this.state.shabadId || searchData.id, API_URL });
     } else {
       const { query, type, source } = searchData;
