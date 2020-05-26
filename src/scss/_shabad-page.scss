@@ -265,7 +265,7 @@ blockquote {
   background-color: $sttm-pure-white;
   border: 1px solid $sttm-light-grey;
   border-radius: 4px;
-  box-shadow: 0 0 10px 1px $sttm-grey;
+  box-shadow: 0 4px 8px 0 $sttm-grey;
   color: $sttm-black;
   cursor: pointer;
   display: flex;
@@ -276,6 +276,7 @@ blockquote {
   padding: 5px;
   scroll-margin-left: 0.5rem;
   scroll-snap-align: start;
+  transition: 0.3s ease-in;
   width: 100%;
 
   @media screen and (max-width: 700px) {
@@ -284,6 +285,7 @@ blockquote {
   }
 
   &:hover {
+    box-shadow: 0 8px 16px 0 $sttm-grey;
     color: inherit;
   }
 
@@ -354,9 +356,10 @@ blockquote {
 
   &ShowMoreBtn {
     color: $sttm-orange;
-    outline: none;
     float: right;
     margin-bottom: 30px;
+    outline: none;
+
     &::after {
       clear: right;
     }
