@@ -22,11 +22,8 @@ export default {
       `SikhiToTheMax is backed by a non-profit organization named Khalis Foundation. ${BASIC_META_DESCRIPTION}`,
   },
   '/ang': {
-    createTitle: req => suffixAppName(`Ang ${getAng(req)} of ${getSource(req)}`),
-    createDescription: req =>
-      `Read page number ${getAng(req)} of ${getSource(
-        req
-      )} now. ${BASIC_META_DESCRIPTION}`,
+    createTitle: (title = 'Ang') => suffixAppName(title),
+    createDescription: (description = 'Read page number ') => `${description}. ${BASIC_META_DESCRIPTION}`,
   },
   '/index': {
     createTitle: () => suffixAppName('Index'),
@@ -50,8 +47,7 @@ export default {
   },
   '/shabad': {
     createTitle: (title = 'Shabad') => suffixAppName(title),
-    createDescription: (description = 'Read shabad ') =>
-      `${description} - ${BASIC_META_DESCRIPTION}`,
+    createDescription: (description = 'Read shabad ') => `${description} - ${BASIC_META_DESCRIPTION}`,
   },
   '/sync': {
     createTitle: () => suffixAppName('Sync'),

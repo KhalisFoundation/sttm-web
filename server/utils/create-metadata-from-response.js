@@ -1,14 +1,14 @@
-import { suffixAppName } from './suffix-app-name';
 import { createShabadTitle, createShabadDescription } from './shabads';
+import { getAng, getSource } from './angs';
 
 /**
  * @param {object} req - The request obj
  * @param {object} apiResponse - The api response obj
  **/
 export const createMetadataFromResponse = (req, apiResponse) => {
-  const { path, query } = req;
+  const { path } = req;
   switch (path) {
-    case '/shabad':
+    case '/shabad': {
       const { shabadInfo, verses } = apiResponse.data;
       const { shabadName } = shabadInfo;
 
@@ -22,6 +22,16 @@ export const createMetadataFromResponse = (req, apiResponse) => {
         title,
         description
       }
+    }
+
+    case '/ang': {
+      return {
+        title: `Ang ${getAng(req)} of ${getSource(req)}`,
+        description: `Read page number ${getAng(req)} of ${getSource(
+          req
+        )} now.`
+      }
+    }
 
     default: return { title: '', description: '' }
   }
