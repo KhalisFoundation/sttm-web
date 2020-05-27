@@ -48,10 +48,13 @@ app
     getMetadataFromRequest(req)
       .then(data => {
         const metaData = createMetadataFromResponse(req, data);
+
         return Promise.resolve(metaData);
       }).catch(err => {
+
         console.error('err.message', err.message);
       }).then(metaData => {
+
         //always executed
         const title = createTitle(metaData && metaData.title);
         const description = createDescription(metaData && metaData.description);

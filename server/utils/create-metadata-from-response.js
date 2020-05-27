@@ -1,4 +1,5 @@
 import { suffixAppName } from './suffix-app-name';
+import { createShabadTitle, createShabadDescription } from './shabads';
 
 /**
  * @param {object} req - The request obj
@@ -8,14 +9,18 @@ export const createMetadataFromResponse = (req, apiResponse) => {
   const { path, query } = req;
   switch (path) {
     case '/shabad':
-      const { shabadInfo: { shabadName }, verses } = apiResponse;
+      const { shabadInfo, verses } = apiResponse.data;
+      const { shabadName } = shabadInfo;
 
-      // finding shabad object from verses
+      // getting shabad object from verses
       const shabad = verses.find(v => v.verseId === shabadName)
 
+      const title = createShabadTitle(shabad);
+      const description = createShabadDescription(shabad, shabadInfo);
+
       return {
-        title: createShabadTitle(shabad),
-        description: createShabadDescription(shabad),
+        title,
+        description
       }
 
     default: return { title: '', description: '' }

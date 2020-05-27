@@ -49,7 +49,7 @@ export default {
       `Search Sri Guru Granth Sahib Jee, Sri Dasam Granth Sahib, Bhai Gurdas Vaaran and Gurbani by Sikh Gurus; Guru Nanak Dev, Guru Angad Dev, Guru Amardas, Guru Ramdass, Guru Arjan Dev, Guru Tegh Bahadur, Guru Gobind Singh and Bhagats like Bhagat Kabir Jee, Sheikh Fareed Jee, Bhagat Jaidev, Bhagat Naamdev, Bhagat Ravidaas, Bhagat Ramanand, Bhagat Parmanand, Bhagat Trilochan, Bhagat Surdas.`,
   },
   '/shabad': {
-    createTitle: () => suffixAppName('Shabad'),
+    createTitle: (title = 'Shabad') => suffixAppName(title),
     createDescription: (description = 'Read shabad ') =>
       `${description} - ${BASIC_META_DESCRIPTION}`,
   },
