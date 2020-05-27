@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import Fetch from '../Fetch';
 import { TEXTS } from '@/constants';
 import { IStore } from '@/features/types';
@@ -114,7 +114,6 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
             return null;
           }
           const sortedShabads = shabads.sort((s1, s2) => s2.AvgScore - s1.AvgScore);
-          console.log(shabads, useMemo, sortedShabads, " sorted shabads")
 
           const fontClassName = unicode ? '' : 'gurbani-font';
 
