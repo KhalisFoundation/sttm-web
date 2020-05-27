@@ -15,8 +15,7 @@ export const getMetadataFromRequest = async (req) => {
       const url = 'https:' + _url;
       return axios.get(url);
     }
-    // We are returning a resolved promise here with falsy value
-    // to indicate we get empty data from api.
+    // We are returning a  falsy value to indicate we get empty data from api.
     default: return null;
   }
 }
