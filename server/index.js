@@ -45,7 +45,7 @@ app
         ? DARK_MODE_CLASS_NAME
         : '';
 
-    let metaData = {};
+    let metaData;
     try {
       const data = await getMetadataFromRequest(req);
       metaData = createMetadataFromResponse(req, data);

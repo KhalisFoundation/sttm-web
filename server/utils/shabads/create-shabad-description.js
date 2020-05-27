@@ -13,10 +13,10 @@ import {
 export const createShabadDescription = (shabad, shabadInfo) => {
 
   if (!shabad) return '';
-  const writerName = getWriter(shabad).english;
+  const shabadWriter = getWriter(shabad).english;
+  const shabadSource = shabadInfo ? getSource(shabadInfo) : '';
   const shabadMeaning = translationMap.english(shabad);
-  const sourceName = shabadInfo ? getSource(shabadInfo) : '';
   const shabadUnicode = getUnicodeVerse(shabad);
 
-  return `${shabadMeaning} ${shabadUnicode} shabad ${sourceName && `from ${sourceName}`} ${writerName && ` written by ${writerName}`}`;
+  return `${shabadMeaning} ${shabadUnicode} shabad ${shabadSource && `from ${shabadSource}`} ${shabadWriter && ` written by ${shabadWriter}`}`;
 }
