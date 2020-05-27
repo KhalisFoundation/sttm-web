@@ -1,4 +1,7 @@
-import { transliterationMap, getUnicodeVerse } from '../../../src/js/util/api/shabad';
+import {
+  transliterationMap,
+  getUnicodeVerse
+} from '../../../src/js/util/api/shabad';
 
 /**
  *

@@ -1,4 +1,9 @@
-import { translationMap, getWriter, getSource } from '../../../src/js/util/api/shabad';
+import {
+  translationMap,
+  getWriter,
+  getSource,
+  getUnicodeVerse
+} from '../../../src/js/util/api/shabad';
 
 /**
  *
@@ -11,6 +16,7 @@ export const createShabadDescription = (shabad, shabadInfo) => {
   const writerName = getWriter(shabad).english;
   const shabadMeaning = translationMap.english(shabad);
   const sourceName = shabadInfo ? getSource(shabadInfo) : '';
+  const shabadUnicode = getUnicodeVerse(shabad);
 
-  return `${shabadMeaning} shabad ${sourceName && `from ${sourceName}`} ${writerName && ` written by ${writerName}`} `;
+  return `${shabadMeaning} ${shabadUnicode} shabad ${sourceName && `from ${sourceName}`} ${writerName && ` written by ${writerName}`}`;
 }
