@@ -25,11 +25,12 @@ export const createMetadataFromResponse = (req, apiResponse) => {
     }
 
     case '/ang': {
+      const title = `Ang ${getAng(req)} of ${getSource(req)}`;
+      const description = `Read page number ${getAng(req)} of ${getSource(req)} now.`
+
       return {
-        title: `Ang ${getAng(req)} of ${getSource(req)}`,
-        description: `Read page number ${getAng(req)} of ${getSource(
-          req
-        )} now.`
+        title,
+        description
       }
     }
 

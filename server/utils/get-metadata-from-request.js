@@ -7,7 +7,7 @@ import { API_URL } from '../../common/constants';
  * @param {object} req - The request obj
  *
  */
-export const getMetadataFromRequest = (req) => {
+export const getMetadataFromRequest = async (req) => {
   const { path, query } = req;
   switch (path) {
     case '/shabad': {
@@ -15,8 +15,8 @@ export const getMetadataFromRequest = (req) => {
       const url = 'https:' + _url;
       return axios.get(url);
     }
-    // We are returni ng a resolved promise here with falsy value
+    // We are returning a resolved promise here with falsy value
     // to indicate we get empty data from api.
-    default: return Promise.resolve(null);
+    default: return null;
   }
 }

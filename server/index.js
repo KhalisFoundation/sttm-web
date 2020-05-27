@@ -29,7 +29,7 @@ app
   .use(express.static(`${__dirname}/../public`))
 
   // Direct all calls to index template
-  .get('*', (req, res) => {
+  .get('*', async (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     const { path, url } = req;
@@ -45,29 +45,26 @@ app
         ? DARK_MODE_CLASS_NAME
         : '';
 
-    getMetadataFromRequest(req)
-      .then(data => {
-        const metaData = createMetadataFromResponse(req, data);
+    let metaData = {};
+    try {
+      const data = await getMetadataFromRequest(req);
+      metaData = createMetadataFromResponse(req, data);
 
-        return Promise.resolve(metaData);
-      }).catch(err => {
+    } catch (err) {
+      console.error('err.message', err.message);
+    } finally {
+      const title = createTitle(metaData && metaData.title);
+      const description = createDescription(metaData && metaData.description);
 
-        console.error('err.message', err.message);
-      }).then(metaData => {
+      const template = createTemplate({
+        url,
+        bodyClass,
+        title,
+        description,
+      });
 
-        //always executed
-        const title = createTitle(metaData && metaData.title);
-        const description = createDescription(metaData && metaData.description);
-
-        const template = createTemplate({
-          url,
-          bodyClass,
-          title,
-          description,
-        });
-
-        template(res, { debug: 'off', stringToBufferThreshold: 1000 });
-      })
+      template(res, { debug: 'off', stringToBufferThreshold: 1000 });
+    }
   })
 
   // Listen on port
