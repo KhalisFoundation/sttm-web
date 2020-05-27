@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import Fetch from '../Fetch';
 import { TEXTS } from '@/constants';
 import { IStore } from '@/features/types';
@@ -65,6 +65,16 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
     })
   }
 
+  formatAvgScore = (avgScore: number) => {
+    const decimal = avgScore - parseInt(avgScore.toString(), 10);
+    console.log(decimal, avgScore, parseInt(avgScore.toString(), 10), 'decimal')
+    if (decimal >= 0.5) {
+      return Math.ceil(avgScore).toString();
+    }
+
+    return Math.floor(avgScore).toString();
+  }
+
   handleShabadClick = (shabadId: number) => () => {
     clickEvent({ action: ACTIONS.RELATED_SHABAD, label: String(shabadId) });
   };
@@ -103,6 +113,8 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
           if (totalShabads === 0) {
             return null;
           }
+          const sortedShabads = shabads.sort((s1, s2) => s2.AvgScore - s1.AvgScore);
+          console.log(shabads, useMemo, sortedShabads, " sorted shabads")
 
           const fontClassName = unicode ? '' : 'gurbani-font';
 
@@ -116,7 +128,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
             <div className="relatedShabadWrapper">
               <h3>{TEXTS.RELATED_SHABADS}</h3>
               <div className="relatedShabadContainer">
-                {shabads.map((s, idx) => {
+                {sortedShabads.map((s, idx) => {
                   if (idx + 1 > visibleShabads) {
                     return null;
                   }
@@ -131,7 +143,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                       onClick={this.handleShabadClick(s.ShabadID)}
                     >
                       <div className="relatedShabadInner">
-                        <div title={`${s.AvgScore.toString()}% matches`} className="relatedShabadAvgRating">
+                        <div title={`${this.formatAvgScore(s.AvgScore)}% matches`} className="relatedShabadAvgRating">
                           <div
                             style={{
                               transform: `scaleY(${s.AvgScore / 100})`,
@@ -196,7 +208,15 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                     </a>)
                 })}
               </div>
-              {visibleShabads < totalShabads && <button className="relatedShabadShowMoreBtn" onClick={this.handleShowMore(totalShabads)}>MORE</button>}
+              {visibleShabads < totalShabads
+                &&
+                (<div className="relatedShabadShowMore">
+                  <button
+                    className="relatedShabadShowMoreBtn"
+                    onClick={this.handleShowMore(totalShabads)}>
+                    Show More Results
+                  </button>
+                </div>)}
             </div>
           );
         }}

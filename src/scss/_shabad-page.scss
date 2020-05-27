@@ -354,14 +354,16 @@ blockquote {
     }
   }
 
-  &ShowMoreBtn {
-    color: $sttm-orange;
-    float: right;
+  &ShowMore {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     margin-bottom: 30px;
-    outline: none;
+    width: 100%;
 
-    &::after {
-      clear: right;
+    &Btn {
+      color: $sttm-orange;
+      outline: none;
     }
   }
 
