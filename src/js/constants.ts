@@ -215,6 +215,16 @@ export const MAX_ANGS = {
   S: 28
 }
 
+export const TIMED_BANI_LINKS = [{
+  name: 'Rehraas sahib',
+  time: '18:00 - 19:00', // time in range in particular format
+  link: '/sunder-gutka/2'
+}, {
+  name: 'Japji sahib',
+  time: '6:00 - 7:00',
+  link: '/sunder-gutka/3'
+}]
+
 export const DOODLE = {
   largeImage: `/assets/images/doodle_hola_mahalla.png`,
   smallImage: `/assets/images/doodle_hola_mahalla_sm.png`,

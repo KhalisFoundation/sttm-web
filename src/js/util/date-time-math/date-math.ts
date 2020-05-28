@@ -18,10 +18,6 @@ export const dateMath = {
     da.setDate(newDay);
     return da.toLocaleDateString('zh-tw'); // yyyy-m-d
   },
-  isInRange: (date1: Date, date2: Date) => {
-    const currentDate = new Date();
-    return new Date(date1) <= currentDate && currentDate <= new Date(date2)
-  },
   isBefore: (date1: Date, date2: Date) => new Date(date1) < new Date(date2),
   isAfter: (date1: Date, date2: Date) => new Date(date1) > new Date(date2),
   expand: (date: Date, year: boolean = true) => {
