@@ -9,11 +9,11 @@
     list-style: none;
 
     > svg {
-      width: 24px;
-      height: 24px;
-      transform: translateX(-2px);
       fill: $sttm-light-black;
+      height: 24px;
       margin-right: 2px;
+      transform: translateX(-2px);
+      width: 24px;
     }
   }
 }
