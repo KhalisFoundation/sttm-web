@@ -10,6 +10,7 @@ import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
 const ON_HEROKU = 'ON_HEROKU' in process.env;
+
 port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
