@@ -1,5 +1,7 @@
 import { SOURCES, SOURCES_WITH_ANG, TYPES as _TYPES } from '@sttm/banidb';
 
+import { ACTIONS } from './util/analytics';
+
 export { SOURCES, SOURCES_WITH_ANG };
 
 export const SEARCH_TYPES = {
@@ -215,15 +217,24 @@ export const MAX_ANGS = {
   S: 28
 }
 
+export interface BAANI_LINK {
+  name: string;
+  time: string;
+  link: string;
+  action: string;
+}
+
 export const TIMED_BAANI_LINKS = [{
   name: 'Rehraas sahib',
   time: '18:00 - 19:00', // time in range in particular format
-  link: '/sunder-gutka/2'
+  link: '/sunder-gutka/2',
+  action: ACTIONS.REHRAAS_SAHIB_LINK,
 }, {
   name: 'Japji sahib',
   time: '6:00 - 7:00',
-  link: '/sunder-gutka/3'
-}]
+  link: '/sunder-gutka/3',
+  action: ACTIONS.JAPJI_SAHIB_LINK
+}] as BAANI_LINK[];
 
 export const DOODLE = {
   largeImage: `/assets/images/doodle_hola_mahalla.png`,
