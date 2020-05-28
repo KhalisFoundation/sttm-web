@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { BAANI_LINK, TIMED_BAANI_LINKS } from '../../constants';
 import { clickEvent } from '../../util/analytics';
 import { timeMath } from '../../util';
+import { Clock } from '../Icons/Clock';
 
 interface IBaaniLinkProps {
   history: History
@@ -29,15 +30,16 @@ class _BaaniLinks extends React.PureComponent<IBaaniLinkProps> {
 
   render() {
     return (
-      <ul>
+      <ul className="baaniLink">
         {TIMED_BAANI_LINKS.map(baani => {
           const timeRange = timeMath.parseTime(baani.time);
-          if (!timeMath.isInRange(timeRange[0], timeRange[1])) {
+          if (!timeMath.isInRange(timeRange[0], timeRange[1] as Date)) {
             return null;
           }
 
           return (
-            <li>
+            <li className="baaniLinkListItem" key={baani.name}>
+              <Clock />
               <a role="button" aria-label="open" onClick={this.handleBaaniLinkClick(baani)}>
                 Time for {baani.name}
               </a>

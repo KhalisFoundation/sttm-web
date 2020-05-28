@@ -219,20 +219,20 @@ export const MAX_ANGS = {
 
 export interface BAANI_LINK {
   name: string;
-  time: string;
+  time: string; // time in range in particular format eg 6:00 - 7:30
   link: string;
   action: string;
 }
 
 export const TIMED_BAANI_LINKS = [{
   name: 'Rehraas sahib',
-  time: '18:00 - 19:00', // time in range in particular format
-  link: '/sunder-gutka/2',
+  time: '18:00 - 20:30',
+  link: '/sundar-gutka/21',
   action: ACTIONS.REHRAAS_SAHIB_LINK,
 }, {
   name: 'Japji sahib',
   time: '6:00 - 7:00',
-  link: '/sunder-gutka/3',
+  link: '/sundar-gutka/2',
   action: ACTIONS.JAPJI_SAHIB_LINK
 }] as BAANI_LINK[];
 

@@ -3,6 +3,7 @@ export const timeMath = {
     if (hours < 0 || hours >= 24) {
       throw new Error("Invalid range for hours, it should be in the range 0 - 24");
     }
+    return true;
   },
   isValidMinute: (mins: number) => {
     if (mins < 0 || mins > 60) {
@@ -24,19 +25,20 @@ export const timeMath = {
 
     const time1 = timeMath.getExactTime(time1Hours, time1Mins);
     const time2 = timeMath.getExactTime(time2Hours, time2Mins);
+    console.log(time1Hours, time1Mins, time2Hours, time2Mins, "_________________________")
 
     return [time1, time2];
   },
   isInRange: (time1: Date, time2: Date) => {
     const currentDateTime = new Date();
-    return new Date(time1) <= currentDateTime && currentDateTime <= new Date(time2)
+    return (new Date(time1) <= currentDateTime) && (currentDateTime <= new Date(time2))
   },
   getExactTime: (hours: number, mins: number): Date => {
     const d = new Date();
     const year = d.getFullYear();
     const month = d.getMonth();
     const date = d.getDate();
-    if (timeMath.isValidMinute(mins) && timeMath.isValidHour(hours)) {
+    if (timeMath.isValidHour(hours) && timeMath.isValidMinute(mins)) {
       return new Date(year, month, date, hours, mins, 0);
     }
     return new Date();

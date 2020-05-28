@@ -1,0 +1,19 @@
+.baaniLink {
+  margin: 0;
+  padding: 0;
+
+  &ListItem {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    list-style: none;
+
+    > svg {
+      width: 24px;
+      height: 24px;
+      transform: translateX(-2px);
+      fill: $sttm-light-black;
+      margin-right: 2px;
+    }
+  }
+}
