@@ -18,6 +18,13 @@ import {
 import { translationMap, getGurmukhiVerse } from './api/shabad';
 
 import { buildApiUrl } from '@sttm/banidb';
+
+/**
+ * Date Time Helpers
+ */
+export * from './date-time-math';
+
+
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
  * Calling this function lets you throw an error inline (eg. JSX)
@@ -453,38 +460,6 @@ export const makeSelection = selectedDiv => {
   window.getSelection().addRange(range);
 };
 
-/**
- * Manipulates the date string
- */
-export const dateMath = {
-  algebra: (inputDate, operator, days) => {
-    const da = new Date(inputDate);
-    let newDay;
-    switch (operator) {
-      case '+':
-      case 'plus':
-        newDay = da.getDate() + days;
-        break;
-      case '-':
-      case 'minus':
-        newDay = da.getDate() - days;
-        break;
-    }
-    da.setDate(newDay);
-    return da.toLocaleDateString('zh-tw'); // yyyy-m-d
-  },
-  isBefore: (date1, date2) => new Date(date1) < new Date(date2),
-  isAfter: (date1, date2) => new Date(date1) > new Date(date2),
-  expand: (date, year = true) => {
-    const inDate = new Date(date);
-    let options;
-    year ?
-      options = { year: 'numeric', month: 'short', day: 'numeric' } :
-      options = { month: 'short', day: 'numeric' };
-    return inDate.toLocaleDateString('en', options);
-  },
-  isFuture: date => dateMath.isBefore(new Date(), date),
-};
 
 export const getHukamnama = data => {
   const { shabads } = data;
