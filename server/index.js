@@ -8,7 +8,10 @@ import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
 
 const hostname = _hostname().substr(0, 3);
-const port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
+let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
+const ON_HEROKU = 'ON_HEROKU' in process.env;
+port = ON_HEROKU ? process.env.PORT : port;
+
 const app = express();
 
 app
@@ -57,5 +60,6 @@ app
     template(res, { debug: 'off', stringToBufferThreshold: 1000 });
   })
 
+
   // Listen on port
-  .listen(process.env.PORT || port, () => console.log(`Server started on port:${port}`));
+  .listen(port, () => console.log(`Server started on port:${port}`));
