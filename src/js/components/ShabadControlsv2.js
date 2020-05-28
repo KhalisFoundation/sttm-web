@@ -19,6 +19,7 @@ export default class ShabadControls extends React.PureComponent {
     toggleCenterAlignOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
     toggleDarkMode: PropTypes.func.isRequired,
+    toggleAutoScrollMode: PropTypes.func.isRequired,
     setVisraamSource: PropTypes.func.isRequired,
     setVisraamStyle: PropTypes.func.isRequired,
     changeFont: PropTypes.func.isRequired,
@@ -35,6 +36,7 @@ export default class ShabadControls extends React.PureComponent {
     centerAlignGurbani: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    autoScrollMode: PropTypes.bool.isRequired,
     fontFamily: PropTypes.string.isRequired,
     showAdvancedOptions: PropTypes.bool.isRequired,
   };

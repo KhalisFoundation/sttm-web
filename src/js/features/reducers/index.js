@@ -5,6 +5,7 @@ import {
   TOGGLE_LARIVAAR_ASSIST_OPTION,
   TOGGLE_LARIVAAR_OPTION,
   TOGGLE_DARK_MODE,
+  TOGGLE_AUTO_SCROLL_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
   SET_VISRAAM_SOURCE,
@@ -16,6 +17,7 @@ import {
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
+  SET_AUTO_SCROLL_MODE,
   SET_VISRAAMS,
   SET_SPLIT_VIEW,
   CHANGE_FONT,
@@ -26,6 +28,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_LARIVAAR,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
+  LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
   LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
@@ -92,6 +95,20 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
+      };
+    }
+    case TOGGLE_AUTO_SCROLL_MODE: {
+      const autoScrollMode = !state.autoScrollMode;
+      clickEvent({
+        action: TOGGLE_AUTO_SCROLL_MODE,
+        label: autoScrollMode ? 1 : 0,
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE, autoScrollMode);
+
+      return {
+        ...state,
+        autoScrollMode,
       };
     }
     case TOGGLE_VISRAAMS: {
@@ -240,6 +257,18 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
+      };
+    }
+    case SET_AUTO_SCROLL_MODE: {
+      const autoScrollMode = action.payload || false;
+      clickEvent({
+        action: SET_AUTO_SCROLL_MODE,
+        label: autoScrollMode ? true : false,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE, autoScrollMode);
+      return {
+        ...state,
+        autoScrollMode,
       };
     }
     case SET_VISRAAMS: {

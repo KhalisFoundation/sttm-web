@@ -43,6 +43,7 @@ export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
 export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
+export const LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE = 'autoScrollMode';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAMS = 'visraams';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE = 'visraamSource';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE = 'visraamStyle';
@@ -75,6 +76,7 @@ export const DEFAULT_FONT_SIZE = 2;
 export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
+export const DEFAULT_AUTO_SCROLL_MODE = false;
 export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 export const DEFAULT_VISRAAMS = false;
 export const DEFAULT_VISRAAM_SOURCE = 'sttm';
@@ -164,6 +166,7 @@ export const TEXTS = {
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
+  AUTO_SCROLL_MODE: 'Auto Scroll Mode',
   VISRAAMS: 'Visraams',
   CENTERALIGN: 'Center-Align',
   HUKAMNAMA_NOT_FOUND_DESCRIPTION:

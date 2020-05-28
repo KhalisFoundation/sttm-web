@@ -25,6 +25,7 @@ export interface SETTING_ACTIONS {
   resetDisplayOptions: Function,
   resetFontOptions: Function,
   toggleVisraams: Function,
+  toggleAutoScrollMode: Function,
   toggleLarivaarOption: Function,
   toggleLarivaarAssistOption: Function,
   setFontSize: Function,
@@ -47,6 +48,7 @@ export interface SETTING_ACTIONS {
   centerAlignGurbani: Boolean,
   splitView: Boolean,
   darkMode: Boolean,
+  autoScrollMode: Boolean,
   fontFamily: String,
   showAdvancedOptions: Boolean,
 }
@@ -64,6 +66,7 @@ export const QUICK_SETTINGS = ({
   toggleSplitViewOption,
   toggleAdvancedOptions,
   toggleDarkMode,
+  toggleAutoScrollMode,
 
   translationLanguages,
   transliterationLanguages,
@@ -75,6 +78,7 @@ export const QUICK_SETTINGS = ({
   splitView,
   showAdvancedOptions,
   darkMode,
+  autoScrollMode,
 }: SETTING_ACTIONS) => [
     {
       type: 'multiselect_checkbox',
@@ -192,6 +196,12 @@ export const QUICK_SETTINGS = ({
       label: 'Dark Mode',
       checked: darkMode,
       action: toggleDarkMode,
+    },
+    {
+      type: 'toggle-option',
+      label: 'Auto Scroll Mode',
+      checked: autoScrollMode,
+      action: toggleAutoScrollMode,
     },
     {
       type: 'toggle-option',

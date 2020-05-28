@@ -2,6 +2,7 @@ import {
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_DARK_MODE,
+  DEFAULT_AUTO_SCROLL_MODE,
   DEFAULT_VISRAAMS,
   DEFAULT_VISRAAM_SOURCE,
   DEFAULT_VISRAAM_STYLE,
@@ -29,6 +30,10 @@ export const toggleDarkMode = createAction(TOGGLE_DARK_MODE);
 
 export const TOGGLE_VISRAAMS = 'TOGGLE_VISRAAMS';
 export const toggleVisraams = createAction(TOGGLE_VISRAAMS);
+
+export const TOGGLE_AUTO_SCROLL_MODE = 'TOGGLE_AUTO_SCROLL_MODE';
+
+export const toggleAutoScrollMode = createAction(TOGGLE_AUTO_SCROLL_MODE);
 
 export const TOGGLE_TRANSLATION_OPTIONS = 'TOGGLE_TRANSLATION_OPTIONS';
 export const toggleTranslationOptions = createAction(
@@ -74,6 +79,9 @@ export const setTransliterationLanguages = createAction(
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const setDarkMode = createAction(SET_DARK_MODE);
 
+export const SET_AUTO_SCROLL_MODE = 'SET_AUTO_SCROLL_MODE';
+export const setAutoScrollMode = createAction(SET_AUTO_SCROLL_MODE);
+
 export const SET_VISRAAMS = 'SET_VISRAAMS';
 export const setVisraams = createAction(SET_VISRAAMS);
 
@@ -84,6 +92,7 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
+  dispatch(setAutoScrollMode(DEFAULT_AUTO_SCROLL_MODE));
   dispatch(setVisraams(DEFAULT_VISRAAMS));
   dispatch(setVisraamSource(DEFAULT_VISRAAM_SOURCE));
   dispatch(setVisraamStyle(DEFAULT_VISRAAM_STYLE));
