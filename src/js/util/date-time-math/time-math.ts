@@ -25,7 +25,6 @@ export const timeMath = {
 
     const time1 = timeMath.getExactTime(time1Hours, time1Mins);
     const time2 = timeMath.getExactTime(time2Hours, time2Mins);
-    console.log(time1Hours, time1Mins, time2Hours, time2Mins, "_________________________")
 
     return [time1, time2];
   },
