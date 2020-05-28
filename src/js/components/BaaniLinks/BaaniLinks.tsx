@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react';
 import { History } from 'history'
 import { withRouter } from 'react-router-dom';
 
-import { BAANI_LINK, TIMED_BAANI_LINKS } from '../../constants';
+import { IBAANI_LINK, TIMED_BAANI_LINKS } from '../../constants';
 import { clickEvent } from '../../util/analytics';
 import { timeMath } from '../../util';
 import { Clock } from '../Icons/Clock';
@@ -12,11 +12,11 @@ interface IBaaniLinkProps {
 }
 
 class _BaaniLinks extends React.PureComponent<IBaaniLinkProps> {
-  constructor(props) {
+  constructor(props: Readonly<IBaaniLinkProps>) {
     super(props);
   }
 
-  handleBaaniLinkClick = (baani: BAANI_LINK) => (e: MouseEvent<HTMLAnchorElement>) => {
+  handleBaaniLinkClick = (baani: IBAANI_LINK) => (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     clickEvent({

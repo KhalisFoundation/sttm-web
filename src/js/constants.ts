@@ -217,7 +217,7 @@ export const MAX_ANGS = {
   S: 28
 }
 
-export interface BAANI_LINK {
+export interface IBAANI_LINK {
   name: string;
   time: string; // time in range in particular format eg 6:00 - 7:30
   link: string;
@@ -234,7 +234,7 @@ export const TIMED_BAANI_LINKS = [{
   time: '6:00 - 7:00',
   link: '/sundar-gutka/2',
   action: ACTIONS.JAPJI_SAHIB_LINK
-}] as BAANI_LINK[];
+}] as IBAANI_LINK[];
 
 export const DOODLE = {
   largeImage: `/assets/images/doodle_hola_mahalla.png`,
