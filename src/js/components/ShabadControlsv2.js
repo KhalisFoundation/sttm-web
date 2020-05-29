@@ -5,6 +5,7 @@ import { VISRAAM_CONSTANTS } from '../constants';
 import { clearVisraamClass } from '../util';
 import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
 import { MultiSelect } from '../components/MultiSelect';
+import { AutoScrollControl } from '../components/AutoScrollControl';
 
 export default class ShabadControls extends React.PureComponent {
   static propTypes = {
@@ -119,6 +120,7 @@ export default class ShabadControls extends React.PureComponent {
   }
 
   render() {
+    const isAutoScrollMode = this.props.autoScrollMode;
     const settings = QUICK_SETTINGS(this.props);
     const advanced = ADVANCED_SETTINGS(this.props);
 
@@ -137,6 +139,7 @@ export default class ShabadControls extends React.PureComponent {
         <div id="shabad-controllers">
           <div className="quick-settings">
             {quickSettingsPanel}
+            {isAutoScrollMode && <AutoScrollControl />}
           </div>
           {this.props.showAdvancedOptions && (
             <div className="advanced-options">
