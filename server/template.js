@@ -153,9 +153,13 @@ export default ({ url, bodyClass, title, description }) => marinate`
   </script>
 <link rel="stylesheet" href="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.css">
 <script src="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.js"></script>
-  <noscript>
-    ${noScriptHTML}
-  </noscript>
+
+<!-- freshwork widget -->
+<script> window.fwSettings={ 'widget_id':63000000151 }; !function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() </script> <script type='text/javascript' src='https://widget.freshworks.com/widgets/63000000151.js' async></script>
+
+<noscript>
+  ${noScriptHTML}
+ </noscript>
 
 
 </body>

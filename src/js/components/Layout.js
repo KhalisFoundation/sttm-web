@@ -112,6 +112,7 @@ class Layout extends React.PureComponent {
           pathname === '/ang') && <FullScreen />}
         {this.state.showScrollToTop && <ScrollToTop />}
       </React.Fragment>
+
     ) : (
         <div className="content-root">
           <GenericError
@@ -120,7 +121,7 @@ class Layout extends React.PureComponent {
             image={SachKaur}
           />
         </div>
-      );
+      )
   }
 
   updateTheme() {
@@ -133,6 +134,7 @@ class Layout extends React.PureComponent {
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
     window.addEventListener('scroll', this.onScroll, { passive: true });
+
     document.title = this.props.title;
     this.updateTheme();
     addVisraamClass();
