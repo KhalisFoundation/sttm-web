@@ -1,73 +1,53 @@
-import { SOURCES } from '@sttm/banidb';
-
-const suffix = suffix => (value = '') =>
-  `${value}${value === '' ? '' : ' - '}${suffix}`;
-
-const suffixAppName = suffix('SikhiToTheMax');
-
-const getAng = req => req.query.ang;
-const getSource = req => SOURCES[req.query.source || 'G'];
-const basicDescription = `Search Sri Guru Granth Sahib Jee, Sri Dasam Granth Sahib, Bhai Gurdas Vaar, Bhai Nandlal Vaar, Bhai Gurdas Singh Vaar, Tankhanaama, Zafarnaama, Amrit Kirtan.`;
+import { suffixAppName } from '../server/utils/';
+import { BASIC_META_DESCRIPTION } from './constants';
 
 export default {
   '/': {
-    title: suffixAppName(),
-    createDescription: () =>
-      `SikhiToTheMax, online Gurbani Searcher. ${basicDescription}`,
+    createTitle: () => suffixAppName(),
+    createDescription: () => `SikhiToTheMax, online Gurbani Searcher. ${BASIC_META_DESCRIPTION}`,
   },
   '/404': {
-    title: suffixAppName('Page not found'),
-    createDescription: () => `Page not found. ${basicDescription}`,
+    createTitle: () => suffixAppName('Page not found'),
+    createDescription: () => 'Page not found.'
   },
   '/terms-of-service': {
-    title: suffixAppName('Terms Of Service'),
-    createDescription: () =>
-      `Terms of Service of SikhiToTheMax. ${basicDescription}`,
+    createTitle: () => suffixAppName('Terms Of Service'),
+    createDescription: () => 'Terms of Service of SikhiToTheMax.'
   },
   '/about': {
-    title: suffixAppName('About'),
-    createDescription: () =>
-      `SikhiToTheMax is backed by a non-profit organization named Khalis Foundation. ${basicDescription}`,
+    createTitle: () => suffixAppName('About'),
+    createDescription: () => 'SikhiToTheMax is backed by a non-profit organization named Khalis Foundation.'
   },
   '/ang': {
-    title: req => suffixAppName(`Ang ${getAng(req)} of ${getSource(req)}`),
-    createDescription: req =>
-      `Read page number ${getAng(req)} of ${getSource(
-        req
-      )} now. ${basicDescription}`,
+    createTitle: (title = 'Ang') => suffixAppName(title),
+    createDescription: (description = 'Read page number ') => description,
   },
   '/index': {
-    title: suffixAppName('Index'),
-    createDescription: () =>
-      `Index page of Sri Guru Granth Sahib Jee, Sri Dasam Granth. Read Asa Ki Vaar, Raag Dhanasari, Ramkali Ki Vaar Rai Balvand, Shalok Sehskritee, Shalok Vaaran Te Vadeek, Salok Mahalla 9, Raag Maala, Akaal Ustat, Vaar Sri Bhagouti Jee kee, Sri Shastar Naam Mala, Zafarnamah, Khalsa Mahima, Sri Charitropakhyan`,
+    createTitle: () => suffixAppName('Index'),
+    createDescription: () => 'Index page of Sri Guru Granth Sahib Jee, Sri Dasam Granth. Read Asa Ki Vaar, Raag Dhanasari, Ramkali Ki Vaar Rai Balvand, Shalok Sehskritee, Shalok Vaaran Te Vadeek, Salok Mahalla 9, Raag Maala, Akaal Ustat, Vaar Sri Bhagouti Jee kee, Sri Shastar Naam Mala, Zafarnamah, Khalsa Mahima, Sri Charitropakhyan',
   },
   '/help': {
-    title: suffixAppName('Help'),
-    createDescription: () =>
-      `Need help in understanding how to use SikhiTheMax? ${basicDescription}`,
+    createTitle: () => suffixAppName('Help'),
+    createDescription: () => 'Needs help in understanding how to use SikhiTheMax?'
   },
   '/hukamnama': {
-    title: suffixAppName('Hukamanama'),
-    createDescription: () =>
-      `Read Sri Mukhwaakh Hukamnama of today from Sri Darbar Sahib, Harmandir Sahib (Golden Temple) Amritsar online now. ${basicDescription}`,
+    createTitle: () => suffixAppName('Hukamanama'),
+    createDescription: () => `Read Sri Mukhwaakh Hukamnama of today from Sri Darbar Sahib, Harmandir Sahib (Golden Temple) Amritsar online now. ${BASIC_META_DESCRIPTION}`,
   },
   '/search': {
-    title: suffixAppName('Search Results'),
-    createDescription: () =>
-      `Search Sri Guru Granth Sahib Jee, Sri Dasam Granth Sahib, Bhai Gurdas Vaaran and Gurbani by Sikh Gurus; Guru Nanak Dev, Guru Angad Dev, Guru Amardas, Guru Ramdass, Guru Arjan Dev, Guru Tegh Bahadur, Guru Gobind Singh and Bhagats like Bhagat Kabir Jee, Sheikh Fareed Jee, Bhagat Jaidev, Bhagat Naamdev, Bhagat Ravidaas, Bhagat Ramanand, Bhagat Parmanand, Bhagat Trilochan, Bhagat Surdas.`,
+    createTitle: () => suffixAppName('Search Results'),
+    createDescription: () => 'Search Sri Guru Granth Sahib Jee, Sri Dasam Granth Sahib, Bhai Gurdas Vaaran and Gurbani by Sikh Gurus; Guru Nanak Dev, Guru Angad Dev, Guru Amardas, Guru Ramdass, Guru Arjan Dev, Guru Tegh Bahadur, Guru Gobind Singh and Bhagats like Bhagat Kabir Jee, Sheikh Fareed Jee, Bhagat Jaidev, Bhagat Naamdev, Bhagat Ravidaas, Bhagat Ramanand, Bhagat Parmanand, Bhagat Trilochan, Bhagat Surdas.'
   },
   '/shabad': {
-    title: suffixAppName('Shabad'),
-    createDescription: () =>
-      `Read shabad online right now. ${basicDescription}`,
+    createTitle: (title = 'Shabad') => suffixAppName(title),
+    createDescription: (description = 'Read shabad ') => description,
   },
   '/sync': {
-    title: suffixAppName('Sync'),
-    createDescription: () => ``,
+    createTitle: () => suffixAppName('Sync'),
+    createDescription: () => '',
   },
   '/sundar-gutka': {
-    title: suffixAppName('Sundar Gutka'),
-    createDescription: () =>
-      `Read Nitnem Baanies like Japji Sahib, Jaap Sahib, Tva Prasad Sawaiye, Benit Chaupayee Sahib, Anand Sahib, Rehiraas Sahib, Aartee, Ardaas, Kirtan Sohilla Sahib with translations, transliterations and larivaar options online right now from Sundar Gutka.`,
+    createTitle: () => suffixAppName('Sundar Gutka'),
+    createDescription: () => 'Read Nitnem Baanies like Japji Sahib, Jaap Sahib, Tva Prasad Sawaiye, Benit Chaupayee Sahib, Anand Sahib, Rehiraas Sahib, Aartee, Ardaas, Kirtan Sohilla Sahib with translations, transliterations and larivaar options online right now from Sundar Gutka.',
   },
 };

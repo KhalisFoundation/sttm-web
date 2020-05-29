@@ -1,4 +1,4 @@
-import { SOURCES } from '../../constants';
+import { SOURCES } from '@sttm/banidb';
 
 export const getAng = shabad => shabad.pageNo;
 
