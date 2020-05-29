@@ -4,20 +4,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 const path = require('path');
+const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
-
-const API_URLS = {
-  BANIS: PRODUCTION ? '//api.banidb.com/v2/banis' : "//api.khajana.org/v2/banis",
-  PRODUCTION: '//api.banidb.com/v2/',
-  DEVELOPMENT: '//api.khajana.org/v2/',
-  BANNERS: '//api.sikhitothemax.org/messages/web',
-  SYNC: {
-    PRODUCTION: '//api.sikhitothemax.org/',
-    LOCAL: '//api.sikhitothemax.org/',
-  },
-  CEREMONIES: '//api.sikhitothemax.org/ceremonies/'
-};
 
 const commonPlugins = [new ManifestPlugin()];
 
