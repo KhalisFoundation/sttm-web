@@ -32,8 +32,8 @@ class _BaaniLinks extends React.PureComponent<IBaaniLinkProps> {
     return (
       <ul className="baaniLink">
         {TIMED_BAANI_LINKS.map(baani => {
-          const timeRange = timeMath.parseTime(baani.time);
-          if (!timeMath.isInRange(timeRange[0], timeRange[1] as Date)) {
+          const timeRange = timeMath.parseTime(baani.startTimeInMinutes, baani.endTimeInMinutes);
+          if (!timeMath.isInRange(timeRange[0], timeRange[1])) {
             return null;
           }
 

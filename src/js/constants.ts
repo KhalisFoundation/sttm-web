@@ -1,6 +1,7 @@
 import { SOURCES, SOURCES_WITH_ANG, TYPES as _TYPES } from '@sttm/banidb';
 
 import { ACTIONS } from './util/analytics';
+import { timeMath } from '../js/util/';
 
 export { SOURCES, SOURCES_WITH_ANG };
 
@@ -219,20 +220,31 @@ export const MAX_ANGS = {
 
 export interface IBAANI_LINK {
   name: string;
-  time: string; // time in range in particular format eg 6:00 - 7:30
+  startTimeInMinutes: number;
+  endTimeInMinutes: number;
   link: string;
   action: string;
 }
 
 export const TIMED_BAANI_LINKS = [{
   name: 'Rehraas sahib',
-  time: '18:00 - 20:30',
+  startTimeInMinutes: timeMath.calcTimeInMinutes(17, 0),
+  endTimeInMinutes: timeMath.calcTimeInMinutes(20, 0),
   link: '/sundar-gutka/21',
   action: ACTIONS.REHRAAS_SAHIB_LINK,
-}, {
+},
+{
   name: 'Japji sahib',
-  time: '6:00 - 7:00',
+  startTimeInMinutes: timeMath.calcTimeInMinutes(5, 0),
+  endTimeInMinutes: timeMath.calcTimeInMinutes(8, 0),
   link: '/sundar-gutka/2',
+  action: ACTIONS.JAPJI_SAHIB_LINK
+},
+{
+  name: 'Sohilaa sahib',
+  startTimeInMinutes: timeMath.calcTimeInMinutes(21, 0),
+  endTimeInMinutes: timeMath.calcTimeInMinutes(23, 0),
+  link: '/sundar-gutka/23',
   action: ACTIONS.JAPJI_SAHIB_LINK
 }] as IBAANI_LINK[];
 

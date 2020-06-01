@@ -1,3 +1,5 @@
+type Time = [number, number]; // [ Hours , Mins ]
+
 export const timeMath = {
   isValidHour: (hours: number) => {
     if (hours < 0 || hours >= 24) {
@@ -11,22 +13,35 @@ export const timeMath = {
     }
     return true;
   },
-  parseTime: (time: string): [Date, Date?] => {
-    const timeRange = time.split('-'); // 4:30 - 6:30
-    const timeRangeArr = timeRange // [4:30, 6:30]
-      .map(tR => tR.split(':')) // [[4,30],[6,30]]
-      .map(tRStr => [parseInt(tRStr[0], 10), parseInt(tRStr[1], 10)]); //[[4, 30], [6, 30]]
+  isValidTimeInMinutes: (timeInMins: number) => {
+    const maxTimeInMins = 24 * 60;
+    if (timeInMins < 0 || timeInMins > maxTimeInMins) {
+      throw new Error("Invalid value for time in mins");
+    }
 
-    const time1Hours = timeRangeArr[0][0];
-    const time1Mins = timeRangeArr[0][1];
+    return true;
+  },
+  parseTimeInMinutes: (timeInMins: number): Time | undefined => {
+    if (timeMath.isValidTimeInMinutes(timeInMins)) {
+      const mins = timeInMins % 60;
+      const hours = (timeInMins - mins) / 60;
+      return [hours, mins];
+    }
+  },
+  calcTimeInMinutes: (hours: number, mins: number) => {
+    if (timeMath.isValidHour(hours) && timeMath.isValidMinute(mins)) {
+      return hours * 60 + mins;
+    }
+  },
+  parseTime: (time1InMinutes: number, time2InMinutes: number): [Date, Date] => {
 
-    const time2Hours = timeRangeArr[1][0];
-    const time2Mins = timeRangeArr[1][1];
+    const time1 = timeMath.parseTimeInMinutes(time1InMinutes);
+    const time2 = timeMath.parseTimeInMinutes(time2InMinutes);
 
-    const time1 = timeMath.getExactTime(time1Hours, time1Mins);
-    const time2 = timeMath.getExactTime(time2Hours, time2Mins);
+    const dateTime1 = time1 && timeMath.getExactTime(time1[0], time1[1]);
+    const dateTime2 = time2 && timeMath.getExactTime(time2[0], time2[1]);
 
-    return [time1, time2];
+    return [dateTime1, dateTime2] as [Date, Date];
   },
   isInRange: (time1: Date, time2: Date) => {
     const currentDateTime = new Date();
