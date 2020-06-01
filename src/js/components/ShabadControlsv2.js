@@ -139,7 +139,6 @@ export default class ShabadControls extends React.PureComponent {
         <div id="shabad-controllers">
           <div className="quick-settings">
             {quickSettingsPanel}
-            {isAutoScrollMode && <AutoScrollControl />}
           </div>
           {this.props.showAdvancedOptions && (
             <div className="advanced-options">

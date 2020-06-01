@@ -7,6 +7,7 @@ import { pageView } from '../../util/analytics';
 import ShabadContent from '../../components/ShabadContent';
 import { toShabadURL } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
+import { AutoScrollControl } from '../../components/AutoScrollControl';
 import { TEXTS } from '../../constants';
 const Stub = () => <div className="spinner" />;
 
@@ -24,25 +25,26 @@ export default class Shabad extends React.PureComponent {
     );
 
     return (
-     
+
       <PageLoader url={url}>
         {({ data, loading }) =>
           loading ? (
             <Stub />
           ) : (
-            <div className="row" id="content-root">
-              <BreadCrumb links={[{ title: TEXTS.URIS.SHABAD }]} />
-              <ShabadContent
-                random={random}
-                type="shabad"
-                highlight={highlight}
-                info={data.shabadInfo}
-                gurbani={data.verses}
-                nav={data.navigation}
-              />
-            </div>
+              <div className="row" id="content-root">
+                <BreadCrumb links={[{ title: TEXTS.URIS.SHABAD }]} />
+                <ShabadContent
+                  random={random}
+                  type="shabad"
+                  highlight={highlight}
+                  info={data.shabadInfo}
+                  gurbani={data.verses}
+                  nav={data.navigation}
+                />
+                <AutoScrollControl />
+              </div>
 
-          )
+            )
         }
       </PageLoader>
     );

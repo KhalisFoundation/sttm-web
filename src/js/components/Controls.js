@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
+
 import {
   setFontSize,
   setTranslationLanguages,
@@ -98,6 +99,7 @@ class Controls extends React.PureComponent {
           ref={this.setRef}
         >
           <ShabadControls {...this.props} />
+
         </div>
       </>
     );

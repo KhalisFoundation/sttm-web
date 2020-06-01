@@ -9,48 +9,108 @@ interface IAutoScrollControlState {
 export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollControlState> {
 
   static maxScrollingSpeed = 100;
-  static maxScrollPixelMovement = 10;
+  static maxScrollPixelMovement = 6;
+  _maxScrollPossible!: number;
+  _nextScrollPosition!: number;
+  _sliding!: boolean;
 
-  constructor(props) {
+  constructor(props: Readonly<{}>) {
     super(props)
 
     this.state = {
-      isScrolling: true,
+      isScrolling: false,
       scrollingSpeed: 50,
     }
   }
 
   handleScrollSpeedChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value, ' new value')
+    // console.log(e.currentTarget.value, ' new value')
+    const newSpeed = ((e.currentTarget.value as unknown) as number);
+    console.log(this._sliding, "sliding..")
+    if (!this._sliding) {
+      requestAnimationFrame(() => {
+        this.setState(() => { return { ...this.state, scrollingSpeed: newSpeed } }, () => {
+          this._sliding = false;
+        })
+      });
+
+      this._sliding = true;
+    }
+
+  }
+
+  toggleAutoScrollState = () => {
+    if (this.state.isScrolling) {
+      this.removeScroll();
+    } else {
+      this.startScroll();
+    }
+  }
+
+  startScroll = () => {
     this.setState(() => {
       return {
         ...this.state,
-        scrollingSpeed: parseInt(e.target.value, 10)
+        isScrolling: true,
       }
     })
+    this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
+    this._nextScrollPosition = window.scrollY;
+
+    window.addEventListener('scroll', this.handleAutoScroll);
+    requestAnimationFrame(this.handleAutoScroll);
+  }
+
+  removeScroll = () => {
+    this.setState(() => {
+      return {
+        ...this.state,
+        isScrolling: false
+      }
+    });
+    window.removeEventListener('scroll', this.handleAutoScroll);
   }
 
   handleAutoScroll = () => {
-    if (window.scrollY !== window.innerHeight) {
-      const { scrollingSpeed } = this.state;
-      let scrollY = window.scrollY;
-      scrollY += (scrollingSpeed / 100) * AutoScrollControl.maxScrollPixelMovement
+    // console.log(window.scrollY, window.innerHeight, 'window .inner height..')
+    const scrollY = window.scrollY;
+    if (this.state.isScrolling) {
+      if (scrollY >= this._maxScrollPossible) {
+        this.removeScroll();
+      }
 
-      window.scrollTo(0, scrollY);
+      const movement = Math.floor((this.state.scrollingSpeed / 100) * AutoScrollControl.maxScrollPixelMovement);
+      const newScrollPosition = (scrollY + movement) === scrollY ? scrollY + movement : scrollY + 1;
 
-      requestAnimationFrame(this.handleAutoScroll);
+      // console.log(scrollY, this._nextScrollPosition, this._maxScrollPossible, ".....")
+      if (this._nextScrollPosition === scrollY) {
+        // console.log(newScrollPosition, this.state.scrollingSpeed, movement, "..........")
+        window.scrollTo({ left: 0, top: newScrollPosition, behavior: 'smooth' });
+
+        this._nextScrollPosition = newScrollPosition;
+
+        requestAnimationFrame(this.handleAutoScroll);
+      }
     }
   }
 
   componentDidMount = () => {
-    window.addEventListener('scroll', this.handleAutoScroll, { passive: true });
+    // console.log(document.documentElement, this._maxScrollPossible, window.innerHeight);
+    window.addEventListener("touchmove", this.removeScroll);
+    window.addEventListener("wheel", this.removeScroll);
   }
+
+  componentWillUnmount = () => {
+    window.removeEventListener("scroll", this.startScroll);
+    window.removeEventListener("wheel", this.removeScroll);
+    window.removeEventListener("touchmove", this.removeScroll);
+  };
 
   render() {
     const { isScrolling, scrollingSpeed } = this.state;
     return (
-      <div className="autoScrollController">
-        <button className="autoScrollControllerBtn">
+      <div className="autoScrollControl">
+        <button onClick={this.toggleAutoScrollState} className="autoScrollControlBtn">
           {isScrolling ? 'Pause' : 'Start'}
         </button>
         <label>
@@ -58,8 +118,9 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
           <input
             id="changeSpeed"
             type="range"
-            min="0"
+            min="1"
             step="1"
+            onInput={this.handleScrollSpeedChange}
             max={AutoScrollControl.maxScrollingSpeed}
             value={scrollingSpeed} />
         </label>
