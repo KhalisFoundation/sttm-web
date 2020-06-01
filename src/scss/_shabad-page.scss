@@ -290,7 +290,7 @@ blockquote {
   }
 
   &Inner {
-    align-items: center;
+    align-items: flex-end;
     display: flex;
     height: 100%;
   }
@@ -386,11 +386,10 @@ blockquote {
   &AvgRating {
     background-color: $sttm-grey;
     flex-shrink: 0;
-    height: 100%;
+    height: 150px;
     margin-right: 4px;
     position: relative;
     width: 8px;
-    height: 150px;
 
     &Excellent {
       background-color: $sttm-green;
