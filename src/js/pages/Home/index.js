@@ -6,7 +6,7 @@ import { toSearchURL, getShabadList, dateMath } from '../../util';
 import { pageView } from '../../util/analytics';
 import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
 import SehajPaathLink from '../../components/SehajPaathLink';
-import { BaaniLinks } from '../../components/BaaniLinks/BaaniLinks';
+import { BaaniLinks } from '../../components/BaaniLinks/';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Icons/Logo';
 import CrossIcon from '../../components/Icons/Times';
