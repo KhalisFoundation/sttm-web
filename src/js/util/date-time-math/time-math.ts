@@ -2,20 +2,21 @@ type Time = [number, number]; // [ Hours , Mins ]
 
 export const timeMath = {
   isValidHour: (hours: number) => {
-    if (hours < 0 || hours >= 24) {
+    if ((hours < 0) || (hours >= 24)) {
       throw new Error("Invalid range for hours, it should be in the range 0 - 24");
     }
     return true;
   },
   isValidMinute: (mins: number) => {
-    if (mins < 0 || mins > 60) {
+    if ((mins < 0) || (mins > 60)) {
       throw new Error("Invalid range for minutes, it should be in 0 - 60 ");
     }
     return true;
   },
   isValidTimeInMinutes: (timeInMins: number) => {
     const maxTimeInMins = 24 * 60;
-    if (timeInMins < 0 || timeInMins > maxTimeInMins) {
+    if ((timeInMins < 0) || (timeInMins > maxTimeInMins)) {
+      console.log(timeInMins, maxTimeInMins, ".........")
       throw new Error("Invalid value for time in mins");
     }
 

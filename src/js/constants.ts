@@ -241,7 +241,7 @@ export const TIMED_BAANI_LINKS = [{
 },
 {
   name: 'Sohilaa sahib',
-  startTimeInMinutes: 2160, //timeMath.calcTimeInMinutes(21, 0),
+  startTimeInMinutes: 1260, //timeMath.calcTimeInMinutes(21, 0),
   endTimeInMinutes: 1380, //timeMath.calcTimeInMinutes(23, 0),
   link: '/sundar-gutka/23',
   action: ACTIONS.SOHILAA_SAHIB_LINK
