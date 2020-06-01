@@ -67,7 +67,6 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
 
   formatAvgScore = (avgScore: number) => {
     const decimal = avgScore - parseInt(avgScore.toString(), 10);
-    console.log(decimal, avgScore, parseInt(avgScore.toString(), 10), 'decimal')
     if (decimal >= 0.5) {
       return Math.ceil(avgScore).toString();
     }
