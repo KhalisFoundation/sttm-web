@@ -186,8 +186,8 @@ class Shabad extends React.PureComponent {
   };
 
   componentDidMount() {
-    // addEventListener('scroll', this.scrollListener, { passive: true });
-    // this.scrollListener();
+    addEventListener('scroll', this.scrollListener, { passive: true });
+    this.scrollListener();
   }
 
   componentWillUnmount() {

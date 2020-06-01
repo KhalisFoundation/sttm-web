@@ -60,8 +60,8 @@ export default class SlideControls extends React.PureComponent {
   };
 
   componentDidMount() {
-    // this.mounted = true;
-    // window.addEventListener('scroll', this.scrollListener, { passive: true });
+    this.mounted = true;
+    window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
   componentDidUpdate() {

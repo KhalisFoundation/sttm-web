@@ -1,18 +1,37 @@
 .autoScrollControl {
-  position: fixed;
-  bottom: 0;
-  top: 100vh;
-  transform: translateY(-100%);
-  color: white;
-  height: 50px;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
   align-items: center;
   background-color: rgba(0,0,0,.5);
+  bottom: 0;
+  color: $sttm-white;
+  height: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 8px;
+  position: fixed;
+  top: 100vh;
+  transform: translateY(-100%);
+  width: 100vw;
 
   &Btn {
     margin-bottom: 8px;
+  }
+
+  &Speed {
+    display: flex;
+    align-items: center;
+
+    & > label {
+      color: $sttm-white;
+      display: flex;
+
+      & > input {
+        margin-left: 8px;
+      }
+    }
+
+    &Value {
+      margin-left: 8px;
+    }
   }
 }
