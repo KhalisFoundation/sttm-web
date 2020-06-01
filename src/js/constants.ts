@@ -245,7 +245,7 @@ export const TIMED_BAANI_LINKS = [{
   startTimeInMinutes: timeMath.calcTimeInMinutes(21, 0),
   endTimeInMinutes: timeMath.calcTimeInMinutes(23, 0),
   link: '/sundar-gutka/23',
-  action: ACTIONS.JAPJI_SAHIB_LINK
+  action: ACTIONS.SOHILAA_SAHIB_LINK
 }] as IBAANI_LINK[];
 
 export const DOODLE = {
