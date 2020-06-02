@@ -50,6 +50,15 @@
   display: inline-block;
   height: 54px;
   width: 100%;
+
+  &.doodle-link.bigger-image {
+    display: inline-block;
+    height: 88px;
+  }
+
+  &.doodle-link.icon {
+    display: none;
+  }
 }
 
 .top-bar-logo-small {
@@ -514,8 +523,12 @@
     background-image: url(/assets/images/sttm_icon.png);
     width: 54px;
 
-    &.doodle-link {
-      background-image: url(/assets/images/sttm_icon.png) !important;
+    &.doodle-link.icon {
+      display: inline-block;
+    }
+
+    &.doodle-link.bigger-image {
+      display: none;
     }
   }
 
