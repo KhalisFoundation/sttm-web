@@ -16,6 +16,7 @@ const API_URLS = {
     PRODUCTION: '//api.sikhitothemax.org/',
     LOCAL: '//api.sikhitothemax.org/',
   },
+  DOODLE: '//api.sikhitothemax.org/doodle/',
 };
 
 const commonPlugins = [new ManifestPlugin()];
@@ -32,6 +33,7 @@ const plugins = PRODUCTION
       SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
       BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
+      DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
     }),
   ])
   : commonPlugins.concat([
@@ -44,6 +46,7 @@ const plugins = PRODUCTION
       SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
       BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
+      DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
     }),
   ]);
 
