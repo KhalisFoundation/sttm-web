@@ -16,6 +16,7 @@ export default class ShabadControls extends React.PureComponent {
     toggleLarivaarOption: PropTypes.func.isRequired,
     toggleLarivaarAssistOption: PropTypes.func.isRequired,
     setFontSize: PropTypes.func.isRequired,
+    setLineHeight: PropTypes.func.isRequired,
     toggleCenterAlignOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
     toggleDarkMode: PropTypes.func.isRequired,
@@ -32,6 +33,7 @@ export default class ShabadControls extends React.PureComponent {
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    lineHeight: PropTypes.number.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
@@ -40,7 +42,7 @@ export default class ShabadControls extends React.PureComponent {
   };
 
   bakeSettings = settingsObj => {
-    let iconsMarkup, options, Icon;
+    let controlsMarkup, options, Icon;
     switch (settingsObj.type) {
       case 'multiselect_checkbox':
         return (
@@ -72,7 +74,7 @@ export default class ShabadControls extends React.PureComponent {
           const { icon, control, value, action, actionType } = c;
           const CustomControl = icon || control;
           const isOnChange = actionType === 'change';
-          const inOnClick = actionType !== 'change';
+          const isOnClick = actionType !== 'change';
 
           return (
             <CustomControl
@@ -83,12 +85,11 @@ export default class ShabadControls extends React.PureComponent {
             />
           );
         });
+        console.log(controlsMarkup, 'conrols markup');
         return (
           <>
             <p className="toggle-text">{settingsObj.label}</p>
-            <>
-              {controlsMarkup}
-            </>
+            {controlsMarkup}
           </>
         )
       case 'separator':
@@ -138,6 +139,7 @@ export default class ShabadControls extends React.PureComponent {
   }
 
   render() {
+    console.log(this.props.lineHeight, "....")
     const settings = QUICK_SETTINGS(this.props);
     const advanced = ADVANCED_SETTINGS(this.props);
 

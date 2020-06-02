@@ -2,6 +2,7 @@ import {
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_DARK_MODE,
+  DEFAULT_LINE_HEIGHT,
   DEFAULT_VISRAAMS,
   DEFAULT_VISRAAM_SOURCE,
   DEFAULT_VISRAAM_STYLE,
@@ -63,6 +64,9 @@ export const setUnicode = createAction(SET_UNICODE);
 export const SET_FONT_SIZE = 'SET_FONT_SIZE';
 export const setFontSize = createAction(SET_FONT_SIZE);
 
+export const SET_LINE_HEIGHT = 'SET_LINE_HEIGHT';
+export const setLineHeight = createAction(SET_LINE_HEIGHT);
+
 export const SET_TRANSLATION_LANGUAGES = 'SET_TRANSLATION_LANGUAGES';
 export const setTranslationLanguages = createAction(SET_TRANSLATION_LANGUAGES);
 
@@ -98,6 +102,7 @@ export const resetFontOptions = () => dispatch => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
   dispatch(changeFont(DEFAULT_FONT_FAMILY));
+  dispatch(setLineHeight(DEFAULT_LINE_HEIGHT));
 };
 
 export const SET_CENTER_ALIGN_OPTION = 'SET_CENTER_ALIGN_OPTION';

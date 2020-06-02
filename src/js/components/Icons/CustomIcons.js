@@ -16,10 +16,12 @@ export const PlusIcon = props => (
 );
 PlusIcon.propTypes = props;
 
+
+const fontControlCommonStyles = {width: 'inherit', height: '42px', marginBottom: 0 }
 export const FontSizeControl = props => (
   <select
     className={`custom-fa ${props.className}`}
-    style={{ 'width': 'inherit', 'height': '42px', 'marginBottom': '0' }}
+    style={{ ...fontControlCommonStyles }}
     onChange={(e) => {
       const updatedSize = e.currentTarget.value;
       props.onClick(updatedSize)
@@ -40,18 +42,21 @@ export const LineHeightControl = props => (
   <select
     className={`custom-fa ${props.className}`}
     onChange={(e) => {
-      props.onChange(e.currentTarget.value);
+      props.onChange(Number(e.currentTarget.value));
     }}
+    style={{...fontControlCommonStyles}}
     value={props.value}
   >
-    <option>1</option>
-    <option>1.2</option>
-    <option>1.4</option>
-    <option>1.6</option>
-    <option>1.8</option>
-    <option>2</option>
+    <option value={1}>1</option>
+    <option value={1.2}>1.2</option>
+    <option value={1.4}>1.4</option>
+    <option value={1.6}>1.6</option>
+    <option value={1.8}>1.8</option>
+    <option value={2}>2</option>
   </select>
 )
+
+LineHeightControl.propTypes = props;
 
 export const MinusIcon = props => (
   <span onClick={props.onClick}
