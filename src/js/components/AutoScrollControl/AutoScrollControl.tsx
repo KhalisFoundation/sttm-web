@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import { connect } from 'react-redux';
 
 interface IAutoScrollControlState {
   isScrolling: boolean;
@@ -150,7 +149,7 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
               max={AutoScrollControl.maxScrollingSpeed}
               value={scrollingSpeed} />
           </label>
-          <span className="autoScrollControlSpeedValu">{scrollingSpeed}</span>
+          <span className="autoScrollControlSpeedValue">{scrollingSpeed}</span>
         </div>
       </div>
     )
