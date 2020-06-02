@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, DOODLE } from '../constants';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, DOODLE } from '../constants';
 import { Link } from 'react-router-dom';
 import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
@@ -154,6 +154,8 @@ export default class Header extends React.PureComponent {
                                   placeholder={placeholder}
                                   title={title}
                                   pattern={pattern}
+                                  min={name === 'ang' && 1}
+                                  max={name === 'ang' && MAX_ANGS[source]}
                                 />
 
                                 <button

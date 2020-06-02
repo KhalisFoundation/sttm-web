@@ -21,6 +21,7 @@
   "help",
   "controller",
   "banner",
+  "baani-link",
   "vishraam";
 
 html,
@@ -232,4 +233,8 @@ select {
     margin-right: auto;
     width: 150px;
   }
+}
+
+.fullscreen-view #freshworks-container {
+  display: none;
 }
