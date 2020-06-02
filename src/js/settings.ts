@@ -10,9 +10,9 @@ import { toggleItemInArray } from './util';
 import {
   LarivaarIcon,
   LarivaarAssistIcon,
-  FontPlus,
-  CurrentFont,
-  FontMinus,
+  PlusIcon,
+  MinusIcon,
+  FontSizeControl,
   AlignCenterIcon,
   AlignLeftIcon,
   SplitViewIcon,
@@ -60,6 +60,7 @@ export const QUICK_SETTINGS = ({
   toggleLarivaarOption,
   toggleLarivaarAssistOption,
   setFontSize,
+  setLineHeight,
   toggleCenterAlignOption,
   toggleSplitViewOption,
   toggleAdvancedOptions,
@@ -71,6 +72,7 @@ export const QUICK_SETTINGS = ({
   larivaarAssist,
   larivaar,
   fontSize,
+  lineHeight,
   centerAlignGurbani,
   splitView,
   showAdvancedOptions,
@@ -103,21 +105,22 @@ export const QUICK_SETTINGS = ({
     {
       type: 'icon-toggle',
       label: 'Font Size',
-      iconList: [
+      controlsList: [
         {
-          icon: FontMinus,
+          icon: MinusIcon,
           action: () => {
             fontSize >= 1.6 && setFontSize(parseFloat((fontSize - 0.4).toFixed(1)));
           },
           value: Math.floor(fontSize * 10)
         },
         {
-          icon: CurrentFont,
+          control: FontSizeControl,
+          actionType: 'change',
           action: (size: any) => { setFontSize(parseFloat((size / 10).toFixed(1))); },
           value: Math.floor(fontSize * 10),
         },
         {
-          icon: FontPlus,
+          icon: PlusIcon,
           action: () => {
             fontSize < 3.2 && setFontSize(parseFloat((fontSize + 0.4).toFixed(1)));
           },
@@ -129,7 +132,7 @@ export const QUICK_SETTINGS = ({
     {
       type: 'icon-toggle',
       label: 'Text Align',
-      iconList: [
+      controlsList: [
         {
           icon: AlignLeftIcon,
           action: () => {
@@ -149,7 +152,7 @@ export const QUICK_SETTINGS = ({
     {
       type: 'icon-toggle',
       label: 'Split',
-      iconList: [
+      controlsList: [
         {
           icon: SplitViewIcon,
           action: toggleSplitViewOption,
@@ -160,7 +163,7 @@ export const QUICK_SETTINGS = ({
     {
       type: 'icon-toggle',
       label: 'Larivaar',
-      iconList: [
+      controlsList: [
         {
           icon: LarivaarIcon,
           action: () => {
@@ -229,6 +232,9 @@ export const ADVANCED_SETTINGS = ({
   fontFamily,
 }: SETTING_ACTIONS) => [
     {
+      type: ''
+    },
+    {
       type: 'dropdown',
       label: 'Visraam Source',
       value: visraamSource,
@@ -248,5 +254,31 @@ export const ADVANCED_SETTINGS = ({
       value: fontFamily,
       action: changeFont,
       options: FONT_OPTIONS,
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Line Height',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => {
+            fontSize >= 1.6 && setFontSize(parseFloat((fontSize - 0.4).toFixed(1)));
+          },
+          value: Math.floor(fontSize * 10)
+        },
+        {
+          control: FontSizeControl,
+          actionType: 'change',
+          action: (size: any) => { setFontSize(parseFloat((size / 10).toFixed(1))); },
+          value: Math.floor(fontSize * 10),
+        },
+        {
+          icon: PlusIcon,
+          action: () => {
+            fontSize < 3.2 && setFontSize(parseFloat((fontSize + 0.4).toFixed(1)));
+          },
+          value: Math.floor(fontSize * 10)
+        },
+      ],
     },
   ]
