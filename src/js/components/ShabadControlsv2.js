@@ -85,7 +85,6 @@ export default class ShabadControls extends React.PureComponent {
             />
           );
         });
-        console.log(controlsMarkup, 'conrols markup');
         return (
           <>
             <p className="toggle-text">{settingsObj.label}</p>
@@ -139,7 +138,6 @@ export default class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props.lineHeight, "....")
     const settings = QUICK_SETTINGS(this.props);
     const advanced = ADVANCED_SETTINGS(this.props);
 
