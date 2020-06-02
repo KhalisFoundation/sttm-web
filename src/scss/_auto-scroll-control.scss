@@ -1,11 +1,11 @@
 .autoScrollControl {
   align-items: center;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0, 0, 0, 0.5);
   bottom: 0;
   color: $sttm-white;
-  height: 75px;
   display: flex;
   flex-direction: column;
+  height: 75px;
   justify-content: center;
   padding: 8px;
   position: fixed;
@@ -19,8 +19,8 @@
   }
 
   &Speed {
-    display: flex;
     align-items: center;
+    display: flex;
 
     & > label {
       color: $sttm-white;
