@@ -15,7 +15,7 @@ import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
 import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
-
+import { AutoScrollControl } from '../AutoScrollControl';
 
 /**
  *
@@ -105,6 +105,7 @@ class Shabad extends React.PureComponent {
         fontFamily,
         centerAlignGurbani,
         showFullScreen,
+        autoScrollMode,
       },
       handleEmbed,
       handleCopyAll,
@@ -113,6 +114,7 @@ class Shabad extends React.PureComponent {
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
+
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
@@ -169,6 +171,7 @@ class Shabad extends React.PureComponent {
             </div>
           </div>
           <ProgressBar percent={this.state.progress} />
+          {autoScrollMode && <AutoScrollControl />}
         </React.Fragment>
       </GlobalHotKeys>
     );

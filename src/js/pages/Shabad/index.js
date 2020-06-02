@@ -7,7 +7,6 @@ import { pageView } from '../../util/analytics';
 import ShabadContent from '../../components/ShabadContent';
 import { toShabadURL } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
-import { AutoScrollControl } from '../../components/AutoScrollControl';
 import { TEXTS } from '../../constants';
 const Stub = () => <div className="spinner" />;
 
@@ -41,7 +40,6 @@ export default class Shabad extends React.PureComponent {
                   gurbani={data.verses}
                   nav={data.navigation}
                 />
-                <AutoScrollControl />
               </div>
 
             )

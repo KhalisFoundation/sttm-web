@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react';
+import { connect } from 'react-redux';
 
 interface IAutoScrollControlState {
   isScrolling: boolean;
@@ -9,7 +10,7 @@ interface IAutoScrollControlState {
 export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollControlState> {
 
   static maxScrollingSpeed = 100;
-  static maxScrollPixelMovement = 20;
+  static maxScrollPixelMovement = 25;
   static minScrollPixelMovement = 5;
   static minInterval = 10;
   static fps = 1000 / 40;
@@ -18,7 +19,7 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
   _sliding!: boolean;
   // _then: number;
   // _isFirstIteration: boolean;
-  _interval: NodeJS.Timeout;
+  _interval!: NodeJS.Timeout;
 
 
   constructor(props: Readonly<{}>) {
@@ -95,7 +96,7 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
       this._nextScrollPosition += movement;
       // const now = Date.now();
       // const elapsed = now - this._then;
-      console.log(movement, this._nextScrollPosition)
+      // console.log(movement, this._nextScrollPosition)
       // if (elapsed >= AutoScrollControl.minInterval || this._isFirstIteration) {
       // Get ready for next frame by setting then=now, but also adjust for your
       // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
@@ -103,26 +104,34 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
       window.scrollTo({ left: 0, top: this._nextScrollPosition, behavior: 'smooth' });
       // document.documentElement.scrollTop += movement < 0.5 ? 0.5 : movement;
       // console.log(newScrollPosition, this.state.scrollingSpeed, movement, "..........")
-      this._isFirstIteration = false;
+      // this._isFirstIteration = false;
       // requestAnimationFrame(this.handleAutoScroll);
       // }
     }
   }
 
-  componentDidMount = () => {
-    // console.log(document.documentElement, this._maxScrollPossible, window.innerHeight);
+  addListeners = () => {
     window.addEventListener("touchmove", this.removeScroll);
     window.addEventListener("wheel", this.removeScroll);
   }
 
-  componentWillUnmount = () => {
-    window.removeEventListener("scroll", this.startScroll);
+  removeListeners = () => {
     window.removeEventListener("wheel", this.removeScroll);
     window.removeEventListener("touchmove", this.removeScroll);
+  }
+
+  componentDidMount = () => {
+    // console.log(document.documentElement, this._maxScrollPossible, window.innerHeight);
+    this.addListeners();
+  }
+
+  componentWillUnmount = () => {
+    this.removeListeners();
   };
 
   render() {
     const { isScrolling, scrollingSpeed } = this.state;
+
     return (
       <div className="autoScrollControl">
         <button onClick={this.toggleAutoScrollState} className="autoScrollControlBtn">
@@ -141,7 +150,7 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
               max={AutoScrollControl.maxScrollingSpeed}
               value={scrollingSpeed} />
           </label>
-          <span className="autoScrollControlSpeedValue">{scrollingSpeed}</span>
+          <span className="autoScrollControlSpeedValu">{scrollingSpeed}</span>
         </div>
       </div>
     )

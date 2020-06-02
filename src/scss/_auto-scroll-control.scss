@@ -24,14 +24,11 @@
     & > label {
       color: $sttm-white;
       display: flex;
+      margin-right: 8px;
 
       & > input {
         margin-left: 8px;
       }
-    }
-
-    &Value {
-      margin-left: 8px;
     }
   }
 }

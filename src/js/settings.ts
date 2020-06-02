@@ -66,7 +66,6 @@ export const QUICK_SETTINGS = ({
   toggleSplitViewOption,
   toggleAdvancedOptions,
   toggleDarkMode,
-  toggleAutoScrollMode,
 
   translationLanguages,
   transliterationLanguages,
@@ -78,7 +77,6 @@ export const QUICK_SETTINGS = ({
   splitView,
   showAdvancedOptions,
   darkMode,
-  autoScrollMode,
 }: SETTING_ACTIONS) => [
     {
       type: 'multiselect_checkbox',
@@ -199,12 +197,6 @@ export const QUICK_SETTINGS = ({
     },
     {
       type: 'toggle-option',
-      label: 'Auto Scroll Mode',
-      checked: autoScrollMode,
-      action: toggleAutoScrollMode,
-    },
-    {
-      type: 'toggle-option',
       label: 'Vishraams',
       checked: visraams,
       action: toggleVisraams,
@@ -234,6 +226,8 @@ export const ADVANCED_SETTINGS = ({
   setVisraamStyle,
   changeFont,
 
+  toggleAutoScrollMode,
+  autoScrollMode,
   visraamSource,
   visraamStyle,
   fontFamily,
@@ -251,6 +245,12 @@ export const ADVANCED_SETTINGS = ({
       value: visraamStyle,
       action: setVisraamStyle,
       options: VISRAAM_CONSTANTS.TYPES,
+    },
+    {
+      type: 'toggle-option',
+      label: 'Auto Scroll Mode',
+      checked: autoScrollMode,
+      action: toggleAutoScrollMode,
     },
     {
       type: 'dropdown',

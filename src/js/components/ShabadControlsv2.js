@@ -120,7 +120,6 @@ export default class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    const isAutoScrollMode = this.props.autoScrollMode;
     const settings = QUICK_SETTINGS(this.props);
     const advanced = ADVANCED_SETTINGS(this.props);
 
