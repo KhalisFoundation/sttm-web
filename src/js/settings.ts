@@ -233,6 +233,12 @@ export const ADVANCED_SETTINGS = ({
   fontFamily,
 }: SETTING_ACTIONS) => [
     {
+      type: 'toggle-option',
+      label: 'Auto Scroll Mode',
+      checked: autoScrollMode,
+      action: toggleAutoScrollMode,
+    },
+    {
       type: 'dropdown',
       label: 'Visraam Source',
       value: visraamSource,
@@ -245,12 +251,6 @@ export const ADVANCED_SETTINGS = ({
       value: visraamStyle,
       action: setVisraamStyle,
       options: VISRAAM_CONSTANTS.TYPES,
-    },
-    {
-      type: 'toggle-option',
-      label: 'Auto Scroll Mode',
-      checked: autoScrollMode,
-      action: toggleAutoScrollMode,
     },
     {
       type: 'dropdown',

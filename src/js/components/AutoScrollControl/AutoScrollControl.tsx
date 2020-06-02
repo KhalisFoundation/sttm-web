@@ -5,7 +5,6 @@ interface IAutoScrollControlState {
   scrollingSpeed: number;
 }
 
-
 export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollControlState> {
 
   static maxScrollingSpeed = 100;
@@ -54,6 +53,10 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
     }
   }
 
+  clearScrollInterval = () => {
+    clearInterval(this._interval)
+  }
+
   startScroll = () => {
     this.setState(() => {
       return {
@@ -76,9 +79,7 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
         ...this.state,
         isScrolling: false
       }
-    }, () => {
-      clearInterval(this._interval);
-    });
+    }, this.clearScrollInterval);
     // window.removeEventListener('scroll', this.handleAutoScroll);
   }
 
@@ -125,6 +126,7 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
   }
 
   componentWillUnmount = () => {
+    this.clearScrollInterval();
     this.removeListeners();
   };
 
