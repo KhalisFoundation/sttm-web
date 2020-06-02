@@ -16,7 +16,6 @@ export const timeMath = {
   isValidTimeInMinutes: (timeInMins: number) => {
     const maxTimeInMins = 24 * 60;
     if ((timeInMins < 0) || (timeInMins > maxTimeInMins)) {
-      console.log(timeInMins, maxTimeInMins, ".........")
       throw new Error("Invalid value for time in mins");
     }
 

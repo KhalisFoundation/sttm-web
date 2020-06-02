@@ -19,11 +19,11 @@ import { translationMap, getGurmukhiVerse } from './api/shabad';
 
 import { buildApiUrl } from '@sttm/banidb';
 
+export * from './get-classnames-for-shabad-ratings';
 /**
  * Date Time Helpers
  */
 export * from './date-time-math';
-
 
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
