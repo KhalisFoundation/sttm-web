@@ -234,7 +234,7 @@ export const ADVANCED_SETTINGS = ({
 }: SETTING_ACTIONS) => [
     {
       type: 'toggle-option',
-      label: 'Auto Scroll Mode',
+      label: 'Auto Scroll',
       checked: autoScrollMode,
       action: toggleAutoScrollMode,
     },
