@@ -276,7 +276,6 @@ export default class WebControllerPage extends React.PureComponent {
       script.src = src;
       document.body.appendChild(script);
     }
-
     window.addEventListener('beforeunload', this._alertOnExit);
   }
 }

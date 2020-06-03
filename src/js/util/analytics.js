@@ -18,6 +18,9 @@ export const ACTIONS = {
   ANG_NOT_FOUND: 'ang-not-found',
   SEHAJ_PAATH_LINK: 'sehaj-paath-link',
   RELATED_SHABAD: 'related-shabad',
+  JAPJI_SAHIB_LINK: 'japji-sahib-link',
+  REHRAAS_SAHIB_LINK: 'rehraas-sahib-link',
+  SOHILAA_SAHIB_LINK: 'sohilaa-sahib-link'
 };
 
 export const pageView = page =>
