@@ -5,7 +5,6 @@ import { VISRAAM_CONSTANTS } from '../constants';
 import { clearVisraamClass } from '../util';
 import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
 import { MultiSelect } from '../components/MultiSelect';
-import { AutoScrollControl } from '../components/AutoScrollControl';
 
 export default class ShabadControls extends React.PureComponent {
   static propTypes = {

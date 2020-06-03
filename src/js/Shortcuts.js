@@ -14,10 +14,10 @@ const ViewerShortcuts = {
     name: 'Toggle Vishraams',
     sequences: ['v'],
   },
-  // toggleAutoScrollMode: {
-  //   name: 'Toggle AutoScroll Mode',
-  //   sequence: ['a']
-  // },
+  toggleAutoScrollMode: {
+    name: 'Toggle AutoScroll Mode',
+    sequences: ['a']
+  },
   centerAlign: {
     name: 'Center Align',
     sequences: ['meta+shift+c', 'ctrl+shift+c']

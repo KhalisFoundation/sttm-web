@@ -8,16 +8,14 @@ interface IAutoScrollControlState {
 export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollControlState> {
 
   static maxScrollingSpeed = 100;
-  static maxScrollPixelMovement = 25;
-  static minScrollPixelMovement = 5;
+  static minScrollPixelMovement = 0.5;
+  static maxScrollPixelMovement = 2;
   static minInterval = 10;
   static fps = 1000 / 40;
   _maxScrollPossible!: number;
   _nextScrollPosition!: number;
   _sliding!: boolean;
-  // _then: number;
-  // _isFirstIteration: boolean;
-  _interval!: NodeJS.Timeout;
+  _interval!: any;
 
 
   constructor(props: Readonly<{}>) {
@@ -54,7 +52,7 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
   }
 
   clearScrollInterval = () => {
-    clearInterval(this._interval)
+    cancelAnimationFrame(this._interval)
   }
 
   startScroll = () => {
@@ -69,7 +67,8 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
       // this._then = Date.now();
       // this._isFirstIteration = true;
       // window.addEventListener('scroll', this.handleAutoScroll);
-      this._interval = setInterval(this.handleAutoScroll, AutoScrollControl.fps);
+      // this._interval = setInterval(this.handleAutoScroll, AutoScrollControl.fps);
+      this._interval = requestAnimationFrame(this.handleAutoScroll);
     })
   }
 
@@ -91,22 +90,26 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
         this.removeScroll();
       }
 
-      let movement = (AutoScrollControl.minScrollPixelMovement + ((this.state.scrollingSpeed / 100) * (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement))) / AutoScrollControl.fps;
-      movement = Number(movement.toFixed(2));
-      this._nextScrollPosition += movement;
-      // const now = Date.now();
-      // const elapsed = now - this._then;
-      // console.log(movement, this._nextScrollPosition)
-      // if (elapsed >= AutoScrollControl.minInterval || this._isFirstIteration) {
-      // Get ready for next frame by setting then=now, but also adjust for your
-      // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
-      // this._then = now - (elapsed % AutoScrollControl.minInterval);
-      window.scrollTo({ left: 0, top: this._nextScrollPosition, behavior: 'smooth' });
-      // document.documentElement.scrollTop += movement < 0.5 ? 0.5 : movement;
-      // console.log(newScrollPosition, this.state.scrollingSpeed, movement, "..........")
-      // this._isFirstIteration = false;
-      // requestAnimationFrame(this.handleAutoScroll);
-      // }
+      let movement = (AutoScrollControl.minScrollPixelMovement + ((this.state.scrollingSpeed / 100) * (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement)));
+      movement = parseFloat(movement.toFixed(2));
+
+      if (scrollY >= Math.floor(this._nextScrollPosition)) {
+        // Get ready for next frame by setting then=now, but also adjust for your
+        this._nextScrollPosition += movement;
+
+        // const now = Date.now();
+        // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+        // this._then = now - (elapsed % AutoScrollControl.minInterval);
+        window.scrollTo({ left: 0, top: this._nextScrollPosition, behavior: 'smooth' });
+        // document.documentElement.scrollTop += movement < 0.5 ? 0.5 : movement;
+        // console.log(newScrollPosition, this.state.scrollingSpeed, movement, "..........")
+        // this._isFirstIteration = false;
+        // }
+
+        // if (scrollY <= this._maxScrollPossible) {
+        // requestAnimationFrame(this.handleAutoScroll);
+      }
+      this._interval = requestAnimationFrame(this.handleAutoScroll);
     }
   }
 
