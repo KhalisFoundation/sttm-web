@@ -317,10 +317,7 @@ blockquote {
     font-size: 1.6em;
     line-height: 1.2;
     margin-bottom: 0;
-
-    @media screen and (max-width: 800px) {
-      font-weight: 400;
-    }
+    font-weight: 400;
   }
 
   &Transliteration,
