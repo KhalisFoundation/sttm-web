@@ -383,7 +383,6 @@
         &:hover {
           color: $sttm-light-grey;
         }
-
       }
 
       &.icon-label:active {
@@ -502,6 +501,7 @@
 
 @media screen and (max-width: 420px) {
   .quick-settings>.controller-option {
+
 
     &:nth-last-child(2),
     &:nth-last-child(10) {
