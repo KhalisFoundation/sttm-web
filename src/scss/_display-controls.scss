@@ -34,7 +34,7 @@
     transform-origin: top;
   }
 
-  > div {
+  >div {
     margin-bottom: 0.5rem;
   }
 
@@ -70,11 +70,9 @@
 
   .dark-mode & {
     background-image:
-      linear-gradient(
-        to right,
+      linear-gradient(to right,
         $sttm-light-black,
-        $sttm-light-black
-      ),
+        $sttm-light-black),
       linear-gradient(to right, $sttm-light-black, $sttm-light-black),
       linear-gradient(to right, $sttm-black, $sttm-lighter-black),
       linear-gradient(to left, $sttm-black, $sttm-lighter-black);
@@ -84,7 +82,7 @@
 .custom-fa {
   background-color: $sttm-white;
   border: 1px solid $sttm-light-grey;
-  border-radius: 4px;
+  border-radius: 2px;
   color: $sttm-dark-grey;
   display: inline-block;
   line-height: 32px;
@@ -95,6 +93,15 @@
     background-color: $sttm-lighter-black;
     border-color: $sttm-light-black;
     color: $sttm-white;
+
+    &:hover {
+      background-color: $sttm-dark-grey;
+    }
+
+  }
+
+  &:hover {
+    background-color: $sttm-lighter-grey;
   }
 
   &.fontsize-icon {
@@ -102,6 +109,10 @@
     border: none;
     font-size: 24px;
     line-height: 1;
+
+    &:hover {
+      color: $sttm-orange;
+    }
 
     &:active {
       background-color: $sttm-lighter-grey;
@@ -113,7 +124,7 @@
     }
   }
 
-  > svg {
+  >svg {
     fill: $sttm-dark-grey;
     vertical-align: middle;
 
@@ -134,7 +145,7 @@
     border-color: $sttm-blue;
     color: $sttm-white;
 
-    > svg {
+    >svg {
       fill: $sttm-white;
     }
   }
@@ -166,7 +177,7 @@
   &.multiselect_checkbox {
     background-color: $sttm-white;
     border: 1px solid $sttm-light-grey;
-    border-radius: 8px;
+    border-radius: 2px;
     height: 42px;
     position: relative;
 
@@ -176,7 +187,7 @@
       color: $sttm-white;
     }
 
-    > span {
+    >span {
       display: inline-block;
       height: 100%;
       line-height: 42px;
@@ -186,7 +197,7 @@
 
     .list-wrapper {
       background-color: $sttm-white;
-      border-radius: 8px;
+      border-radius: 2px;
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
       display: flex;
       flex-flow: row;
@@ -249,7 +260,7 @@
           }
         }
 
-        input[type="checkbox"]:checked + .fake-checkbox {
+        input[type="checkbox"]:checked+.fake-checkbox {
           background-color: $sttm-blue;
           background-image: url('/assets/images/tick.svg');
           background-position: center;
@@ -307,8 +318,17 @@
     line-height: 42px;
     padding: 0 6px;
 
+    &:hover {
+      color: $sttm-orange;
+    }
+
     .dark-mode & {
       color: $sttm-orange;
+
+      &:hover {
+        color: $sttm-lighter-grey;
+      }
+
     }
 
     &:active {
@@ -346,6 +366,10 @@
     min-height: 42px;
     overflow: hidden;
 
+    &:hover {
+      color: $sttm-orange;
+    }
+
     span {
       padding: 0 6px;
 
@@ -355,6 +379,11 @@
 
       .dark-mode & {
         color: $sttm-orange;
+
+        &:hover {
+          color: $sttm-light-grey;
+        }
+
       }
 
       &.icon-label:active {
@@ -392,7 +421,8 @@
 }
 
 @media screen and (max-width: 900px) {
-  .quick-settings > .controller-option {
+  .quick-settings>.controller-option {
+
     &:nth-last-child(3),
     &:nth-last-child(4),
     &:nth-last-child(5) {
@@ -402,6 +432,7 @@
 
   .advanced-options {
     .qs-option {
+
       &:nth-last-of-type(3),
       &:nth-last-of-type(4),
       &:nth-last-of-type(5) {
@@ -417,7 +448,8 @@
 }
 
 @media screen and (max-width: 710px) {
-  .quick-settings > .controller-option {
+  .quick-settings>.controller-option {
+
     &:nth-last-child(6),
     &:nth-last-child(7),
     &:nth-last-child(8) {
@@ -428,6 +460,7 @@
 
   .advanced-options {
     .qs-option {
+
       &:nth-last-of-type(6),
       &:nth-last-of-type(7),
       &:nth-last-of-type(8) {
@@ -443,7 +476,7 @@
 }
 
 @media screen and (max-width: 560px) {
-  .quick-settings > .controller-option {
+  .quick-settings>.controller-option {
     &:nth-last-child(9) {
       display: none;
     }
@@ -468,7 +501,8 @@
 }
 
 @media screen and (max-width: 420px) {
-  .quick-settings > .controller-option {
+  .quick-settings>.controller-option {
+
     &:nth-last-child(2),
     &:nth-last-child(10) {
       display: none;

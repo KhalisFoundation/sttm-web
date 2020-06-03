@@ -120,7 +120,7 @@ blockquote {
   width: 100%;
 }
 
-.shabad-content > div {
+.shabad-content>div {
   margin-bottom: 1rem;
 }
 
@@ -173,19 +173,19 @@ blockquote {
       }
 
       .copy:hover {
-        > svg {
+        >svg {
           fill: $sttm-orange;
         }
       }
 
       .twitter:hover {
-        > svg {
+        >svg {
           fill: $twitter-blue;
         }
       }
 
       .facebook:hover {
-        > svg {
+        >svg {
           fill: $facebook-blue;
         }
       }
@@ -222,6 +222,7 @@ blockquote {
 }
 
 @media screen and (max-width: 730px) {
+
   .share,
   .line:hover .share {
     display: none !important;
@@ -279,6 +280,18 @@ blockquote {
   transition: 0.3s ease-in;
   width: 100%;
 
+  .dark-mode & {
+    border: 1px solid $sttm-pure-black;
+    background-color: $sttm-lighter-black;
+    box-shadow: 0 4px 8px 0 $sttm-lighter-black;
+    color: $sttm-light-grey;
+
+    &:hover {
+      box-shadow: 0 8px 16px 0 $sttm-dark-grey;
+    }
+
+  }
+
   @media screen and (max-width: 700px) {
     margin-right: 0;
     max-width: 100%;
@@ -328,6 +341,11 @@ blockquote {
     color: $sttm-pure-black;
     font-size: 13px;
     margin-bottom: 4px;
+
+    .dark-mode & {
+      color: $sttm-light-grey;
+    }
+
   }
 
   &Content {
@@ -347,7 +365,8 @@ blockquote {
         flex-direction: row;
       }
 
-      @media screen and (min-width: 701px) and  (max-width: 900px), (max-width: 500px) {
+      @media screen and (min-width: 701px) and (max-width: 900px),
+      (max-width: 500px) {
         align-items: start;
         flex-direction: column;
       }
@@ -386,6 +405,10 @@ blockquote {
     margin-right: 8px;
     opacity: 0.9;
 
+    .dark-mode & {
+      color: $sttm-light-grey;
+    }
+
     &:last-child {
       margin-right: 0;
     }
@@ -393,6 +416,11 @@ blockquote {
     &.englishSource {
       color: $sttm-pure-black;
       opacity: 1;
+
+      .dark-mode & {
+        color: $sttm-light-grey;
+      }
+
     }
   }
 
