@@ -25,7 +25,6 @@
   }
 
   &-naked {
-
     &,
     ul {
       background-color: transparent;
@@ -75,14 +74,13 @@
 }
 
 .hide-search-bar {
-
   .top-bar-left,
   #search-options {
     display: none;
   }
 }
 
-.top-bar-right .menu>li {
+.top-bar-right .menu > li {
   display: inline-block;
   font-weight: 400;
 
@@ -101,7 +99,7 @@
       vertical-align: middle;
     }
 
-    &:hover>.submenu-items {
+    &:hover > .submenu-items {
       display: inline-block;
     }
   }
@@ -149,13 +147,13 @@
     height: inherit;
   }
 
-  .menu>li>&.kb-active {
+  .menu > li > &.kb-active {
     @media screen and (min-width: 55.99em) {
       height: 44px;
     }
   }
 
-  >#suggestions {
+  > #suggestions {
     width: 100%;
   }
 
@@ -164,7 +162,7 @@
     box-shadow: 0 2px 2px 0 $sttm-black, 0 0 0 1px $sttm-black;
   }
 
-  >button {
+  > button {
     color: $sttm-pure-white;
     display: inline-block;
     height: 44px;
@@ -234,20 +232,20 @@
   .dark-mode & {
     background-color: $sttm-lighter-black;
 
-    >.suggestion-active {
+    > .suggestion-active {
       background-color: $sttm-transparent-black;
     }
   }
 
-  >li {
-    >a {
+  > li {
+    > a {
       display: block;
       padding: 10px;
       width: 100%;
     }
   }
 
-  >.suggestion-active {
+  > .suggestion-active {
     background-color: $sttm-lighter-grey;
   }
 }
@@ -265,7 +263,7 @@
   position: relative;
   width: calc(100% - 110px);
 
-  &[value='']+.clear-search-toggle {
+  &[value=''] + .clear-search-toggle {
     pointer-events: none;
     visibility: hidden;
   }
@@ -404,7 +402,7 @@
     fill: $sttm-blue;
   }
 
-  .top-bar-left>& {
+  .top-bar-left > & {
     left: 0.5rem;
   }
 }
@@ -505,7 +503,6 @@
 }
 
 @media screen and (min-width: 40em) {
-
   .top-bar .top-bar-left,
   .top-bar .top-bar-right {
     width: 100%;
@@ -516,9 +513,9 @@
 @media screen and (min-width: 56em) {
   .top-bar-title a {
     background-image: url(/assets/images/sttm_icon.png);
-    width: 46px;
     background-position: bottom;
     margin-top: 5px;
+    width: 46px;
 
     &.doodle-link {
       background-image: url(/assets/images/sttm_icon.png) !important;
@@ -539,7 +536,7 @@
   }
 
   .menu {
-    .submenu>.submenu-items {
+    .submenu > .submenu-items {
       background-color: $sttm-white;
       border: 1px solid $sttm-lighter-grey;
       display: none;
@@ -562,7 +559,7 @@
     justify-content: space-between;
     width: calc(100% - 70px);
 
-    >.top-bar-right {
+    > .top-bar-right {
       min-width: 470px;
       text-align: right;
     }
