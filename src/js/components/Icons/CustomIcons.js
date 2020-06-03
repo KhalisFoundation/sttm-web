@@ -17,7 +17,12 @@ export const PlusIcon = props => (
 PlusIcon.propTypes = props;
 
 
-const fontControlCommonStyles = {width: 'inherit', height: '42px', marginBottom: 0 }
+const fontControlCommonStyles = {
+  height: '42px',
+  marginBottom: 0,
+  textAlignLast: 'center',
+  width: 'inherit',
+}
 export const FontSizeControl = props => (
   <select
     className={`custom-fa ${props.className}`}
