@@ -84,17 +84,25 @@
 .custom-fa {
   background-color: $sttm-white;
   border: 1px solid $sttm-light-grey;
-  border-radius: 4px;
+  border-radius: 2px;
   color: $sttm-dark-grey;
   display: inline-block;
   line-height: 32px;
   min-height: 32px;
   padding: 4px;
 
+  &:hover {
+    background-color: $sttm-lighter-grey;
+  }
+
   .dark-mode & {
     background-color: $sttm-lighter-black;
     border-color: $sttm-light-black;
     color: $sttm-white;
+
+    &:hover {
+      background-color: $sttm-dark-grey;
+    }
   }
 
   &.fontsize-icon {
@@ -102,6 +110,10 @@
     border: none;
     font-size: 24px;
     line-height: 1;
+
+    &:hover {
+      color: $sttm-orange;
+    }
 
     &:active {
       background-color: $sttm-lighter-grey;
@@ -166,7 +178,7 @@
   &.multiselect_checkbox {
     background-color: $sttm-white;
     border: 1px solid $sttm-light-grey;
-    border-radius: 8px;
+    border-radius: 2px;
     height: 42px;
     position: relative;
 
@@ -186,7 +198,7 @@
 
     .list-wrapper {
       background-color: $sttm-white;
-      border-radius: 8px;
+      border-radius: 2px;
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
       display: flex;
       flex-flow: row;
@@ -307,15 +319,23 @@
     line-height: 42px;
     padding: 0 6px;
 
-    .dark-mode & {
+    &:hover {
       color: $sttm-orange;
     }
 
-    &:active {
-      background-color: $sttm-lighter-grey;
+    .dark-mode & {
+      color: $sttm-orange;
 
-      .dark-mode & {
-        background-color: $sttm-lighter-black;
+      &:hover {
+        color: $sttm-lighter-grey;
+      }
+
+      &:active {
+        background-color: $sttm-lighter-grey;
+
+        .dark-mode & {
+          background-color: $sttm-lighter-black;
+        }
       }
     }
   }
@@ -346,6 +366,10 @@
     min-height: 42px;
     overflow: hidden;
 
+    &:hover {
+      color: $sttm-orange;
+    }
+
     span {
       padding: 0 6px;
 
@@ -355,6 +379,10 @@
 
       .dark-mode & {
         color: $sttm-orange;
+
+        &:hover {
+          color: $sttm-light-grey;
+        }
       }
 
       &.icon-label:active {

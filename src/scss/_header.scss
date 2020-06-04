@@ -48,7 +48,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   display: inline-block;
-  height: 54px;
+  height: 48px;
   width: 100%;
 }
 
@@ -513,7 +513,9 @@
 @media screen and (min-width: 56em) {
   .top-bar-title a {
     background-image: url(/assets/images/sttm_icon.png);
-    width: 54px;
+    background-position: bottom;
+    margin-top: 5px;
+    width: 46px;
 
     &.doodle-link {
       background-image: url(/assets/images/sttm_icon.png) !important;
@@ -536,7 +538,7 @@
   .menu {
     .submenu > .submenu-items {
       background-color: $sttm-white;
-      border: 1px solid $sttm-pure-white;
+      border: 1px solid $sttm-lighter-grey;
       display: none;
       position: absolute;
       right: 0;
@@ -545,7 +547,7 @@
 
       .dark-mode & {
         background-color: $sttm-light-black;
-        border-color: $sttm-pure-black;
+        border-color: $sttm-dark-grey;
       }
     }
   }
