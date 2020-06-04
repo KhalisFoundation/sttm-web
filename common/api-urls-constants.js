@@ -9,5 +9,6 @@ module.exports = {
     PRODUCTION: '//api.sikhitothemax.org/',
     LOCAL: '//api.sikhitothemax.org/',
   },
-  CEREMONIES: '//api.sikhitothemax.org/ceremonies/'
+  CEREMONIES: '//api.sikhitothemax.org/ceremonies/',
+  DOODLE: '//api.sikhitothemax.org/doodle/'
 };
