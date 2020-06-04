@@ -441,8 +441,8 @@ blockquote {
   }
 
   &AvgRatingMeter {
-    left: 0;
     height: 100%;
+    left: 0;
     position: absolute;
     transform-origin: left;
     transition: transform 0.1s ease-in-out;
