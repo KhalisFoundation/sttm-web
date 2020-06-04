@@ -70,9 +70,6 @@ export const QUICK_SETTINGS = ({
   toggleSplitViewOption,
   toggleAdvancedOptions,
   toggleDarkMode,
-  setLineHeight,
-
-  lineHeight,
   translationLanguages,
   transliterationLanguages,
   visraams,
@@ -133,26 +130,6 @@ export const QUICK_SETTINGS = ({
             fontSize < 3.2 && setFontSize(toFixedFloat(fontSize + 0.4));
           },
           // value: Math.floor(fontSize * 10)
-        },
-      ],
-    },
-    {
-      type: 'icon-toggle',
-      label: 'Line Height',
-      controlsList: [
-        {
-          icon: MinusIcon,
-          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - LINE_HEIGHT_CHANGE), MIN_LINE_HEIGHT)),
-        },
-        {
-          control: LineHeightControl,
-          actionType: 'change',
-          action: (val: number) => setLineHeight(toFixedFloat(val)),
-          value: lineHeight
-        },
-        {
-          icon: PlusIcon,
-          action: () => setLineHeight(Math.min(toFixedFloat(lineHeight + LINE_HEIGHT_CHANGE), MAX_LINE_HEIGHT)),
         },
       ],
     },
@@ -254,13 +231,32 @@ export const QUICK_SETTINGS = ({
 export const ADVANCED_SETTINGS = ({
   setVisraamSource,
   setVisraamStyle,
+  setLineHeight,
+  lineHeight,
   changeFont,
   visraamSource,
   visraamStyle,
   fontFamily,
 }: SETTING_ACTIONS) => [
     {
-      type: ''
+      type: 'icon-toggle',
+      label: 'Line Height',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - LINE_HEIGHT_CHANGE), MIN_LINE_HEIGHT)),
+        },
+        {
+          control: LineHeightControl,
+          actionType: 'change',
+          action: (val: number) => setLineHeight(toFixedFloat(val)),
+          value: lineHeight
+        },
+        {
+          icon: PlusIcon,
+          action: () => setLineHeight(Math.min(toFixedFloat(lineHeight + LINE_HEIGHT_CHANGE), MAX_LINE_HEIGHT)),
+        },
+      ],
     },
     {
       type: 'dropdown',
