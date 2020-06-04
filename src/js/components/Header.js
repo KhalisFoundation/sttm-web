@@ -1,6 +1,8 @@
+/* globals DOODLE_URL */
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, DOODLE } from '../constants';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
 import { Link } from 'react-router-dom';
 import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
@@ -24,6 +26,29 @@ export default class Header extends React.PureComponent {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
 
+  state = {
+    showDoodle: false,
+    doodleData: null,
+  }
+
+  fetchDoodle = () => {
+    fetch(`${DOODLE_URL}`)
+      .then(r => r.json())
+      .then((data) => {
+        if (data) {
+          this.setState({ showDoodle: true, doodleData: data.rows[0] });
+        }
+      }, (error) => {
+        console.log(error);
+        this.setState({ showDoodle: false, doodleData: null });
+      }
+      );
+  }
+
+  componentDidMount() {
+    this.fetchDoodle();
+  }
+
   onFormSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
     handleSubmit();
@@ -35,6 +60,7 @@ export default class Header extends React.PureComponent {
   render() {
     const {
       props: { defaultQuery, isHome, isAng, isController },
+      state: { showDoodle, doodleData },
       onFormSubmit,
       handleFormSubmit,
     } = this;
@@ -69,9 +95,13 @@ export default class Header extends React.PureComponent {
         <div className="top-bar-wrapper row">
           {!isHome && (
             <div className="top-bar-title">
-              {dateMath.isFuture(DOODLE['date']) ?
-                (<Link to="/" title={DOODLE['title']} className="doodle-link"
-                  style={{ backgroundImage: `url(${DOODLE['smallImage']}) ` }} />) :
+              {showDoodle ?
+                (<>
+                  <Link to="/" title={doodleData['Description']} className="doodle-link icon"
+                    style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
+                  <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
+                    style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
+                </>) :
                 (<Link to="/" />)
               }
             </div>

@@ -23,6 +23,7 @@ const plugins = PRODUCTION
       BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
       CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
+      DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
     }),
   ])
   : commonPlugins.concat([
@@ -36,6 +37,7 @@ const plugins = PRODUCTION
       BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
       CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
+      DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
     }),
   ]);
 
