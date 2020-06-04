@@ -144,7 +144,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                         <div title={`${this.formatAvgScore(s.AvgScore)}% matches`} className="relatedShabadAvgRating">
                           <div
                             style={{
-                              transform: `scaleY(${s.AvgScore / 100})`,
+                              transform: `scaleX(${s.AvgScore / 100})`,
                             }}
                             className={`relatedShabadAvgRatingMeter relatedShabadAvgRating${getClassnamesForShabadRatings(
                               s.AvgScore
