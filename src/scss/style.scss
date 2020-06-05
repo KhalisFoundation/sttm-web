@@ -1,7 +1,6 @@
 /* stylelint-disable at-rule-no-unknown */
 
-@import
-  "mixin",
+@import "mixin",
   "colours",
   "auto-scroll-control",
   "display-controls",
@@ -22,6 +21,7 @@
   "help",
   "controller",
   "banner",
+  "baani-link",
   "vishraam";
 
 html,
@@ -62,7 +62,9 @@ select {
 /* youtube responsive */
 .videoWrapper {
   height: 0;
-  padding-bottom: 56.25%; /* 16:9 */
+  padding-bottom: 56.25%;
+
+  /* 16:9 */
   padding-top: 25px;
   position: relative;
 }
@@ -191,7 +193,7 @@ select {
   }
 
   &.fullscreen {
-    right: 28px;
+    right: 18px;
 
     & + .scroll-to-top {
       right: 84px;
@@ -237,4 +239,8 @@ select {
 
 .fullscreen-view #freshworks-container {
   display: none;
+}
+
+#fullscreen {
+  fill: $sttm-orange;
 }

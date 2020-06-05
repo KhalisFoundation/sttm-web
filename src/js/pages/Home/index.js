@@ -1,10 +1,14 @@
+/* globals DOODLE_URL */
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, DOODLE, MAX_ANGS } from '../../constants';
-import { toSearchURL, getShabadList, dateMath } from '../../util';
+
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../../constants';
+import { toSearchURL, getShabadList } from '../../util';
 import { pageView } from '../../util/analytics';
 import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
 import SehajPaathLink from '../../components/SehajPaathLink';
+import { BaaniLinks } from '../../components/BaaniLinks/';
 import SearchForm from '../../components/SearchForm';
 import Logo from '../../components/Icons/Logo';
 import CrossIcon from '../../components/Icons/Times';
@@ -23,6 +27,25 @@ export default class Home extends React.PureComponent {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
 
+  state = {
+    showDoodle: false,
+    doodleData: null
+  }
+
+  fetchDoodle = () => {
+    fetch(`${DOODLE_URL}`)
+      .then(r => r.json())
+      .then((data) => {
+        if (data.rows.length) {
+          this.setState({ showDoodle: true, doodleData: data.rows[0] });
+        }
+      }, (error) => {
+        console.log(error);
+        this.setState({ showDoodle: false, doodleData: null });
+      }
+      );
+  }
+
   onSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
     handleSubmit();
@@ -33,7 +56,8 @@ export default class Home extends React.PureComponent {
    * Functional component
    */
   render() {
-    const showDoodle = dateMath.isFuture(DOODLE['date']);
+    const { showDoodle, doodleData } = this.state;
+
     return (
       <SearchForm>
         {({
@@ -71,7 +95,9 @@ export default class Home extends React.PureComponent {
                   >
                     <div className="flex justify-center align-center">
                       <div>
-                        <Logo className="logo-long" doodle={DOODLE} />
+                        {showDoodle ? (
+                          <Logo className="logo-long" doodle={doodleData} />
+                        ) : (<Logo className="logo-long" />)}
                       </div>
                     </div>
 
@@ -92,8 +118,8 @@ export default class Home extends React.PureComponent {
                         placeholder={placeholder}
                         title={title}
                         pattern={pattern}
-                        min={name === 'ang' && 1}
-                        max={name === 'ang' && MAX_ANGS[source]}
+                        min={name === 'ang' ? 1 : undefined}
+                        max={name === 'ang' ? MAX_ANGS[source] : undefined}
                       />
                       <button
                         type="button"
@@ -177,11 +203,14 @@ export default class Home extends React.PureComponent {
                       </div>
                     </div>
                     <SehajPaathLink />
+                    <BaaniLinks />
                   </form>
                 </div>
               </div>
               {showDoodle && (
-                <p className="doodle-credit" dangerouslySetInnerHTML={{ __html: DOODLE['credit'] }}></p>
+                <a href={doodleData['SourceLink']} target="_blank">
+                  <p className="doodle-credit">Special thanks to {doodleData['SourceText']}</p>
+                </a>
               )}
             </React.Fragment>
           )}
@@ -191,5 +220,6 @@ export default class Home extends React.PureComponent {
 
   componentDidMount() {
     pageView('/');
+    this.fetchDoodle();
   }
 }

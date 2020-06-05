@@ -2,13 +2,15 @@
 import React from 'react';
 
 export default props => {
-  const { doodle } = props;
-  // if (showDoodle) {
-  //   return (
-  //     <img title={doodle['title']}
-  //       style={{ paddingBottom: '10px' }} src={doodle['largeImage']} />
-  //   )
-  // }
+  if (props.doodle) {
+    const doodle = props.doodle;
+    return (
+      <a href={doodle['Link']} target="_blank">
+        <img title={doodle['Description']}
+          style={{ paddingBottom: '10px', maxWidth: '312px' }} src={doodle['Image']} />
+      </a>
+    );
+  }
   return (
     <svg
       height="86"

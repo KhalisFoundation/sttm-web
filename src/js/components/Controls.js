@@ -6,6 +6,7 @@ import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 
 import {
   setFontSize,
+  setLineHeight,
   setTranslationLanguages,
   setTransliterationLanguages,
   resetDisplayOptions,
@@ -124,6 +125,7 @@ const dispatchToProps = {
   toggleDarkMode,
   toggleAutoScrollMode,
   toggleVisraams,
+  setLineHeight,
   setVisraamSource,
   setVisraamStyle,
   changeFont,

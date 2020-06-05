@@ -5,7 +5,6 @@ import {
   SHORT_DOMAIN,
   SEARCH_TYPES,
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
-  FIRST_HUKAMNAMA_DATE,
   BANI_LENGTH_COLS,
   VISRAAM_CONSTANTS,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
@@ -18,6 +17,22 @@ import {
 import { translationMap, getGurmukhiVerse } from './api/shabad';
 
 import { buildApiUrl } from '@sttm/banidb';
+
+export * from './numbers';
+export * from './get-classnames-for-shabad-ratings';
+
+/**
+ * Date Time Helpers
+ */
+export * from './date-time-math';
+
+/**
+ * Hukamnama Helpers
+ */
+export * from './hukamnama';
+
+
+
 /**
  * Throws given error. This is a workaround for absence of throw expressions.
  * Calling this function lets you throw an error inline (eg. JSX)
@@ -452,74 +467,6 @@ export const makeSelection = selectedDiv => {
   range.selectNode(selectedDiv);
   window.getSelection().addRange(range);
 };
-
-/**
- * Manipulates the date string
- */
-export const dateMath = {
-  algebra: (inputDate, operator, days) => {
-    const da = new Date(inputDate);
-    let newDay;
-    switch (operator) {
-      case '+':
-      case 'plus':
-        newDay = da.getDate() + days;
-        break;
-      case '-':
-      case 'minus':
-        newDay = da.getDate() - days;
-        break;
-    }
-    da.setDate(newDay);
-    return da.toLocaleDateString('zh-tw'); // yyyy-m-d
-  },
-  isBefore: (date1, date2) => new Date(date1) < new Date(date2),
-  isAfter: (date1, date2) => new Date(date1) > new Date(date2),
-  expand: (date, year = true) => {
-    const inDate = new Date(date);
-    let options;
-    year ?
-      options = { year: 'numeric', month: 'short', day: 'numeric' } :
-      options = { month: 'short', day: 'numeric' };
-    return inDate.toLocaleDateString('en', options);
-  },
-  isFuture: date => dateMath.isBefore(new Date(), date),
-};
-
-export const getHukamnama = data => {
-  const { shabads } = data;
-  const { date, month, year } = data.date.gregorian;
-  const hukamnamaDate = year + '/' + month + '/' + date;
-  let totalVerses = [];
-
-  shabads.forEach(s => {
-    totalVerses = totalVerses.concat(s.verses);
-  });
-  const [shabad] = shabads;
-  shabad.verses = totalVerses;
-  shabad.expandedDate = dateMath.expand(hukamnamaDate);
-
-  let prevDate = dateMath.algebra(hukamnamaDate, '-', 1);
-
-  if (dateMath.isBefore(prevDate, FIRST_HUKAMNAMA_DATE)) {
-    prevDate = undefined;
-  }
-
-  //TODO: After API is updated, check if it's latest hukamnama from API
-
-  let nextDate = dateMath.algebra(hukamnamaDate, '+', 1);
-
-  if (dateMath.isFuture(nextDate)) {
-    nextDate = undefined;
-  }
-
-  shabad.nav = {
-    previous: prevDate,
-    next: nextDate,
-  };
-  return shabad;
-};
-
 
 export const getShabadList = (q, { type, source }) => {
   const offset = 1;

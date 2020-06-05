@@ -1,5 +1,7 @@
 import { SOURCES, SOURCES_WITH_ANG, TYPES as _TYPES } from '@sttm/banidb';
 
+import { ACTIONS } from './util/analytics';
+
 export { SOURCES, SOURCES_WITH_ANG };
 
 export const SEARCH_TYPES = {
@@ -41,6 +43,7 @@ export const LOCAL_STORAGE_KEY_FOR_LARIVAAR = 'larivaar';
 export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
+export const LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT = 'lineHeight';
 export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
 export const LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE = 'autoScrollMode';
@@ -73,6 +76,7 @@ export const DEFAULT_LARIVAAR_ASSIST = false;
 export const DEFAULT_UNICODE = false;
 export const DEFAULT_SPLIT_VIEW = false;
 export const DEFAULT_FONT_SIZE = 2;
+export const DEFAULT_LINE_HEIGHT = 1.2;
 export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
@@ -218,10 +222,33 @@ export const MAX_ANGS = {
   S: 28
 }
 
-export const DOODLE = {
-  largeImage: `/assets/images/doodle_hola_mahalla.png`,
-  smallImage: `/assets/images/doodle_hola_mahalla_sm.png`,
-  title: `Celebrating the 319th Hola Mahalla this month of March`,
-  credit: `Special thanks to <a target="_blank" href="https://instagram.com/immersedinyou">@immersedinyou</a> for the amazing artwork`,
-  date: new Date('April 1, 2020'), //will stop showing after 1st april 2020
+export interface IBAANI_LINK {
+  name: string;
+  startTimeInMinutes: number;
+  endTimeInMinutes: number;
+  link: string;
+  action: string;
 }
+
+export const TIMED_BAANI_LINKS = [{
+  name: 'Rehraas sahib',
+  startTimeInMinutes: 1020, // timeMath.calcTimeInMinutes(17, 0),
+  endTimeInMinutes: 1200, // timeMath.calcTimeInMinutes(20, 0),
+  link: '/sundar-gutka/21',
+  action: ACTIONS.REHRAAS_SAHIB_LINK,
+},
+{
+  name: 'Japji sahib',
+  startTimeInMinutes: 300, // timeMath.calcTimeInMinutes(5, 0),
+  endTimeInMinutes: 480, // timeMath.calcTimeInMinutes(8, 0),
+  link: '/sundar-gutka/2',
+  action: ACTIONS.JAPJI_SAHIB_LINK
+},
+{
+  name: 'Sohilaa sahib',
+  startTimeInMinutes: 1260, //timeMath.calcTimeInMinutes(21, 0),
+  endTimeInMinutes: 1380, //timeMath.calcTimeInMinutes(23, 0),
+  link: '/sundar-gutka/23',
+  action: ACTIONS.SOHILAA_SAHIB_LINK
+}] as IBAANI_LINK[];
+

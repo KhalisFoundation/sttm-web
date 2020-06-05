@@ -102,6 +102,7 @@ class Shabad extends React.PureComponent {
         highlight,
         unicode,
         fontSize,
+        lineHeight,
         fontFamily,
         centerAlignGurbani,
         showFullScreen,
@@ -155,6 +156,7 @@ class Shabad extends React.PureComponent {
                 highlight={highlight}
                 larivaar={larivaar}
                 fontSize={fontSize}
+                lineHeight={lineHeight}
                 fontFamily={fontFamily}
                 larivaarAssist={larivaarAssist}
                 translationLanguages={translationLanguages}

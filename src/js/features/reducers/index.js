@@ -13,6 +13,7 @@ import {
   SET_CENTER_ALIGN_OPTION,
   SET_UNICODE,
   SET_FONT_SIZE,
+  SET_LINE_HEIGHT,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
@@ -33,6 +34,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
+  LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT,
   LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
@@ -204,6 +206,17 @@ export default function reducer(state, action) {
       return {
         ...state,
         fontSize,
+      };
+    }
+    case SET_LINE_HEIGHT: {
+      const lineHeight = parseFloat(action.payload, 10);
+
+      if (lineHeight === state.lineHeight) return state;
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT, action.payload);
+      return {
+        ...state,
+        lineHeight,
       };
     }
     case CHANGE_FONT: {
