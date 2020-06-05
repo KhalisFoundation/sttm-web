@@ -10,13 +10,10 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
   static maxScrollingSpeed = 100;
   static minScrollPixelMovement = 0.5;
   static maxScrollPixelMovement = 2;
-  static minInterval = 10;
-  static fps = 1000 / 40;
   _maxScrollPossible!: number;
   _nextScrollPosition!: number;
   _sliding!: boolean;
   _interval!: any;
-
 
   constructor(props: Readonly<{}>) {
     super(props)
@@ -28,19 +25,16 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
   }
 
   handleScrollSpeedChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.currentTarget.value, ' new value')
-    const newSpeed = ((e.currentTarget.value as unknown) as number);
-    // console.log(this._sliding, "sliding..")
+    const newSpeed = Number(e.currentTarget.value);
+
     if (!this._sliding) {
       requestAnimationFrame(() => {
-        this.setState(() => { return { ...this.state, scrollingSpeed: newSpeed } }, () => {
-          this._sliding = false;
-        })
+        this.setState(
+          () => ({ ...this.state, scrollingSpeed: newSpeed }),
+          () => { this._sliding = false })
       });
-
       this._sliding = true;
     }
-
   }
 
   toggleAutoScrollState = () => {
@@ -64,51 +58,32 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
     }, () => {
       this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
       this._nextScrollPosition = document.documentElement.scrollTop;
-      // this._then = Date.now();
-      // this._isFirstIteration = true;
-      // window.addEventListener('scroll', this.handleAutoScroll);
-      // this._interval = setInterval(this.handleAutoScroll, AutoScrollControl.fps);
       this._interval = requestAnimationFrame(this.handleAutoScroll);
     })
   }
 
   removeScroll = () => {
-    this.setState(() => {
-      return {
-        ...this.state,
-        isScrolling: false
-      }
-    }, this.clearScrollInterval);
-    // window.removeEventListener('scroll', this.handleAutoScroll);
+    this.setState(() => ({ ...this.state, isScrolling: false }), this.clearScrollInterval);
   }
 
   handleAutoScroll = () => {
-    // console.log(window.scrollY, window.innerHeight, 'window .inner height..')
-    if (this.state.isScrolling) {
+    const { isScrolling, scrollingSpeed } = this.state;
+    if (isScrolling) {
       const scrollY = document.documentElement.scrollTop;
+
       if (scrollY >= this._maxScrollPossible) {
         this.removeScroll();
       }
 
-      let movement = (AutoScrollControl.minScrollPixelMovement + ((this.state.scrollingSpeed / 100) * (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement)));
+      // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
+      let movement = (AutoScrollControl.minScrollPixelMovement + ((scrollingSpeed / 100) * (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement)));
       movement = parseFloat(movement.toFixed(2));
 
       if (scrollY >= Math.floor(this._nextScrollPosition)) {
-        // Get ready for next frame by setting then=now, but also adjust for your
         this._nextScrollPosition += movement;
-
-        // const now = Date.now();
-        // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
-        // this._then = now - (elapsed % AutoScrollControl.minInterval);
         window.scrollTo({ left: 0, top: this._nextScrollPosition, behavior: 'smooth' });
-        // document.documentElement.scrollTop += movement < 0.5 ? 0.5 : movement;
-        // console.log(newScrollPosition, this.state.scrollingSpeed, movement, "..........")
-        // this._isFirstIteration = false;
-        // }
-
-        // if (scrollY <= this._maxScrollPossible) {
-        // requestAnimationFrame(this.handleAutoScroll);
       }
+
       this._interval = requestAnimationFrame(this.handleAutoScroll);
     }
   }
@@ -124,7 +99,6 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
   }
 
   componentDidMount = () => {
-    // console.log(document.documentElement, this._maxScrollPossible, window.innerHeight);
     this.addListeners();
   }
 
