@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DownArrowIcon } from '@/components/Icons/CustomIcons';
-export class MultiSelect extends React.Component {
+export class MultiSelect extends React.PureComponent {
   static propTypes = {
     collections: PropTypes.array.isRequired,
     dropdownLabel: PropTypes.string.isRequired,
@@ -13,7 +13,6 @@ export class MultiSelect extends React.Component {
     }
   }
   componentDidMount = () => {
-    // eslint-disable-next-line no-debugger
     document.body.addEventListener('click', (e) => {
       if (!this.wrapper.contains(e.target) && !this.listController.contains(e.target)) {
         this.closeMultiSelectState()
@@ -42,31 +41,25 @@ export class MultiSelect extends React.Component {
     const collectionsMarkup = collections.map(c => {
       const { options, action, label, checked } = c;
       return (
-        <ul
-          key={label}
-        >
-          <p>
-            {label}
-          </p>
-          {
-            options.map(op => (
-              <li key={op}>
-                <input
-                  id={`checkbox-${label}-${op}`}
-                  type="checkbox"
-                  value={op}
-                  onChange={() => action(op)}
-                  checked={checked.includes(op)} />
-                <span
-                  className="fake-checkbox"
-                  onClick={this.toggleCheckBox(op, action)} >
-                </span>
-                <label
-                  htmlFor={`checkbox-${label}-${op}`}> {op} </label>
-              </li>
-            ))
-          }
-        </ul >
+        <ul key={label}>
+          <p>{label}</p>
+          {options.map(op => (
+            <li key={op}>
+              <input
+                id={`checkbox-${label}-${op}`}
+                type="checkbox"
+                value={op}
+                onChange={() => action(op)}
+                checked={checked.includes(op)} />
+              <span
+                className="fake-checkbox"
+                onClick={this.toggleCheckBox(op, action)} >
+              </span>
+              <label
+                htmlFor={`checkbox-${label}-${op}`}> {op} </label>
+            </li>
+          ))}
+        </ul>
       )
     });
 
@@ -74,7 +67,6 @@ export class MultiSelect extends React.Component {
       <>
         <span
           ref={(el) => this.listController = el}
-          id={listId}
           onClick={this.toggleMultiSelectState}>
           {dropdownLabel} <DownArrowIcon />
         </span>
