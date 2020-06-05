@@ -264,7 +264,7 @@ blockquote {
 .relatedShabad {
   background-color: $sttm-pure-white;
   border: 1px solid $sttm-light-grey;
-  border-radius: 4px;
+  border-radius: 2px;
   box-shadow: 0 4px 8px 0 $sttm-grey;
   color: $sttm-black;
   cursor: pointer;
@@ -419,8 +419,8 @@ blockquote {
 
   &AvgRating {
     background-color: $sttm-grey;
-    border-top-right-radius: 2px;
     border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
     height: 8px;
     position: relative;
     width: 100%;
@@ -439,8 +439,8 @@ blockquote {
   }
 
   &AvgRatingMeter {
-    border-top-right-radius: 2px;
     border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
     height: 100%;
     left: 0;
     position: absolute;
