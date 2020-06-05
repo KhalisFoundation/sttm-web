@@ -6,7 +6,7 @@ import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../con
 import { Link } from 'react-router-dom';
 import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
-import { toSearchURL, getQueryParams, getShabadList, dateMath } from '../util';
+import { toSearchURL, getQueryParams, getShabadList } from '../util';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
