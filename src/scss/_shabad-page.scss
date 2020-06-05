@@ -438,9 +438,11 @@ blockquote {
   }
 
   &AvgRatingMeter {
+    border-radius: 4px;
     height: 100%;
     left: 0;
     position: absolute;
+    top: -1px;
     transform-origin: left;
     transition: transform 0.1s ease-in-out;
     width: 100%;
