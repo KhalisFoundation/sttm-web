@@ -28,6 +28,8 @@
 
   #sync-logo {
     background-image: url('/assets/images/sttm_icon.png');
+    height: 32px;
+    margin-top: 0;
     width: 32px;
   }
 }
@@ -186,7 +188,7 @@
   }
 
   #open-mobile-menu {
-    line-height: 36px;
+    // line-height: 36px;
   }
 }
 
