@@ -33,6 +33,7 @@ export default class Baani extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    lineHeight: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
@@ -143,6 +144,7 @@ export default class Baani extends React.PureComponent {
       larivaar,
       unicode,
       fontSize,
+      lineHeight,
       fontFamily,
       highlight,
       centerAlignGurbani,
@@ -161,6 +163,7 @@ export default class Baani extends React.PureComponent {
         larivaar={larivaar}
         larivaarAssist={larivaarAssist}
         fontSize={fontSize}
+        lineHeight={lineHeight}
         fontFamily={fontFamily}
         visraam={shabad.visraam}
       />

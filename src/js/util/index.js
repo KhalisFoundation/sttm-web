@@ -18,6 +18,7 @@ import { translationMap, getGurmukhiVerse } from './api/shabad';
 
 import { buildApiUrl } from '@sttm/banidb';
 
+export * from './numbers';
 export * from './get-classnames-for-shabad-ratings';
 
 /**
