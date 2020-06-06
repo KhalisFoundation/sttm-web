@@ -9,13 +9,13 @@
   }
 
   .highlight {
-    background-image: linear-gradient(to right, $sttm-lighter-grey, #ffffff00);
+    background-image: linear-gradient(to right, $sttm-lighter-grey, #fff0);
     border-left: 5px solid $sttm-blue;
     margin: 5px 0;
     padding: 10px 15px;
 
     .dark-mode & {
-      background-image: linear-gradient(to right, $sttm-lighter-black, #ffffff00);
+      background-image: linear-gradient(to right, $sttm-lighter-black, #fff0);
       border-color: $sttm-orange;
       color: inherit;
     }
