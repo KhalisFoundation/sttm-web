@@ -57,6 +57,7 @@ const GlobalHandlers = {
     const searchbar = document.querySelector('#search')
 
     searchbar.focus()
+    searchbar.value = ''
   }
 }
 const ViewerShortcutHanders = {
