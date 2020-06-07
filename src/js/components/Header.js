@@ -173,6 +173,7 @@ export default class Header extends React.PureComponent {
                                   <input
                                     type={inputType}
                                     id="search"
+                                    onFocus={setQueryAs('')}
                                     autoComplete="off"
                                     autoCapitalize="none"
                                     autoCorrect="off"

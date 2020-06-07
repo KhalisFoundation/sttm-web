@@ -57,7 +57,6 @@ const GlobalHandlers = {
     const searchbar = document.querySelector('#search')
 
     searchbar.focus()
-    searchbar.innerHTML = ''
   }
 }
 const ViewerShortcutHanders = {
@@ -71,7 +70,8 @@ const ViewerShortcutHanders = {
   toggleVishraams: () => {
     store.dispatch({ type: "TOGGLE_VISRAAMS" })
   },
-  centerAlign: () => {
+  centerAlign: (e) => {
+    e.preventDefault()
     const state = store.getState();
     store.dispatch({ type: "SET_CENTER_ALIGN_OPTION", payload: !state.centerAlignGurbani })
   },
