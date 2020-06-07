@@ -46,6 +46,10 @@
     display: none !important;
   }
 }
+.keyboard-help {
+  display: flex;
+  flex-direction: column;
+}
 
 .show-on-mobile {
   display: none !important;

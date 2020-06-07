@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { showToast, copyToClipboard, shortenURL } from '../util';
 import { TEXTS } from '../constants';
@@ -9,6 +9,8 @@ import CopyAllIcon from './Icons/CopyAll';
 import WhatsAppIcon from './Icons/WhatsApp';
 import ClipboardIcon from './Icons/Clipboard';
 import PrinterIcon from './Icons/Printer';
+import KeyboardIcon from './Icons/Keyboard';
+import ShortcutsHelp from './ShortcutsHelp';
 
 const handleWhatsapp = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
@@ -31,9 +33,28 @@ const copyShortUrl = () =>
     )
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-export const supportedMedia = ['print', 'copyAll', 'embed', 'whatsapp', 'copy'];
+export const supportedMedia = ['keyboadShortcuts','print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
+const ShortcutHelpButton = () => {
+  const [visible, updateVisible] = useState(false)
+
+  const toggleVis = () => { updateVisible(prev => !prev) }
+
+  return (
+    <React.Fragment>
+      <button onClick={toggleVis}>
+        <div className="shortcuts-help">
+          <KeyboardIcon />
+        </div>
+      </button>
+        {visible && <ShortcutsHelp />} 
+    </React.Fragment>
+  )
+}
 export default class ShareButtons extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
   static defaultProps = {
     media: ['whatsapp', 'copy'],
   };
@@ -66,22 +87,27 @@ export default class ShareButtons extends React.PureComponent {
     // TODO: Use array to generate this DOM
 
     const mediaMap = {
-      embed: (
+      keyboadShortcuts: (
         <li key={0} className="show-on-desktop">
+        <ShortcutHelpButton />
+      </li>
+      ),
+      embed: (
+        <li key={1} className="show-on-desktop">
           <button onClick={onEmbedClick}>
             <EmbedIcon />
           </button>
         </li>
       ),
       copyAll: (
-        <li key={1}>
+        <li key={2}>
           <button onClick={onCopyAllClick}>
             <CopyAllIcon />
           </button>
         </li>
       ),
       whatsapp: (
-        <li key={2} className="show-on-mobile">
+        <li key={3} className="show-on-mobile">
           <a title="Share on Whatsapp" onClick={handleWhatsapp}>
             <WhatsAppIcon />
             <span className="sr-only">Share on Whatsapp</span>
@@ -89,7 +115,7 @@ export default class ShareButtons extends React.PureComponent {
         </li>
       ),
       copy: (
-        <li key={3}>
+        <li key={4}>
           <a id="copy-short-url" className="copy" onClick={copyShortUrl}>
             <input
               className="short-url-input"
@@ -103,7 +129,7 @@ export default class ShareButtons extends React.PureComponent {
         </li>
       ),
       print: (
-        <li key={4}>
+        <li key={5}>
           <a id="print-shabad" onClick={window.print}>
             <PrinterIcon />
             <span className="sr-only">Print Shabad</span>
