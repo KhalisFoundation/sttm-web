@@ -85,8 +85,9 @@ export default class Pankti extends React.PureComponent {
 
     if (!visitedPanktis.includes(verse)) {
       visitedPanktis.push(verse);
-      this.setState({ highlightId: verse, visited: visitedPanktis });
+      this.setState({ visited: visitedPanktis });
     }
+    this.setState({ highlightId: verse });
   }
 
   baniLineCategory(node, shabad) {
