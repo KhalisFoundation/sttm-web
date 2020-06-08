@@ -1,6 +1,6 @@
 {
   "name": "@sttm/web",
-  "version": "1.7.5",
+  "version": "1.8.0",
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "scripts": {
@@ -9,9 +9,9 @@
     "start": "npm run server",
     "dev": "npm run watch",
     "watch": "run-p watch:*",
-    "watch:webpack": "npm run build:webpack -- --watch",
+    "tempwatch:webpack": "npm run build:webpack -- --watch && npm run start",
     "watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss public/assets/css/bundle.css\"",
-    "watch:server": "nodemon --watch server/ --exec npm run server",
+    "watch:server": "nodemon --watch src/ --exec npm run tempwatch:webpack",
     "test": "npm-run-all test:*",
     "test:lint": "run-p test:lint:*",
     "test:lint:css": "stylelint \"src/scss/*.scss\" --syntax scss",
@@ -19,6 +19,7 @@
     "test:lint:js:eslint": "eslint server/ common/",
     "test:lint:js:ignore:tslint": "tslint --project . -t stylish",
     "test:unit": "NODE_ENV=test jest --no-cache --config jest/config.js",
+    "updatetest": "NODE_ENV=test jest --no-cache --config jest/config.js --updateSnapshot",
     "webpack-stats": "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
     "build": "run-p build:*",
     "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/style.scss public/assets/css/bundle.css",
@@ -28,11 +29,11 @@
     "deploy:prod": "npm-run-all deploy:prod:*",
     "deploy:prod:build": "NODE_ENV=production npm run build",
     "deploy:prod:clean": "rm -rf .editorconfig .gitignore .github .stylelintrc .vscode stats.json webpack.config.js src LICENSE CONTRIBUTING.md README.md jest",
-    "deploy:prod:pm2": "kill_service_worker=0 pm2 start server --update-env --name=\"sttm-prod\" --node-args=\"-r esm\"",
+    "deploy:prod:pm2": "kill_service_worker=0 NODE_ENV=production pm2 start server --update-env --name=\"sttm-prod\" --node-args=\"-r esm\"",
     "deploy:dev": "npm-run-all deploy:dev:*",
     "deploy:dev:build": "NODE_ENV=development npm run build",
     "deploy:dev:clean": "npm run deploy:prod:clean",
-    "deploy:dev:pm2": "kill_service_worker=0 pm2 start server --update-env --name=\"sttm-dev\" --node-args=\"-r esm\""
+    "deploy:dev:pm2": "kill_service_worker=0 NODE_ENV=development pm2 start server --update-env --name=\"sttm-dev\" --node-args=\"-r esm\""
   },
   "repository": {
     "type": "git",
@@ -98,7 +99,8 @@
     ]
   },
   "dependencies": {
-    "@sttm/banidb": "^2.2.3",
+    "@sttm/banidb": "^2.2.4",
+    "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",
@@ -108,6 +110,7 @@
     "marinate": "^0.1.5",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-hotkeys": "^2.0.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.1",

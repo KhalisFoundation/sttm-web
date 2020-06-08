@@ -1,4 +1,6 @@
 /* globals SYNC_API_URL */
+/* globals CEREMONIES_URL */
+/* globals BANIS_API_URL */
 import React from 'react';
 import cx from 'classnames';
 
@@ -9,6 +11,8 @@ import SearchInput from './search-input';
 import SlideControls from './slide-controls';
 import ControllerSearch from './search';
 import { Stub } from '../Search/Layout';
+import ControllerShabad from '@/pages/WebController/shabad';
+import { versesToGurbani } from '@/util';
 
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
@@ -18,7 +22,8 @@ export default class WebControllerPage extends React.PureComponent {
       namespaceString: '',
       socket: null,
       controllerPin: 0,
-      searchData: {},
+      searchData: null,
+      shabadData: null,
 
       error: false,
       pinError: false,
@@ -42,7 +47,39 @@ export default class WebControllerPage extends React.PureComponent {
   }
 
   handleSearch = data => {
-    this.setState({ searchData: data });
+    this.setState({ searchData: data, shabadData: null });
+  }
+
+  handleCeremony = (ceremonyID, highlight) => {
+    fetch(`${CEREMONIES_URL}${ceremonyID}`)
+      .then(r => r.json())
+      .then((data) => {
+        if (data) {
+          const processedData = data;
+          processedData.verses = versesToGurbani(data.verses, false, 'ceremony');
+          processedData.type = 'ceremony';
+          processedData.highlight = highlight || processedData.verses[0].verseId;
+          processedData.homeId = processedData.verses[0].verseId;
+          this.setState({ searchData: null, shabadData: processedData }, this.finishLoading);
+        }
+      }
+      );
+  }
+
+  handleBani = (baniID, highlight, baniLength, mangalPosition) => {
+    fetch(`${BANIS_API_URL}/${baniID}`)
+      .then(r => r.json())
+      .then((data) => {
+        if (data) {
+          const processedData = data;
+          processedData.verses = versesToGurbani(data.verses, baniLength, mangalPosition);
+          processedData.type = 'bani';
+          processedData.highlight = highlight || processedData.verses[0].verseId;
+          processedData.homeId = processedData.verses[0].verseId;
+          this.setState({ searchData: null, shabadData: processedData }, this.finishLoading);
+        }
+      }
+      );
   }
 
   handleSubmit = (code, pin) => {
@@ -91,6 +128,13 @@ export default class WebControllerPage extends React.PureComponent {
                     pinError: true,
                     codeError: false,
                   }, this.finishLoading);
+              } else if (!data.verseChange && data['host'] !== 'sttm-web') {
+                data['type'] === 'shabad' &&
+                  this.setState({ searchData: data, shabadData: null });
+                data['type'] === 'ceremony' &&
+                  this.handleCeremony(data.id, data.highlight);
+                data['type'] === 'bani' &&
+                  this.handleBani(data.id, data.highlight, data.baniLength, data.mangalPosition);
               }
             });
           }
@@ -114,10 +158,10 @@ export default class WebControllerPage extends React.PureComponent {
       namespaceString,
       error,
       pinError,
-      codeError
+      codeError,
+      shabadData,
     } = this.state;
 
-    const { query, type, source, offset } = searchData;
     let errorMessage;
 
     if (error) {
@@ -141,15 +185,27 @@ export default class WebControllerPage extends React.PureComponent {
               <SearchInput onSearch={this.handleSearch} />
               <SlideControls
                 socket={socket}
-                controllerPin={controllerPin} />
-              {query && (
-                <ControllerSearch
-                  q={query}
-                  type={type}
-                  source={source}
-                  offset={offset}
+                specialHandler={this.handleCeremony}
+                controllerPin={controllerPin}
+                default={(shabadData && shabadData.type === 'ceremony') ? shabadData.ceremonyInfo.ceremonyID : null} />
+
+              {shabadData && (
+                <ControllerShabad
+                  data={shabadData}
                   socket={socket}
                   controllerPin={controllerPin}
+                  resultType={shabadData.type}
+                  highlight={shabadData.highlight}
+                  homeId={shabadData.homeId}
+                />
+              )}
+
+              {searchData && (
+                <ControllerSearch
+                  searchData={searchData}
+                  socket={socket}
+                  controllerPin={controllerPin}
+                  resultType={'shabad'}
                 />
               )}
             </React.Fragment>
@@ -220,7 +276,6 @@ export default class WebControllerPage extends React.PureComponent {
       script.src = src;
       document.body.appendChild(script);
     }
-
     window.addEventListener('beforeunload', this._alertOnExit);
   }
 }

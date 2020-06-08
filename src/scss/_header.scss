@@ -48,7 +48,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   display: inline-block;
-  height: 54px;
+  height: 48px;
   width: 100%;
 
   &.doodle-link.bigger-image {
@@ -67,7 +67,7 @@
 
 #search-options {
   clear: both;
-  margin-left: 70px;
+  // margin-left: 70px;
   padding: 0.5rem 0 0;
   width: 288px;
 
@@ -95,6 +95,7 @@
 
   &.submenu {
     position: relative;
+    z-index: 10;
 
     p {
       display: inline-block;
@@ -423,6 +424,10 @@
   width: 100%;
 }
 
+#top-bar-search-form menu li {
+  display: list-item;
+}
+
 @media screen and (max-width: 55.99em) {
   .top-bar-title {
     float: none;
@@ -521,7 +526,9 @@
 @media screen and (min-width: 56em) {
   .top-bar-title a {
     background-image: url(/assets/images/sttm_icon.png);
-    width: 54px;
+    background-position: bottom;
+    margin-top: 5px;
+    width: 46px;
 
     &.doodle-link.icon {
       display: inline-block;
@@ -548,7 +555,7 @@
   .menu {
     .submenu > .submenu-items {
       background-color: $sttm-white;
-      border: 1px solid $sttm-pure-white;
+      border: 1px solid $sttm-lighter-grey;
       display: none;
       position: absolute;
       right: 0;
@@ -557,7 +564,7 @@
 
       .dark-mode & {
         background-color: $sttm-light-black;
-        border-color: $sttm-pure-black;
+        border-color: $sttm-dark-grey;
       }
     }
   }
@@ -567,10 +574,11 @@
     display: flex;
     flex-grow: 1;
     justify-content: space-between;
+    margin-left: 8px;
     width: calc(100% - 70px);
 
     > .top-bar-right {
-      min-width: 470px;
+      // min-width: 470px;
       text-align: right;
     }
   }
@@ -583,7 +591,7 @@
 
 @media screen and (min-width: 56em) {
   .top-bar #search-container {
-    max-width: 444px;
+    min-width: 444px;
   }
 
   .top-bar #search {

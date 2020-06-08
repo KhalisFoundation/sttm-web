@@ -2,6 +2,7 @@ import {
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_DARK_MODE,
+  DEFAULT_LINE_HEIGHT,
   DEFAULT_VISRAAMS,
   DEFAULT_VISRAAM_SOURCE,
   DEFAULT_VISRAAM_STYLE,
@@ -21,11 +22,8 @@ export const createAction = (type, meta) => payload => ({
 export const SET_ONLINE_MODE = 'SET_ONLINE_MODE';
 export const setOnlineMode = createAction(SET_ONLINE_MODE);
 
-export const TOGGLE_DISPLAY_OPTIONS = 'TOGGLE_DISPLAY_OPTIONS';
-export const toggleDisplayOptions = createAction(TOGGLE_DISPLAY_OPTIONS);
-
-export const TOGGLE_FONT_OPTIONS = 'TOGGLE_FONT_OPTIONS';
-export const toggleFontOptions = createAction(TOGGLE_FONT_OPTIONS);
+export const TOGGLE_ADVANCED_OPTIONS = 'TOGGLE_ADVANCED_OPTIONS';
+export const toggleAdvancedOptions = createAction(TOGGLE_ADVANCED_OPTIONS);
 
 export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE';
 export const toggleDarkMode = createAction(TOGGLE_DARK_MODE);
@@ -64,11 +62,10 @@ export const SET_UNICODE = 'SET_UNICODE';
 export const setUnicode = createAction(SET_UNICODE);
 
 export const SET_FONT_SIZE = 'SET_FONT_SIZE';
-export const setFontSize = createAction(SET_FONT_SIZE, {
-  debounce: {
-    time: 300,
-  },
-});
+export const setFontSize = createAction(SET_FONT_SIZE);
+
+export const SET_LINE_HEIGHT = 'SET_LINE_HEIGHT';
+export const setLineHeight = createAction(SET_LINE_HEIGHT);
 
 export const SET_TRANSLATION_LANGUAGES = 'SET_TRANSLATION_LANGUAGES';
 export const setTranslationLanguages = createAction(SET_TRANSLATION_LANGUAGES);
@@ -105,6 +102,7 @@ export const resetFontOptions = () => dispatch => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
   dispatch(changeFont(DEFAULT_FONT_FAMILY));
+  dispatch(setLineHeight(DEFAULT_LINE_HEIGHT));
 };
 
 export const SET_CENTER_ALIGN_OPTION = 'SET_CENTER_ALIGN_OPTION';

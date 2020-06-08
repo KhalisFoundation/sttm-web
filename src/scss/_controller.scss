@@ -28,6 +28,8 @@
 
   #sync-logo {
     background-image: url('/assets/images/sttm_icon.png');
+    height: 32px;
+    margin-top: 0;
     width: 32px;
   }
 }
@@ -176,6 +178,24 @@
   }
 }
 
+#nav-bar {
+  padding-top: 1rem;
+
+  .top-bar-title {
+    transform: translate(8px, -8px);
+  }
+
+  #search-options {
+    padding: 1rem 0 0;
+  }
+
+  @media screen and (max-width: 55.99em) {
+    #search-options {
+      padding: 1rem 8px 0 8px;
+    }
+  }
+}
+
 @media screen and (max-width: 55.99em) {
   .controller-row .search-page {
     padding-top: 5px;
@@ -186,7 +206,7 @@
   }
 
   #open-mobile-menu {
-    line-height: 30px;
+    // line-height: 36px;
   }
 }
 

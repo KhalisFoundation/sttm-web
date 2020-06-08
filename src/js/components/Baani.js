@@ -33,10 +33,10 @@ export default class Baani extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    lineHeight: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
-    onPanktiClick: PropTypes.func,
   };
 
   getShareLine = shabad => {
@@ -144,11 +144,11 @@ export default class Baani extends React.PureComponent {
       larivaar,
       unicode,
       fontSize,
+      lineHeight,
       fontFamily,
       highlight,
       centerAlignGurbani,
       showFullScreen,
-      onPanktiClick,
     } = this.props;
 
     const disabledActions = ['ang', 'hukamnama'].includes(type)
@@ -163,14 +163,14 @@ export default class Baani extends React.PureComponent {
         larivaar={larivaar}
         larivaarAssist={larivaarAssist}
         fontSize={fontSize}
+        lineHeight={lineHeight}
         fontFamily={fontFamily}
-        onPanktiClick={onPanktiClick}
         visraam={shabad.visraam}
       />
     );
 
     const getTransliterations = shabad => transliterationLanguages.map(language => (
-      <Transliteration key={getVerseId(shabad) + language}>
+      <Transliteration fontSize={fontSize} key={getVerseId(shabad) + language}>
         {transliterationMap[language](shabad)}
       </Transliteration>
     ));
@@ -186,6 +186,7 @@ export default class Baani extends React.PureComponent {
 
     const getTranslations = shabad => translationLanguages.map(language => (
       <Translation
+        fontSize={fontSize}
         key={getVerseId(shabad) + language}
         type={language}
         {...Translation.getTranslationProps({
@@ -211,7 +212,6 @@ export default class Baani extends React.PureComponent {
                 ? (this.$highlightedBaaniLine = node)
                 : null
             }
-            onClick={() => onPanktiClick(getVerseId(shabad))}
           >
             {getBaniLine(shabad)}
             {getTransliterations(shabad)}
@@ -263,7 +263,7 @@ export default class Baani extends React.PureComponent {
         {transliterationLanguages.map(language => (
           <div key={language} className="split-view-baani-wrapper">
             {gurbani.map(shabad => (
-              <Transliteration key={getVerseId(shabad)}>
+              <Transliteration fontSize={fontSize} key={getVerseId(shabad)}>
                 {transliterationMap[language](shabad)}
               </Transliteration>
             ))}
@@ -273,6 +273,7 @@ export default class Baani extends React.PureComponent {
           <div key={language} className="split-view-baani-wrapper">
             {gurbani.map(shabad => (
               <Translation
+                fontSize={fontSize}
                 key={getVerseId(shabad)}
                 type={language}
                 {...Translation.getTranslationProps({

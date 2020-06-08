@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { GlobalHotKeys } from 'react-hotkeys';
 
 import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
 import { showToast, copyToClipboard } from '@/util';
@@ -13,6 +14,8 @@ import Baani from '@/components/Baani';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
 import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
+import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
+
 
 /**
  *
@@ -80,6 +83,9 @@ class Shabad extends React.PureComponent {
     showFullScreen: PropTypes.bool,
   };
 
+  constructor(props) {
+    super(props);
+  }
   render() {
     const {
       props: {
@@ -96,6 +102,7 @@ class Shabad extends React.PureComponent {
         highlight,
         unicode,
         fontSize,
+        lineHeight,
         fontFamily,
         centerAlignGurbani,
         showFullScreen,
@@ -109,57 +116,63 @@ class Shabad extends React.PureComponent {
     }
 
     return (
-      <React.Fragment>
-        {this.props.hideControls === false && (
-          <Controls
-            media={
-              ['shabad', 'hukamnama', 'ang'].includes(type)
-                ? supportedMedia
-                : supportedMedia.filter(
-                  m => ['embed', 'copyAll', 'copy'].includes(m) === false
-                )
-            }
-            onCopyAllClick={handleCopyAll}
-            onEmbedClick={handleEmbed}
-            {...this.props.controlProps}
-          />
-        )}
-        {this.props.hideMeta === false && (
-          <Meta
-            info={info}
-            nav={nav}
-            type={type}
-            translationLanguages={translationLanguages}
-            transliterationLanguages={transliterationLanguages}
-          />
-        )}
-        <div id="shabad" className="shabad display">
-          <div className="shabad-container">
-            <Baani
+      <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
+
+        <React.Fragment >
+
+          {this.props.hideControls === false && (
+            <Controls
+              media={
+                ['shabad', 'hukamnama', 'ang'].includes(type)
+                  ? supportedMedia
+                  : supportedMedia.filter(
+                    m => ['embed', 'copyAll', 'copy'].includes(m) === false
+                  )
+              }
+              onCopyAllClick={handleCopyAll}
+              onEmbedClick={handleEmbed}
+              {...this.props.controlProps}
+            />
+          )}
+          {this.props.hideMeta === false && (
+            <Meta
+              isUnicode={unicode}
+              info={info}
+              nav={nav}
               type={type}
-              gurbani={gurbani}
-              splitView={splitView}
-              unicode={unicode}
-              highlight={highlight}
-              larivaar={larivaar}
-              fontSize={fontSize}
-              fontFamily={fontFamily}
-              larivaarAssist={larivaarAssist}
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
-              centerAlignGurbani={centerAlignGurbani}
-              showFullScreen={showFullScreen}
             />
+          )}
+          <div id="shabad" className="shabad display">
+            <div className="shabad-container">
+              <Baani
+                type={type}
+                gurbani={gurbani}
+                splitView={splitView}
+                unicode={unicode}
+                highlight={highlight}
+                larivaar={larivaar}
+                fontSize={fontSize}
+                lineHeight={lineHeight}
+                fontFamily={fontFamily}
+                larivaarAssist={larivaarAssist}
+                translationLanguages={translationLanguages}
+                transliterationLanguages={transliterationLanguages}
+                centerAlignGurbani={centerAlignGurbani}
+                showFullScreen={showFullScreen}
+              />
 
-            {this.props.hideMeta === false && (
-              <FootNav info={info} type={type} nav={nav} />
-            )}
+              {this.props.hideMeta === false && (
+                <FootNav info={info} type={type} nav={nav} />
+              )}
 
-            <RelatedShabads forShabadID={getShabadId(this.props.info)} />
+              <RelatedShabads forShabadID={getShabadId(this.props.info)} />
+            </div>
           </div>
-        </div>
-        <ProgressBar percent={this.state.progress} />
-      </React.Fragment>
+          <ProgressBar percent={this.state.progress} />
+        </React.Fragment>
+      </GlobalHotKeys>
     );
   }
 

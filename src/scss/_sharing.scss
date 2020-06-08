@@ -3,10 +3,11 @@
 */
 #share-menu {
   border-radius: 2px;
-  height: calc(10px + 2em);
-  margin-bottom: 0.5rem;
-  margin-right: 35px;
-  padding: 0 35px !important;
+  margin: -27px 2rem 0 auto;
+
+  .fullscreen-view & {
+    display: none;
+  }
 
   a {
     background-color: transparent !important;
@@ -17,16 +18,19 @@
     }
   }
 
-  @media screen and (max-width: 46em) {
-    margin-right: 0 !important;
-    padding: 0 !important;
+  @media screen and (max-width: 730px) {
+    margin: 0 1rem 0 1rem;
+
+    .share-buttons {
+      text-align: left;
+    }
   }
 }
 
 .share-buttons {
   list-style: none;
-  margin: auto -20px;
-  padding: 5px 0;
+  margin: 0;
+  text-align: right;
 
   li {
     display: inline;
@@ -46,14 +50,6 @@
     padding: 0;
     position: absolute;
     width: 1px;
-  }
-
-  @media screen and (max-width: 45.999999em) {
-    margin: auto !important;
-    overflow: hidden;
-    text-align: center;
-    width: 0;
-    z-index: -1;
   }
 
   #copy-short-url {
@@ -120,9 +116,6 @@
 @media screen and (max-width: 45.999999em) {
   .share-buttons,
   #share-menu {
-    text-align: left;
-    width: calc(100% - 1rem) !important;
-
     .dark-mode & {
       background-color: $sttm-light-black;
     }

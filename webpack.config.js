@@ -4,20 +4,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 const path = require('path');
+const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
-
-const API_URLS = {
-  BANIS: PRODUCTION ? '//api.banidb.com/v2/banis' : "//api.khajana.org/v2/banis",
-  PRODUCTION: '//api.banidb.com/v2/',
-  DEVELOPMENT: '//api.khajana.org/v2/',
-  BANNERS: '//api.sikhitothemax.org/messages/web',
-  SYNC: {
-    PRODUCTION: '//api.sikhitothemax.org/',
-    LOCAL: '//api.sikhitothemax.org/',
-  },
-  DOODLE: '//api.sikhitothemax.org/doodle/',
-};
 
 const commonPlugins = [new ManifestPlugin()];
 
@@ -33,6 +22,7 @@ const plugins = PRODUCTION
       SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
       BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
+      CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
       DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
     }),
   ])
@@ -46,6 +36,7 @@ const plugins = PRODUCTION
       SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
       BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
       BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
+      CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
       DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
     }),
   ]);
