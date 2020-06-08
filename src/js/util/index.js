@@ -1,4 +1,5 @@
 /* globals API_URL */
+import { unicode } from 'anvaad-js'
 import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
@@ -317,7 +318,7 @@ export const getHighlightIndices = (baani, query, type) => {
   let mainQuery = query.replace(/"/g, '');
 
   //Handles - search operator
-  mainQuery = mainQuery.replace(/[-][ ,\w,),(]*/g, '');
+  mainQuery = unicode(mainQuery.replace(/[-][ ,\w,),(]*/g, ''), true);
 
   if (baani === null) {
     return [start, end];
