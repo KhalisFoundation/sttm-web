@@ -5,7 +5,11 @@ interface IAutoScrollControlState {
   scrollingSpeed: number;
 }
 
-export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollControlState> {
+interface IAutoScrollControlProps {
+  isBackgroundTransparent: boolean;
+}
+
+export class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAutoScrollControlState> {
 
   static maxScrollingSpeed = 100;
   static minScrollPixelMovement = 0.5;
@@ -15,7 +19,7 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
   _sliding!: boolean;
   _interval!: any;
 
-  constructor(props: Readonly<{}>) {
+  constructor(props: Readonly<IAutoScrollControlProps>) {
     super(props)
 
     this.state = {
@@ -109,10 +113,11 @@ export class AutoScrollControl extends React.PureComponent<{}, IAutoScrollContro
 
   render() {
     const { isScrolling, scrollingSpeed } = this.state;
+    const { isBackgroundTransparent } = this.props;
 
     return (
       <div className="autoScrollControl">
-        <button onClick={this.toggleAutoScrollState} className="autoScrollControlBtn">
+        <button onClick={this.toggleAutoScrollState} className="autoScrollControlPlayBtn">
           {isScrolling ? 'Pause' : 'Start'}
         </button>
         <div className="autoScrollControlSpeed">

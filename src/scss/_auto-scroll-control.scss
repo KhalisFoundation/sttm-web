@@ -1,6 +1,6 @@
 .autoScrollControl {
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $sttm-blue;
   bottom: 0;
   color: $sttm-white;
   display: flex;
@@ -15,7 +15,9 @@
   width: 100vw;
   z-index: 1;
 
-  &Btn {
+  &PlayBtn {
+    background-color: $sttm-color;
+    border-radius: 50%;
     margin-bottom: 8px;
   }
 
