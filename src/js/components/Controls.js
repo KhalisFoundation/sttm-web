@@ -5,6 +5,7 @@ import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
   setFontSize,
+  setLineHeight,
   setTranslationLanguages,
   setTransliterationLanguages,
   resetDisplayOptions,
@@ -120,6 +121,7 @@ const dispatchToProps = {
   toggleSplitViewOption,
   toggleDarkMode,
   toggleVisraams,
+  setLineHeight,
   setVisraamSource,
   setVisraamStyle,
   changeFont,

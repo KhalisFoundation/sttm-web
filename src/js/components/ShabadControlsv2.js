@@ -16,6 +16,7 @@ export default class ShabadControls extends React.PureComponent {
     toggleLarivaarOption: PropTypes.func.isRequired,
     toggleLarivaarAssistOption: PropTypes.func.isRequired,
     setFontSize: PropTypes.func.isRequired,
+    setLineHeight: PropTypes.func.isRequired,
     toggleCenterAlignOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
     toggleDarkMode: PropTypes.func.isRequired,
@@ -32,6 +33,7 @@ export default class ShabadControls extends React.PureComponent {
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    lineHeight: PropTypes.number.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
@@ -39,8 +41,8 @@ export default class ShabadControls extends React.PureComponent {
     showAdvancedOptions: PropTypes.bool.isRequired,
   };
 
-  bake_settings = settingsObj => {
-    let iconsMarkup, options, Icon;
+  bakeSettings = settingsObj => {
+    let controlsMarkup, options, Icon;
     switch (settingsObj.type) {
       case 'multiselect_checkbox':
         return (
@@ -62,38 +64,53 @@ export default class ShabadControls extends React.PureComponent {
               checked={settingsObj.checked}
               className="toggle-checkbox"
               onChange={settingsObj.action} />
-            <label className="toggle-label" htmlFor={`${settingsObj.label}-control`}></label>
+            <label
+              className="toggle-label"
+              htmlFor={`${settingsObj.label}-control`} />
           </>
         )
       case 'icon-toggle':
-        iconsMarkup = settingsObj.iconList.map((i, x) => {
-          const Icon = i.icon;
+        controlsMarkup = settingsObj.controlsList.map((c, idx) => {
+          const { icon, control, value, action, actionType } = c;
+          const CustomControl = icon || control;
+          const isOnChange = actionType === 'change';
+          const isOnClick = actionType !== 'change';
+
           return (
-            <Icon value={i.value} key={'icon-toggle' + x} onClick={i.action} />
+            <CustomControl
+              value={value}
+              key={'icon-toggle' + idx}
+              onClick={isOnClick ? action : undefined}
+              onChange={isOnChange ? action : undefined}
+            />
           );
         });
         return (
           <>
             <p className="toggle-text">{settingsObj.label}</p>
-            <>
-              {iconsMarkup}
-            </>
+            {controlsMarkup}
           </>
         )
       case 'separator':
         return (
-          <span className="separator"></span>
+          <span className="separator" />
         )
       case 'dropdown':
-        options = Object.keys(settingsObj.options).map(key =>
-          <option key={key} value={key}>{settingsObj.options[key]}</option>
-        )
+        options = Object
+          .keys(settingsObj.options)
+          .map(key =>
+            <option key={key} value={key}>{settingsObj.options[key]}</option>
+          )
         return (
           <>
             <p className="toggle-text">{settingsObj.label}</p>
-            <select value={settingsObj.value} onChange={(e) => {
-              settingsObj.action(e.currentTarget.value);
-            }}> {options} </select>
+            <select
+              value={settingsObj.value}
+              onChange={(e) => {
+                settingsObj.action(e.currentTarget.value);
+              }}>
+              {options}
+            </select>
           </>
         )
       case 'icon-text-toggle':
@@ -101,7 +118,11 @@ export default class ShabadControls extends React.PureComponent {
         return (
           <>
             <Icon value={settingsObj.value} onClick={settingsObj.action} />
-            <span onClick={settingsObj.action} className={`icon-label ${settingsObj.value ? 'enabled' : ''}`}>{settingsObj.label}</span>
+            <span
+              onClick={settingsObj.action}
+              className={`icon-label ${settingsObj.value ? 'enabled' : ''}`}>
+              {settingsObj.label}
+            </span>
           </>
         )
     }
@@ -124,7 +145,7 @@ export default class ShabadControls extends React.PureComponent {
       <>
         {settings.map((element, i) => (
           <div key={`settings-${i}`} className={`qs-option controller-option ${element.type}`}>
-            {this.bake_settings(element)}
+            {this.bakeSettings(element)}
           </div>
         ))}
       </>
@@ -140,7 +161,7 @@ export default class ShabadControls extends React.PureComponent {
             <div className="advanced-options">
               {advanced.map((element, i) => (
                 <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
-                  {this.bake_settings(element)}
+                  {this.bakeSettings(element)}
                 </div>
               ))}
               {quickSettingsPanel}

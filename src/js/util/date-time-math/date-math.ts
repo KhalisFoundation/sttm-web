@@ -2,7 +2,7 @@
  * Manipulates the date string
  */
 export const dateMath = {
-  algebra: (inputDate: Date, operator: string, days: number) => {
+  algebra: (inputDate: Date | string, operator: string, days: number) => {
     const da = new Date(inputDate);
     let newDay: number = 0; //assigned default value to pass typescript error check
     switch (operator) {
@@ -18,9 +18,9 @@ export const dateMath = {
     da.setDate(newDay);
     return da.toLocaleDateString('zh-tw'); // yyyy-m-d
   },
-  isBefore: (date1: Date, date2: Date) => new Date(date1) < new Date(date2),
+  isBefore: (date1: Date | string, date2: Date | string) => new Date(date1) < new Date(date2),
   isAfter: (date1: Date, date2: Date) => new Date(date1) > new Date(date2),
-  expand: (date: Date, year: boolean = true) => {
+  expand: (date: Date | string, year: boolean = true) => {
     const inDate = new Date(date);
     let options;
     year ?
@@ -28,5 +28,5 @@ export const dateMath = {
       options = { month: 'short', day: 'numeric' };
     return inDate.toLocaleDateString('en', options);
   },
-  isFuture: (date: Date) => dateMath.isBefore(new Date(), date),
+  isFuture: (date: Date | string) => dateMath.isBefore(new Date(), date),
 };

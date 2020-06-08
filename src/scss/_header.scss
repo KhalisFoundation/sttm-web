@@ -67,7 +67,7 @@
 
 #search-options {
   clear: both;
-  margin-left: 70px;
+  // margin-left: 70px;
   padding: 0.5rem 0 0;
   width: 288px;
 
@@ -424,6 +424,10 @@
   width: 100%;
 }
 
+#top-bar-search-form menu li {
+  display: list-item;
+}
+
 @media screen and (max-width: 55.99em) {
   .top-bar-title {
     float: none;
@@ -570,10 +574,11 @@
     display: flex;
     flex-grow: 1;
     justify-content: space-between;
+    margin-left: 8px;
     width: calc(100% - 70px);
 
     > .top-bar-right {
-      min-width: 470px;
+      // min-width: 470px;
       text-align: right;
     }
   }
@@ -586,7 +591,7 @@
 
 @media screen and (min-width: 56em) {
   .top-bar #search-container {
-    max-width: 444px;
+    min-width: 444px;
   }
 
   .top-bar #search {
