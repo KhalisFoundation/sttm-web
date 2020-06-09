@@ -142,8 +142,7 @@ export default function reducer(state, action) {
       };
     }
     case TOGGLE_LARIVAAR_OPTION: {
-      const larivaarAssist = state.larivaarAssist
-      if (larivaarAssist) return { ...state, larivaarAssist: !larivaarAssist }
+      if (state.larivaarAssist) return { ...state, larivaarAssist: !state.larivaarAssist }
 
       const larivaar = !state.larivaar;
       clickEvent({
