@@ -28,8 +28,9 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
       isShowAutoScroll
     } = this.props;
     const isShowIcons = isShowScrollToTop || isShowFullScreen;
-
-    if (!isShowIcons || !isShowAutoScroll) {
+    const isShowNothing = !isShowFullScreen && !isShowAutoScroll && !isShowScrollToTop
+    if (isShowNothing) {
+      console.log('is show nothing')
       return null;
     }
 

@@ -5,12 +5,13 @@
   bottom: 100px;
   display: flex;
   height: 60px;
-  left: calc(100vw - 450px);
+  right: 24px;
   max-width: 440px;
   padding: 8px 16px;
   position: fixed;
   width: auto;
   z-index: 1;
+  transition: all 0.2s ease-in;
 
   &Control {
     margin-left: 16px;

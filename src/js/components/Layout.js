@@ -82,7 +82,10 @@ class Layout extends React.PureComponent {
       ...props
     } = this.props;
 
-    const isShowFullScreen = pathname === '/shabad' || pathname === '/hukamnama' || pathname === '/ang'
+    const isShowFullScreen =
+      pathname === '/shabad' ||
+      pathname === '/hukamnama' ||
+      pathname === '/ang'
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
@@ -112,9 +115,9 @@ class Layout extends React.PureComponent {
           )}
 
         <FloatingActions
-          isShowAutoScroll={true || autoScrollMode}
-          isShowFullScreen={true || isShowFullScreen}
-          isShowScrollToTop={true || this.state.showScrollToTop} />
+          isShowAutoScroll={autoScrollMode}
+          isShowFullScreen={isShowFullScreen}
+          isShowScrollToTop={this.state.showScrollToTop} />
 
       </React.Fragment>
     ) : (
