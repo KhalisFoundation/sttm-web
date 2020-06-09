@@ -1,8 +1,10 @@
 import React, { ChangeEvent } from 'react';
+import { Range } from 'react-range';
+import { Pause, Play } from "../../components/Icons/controls";
 
 interface IAutoScrollControlState {
   isScrolling: boolean;
-  scrollingSpeed: number;
+  scrollingSpeed: number[];
 }
 
 interface IAutoScrollControlProps {
@@ -11,7 +13,9 @@ interface IAutoScrollControlProps {
 
 export class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAutoScrollControlState> {
 
+
   static maxScrollingSpeed = 100;
+  static minScrollingSpeed = 1;
   static minScrollPixelMovement = 0.5;
   static maxScrollPixelMovement = 2;
   _maxScrollPossible!: number;
@@ -24,13 +28,11 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
 
     this.state = {
       isScrolling: false,
-      scrollingSpeed: 50,
+      scrollingSpeed: [50],
     }
   }
 
-  handleScrollSpeedChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newSpeed = Number(e.currentTarget.value);
-
+  handleScrollSpeedChange = (newSpeed: number[]) => {
     if (!this._sliding) {
       requestAnimationFrame(() => {
         this.setState(
@@ -39,6 +41,18 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
       });
       this._sliding = true;
     }
+  }
+
+  setSpeed = (operation: string) => () => {
+    const [scrollingSpeed] = this.state.scrollingSpeed;
+    let scrollingSpeedToSet: number = 0;
+    switch (operation) {
+      case 'increment': scrollingSpeedToSet = Math.min(scrollingSpeed + 10, AutoScrollControl.maxScrollingSpeed)
+        break;
+      case 'decrement': scrollingSpeedToSet = Math.max(scrollingSpeed - 10, AutoScrollControl.minScrollingSpeed);
+        break;
+    }
+    this.handleScrollSpeedChange([scrollingSpeedToSet]);
   }
 
   toggleAutoScrollState = () => {
@@ -71,14 +85,14 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
   }
 
   handleAutoScroll = () => {
-    const { isScrolling, scrollingSpeed } = this.state;
-    if (isScrolling) {
+    if (this.state.isScrolling) {
       const scrollY = document.documentElement.scrollTop;
 
       if (scrollY >= this._maxScrollPossible) {
         this.removeScroll();
       }
 
+      const [scrollingSpeed] = this.state.scrollingSpeed;
       // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
       let movement = (AutoScrollControl.minScrollPixelMovement + ((scrollingSpeed / 100) * (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement)));
       movement = parseFloat(movement.toFixed(2));
@@ -117,24 +131,52 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
 
     return (
       <div className="autoScrollControl">
-        <button onClick={this.toggleAutoScrollState} className="autoScrollControlPlayBtn">
-          {isScrolling ? 'Pause' : 'Start'}
-        </button>
         <div className="autoScrollControlSpeed">
-          <label>
-            Change Speed
-          <input
-              title={scrollingSpeed.toString()}
-              id="changeSpeed"
-              type="range"
-              min="1"
-              step="1"
-              onInput={this.handleScrollSpeedChange}
-              max={AutoScrollControl.maxScrollingSpeed}
-              value={scrollingSpeed} />
-          </label>
-          <span className="autoScrollControlSpeedValue">{scrollingSpeed}</span>
+
+          <div className="autoScrollControlGroup">
+            <label className="autoScrollControlSliderLabel">
+              Speed
+            </label>
+            <div className="autoScrollControlSlider">
+              <button
+                className="autoScrollControlDecreaseSpeed"
+                onClick={this.setSpeed('decrement')}> - </button>
+              <Range
+                step={1}
+                min={AutoScrollControl.minScrollingSpeed}
+                max={AutoScrollControl.maxScrollingSpeed}
+                onChange={this.handleScrollSpeedChange}
+                values={scrollingSpeed}
+                renderTrack={({ props, children }) => (
+                  <div
+                    className="autoScrollControlSliderTrack"
+                    {...props}
+                    style={{
+                      ...props.style,
+                    }}
+                  >
+                    {children}
+                  </div>
+                )}
+                renderThumb={({ props }) => (
+                  <div className="autoScrollControlSliderThumb"
+                    {...props}
+                    style={{
+                      ...props.style,
+                    }}
+                  />
+                )}
+              />
+              <button
+                className="autoScrollControlIncreaseSpeed"
+                onClick={this.setSpeed('increment')}> + </button>
+            </div>
+          </div>
+          {/* <span className="autoScrollControlSpeedValue">{scrollingSpeed}</span> */}
         </div>
+        <button onClick={this.toggleAutoScrollState} className="autoScrollControlPlayBtn">
+          {isScrolling ? <Pause /> : <Play />}
+        </button>
       </div>
     )
   }

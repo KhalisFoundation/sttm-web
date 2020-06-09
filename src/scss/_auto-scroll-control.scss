@@ -4,35 +4,86 @@
   bottom: 0;
   color: $sttm-white;
   display: flex;
-  flex-direction: column;
-  height: 75px;
+  height: 60px;
   justify-content: center;
   left: 0;
-  padding: 8px;
+  padding: 8px 24px;
   position: fixed;
-  top: 100vh;
+  top: calc(100vh - 100px);
   transform: translateY(-100%);
-  width: 100vw;
+  width: auto;
+  border-radius: 40px;
   z-index: 1;
 
+  &IncreaseSpeed, &DecreaseSpeed {
+    border: none;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0px 8px;
+    outline: 0;
+    transform: translateY(-3px);
+  }
+
+  &Group {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 8px;
+
+    & > label {
+      color: $sttm-white;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+  }
+
   &PlayBtn {
-    background-color: $sttm-color;
+    align-items: center;
+    background-color: $sttm-orange;
+    border: none;
     border-radius: 50%;
-    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    outline: 0;
+    width: 80px;
+
+    > svg {
+      width: 40px;
+      height: 40px;
+      fill: $sttm-white;
+    }
   }
 
   &Speed {
     align-items: center;
     display: flex;
+    font-size: 16px;
+  }
 
-    & > label {
-      color: $sttm-white;
-      display: flex;
-      margin-right: 8px;
+  &Slider {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    max-height: 30px;
 
-      & > input {
-        margin-left: 8px;
-      }
+    &Thumb {
+      background-color: $sttm-orange;
+      border: none;
+      border-radius: 50%;
+      height: 20px;
+      outline: 0;
+      width: 20px;
+    }
+
+    &Track {
+      border-radius: 4px;
+      background-color: $sttm-white;
+      height: 6px;
+      width: 150px;
+      margin: 0 8px;
     }
   }
 }
