@@ -1,5 +1,7 @@
 import React from 'react';
 import { Range } from 'react-range';
+import { Transition } from 'react-spring/renderprops';
+
 import { toFixedFloat } from '../../util/numbers';
 import { Pause, Play } from "../../components/Icons/controls";
 
@@ -8,12 +10,15 @@ interface IAutoScrollControlState {
   scrollingSpeed: number[];
 }
 
+// Visible controls mode will have all the controls visible all the time.
+// Hidden controls mode will have all the controls hidden by default and shown only when playing
+type MODE = 'visible-controls' | 'hidden-controls';
 interface IAutoScrollControlProps {
+  mode: MODE;
   isBackgroundTransparent: boolean;
 }
 
 export class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAutoScrollControlState> {
-
 
   static maxScrollingSpeed = 100;
   static minScrollingSpeed = 1;
@@ -25,7 +30,8 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
   _interval!: any;
 
   static defaultProps = {
-    isBackgroundTransparent: false
+    isBackgroundTransparent: false,
+    mode: 'visible-controls'
   }
 
   constructor(props: Readonly<IAutoScrollControlProps>) {
@@ -51,12 +57,12 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
   setSpeed = (operation: string) => () => {
     const [scrollingSpeed] = this.state.scrollingSpeed;
     let scrollingSpeedToSet: number = 0;
-    switch (operation) {
-      case 'increment': scrollingSpeedToSet = Math.min(scrollingSpeed + 10, AutoScrollControl.maxScrollingSpeed)
-        break;
-      case 'decrement': scrollingSpeedToSet = Math.max(scrollingSpeed - 10, AutoScrollControl.minScrollingSpeed);
-        break;
-    }
+
+    if (operation === 'increment')
+      scrollingSpeedToSet = Math.min(scrollingSpeed + 10, AutoScrollControl.maxScrollingSpeed)
+    else
+      scrollingSpeedToSet = Math.max(scrollingSpeed - 10, AutoScrollControl.minScrollingSpeed);
+
     this.handleScrollSpeedChange([scrollingSpeedToSet]);
   }
 
@@ -133,51 +139,60 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
 
   render() {
     const { isScrolling, scrollingSpeed } = this.state;
-    const { isBackgroundTransparent } = this.props;
-
+    const { isBackgroundTransparent, mode } = this.props;
+    const isHiddenControlsMode = mode === 'hidden-controls';
+    const isShowControls = !isHiddenControlsMode || isScrolling;
     return (
       <div className={`autoScrollControl ${isBackgroundTransparent ? 'backgroundTransparent' : ''}`}>
         <div className="autoScrollControlSpeed">
 
-          <div className="autoScrollControlGroup">
-            <label className="autoScrollControlSliderLabel">
-              Speed
-            </label>
-            <div className="autoScrollControlSlider">
-              <button
-                className="autoScrollControlDecreaseSpeed"
-                onClick={this.setSpeed('decrement')}> - </button>
-              <Range
-                step={1}
-                min={AutoScrollControl.minScrollingSpeed}
-                max={AutoScrollControl.maxScrollingSpeed}
-                onChange={this.handleScrollSpeedChange}
-                values={scrollingSpeed}
-                renderTrack={({ props, children }) => (
-                  <div
-                    className="autoScrollControlSliderTrack"
-                    {...props}
-                    style={{
-                      ...props.style,
-                    }}
-                  >
-                    {children}
+          <Transition
+            items={isShowControls}
+            from={{ opacity: 0 }}
+            enter={{ opacity: 1, width: 230 }}
+            leave={{ opacity: 0, width: 0 }} >
+            {isShowControls =>
+              isShowControls && ((props) =>
+                <div style={props} className="autoScrollControlGroup">
+                  <label className="autoScrollControlSliderLabel">
+                    Speed
+                  </label>
+                  <div className="autoScrollControlSlider">
+                    <button
+                      className="autoScrollControlDecreaseSpeed"
+                      onClick={this.setSpeed('decrement')}> - </button>
+                    <Range
+                      step={1}
+                      min={AutoScrollControl.minScrollingSpeed}
+                      max={AutoScrollControl.maxScrollingSpeed}
+                      onChange={this.handleScrollSpeedChange}
+                      values={scrollingSpeed}
+                      renderTrack={({ props, children }) => (
+                        <div
+                          className="autoScrollControlSliderTrack"
+                          {...props}
+                          style={{
+                            ...props.style,
+                          }}
+                        >
+                          {children}
+                        </div>
+                      )}
+                      renderThumb={({ props }) => (
+                        <div className="autoScrollControlSliderThumb"
+                          {...props}
+                          style={{
+                            ...props.style,
+                          }}
+                        />
+                      )}
+                    />
+                    <button
+                      className="autoScrollControlIncreaseSpeed"
+                      onClick={this.setSpeed('increment')}> + </button>
                   </div>
-                )}
-                renderThumb={({ props }) => (
-                  <div className="autoScrollControlSliderThumb"
-                    {...props}
-                    style={{
-                      ...props.style,
-                    }}
-                  />
-                )}
-              />
-              <button
-                className="autoScrollControlIncreaseSpeed"
-                onClick={this.setSpeed('increment')}> + </button>
-            </div>
-          </div>
+                </div>)}
+          </Transition>
           {/* <span className="autoScrollControlSpeedValue">{scrollingSpeed}</span> */}
         </div>
         <button
