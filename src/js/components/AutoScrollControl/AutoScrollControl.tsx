@@ -130,7 +130,7 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
     const { isBackgroundTransparent } = this.props;
 
     return (
-      <div className="autoScrollControl">
+      <div className={`autoScrollControl ${isBackgroundTransparent ? 'backgroundTransparent' : ''}`}>
         <div className="autoScrollControlSpeed">
 
           <div className="autoScrollControlGroup">
@@ -177,7 +177,7 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
         <button onClick={this.toggleAutoScrollState} className="autoScrollControlPlayBtn">
           {isScrolling ? <Pause /> : <Play />}
         </button>
-      </div>
+      </ div>
     )
   }
 }

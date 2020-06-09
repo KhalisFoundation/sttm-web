@@ -17,8 +17,7 @@
 
   &IncreaseSpeed, &DecreaseSpeed {
     border: none;
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 36px;
     margin: 0px 8px;
     outline: 0;
     transform: translateY(-3px);
@@ -30,12 +29,15 @@
     flex-direction: column;
     justify-content: center;
     margin: 0 8px;
+    position: relative;
 
     & > label {
       color: $sttm-white;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 500;
       line-height: 1.2;
+      position: absolute;
+      top: -12px;
     }
   }
 
@@ -73,9 +75,9 @@
       background-color: $sttm-orange;
       border: none;
       border-radius: 50%;
-      height: 20px;
+      height: 15px;
       outline: 0;
-      width: 20px;
+      width: 15px;
     }
 
     &Track {
@@ -86,4 +88,8 @@
       margin: 0 8px;
     }
   }
+}
+
+.backgroundTransparent {
+  background-color: transparent;
 }
