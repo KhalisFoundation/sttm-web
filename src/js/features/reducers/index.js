@@ -143,17 +143,18 @@ export default function reducer(state, action) {
     }
     case TOGGLE_LARIVAAR_OPTION: {
       if (state.larivaarAssist) return { ...state, larivaarAssist: !state.larivaarAssist }
-
-      const larivaar = !state.larivaar;
-      clickEvent({
-        action: TOGGLE_LARIVAAR_OPTION,
-        label: larivaar ? 1 : 0,
-      });
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR, larivaar);
-      return {
-        ...state,
-        larivaar,
-      };
+      else {
+        const larivaar = !state.larivaar;
+        clickEvent({
+          action: TOGGLE_LARIVAAR_OPTION,
+          label: larivaar ? 1 : 0,
+        });
+        saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR, larivaar);
+        return {
+          ...state,
+          larivaar,
+        };
+      }
     }
     case TOGGLE_LARIVAAR_ASSIST_OPTION: {
       let larivaar = state.larivaar
