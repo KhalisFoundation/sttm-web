@@ -16,7 +16,6 @@ export default class Root extends React.PureComponent {
 
     configure({
       // logLevel: 'debug', use this when hotkeys break
-      logLevel: 'debug',
       defaultKeyEvent: 'keydown',
       defaultComponent: 'div',
       ignoreTags: ['input'],

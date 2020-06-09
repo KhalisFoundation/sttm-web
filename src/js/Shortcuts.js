@@ -62,7 +62,6 @@ const GlobalHandlers = {
 }
 const ViewerShortcutHanders = {
   toggleLarivar: () => {
-    console.log('toggling larivaar')
     store.dispatch({ type: "TOGGLE_LARIVAAR_OPTION" })
   },
   toggleLarivarAssist: () => {
