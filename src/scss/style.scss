@@ -174,7 +174,7 @@ select {
 .scroll-to-top {
   // align-items: center;
   animation: grow ease-in-out 0.25s;
-  background-color: $sttm-white;
+  // background-color: $sttm-white;
   // border-radius: 50%;
   // bottom: 28px;
   // box-shadow: 0 1px 4px 0 $sttm-dark-grey;
@@ -193,13 +193,13 @@ select {
     box-shadow: none;
   }
 
-  &.fullscreen {
-    right: 18px;
+  // &.fullscreen {
+  //   right: 18px;
 
-    & + .scroll-to-top {
-      right: 84px;
-    }
-  }
+  //   & + .scroll-to-top {
+  //     right: 84px;
+  //   }
+  // }
 
   @keyframes grow {
     from {

@@ -15,7 +15,6 @@ import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
 import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
-import { AutoScrollControl } from '../AutoScrollControl';
 
 /**
  *
@@ -173,7 +172,6 @@ class Shabad extends React.PureComponent {
             </div>
           </div>
           <ProgressBar percent={this.state.progress} />
-          {autoScrollMode && <AutoScrollControl />}
         </React.Fragment>
       </GlobalHotKeys>
     );

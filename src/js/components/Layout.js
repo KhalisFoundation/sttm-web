@@ -12,8 +12,7 @@ import {
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
-import ScrollToTop from './FloatingActions/ScrollToTop';
-import FullScreen from './FloatingActions/FullScreen';
+import { FloatingActions } from './FloatingActions';
 import throttle from 'lodash.throttle';
 import { addVisraamClass } from '../util';
 
@@ -28,6 +27,7 @@ class Layout extends React.PureComponent {
     online: PropTypes.bool,
     children: PropTypes.node.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    autoScrollMode: PropTypes.bool.isRequired,
     location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
       .isRequired,
     defaultQuery: PropTypes.string,
@@ -77,9 +77,12 @@ class Layout extends React.PureComponent {
       isAng = false,
       isHome = false,
       isController = false,
+      autoScrollMode,
       location: { pathname = '/' } = {},
       ...props
     } = this.props;
+
+    const isShowFullScreen = pathname === '/shabad' || pathname === '/hukamnama' || pathname === '/ang'
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
@@ -107,12 +110,13 @@ class Layout extends React.PureComponent {
         ) : (
             children
           )}
-        {(pathname === '/shabad' ||
-          pathname === '/hukamnama' ||
-          pathname === '/ang') && <FullScreen />}
-        {this.state.showScrollToTop && <ScrollToTop />}
-      </React.Fragment>
 
+        <FloatingActions
+          isShowAutoScroll={true || autoScrollMode}
+          isShowFullScreen={true || isShowFullScreen}
+          isShowScrollToTop={true || this.state.showScrollToTop} />
+
+      </React.Fragment>
     ) : (
         <div className="content-root">
           <GenericError
@@ -177,7 +181,7 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode }) => ({ online, darkMode }),
+  ({ online, darkMode, autoScrollMode }) => ({ online, darkMode, autoScrollMode }),
   {
     setOnlineMode,
   }

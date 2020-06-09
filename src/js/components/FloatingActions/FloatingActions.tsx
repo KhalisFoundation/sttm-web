@@ -4,19 +4,46 @@ import { AutoScrollControl } from '../AutoScrollControl';
 import ScrollToTop from './ScrollToTop';
 import FullScreen from './FullScreen';
 
-export class FloatingActions extends React.PureComponent {
+interface IFloatingActionsProps {
+  isShowAutoScroll?: boolean
+  isShowScrollToTop?: boolean
+  isShowFullScreen?: boolean
+}
+
+export class FloatingActions extends React.PureComponent<IFloatingActionsProps, {}> {
+  static defaultProps = {
+    isShowAutoScroll: true,
+    isShowScrollToTop: true,
+    isShowFullScreen: true
+  }
+
+  constructor(props: Readonly<IFloatingActionsProps>) {
+    super(props);
+  }
+
   render() {
+    const {
+      isShowFullScreen,
+      isShowScrollToTop,
+      isShowAutoScroll
+    } = this.props;
+    const isShowIcons = isShowScrollToTop || isShowFullScreen;
+
+    if (!isShowIcons || !isShowAutoScroll) {
+      return null;
+    }
+
     return (
       <div className="floatingActions">
-        <AutoScrollControl isBackgroundTransparent />
-        <div className="floatingActionsIcons">
-          <div className="floatingActionsControl">
-            <FullScreen />
-          </div>
-          <div className="floatingActionsControl">
+        {isShowAutoScroll && <AutoScrollControl isBackgroundTransparent />}
+        {isShowIcons && <div className="floatingActionsIcons">
+          {isShowScrollToTop && <div className="floatingActionsControl">
             <ScrollToTop />
-          </div>
-        </div>
+          </div>}
+          {isShowFullScreen && <div className="floatingActionsControl">
+            <FullScreen />
+          </div>}
+        </div>}
       </div>
     )
   }

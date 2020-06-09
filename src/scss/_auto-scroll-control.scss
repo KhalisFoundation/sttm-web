@@ -1,26 +1,27 @@
 .autoScrollControl {
   align-items: center;
   background-color: $sttm-blue;
+  border-radius: 40px;
   bottom: 0;
   color: $sttm-white;
   display: flex;
   height: 60px;
   justify-content: center;
-  left: 0;
-  padding: 8px 24px;
-  position: fixed;
-  top: calc(100vh - 100px);
-  transform: translateY(-100%);
+  padding: 8px;
   width: auto;
-  border-radius: 40px;
-  z-index: 1;
 
-  &IncreaseSpeed, &DecreaseSpeed {
+  &IncreaseSpeed,
+  &DecreaseSpeed {
     border: none;
     font-size: 36px;
-    margin: 0px 8px;
+    margin: 0 8px;
     outline: 0;
     transform: translateY(-3px);
+    transition: 0.2s all ease-in-out;
+
+    &:hover {
+      color: $sttm-orange;
+    }
   }
 
   &Group {
@@ -28,7 +29,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 8px;
+    max-width: 240px;
     position: relative;
 
     & > label {
@@ -47,15 +48,15 @@
     border: none;
     border-radius: 50%;
     display: flex;
-    justify-content: center;
     height: 80px;
+    justify-content: center;
     outline: 0;
     width: 80px;
 
     > svg {
-      width: 40px;
-      height: 40px;
       fill: $sttm-white;
+      height: 40px;
+      width: 40px;
     }
   }
 
@@ -81,11 +82,11 @@
     }
 
     &Track {
-      border-radius: 4px;
       background-color: $sttm-white;
+      border-radius: 4px;
       height: 6px;
-      width: 150px;
       margin: 0 8px;
+      width: 150px;
     }
   }
 }
