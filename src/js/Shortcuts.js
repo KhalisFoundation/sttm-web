@@ -66,7 +66,7 @@ const ViewerShortcutHanders = {
   },
   toggleLarivarAssist: () => {
     const state = store.getState();
-    store.dispatch({ type: 'TOGGLE_LARIVAAR_ASSIST_OPTION', payload: !state.larivaarAssist })
+    store.dispatch({ type: 'TOGGLE_LARIVAAR_ASSIST_OPTION', })
   },
   toggleVishraams: () => {
     store.dispatch({ type: "TOGGLE_VISRAAMS" })

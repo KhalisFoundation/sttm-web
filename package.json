@@ -122,8 +122,6 @@
     "trailingComma": "es5"
   },
   "husky": {
-    "hooks": {
-      "pre-push": "npm run pre-push-message && npm run test"
-    }
+    "hooks": {}
   }
 }
