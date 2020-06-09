@@ -1,5 +1,6 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { Range } from 'react-range';
+import { toFixedFloat } from '../../util/numbers';
 import { Pause, Play } from "../../components/Icons/controls";
 
 interface IAutoScrollControlState {
@@ -22,6 +23,10 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
   _nextScrollPosition!: number;
   _sliding!: boolean;
   _interval!: any;
+
+  static defaultProps = {
+    isBackgroundTransparent: false
+  }
 
   constructor(props: Readonly<IAutoScrollControlProps>) {
     super(props)
@@ -94,8 +99,9 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
 
       const [scrollingSpeed] = this.state.scrollingSpeed;
       // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
-      let movement = (AutoScrollControl.minScrollPixelMovement + ((scrollingSpeed / 100) * (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement)));
-      movement = parseFloat(movement.toFixed(2));
+      let movement = (AutoScrollControl.minScrollPixelMovement +
+        ((scrollingSpeed / 100) * (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement)));
+      movement = toFixedFloat(movement, 2);
 
       if (scrollY >= Math.floor(this._nextScrollPosition)) {
         this._nextScrollPosition += movement;
@@ -174,7 +180,9 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
           </div>
           {/* <span className="autoScrollControlSpeedValue">{scrollingSpeed}</span> */}
         </div>
-        <button onClick={this.toggleAutoScrollState} className="autoScrollControlPlayBtn">
+        <button
+          onClick={this.toggleAutoScrollState}
+          className="autoScrollControlPlayBtn">
           {isScrolling ? <Pause /> : <Play />}
         </button>
       </ div>

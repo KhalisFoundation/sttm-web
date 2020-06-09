@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Chevron from './Icons/Chevron';
+import Chevron from '../Icons/Chevron';
 
 /**
  *

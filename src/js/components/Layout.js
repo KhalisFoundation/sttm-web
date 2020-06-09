@@ -12,8 +12,8 @@ import {
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
-import ScrollToTop from './ScrollToTop';
-import FullScreen from './FullScreen';
+import ScrollToTop from './FloatingActions/ScrollToTop';
+import FullScreen from './FloatingActions/FullScreen';
 import throttle from 'lodash.throttle';
 import { addVisraamClass } from '../util';
 
