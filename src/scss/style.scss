@@ -171,12 +171,31 @@ select {
   }
 }
 
+#fullscreen {
+  fill: $sttm-white;
+}
+
+.fullscreen {
+  height: 22px;
+
+  & > svg {
+    transition: all 0.2s ease-in;
+  }
+
+  &:hover #fullscreen {
+    fill: $sttm-orange;
+  }
+}
+
 .scroll-to-top {
   animation: grow ease-in-out 0.25s;
   cursor: pointer;
+  height: 18px;
+  transform: translateY(-2px);
 
-  .dark-mode & {
-    box-shadow: none;
+  & svg {
+    fill: $sttm-white;
+    transition: all 0.2s ease-in;
   }
 
   @keyframes grow {
@@ -205,6 +224,10 @@ select {
   }
 }
 
+.scroll-to-top:hover svg {
+  fill: $sttm-orange;
+}
+
 .logo-center {
   margin-top: 10px;
 
@@ -218,14 +241,6 @@ select {
 
 .fullscreen-view #freshworks-container {
   display: none;
-}
-
-#fullscreen {
-  fill: $sttm-orange;
-}
-
-.fullscreen {
-  height: 22px;
 }
 
 .hide-mobile {

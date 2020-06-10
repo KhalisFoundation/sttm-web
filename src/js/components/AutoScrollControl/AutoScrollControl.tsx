@@ -183,7 +183,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
           <Transition
             items={isShowControls}
             from={{ opacity: 0 }}
-            enter={{ opacity: 1, maxWidth: 230 }}
+            enter={{ opacity: 1, maxWidth: 250 }}
             leave={{ opacity: 0, maxWidth: 0 }} >
             {isShowControls =>
               isShowControls && ((props) =>
