@@ -8,7 +8,7 @@ import { Pause, Play } from "../../components/Icons/controls";
 import { setAutoScrolling } from '@/features/actions';
 
 interface IReduxStateAsProps {
-  isAutoScrolling: boolean;
+  isAutoScrolling?: boolean;
 }
 interface IReduxDispatchProps {
   setAutoScrolling?: (action: boolean) => {}
@@ -155,7 +155,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 
   componentDidUpdate = (prevProps: IAutoScrollControlProps, prevState: IAutoScrollControlState) => {
-    console.log(prevProps, this.props, ' updating the state')
     if (prevProps.isAutoScrolling !== this.props.isAutoScrolling) {
       if (this.props.isAutoScrolling !== this.state.isScrolling) {
         if (this.props.isAutoScrolling)
@@ -239,11 +238,11 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 }
 
-const mapStateToProps = ({ isAutoScrolling }: IReduxStateAsProps) => ({ isAutoScrolling })
+const mapStateToProps = ({ isAutoScrolling }: any) => ({ isAutoScrolling })
 
 const mapDispatchToProps: IReduxDispatchProps = {
   setAutoScrolling
 }
 
 // TODO: finding fix for proper typing this
-export default connect(mapStateToProps, mapDispatchToProps)(AutoScrollControl as any);
+export default connect<{}, {}, IAutoScrollControlProps, IAutoScrollControlState>(mapStateToProps as any, mapDispatchToProps)(AutoScrollControl as any);

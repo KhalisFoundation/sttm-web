@@ -34,8 +34,7 @@
 
     & > label {
       color: $sttm-white;
-      font-size: 16px;
-      font-weight: 500;
+      font-size: 12px;
       line-height: 1.2;
       position: absolute;
       top: -12px;
@@ -70,7 +69,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    max-height: 30px;
+    max-height: 20px;
 
     &Thumb {
       background-color: $sttm-orange;
