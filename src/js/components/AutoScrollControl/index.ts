@@ -1,1 +1,1 @@
-export * from './AutoScrollControl';
+export { default } from './AutoScrollControl';

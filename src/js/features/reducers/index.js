@@ -14,6 +14,7 @@ import {
   SET_UNICODE,
   SET_FONT_SIZE,
   SET_LINE_HEIGHT,
+  SET_AUTOSCROLLING,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
@@ -185,6 +186,14 @@ export default function reducer(state, action) {
         visraams,
       };
     }
+
+    case SET_AUTOSCROLLING: {
+      return {
+        ...state,
+        isAutoScrolling: action.payload,
+      }
+    }
+
     case SET_UNICODE: {
       const unicode = action.payload || false;
       clickEvent({

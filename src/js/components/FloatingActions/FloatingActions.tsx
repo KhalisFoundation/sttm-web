@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AutoScrollControl } from '../AutoScrollControl';
+import AutoScrollControl from '../AutoScrollControl';
 import ScrollToTop from './ScrollToTop';
 import FullScreen from './FullScreen';
 
@@ -40,7 +40,6 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
             controlsState="hidden"
             hideSliderScreenSize="mobile"
             isBackgroundTransparent />}
-
         {isShowIcons &&
           <div
             className="floatingActionsIcons">

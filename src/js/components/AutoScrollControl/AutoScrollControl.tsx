@@ -1,9 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Range } from 'react-range';
 import { Transition } from 'react-spring/renderprops';
 
 import { toFixedFloat } from '../../util/numbers';
 import { Pause, Play } from "../../components/Icons/controls";
+import { setAutoScrolling } from '@/features/actions';
+
+interface IReduxStateAsProps {
+  isAutoScrolling: boolean;
+}
+interface IReduxDispatchProps {
+  setAutoScrolling?: (action: boolean) => {}
+}
 
 interface IAutoScrollControlState {
   isScrolling: boolean;
@@ -14,13 +23,13 @@ interface IAutoScrollControlState {
 // Hidden controls controlsState will have all the controls hidden by default and shown only when playing
 type ControlsState = 'visible' | 'hidden';
 type HideSliderScreenSize = 'never' | 'mobile' | 'tablet' | 'desktop';
-interface IAutoScrollControlProps {
+interface IAutoScrollControlProps extends IReduxDispatchProps, IReduxStateAsProps {
   controlsState: ControlsState;
   hideSliderScreenSize: HideSliderScreenSize;
   isBackgroundTransparent: boolean;
 }
 
-export class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAutoScrollControlState> {
+class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAutoScrollControlState> {
 
   static maxScrollingSpeed = 100;
   static minScrollingSpeed = 1;
@@ -89,20 +98,21 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
   }
 
   startScroll = () => {
-    this.setState(() => {
-      return {
-        ...this.state,
-        isScrolling: true,
-      }
-    }, () => {
-      this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
-      this._nextScrollPosition = document.documentElement.scrollTop;
-      this._interval = requestAnimationFrame(this.handleAutoScroll);
-    })
+    this.setState(() => ({ ...this.state, isScrolling: true }),
+      () => {
+        this.props.setAutoScrolling && this.props.setAutoScrolling(true);
+        this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
+        this._nextScrollPosition = document.documentElement.scrollTop;
+        this._interval = requestAnimationFrame(this.handleAutoScroll);
+      })
   }
 
   removeScroll = () => {
-    this.setState(() => ({ ...this.state, isScrolling: false }), this.clearScrollInterval);
+    this.setState(() => ({ ...this.state, isScrolling: false }),
+      () => {
+        this.props.setAutoScrolling && this.props.setAutoScrolling(false);
+        this.clearScrollInterval()
+      });
   }
 
   handleAutoScroll = () => {
@@ -114,11 +124,13 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
       }
 
       const [scrollingSpeed] = this.state.scrollingSpeed;
-      // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
-      let movement = (AutoScrollControl.minScrollPixelMovement +
-        ((scrollingSpeed / 100) * (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement)));
-      movement = toFixedFloat(movement, 2);
 
+      // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
+      const movement = toFixedFloat((AutoScrollControl.minScrollPixelMovement +
+        ((scrollingSpeed / 100) *
+          (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement))));
+
+      // Only allow the scrolling if we have surpassed previous scrolls
       if (scrollY >= Math.floor(this._nextScrollPosition)) {
         this._nextScrollPosition += movement;
         window.scrollTo({ left: 0, top: this._nextScrollPosition, behavior: 'smooth' });
@@ -142,6 +154,18 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
     this.addListeners();
   }
 
+  componentDidUpdate = (prevProps: IAutoScrollControlProps, prevState: IAutoScrollControlState) => {
+    console.log(prevProps, this.props, ' updating the state')
+    if (prevProps.isAutoScrolling !== this.props.isAutoScrolling) {
+      if (this.props.isAutoScrolling !== this.state.isScrolling) {
+        if (this.props.isAutoScrolling)
+          this.startScroll()
+
+        this.removeScroll();
+      }
+    }
+  }
+
   componentWillUnmount = () => {
     this.clearScrollInterval();
     this.removeListeners();
@@ -157,7 +181,6 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
     return (
       <div className={`autoScrollControl ${autoScrollControlBgClass}`}>
         <div className="autoScrollControlSpeed">
-
           <Transition
             items={isShowControls}
             from={{ opacity: 0 }}
@@ -168,7 +191,7 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
                 <div style={props} className="autoScrollControlGroup">
                   <label className="autoScrollControlSliderLabel">
                     Speed
-                  </label>
+                </label>
                   <div className="autoScrollControlSlider">
                     <button
                       className="autoScrollControlDecreaseSpeed"
@@ -205,7 +228,6 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
                   </div>
                 </div>)}
           </Transition>
-          {/* <span className="autoScrollControlSpeedValue">{scrollingSpeed}</span> */}
         </div>
         <button
           onClick={this.toggleAutoScrollState}
@@ -216,3 +238,12 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
     )
   }
 }
+
+const mapStateToProps = ({ isAutoScrolling }: IReduxStateAsProps) => ({ isAutoScrolling })
+
+const mapDispatchToProps: IReduxDispatchProps = {
+  setAutoScrolling
+}
+
+// TODO: finding fix for proper typing this
+export default connect(mapStateToProps, mapDispatchToProps)(AutoScrollControl as any);

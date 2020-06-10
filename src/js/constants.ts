@@ -81,6 +81,7 @@ export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
 export const DEFAULT_AUTO_SCROLL_MODE = false;
+export const DEFAULT_IS_AUTOSCROLLING = false;
 export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 export const DEFAULT_VISRAAMS = false;
 export const DEFAULT_VISRAAM_SOURCE = 'sttm';
@@ -230,7 +231,7 @@ export interface IBAANI_LINK {
   action: string;
 }
 
-export const TIMED_BAANI_LINKS = [{
+export const TIMED_BAANI_LINKS: IBAANI_LINK[] = [{
   name: 'Rehraas sahib',
   startTimeInMinutes: 1020, // timeMath.calcTimeInMinutes(17, 0),
   endTimeInMinutes: 1200, // timeMath.calcTimeInMinutes(20, 0),
@@ -250,5 +251,4 @@ export const TIMED_BAANI_LINKS = [{
   endTimeInMinutes: 1380, //timeMath.calcTimeInMinutes(23, 0),
   link: '/sundar-gutka/23',
   action: ACTIONS.SOHILAA_SAHIB_LINK
-}] as IBAANI_LINK[];
-
+}];

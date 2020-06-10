@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { toggleAutoScrollMode } from '@/features/actions';
+import { setAutoScrolling } from '@/features/actions';
 import Chevron from '../Icons/Chevron';
 
 /**
@@ -20,13 +20,13 @@ class ScrollToTop extends React.PureComponent {
   /**
    * @typedef {object} ScrollToTopProps
    * @property {number} [disableSmoothScrollingAt=4000]
-   * @property {Func} [toggleAutoScrollMode]
+   * @property {Func} [setAutoScrolling]
    *
    * @static
    * @memberof ScrollToTop
    */
   static propTypes = {
-    toggleAutoScrollMode: PropTypes.func,
+    setAutoScrolling: PropTypes.func,
     disableSmoothScrollingAt: PropTypes.number,
   };
 
@@ -37,9 +37,10 @@ class ScrollToTop extends React.PureComponent {
    */
   handleClick = () => {
     const prevValue = document.body.style.scrollBehavior;
-    const { toggleAutoScrollMode } = this.props;
-    // Stop the autoscroll control
-    toggleAutoScrollMode();
+    const { setAutoScrolling } = this.props;
+
+    // Stop the autoscrolling when we are doing scroll to top
+    setAutoScrolling(false);
 
     // If user has scrolled for 4000 pixels, smooth scrolling would take a lot of time
     if (window.scrollY > this.props.disableSmoothScrollingAt) {
@@ -68,7 +69,7 @@ class ScrollToTop extends React.PureComponent {
 const stateToProps = () => { };
 
 const dispatchToProps = {
-  toggleAutoScrollMode,
+  setAutoScrolling,
 };
 
 
