@@ -48,7 +48,7 @@ export default class FullScreen extends React.PureComponent {
   render() {
     const { isFullScreen } = this.state;
     return (
-      <div className="scroll-to-top fullscreen" onClick={this.handleClick}>
+      <div className="fab scroll-to-top fullscreen" onClick={this.handleClick}>
         <FullscreenIcon state={isFullScreen} />
       </div>
     );

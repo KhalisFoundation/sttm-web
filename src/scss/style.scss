@@ -179,7 +179,6 @@ select {
     box-shadow: none;
   }
 
-
   @keyframes grow {
     from {
       transform: scale(0);
@@ -223,4 +222,26 @@ select {
 
 #fullscreen {
   fill: $sttm-orange;
+}
+
+.fullscreen {
+  height: 22px;
+}
+
+.hide-mobile{
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
+}
+
+.hide-tablet{
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+}
+
+.hide-desktop{
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 }

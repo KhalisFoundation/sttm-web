@@ -36,6 +36,7 @@ export const TOGGLE_AUTO_SCROLL_MODE = 'TOGGLE_AUTO_SCROLL_MODE';
 
 export const toggleAutoScrollMode = createAction(TOGGLE_AUTO_SCROLL_MODE);
 
+
 export const TOGGLE_TRANSLATION_OPTIONS = 'TOGGLE_TRANSLATION_OPTIONS';
 export const toggleTranslationOptions = createAction(
   TOGGLE_TRANSLATION_OPTIONS
@@ -56,6 +57,10 @@ export const toggleLarivaarAssistOption = createAction(
 
 export const TOGGLE_SPLIT_VIEW_OPTION = 'TOGGLE_SPLIT_VIEW_OPTION';
 export const toggleSplitViewOption = createAction(TOGGLE_SPLIT_VIEW_OPTION);
+
+
+export const SET_IS_AUTO_SCROLL = 'SET_IS_AUTOSCROLL';
+export const setIsAutoScroll = createAction(setIsAutoScroll)
 
 export const SET_VISRAAM_SOURCE = 'SET_VISRAAM_SOURCE';
 export const setVisraamSource = createAction(SET_VISRAAM_SOURCE);

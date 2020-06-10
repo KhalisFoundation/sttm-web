@@ -57,7 +57,7 @@ class ScrollToTop extends React.PureComponent {
 
   render() {
     return (
-      <div className="scroll-to-top" onClick={this.handleClick}>
+      <div className="fab scroll-to-top" onClick={this.handleClick}>
         <Chevron direction={Chevron.DIRECTIONS.TOP} />
       </div>
     );

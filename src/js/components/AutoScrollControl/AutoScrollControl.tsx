@@ -10,11 +10,13 @@ interface IAutoScrollControlState {
   scrollingSpeed: number[];
 }
 
-// Visible controls mode will have all the controls visible all the time.
-// Hidden controls mode will have all the controls hidden by default and shown only when playing
-type MODE = 'visible-controls' | 'hidden-controls';
+// Visible controls controlsState will have all the controls visible all the time.
+// Hidden controls controlsState will have all the controls hidden by default and shown only when playing
+type ControlsState = 'visible' | 'hidden';
+type HideSliderScreenSize = 'never' | 'mobile' | 'tablet' | 'desktop';
 interface IAutoScrollControlProps {
-  mode: MODE;
+  controlsState: ControlsState;
+  hideSliderScreenSize: HideSliderScreenSize;
   isBackgroundTransparent: boolean;
 }
 
@@ -31,7 +33,8 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
 
   static defaultProps = {
     isBackgroundTransparent: false,
-    mode: 'visible-controls'
+    hideSliderScreenSize: 'never',
+    controlsState: 'visible-controls'
   }
 
   constructor(props: Readonly<IAutoScrollControlProps>) {
@@ -41,6 +44,13 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
       isScrolling: false,
       scrollingSpeed: [50],
     }
+  }
+
+  _getHideSliderClass = () => {
+    const { hideSliderScreenSize } = this.props;
+    if (hideSliderScreenSize === 'never') return '';
+
+    return `hide-${hideSliderScreenSize}`;
   }
 
   handleScrollSpeedChange = (newSpeed: number[]) => {
@@ -139,18 +149,20 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
 
   render() {
     const { isScrolling, scrollingSpeed } = this.state;
-    const { isBackgroundTransparent, mode } = this.props;
-    const isHiddenControlsMode = mode === 'hidden-controls';
+    const { isBackgroundTransparent, controlsState } = this.props;
+    const isHiddenControlsMode = controlsState === 'hidden';
+    const hideSliderClass = this._getHideSliderClass();
+    const autoScrollControlBgClass = isBackgroundTransparent ? 'backgroundTransparent' : '';
     const isShowControls = !isHiddenControlsMode || isScrolling;
     return (
-      <div className={`autoScrollControl ${isBackgroundTransparent ? 'backgroundTransparent' : ''}`}>
+      <div className={`autoScrollControl ${autoScrollControlBgClass}`}>
         <div className="autoScrollControlSpeed">
 
           <Transition
             items={isShowControls}
             from={{ opacity: 0 }}
-            enter={{ opacity: 1, width: 230 }}
-            leave={{ opacity: 0, width: 0 }} >
+            enter={{ opacity: 1, maxWidth: 230 }}
+            leave={{ opacity: 0, maxWidth: 0 }} >
             {isShowControls =>
               isShowControls && ((props) =>
                 <div style={props} className="autoScrollControlGroup">
@@ -169,21 +181,21 @@ export class AutoScrollControl extends React.PureComponent<IAutoScrollControlPro
                       values={scrollingSpeed}
                       renderTrack={({ props, children }) => (
                         <div
-                          className="autoScrollControlSliderTrack"
-                          {...props}
+                          className={`autoScrollControlSliderTrack ${hideSliderClass}`}
                           style={{
                             ...props.style,
                           }}
+                          {...props}
                         >
                           {children}
                         </div>
                       )}
                       renderThumb={({ props }) => (
-                        <div className="autoScrollControlSliderThumb"
-                          {...props}
+                        <div className={`autoScrollControlSliderThumb ${hideSliderClass}`}
                           style={{
                             ...props.style,
                           }}
+                          {...props}
                         />
                       )}
                     />
