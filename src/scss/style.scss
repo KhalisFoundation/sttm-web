@@ -228,19 +228,19 @@ select {
   height: 22px;
 }
 
-.hide-mobile{
+.hide-mobile {
   @media screen and (max-width: 480px) {
     display: none;
   }
 }
 
-.hide-tablet{
+.hide-tablet {
   @media screen and (max-width: 700px) {
     display: none;
   }
 }
 
-.hide-desktop{
+.hide-desktop {
   @media screen and (max-width: 1000px) {
     display: none;
   }
