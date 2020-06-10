@@ -29,8 +29,10 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
     } = this.props;
     const isShowIcons = isShowScrollToTop || isShowFullScreen;
     const isShowNothing = !isShowFullScreen && !isShowAutoScroll && !isShowScrollToTop
-    const isLastIcon = !isShowFullScreen && !isShowScrollToTop && !isShowAutoScroll;
+    const isLastIcon = [isShowScrollToTop, isShowFullScreen, isShowAutoScroll]
+      .filter(isShowEntry => isShowEntry).length === 1;
     const lastIconStyles = isLastIcon ? { margin: 0 } : {};
+
     if (isShowNothing) return null;
 
     return (
@@ -45,6 +47,7 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
             className="floatingActionsIcons">
             {isShowScrollToTop &&
               <div
+                style={lastIconStyles}
                 className="floatingActionsControl">
                 <ScrollToTop />
               </div>}
