@@ -20,6 +20,7 @@ export default class ShabadControls extends React.PureComponent {
     toggleCenterAlignOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
     toggleDarkMode: PropTypes.func.isRequired,
+    toggleParagraphMode: PropTypes.func.isRequired,
     setVisraamSource: PropTypes.func.isRequired,
     setVisraamStyle: PropTypes.func.isRequired,
     changeFont: PropTypes.func.isRequired,
@@ -37,6 +38,7 @@ export default class ShabadControls extends React.PureComponent {
     centerAlignGurbani: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    paragraphMode: PropTypes.bool.isRequired,
     fontFamily: PropTypes.string.isRequired,
     showAdvancedOptions: PropTypes.bool.isRequired,
   };
@@ -144,7 +146,8 @@ export default class ShabadControls extends React.PureComponent {
     const quickSettingsPanel = (
       <>
         {settings.map((element, i) => (
-          <div key={`settings-${i}`} className={`qs-option controller-option ${element.type}`}>
+          <div key={`settings-${i}`}
+            className={`qs-option controller-option ${element.type}`}>
             {this.bakeSettings(element)}
           </div>
         ))}

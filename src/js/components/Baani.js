@@ -10,6 +10,7 @@ import { copyToClipboard, showToast, shortenURL } from '../util';
 
 import { translationMap, transliterationMap, getVerseId } from '@/util/api/shabad';
 
+
 /**
  *
  *
@@ -77,6 +78,20 @@ export default class Baani extends React.PureComponent {
     );
   };
 
+  createParagraphedGurbani = () => {
+    const paragraphedGurbani = {};
+    const { gurbani } = this.props;
+    gurbani.forEach(shabad => {
+      if (!paragraphedGurbani[shabad.paragraph]) {
+        paragraphedGurbani[shabad.paragraph] = [];
+      }
+
+      paragraphedGurbani[shabad.paragraph].push(shabad);
+    })
+
+    return paragraphedGurbani;
+  }
+
   /*onTweetClick = shabad => () => {
     clickEvent({
       action: ACTIONS.LINE_SHARER,
@@ -133,13 +148,8 @@ export default class Baani extends React.PureComponent {
     }
   }
 
-  render() {
+  getBaniLine = shabad => {
     const {
-      gurbani,
-      splitView,
-      translationLanguages,
-      type,
-      transliterationLanguages,
       larivaarAssist,
       larivaar,
       unicode,
@@ -147,44 +157,57 @@ export default class Baani extends React.PureComponent {
       lineHeight,
       fontFamily,
       highlight,
-      centerAlignGurbani,
       showFullScreen,
     } = this.props;
 
-    const disabledActions = ['ang', 'hukamnama'].includes(type)
-      ? ['tweet']
-      : ['openShabad', 'tweet'];
+    return (<BaaniLine
+      text={shabad.verse}
+      unicode={unicode}
+      shouldHighlight={showFullScreen ? false : highlight === parseInt(getVerseId(shabad), 10)}
+      larivaar={larivaar}
+      larivaarAssist={larivaarAssist}
+      fontSize={fontSize}
+      lineHeight={lineHeight}
+      fontFamily={fontFamily}
+      visraam={shabad.visraam}
+    />)
+  }
+  getTransliterations = shabad => {
+    const {
+      transliterationLanguages,
+      fontSize,
+    } = this.props;
 
-    const getBaniLine = shabad => (
-      <BaaniLine
-        text={shabad.verse}
-        unicode={unicode}
-        shouldHighlight={showFullScreen ? false : highlight === parseInt(getVerseId(shabad), 10)}
-        larivaar={larivaar}
-        larivaarAssist={larivaarAssist}
-        fontSize={fontSize}
-        lineHeight={lineHeight}
-        fontFamily={fontFamily}
-        visraam={shabad.visraam}
-      />
-    );
-
-    const getTransliterations = shabad => transliterationLanguages.map(language => (
+    return transliterationLanguages.map(language => (
       <Transliteration fontSize={fontSize} key={getVerseId(shabad) + language}>
         {transliterationMap[language](shabad)}
       </Transliteration>
     ));
+  }
+  getActions = shabad => {
+    const {
+      type
+    } = this.props;
 
-    const getActions = shabad => (
+    const disabledActions = ['ang', 'hukamnama'].includes(type) ? ['tweet'] : ['openShabad', 'tweet'];
+
+    return (
       <Actions
         disabledActions={disabledActions}
         shabad={shabad}
         onFacebookClick={this.onFacebookClick(shabad)}
         onCopyClick={this.onCopyClick(shabad)}
       />
-    );
+    )
+  }
+  getTranslations = shabad => {
+    const {
+      unicode,
+      fontSize,
+      translationLanguages,
+    } = this.props;
 
-    const getTranslations = shabad => translationLanguages.map(language => (
+    return translationLanguages.map(language => (
       <Translation
         fontSize={fontSize}
         key={getVerseId(shabad) + language}
@@ -197,32 +220,84 @@ export default class Baani extends React.PureComponent {
         })}
       />
     ));
+  }
 
-    const mixedViewMarkup = (
-      <div className="mixed-view-baani">
-        {gurbani.map(shabad => (
-          <div
-            key={getVerseId(shabad)}
-            id={`line-${getVerseId(shabad)}`}
-            className="line"
-            onMouseUp={this.showShare}
-            onMouseDown={this.removeSelection}
-            ref={node =>
-              highlight === parseInt(getVerseId(shabad), 10)
-                ? (this.$highlightedBaaniLine = node)
-                : null
-            }
-          >
-            {getBaniLine(shabad)}
-            {getTransliterations(shabad)}
-            {getTranslations(shabad)}
-            {getActions(shabad)}
+  createShabadLine = (shabad, textToRender) => {
+    const { highlight } = this.props;
+    return (
+      <span
+        key={getVerseId(shabad)}
+        id={`line-${getVerseId(shabad)}`}
+        className="line"
+        onMouseUp={this.showShare}
+        onMouseDown={this.removeSelection}
+        ref={node =>
+          highlight === parseInt(getVerseId(shabad), 10)
+            ? (this.$highlightedBaaniLine = node)
+            : null
+        }
+      >
+        {textToRender}
+      </span>
+    )
+  }
+
+
+  createVersedGurbani = () => {
+    const { gurbani } = this.props;
+    const versedGurbani = {};
+
+    gurbani.forEach((shabad, idx) => {
+      versedGurbani[idx] = [];
+      versedGurbani[idx].push(shabad);
+    })
+
+    return versedGurbani;
+  }
+
+  normalizeGurbani = () => {
+    const { paragraphMode } = this.props;
+    if (paragraphMode) {
+      return this.createParagraphedGurbani();
+    }
+
+    return this.createVersedGurbani();
+  }
+
+  createMixedViewMarkup = () => {
+    const {
+      paragraphMode
+    } = this.props;
+    const normalizedGurbani = this.normalizeGurbani();
+    const paragraphModeClass = paragraphMode ? 'paragraph-mode' : '';
+    return (
+      <div className={`mixed-view-baani ${paragraphModeClass}`}>
+        {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+          <div key={idx} className={`mix-view-baani-pankti ${paragraphModeClass}`}>
+            <span className={`mix-view-baani-line ${paragraphModeClass}`}>
+              {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad)))}
+            </span>
+            <span className={`mix-view-baani-transliteration ${paragraphModeClass}`}>
+              {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterations(shabad)))}
+            </span>
+            <span className={`mix-view-baani-translation ${paragraphModeClass}`}>
+              {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslations(shabad)))}
+            </span>
+            <span className={`mix-view-baani-actions ${paragraphModeClass}`}>
+              {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
+            </span>
           </div>
         ))}
       </div>
-    );
+    )
+  }
+  createFullScreenMarkup = () => {
+    const {
+      gurbani,
+      highlight,
+    } = this.props;
 
-    const fullScreenMarkup = (
+    return (
       <div className="full-screen-baani">
         {gurbani.map(shabad => (
           highlight === parseInt(getVerseId(shabad), 10) ?
@@ -233,16 +308,26 @@ export default class Baani extends React.PureComponent {
               onMouseUp={this.showShare}
               onMouseDown={this.removeSelection}
             >
-              {getBaniLine(shabad)}
-              {getTransliterations(shabad)}
-              {getTranslations(shabad)}
-              {getActions(shabad)}
+              {this.getBaniLine(shabad)}
+              {this.getTransliterations(shabad)}
+              {this.getTranslations(shabad)}
+              {this.getActions(shabad)}
             </div> : ''
         ))}
       </div>
     );
+  }
+  createSplitViewMarkup = () => {
+    const {
+      gurbani,
+      translationLanguages,
+      transliterationLanguages,
+      unicode,
+      fontSize,
+      highlight,
+    } = this.props;
 
-    const splitViewMarkup = (
+    return (
       <div className="split-view-baani">
         <div className="split-view-baani-wrapper">
           {gurbani.map(shabad => (
@@ -255,8 +340,8 @@ export default class Baani extends React.PureComponent {
                   : null
               }
             >
-              {getBaniLine(shabad)}
-              {getActions(shabad)}
+              {this.getBaniLine(shabad)}
+              {this.getActions(shabad)}
             </div>
           ))}
         </div>
@@ -286,18 +371,26 @@ export default class Baani extends React.PureComponent {
             ))}
           </div>
         ))}
-      </div>
-    );
+      </div>)
+  }
+  getMarkup = () => {
+    const {
+      splitView,
+      showFullScreen,
+    } = this.props;
 
-    const getMarkup = () => {
-      if (showFullScreen) {
-        return fullScreenMarkup;
-      } else if (splitView) {
-        return splitViewMarkup;
-      } else {
-        return mixedViewMarkup;
-      }
+    if (showFullScreen) {
+      return this.createFullScreenMarkup();
+    } else if (splitView) {
+      return this.createSplitViewMarkup();
     }
+    return this.createMixedViewMarkup();
+  }
+  render() {
+    const {
+      centerAlignGurbani,
+      showFullScreen,
+    } = this.props;
 
     return (
       <div
@@ -305,7 +398,7 @@ export default class Baani extends React.PureComponent {
           centerAlignGurbani || showFullScreen ? ' center-align' : ''
           }`}
       >
-        {getMarkup()}
+        {this.getMarkup()}
       </div>
     );
   }

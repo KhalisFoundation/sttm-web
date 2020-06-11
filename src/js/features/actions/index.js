@@ -2,6 +2,7 @@ import {
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_DARK_MODE,
+  DEFAULT_PARAGRAPH_MODE,
   DEFAULT_LINE_HEIGHT,
   DEFAULT_VISRAAMS,
   DEFAULT_VISRAAM_SOURCE,
@@ -36,6 +37,11 @@ export const toggleTranslationOptions = createAction(
   TOGGLE_TRANSLATION_OPTIONS
 );
 
+export const TOGGLE_PARAGRAPH_MODE = 'TOGGLE_PARAGRAPH_MODE';
+export const toggleParagraphMode = createAction(
+  TOGGLE_PARAGRAPH_MODE
+)
+
 export const TOGGLE_TRANSLITERATION_OPTIONS = 'TOGGLE_TRANSLITERATION_OPTIONS';
 export const toggleTransliterationOptions = createAction(
   TOGGLE_TRANSLITERATION_OPTIONS
@@ -67,6 +73,9 @@ export const setFontSize = createAction(SET_FONT_SIZE);
 export const SET_LINE_HEIGHT = 'SET_LINE_HEIGHT';
 export const setLineHeight = createAction(SET_LINE_HEIGHT);
 
+export const SET_PARAGRAPH_MODE = 'SET_PARAGRAPH_MODE';
+export const setParagraphMode = createAction(SET_PARAGRAPH_MODE);
+
 export const SET_TRANSLATION_LANGUAGES = 'SET_TRANSLATION_LANGUAGES';
 export const setTranslationLanguages = createAction(SET_TRANSLATION_LANGUAGES);
 
@@ -88,6 +97,7 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
+  dispatch(setParagraphMode(DEFAULT_PARAGRAPH_MODE))
   dispatch(setVisraams(DEFAULT_VISRAAMS));
   dispatch(setVisraamSource(DEFAULT_VISRAAM_SOURCE));
   dispatch(setVisraamStyle(DEFAULT_VISRAAM_STYLE));
