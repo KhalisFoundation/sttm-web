@@ -193,7 +193,7 @@ blockquote {
   }
 
   .split-view-baani {
-    &-line{
+    &-line {
       &.paragraph-mode > * {
         display: inline;
       }
@@ -204,20 +204,24 @@ blockquote {
       position: relative;
 
       &.paragraph-mode * {
-          display: inline;
+        display: inline;
+
+        .share {
+          display: none;
+        }
       }
     }
 
     &-translation {
       margin-bottom: 4px;
 
-      &.paragraph-mode  * {
+      &.paragraph-mode * {
         display: inline;
 
-       &.translation {
-          padding: 0;
+        &.translation {
           margin: 0;
           margin-right: 4px;
+          padding: 0;
         }
       }
     }
@@ -225,7 +229,7 @@ blockquote {
     &-transliteration {
       margin-bottom: 4px;
 
-      &.paragraph-mode  * {
+      &.paragraph-mode * {
         display: inline;
 
         & .transliteration {
@@ -247,20 +251,24 @@ blockquote {
       position: relative;
 
       &.paragraph-mode * {
-          display: inline;
+        display: inline;
+
+        .share {
+          display: none;
+        }
       }
     }
 
     &-translation {
       margin-bottom: 4px;
 
-      &.paragraph-mode  * {
+      &.paragraph-mode * {
         display: inline;
 
         & .translation {
-          padding: 0;
           margin: 0;
           margin-right: 4px;
+          padding: 0;
         }
       }
     }
@@ -268,7 +276,7 @@ blockquote {
     &-transliteration {
       margin-bottom: 4px;
 
-      &.paragraph-mode  * {
+      &.paragraph-mode * {
         display: inline;
 
         & .transliteration {

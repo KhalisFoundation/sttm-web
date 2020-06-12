@@ -245,8 +245,6 @@ export default class Baani extends React.PureComponent {
       </div>
     )
   }
-
-
   createVersedGurbani = () => {
     const { gurbani } = this.props;
     const versedGurbani = {};
