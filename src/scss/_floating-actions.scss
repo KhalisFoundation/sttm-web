@@ -14,6 +14,10 @@
   width: auto;
   z-index: 1;
 
+  .dark-mode & {
+    box-shadow: 0 2px 4px 0 $sttm-grey;
+  }
+
   &Control {
     margin: 0 12px;
   }

@@ -39,8 +39,8 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
       <div className="floatingActions">
         {isShowAutoScroll &&
           <AutoScrollControl
-            controlsState="hidden"
             hideSliderScreenSize="mobile"
+            isControlsAlwaysVisible={false}
             isBackgroundTransparent />}
         {isShowIcons &&
           <div

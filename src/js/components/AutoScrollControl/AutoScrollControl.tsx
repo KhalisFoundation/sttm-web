@@ -18,13 +18,12 @@ interface IAutoScrollControlState {
   scrollingSpeed: number[];
 }
 
-// Visible controls controlsState will have all the controls visible all the time.
+// Visible controls isControlsVisible will have all the controls visible all the time.
 // Hidden controls controlsState will have all the controls hidden by default and shown only when playing
-type ControlsState = 'visible' | 'hidden';
 type HideSliderScreenSize = 'never' | 'mobile' | 'tablet' | 'desktop';
 interface IAutoScrollControlProps extends IReduxDispatchProps, IReduxStateAsProps {
-  controlsState: ControlsState;
   hideSliderScreenSize: HideSliderScreenSize;
+  isControlsAlwaysVisible: boolean;
   isBackgroundTransparent: boolean;
 }
 
@@ -41,8 +40,8 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   static defaultProps = {
     isBackgroundTransparent: false,
+    isControlsAlwaysVisible: true,
     hideSliderScreenSize: 'never',
-    controlsState: 'visible-controls'
   }
 
   constructor(props: Readonly<IAutoScrollControlProps>) {
@@ -171,11 +170,10 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   render() {
     const { isScrolling, scrollingSpeed } = this.state;
-    const { isBackgroundTransparent, controlsState } = this.props;
-    const isHiddenControlsMode = controlsState === 'hidden';
+    const { isBackgroundTransparent, isControlsAlwaysVisible } = this.props;
     const hideSliderClass = this._getHideSliderClass();
     const autoScrollControlBgClass = isBackgroundTransparent ? 'backgroundTransparent' : '';
-    const isShowControls = !isHiddenControlsMode || isScrolling;
+    const isShowControls = isControlsAlwaysVisible || isScrolling;
 
     return (
       <div className={`autoScrollControl ${autoScrollControlBgClass}`}>
