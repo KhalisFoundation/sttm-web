@@ -30,6 +30,22 @@
     justify-content: center;
     margin: 0 12px;
     position: relative;
+    transition: all 0.2s ease-in;
+
+    &.visible {
+      margin: 0 12px;
+      max-width: 250px;
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    &.hidden  {
+      display: flex;
+       margin: 0;
+       max-width: 0;
+       opacity: 0;
+      pointer-events: none;
+    }
 
     & > label {
       color: $sttm-white;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Range } from 'react-range';
-import { Transition } from 'react-spring/renderprops';
 
 import { toFixedFloat } from '../../util/numbers';
 import { Pause, Play } from "../../components/Icons/controls";
@@ -177,63 +176,56 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     const hideSliderClass = this._getHideSliderClass();
     const autoScrollControlBgClass = isBackgroundTransparent ? 'backgroundTransparent' : '';
     const isShowControls = !isHiddenControlsMode || isScrolling;
+
     return (
       <div className={`autoScrollControl ${autoScrollControlBgClass}`}>
         <div className="autoScrollControlSpeed">
-          <Transition
-            items={isShowControls}
-            from={{ opacity: 0 }}
-            enter={{ opacity: 1, maxWidth: 250 }}
-            leave={{ opacity: 0, maxWidth: 0 }} >
-            {isShowControls =>
-              isShowControls && ((props) =>
-                <div style={props} className="autoScrollControlGroup">
-                  <label className="autoScrollControlSliderLabel">
-                    Speed
-                </label>
-                  <div className="autoScrollControlSlider">
-                    <button
-                      className="autoScrollControlDecreaseSpeed"
-                      onClick={this.setSpeed('decrement')}> - </button>
-                    <Range
-                      step={1}
-                      min={AutoScrollControl.minScrollingSpeed}
-                      max={AutoScrollControl.maxScrollingSpeed}
-                      onChange={this.handleScrollSpeedChange}
-                      values={scrollingSpeed}
-                      renderTrack={({ props, children }) => (
-                        <div
-                          className={`autoScrollControlSliderTrack ${hideSliderClass}`}
-                          style={{
-                            ...props.style,
-                          }}
-                          {...props}
-                        >
-                          {children}
-                        </div>
-                      )}
-                      renderThumb={({ props }) => (
-                        <div className={`autoScrollControlSliderThumb ${hideSliderClass}`}
-                          style={{
-                            ...props.style,
-                          }}
-                          {...props}
-                        />
-                      )}
-                    />
-                    <button
-                      className="autoScrollControlIncreaseSpeed"
-                      onClick={this.setSpeed('increment')}> + </button>
+          <div className={`autoScrollControlGroup ${isShowControls ? 'visible' : 'hidden'}`}>
+            <label className="autoScrollControlSliderLabel">
+              Speed
+            </label>
+            <div className="autoScrollControlSlider">
+              <button
+                className="autoScrollControlDecreaseSpeed"
+                onClick={this.setSpeed('decrement')}> - </button>
+              <Range
+                step={1}
+                min={AutoScrollControl.minScrollingSpeed}
+                max={AutoScrollControl.maxScrollingSpeed}
+                onChange={this.handleScrollSpeedChange}
+                values={scrollingSpeed}
+                renderTrack={({ props, children }) => (
+                  <div
+                    className={`autoScrollControlSliderTrack ${hideSliderClass}`}
+                    style={{
+                      ...props.style,
+                    }}
+                    {...props}
+                  >
+                    {children}
                   </div>
-                </div>)}
-          </Transition>
+                )}
+                renderThumb={({ props }) => (
+                  <div className={`autoScrollControlSliderThumb ${hideSliderClass}`}
+                    style={{
+                      ...props.style,
+                    }}
+                    {...props}
+                  />
+                )}
+              />
+              <button
+                className="autoScrollControlIncreaseSpeed"
+                onClick={this.setSpeed('increment')}> + </button>
+            </div>
+          </div>
         </div>
         <button
           onClick={this.toggleAutoScrollState}
           className="autoScrollControlPlayBtn">
           {isScrolling ? <Pause /> : <Play />}
         </button>
-      </ div>
+      </ div >
     )
   }
 }

@@ -12,9 +12,9 @@
   transition: transform 0.2s;
   z-index: 1;
 
-  // .dark-mode & {
-  //   background-color: $sttm-light-black;
-  // }
+  .dark-mode & {
+    background-color: $sttm-light-black;
+  }
 
   .fullscreen-view & {
     display: none;
