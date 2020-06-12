@@ -192,9 +192,13 @@ blockquote {
     }
   }
 
-  .paragraphed-baani {
-    .line {
-      margin-bottom: 16px;
+  .split-view-baani {
+    &-line{
+      &.paragraph-mode {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
     }
   }
 
