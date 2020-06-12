@@ -276,11 +276,12 @@ export default class Baani extends React.PureComponent {
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = paragraphMode ? 'paragraph-mode' : '';
     const mixedViewBaaniClass = 'mixed-view-baani';
+
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
-          <div key={idx} className={`${mixedViewBaaniClass}-pankti ${paragraphModeClass}`}>
-            <div className={`${mixedViewBaaniClass}-line ${paragraphModeClass}`}>
+          <div key={idx} className={`${mixedViewBaaniClass}-wrapper ${paragraphModeClass}`}>
+            <div className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
               {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad)))}
             </div>
             <div className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
@@ -335,12 +336,13 @@ export default class Baani extends React.PureComponent {
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = paragraphMode ? 'paragraph-mode' : '';
+    const splitViewBaaniClass = 'split-view-baani';
 
     return (
-      <div className={`split-view-baani ${paragraphModeClass}`}>
-        <div className={`split-view-baani-wrapper ${paragraphModeClass}`}>
+      <div className={`${splitViewBaaniClass} ${paragraphModeClass}`}>
+        <div className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>
           {Object.entries(normalizedGurbani).map(([idx, shabads]) =>
-            <div className={`split-view-baani-line ${paragraphModeClass}`} key={idx}>
+            <div className={`${splitViewBaaniClass}-paragraph ${paragraphModeClass}`} key={idx}>
               {shabads.map(shabad =>
                 (<div
                   key={getVerseId(shabad)}
@@ -360,9 +362,13 @@ export default class Baani extends React.PureComponent {
         </div>
         {
           transliterationLanguages.map(language => (
-            <div key={language} className={`split-view-baani-wrapper ${paragraphModeClass}`}>
+            <div
+              key={language}
+              className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>
               {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
-                <div className={`split-view-baani-line ${paragraphModeClass}`} key={idx}>
+                <div
+                  className={`${splitViewBaaniClass}-transliteration ${paragraphModeClass}`}
+                  key={idx}>
                   {
                     shabads.map(shabad =>
                       <Transliteration fontSize={fontSize} key={getVerseId(shabad)}>
@@ -376,9 +382,14 @@ export default class Baani extends React.PureComponent {
         }
         {
           translationLanguages.map(language => (
-            <div key={language} className={`split-view-baani-wrapper ${paragraphModeClass}`}>
+            <div
+              key={language}
+              className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>
               {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
-                <div key={idx}>
+                <div
+                  key={idx}
+                  className={`${splitViewBaaniClass}-translation ${paragraphModeClass}`}
+                >
                   {
                     shabads.map(shabad =>
                       <Translation

@@ -198,20 +198,13 @@ blockquote {
         display: inline;
       }
     }
-  }
 
-  .mixed-view-baani {
-
-    &-pankti {
-      margin-bottom: 16px;
-    }
-
-    &-line {
+    &-paragraph {
       margin-bottom: 4px;
       position: relative;
 
-      &.paragraph-mode  * {
-        display: inline;
+      &.paragraph-mode * {
+          display: inline;
       }
     }
 
@@ -220,6 +213,12 @@ blockquote {
 
       &.paragraph-mode  * {
         display: inline;
+
+       &.translation {
+          padding: 0;
+          margin: 0;
+          margin-right: 4px;
+        }
       }
     }
 
@@ -228,6 +227,59 @@ blockquote {
 
       &.paragraph-mode  * {
         display: inline;
+
+        & .transliteration {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &-wrapper {
+      &.paragraph-mode {
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .mixed-view-baani {
+    &-paragraph {
+      margin-bottom: 4px;
+      position: relative;
+
+      &.paragraph-mode * {
+          display: inline;
+      }
+    }
+
+    &-translation {
+      margin-bottom: 4px;
+
+      &.paragraph-mode  * {
+        display: inline;
+
+        & .translation {
+          padding: 0;
+          margin: 0;
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &-transliteration {
+      margin-bottom: 4px;
+
+      &.paragraph-mode  * {
+        display: inline;
+
+        & .transliteration {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &-wrapper {
+      &.paragraph-mode {
+        margin-bottom: 24px;
       }
     }
   }
