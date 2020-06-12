@@ -194,17 +194,41 @@ blockquote {
 
   .split-view-baani {
     &-line{
-      &.paragraph-mode {
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 16px;
+      &.paragraph-mode > * {
+        display: inline;
       }
     }
   }
 
   .mixed-view-baani {
-    .line {
+
+    &-pankti {
+      margin-bottom: 16px;
+    }
+
+    &-line {
+      margin-bottom: 4px;
       position: relative;
+
+      &.paragraph-mode  * {
+        display: inline;
+      }
+    }
+
+    &-translation {
+      margin-bottom: 4px;
+
+      &.paragraph-mode  * {
+        display: inline;
+      }
+    }
+
+    &-transliteration {
+      margin-bottom: 4px;
+
+      &.paragraph-mode  * {
+        display: inline;
+      }
     }
   }
 

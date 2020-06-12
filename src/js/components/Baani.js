@@ -275,22 +275,23 @@ export default class Baani extends React.PureComponent {
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = paragraphMode ? 'paragraph-mode' : '';
+    const mixedViewBaaniClass = 'mixed-view-baani';
     return (
-      <div className={`mixed-view-baani ${paragraphModeClass}`}>
+      <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
-          <div key={idx} className={`mix-view-baani-pankti ${paragraphModeClass}`}>
-            <span className={`mix-view-baani-line ${paragraphModeClass}`}>
+          <div key={idx} className={`${mixedViewBaaniClass}-pankti ${paragraphModeClass}`}>
+            <div className={`${mixedViewBaaniClass}-line ${paragraphModeClass}`}>
               {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad)))}
-            </span>
-            <span className={`mix-view-baani-transliteration ${paragraphModeClass}`}>
+            </div>
+            <div className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
               {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterations(shabad)))}
-            </span>
-            <span className={`mix-view-baani-translation ${paragraphModeClass}`}>
+            </div>
+            <div className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
               {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslations(shabad)))}
-            </span>
-            <span className={`mix-view-baani-actions ${paragraphModeClass}`}>
+            </div>
+            <div className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
               {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
-            </span>
+            </div>
           </div>
         ))}
       </div>
@@ -339,7 +340,7 @@ export default class Baani extends React.PureComponent {
       <div className={`split-view-baani ${paragraphModeClass}`}>
         <div className={`split-view-baani-wrapper ${paragraphModeClass}`}>
           {Object.entries(normalizedGurbani).map(([idx, shabads]) =>
-            <span className={`split-view-baani-line ${paragraphModeClass}`} key={idx}>
+            <div className={`split-view-baani-line ${paragraphModeClass}`} key={idx}>
               {shabads.map(shabad =>
                 (<div
                   key={getVerseId(shabad)}
@@ -354,21 +355,21 @@ export default class Baani extends React.PureComponent {
                   {this.getActions(shabad)}
                 </div>
                 ))}
-            </span>
+            </div>
           )}
         </div>
         {
           transliterationLanguages.map(language => (
             <div key={language} className={`split-view-baani-wrapper ${paragraphModeClass}`}>
               {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
-                <span className={`split-view-baani-line ${paragraphModeClass}`} key={idx}>
+                <div className={`split-view-baani-line ${paragraphModeClass}`} key={idx}>
                   {
                     shabads.map(shabad =>
                       <Transliteration fontSize={fontSize} key={getVerseId(shabad)}>
                         {transliterationMap[language](shabad)}
                       </Transliteration>)
                   }
-                </span>
+                </div>
               ))}
             </div>
           ))
@@ -377,7 +378,7 @@ export default class Baani extends React.PureComponent {
           translationLanguages.map(language => (
             <div key={language} className={`split-view-baani-wrapper ${paragraphModeClass}`}>
               {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
-                <span key={idx}>
+                <div key={idx}>
                   {
                     shabads.map(shabad =>
                       <Translation
@@ -392,7 +393,7 @@ export default class Baani extends React.PureComponent {
                         })}
                       />)
                   }
-                </span>))}
+                </div>))}
             </div>))}
       </div>)
   }
