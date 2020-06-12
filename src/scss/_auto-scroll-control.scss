@@ -39,11 +39,11 @@
       pointer-events: all;
     }
 
-    &.hidden  {
+    &.hidden {
       display: flex;
-       margin: 0;
-       max-width: 0;
-       opacity: 0;
+      margin: 0;
+      max-width: 0;
+      opacity: 0;
       pointer-events: none;
     }
 
