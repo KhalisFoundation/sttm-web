@@ -142,6 +142,7 @@ export default function reducer(state, action) {
       };
     }
     case TOGGLE_LARIVAAR_OPTION: {
+      if (state.larivaarAssist) return { ...state, larivaarAssist: !state.larivaarAssist }
       const larivaar = !state.larivaar;
       clickEvent({
         action: TOGGLE_LARIVAAR_OPTION,
@@ -154,6 +155,10 @@ export default function reducer(state, action) {
       };
     }
     case TOGGLE_LARIVAAR_ASSIST_OPTION: {
+      let larivaar = state.larivaar
+
+      if (!larivaar) larivaar = !larivaar
+
       const larivaarAssist = !state.larivaarAssist;
       clickEvent({
         action: TOGGLE_LARIVAAR_ASSIST_OPTION,
@@ -166,6 +171,7 @@ export default function reducer(state, action) {
         ...state,
         larivaarAssist,
         visraams,
+        larivaar
       };
     }
     case SET_UNICODE: {
