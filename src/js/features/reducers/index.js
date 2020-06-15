@@ -109,7 +109,6 @@ export default function reducer(state, action) {
       })
 
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE, paragraphMode);
-      console.log('paragraphMode', paragraphMode);
       return {
         ...state,
         paragraphMode

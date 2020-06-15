@@ -122,18 +122,17 @@ export default class Baani extends React.PureComponent {
     }
   };
 
-  showShare = e => {
-    const currentShare = document.querySelector('.showShare');
-    console.log(currentShare, " current share..");
-    if (currentShare) {
-      currentShare.classList.remove('showShare');
-    }
-    const selectedDiv = e.currentTarget;
-    if (window.getSelection().toString()) {
-      const shareDiv = selectedDiv.querySelector('.share');
-      shareDiv.classList.add('showShare');
-    }
-  };
+  // showShare = e => {
+  //   const currentShare = document.querySelector('.showShare');
+  //   if (currentShare) {
+  //     currentShare.classList.remove('showShare');
+  //   }
+  //   const selectedDiv = e.currentTarget;
+  //   if (window.getSelection().toString()) {
+  //     const shareDiv = selectedDiv.querySelector('.share');
+  //     shareDiv.classList.add('showShare');
+  //   }
+  // };
 
   removeSelection = () => {
     window.getSelection().removeAllRanges();
