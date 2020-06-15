@@ -160,17 +160,19 @@ export default class Baani extends React.PureComponent {
       showFullScreen,
     } = this.props;
 
-    return (<BaaniLine
-      text={shabad.verse}
-      unicode={unicode}
-      shouldHighlight={showFullScreen ? false : highlight === parseInt(getVerseId(shabad), 10)}
-      larivaar={larivaar}
-      larivaarAssist={larivaarAssist}
-      fontSize={fontSize}
-      lineHeight={lineHeight}
-      fontFamily={fontFamily}
-      visraam={shabad.visraam}
-    />)
+    return (
+      <BaaniLine
+        text={shabad.verse}
+        unicode={unicode}
+        shouldHighlight={showFullScreen ? false : highlight === parseInt(getVerseId(shabad), 10)}
+        larivaar={larivaar}
+        larivaarAssist={larivaarAssist}
+        fontSize={fontSize}
+        lineHeight={lineHeight}
+        fontFamily={fontFamily}
+        visraam={shabad.visraam}
+      />
+    )
   }
   getTransliterations = shabad => {
     const {
@@ -203,6 +205,41 @@ export default class Baani extends React.PureComponent {
       />
     )
   }
+
+  getTransiliterationForLanguage = (shabad, language) => {
+    const {
+      fontSize,
+    } = this.props;
+
+    return (
+      <Transliteration
+        fontSize={fontSize}
+        key={getVerseId(shabad) + language}>
+        {transliterationMap[language](shabad)}
+      </Transliteration>
+    )
+  }
+  getTranslationForLanguage = (shabad, language) => {
+    const {
+      unicode,
+      fontSize,
+    } = this.props;
+
+    return (
+      <Translation
+        fontSize={fontSize}
+        key={getVerseId(shabad) + language}
+        type={language}
+        {...Translation.getTranslationProps({
+          translationMap,
+          language,
+          shabad,
+          unicode,
+        })}
+      />
+    )
+  }
+
   getTranslations = shabad => {
     const {
       unicode,
@@ -232,7 +269,6 @@ export default class Baani extends React.PureComponent {
         key={getVerseId(shabad)}
         id={`line-${getVerseId(shabad)}`}
         className="line"
-        onMouseUp={this.showShare}
         onMouseDown={this.removeSelection}
         ref={node =>
           highlight === parseInt(getVerseId(shabad), 10)
@@ -267,7 +303,9 @@ export default class Baani extends React.PureComponent {
 
   createMixedViewMarkup = () => {
     const {
-      paragraphMode
+      paragraphMode,
+      translationLanguages,
+      transliterationLanguages,
     } = this.props;
 
     const normalizedGurbani = this.normalizeGurbani();
@@ -282,10 +320,22 @@ export default class Baani extends React.PureComponent {
               {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad)))}
             </div>
             <div className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
-              {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterations(shabad)))}
+              {transliterationLanguages.map(language =>
+                <div
+                  key={language}
+                  className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
+                  {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
+                </div>
+              )}
             </div>
             <div className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
-              {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslations(shabad)))}
+              {translationLanguages.map(language =>
+                <div
+                  key={language}
+                  className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
+                  {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
+                </div>
+              )}
             </div>
             <div className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
               {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
@@ -358,24 +408,25 @@ export default class Baani extends React.PureComponent {
           )}
         </div>
         {
-          transliterationLanguages.map(language => (
-            <div
-              key={language}
-              className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>
-              {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
-                <div
-                  className={`${splitViewBaaniClass}-transliteration ${paragraphModeClass}`}
-                  key={idx}>
-                  {
-                    shabads.map(shabad =>
-                      <Transliteration fontSize={fontSize} key={getVerseId(shabad)}>
-                        {transliterationMap[language](shabad)}
-                      </Transliteration>)
-                  }
-                </div>
-              ))}
-            </div>
-          ))
+          transliterationLanguages.map(language => {
+            return (
+              <div
+                key={language}
+                className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>
+                {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+                  <div
+                    className={`${splitViewBaaniClass}-transliteration ${paragraphModeClass}`}
+                    key={idx}>
+                    {
+                      shabads.map(shabad =>
+                        <Transliteration fontSize={fontSize} key={getVerseId(shabad)}>
+                          {transliterationMap[language](shabad)}
+                        </Transliteration>)
+                    }
+                  </div>
+                ))}
+              </div>)
+          })
         }
         {
           translationLanguages.map(language => (
