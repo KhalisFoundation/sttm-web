@@ -206,7 +206,7 @@ export default class Baani extends React.PureComponent {
     )
   }
 
-  getTransiliterationForLanguage = (shabad, language) => {
+  getTransliterationForLanguage = (shabad, language) => {
     const {
       fontSize,
     } = this.props;
@@ -224,7 +224,7 @@ export default class Baani extends React.PureComponent {
       unicode,
       fontSize,
     } = this.props;
-
+    console.log(language, "language ")
     return (
       <Translation
         fontSize={fontSize}
@@ -324,7 +324,7 @@ export default class Baani extends React.PureComponent {
                 <div
                   key={language}
                   className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
-                  {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
+                  {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
                 </div>
               )}
             </div>

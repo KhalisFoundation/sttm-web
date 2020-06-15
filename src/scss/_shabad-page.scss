@@ -287,10 +287,11 @@ blockquote {
 
     &-wrapper {
       &.paragraph-mode {
-        margin-bottom: 24px;
+        margin-bottom: 16px;
 
          & div[class^="mixed-view-baani-translation-"], & div[class^="mixed-view-baani-transliteration-"] {
           display: inline-block;
+          margin-bottom: 4px;
         }
       }
     }

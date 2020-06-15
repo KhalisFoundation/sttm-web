@@ -41,10 +41,12 @@ export default class Translation extends React.PureComponent {
     language,
     shabad,
     unicode,
-  }) =>
-    language === PUNJABI
+  }) => {
+    console.log(language, translationMap, '-----------')
+    return language === PUNJABI
       ? { unicode, text: translationMap.punjabi(shabad) }
       : { children: translationMap[language](shabad) };
+  }
 
   render() {
     const defaultFontSize = '18px';
