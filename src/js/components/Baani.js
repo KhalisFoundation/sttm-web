@@ -224,7 +224,6 @@ export default class Baani extends React.PureComponent {
       unicode,
       fontSize,
     } = this.props;
-    console.log(language, "language ")
     return (
       <Translation
         fontSize={fontSize}

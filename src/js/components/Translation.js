@@ -42,7 +42,6 @@ export default class Translation extends React.PureComponent {
     shabad,
     unicode,
   }) => {
-    console.log(language, translationMap, '-----------')
     return language === PUNJABI
       ? { unicode, text: translationMap.punjabi(shabad) }
       : { children: translationMap[language](shabad) };

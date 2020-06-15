@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { VISRAAM_CONSTANTS } from '../constants';
 import { clearVisraamClass } from '../util';
 import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
 import { MultiSelect } from '../components/MultiSelect';
 
-export default class ShabadControls extends React.PureComponent {
+class ShabadControls extends React.PureComponent {
   static propTypes = {
     setTranslationLanguages: PropTypes.func.isRequired,
     setTransliterationLanguages: PropTypes.func.isRequired,
@@ -28,6 +29,8 @@ export default class ShabadControls extends React.PureComponent {
 
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
     visraams: PropTypes.bool.isRequired,
     visraamSource: PropTypes.string.isRequired,
     visraamStyle: PropTypes.string.isRequired,
@@ -140,17 +143,28 @@ export default class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    const settings = QUICK_SETTINGS(this.props);
-    const advanced = ADVANCED_SETTINGS(this.props);
+    const {
+      history,
+      match,
+      location,
+      ...others
+    } = this.props;
+
+    const isSundarGutkaView = location.pathname.includes('sundar-gutka');
+
+    const settings = QUICK_SETTINGS(others);
+    const advanced = ADVANCED_SETTINGS(others);
 
     const quickSettingsPanel = (
       <>
-        {settings.map((element, i) => (
-          <div key={`settings-${i}`}
-            className={`qs-option controller-option ${element.type}`}>
-            {this.bakeSettings(element)}
-          </div>
-        ))}
+        {settings.map((element, i) => {
+          return (
+            <div key={`settings-${i}`}
+              className={`qs-option controller-option ${element.type}`}>
+              {this.bakeSettings(element)}
+            </div>
+          )
+        })}
       </>
     );
 
@@ -162,11 +176,16 @@ export default class ShabadControls extends React.PureComponent {
           </div>
           {this.props.showAdvancedOptions && (
             <div className="advanced-options">
-              {advanced.map((element, i) => (
-                <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
-                  {this.bakeSettings(element)}
-                </div>
-              ))}
+              {advanced.map((element, i) => {
+                if (element.label === 'Paragraph' && !isSundarGutkaView) {
+                  return null;
+                }
+                return (
+                  <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
+                    {this.bakeSettings(element)}
+                  </div>
+                )
+              })}
               {quickSettingsPanel}
             </div>
           )}
@@ -175,3 +194,5 @@ export default class ShabadControls extends React.PureComponent {
     );
   }
 }
+
+export default withRouter(ShabadControls);
