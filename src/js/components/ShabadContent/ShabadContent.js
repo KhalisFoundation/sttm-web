@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GlobalHotKeys } from 'react-hotkeys';
 
@@ -15,7 +15,6 @@ import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
 import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
-
 
 /**
  *
@@ -70,6 +69,9 @@ class Shabad extends React.PureComponent {
     hideControls: PropTypes.bool,
     controlProps: PropTypes.object,
 
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     random: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
@@ -91,6 +93,7 @@ class Shabad extends React.PureComponent {
     const {
       props: {
         gurbani,
+        location,
         nav,
         info,
         type,
@@ -116,6 +119,8 @@ class Shabad extends React.PureComponent {
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
+
+    const isSundarGutkaView = true || location.pathname.includes('sundar-gutka');
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
@@ -163,7 +168,7 @@ class Shabad extends React.PureComponent {
                 transliterationLanguages={transliterationLanguages}
                 centerAlignGurbani={centerAlignGurbani}
                 showFullScreen={showFullScreen}
-                paragraphMode={paragraphMode}
+                isParagraphMode={paragraphMode && isSundarGutkaView}
               />
 
               {this.props.hideMeta === false && (
@@ -241,4 +246,4 @@ class Shabad extends React.PureComponent {
 }
 
 const stateToProps = state => state;
-export default connect(stateToProps)(Shabad);
+export default connect(stateToProps)(withRouter(Shabad));
