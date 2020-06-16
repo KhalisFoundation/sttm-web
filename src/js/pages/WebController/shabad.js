@@ -22,7 +22,7 @@ export default class ControllerShabad extends React.PureComponent {
     resultType: PropTypes.string,
   };
 
-  handlePanktiClick = (verseId, shabadId) => {
+  handlePanktiClick = (verseId, shabadId, lineCount) => {
     const isItCeremony = this.props.data.ceremonyInfo;
     const isItBani = this.props.data.baniInfo;
     this.props.socket.emit('data', {
@@ -33,6 +33,7 @@ export default class ControllerShabad extends React.PureComponent {
       baniId: isItBani ? isItBani.baniID : null,
       shabadId,
       verseId,
+      lineCount,
     });
   }
 

@@ -39,7 +39,7 @@ export default class Pankti extends React.PureComponent {
     socket: PropTypes.object.isRequired,
   };
 
-  _scrollToHiglight = () => {
+  _scrollToHighlight = () => {
     if (this.$highlightedBaaniLine) {
       if ('offsetTop' in this.$highlightedBaaniLine) {
         const { offsetTop, offsetHeight } = this.$highlightedBaaniLine;
@@ -53,7 +53,7 @@ export default class Pankti extends React.PureComponent {
 
   componentDidMount() {
     const { socket } = this.props;
-    this._scrollToHiglight();
+    this._scrollToHighlight();
     socket.on('data', data => {
       if (data['host'] !== 'sttm-web' &&
         data['verseChange'] &&
@@ -62,24 +62,25 @@ export default class Pankti extends React.PureComponent {
         let visitedPanktis = this.state.visited;
         !visitedPanktis.includes(data.highlight) && visitedPanktis.push(data.highlight);
         !data.homeId && this.setState({ highlightId: data.highlight, visited: visitedPanktis });
-        this._scrollToHiglight();
+        this._scrollToHighlight();
       }
     });
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.highlight !== prevProps.highlight) {
+    const { visited } = this.state;
+    if (this.props.highlight !== prevProps.highlight && !visited.includes(this.props.highlight)) {
       this.setState({ highlightId: this.props.highlight, visited: [this.props.highlight] });
-      this._scrollToHiglight();
+      this._scrollToHighlight();
     }
   }
 
-  clickedPankti(e, verse, shabad) {
+  clickedPankti(e, verse, shabad, lineCount) {
     const clickedPankti = e.currentTarget;
 
     document.querySelector(".active-slide").classList.remove("active-slide");
     clickedPankti.classList.add("active-slide");
-    this.props.onPanktiClick(verse, shabad);
+    this.props.onPanktiClick(verse, shabad, lineCount);
 
     let visitedPanktis = this.state.visited;
 
@@ -122,7 +123,7 @@ export default class Pankti extends React.PureComponent {
         visraam={shabad.visraam}
       />
     );
-    const markup = gurbani.map(shabad => (
+    const markup = gurbani.map((shabad, lineIndex) => (
       <div
         key={getVerseId(shabad)}
         id={`line-${getVerseId(shabad)}`}
@@ -132,7 +133,8 @@ export default class Pankti extends React.PureComponent {
           'visited': this.state.visited.includes(getVerseId(shabad))
         })}
         ref={node => this.baniLineCategory(node, shabad)}
-        onClick={e => this.clickedPankti(e, getVerseId(shabad), getShabadId(shabad))}
+        // line count is equal to lineIndex + 1 because lineIndex starts from 0
+        onClick={e => this.clickedPankti(e, getVerseId(shabad), getShabadId(shabad), lineIndex + 1)}
       >
         {getBaniLine(shabad)}
         {homeId === parseInt(getVerseId(shabad), 10) && (<HomeIcon />)}
