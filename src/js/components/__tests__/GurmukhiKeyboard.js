@@ -1,6 +1,6 @@
 /* global describe, it, expect, jest */
 import React from 'react';
-import { render, fireEvent, wait } from 'react-testing-library';
+import { render, fireEvent, wait } from '@testing-library/react';
 import GurmukhiKeyboard from '../GurmukhiKeyboard';
 import { StaticRouter } from 'react-router-dom';
 
