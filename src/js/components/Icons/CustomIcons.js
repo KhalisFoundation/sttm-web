@@ -134,6 +134,29 @@ SplitViewIcon.propTypes = {
   value: PropTypes.bool,
 };
 
+export const ParagraphIcon = props => (
+  <span
+    onClick={props.onClick}
+    className={`custom-fa ${props.value ? 'enabled' : ''}`}>
+    <svg
+      width="25"
+      height="25"
+      xmlns="http://www.w3.org/2000/svg"
+      shapeRendering="geometricPrecision"
+      textRendering="geometricPrecision"
+      imageRendering="optimizeQuality"
+      fillRule="evenodd" clipRule="evenodd"
+      viewBox="0 0 640 640">
+      <path d="M523.01 95.222v526.022c0 10.323-8.563 18.756-19.04 18.756h-57.13c-10.477 0-19.04-8.433-19.04-18.756V95.222h-65.28v526.01c0 10.334-8.563 18.767-19.04 18.767h-57.13c-10.489 0-19.052-8.433-19.052-18.767V411.454l-2.043.011c-113.801 0-206.081-92.268-206.081-206.069C59.174 73.56 165.687 0 287.035 0h274.763c10.476 0 19.04 8.564 19.04 19.052v57.13c0 10.465-8.575 19.04-19.04 19.04H523.01z" />
+    </svg>
+  </span>
+)
+
+ParagraphIcon.propTypes = {
+  ...props,
+  value: PropTypes.bool,
+};
+
 export const GearsIcon = props => (
   <span onClick={props.onClick} className={`custom-fa gear-icon ${props.value ? 'enabled' : ''}`}>
   <svg height="18" viewBox="0 0 512 512" width="18" xmlns="http://www.w3.org/2000/svg">

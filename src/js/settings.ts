@@ -16,6 +16,7 @@ import {
   AlignCenterIcon,
   AlignLeftIcon,
   SplitViewIcon,
+  ParagraphIcon,
   GearsIcon,
 } from '@/components/Icons/CustomIcons';
 import { LineHeightControl } from './components/Icons/CustomIcons';
@@ -71,6 +72,7 @@ export const QUICK_SETTINGS = ({
   toggleCenterAlignOption,
   toggleSplitViewOption,
   toggleAdvancedOptions,
+  toggleParagraphMode,
   toggleDarkMode,
   translationLanguages,
   transliterationLanguages,
@@ -78,6 +80,7 @@ export const QUICK_SETTINGS = ({
   larivaarAssist,
   larivaar,
   fontSize,
+  paragraphMode,
   centerAlignGurbani,
   splitView,
   showAdvancedOptions,
@@ -169,6 +172,17 @@ export const QUICK_SETTINGS = ({
     },
     {
       type: 'icon-toggle',
+      label: "Paragraph",
+      controlsList: [
+        {
+          icon: ParagraphIcon,
+          action: toggleParagraphMode,
+          value: paragraphMode,
+        }
+      ]
+    },
+    {
+      type: 'icon-toggle',
       label: 'Larivaar',
       controlsList: [
         {
@@ -234,8 +248,6 @@ export const ADVANCED_SETTINGS = ({
   setVisraamSource,
   setVisraamStyle,
   setLineHeight,
-  toggleParagraphMode,
-  paragraphMode,
   lineHeight,
   changeFont,
   visraamSource,
@@ -261,12 +273,6 @@ export const ADVANCED_SETTINGS = ({
           action: () => setLineHeight(Math.min(toFixedFloat(lineHeight + LINE_HEIGHT_CHANGE), MAX_LINE_HEIGHT)),
         },
       ],
-    },
-    {
-      type: 'toggle-option',
-      label: 'Paragraph',
-      checked: paragraphMode,
-      action: toggleParagraphMode,
     },
     {
       type: 'dropdown',
