@@ -35,7 +35,6 @@ export default class Header extends React.PureComponent {
     fetch(`${DOODLE_URL}`)
       .then(r => r.json())
       .then((data) => {
-        console.log(data);
         if (data.error) {
           this.setState({ showDoodle: false, doodleData: null });
         } else if (data.rows.length) {
