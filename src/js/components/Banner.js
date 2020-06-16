@@ -21,7 +21,7 @@ export default class Banner extends React.PureComponent {
       .then(messages => {
         const { rows } = messages;
 
-        if (rows) {
+        if (rows.length) {
           const unreadNotifications = rows.filter(notification => {
             const { ID } = notification;
             const lastSeen = getStringFromLocalStorage(`banner-${ID}`);
