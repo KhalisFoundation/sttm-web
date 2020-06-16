@@ -36,7 +36,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   _maxScrollPossible!: number;
   _nextScrollPosition!: number;
   _sliding!: boolean;
-  _interval!: ReturnType<typeof setInterval>;
+  _interval!: number;
 
   static defaultProps = {
     isBackgroundTransparent: false,
