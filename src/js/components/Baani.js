@@ -10,7 +10,6 @@ import { copyToClipboard, showToast, shortenURL } from '../util';
 
 import { translationMap, transliterationMap, getVerseId } from '@/util/api/shabad';
 
-
 /**
  *
  *

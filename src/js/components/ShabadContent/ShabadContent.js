@@ -120,7 +120,7 @@ class Shabad extends React.PureComponent {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
 
-    const isSundarGutkaView = true || location.pathname.includes('sundar-gutka');
+    const isSundarGutkaView = location.pathname.includes('sundar-gutka');
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
