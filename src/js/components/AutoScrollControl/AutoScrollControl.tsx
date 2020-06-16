@@ -105,6 +105,13 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
       })
   }
 
+  handleScrollbarClick = (e: MouseEvent) => {
+    const isScrollbarClicked = window.innerWidth >= e.pageX && e.pageX >= document.body.scrollWidth;
+    if (isScrollbarClicked) {
+      this.removeScroll();
+    }
+  }
+
   removeScroll = () => {
     this.setState(() => ({ ...this.state, isScrolling: false }),
       () => {
@@ -126,7 +133,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
       // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
       const movement = toFixedFloat((AutoScrollControl.minScrollPixelMovement +
         ((scrollingSpeed / 100) *
-          (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement))));
+          (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement))), 2);
 
       // Only allow the scrolling if we have surpassed previous scrolls
       if (scrollY >= Math.floor(this._nextScrollPosition)) {
@@ -139,11 +146,13 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 
   addListeners = () => {
+    window.addEventListener("mousedown", this.handleScrollbarClick);
     window.addEventListener("touchmove", this.removeScroll);
     window.addEventListener("wheel", this.removeScroll);
   }
 
   removeListeners = () => {
+    window.removeEventListener("mousedown", this.handleScrollbarClick);
     window.removeEventListener("wheel", this.removeScroll);
     window.removeEventListener("touchmove", this.removeScroll);
   }
