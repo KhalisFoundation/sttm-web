@@ -65,7 +65,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
     })
   }
 
-  formatAvgScore = (avgScore: number) => {
+  getShabadScoreForTitle = (avgScore: number) => {
     const decimal = avgScore - parseInt(avgScore.toString(), 10);
     if (decimal >= 0.5) {
       return Math.ceil(avgScore).toString();
@@ -131,6 +131,9 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                     return null;
                   }
 
+                  const shabadScores = Math.min(s.AvgScore * 1.5, 100);
+                  const shabadBarScale = shabadScores / 100;
+                  console.log(shabadScores, s.AvgScore, " ------- scale up")
                   return (
                     <a
                       key={s.ShabadID}
@@ -141,13 +144,15 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                       onClick={this.handleShabadClick(s.ShabadID)}
                     >
                       <div className="relatedShabadInner">
-                        <div title={`${this.formatAvgScore(s.AvgScore)}% matches`} className="relatedShabadAvgRating">
+                        <div
+                          title={`${this.getShabadScoreForTitle(shabadScores)}% matches`}
+                          className="relatedShabadAvgRating">
                           <div
                             style={{
-                              transform: `scaleX(${s.AvgScore / 100})`,
+                              transform: `scaleX(${shabadBarScale})`,
                             }}
                             className={`relatedShabadAvgRatingMeter relatedShabadAvgRating${getClassnamesForShabadRatings(
-                              s.AvgScore
+                              shabadScores
                             )}`}
                           />
                         </div>
