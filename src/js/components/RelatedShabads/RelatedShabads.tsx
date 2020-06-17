@@ -48,6 +48,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
 
   static showMoreShabads = 4;
   static maxVisibleShabads = 20;
+  static shabadMatchingScoreScale = 1.5;
 
   constructor(props: Readonly<IRelatedShabadsProps>) {
     super(props);
@@ -127,13 +128,14 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
               <h3>{TEXTS.RELATED_SHABADS}</h3>
               <div className="relatedShabadContainer">
                 {sortedShabads.map((s, idx) => {
+
                   if (idx + 1 > visibleShabads) {
                     return null;
                   }
 
-                  const shabadScores = Math.min(s.AvgScore * 1.5, 100);
+                  const shabadScores = Math.min(s.AvgScore * RelatedShabads.shabadMatchingScoreScale, 100);
                   const shabadBarScale = shabadScores / 100;
-                  console.log(shabadScores, s.AvgScore, " ------- scale up")
+
                   return (
                     <a
                       key={s.ShabadID}
