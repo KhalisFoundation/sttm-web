@@ -158,6 +158,9 @@ class ShabadControls extends React.PureComponent {
     const quickSettingsPanel = (
       <>
         {settings.map((element, i) => {
+          if (element.label === 'Paragraph' && !isSundarGutkaView) {
+            return null;
+          }
           return (
             <div key={`settings-${i}`}
               className={`qs-option controller-option ${element.type}`}>
@@ -177,9 +180,6 @@ class ShabadControls extends React.PureComponent {
           {this.props.showAdvancedOptions && (
             <div className="advanced-options">
               {advanced.map((element, i) => {
-                if (element.label === 'Paragraph' && !isSundarGutkaView) {
-                  return null;
-                }
                 return (
                   <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
                     {this.bakeSettings(element)}
