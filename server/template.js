@@ -17,37 +17,36 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <title>${title}</title>
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="manifest" href="/manifest.json" />
-
   ${preconnectHTML}
   ${preloadFontsHTML}
   ${preloadScriptsHTML}
   ${prefetchImagesHTML}
 
   <!-- Meta Tags -->
-  <meta charset="utf-8">
-  <meta name="theme-color" content="${ONLINE_COLOR}">
-  <meta name="description" content="${description}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="theme-color" content="${ONLINE_COLOR}" />
+  <meta name="description" content="${description}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.sikhitothemax.org${url}">
-  <meta property="og:author" content="https://khalisfoundation.org/">
-  <meta property="og:title" content="${title}">
-  <meta property="og:description" content="${description}">
-  <meta property="og:image" content="/assets/images/sttm_banner.png">
-  <meta property="og:image:width" content="1500">
-  <meta property="og:image:height" content="1000">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.sikhitothemax.org${url}" />
+  <meta property="og:author" content="https://khalisfoundation.org/" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${description}" />
+  <meta property="og:image" content="/assets/images/sttm_banner.png" />
+  <meta property="og:image:width" content="1500" />
+  <meta property="og:image:height" content="1000" />
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:site" content="@khalisfound">
-  <meta property="twitter:creator" content="@khalisfound">
-  <meta property="twitter:title" content="${title}">
-  <meta property="twitter:description" content="${description}">
-  <meta property="twitter:image:src" content="/assets/images/sttm_banner.png">
-  <meta property="twitter:image:width" content="1500">
-  <meta property="twitter:image:height" content="1000">
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:site" content="@khalisfound" />
+  <meta property="twitter:creator" content="@khalisfound" />
+  <meta property="twitter:title" content="${title}" />
+  <meta property="twitter:description" content="${description}"/>
+  <meta property="twitter:image:src" content="/assets/images/sttm_banner.png" />
+  <meta property="twitter:image:width" content="1500" />
+  <meta property="twitter:image:height" content="1000" />
 
   <!-- Safari iOS config -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -83,7 +82,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
           <a href="/about">About Us</a>
         </li>
         <li>
-          <a href="https://form.jotform.com/80266126732151" target="_blank" rel="noopener noreferrer">Feedback</a>
+          <a href="http://support.khalisfoundation.org/support/tickets/new" target="_blank" rel="noopener noreferrer">Feedback</a>
         </li>
         <li>
           <a href="/terms-of-service">Legal</a>
@@ -103,13 +102,11 @@ export default ({ url, bodyClass, title, description }) => marinate`
         <li>
           <a class="download-icon" target="_blank" href="https://play.google.com/store/apps/details?id=com.nest.sttm&hl=en_US"><img src="/assets/images/app-android.png" alt="Android icon"/></a>
         </li>
-        </ul>
       </ul>
       <div class="copyright">
         Copyright © <span id="year"></span> Khalis Foundation
         <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
       </div>
-
     </div>
   </footer>
 
@@ -146,12 +143,11 @@ export default ({ url, bodyClass, title, description }) => marinate`
   }
     }
   </script>
-
   <script>
     var d = new Date();
     document.getElementById("year").innerHTML = d.getFullYear();
   </script>
-<link rel="stylesheet" href="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.css">
+<link rel="stylesheet" href="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.css" />
 <script src="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.js"></script>
 
 <!-- freshwork widget -->

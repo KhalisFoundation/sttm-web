@@ -66,7 +66,7 @@ class ScrollToTop extends React.PureComponent {
 }
 
 // TODO: Take exactly what we need.
-const stateToProps = () => { };
+const stateToProps = () => ({});
 
 const dispatchToProps = {
   setAutoScrolling,

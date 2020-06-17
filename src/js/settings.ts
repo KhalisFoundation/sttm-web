@@ -173,23 +173,14 @@ export const QUICK_SETTINGS = ({
         {
           icon: LarivaarIcon,
           action: () => {
-            if (larivaarAssist) {
-              toggleLarivaarAssistOption();
-            } else {
-              toggleLarivaarOption();
-            }
+            toggleLarivaarOption();
           },
           value: larivaar,
         },
         {
           icon: LarivaarAssistIcon,
           action: () => {
-            if (larivaar) {
-              toggleLarivaarAssistOption();
-            } else {
-              toggleLarivaarOption();
-              toggleLarivaarAssistOption();
-            }
+            toggleLarivaarAssistOption();
           },
           value: larivaarAssist
         }
