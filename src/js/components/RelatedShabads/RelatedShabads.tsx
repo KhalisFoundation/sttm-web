@@ -102,7 +102,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
     return (
       <Fetch url={`${SYNC_API_URL}related/shabad/${forShabadID}`}>
         {({ data, loading, error }) => {
-          if (loading || error) {
+          if (loading || error || data.error) {
             return null;
           }
 

@@ -26,12 +26,12 @@ export default class Root extends React.PureComponent {
     return (
       <Router>
         <GlobalHotKeys keyMap={GlobalShortcuts} handlers={GlobalHandlers}>
-        <Switch>
-          {routes.map((props, key) => (
-            <Route key={key} {...props} />
-          ))}
-          <Route render={() => <NotFound />} />
-        </Switch>
+          <Switch>
+            {routes.map((props, key) => (
+              <Route key={key} {...props} />
+            ))}
+            <Route render={() => <NotFound />} />
+          </Switch>
         </GlobalHotKeys>
       </Router>
     );
@@ -42,7 +42,7 @@ export default class Root extends React.PureComponent {
     if ($a) {
       $a.innerHTML = `v${process.env.npm_package_version}`;
     }
-    
+
     const hasNotAcknolwedged =
       getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, false) ===
       false;
