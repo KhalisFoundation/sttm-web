@@ -17,6 +17,8 @@ class ShabadControls extends React.PureComponent {
     toggleLarivaarOption: PropTypes.func.isRequired,
     toggleLarivaarAssistOption: PropTypes.func.isRequired,
     setFontSize: PropTypes.func.isRequired,
+    setTranslationFontSize: PropTypes.func.isRequired,
+    setTransliterationFontSize: PropTypes.func.isRequired,
     setLineHeight: PropTypes.func.isRequired,
     toggleCenterAlignOption: PropTypes.func.isRequired,
     toggleSplitViewOption: PropTypes.func.isRequired,
@@ -37,6 +39,8 @@ class ShabadControls extends React.PureComponent {
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    translationFontSize: PropTypes.number.isRequired,
+    transliterationFontSize: PropTypes.number.isRequired,
     lineHeight: PropTypes.number.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
@@ -76,13 +80,14 @@ class ShabadControls extends React.PureComponent {
         )
       case 'icon-toggle':
         controlsMarkup = settingsObj.controlsList.map((c, idx) => {
-          const { icon, control, value, action, actionType } = c;
+          const { icon, control, controlOptions, value, action, actionType } = c;
           const CustomControl = icon || control;
           const isOnChange = actionType === 'change';
           const isOnClick = actionType !== 'change';
 
           return (
             <CustomControl
+              options={controlOptions}
               value={value}
               key={'icon-toggle' + idx}
               onClick={isOnClick ? action : undefined}

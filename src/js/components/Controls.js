@@ -5,6 +5,8 @@ import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
   setFontSize,
+  setTranslationFontSize,
+  setTransliterationFontSize,
   setLineHeight,
   setTranslationLanguages,
   setTransliterationLanguages,
@@ -110,6 +112,8 @@ const stateToProps = state => state;
 
 const dispatchToProps = {
   setFontSize,
+  setTranslationFontSize,
+  setTransliterationFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
   resetDisplayOptions,

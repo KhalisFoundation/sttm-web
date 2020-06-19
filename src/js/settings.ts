@@ -19,11 +19,7 @@ import {
   ParagraphIcon,
   GearsIcon,
 } from '@/components/Icons/CustomIcons';
-import { LineHeightControl } from './components/Icons/CustomIcons';
 
-const LINE_HEIGHT_CHANGE = 0.2;
-const MAX_LINE_HEIGHT = 2;
-const MIN_LINE_HEIGHT = 1;
 export interface SETTING_ACTIONS {
   setTranslationLanguages: Function,
   setTransliterationLanguages: Function,
@@ -33,6 +29,8 @@ export interface SETTING_ACTIONS {
   toggleLarivaarOption: Function,
   toggleLarivaarAssistOption: Function,
   setFontSize: Function,
+  setTranslationFontSize: Function,
+  setTransliterationFontSize: Function,
   setLineHeight: Function,
   toggleCenterAlignOption: Function,
   toggleSplitViewOption: Function,
@@ -50,7 +48,9 @@ export interface SETTING_ACTIONS {
   visraamStyle: string,
   larivaarAssist: boolean,
   larivaar: boolean,
-  fontSize: any,
+  fontSize: number,
+  translationFontSize: number,
+  transliterationFontSize: number,
   paragraphMode: boolean,
   lineHeight: number,
   centerAlignGurbani: boolean,
@@ -121,7 +121,6 @@ export const QUICK_SETTINGS = ({
           action: () => {
             fontSize >= 1.6 && setFontSize(toFixedFloat(fontSize - 0.4));
           },
-          // value: Math.floor(fontSize * 10)
         },
         {
           control: FontSizeControl,
@@ -134,7 +133,6 @@ export const QUICK_SETTINGS = ({
           action: () => {
             fontSize < 3.2 && setFontSize(toFixedFloat(fontSize + 0.4));
           },
-          // value: Math.floor(fontSize * 10)
         },
       ],
     },
@@ -244,6 +242,10 @@ export const ADVANCED_SETTINGS = ({
   visraamSource,
   visraamStyle,
   fontFamily,
+  setTranslationFontSize,
+  setTransliterationFontSize,
+  translationFontSize,
+  transliterationFontSize,
 }: SETTING_ACTIONS) => [
     {
       type: 'icon-toggle',
@@ -251,17 +253,59 @@ export const ADVANCED_SETTINGS = ({
       controlsList: [
         {
           icon: MinusIcon,
-          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - LINE_HEIGHT_CHANGE), MIN_LINE_HEIGHT)),
+          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - 0.2), 1)),
         },
         {
-          control: LineHeightControl,
+          control: FontSizeControl,
+          controlOptions: [1, 1.2, 1.4, 1.6, 1.8, 2],
           actionType: 'change',
           action: (val: number) => setLineHeight(toFixedFloat(val)),
           value: lineHeight
         },
         {
           icon: PlusIcon,
-          action: () => setLineHeight(Math.min(toFixedFloat(lineHeight + LINE_HEIGHT_CHANGE), MAX_LINE_HEIGHT)),
+          action: () => setLineHeight(Math.min(toFixedFloat(lineHeight + 0.2), 2)),
+        },
+      ],
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Translation',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => setTranslationFontSize(Math.max(toFixedFloat(translationFontSize - 0.4), 1.2))
+        },
+        {
+          control: FontSizeControl,
+          controlOptions: [12, 16, 20, 24],
+          actionType: 'change',
+          action: (size: number) => setTranslationFontSize(toFixedFloat((size / 10))),
+          value: Math.floor(translationFontSize * 10),
+        },
+        {
+          icon: PlusIcon,
+          action: () => setTranslationFontSize(Math.min(toFixedFloat(translationFontSize + 0.4), 2.4))
+        },
+      ],
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Transliteration',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => setTransliterationFontSize(Math.max(toFixedFloat(transliterationFontSize - 0.4), 1.2))
+        },
+        {
+          control: FontSizeControl,
+          actionType: 'change',
+          action: (size: number) => setTransliterationFontSize(toFixedFloat((size / 10))),
+          value: Math.floor(transliterationFontSize * 10),
+        },
+        {
+          icon: PlusIcon,
+          action: () => setTransliterationFontSize(Math.min(toFixedFloat(transliterationFontSize + 0.4), 3.2))
         },
       ],
     },
