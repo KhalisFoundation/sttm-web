@@ -67,9 +67,6 @@ class Autocomplete extends Component {
           getSuggestions(userInput, searchOptions)
             .then(suggestions => {
 
-              // add show full results in the end.
-              suggestions.push()
-
               this.setState({
                 activeSuggestion: -1,
                 filteredSuggestions: suggestions,
