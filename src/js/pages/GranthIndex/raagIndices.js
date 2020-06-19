@@ -16,7 +16,7 @@ export default {
         pages: [94, 151],
       },
       {
-        name: 'Vaar Manjh Ki',
+        name: 'Vaar Manjh Ki',  
         pages: [137, 150],
         highlight: 5589,
       },

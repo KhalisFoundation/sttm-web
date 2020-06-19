@@ -53,6 +53,7 @@ export const LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG = 'previouslyReadAng';
 export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
 export const LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW = 'centerAlignView';
 export const LOCAL_STORAGE_KEY_FOR_SYNC_CODE = 'previous-sync';
+export const LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE = 'paragraphMode';
 
 export const PLACEHOLDERS = {
   [SEARCH_TYPES.FIRST_LETTERS]: ['jmTAq'], // first letters
@@ -79,6 +80,7 @@ export const DEFAULT_LINE_HEIGHT = 1.2;
 export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
+export const DEFAULT_PARAGRAPH_MODE = false;
 export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 export const DEFAULT_VISRAAMS = false;
 export const DEFAULT_VISRAAM_SOURCE = 'sttm';
@@ -248,4 +250,3 @@ export const TIMED_BAANI_LINKS = [{
   link: '/sundar-gutka/23',
   action: ACTIONS.SOHILAA_SAHIB_LINK
 }] as IBAANI_LINK[];
-

@@ -19,7 +19,7 @@ export default class Transliteration extends React.PureComponent {
       <div
         style={{ fontSize }}
         className={'transliteration ' + this.props.language}>
-        {this.props.children}
+        {this.props.children + ''}
       </div>
     );
   }

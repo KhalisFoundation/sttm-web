@@ -5,6 +5,7 @@ import {
   TOGGLE_LARIVAAR_ASSIST_OPTION,
   TOGGLE_LARIVAAR_OPTION,
   TOGGLE_DARK_MODE,
+  TOGGLE_PARAGRAPH_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
   SET_VISRAAM_SOURCE,
@@ -17,6 +18,7 @@ import {
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
+  SET_PARAGRAPH_MODE,
   SET_VISRAAMS,
   SET_SPLIT_VIEW,
   CHANGE_FONT,
@@ -27,6 +29,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_LARIVAAR,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
+  LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
   LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
@@ -96,6 +99,22 @@ export default function reducer(state, action) {
         darkMode,
       };
     }
+
+    case TOGGLE_PARAGRAPH_MODE: {
+      const paragraphMode = !state.paragraphMode;
+
+      clickEvent({
+        action: TOGGLE_PARAGRAPH_MODE,
+        label: paragraphMode ? 1 : 0,
+      })
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE, paragraphMode);
+      return {
+        ...state,
+        paragraphMode
+      }
+    }
+
     case TOGGLE_VISRAAMS: {
       const visraams = !state.visraams;
       clickEvent({
@@ -247,6 +266,19 @@ export default function reducer(state, action) {
       return {
         ...state,
         transliterationLanguages,
+      };
+    }
+    case SET_PARAGRAPH_MODE: {
+      const paragraphMode = action.payload;
+
+      clickEvent({
+        action: SET_PARAGRAPH_MODE,
+        label: paragraphMode ? true : false,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE, paragraphMode);
+      return {
+        ...state,
+        paragraphMode,
       };
     }
     case SET_DARK_MODE: {
