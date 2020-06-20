@@ -43,19 +43,19 @@ export default class Baani extends React.PureComponent {
             ) : loading ? (
               <div className="spinner" />
             ) : (
-              <ShabadContent
-                type="shabad"
-                info={data.baniInfo}
-                nav={data.nav}
-                gurbani={versesToGurbani(
-                  data.verses.filter(v => v.mangalPosition !== 'above')
-                )}
-                hideMeta
-                controlProps={{
-                  disableSplitView: true,
-                }}
-              />
-            )
+                  <ShabadContent
+                    type="shabad"
+                    info={data.baniInfo}
+                    nav={data.nav}
+                    gurbani={versesToGurbani(
+                      data.verses.filter(v => v.mangalPosition !== 'above')
+                    )}
+                    hideMeta
+                    controlProps={{
+                      disableSplitView: true,
+                    }}
+                  />
+                )
           }
         </Fetch>
       </div>
