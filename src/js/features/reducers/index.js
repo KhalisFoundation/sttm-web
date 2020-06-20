@@ -13,6 +13,8 @@ import {
   SET_CENTER_ALIGN_OPTION,
   SET_UNICODE,
   SET_FONT_SIZE,
+  SET_TRANSLATION_FONT_SIZE,
+  SET_TRANSLITERATION_FONT_SIZE,
   SET_LINE_HEIGHT,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
@@ -34,6 +36,8 @@ import {
   LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
+  LOCAL_STORAGE_KEY_FOR_TRANSLATION_FONT_SIZE,
+  LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE,
   LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT,
   LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
@@ -214,6 +218,28 @@ export default function reducer(state, action) {
       return {
         ...state,
         fontSize,
+      };
+    }
+    case SET_TRANSLATION_FONT_SIZE: {
+      const translationFontSize = parseFloat(action.payload, 10);
+
+      if (translationFontSize === state.translationFontSize) return state;
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_TRANSLATION_FONT_SIZE, action.payload);
+      return {
+        ...state,
+        translationFontSize,
+      };
+    }
+    case SET_TRANSLITERATION_FONT_SIZE: {
+      const transliterationFontSize = parseFloat(action.payload, 10);
+
+      if (transliterationFontSize === state.transliterationFontSize) return state;
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE, action.payload);
+      return {
+        ...state,
+        transliterationFontSize,
       };
     }
     case SET_LINE_HEIGHT: {

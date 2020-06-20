@@ -1,12 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const props = {
+const propTypes = {
   onClick: PropTypes.func,
   onChange: PropTypes.func,
   className: PropTypes.string,
   value: PropTypes.number,
 };
+
+const iconPropTypes = {
+  ...propTypes,
+  value: PropTypes.bool
+}
+
+const multiSelectPropTypes = {
+  ...propTypes,
+  options: PropTypes.arrayOf(PropTypes.number)
+}
+
+const defaultMultiSelectOptions = [12, 16, 20, 24, 28, 32];
 
 export const PlusIcon = props => (
   <span onClick={props.onClick}
@@ -14,8 +26,7 @@ export const PlusIcon = props => (
     +
   </span>
 );
-PlusIcon.propTypes = props;
-
+PlusIcon.propTypes = propTypes;
 
 const fontControlCommonStyles = {
   height: '42px',
@@ -23,45 +34,24 @@ const fontControlCommonStyles = {
   textAlignLast: 'center',
   width: 'inherit',
 }
-export const FontSizeControl = props => (
-  <select
-    className={`custom-fa ${props.className}`}
-    style={{ ...fontControlCommonStyles }}
-    onChange={(e) => {
-      const updatedSize = e.currentTarget.value;
-      props.onClick(updatedSize)
-    }
-    }
-    value={props.value}>
-    <option>12</option>
-    <option>16</option>
-    <option>20</option>
-    <option>24</option>
-    <option>28</option>
-    <option>32</option>
-  </select>
-)
-FontSizeControl.propTypes = props;
+export const FontSizeControl = props => {
+  const { options = defaultMultiSelectOptions, className, onChange, value } = props;
 
-export const LineHeightControl = props => (
-  <select
-    className={`custom-fa ${props.className}`}
-    onChange={(e) => {
-      props.onChange(Number(e.currentTarget.value));
-    }}
-    style={{ ...fontControlCommonStyles }}
-    value={props.value}
-  >
-    <option value={1}>1</option>
-    <option value={1.2}>1.2</option>
-    <option value={1.4}>1.4</option>
-    <option value={1.6}>1.6</option>
-    <option value={1.8}>1.8</option>
-    <option value={2}>2</option>
-  </select>
-)
-
-LineHeightControl.propTypes = props;
+  return (
+    <select
+      className={`custom-fa ${className}`}
+      style={{ ...fontControlCommonStyles }}
+      onChange={(e) => {
+        const updatedSize = e.currentTarget.value;
+        onChange(updatedSize)
+      }
+      }
+      value={value}>
+      {options.map(val => <option key={val}>{val}</option>)}
+    </select >
+  )
+}
+FontSizeControl.propTypes = multiSelectPropTypes;
 
 export const MinusIcon = props => (
   <span onClick={props.onClick}
@@ -69,43 +59,29 @@ export const MinusIcon = props => (
     -
   </span>
 )
-MinusIcon.propTypes = props;
+MinusIcon.propTypes = propTypes;
 
 export const AlignCenterIcon = props => (
   <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>
     <svg id="Layer" enableBackground="new 0 0 64 64" height="25" viewBox="0 0 64 64" width="25" xmlns="http://www.w3.org/2000/svg"><path d="m54 8h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m54 52h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m46 23c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" /><path d="m54 30h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m46 45c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" /></svg>
   </span>
 );
-AlignCenterIcon.propTypes = {
-  ...props,
-  value: PropTypes.bool,
-};
-
+AlignCenterIcon.propTypes = iconPropTypes
 export const AlignLeftIcon = props => (
   <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>
     <svg id="Layer" enableBackground="new 0 0 64 64" height="25" viewBox="0 0 64 64" width="25" xmlns="http://www.w3.org/2000/svg"><path d="m54 8h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m54 52h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m10 23h28c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" /><path d="m54 30h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m10 45h28c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" /></svg>
   </span>
 );
-AlignLeftIcon.propTypes = {
-  ...props,
-  value: PropTypes.bool,
-};
+AlignLeftIcon.propTypes = iconPropTypes
 
 export const LarivaarIcon = props => (
   <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>ੳਅ</span>
 );
-LarivaarIcon.propTypes = {
-  ...props,
-  value: PropTypes.bool,
-};
-
+LarivaarIcon.propTypes = iconPropTypes
 export const LarivaarAssistIcon = props => (
   <span onClick={props.onClick} className={`custom-fa  custom-fa-assist ${props.value ? 'enabled' : ''}`}>ੳ</span>
 );
-LarivaarAssistIcon.propTypes = {
-  ...props,
-  value: PropTypes.bool,
-};
+LarivaarAssistIcon.propTypes = iconPropTypes
 
 export const SplitViewIcon = props => (
   <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>
@@ -129,11 +105,7 @@ export const SplitViewIcon = props => (
     </svg>
   </span>
 );
-SplitViewIcon.propTypes = {
-  ...props,
-  value: PropTypes.bool,
-};
-
+SplitViewIcon.propTypes = iconPropTypes
 export const ParagraphIcon = props => (
   <span
     onClick={props.onClick}
@@ -149,10 +121,7 @@ export const ParagraphIcon = props => (
   </span>
 )
 
-ParagraphIcon.propTypes = {
-  ...props,
-  value: PropTypes.bool,
-};
+ParagraphIcon.propTypes = iconPropTypes
 
 export const GearsIcon = props => (
   <span onClick={props.onClick} className={`custom-fa gear-icon ${props.value ? 'enabled' : ''}`}>
@@ -161,10 +130,7 @@ export const GearsIcon = props => (
     </svg>
   </span>
 )
-GearsIcon.propTypes = {
-  ...props,
-  value: PropTypes.bool,
-};
+GearsIcon.propTypes = iconPropTypes
 
 export const DownArrowIcon = () => (
   <span className={`downarrow-key`}>

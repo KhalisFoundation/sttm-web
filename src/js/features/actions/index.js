@@ -1,6 +1,9 @@
 import {
   DEFAULT_TRANSLATION_LANGUAGES,
+  DEFAULT_TRANSLATION_FONT_SIZE,
   DEFAULT_TRANSLITERATION_LANGUAGES,
+  DEFAULT_TRANSLITERATION_FONT_SIZE,
+  DEFAULT_FONT_SIZE,
   DEFAULT_DARK_MODE,
   DEFAULT_PARAGRAPH_MODE,
   DEFAULT_LINE_HEIGHT,
@@ -8,7 +11,6 @@ import {
   DEFAULT_VISRAAM_SOURCE,
   DEFAULT_VISRAAM_STYLE,
   DEFAULT_UNICODE,
-  DEFAULT_FONT_SIZE,
   DEFAULT_FONT_FAMILY,
   DEFAULT_CENTER_ALIGN_GURBANI,
   DEFAULT_SPLIT_VIEW,
@@ -70,6 +72,12 @@ export const setUnicode = createAction(SET_UNICODE);
 export const SET_FONT_SIZE = 'SET_FONT_SIZE';
 export const setFontSize = createAction(SET_FONT_SIZE);
 
+export const SET_TRANSLATION_FONT_SIZE = 'SET_TRANSLATION_FONT_SIZE';
+export const setTranslationFontSize = createAction(SET_TRANSLATION_FONT_SIZE);
+
+export const SET_TRANSLITERATION_FONT_SIZE = 'SET_TRANSLITERATION_FONT_SIZE';
+export const setTransliterationFontSize = createAction(SET_TRANSLITERATION_FONT_SIZE);
+
 export const SET_LINE_HEIGHT = 'SET_LINE_HEIGHT';
 export const setLineHeight = createAction(SET_LINE_HEIGHT);
 
@@ -111,6 +119,8 @@ export const changeFont = createAction(CHANGE_FONT);
 export const resetFontOptions = () => dispatch => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
+  dispatch(setTranslationFontSize(DEFAULT_TRANSLATION_FONT_SIZE));
+  dispatch(setTransliterationFontSize(DEFAULT_TRANSLITERATION_FONT_SIZE));
   dispatch(changeFont(DEFAULT_FONT_FAMILY));
   dispatch(setLineHeight(DEFAULT_LINE_HEIGHT));
 };

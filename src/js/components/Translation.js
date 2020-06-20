@@ -5,7 +5,7 @@ import { TRANSLATION_LANGUAGES } from '../constants';
 const PUNJABI = 'punjabi';
 export default class Translation extends React.PureComponent {
   static defaultProps = { children: '' };
-
+  static defaultFontSize = '18px';
   static propTypes = {
     type: PropTypes.oneOf(TRANSLATION_LANGUAGES),
     unicode: (props, propName) => {
@@ -48,9 +48,9 @@ export default class Translation extends React.PureComponent {
   }
 
   render() {
-    const defaultFontSize = '18px';
+    const { defaultFontSize } = Translation;
     const { type, unicode, text, fontSize: _fontSize } = this.props;
-    const fontSize = _fontSize ? (0.7 * _fontSize) + 'em' : defaultFontSize;
+    const fontSize = _fontSize ? _fontSize + 'em' : defaultFontSize;
 
     if (type === PUNJABI) {
       return (
