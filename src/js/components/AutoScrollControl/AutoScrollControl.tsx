@@ -185,7 +185,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 
   componentWillUnmount = () => {
-    console.log('RUNNING ?')
     this.clearScrollInterval();
     this.removeListeners();
 
