@@ -101,6 +101,10 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
         this.props.setAutoScrolling && this.props.setAutoScrolling(true);
         this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
         this._nextScrollPosition = document.documentElement.scrollTop;
+
+        // set a class on body to mark that it's autoscrolling
+        document.body.classList.add('autoscrolling');
+
         this._interval = requestAnimationFrame(this.handleAutoScroll);
       })
   }
@@ -116,6 +120,10 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     this.setState(() => ({ ...this.state, isScrolling: false }),
       () => {
         this.props.setAutoScrolling && this.props.setAutoScrolling(false);
+
+        // remove class on body to mark that it's not autoscrolling
+        document.body.classList.remove('autoscrolling');
+
         this.clearScrollInterval()
       });
   }
@@ -161,7 +169,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     this.addListeners();
   }
 
-  componentDidUpdate = (prevProps: IAutoScrollControlProps, prevState: IAutoScrollControlState) => {
+  componentDidUpdate = (prevProps: IAutoScrollControlProps) => {
     if (prevProps.isAutoScrolling !== this.props.isAutoScrolling) {
       if (this.props.isAutoScrolling !== this.state.isScrolling) {
         if (this.props.isAutoScrolling)

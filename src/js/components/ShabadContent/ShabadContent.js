@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GlobalHotKeys } from 'react-hotkeys';
 
@@ -69,6 +69,9 @@ class Shabad extends React.PureComponent {
     hideControls: PropTypes.bool,
     controlProps: PropTypes.object,
 
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     random: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
@@ -77,9 +80,14 @@ class Shabad extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    lineHeight: PropTypes.number.isRequired,
+    transliterationFontSize: PropTypes.number.isRequired,
+    translationFontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
+    paragraphMode: PropTypes.bool,
+    autoScrollMode: PropTypes.bool,
   };
 
   constructor(props) {
@@ -89,6 +97,7 @@ class Shabad extends React.PureComponent {
     const {
       props: {
         gurbani,
+        location,
         nav,
         info,
         type,
@@ -102,10 +111,13 @@ class Shabad extends React.PureComponent {
         unicode,
         fontSize,
         lineHeight,
+        translationFontSize,
+        transliterationFontSize,
         fontFamily,
         centerAlignGurbani,
         showFullScreen,
         autoScrollMode,
+        paragraphMode
       },
       handleEmbed,
       handleCopyAll,
@@ -115,6 +127,7 @@ class Shabad extends React.PureComponent {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
 
+    const isSundarGutkaView = location.pathname.includes('sundar-gutka');
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
@@ -155,6 +168,8 @@ class Shabad extends React.PureComponent {
                 highlight={highlight}
                 larivaar={larivaar}
                 fontSize={fontSize}
+                translationFontSize={translationFontSize}
+                transliterationFontSize={transliterationFontSize}
                 lineHeight={lineHeight}
                 fontFamily={fontFamily}
                 larivaarAssist={larivaarAssist}
@@ -162,6 +177,7 @@ class Shabad extends React.PureComponent {
                 transliterationLanguages={transliterationLanguages}
                 centerAlignGurbani={centerAlignGurbani}
                 showFullScreen={showFullScreen}
+                isParagraphMode={paragraphMode && isSundarGutkaView}
               />
 
               {this.props.hideMeta === false && (
@@ -239,4 +255,4 @@ class Shabad extends React.PureComponent {
 }
 
 const stateToProps = state => state;
-export default connect(stateToProps)(Shabad);
+export default connect(stateToProps)(withRouter(Shabad));

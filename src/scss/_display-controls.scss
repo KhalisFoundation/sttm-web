@@ -164,6 +164,7 @@
   height: 100%;
   margin-right: 10px;
   min-height: 42px;
+  text-align: center;
   transition: 0.2s all ease;
 
   span {
@@ -495,7 +496,7 @@
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 490px) {
   .quick-settings > .controller-option {
     &:nth-last-child(2),
     &:nth-last-child(10) {

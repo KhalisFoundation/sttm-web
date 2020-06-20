@@ -1,15 +1,18 @@
 import {
   DEFAULT_TRANSLATION_LANGUAGES,
+  DEFAULT_TRANSLATION_FONT_SIZE,
   DEFAULT_TRANSLITERATION_LANGUAGES,
+  DEFAULT_TRANSLITERATION_FONT_SIZE,
+  DEFAULT_FONT_SIZE,
   DEFAULT_DARK_MODE,
   DEFAULT_AUTO_SCROLL_MODE,
   DEFAULT_IS_AUTOSCROLLING,
+  DEFAULT_PARAGRAPH_MODE,
   DEFAULT_LINE_HEIGHT,
   DEFAULT_VISRAAMS,
   DEFAULT_VISRAAM_SOURCE,
   DEFAULT_VISRAAM_STYLE,
   DEFAULT_UNICODE,
-  DEFAULT_FONT_SIZE,
   DEFAULT_FONT_FAMILY,
   DEFAULT_CENTER_ALIGN_GURBANI,
   DEFAULT_SPLIT_VIEW,
@@ -42,6 +45,11 @@ export const toggleTranslationOptions = createAction(
   TOGGLE_TRANSLATION_OPTIONS
 );
 
+export const TOGGLE_PARAGRAPH_MODE = 'TOGGLE_PARAGRAPH_MODE';
+export const toggleParagraphMode = createAction(
+  TOGGLE_PARAGRAPH_MODE
+)
+
 export const TOGGLE_TRANSLITERATION_OPTIONS = 'TOGGLE_TRANSLITERATION_OPTIONS';
 export const toggleTransliterationOptions = createAction(
   TOGGLE_TRANSLITERATION_OPTIONS
@@ -73,8 +81,17 @@ export const setUnicode = createAction(SET_UNICODE);
 export const SET_FONT_SIZE = 'SET_FONT_SIZE';
 export const setFontSize = createAction(SET_FONT_SIZE);
 
+export const SET_TRANSLATION_FONT_SIZE = 'SET_TRANSLATION_FONT_SIZE';
+export const setTranslationFontSize = createAction(SET_TRANSLATION_FONT_SIZE);
+
+export const SET_TRANSLITERATION_FONT_SIZE = 'SET_TRANSLITERATION_FONT_SIZE';
+export const setTransliterationFontSize = createAction(SET_TRANSLITERATION_FONT_SIZE);
+
 export const SET_LINE_HEIGHT = 'SET_LINE_HEIGHT';
 export const setLineHeight = createAction(SET_LINE_HEIGHT);
+
+export const SET_PARAGRAPH_MODE = 'SET_PARAGRAPH_MODE';
+export const setParagraphMode = createAction(SET_PARAGRAPH_MODE);
 
 export const SET_TRANSLATION_LANGUAGES = 'SET_TRANSLATION_LANGUAGES';
 export const setTranslationLanguages = createAction(SET_TRANSLATION_LANGUAGES);
@@ -102,6 +119,7 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
   dispatch(setAutoScrollMode(DEFAULT_AUTO_SCROLL_MODE));
   dispatch(setAutoScrolling(DEFAULT_IS_AUTOSCROLLING));
+  dispatch(setParagraphMode(DEFAULT_PARAGRAPH_MODE))
   dispatch(setVisraams(DEFAULT_VISRAAMS));
   dispatch(setVisraamSource(DEFAULT_VISRAAM_SOURCE));
   dispatch(setVisraamStyle(DEFAULT_VISRAAM_STYLE));
@@ -115,6 +133,8 @@ export const changeFont = createAction(CHANGE_FONT);
 export const resetFontOptions = () => dispatch => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
+  dispatch(setTranslationFontSize(DEFAULT_TRANSLATION_FONT_SIZE));
+  dispatch(setTransliterationFontSize(DEFAULT_TRANSLITERATION_FONT_SIZE));
   dispatch(changeFont(DEFAULT_FONT_FAMILY));
   dispatch(setLineHeight(DEFAULT_LINE_HEIGHT));
 };

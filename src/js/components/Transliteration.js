@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Transliteration extends React.PureComponent {
+
+  static defaultFontSize = '18px';
   static propTypes = {
     language: PropTypes.string,
     children: PropTypes.string.isRequired,
@@ -11,15 +13,15 @@ export default class Transliteration extends React.PureComponent {
     ]),
   };
   render() {
-    const defaultFontSize = '18px';
+    const { defaultFontSize } = Transliteration;
     const { fontSize: _fontSize } = this.props;
-    const fontSize = _fontSize ? (0.7 * _fontSize) + 'em' : defaultFontSize;
+    const fontSize = _fontSize ? _fontSize + 'em' : defaultFontSize;
 
     return (
       <div
         style={{ fontSize }}
         className={'transliteration ' + this.props.language}>
-        {this.props.children}
+        {this.props.children + ''}
       </div>
     );
   }

@@ -243,6 +243,14 @@ select {
   display: none;
 }
 
+.autoscrolling {
+  @media screen and (max-width: 600px) {
+    #freshworks-container {
+      display: none;
+    }
+  }
+}
+
 .hide-mobile {
   @media screen and (max-width: 480px) {
     display: none;
