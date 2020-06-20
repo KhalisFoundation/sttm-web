@@ -87,6 +87,7 @@ class Shabad extends React.PureComponent {
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
     paragraphMode: PropTypes.bool,
+    autoScrollMode: PropTypes.bool,
   };
 
   constructor(props) {
@@ -115,6 +116,7 @@ class Shabad extends React.PureComponent {
         fontFamily,
         centerAlignGurbani,
         showFullScreen,
+        autoScrollMode,
         paragraphMode
       },
       handleEmbed,

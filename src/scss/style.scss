@@ -2,8 +2,10 @@
 
 @import "mixin",
   "colours",
+  "auto-scroll-control",
   "display-controls",
   "error-page",
+  "floating-actions",
   "footer",
   "fonts",
   "header",
@@ -169,34 +171,31 @@ select {
   }
 }
 
-.scroll-to-top {
-  align-items: center;
-  animation: grow ease-in-out 0.25s;
-  background-color: $sttm-white;
-  border-radius: 50%;
-  bottom: 28px;
-  box-shadow: 0 1px 4px 0 $sttm-dark-grey;
-  cursor: pointer;
-  display: flex;
-  height: 50px;
-  justify-content: center;
-  position: fixed;
-  right: 28px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  width: 50px;
-  z-index: 5;
+#fullscreen {
+  fill: $sttm-white;
+}
 
-  .dark-mode & {
-    background-color: $sttm-darker-grey;
-    box-shadow: none;
+.fullscreen {
+  height: 22px;
+
+  & > svg {
+    transition: all 0.2s ease-in;
   }
 
-  &.fullscreen {
-    right: 18px;
+  &:hover #fullscreen {
+    fill: $sttm-orange;
+  }
+}
 
-    & + .scroll-to-top {
-      right: 84px;
-    }
+.scroll-to-top {
+  animation: grow ease-in-out 0.25s;
+  cursor: pointer;
+  height: 18px;
+  transform: translateY(-2px);
+
+  & svg {
+    fill: $sttm-white;
+    transition: all 0.2s ease-in;
   }
 
   @keyframes grow {
@@ -225,6 +224,10 @@ select {
   }
 }
 
+.scroll-to-top:hover svg {
+  fill: $sttm-orange;
+}
+
 .logo-center {
   margin-top: 10px;
 
@@ -240,6 +243,28 @@ select {
   display: none;
 }
 
-#fullscreen {
-  fill: $sttm-orange;
+.autoscroll-mode {
+  @media screen and (max-width: 600px) {
+    #freshworks-container {
+      display: none;
+    }
+  }
+}
+
+.hide-mobile {
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
+}
+
+.hide-tablet {
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+}
+
+.hide-desktop {
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 }

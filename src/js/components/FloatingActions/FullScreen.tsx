@@ -1,5 +1,5 @@
 import React from 'react';
-import FullscreenIcon from './Icons/FullscreenIcon';
+import FullscreenIcon from '../Icons/FullscreenIcon';
 
 /**
  *
@@ -32,12 +32,12 @@ export default class FullScreen extends React.PureComponent {
   componentDidUpdate() {
     const html = this.$htmlNode;
     if (this.state.isFullScreen) {
-      document.body.classList['add']('fullscreen-view');
+      document.body.classList.add('fullscreen-view');
       html.requestFullscreen && html.requestFullscreen();
       html.webkitRequestFullscreen && html.webkitRequestFullscreen();
     } else {
       document.fullscreen && document.exitFullscreen();
-      document.body.classList['remove']('fullscreen-view');
+      document.body.classList.remove('fullscreen-view');
     }
   }
 
@@ -48,7 +48,7 @@ export default class FullScreen extends React.PureComponent {
   render() {
     const { isFullScreen } = this.state;
     return (
-      <div className="scroll-to-top fullscreen" onClick={this.handleClick}>
+      <div className="fab scroll-to-top fullscreen" onClick={this.handleClick}>
         <FullscreenIcon state={isFullScreen} />
       </div>
     );

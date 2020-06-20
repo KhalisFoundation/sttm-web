@@ -5,6 +5,7 @@ import {
   TOGGLE_LARIVAAR_ASSIST_OPTION,
   TOGGLE_LARIVAAR_OPTION,
   TOGGLE_DARK_MODE,
+  TOGGLE_AUTO_SCROLL_MODE,
   TOGGLE_PARAGRAPH_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
@@ -16,10 +17,12 @@ import {
   SET_TRANSLATION_FONT_SIZE,
   SET_TRANSLITERATION_FONT_SIZE,
   SET_LINE_HEIGHT,
+  SET_AUTOSCROLLING,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
+  SET_AUTO_SCROLL_MODE,
   SET_PARAGRAPH_MODE,
   SET_VISRAAMS,
   SET_SPLIT_VIEW,
@@ -31,6 +34,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_LARIVAAR,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
+  LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE,
   LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
   LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
@@ -101,6 +105,20 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
+      };
+    }
+    case TOGGLE_AUTO_SCROLL_MODE: {
+      const autoScrollMode = !state.autoScrollMode;
+      clickEvent({
+        action: TOGGLE_AUTO_SCROLL_MODE,
+        label: autoScrollMode ? 1 : 0,
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE, autoScrollMode);
+
+      return {
+        ...state,
+        autoScrollMode,
       };
     }
 
@@ -197,6 +215,14 @@ export default function reducer(state, action) {
         larivaar
       };
     }
+
+    case SET_AUTOSCROLLING: {
+      return {
+        ...state,
+        isAutoScrolling: action.payload,
+      }
+    }
+
     case SET_UNICODE: {
       const unicode = action.payload || false;
       clickEvent({
@@ -317,6 +343,18 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
+      };
+    }
+    case SET_AUTO_SCROLL_MODE: {
+      const autoScrollMode = action.payload || false;
+      clickEvent({
+        action: SET_AUTO_SCROLL_MODE,
+        label: autoScrollMode ? true : false,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE, autoScrollMode);
+      return {
+        ...state,
+        autoScrollMode,
       };
     }
     case SET_VISRAAMS: {

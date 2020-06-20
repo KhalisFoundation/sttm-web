@@ -48,6 +48,7 @@ export const LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE = 'transliterationF
 export const LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT = 'lineHeight';
 export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
+export const LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE = 'autoScrollMode';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAMS = 'visraams';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE = 'visraamSource';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE = 'visraamStyle';
@@ -84,6 +85,8 @@ export const DEFAULT_LINE_HEIGHT = 1.2;
 export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
+export const DEFAULT_AUTO_SCROLL_MODE = false;
+export const DEFAULT_IS_AUTOSCROLLING = false;
 export const DEFAULT_PARAGRAPH_MODE = false;
 export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 export const DEFAULT_VISRAAMS = false;
@@ -174,6 +177,7 @@ export const TEXTS = {
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',
+  AUTO_SCROLL_MODE: 'Auto Scroll Mode',
   VISRAAMS: 'Visraams',
   CENTERALIGN: 'Center-Align',
   HUKAMNAMA_NOT_FOUND_DESCRIPTION:
@@ -233,7 +237,7 @@ export interface IBAANI_LINK {
   action: string;
 }
 
-export const TIMED_BAANI_LINKS = [{
+export const TIMED_BAANI_LINKS: IBAANI_LINK[] = [{
   name: 'Rehraas sahib',
   startTimeInMinutes: 1020, // timeMath.calcTimeInMinutes(17, 0),
   endTimeInMinutes: 1200, // timeMath.calcTimeInMinutes(20, 0),
@@ -253,4 +257,4 @@ export const TIMED_BAANI_LINKS = [{
   endTimeInMinutes: 1380, //timeMath.calcTimeInMinutes(23, 0),
   link: '/sundar-gutka/23',
   action: ACTIONS.SOHILAA_SAHIB_LINK
-}] as IBAANI_LINK[];
+}];

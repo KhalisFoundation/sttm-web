@@ -5,6 +5,8 @@ import {
   DEFAULT_TRANSLITERATION_FONT_SIZE,
   DEFAULT_FONT_SIZE,
   DEFAULT_DARK_MODE,
+  DEFAULT_AUTO_SCROLL_MODE,
+  DEFAULT_IS_AUTOSCROLLING,
   DEFAULT_PARAGRAPH_MODE,
   DEFAULT_LINE_HEIGHT,
   DEFAULT_VISRAAMS,
@@ -34,6 +36,10 @@ export const toggleDarkMode = createAction(TOGGLE_DARK_MODE);
 export const TOGGLE_VISRAAMS = 'TOGGLE_VISRAAMS';
 export const toggleVisraams = createAction(TOGGLE_VISRAAMS);
 
+export const TOGGLE_AUTO_SCROLL_MODE = 'TOGGLE_AUTO_SCROLL_MODE';
+
+export const toggleAutoScrollMode = createAction(TOGGLE_AUTO_SCROLL_MODE);
+
 export const TOGGLE_TRANSLATION_OPTIONS = 'TOGGLE_TRANSLATION_OPTIONS';
 export const toggleTranslationOptions = createAction(
   TOGGLE_TRANSLATION_OPTIONS
@@ -59,6 +65,9 @@ export const toggleLarivaarAssistOption = createAction(
 
 export const TOGGLE_SPLIT_VIEW_OPTION = 'TOGGLE_SPLIT_VIEW_OPTION';
 export const toggleSplitViewOption = createAction(TOGGLE_SPLIT_VIEW_OPTION);
+
+export const SET_AUTOSCROLLING = 'SET_AUTOSCROLLING';
+export const setAutoScrolling = createAction(SET_AUTOSCROLLING);
 
 export const SET_VISRAAM_SOURCE = 'SET_VISRAAM_SOURCE';
 export const setVisraamSource = createAction(SET_VISRAAM_SOURCE);
@@ -95,6 +104,9 @@ export const setTransliterationLanguages = createAction(
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const setDarkMode = createAction(SET_DARK_MODE);
 
+export const SET_AUTO_SCROLL_MODE = 'SET_AUTO_SCROLL_MODE';
+export const setAutoScrollMode = createAction(SET_AUTO_SCROLL_MODE);
+
 export const SET_VISRAAMS = 'SET_VISRAAMS';
 export const setVisraams = createAction(SET_VISRAAMS);
 
@@ -105,6 +117,8 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
+  dispatch(setAutoScrollMode(DEFAULT_AUTO_SCROLL_MODE));
+  dispatch(setAutoScrolling(DEFAULT_IS_AUTOSCROLLING));
   dispatch(setParagraphMode(DEFAULT_PARAGRAPH_MODE))
   dispatch(setVisraams(DEFAULT_VISRAAMS));
   dispatch(setVisraamSource(DEFAULT_VISRAAM_SOURCE));

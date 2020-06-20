@@ -26,6 +26,7 @@ export interface SETTING_ACTIONS {
   resetDisplayOptions: Function,
   resetFontOptions: Function,
   toggleVisraams: Function,
+  toggleAutoScrollMode: Function,
   toggleLarivaarOption: Function,
   toggleLarivaarAssistOption: Function,
   setFontSize: Function,
@@ -239,6 +240,9 @@ export const ADVANCED_SETTINGS = ({
   setLineHeight,
   lineHeight,
   changeFont,
+
+  toggleAutoScrollMode,
+  autoScrollMode,
   visraamSource,
   visraamStyle,
   fontFamily,
@@ -247,6 +251,12 @@ export const ADVANCED_SETTINGS = ({
   translationFontSize,
   transliterationFontSize,
 }: SETTING_ACTIONS) => [
+    {
+      type: 'toggle-option',
+      label: 'Auto Scroll',
+      checked: autoScrollMode,
+      action: toggleAutoScrollMode,
+    },
     {
       type: 'icon-toggle',
       label: 'Line Height',
