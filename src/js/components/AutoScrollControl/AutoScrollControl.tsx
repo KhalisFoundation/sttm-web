@@ -8,7 +8,6 @@ import { setAutoScrolling } from '@/features/actions';
 
 interface IReduxStateAsProps {
   isAutoScrolling?: boolean;
-  autoScrollMode?: boolean;
 }
 interface IReduxDispatchProps {
   setAutoScrolling?: (action: boolean) => {}
@@ -169,14 +168,12 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   componentDidMount = () => {
     this.addListeners();
-    this.setAutoScrollModeDOMChanges(this.props.autoScrollMode);
+
+    // For now, once this component mounts we are in autoscroll-mode.
+    this.setAutoScrollModeDOMChanges(true);
   }
 
   componentDidUpdate = (prevProps: IAutoScrollControlProps) => {
-    if (prevProps.autoScrollMode !== this.props.autoScrollMode) {
-      this.setAutoScrollModeDOMChanges(this.props.autoScrollMode);
-    }
-
     if (prevProps.isAutoScrolling !== this.props.isAutoScrolling) {
       if (this.props.isAutoScrolling !== this.state.isScrolling) {
         if (this.props.isAutoScrolling)
@@ -256,7 +253,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 }
 
-const mapStateToProps = ({ isAutoScrolling, autoScrollMode }: any) => ({ isAutoScrolling, autoScrollMode })
+const mapStateToProps = ({ isAutoScrolling }: any) => ({ isAutoScrolling })
 
 const mapDispatchToProps: IReduxDispatchProps = {
   setAutoScrolling
