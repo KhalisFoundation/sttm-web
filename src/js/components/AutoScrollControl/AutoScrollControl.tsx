@@ -31,8 +31,8 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   static maxScrollingSpeed = 100;
   static minScrollingSpeed = 1;
-  static minScrollPixelMovement = 0.5;
-  static maxScrollPixelMovement = 2;
+  static minScrollPixelMovement = 0.2;
+  static maxScrollPixelMovement = 0.8;
   _maxScrollPossible!: number;
   _nextScrollPosition!: number;
   _sliding!: boolean;
@@ -219,9 +219,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
                 renderTrack={({ props, children }) => (
                   <div
                     className={`autoScrollControlSliderTrack ${hideSliderClass}`}
-                    style={{
-                      ...props.style,
-                    }}
                     {...props}
                   >
                     {children}
@@ -229,9 +226,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
                 )}
                 renderThumb={({ props }) => (
                   <div className={`autoScrollControlSliderThumb ${hideSliderClass}`}
-                    style={{
-                      ...props.style,
-                    }}
                     {...props}
                   />
                 )}
