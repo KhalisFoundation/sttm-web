@@ -1,19 +1,20 @@
-import { SOURCES } from '@sttm/banidb';
-
+interface Index {
+  name: string,
+  pages: [number, number],
+  highlight?: number
+}
 interface IRaagIndex {
   name: string;
-  source: typeof SOURCES;
+  source: 'G';
+  indices: Index[];
 }
 
 interface IRaagIndices {
-  SGGS:
+  SGGS: IRaagIndex,
+  DG: IRaagIndex
 }
 
-export const raagIndices = {
-  SGGS
-}
-
-export default {
+export const raagIndices: IRaagIndices = {
   SGGS: {
     name: 'Sri Guru Granth Sahib Jee',
     source: 'G',

@@ -1,30 +1,32 @@
 import React, { useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Location } from 'history';
 
 import BreadCrumb from '@/components/Breadcrumb';
 import Fetch from '@/components/Fetch';
-import raagIndices from '../constants/raag-indices';
+import { raagIndices } from '../constants/raag-indices';
 import { toAngURL } from '../../../util';
 import { pageView } from '../../../util/analytics';
-import { TEXTS } from '../../../constants';
 import { AmritKeertanIndex } from './AmritKeertanIndex';
 import { sanitizeHash } from '../util';
+import { TEXTS } from '../../../constants';
 
 interface IGranthIndexProps {
-  location: string
+  location: Location
 }
 
 export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
 
+  const { hash } = location;
+
   const scrollToHash = useCallback(() => {
-    const { hash } = this.props.location;
     if (hash.includes('#')) {
       const $item = document.querySelector(`[id="${hash.replace('#', '')}"]`);
       if ($item) {
         requestAnimationFrame(() => window.scrollTo(0, $item.offsetTop));
       }
     }
-  }, []);
+  }, [hash]);
 
   useEffect(() => {
     scrollToHash();
@@ -41,6 +43,8 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
       if (loading) {
         return <div className="spinner" />
       }
+
+      console.log(data, AMRIT_KEERTAN_API_URL, 'data.. from amrit keertan')
 
       return (
         <div className="row" id="content-root">
