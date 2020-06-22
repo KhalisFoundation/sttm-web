@@ -1,6 +1,8 @@
 /* globals AMRIT_KEERTAN_API_URL */
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
+import { AmritKeertanIndexRow } from './AmritKeertanIndexRow';
 import { IAmritKeertanHeader } from '../types';
 
 interface IAmritKeertanProps {
@@ -23,14 +25,12 @@ export const AmritKeertanIndex: React.FC<IAmritKeertanProps> = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ HeaderID, GurmukhiUni }) => (
-            <tr key={HeaderID}>
-              <td>
-                <Link to={"/"}>
-                  {GurmukhiUni}
-                </Link>
-              </td>
-            </tr>
+          {data.map(({ HeaderID, GurmukhiUni, Transliterations }) => (
+            <AmritKeertanIndexRow
+              key={HeaderID}
+              headerId={HeaderID}
+              name={Transliterations.en}
+              gurmukhiUni={GurmukhiUni} />
           ))}
         </tbody>
       </table>

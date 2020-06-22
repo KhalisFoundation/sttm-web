@@ -4,6 +4,7 @@ const plugins = [
   '@babel/plugin-syntax-dynamic-import',
   '@babel/plugin-proposal-object-rest-spread',
   '@babel/plugin-proposal-class-properties',
+  '@babel/transform-runtime'
 ];
 
 const presets = [
@@ -28,14 +29,14 @@ module.exports = {
         preset[0] !== '@babel/preset-env'
           ? preset
           : [
-              '@babel/preset-env',
-              {
-                targets: {
-                  browsers: ['ie 11', 'safari 9'],
-                },
-                modules: false,
+            '@babel/preset-env',
+            {
+              targets: {
+                browsers: ['ie 11', 'safari 9'],
               },
-            ]
+              modules: false,
+            },
+          ]
       ),
       plugins: plugins.concat([
         [
