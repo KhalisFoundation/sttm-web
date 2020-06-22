@@ -18,8 +18,8 @@ interface IAutoScrollControlState {
   scrollingSpeed: number[];
 }
 
-// Visible controls isControlsVisible will have all the controls visible all the time.
 // Hidden controls controlsState will have all the controls hidden by default and shown only when playing
+// Visible controls isControlsVisible will have all the controls visible all the time.
 type HideSliderScreenSize = 'never' | 'mobile' | 'tablet' | 'desktop';
 interface IAutoScrollControlProps extends IReduxDispatchProps, IReduxStateAsProps {
   hideSliderScreenSize: HideSliderScreenSize;
@@ -167,6 +167,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     this.addListeners();
 
     this._isFirefoxAgent = navigator.userAgent.indexOf("Firefox") > -1;
+
     // For now, once this component mounts we are in autoscroll-mode.
     this.setAutoScrollModeDOMChanges(true);
   }
@@ -180,7 +181,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   };
 
   render() {
-    console.log(this.props.isAutoScrolling, " changes shit")
+    console.log(this.props.isAutoScrolling, "isAutoscrolling visible")
     const { scrollingSpeed } = this.state;
     const hideSliderClass = this.getHideSliderClass();
     const {
