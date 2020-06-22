@@ -72,10 +72,10 @@
   width: 288px;
 
   select {
+    cursor: pointer;
     display: inline-block;
     margin: 0;
     width: calc(50% - 0.5rem);
-    cursor: pointer;
 
     &:nth-child(1) {
       margin-right: 1rem;

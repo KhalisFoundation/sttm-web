@@ -272,13 +272,12 @@ select {
 .angNo {
   background-color: $sttm-blue;
   border-radius: 5px;
-  padding: 5px;
   color: $sttm-white;
+  padding: 5px;
 
   &:hover {
     background-color: $sttm-orange;
     color: $sttm-white;
     transition: 0.2s;
-}
-
+  }
 }
