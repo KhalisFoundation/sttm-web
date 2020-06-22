@@ -65,7 +65,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     if (!this._sliding) {
       requestAnimationFrame(() => {
         this.setState(
-          () => ({ ...this.state, scrollingSpeed: newSpeed }),
+          (state) => ({ ...state, scrollingSpeed: newSpeed }),
           () => { this._sliding = false })
       });
       this._sliding = true;
@@ -84,7 +84,9 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     this.handleScrollSpeedChange([newScrollingSpeed]);
   }
 
-  toggleAutoScrollState = () => {
+  toggleAutoScrollState = (e: React.MouseEvent) => {
+    e.preventDefault();
+
     if (this.state.isScrolling) {
       this.removeScroll();
     } else {
@@ -97,7 +99,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 
   startScroll = () => {
-    this.setState(() => ({ ...this.state, isScrolling: true }),
+    this.setState((state) => ({ ...state, isScrolling: true }),
       () => {
         this.props.setAutoScrolling && this.props.setAutoScrolling(true);
         this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
@@ -114,7 +116,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 
   removeScroll = () => {
-    this.setState(() => ({ ...this.state, isScrolling: false }),
+    this.setState((state) => ({ ...state, isScrolling: false }),
       () => {
         this.props.setAutoScrolling && this.props.setAutoScrolling(false);
         this.clearScrollInterval()
@@ -136,7 +138,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
         ((scrollingSpeed / 100) *
           (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement))), 2);
 
-      console.log(this._isFirefoxAgent, 'firefox browser is this')
       // Only allow the scrolling if we have surpassed previous scrolls
       if (this._isFirefoxAgent || scrollY >= Math.floor(this._nextScrollPosition)) {
         this._nextScrollPosition += movement;
