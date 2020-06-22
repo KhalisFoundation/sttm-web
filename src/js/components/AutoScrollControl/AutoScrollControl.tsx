@@ -171,13 +171,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     this.setAutoScrollModeDOMChanges(true);
   }
 
-  // componentDidUpdate = (prevProps: IAutoScrollControlProps) => {
-  //   if (this.props.isAutoScrolling)
-  //     this.startScroll()
-  //   else
-  //     this.removeScroll();
-  // }
-
   componentWillUnmount = () => {
     this.clearScrollInterval();
     this.removeListeners();
