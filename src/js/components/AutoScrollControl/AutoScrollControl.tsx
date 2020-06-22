@@ -180,6 +180,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   };
 
   render() {
+    console.log(this.props.isAutoScrolling, " changes shit")
     const { scrollingSpeed } = this.state;
     const hideSliderClass = this.getHideSliderClass();
     const {
@@ -193,7 +194,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     return (
       <div className={`autoScrollControl ${autoScrollControlBgClass}`}>
         <div className="autoScrollControlSpeed">
-          <div className={`autoScrollControlGroup ${isShowControls ? 'visible' : 'hidden'}`}>
+          {isShowControls && <div className={`autoScrollControlGroup ${isShowControls ? 'visible' : 'hidden'}`}>
             <label className="autoScrollControlSliderLabel">
               Speed
             </label>
@@ -225,7 +226,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
                 className="autoScrollControlIncreaseSpeed"
                 onClick={this.setSpeed('increment')}> + </button>
             </div>
-          </div>
+          </div>}
         </div>
         <button
           onClick={this.toggleAutoScrollState}
