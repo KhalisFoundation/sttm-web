@@ -86,12 +86,17 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   toggleAutoScrollState = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
 
     if (this.props.isAutoScrolling) {
       this.removeScroll();
     } else {
       this.startScroll();
     }
+  }
+
+  handleIconClick = (e: React.MouseEvent) => {
+    e.preventDefault();
   }
 
   clearScrollInterval = () => {
@@ -195,7 +200,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     return (
       <div className={`autoScrollControl ${autoScrollControlBgClass}`}>
         <div className="autoScrollControlSpeed">
-          {isShowControls && <div className={`autoScrollControlGroup ${isShowControls ? 'visible' : 'hidden'}`}>
+          <div className={`autoScrollControlGroup ${isShowControls ? 'visible' : 'hidden'}`}>
             <label className="autoScrollControlSliderLabel">
               Speed
             </label>
@@ -227,12 +232,14 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
                 className="autoScrollControlIncreaseSpeed"
                 onClick={this.setSpeed('increment')}> + </button>
             </div>
-          </div>}
+          </div>
         </div>
         <button
           onClick={this.toggleAutoScrollState}
           className="autoScrollControlPlayBtn">
-          {isAutoScrolling ? <Pause /> : <Play />}
+          {isAutoScrolling ?
+            <Pause onClick={this.handleIconClick} /> :
+            <Play onClick={this.handleIconClick} />}
         </button>
       </div>
     )
