@@ -37,6 +37,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   _nextScrollPosition!: number;
   _sliding!: boolean;
   _interval!: number;
+  _isFirefoxAgent: boolean;
 
   static defaultProps = {
     isBackgroundTransparent: false,
@@ -73,14 +74,14 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   setSpeed = (operation: string) => () => {
     const [scrollingSpeed] = this.state.scrollingSpeed;
-    let scrollingSpeedToSet: number = 0;
+    let newScrollingSpeed: number = 0;
 
     if (operation === 'increment')
-      scrollingSpeedToSet = Math.min(scrollingSpeed + 10, AutoScrollControl.maxScrollingSpeed)
+      newScrollingSpeed = Math.min(scrollingSpeed + 10, AutoScrollControl.maxScrollingSpeed)
     else
-      scrollingSpeedToSet = Math.max(scrollingSpeed - 10, AutoScrollControl.minScrollingSpeed);
+      newScrollingSpeed = Math.max(scrollingSpeed - 10, AutoScrollControl.minScrollingSpeed);
 
-    this.handleScrollSpeedChange([scrollingSpeedToSet]);
+    this.handleScrollSpeedChange([newScrollingSpeed]);
   }
 
   toggleAutoScrollState = () => {
@@ -135,8 +136,9 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
         ((scrollingSpeed / 100) *
           (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement))), 2);
 
+      console.log(this._isFirefoxAgent, 'firefox browser is this')
       // Only allow the scrolling if we have surpassed previous scrolls
-      if (scrollY >= Math.floor(this._nextScrollPosition)) {
+      if (this._isFirefoxAgent || scrollY >= Math.floor(this._nextScrollPosition)) {
         this._nextScrollPosition += movement;
         window.scrollTo({ left: 0, top: this._nextScrollPosition, behavior: 'smooth' });
       }
@@ -158,6 +160,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     window.addEventListener("mousedown", this.handleScrollbarClick);
     window.addEventListener("touchmove", this.removeScroll);
     window.addEventListener("wheel", this.removeScroll);
+
   }
 
   removeListeners = () => {
@@ -169,6 +172,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   componentDidMount = () => {
     this.addListeners();
 
+    this._isFirefoxAgent = navigator.userAgent.indexOf("Firefox") > -1;
     // For now, once this component mounts we are in autoscroll-mode.
     this.setAutoScrollModeDOMChanges(true);
   }
