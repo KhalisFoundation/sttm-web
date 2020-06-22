@@ -1,6 +1,5 @@
 /* globals AMRIT_KEERTAN_API_URL */
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 import { AmritKeertanIndexRow } from './AmritKeertanIndexRow';
 import { IAmritKeertanHeader } from '../types';

@@ -38,7 +38,7 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
       <tr style={{ textAlign: 'center' }}>
         <td>
           {name}
-          <div className="spinner"></div>
+          <div>Loading shabads please wait ...</div>
         </td>
       </tr>
     );
