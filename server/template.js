@@ -94,7 +94,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
         <span class="footer-seperator">|</span>
         </li>
         <li>
-          <a class="download-icon" target="_blank" href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/"><img src="/assets/images/app-desktop.png" alt="Desktop icon"/></a>
+          <a class="download-icon" target="_blank" href="https://khalisfoundation.org/portfolio/sikhitothemax/"><img src="/assets/images/app-desktop.png" alt="Desktop icon"/></a>
         </li>
         <li>
           <a class="download-icon" target="_blank" href="https://apps.apple.com/us/app/sikhitothemax/id1370303478"><img src="/assets/images/app-ios.png" alt="iOS icon"/></a>
