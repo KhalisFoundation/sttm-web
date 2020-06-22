@@ -51,7 +51,6 @@ class Controls extends React.PureComponent {
   }
 
   scrollListener = () => {
-    console.log('WORKING >>>>>>>>>>>>.')
     if (window.scrollY >= this.$wrapper.offsetTop) {
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });

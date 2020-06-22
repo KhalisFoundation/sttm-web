@@ -84,7 +84,7 @@ class Layout extends React.PureComponent {
 
     let isShowFullScreen, isShowAutoScroll;
     isShowFullScreen = isShowAutoScroll = pathname === '/shabad' || pathname === '/hukamnama' || pathname === '/ang'
-    isShowAutoScroll = isShowAutoScroll && autoScrollMode;
+    isShowAutoScroll = (isShowAutoScroll || pathname.includes('sundar-gutka')) && autoScrollMode;
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
