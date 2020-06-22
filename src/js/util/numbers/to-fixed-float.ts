@@ -1,4 +1,5 @@
 
 export const toFixedFloat = (val: number, digits: number = 1) => {
-  return parseFloat(val.toFixed(digits));
+  console.log(val, ' val is this');
+  return parseFloat(Number(val).toFixed(digits));
 }
