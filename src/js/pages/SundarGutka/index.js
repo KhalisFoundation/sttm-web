@@ -54,11 +54,11 @@ class SundarGutka extends React.PureComponent {
           {baanies === null ? (
             <div className="spinner" />
           ) : isSundarGutkaHome ? (
-            <div className="wrapper" style={{ width: '100%' }}>
+            <div className="wrapper" style={{ width: '100%', }}>
               <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
               <div className="show-on-mobile sundar-gutka-app-promo">
                 {TEXTS.SUNDAR_GUTKA_APP}{' '}
-                <a
+                <br /><a
                   href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
                   target="_blank"
                   className="playstore--link"
@@ -86,35 +86,41 @@ class SundarGutka extends React.PureComponent {
                 onChange={this.handleSearch}
                 placeholder="Search"
               />
-              <ul className="list">
+              <div className="sgCards">
                 {baanies
                   .filter(SundarGutka.filter(q))
                   .map(({ ID, transliteration, gurmukhiUni }, i) => (
                     <Link
                       to={`/sundar-gutka/${ID}`}
                       key={ID}
-                      className="list--link"
                     >
-                      <li
-                        className="list--item"
+                      <div
+                        className="sgCard"
                         style={{
                           animationDelay: i < 15 ? `${20 * i}ms` : 0,
                         }}
                       >
-                        {gurmukhiUni}{' '}
-                        {transliterationLanguages.includes('english') &&
-                          `- ${SundarGutka.sanitize(transliteration)}`}
-                      </li>
+                        <div
+                          className="sgCardGurmukhi"
+                        >{gurmukhiUni}{' '}</div>
+
+                        <div
+                          className="sgCardEnglish"
+                        >{transliterationLanguages.includes('english') &&
+                          `${SundarGutka.sanitize(transliteration)}`}
+
+                        </div>
+                      </div>
                     </Link>
                   ))}
-              </ul>
+              </div>
             </div>
           ) : (
-            <Route
-              path={this.props.match.url + '/:currentBaaniId'}
-              component={Baani}
-            />
-          )}
+                <Route
+                  path={this.props.match.url + '/:currentBaaniId'}
+                  component={Baani}
+                />
+              )}
         </div>
       </div>
     );

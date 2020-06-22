@@ -60,12 +60,14 @@ export default class GranthIndex extends React.PureComponent {
                           <td>{name}</td>
                           <td>
                             <Link
+                              className="angNo"
                               to={toAngURL({ ang: from, source, highlight })}
                             >
                               {from}
                             </Link>{' '}
                             to{' '}
-                            <Link to={toAngURL({ ang: to, source })}>{to}</Link>
+                            <Link className="angNo"
+                              to={toAngURL({ ang: to, source })}>{to}</Link>
                           </td>
                         </tr>
                       ))}
