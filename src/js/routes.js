@@ -211,6 +211,33 @@ export default [
     },
   },
   {
+    path: '/amrit-keertan/shabads/:shabadId',
+    render(props) {
+      return (
+        <Layout title="Amrit Keertan shabads - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(
+                /* webpackChunkName: "SundarGutka" */ './pages/SundarGutka/Baani'
+              )
+            }
+          >
+            {({ pending, resolved: { default: Baani } = {}, rejected }) =>
+              pending ? null : Baani ? (
+                <Baani {...props} />
+              ) : (
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
+                )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    }
+  },
+  {
     path: '/help',
     render(props) {
       return (

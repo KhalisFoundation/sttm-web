@@ -1,4 +1,5 @@
 /* globals BANIS_API_URL */
+/* globals AMRIT_KEETAN_API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -22,21 +23,27 @@ export default class Baani extends React.PureComponent {
 
   static propTypes = {
     match: PropTypes.shape({
-      params: PropTypes.shape({ currentBaaniId: PropTypes.string }),
+      params: PropTypes.shape({
+        baaniId: PropTypes.string,
+        shabadId: PropTypes.string
+      }),
+      url: PropTypes.string,
     }).isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
   };
-
   render() {
     const {
       match: {
-        params: { currentBaaniId },
-        url,
+        url
       },
     } = this.props;
+    const baaniUrl = this.getBaaniUrl();
 
     return (
       <div className="baani">
-        <Fetch url={`${BANIS_API_URL}/${currentBaaniId}`}>
+        <Fetch url={`${baaniUrl}`}>
           {({ data, error, loading }) =>
             error ? (
               <Redirect to={url} />
@@ -47,9 +54,7 @@ export default class Baani extends React.PureComponent {
                     type="shabad"
                     info={data.baniInfo}
                     nav={data.nav}
-                    gurbani={versesToGurbani(
-                      data.verses.filter(v => v.mangalPosition !== 'above')
-                    )}
+                    gurbani={this.getGurbani(data)}
                     hideMeta
                     controlProps={{
                       disableSplitView: true,
@@ -62,13 +67,49 @@ export default class Baani extends React.PureComponent {
     );
   }
 
-  componentDidMount() {
+  getGurbani = (data) => {
+    if (this._sundarGutkaRoute)
+      return versesToGurbani(data.verses.filter(v => v.mangalPosition !== 'above'));
+    else if (this._amritKeertanRoute)
+      return data.verses;
+  }
+
+  getBaaniUrl = () => {
     const {
       match: {
-        params: { currentBaaniId },
+        params: { baaniId, shabadId }
       },
     } = this.props;
 
-    pageView(`/sundar-gutka/${currentBaaniId}`);
+    if (this._sundarGutkaRoute)
+      return `${BANIS_API_URL}/${baaniId}`
+    else if (this._amritKeertanRoute)
+      return `${AMRIT_KEERTAN_API_URL}/shabads/${shabadId}`
+  }
+
+  getPageView = () => {
+    const {
+      match: {
+        params: { baaniId, shabadId }
+      },
+    } = this.props;
+
+
+    if (this._sundarGutkaRoute)
+      return `/sundar-gutka/${baaniId}`
+    else if (this._amritKeertanRoute)
+      return `/amrit-keertan/shabads/${shabadId}`
+  }
+
+  componentDidMount = () => {
+    const {
+      location: { pathname }
+    } = this.props;
+
+    this._sundarGutkaRoute = pathname.includes('sundar-gutka');
+    this._amritKeertanRoute = pathname.includes('amrit-keertan');
+
+    const page = this.getPageView();
+    pageView(`${page}`);
   }
 }

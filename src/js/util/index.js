@@ -290,11 +290,15 @@ export const toAngURL = ({ ang, source, highlight }) =>
 export const versesToGurbani = (verses, baniLength = 'extralong', mangalPosition = 'current') => {
   const processedVerses = mangalPosition === 'ceremony' ?
     verses : verses.filter(v => v.mangalPosition === mangalPosition || v.mangalPosition === null);
+
+  console.log(processedVerses, 'processedVerses')
+
   return baniLength ?
     processedVerses.map(({ verse, ...v }) => ({
       ...verse,
       ...v,
-    })).filter(v => v[BANI_LENGTH_COLS[baniLength]]) :
+    })).filter(v => v[BANI_LENGTH_COLS[baniLength]])
+    :
     processedVerses.map(({ verse, ...v }) => ({
       ...verse,
       ...v,

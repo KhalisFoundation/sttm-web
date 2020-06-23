@@ -110,11 +110,12 @@ class SundarGutka extends React.PureComponent {
               </ul>
             </div>
           ) : (
-            <Route
-              path={this.props.match.url + '/:currentBaaniId'}
-              component={Baani}
-            />
-          )}
+                <Route
+                  path={this.props.match.url + '/:baaniId'}
+                  render={routeProps => (
+                    <Baani {...routeProps} />
+                  )} />
+              )}
         </div>
       </div>
     );

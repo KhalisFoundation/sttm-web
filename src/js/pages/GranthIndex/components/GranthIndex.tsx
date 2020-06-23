@@ -19,14 +19,15 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
 
   const { hash } = location;
 
-  const scrollToHash = useCallback(() => {
+  const scrollToHash = () => {
     if (hash.includes('#')) {
       const $item = document.querySelector(`[id="${hash.replace('#', '')}"]`);
+      console.log($item.offsetTop, ' offset top')
       if ($item) {
         requestAnimationFrame(() => window.scrollTo(0, $item.offsetTop));
       }
     }
-  }, [hash]);
+  };
 
   useEffect(() => {
     scrollToHash();

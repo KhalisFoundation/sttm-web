@@ -10,10 +10,6 @@ interface IAmritKeertanProps {
 
 export const AmritKeertanIndex: React.FC<IAmritKeertanProps> = ({ data }) => {
 
-  useEffect(() => {
-
-  });
-
   return (
     <div>
       <h3 id='amritKeertan'> Amrit Keertan</h3>

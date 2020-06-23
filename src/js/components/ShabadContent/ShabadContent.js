@@ -121,7 +121,7 @@ class Shabad extends React.PureComponent {
     }
 
     const isSundarGutkaView = location.pathname.includes('sundar-gutka');
-
+    console.log(gurbani, ' GURBANI')
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
 
@@ -175,7 +175,7 @@ class Shabad extends React.PureComponent {
                 <FootNav info={info} type={type} nav={nav} />
               )}
 
-              <RelatedShabads forShabadID={getShabadId(this.props.info)} />
+              {this.props.info && <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
           <ProgressBar percent={this.state.progress} />

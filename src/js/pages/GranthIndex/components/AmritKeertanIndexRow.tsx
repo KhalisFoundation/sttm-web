@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { sanitizeHash } from '../util';
-// import { transliterationMap } from '../../../util/api/shabad';
+import { Link } from 'react-router-dom';
 // import { IAmritKeertanHeader } from '../types';
 
 interface IAmritKeertanIndexRowProps {
@@ -35,29 +34,30 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
 
   if (isLoadingShabads) {
     return (
-      <tr style={{ textAlign: 'center' }}>
+      <tr className="amritKeertanIndexRow loading">
         <td>
           {name}
-          <div>Loading shabads please wait ...</div>
         </td>
+        <p className="amritKeertanIndexRow loadingShabads">Loading shabads please wait ...</p>
       </tr>
     );
   }
-  console.log(shabads, row, "....")
+
   return (
-    <tr onClick={!shabads.length ? fetchShabads : undefined}>
+    <tr
+      className="amritKeertanIndexRow"
+      onClick={!shabads.length ? fetchShabads : undefined}>
       {shabads.length ?
         <details open ref={row}>
-          <summary style={{ padding: 8 }}>{name}</summary>
-          <ul>
-            {shabads.map((shabad: any) => {
-              const shabadName = shabad.Transliterations.en;
-
+          <summary>{name}</summary>
+          <ul className="amritKeertanIndexRowShabads">
+            {shabads.map(({ Transliterations, ShabadID }) => {
+              const shabadName = Transliterations.en;
               return (
-                <li key={name}>
-                  <a href={`#${`${shabadName}`}`}>
+                <li key={name} className="amritKeertanIndexRowShabad">
+                  <Link to={`/amrit-keertan/shabads/${ShabadID}`}>
                     {shabadName}
-                  </a>
+                  </Link>
                 </li>
               )
             })}
@@ -65,7 +65,7 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
         </details>
         :
         <td>
-          {name}
+          <a>{name}</a>
         </td>}
     </tr>
   )
