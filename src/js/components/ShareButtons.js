@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
 import { showToast, copyToClipboard, shortenURL } from '../util';
 import { TEXTS } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
@@ -33,12 +35,13 @@ const copyShortUrl = () =>
 
 export const supportedMedia = ['print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
-export default class ShareButtons extends React.PureComponent {
+class ShareButtons extends React.PureComponent {
   static defaultProps = {
     media: ['whatsapp', 'copy'],
   };
 
   static propTypes = {
+    location: PropTypes.object,
     media: PropTypes.arrayOf(PropTypes.oneOf(supportedMedia)),
     onEmbedClick: PropTypes.func,
     onCopyAllClick: PropTypes.func,
@@ -57,16 +60,19 @@ export default class ShareButtons extends React.PureComponent {
   };
 
   render() {
-    const { media, onEmbedClick, onCopyAllClick } = this.props;
+    const { location, media, onEmbedClick, onCopyAllClick } = this.props;
 
     if (media.length === 0) {
       return null;
     }
 
+    const { pathname } = location;
+    const isAmritKeertanIndexRoute = pathname.includes('amrit-keertan');
+
     // TODO: Use array to generate this DOM
 
     const mediaMap = {
-      embed: (
+      embed: isAmritKeertanIndexRoute ? null : (
         <li key={0} className="show-on-desktop">
           <button onClick={onEmbedClick}>
             <EmbedIcon />
@@ -112,6 +118,8 @@ export default class ShareButtons extends React.PureComponent {
       ),
     };
 
+    const filteredMedia = media.filter(item => !!item);
+
     if (window !== undefined && 'share' in window.navigator) {
       return (
         <div id="share-menu">
@@ -121,7 +129,7 @@ export default class ShareButtons extends React.PureComponent {
                 <ShareIcon />
                 <span className="sr-only">Open Share Dialog</span>
               </a>
-              {media.map(item => (item === 'whatsapp' ? null : mediaMap[item]))}
+              {filteredMedia.map(item => (item === 'whatsapp' ? null : mediaMap[item]))}
             </li>
           </ul>
         </div>
@@ -130,8 +138,10 @@ export default class ShareButtons extends React.PureComponent {
 
     return (
       <div id="share-menu">
-        <ul className="share-buttons">{media.map(item => mediaMap[item])}</ul>
+        <ul className="share-buttons">{filteredMedia.map(item => mediaMap[item])}</ul>
       </div>
     );
   }
 }
+
+export default withRouter(ShareButtons);
