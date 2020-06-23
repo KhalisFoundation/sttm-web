@@ -15,7 +15,7 @@ export const AmritKeertanShabads: React.FC<IAmritKeertanShabadsProps> = (props) 
     {
       url: '/index', title: TEXTS.URIS.INDEX,
     }, {
-      title: TEXTS.URIS.AMRIT_KEERTAN_SHABADS
+      title: TEXTS.URIS.AMRIT_KEERTAN
     }
   ]
   return (

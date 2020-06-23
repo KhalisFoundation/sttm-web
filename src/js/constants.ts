@@ -103,7 +103,7 @@ export const TEXTS = {
     TOS: 'Terms of Service',
     SUNDAR_GUTKA: 'Sundar Gutka',
     SUNDAR_GUTKA_BAANI: 'Baani',
-    AMRIT_KEERTAN_SHABADS: 'Amrit Keertan Shabads'
+    AMRIT_KEERTAN: 'Amrit Keertan'
   },
   GDPR_NOTICE: `
     Our service uses cookies to remember your preferences to give a great experience. If you do not agree to SikhiToTheMax's use of cookies, please use your browser's private/incognito mode. Otherwise, by continuing the use of the service, you consent to the use of cookies. Read more <a href="/help#Web-why-does-sikhitothemax-website-use-cookies-and-loc">here</a>.
