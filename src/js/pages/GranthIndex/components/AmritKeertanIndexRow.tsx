@@ -45,25 +45,27 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
 
   return (
     <tr
+      id={name}
       className="amritKeertanIndexRow"
       onClick={!shabads.length ? fetchShabads : undefined}>
       {shabads.length ?
-        <details open ref={row}>
-          <summary>{name}</summary>
-          <ul className="amritKeertanIndexRowShabads">
-            {shabads.map(({ Transliterations, ShabadID }) => {
-              const shabadName = Transliterations.en;
-              return (
-                <li key={name} className="amritKeertanIndexRowShabad">
-                  <Link to={`/amrit-keertan/shabads/${ShabadID}`}>
-                    {shabadName}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </details>
-        :
+        <td>
+          <details open ref={row}>
+            <summary>{name}</summary>
+            <ul className="amritKeertanIndexRowShabads">
+              {shabads.map(({ Transliterations, ShabadID }) => {
+                const shabadName = Transliterations.en;
+                return (
+                  <li key={name} className="amritKeertanIndexRowShabad">
+                    <Link to={`/amrit-keertan/shabads/${ShabadID}`}>
+                      {shabadName}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </details>
+        </td> :
         <td>
           <a>{name}</a>
         </td>}

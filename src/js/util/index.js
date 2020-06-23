@@ -291,8 +291,6 @@ export const versesToGurbani = (verses, baniLength = 'extralong', mangalPosition
   const processedVerses = mangalPosition === 'ceremony' ?
     verses : verses.filter(v => v.mangalPosition === mangalPosition || v.mangalPosition === null);
 
-  console.log(processedVerses, 'processedVerses')
-
   return baniLength ?
     processedVerses.map(({ verse, ...v }) => ({
       ...verse,

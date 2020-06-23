@@ -218,13 +218,13 @@ export default [
           <RenderPromise
             promise={() =>
               import(
-                /* webpackChunkName: "SundarGutka" */ './pages/SundarGutka/Baani'
+                /* webpackChunkName: "AmritKeertan" */ './components/RenderShabads'
               )
             }
           >
-            {({ pending, resolved: { default: Baani } = {}, rejected }) =>
-              pending ? null : Baani ? (
-                <Baani {...props} />
+            {({ pending, resolved: { RenderShabads } = {}, rejected }) =>
+              pending ? null : RenderShabads ? (
+                <RenderShabads {...props} />
               ) : (
                   throwError(
                     `We are having trouble in rendering this route.`,

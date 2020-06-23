@@ -379,7 +379,6 @@ export default class Baani extends React.PureComponent {
     const shabad = gurbani[0];
     const translatedShabad = {};
 
-    console.log(shabad, " get available translations, ??")
     translatedShabad.english = !!translationMap.english(shabad);
     translatedShabad.spanish = !!translationMap.spanish(shabad);
     translatedShabad.punjabi = !!translationMap.punjabi(shabad);

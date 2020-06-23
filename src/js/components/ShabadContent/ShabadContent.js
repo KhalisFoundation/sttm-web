@@ -121,7 +121,7 @@ class Shabad extends React.PureComponent {
     }
 
     const isSundarGutkaView = location.pathname.includes('sundar-gutka');
-    console.log(gurbani, ' GURBANI')
+
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
 

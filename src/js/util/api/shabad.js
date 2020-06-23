@@ -13,7 +13,6 @@ export const getGurmukhiVerse = shabad => shabad.verse.gurmukhi;
 export const getVerseId = shabad => shabad.verseId;
 
 export const getShabadId = shabad => {
-  console.log(shabad, " shabad ")
   return shabad.shabadId || shabad.ceremonyID || shabad.baniID;
 }
 
