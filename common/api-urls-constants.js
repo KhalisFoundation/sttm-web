@@ -5,6 +5,7 @@ module.exports = {
   PRODUCTION: '//api.banidb.com/v2/',
   DEVELOPMENT: '//api.khajana.org/v2/',
   AMRIT_KEERTAN: '//api.banidb.com/v2/amritkeertan',
+  AMRIT_KEERTAN_SHABADS: '//api.banidb.com/v2/shabads',
   BANNERS: '//api.sikhitothemax.org/messages/web',
   SYNC: {
     PRODUCTION: '//api.sikhitothemax.org/',

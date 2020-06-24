@@ -6,14 +6,19 @@ import { RenderShabads } from '../../../components/RenderShabads';
 import BreadCrumb from '../../../components/Breadcrumb';
 import { TEXTS } from '../../../constants';
 
+interface LocationState {
+  prevPath?: string
+}
+
 interface IAmritKeertanShabadsProps extends RouteComponentProps<{}> {
-  location: Location
+  location: Location<LocationState>
 }
 
 export const AmritKeertanShabads: React.FC<IAmritKeertanShabadsProps> = (props) => {
+  const previousUrl = props.location.state.prevPath || '/index';
   const links = [
     {
-      url: '/index', title: TEXTS.URIS.INDEX,
+      url: previousUrl, title: TEXTS.URIS.INDEX,
     }, {
       title: TEXTS.URIS.AMRIT_KEERTAN
     }

@@ -43,9 +43,11 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
     );
   }
 
+  const headerName = name.split(' ').join('-');
+
   return (
     <tr
-      id={name}
+      id={headerName}
       className="amritKeertanIndexRow"
       onClick={!shabads.length ? fetchShabads : undefined}>
       {shabads.length ?
@@ -57,7 +59,13 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
                 const shabadName = Transliterations.en;
                 return (
                   <li key={name} className="amritKeertanIndexRowShabad">
-                    <Link to={`/amrit-keertan/shabads/${ShabadID}`}>
+                    <Link to={
+                      {
+                        pathname: `/amrit-keertan/shabads/${ShabadID}`,
+                        state: {
+                          prevPath: `/index/#${headerName}`
+                        }
+                      }} >
                       {shabadName}
                     </Link>
                   </li>
@@ -68,7 +76,8 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
         </td> :
         <td>
           <a>{name}</a>
-        </td>}
-    </tr>
+        </td>
+      }
+    </tr >
   )
 }

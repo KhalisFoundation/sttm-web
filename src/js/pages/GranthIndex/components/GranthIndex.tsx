@@ -19,9 +19,9 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
   const { hash } = location;
 
   useEffect(() => {
-    scrollToHash(hash);
     pageView('/index');
-  }, [scrollToHash, pageView])
+    setTimeout(() => scrollToHash(hash), 800); // making sure
+  }, [])
 
   return (
     <Fetch url={AMRIT_KEERTAN_API_URL}>
@@ -65,7 +65,9 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
                       <ul>
                         {data.headers.map(({ Transliterations: { en: name } }) => (
                           <li key={name}>
-                            <a onClick={(e: MouseEvent<HTMLAnchorElement>) => scrollToHash(name)} href={`#${name}`}>
+                            <a
+                              onClick={(e: MouseEvent<HTMLAnchorElement>) => scrollToHash(name)}
+                              href={`#${name.split(' ').join('-')}`}>
                               {name}
                             </a>
                           </li>

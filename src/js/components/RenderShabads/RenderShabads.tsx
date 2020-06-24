@@ -36,9 +36,6 @@ export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location }
     <div className="baani">
       <Fetch url={`${baaniUrl}`}>
         {({ data, error, loading }) => {
-          // if (error) {
-          //   return <Redirect to={url} />
-          // }
           console.info(error, "FROM RENDER SHABADS")
 
           if (loading) {
