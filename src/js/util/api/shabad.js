@@ -20,8 +20,8 @@ export const translationMap = {
   spanish: shabad => shabad.translation.es.sn,
   english: shabad => shabad.translation.en.bdb,
   punjabi: shabad => ({
-    ...shabad.translation.pu.ss,
-    toString: () => shabad.translation.pu.ss.unicode,
+    ...shabad.translation.pu.bdb,
+    toString: () => shabad.translation.pu.bdb.unicode,
   }),
 };
 

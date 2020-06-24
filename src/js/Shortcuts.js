@@ -14,6 +14,10 @@ const ViewerShortcuts = {
     name: 'Toggle Vishraams',
     sequences: ['v'],
   },
+  toggleAutoScrollMode: {
+    name: 'Toggle AutoScroll Mode',
+    sequences: ['a']
+  },
   centerAlign: {
     name: 'Center Align',
     sequences: ['meta+shift+c', 'ctrl+shift+c']
@@ -70,8 +74,10 @@ const ViewerShortcutHanders = {
   toggleVishraams: () => {
     store.dispatch({ type: "TOGGLE_VISRAAMS" })
   },
-  centerAlign: (e) => {
-    e.preventDefault()
+  toggleAutoScrollMode: () => {
+    store.dispatch({ type: "TOGGLE_AUTO_SCROLL_MODE" })
+  },
+  centerAlign: () => {
     const state = store.getState();
     store.dispatch({ type: "SET_CENTER_ALIGN_OPTION", payload: !state.centerAlignGurbani })
   },

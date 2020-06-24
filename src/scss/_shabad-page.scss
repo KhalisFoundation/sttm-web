@@ -117,6 +117,7 @@ blockquote {
 }
 
 .shabad-container {
+  margin-top: 10px;
   width: 100%;
 }
 
@@ -286,6 +287,8 @@ blockquote {
     }
 
     &-wrapper {
+      margin-top: 15px;
+
       &.paragraph-mode {
         margin-bottom: 16px;
 
@@ -395,7 +398,7 @@ blockquote {
     color: $sttm-light-grey;
 
     &:hover {
-      box-shadow: 0 8px 16px 0 $sttm-dark-grey;
+      box-shadow: 0 8px 16px 0 $sttm-pure-black;
     }
   }
 

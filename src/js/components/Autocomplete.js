@@ -24,7 +24,8 @@ class Autocomplete extends Component {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     if (e.keyCode === 13) {
-      activeSuggestion !== -1 && e.preventDefault();
+      if (activeSuggestion !== -1) e.preventDefault();
+
       window.location = filteredSuggestions[activeSuggestion].url;
       this.setState({
         activeSuggestion: -1,
@@ -62,15 +63,17 @@ class Autocomplete extends Component {
 
       if (userInput.length >= 2 && this.props.searchOptions.type !== 5) {
         const suggestionTimeout = setTimeout(() => {
-          const data = getSuggestions(userInput, searchOptions);
 
-          data.then(suggestions => {
-            this.setState({
-              activeSuggestion: -1,
-              filteredSuggestions: suggestions,
-              showSuggestions: true,
+          getSuggestions(userInput, searchOptions)
+            .then(suggestions => {
+
+              this.setState({
+                activeSuggestion: -1,
+                filteredSuggestions: suggestions,
+                showSuggestions: true,
+              });
             });
-          });
+
         }, 400);
         this.setState({ suggestionTimeout });
       } else {

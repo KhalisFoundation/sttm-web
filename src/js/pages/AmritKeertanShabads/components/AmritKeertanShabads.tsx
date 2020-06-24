@@ -13,7 +13,7 @@ interface IAmritKeertanShabadsProps extends RouteComponentProps<{}> {
 }
 
 export const AmritKeertanShabads: React.FC<IAmritKeertanShabadsProps> = (props) => {
-  const previousUrl = props.location.state.prevPath || '/index';
+  const previousUrl = (props.location.state && props.location.state.prevPath) || '/index';
   const links = [
     {
       url: previousUrl, title: TEXTS.URIS.INDEX,

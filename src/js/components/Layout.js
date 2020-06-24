@@ -12,10 +12,9 @@ import {
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
-import ScrollToTop from './ScrollToTop';
-import FullScreen from './FullScreen';
+import { FloatingActions } from './FloatingActions';
 import throttle from 'lodash.throttle';
-import { addVisraamClass } from '../util';
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoscrollRoute } from '../util';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -28,6 +27,7 @@ class Layout extends React.PureComponent {
     online: PropTypes.bool,
     children: PropTypes.node.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    autoScrollMode: PropTypes.bool.isRequired,
     location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
       .isRequired,
     defaultQuery: PropTypes.string,
@@ -77,9 +77,13 @@ class Layout extends React.PureComponent {
       isAng = false,
       isHome = false,
       isController = false,
+      autoScrollMode,
       location: { pathname = '/' } = {},
       ...props
     } = this.props;
+
+    const isShowFullScreen = isShowFullscreenRoute(pathname);
+    const isShowAutoScroll = isShowAutoscrollRoute(pathname) && autoScrollMode;
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
@@ -107,12 +111,13 @@ class Layout extends React.PureComponent {
         ) : (
             children
           )}
-        {(pathname === '/shabad' ||
-          pathname === '/hukamnama' ||
-          pathname === '/ang') && <FullScreen />}
-        {this.state.showScrollToTop && <ScrollToTop />}
-      </React.Fragment>
 
+        <FloatingActions
+          isShowAutoScroll={isShowAutoScroll}
+          isShowFullScreen={isShowFullScreen}
+          isShowScrollToTop={this.state.showScrollToTop} />
+
+      </React.Fragment>
     ) : (
         <div className="content-root">
           <GenericError
@@ -177,7 +182,7 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode }) => ({ online, darkMode }),
+  ({ online, darkMode, autoScrollMode }) => ({ online, darkMode, autoScrollMode }),
   {
     setOnlineMode,
   }

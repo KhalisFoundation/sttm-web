@@ -112,8 +112,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hotkeys": "^2.0.0",
+    "react-range": "^1.6.6",
     "react-redux": "^6.0.1",
-    "react-router-dom": "^4.2.2",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-debounced": "^0.5.0",
     "redux-thunk": "^2.3.0"

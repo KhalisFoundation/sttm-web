@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
+
 import {
   setFontSize,
+  setTranslationFontSize,
+  setTransliterationFontSize,
   setLineHeight,
   setTranslationLanguages,
   setTransliterationLanguages,
@@ -17,6 +20,7 @@ import {
   toggleTransliterationOptions,
   toggleSplitViewOption,
   toggleDarkMode,
+  toggleAutoScrollMode,
   toggleParagraphMode,
   toggleVisraams,
   setVisraamSource,
@@ -99,6 +103,7 @@ class Controls extends React.PureComponent {
           ref={this.setRef}
         >
           <ShabadControls {...this.props} />
+
         </div>
       </>
     );
@@ -110,6 +115,8 @@ const stateToProps = state => state;
 
 const dispatchToProps = {
   setFontSize,
+  setTranslationFontSize,
+  setTransliterationFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
   resetDisplayOptions,
@@ -122,6 +129,7 @@ const dispatchToProps = {
   toggleSplitViewOption,
   toggleParagraphMode,
   toggleDarkMode,
+  toggleAutoScrollMode,
   toggleVisraams,
   setLineHeight,
   setVisraamSource,

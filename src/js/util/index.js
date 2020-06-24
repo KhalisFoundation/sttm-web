@@ -31,6 +31,10 @@ export * from './date-time-math';
  */
 export * from './hukamnama';
 
+/**
+ * Routes Helpers
+ */
+export * from './routes';
 
 
 /**
@@ -477,26 +481,28 @@ export const getShabadList = (q, { type, source }) => {
 
   return new Promise((resolve, reject) => {
     const json = fetch(url).then((response) => response.json());
-    json.then((data) => {
-      const { verses } = data;
-      let panktiList = [];
-      for (const shabad of verses) {
-        const highlightPankti = type === 3 ? translationMap["english"](shabad) : getGurmukhiVerse(shabad);
-        const highlightIndex = getHighlightIndices(
-          highlightPankti,
-          q,
-          type
-        );
-        panktiList.push({
-          pankti: getGurmukhiVerse(shabad),
-          translation: translationMap["english"](shabad),
-          query: q,
-          url: toShabadURL({ shabad, q, type, source }),
-          highlightIndex,
-        })
-      }
-      resolve(panktiList);
-    }, (error) => { reject(error); });
+    json.then(
+      (data) => {
+        const { verses } = data;
+        let panktiList = [];
+        for (const shabad of verses) {
+          const highlightPankti = type === 3 ? translationMap["english"](shabad) : getGurmukhiVerse(shabad);
+          const highlightIndex = getHighlightIndices(
+            highlightPankti,
+            q,
+            type
+          );
+          panktiList.push({
+            pankti: getGurmukhiVerse(shabad),
+            translation: translationMap["english"](shabad),
+            query: q,
+            url: toShabadURL({ shabad, q, type, source }),
+            highlightIndex,
+          })
+        }
+        resolve(panktiList);
+      },
+      (error) => { reject(error); });
   });
 }
 

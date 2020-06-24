@@ -421,11 +421,13 @@ export default [
     },
   },
   {
-    path: '/control',
+    path: ['/control/:namespaceString', '/control'],
     render(props) {
+      const { match: { params: { namespaceString } } } = props;
+      const codeRegex = new RegExp('[A-Z,a-z]{3}-[A-Z,a-z]{3}');
       return (
         <Layout title={`${TEXTS.CONTROLLER} - SikhiToTheMax`} isController={true} {...props} >
-          <WebControllerPage />
+          <WebControllerPage namespaceString={codeRegex.test(namespaceString) ? namespaceString : ''} />
         </ Layout>
       )
     },

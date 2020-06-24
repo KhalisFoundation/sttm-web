@@ -5,6 +5,7 @@ import {
   TOGGLE_LARIVAAR_ASSIST_OPTION,
   TOGGLE_LARIVAAR_OPTION,
   TOGGLE_DARK_MODE,
+  TOGGLE_AUTO_SCROLL_MODE,
   TOGGLE_PARAGRAPH_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
@@ -13,11 +14,15 @@ import {
   SET_CENTER_ALIGN_OPTION,
   SET_UNICODE,
   SET_FONT_SIZE,
+  SET_TRANSLATION_FONT_SIZE,
+  SET_TRANSLITERATION_FONT_SIZE,
   SET_LINE_HEIGHT,
+  SET_AUTOSCROLLING,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
+  SET_AUTO_SCROLL_MODE,
   SET_PARAGRAPH_MODE,
   SET_VISRAAMS,
   SET_SPLIT_VIEW,
@@ -29,11 +34,14 @@ import {
   LOCAL_STORAGE_KEY_FOR_LARIVAAR,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
+  LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE,
   LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
   LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
   LOCAL_STORAGE_KEY_FOR_FONT_SIZE,
+  LOCAL_STORAGE_KEY_FOR_TRANSLATION_FONT_SIZE,
+  LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE,
   LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT,
   LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
@@ -97,6 +105,20 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
+      };
+    }
+    case TOGGLE_AUTO_SCROLL_MODE: {
+      const autoScrollMode = !state.autoScrollMode;
+      clickEvent({
+        action: TOGGLE_AUTO_SCROLL_MODE,
+        label: autoScrollMode ? 1 : 0,
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE, autoScrollMode);
+
+      return {
+        ...state,
+        autoScrollMode,
       };
     }
 
@@ -193,6 +215,14 @@ export default function reducer(state, action) {
         larivaar
       };
     }
+
+    case SET_AUTOSCROLLING: {
+      return {
+        ...state,
+        isAutoScrolling: action.payload,
+      }
+    }
+
     case SET_UNICODE: {
       const unicode = action.payload || false;
       clickEvent({
@@ -214,6 +244,28 @@ export default function reducer(state, action) {
       return {
         ...state,
         fontSize,
+      };
+    }
+    case SET_TRANSLATION_FONT_SIZE: {
+      const translationFontSize = parseFloat(action.payload, 10);
+
+      if (translationFontSize === state.translationFontSize) return state;
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_TRANSLATION_FONT_SIZE, action.payload);
+      return {
+        ...state,
+        translationFontSize,
+      };
+    }
+    case SET_TRANSLITERATION_FONT_SIZE: {
+      const transliterationFontSize = parseFloat(action.payload, 10);
+
+      if (transliterationFontSize === state.transliterationFontSize) return state;
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE, action.payload);
+      return {
+        ...state,
+        transliterationFontSize,
       };
     }
     case SET_LINE_HEIGHT: {
@@ -291,6 +343,18 @@ export default function reducer(state, action) {
       return {
         ...state,
         darkMode,
+      };
+    }
+    case SET_AUTO_SCROLL_MODE: {
+      const autoScrollMode = action.payload || false;
+      clickEvent({
+        action: SET_AUTO_SCROLL_MODE,
+        label: autoScrollMode ? true : false,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE, autoScrollMode);
+      return {
+        ...state,
+        autoScrollMode,
       };
     }
     case SET_VISRAAMS: {

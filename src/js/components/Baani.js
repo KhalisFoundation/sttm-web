@@ -34,6 +34,8 @@ export default class Baani extends React.PureComponent {
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
     lineHeight: PropTypes.number.isRequired,
+    translationFontSize: PropTypes.number.isRequired,
+    transliterationFontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
@@ -177,12 +179,12 @@ export default class Baani extends React.PureComponent {
   getTransliterations = shabad => {
     const {
       transliterationLanguages,
-      fontSize,
+      transliterationFontSize,
     } = this.props;
 
     return transliterationLanguages.map(language => (
       <Transliteration
-        fontSize={fontSize}
+        fontSize={transliterationFontSize}
         key={getVerseId(shabad) + language}>
         {transliterationMap[language](shabad)}
       </Transliteration>
@@ -208,12 +210,12 @@ export default class Baani extends React.PureComponent {
 
   getTransliterationForLanguage = (shabad, language) => {
     const {
-      fontSize,
+      transliterationFontSize,
     } = this.props;
 
     return (
       <Transliteration
-        fontSize={fontSize}
+        fontSize={transliterationFontSize}
         key={getVerseId(shabad) + language}>
         {transliterationMap[language](shabad)}
       </Transliteration>
@@ -222,11 +224,11 @@ export default class Baani extends React.PureComponent {
   getTranslationForLanguage = (shabad, language) => {
     const {
       unicode,
-      fontSize,
+      translationFontSize
     } = this.props;
     return (
       <Translation
-        fontSize={fontSize}
+        fontSize={translationFontSize}
         key={getVerseId(shabad) + language}
         type={language}
         {...Translation.getTranslationProps({
@@ -242,13 +244,13 @@ export default class Baani extends React.PureComponent {
   getTranslations = shabad => {
     const {
       unicode,
-      fontSize,
+      translationFontSize,
       translationLanguages,
     } = this.props;
 
     return translationLanguages.map(language => (
       <Translation
-        fontSize={fontSize}
+        fontSize={translationFontSize}
         key={getVerseId(shabad) + language}
         type={language}
         {...Translation.getTranslationProps({
