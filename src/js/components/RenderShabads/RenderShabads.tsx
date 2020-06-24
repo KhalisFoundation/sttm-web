@@ -30,6 +30,8 @@ export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location }
 
   useEffect(() => {
     pageView(`${pageViewUrl}`);
+    // Just making sure that we are always on top of page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pageViewUrl])
 
   return (

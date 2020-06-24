@@ -5,11 +5,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { RenderShabads } from '../../../components/RenderShabads';
 import BreadCrumb from '../../../components/Breadcrumb';
 import { TEXTS } from '../../../constants';
-
 interface LocationState {
   prevPath?: string
 }
-
 interface IAmritKeertanShabadsProps extends RouteComponentProps<{}> {
   location: Location<LocationState>
 }
