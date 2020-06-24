@@ -67,7 +67,7 @@ export default class WebControllerPage extends React.PureComponent {
       );
   }
 
-  handleBani = (baniID, highlight, baniLength, mangalPosition) => {
+  handleBani = (baniID, highlight, baniLength = 'extralong', mangalPosition = 'above') => {
     fetch(`${BANIS_API_URL}/${baniID}`)
       .then(r => r.json())
       .then((data) => {
@@ -81,6 +81,14 @@ export default class WebControllerPage extends React.PureComponent {
         }
       }
       );
+  }
+
+  handleShortcuts = ({ type, id }) => {
+    if (type === 'ceremony') {
+      this.handleCeremony(id);
+    } else if (type === 'bani') {
+      this.handleBani(id);
+    }
   }
 
   handleSubmit = (code, pin) => {
@@ -186,7 +194,7 @@ export default class WebControllerPage extends React.PureComponent {
               <SearchInput onSearch={this.handleSearch} />
               <SlideControls
                 socket={socket}
-                specialHandler={this.handleCeremony}
+                specialHandler={this.handleShortcuts}
                 controllerPin={controllerPin}
                 default={(shabadData && shabadData.type === 'ceremony') ? shabadData.ceremonyInfo.ceremonyID : null} />
 

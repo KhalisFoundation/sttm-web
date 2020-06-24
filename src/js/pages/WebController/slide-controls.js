@@ -1,3 +1,4 @@
+/* globals BANIS_API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -7,6 +8,7 @@ export default class SlideControls extends React.PureComponent {
     super(props);
     this.state = {
       showBorder: false,
+      baniList: null,
     };
   }
 
@@ -32,7 +34,15 @@ export default class SlideControls extends React.PureComponent {
         verseId: 26106,
         pin: this.props.controllerPin,
       });
-      this.props.specialHandler(3);
+      this.props.specialHandler({
+        type: 'ceremony',
+        id: 3
+      });
+    } else if (activeSlide.id === 'bani-slide') {
+      this.props.specialHandler({
+        type: 'bani',
+        id: activeSlide.dataset.baniId
+      });
     } else {
       const slideText = {
         'waheguru-slide': 'vwihgurU',
@@ -61,6 +71,11 @@ export default class SlideControls extends React.PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    fetch(BANIS_API_URL)
+      .then(r => r.json())
+      .then(baniList =>
+        this.setState({ baniList })
+      );
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
@@ -83,21 +98,35 @@ export default class SlideControls extends React.PureComponent {
       'control-section': true,
       'with-border': this.state.showBorder,
     });
+    const { baniList } = this.state;
     return (
-      <div className={classNames} id="slide-container" ref={this.setRef}>
-        <div className="slide-type" id="waheguru-slide" onClick={this.sendSlide}>
-          <p className="gurbani-font">vwihgurU</p>
+      <>
+        <div className={classNames} id="slide-container" ref={this.setRef}>
+          <div className="slide-type" id="waheguru-slide" onClick={this.sendSlide}>
+            <p className="gurbani-font">vwihgurU</p>
+          </div>
+          <div className="slide-type" id="moolmantra-slide" onClick={this.sendSlide}>
+            <p>Mool Mantra</p>
+          </div>
+          <div className="slide-type" id="blank-slide" onClick={this.sendSlide}>
+            <p>Blank Slide</p>
+          </div>
+          <div className="slide-type" id="anand-slide" onClick={this.sendSlide}>
+            <p>Anand Sahib</p>
+          </div>
         </div>
-        <div className="slide-type" id="moolmantra-slide" onClick={this.sendSlide}>
-          <p>Mool Mantra</p>
+        <div class="sundar-gutka-sidebar">
+          <div class="toggle-button">All Banis</div>
+          <div class="sg-sidebar sg-hide">
+            <h1>Popular Banis</h1>
+            <ul>
+              {baniList && baniList.map(bl => {
+                console.log(bl);
+              })}
+            </ul>
+          </div>
         </div>
-        <div className="slide-type" id="blank-slide" onClick={this.sendSlide}>
-          <p>Blank Slide</p>
-        </div>
-        <div className="slide-type" id="anand-slide" onClick={this.sendSlide}>
-          <p>Anand Sahib</p>
-        </div>
-      </div>
+      </>
     );
   }
 }
