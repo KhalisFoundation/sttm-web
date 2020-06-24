@@ -47,7 +47,7 @@ export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location }
           return (
             <ShabadContent
               type="shabad"
-              info={data.baniInfo}
+              info={data.baniInfo || data.shabadInfo}
               nav={data.nav}
               gurbani={getGurbani({ data, routeValue })}
               hideMeta

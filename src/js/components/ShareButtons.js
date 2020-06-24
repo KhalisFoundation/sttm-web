@@ -60,19 +60,17 @@ class ShareButtons extends React.PureComponent {
   };
 
   render() {
-    const { location, media, onEmbedClick, onCopyAllClick } = this.props;
+    const { media, onEmbedClick, onCopyAllClick } = this.props;
 
     if (media.length === 0) {
       return null;
     }
 
-    const { pathname } = location;
-    const isAmritKeertanIndexRoute = pathname.includes('amrit-keertan');
 
     // TODO: Use array to generate this DOM
 
     const mediaMap = {
-      embed: isAmritKeertanIndexRoute ? null : (
+      embed: (
         <li key={0} className="show-on-desktop">
           <button onClick={onEmbedClick}>
             <EmbedIcon />
@@ -118,8 +116,6 @@ class ShareButtons extends React.PureComponent {
       ),
     };
 
-    const filteredMedia = media.filter(item => !!item);
-
     if (window !== undefined && 'share' in window.navigator) {
       return (
         <div id="share-menu">
@@ -129,7 +125,7 @@ class ShareButtons extends React.PureComponent {
                 <ShareIcon />
                 <span className="sr-only">Open Share Dialog</span>
               </a>
-              {filteredMedia.map(item => (item === 'whatsapp' ? null : mediaMap[item]))}
+              {media.map(item => (item === 'whatsapp' ? null : mediaMap[item]))}
             </li>
           </ul>
         </div>
@@ -138,10 +134,10 @@ class ShareButtons extends React.PureComponent {
 
     return (
       <div id="share-menu">
-        <ul className="share-buttons">{filteredMedia.map(item => mediaMap[item])}</ul>
+        <ul className="share-buttons">{media.map(item => mediaMap[item])}</ul>
       </div>
     );
   }
 }
 
-export default withRouter(ShareButtons);
+export default ShareButtons;

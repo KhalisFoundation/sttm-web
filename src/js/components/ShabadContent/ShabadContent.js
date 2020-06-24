@@ -87,7 +87,6 @@ class Shabad extends React.PureComponent {
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
     paragraphMode: PropTypes.bool,
-    autoScrollMode: PropTypes.bool,
   };
 
   constructor(props) {
@@ -116,7 +115,6 @@ class Shabad extends React.PureComponent {
         fontFamily,
         centerAlignGurbani,
         showFullScreen,
-        autoScrollMode,
         paragraphMode
       },
       handleEmbed,
@@ -127,7 +125,8 @@ class Shabad extends React.PureComponent {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
 
-    const isSundarGutkaView = location.pathname.includes('sundar-gutka');
+    const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
+    const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
@@ -177,14 +176,14 @@ class Shabad extends React.PureComponent {
                 transliterationLanguages={transliterationLanguages}
                 centerAlignGurbani={centerAlignGurbani}
                 showFullScreen={showFullScreen}
-                isParagraphMode={paragraphMode && isSundarGutkaView}
+                isParagraphMode={paragraphMode && isSundarGutkaRoute}
               />
 
               {this.props.hideMeta === false && (
                 <FootNav info={info} type={type} nav={nav} />
               )}
 
-              {this.props.info && <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
+              {!isAmritKeertanRoute && <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
           <ProgressBar percent={this.state.progress} />
