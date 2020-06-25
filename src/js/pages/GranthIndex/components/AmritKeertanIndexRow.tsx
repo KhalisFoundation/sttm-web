@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 // import { IAmritKeertanHeader } from '../types';
 
 interface IAmritKeertanIndexRowProps {
-  gurmukhiUni: string,
   headerId: number,
   name: string
 }
 
 
-export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ headerId, name, gurmukhiUni }) => {
+export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ headerId, name }) => {
   const [isLoadingShabads, setLoadingShabads] = useState<boolean>(false);
   const [shabads, setShabads] = useState([]);
   const row = useRef(null);
@@ -55,10 +54,9 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
           <details open ref={row}>
             <summary>{name}</summary>
             <ul className="amritKeertanIndexRowShabads">
-              {shabads.map(({ Transliterations, ShabadID }) => {
-                const shabadName = Transliterations.en;
+              {shabads.map(({ GurmukhiUni: shabadName, ShabadID }) => {
                 return (
-                  <li key={name} className="amritKeertanIndexRowShabad">
+                  <li key={shabadName} className="amritKeertanIndexRowShabad">
                     <Link to={
                       {
                         pathname: `/amrit-keertan/shabads/${ShabadID}`,

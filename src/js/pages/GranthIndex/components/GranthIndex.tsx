@@ -20,7 +20,8 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
 
   useEffect(() => {
     pageView('/index');
-    setTimeout(() => scrollToHash(hash), 800); // making sure
+    // making sure the element is rendered on DOM before we get to that
+    setTimeout(() => scrollToHash(hash), 800);
   }, [])
 
   return (
@@ -63,7 +64,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
                     <details>
                       <summary>Amrit Keertan</summary>
                       <ul>
-                        {data.headers.map(({ Transliterations: { en: name } }) => (
+                        {data.headers.map(({ GurmukhiUni: name }) => (
                           <li key={name}>
                             <a
                               onClick={(e: MouseEvent<HTMLAnchorElement>) => scrollToHash(name)}

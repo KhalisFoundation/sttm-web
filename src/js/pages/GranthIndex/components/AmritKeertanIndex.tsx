@@ -20,12 +20,11 @@ export const AmritKeertanIndex: React.FC<IAmritKeertanProps> = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ HeaderID, GurmukhiUni, Transliterations }) => (
+          {data.map(({ HeaderID, GurmukhiUni }) => (
             <AmritKeertanIndexRow
               key={HeaderID}
               headerId={HeaderID}
-              name={Transliterations.en}
-              gurmukhiUni={GurmukhiUni} />
+              name={GurmukhiUni} />
           ))}
         </tbody>
       </table>
