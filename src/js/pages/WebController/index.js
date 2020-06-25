@@ -17,9 +17,10 @@ import { versesToGurbani } from '@/util';
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
       connected: false,
-      namespaceString: '',
+      namespaceString: props.namespaceString ? props.namespaceString : '',
       socket: null,
       controllerPin: 0,
       searchData: null,

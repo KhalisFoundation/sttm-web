@@ -55,10 +55,20 @@
           font-size: 0.9em;
           font-weight: normal;
         }
+
+        &:hover {
+          color: $sttm-orange;
+          transition: 0.2s;
+        }
       }
 
       a {
         color: $sttm-blue;
+
+        &:hover {
+          color: $sttm-orange;
+          transition: 0.2s;
+        }
       }
 
       .dark-mode & {

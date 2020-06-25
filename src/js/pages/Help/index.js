@@ -239,7 +239,7 @@ const content = {
       'How do I install the desktop application?',
       <React.Fragment>
         You can install SikhiToTheMax (STTM) by visiting{' '}
-        <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/">
+        <a href="https://khalisfoundation.org/portfolio/sikhitothemax/">
           this website
         </a>{' '}
         and choosing the Windows or macOS download link. After that, open the
