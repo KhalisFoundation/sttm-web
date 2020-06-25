@@ -14,7 +14,7 @@ import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import throttle from 'lodash.throttle';
-import { addVisraamClass } from '../util';
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute } from '../util';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -82,9 +82,8 @@ class Layout extends React.PureComponent {
       ...props
     } = this.props;
 
-    let isShowFullScreen, isShowAutoScroll;
-    isShowFullScreen = isShowAutoScroll = pathname === '/shabad' || pathname === '/hukamnama' || pathname === '/ang'
-    isShowAutoScroll = isShowAutoScroll && autoScrollMode;
+    const isShowFullScreen = isShowFullscreenRoute(pathname);
+    const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
