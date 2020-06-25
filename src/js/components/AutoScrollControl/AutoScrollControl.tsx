@@ -137,7 +137,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
       const movement = toFixedFloat((0.1 +
         ((scrollingSpeed / 100) *
-          (scrollingSpeed < 60 ? AutoScrollControl.lowerSpeedThreshHold : AutoScrollControl.higherSpeedThreshHold))), 2);
+          (scrollingSpeed < 70 ? AutoScrollControl.lowerSpeedThreshHold : AutoScrollControl.higherSpeedThreshHold))), 2);
 
       // Only allow the scrolling if we have surpassed previous scrolls or if it's firefox browser.
       if (this._isFirefoxAgent || scrollY >= Math.floor(this._nextScrollPosition)) {
