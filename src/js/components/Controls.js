@@ -56,7 +56,7 @@ class Controls extends React.Component {
   }
 
   scrollListener = throttle(() => {
-    if (window.scrollY >= this.originalWrapperTop + 100) {
+    if (window.scrollY >= this.originalWrapperTop) {
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });
       }
