@@ -5,6 +5,7 @@ import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
 import { connect } from 'react-redux';
+import throttle from 'lodash.throttle';
 import {
   DARK_MODE_CLASS_NAME,
   ONLINE_COLOR,
@@ -13,7 +14,7 @@ import {
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
-import throttle from 'lodash.throttle';
+
 import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute } from '../util';
 
 class Layout extends React.PureComponent {
