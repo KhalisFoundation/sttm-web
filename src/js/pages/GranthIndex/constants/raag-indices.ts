@@ -1,4 +1,20 @@
-export default {
+interface Index {
+  name: string,
+  pages: [number, number],
+  highlight?: number
+}
+interface IRaagIndex {
+  name: string;
+  source: 'G';
+  indices: Index[];
+}
+
+interface IRaagIndices {
+  SGGS: IRaagIndex,
+  DG: IRaagIndex
+}
+
+export const raagIndices: IRaagIndices = {
   SGGS: {
     name: 'Sri Guru Granth Sahib Jee',
     source: 'G',
@@ -16,7 +32,7 @@ export default {
         pages: [94, 151],
       },
       {
-        name: 'Vaar Manjh Ki',  
+        name: 'Vaar Manjh Ki',
         pages: [137, 150],
         highlight: 5589,
       },

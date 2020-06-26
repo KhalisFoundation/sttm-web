@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { pageView } from '../../util/analytics';
 import PropTypes from 'prop-types';
 import { TEXTS } from '../../constants';
-import Baani from './Baani';
+import { RenderShabads } from '../../components/RenderShabads';
 import BreadCrumb from '../../components/Breadcrumb';
 import Android from '../../components/Icons/Android';
 import AppleiOS from '../../components/Icons/AppleiOS';
+
 
 class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -117,9 +118,9 @@ class SundarGutka extends React.PureComponent {
             </div>
           ) : (
                 <Route
-                  path={this.props.match.url + '/:currentBaaniId'}
-                  component={Baani}
-                />
+                  path={this.props.match.url + '/:baaniId'}
+                  render={routeProps => <RenderShabads {...routeProps} />
+                  } />
               )}
         </div>
       </div>

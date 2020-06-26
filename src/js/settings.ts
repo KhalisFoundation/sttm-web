@@ -53,6 +53,7 @@ export interface SETTING_ACTIONS {
   translationFontSize: number,
   transliterationFontSize: number,
   paragraphMode: boolean,
+  autoScrollMode: boolean,
   lineHeight: number,
   centerAlignGurbani: boolean,
   splitView: boolean,
