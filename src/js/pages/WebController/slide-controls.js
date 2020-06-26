@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { getBaniCategories } from '@/util/api/sundar-gutka';
+
 export default class SlideControls extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -21,6 +23,7 @@ export default class SlideControls extends React.PureComponent {
 
   sendSlide = e => {
     const activeSlide = e.currentTarget;
+    console.log(activeSlide);
 
     const prevSlide = document.querySelector(".active-slide");
     prevSlide && prevSlide.classList.remove("active-slide");
@@ -38,7 +41,7 @@ export default class SlideControls extends React.PureComponent {
         type: 'ceremony',
         id: 3
       });
-    } else if (activeSlide.id === 'bani-slide') {
+    } else if (activeSlide.classList.contains('bani-slide')) {
       this.props.specialHandler({
         type: 'bani',
         id: activeSlide.dataset.baniId
@@ -73,9 +76,9 @@ export default class SlideControls extends React.PureComponent {
     this.mounted = true;
     fetch(BANIS_API_URL)
       .then(r => r.json())
-      .then(baniList =>
-        this.setState({ baniList })
-      );
+      .then(baniList => {
+        this.setState({ baniList });
+      });
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
@@ -99,6 +102,36 @@ export default class SlideControls extends React.PureComponent {
       'with-border': this.state.showBorder,
     });
     const { baniList } = this.state;
+
+    let baniMarkup;
+
+    if (baniList) {
+      const categories = getBaniCategories(baniList);
+      const markup = categories.map(c => (
+        <>
+          <p className="bani-category">{c.heading}</p>
+          {c.banis.map(bani => (
+            <li key={"bani" + bani.ID} className="gurbani-font bani-slide"
+              data-bani-id={bani.ID} onClick={this.sendSlide}>
+              {bani.gurmukhi}
+            </li>
+          ))}
+          <hr />
+        </>
+      ))
+      baniMarkup = (
+        <ul className="sidebar sg-sidebar">
+          {markup}
+        </ul>
+      )
+    } else {
+      baniMarkup = (
+        <ul className="sidebar sg-sidebar">
+          <div className="spinner" />
+        </ul>
+      );
+    }
+
     return (
       <>
         <div className={classNames} id="slide-container" ref={this.setRef}>
@@ -115,16 +148,11 @@ export default class SlideControls extends React.PureComponent {
             <p>Anand Sahib</p>
           </div>
         </div>
-        <div class="sundar-gutka-sidebar">
-          <div class="toggle-button">All Banis</div>
-          <div class="sg-sidebar sg-hide">
-            <h1>Popular Banis</h1>
-            <ul>
-              {baniList && baniList.map(bl => {
-                console.log(bl);
-              })}
-            </ul>
-          </div>
+        <div className="list-container sg-list-container sg-hide">
+          <div className="toggle-button" onClick={() => {
+            document.querySelector('.sg-list-container').classList.toggle('sg-hide');
+          }}>All Banis</div>
+          {baniMarkup}
         </div>
       </>
     );
