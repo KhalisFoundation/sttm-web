@@ -33,7 +33,7 @@ import {
 
 export const supportedMedia = _s;
 
-class Controls extends React.PureComponent {
+class Controls extends React.Component {
   state = {
     showBorder: false,
     lastScrollPos: 0,
@@ -43,8 +43,8 @@ class Controls extends React.PureComponent {
   componentDidMount() {
     this.mounted = true;
     this.lastScroll = 0;
-    this.showAdvancedOptions = this.props.showAdvancedOptions;
     this.originalWrapperTop = this.$wrapper.offsetTop;
+    this.showAdvancedOptions = this.props.showAdvancedOptions;
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
@@ -65,7 +65,7 @@ class Controls extends React.PureComponent {
       const currentScroll = this.$wrapper.offsetTop;
 
       if (this.showAdvancedOptions !== showAdvancedOptions) {
-        this.showAdvancedOptions = showAdvancedOptions;
+        this.showAdvancedOptions = this.props.showAdvancedOptions;
         this.lastScroll = currentScroll;
         return;
       }
@@ -84,7 +84,6 @@ class Controls extends React.PureComponent {
         };
       });
     } else {
-      this.$wrapper.style.position = 'sticky';
       if (this.mounted && this.state.showBorder === true) {
         this.setState({ showBorder: false });
       }
