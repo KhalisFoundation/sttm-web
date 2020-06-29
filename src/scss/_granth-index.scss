@@ -1,0 +1,36 @@
+.amritKeertanIndex {
+  &Row {
+    details {
+      cursor: pointer;
+    }
+
+    summary {
+      padding: 8px;
+    }
+
+    &.loading {
+      display: flex;
+      position: relative;
+    }
+
+    &.loadingShabads {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      text-align: center;
+      top: 0;
+    }
+
+    &Shabads {
+      margin: 0;
+      margin-bottom: 16px;
+      padding: 0;
+    }
+
+    &Shabad {
+      list-style: none;
+      padding-left: 24px;
+    }
+  }
+}

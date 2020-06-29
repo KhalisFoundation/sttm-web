@@ -18,8 +18,8 @@ interface IAutoScrollControlState {
   scrollingSpeed: number[];
 }
 
-// Visible controls isControlsVisible will have all the controls visible all the time.
 // Hidden controls controlsState will have all the controls hidden by default and shown only when playing
+// Visible controls isControlsVisible will have all the controls visible all the time.
 type HideSliderScreenSize = 'never' | 'mobile' | 'tablet' | 'desktop';
 interface IAutoScrollControlProps extends IReduxDispatchProps, IReduxStateAsProps {
   hideSliderScreenSize: HideSliderScreenSize;
@@ -31,12 +31,13 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   static maxScrollingSpeed = 100;
   static minScrollingSpeed = 1;
-  static minScrollPixelMovement = 0.5;
-  static maxScrollPixelMovement = 2;
+  static lowerSpeedThreshHold = 0.4;
+  static higherSpeedThreshHold = 1.2;
   _maxScrollPossible!: number;
   _nextScrollPosition!: number;
   _sliding!: boolean;
   _interval!: number;
+  _isFirefoxAgent: boolean;
 
   static defaultProps = {
     isBackgroundTransparent: false,
@@ -48,7 +49,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     super(props)
 
     this.state = {
-      isScrolling: false,
+      isScrolling: this.props.isAutoScrolling || false,
       scrollingSpeed: [50],
     }
   }
@@ -64,7 +65,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     if (!this._sliding) {
       requestAnimationFrame(() => {
         this.setState(
-          () => ({ ...this.state, scrollingSpeed: newSpeed }),
+          (state) => ({ ...state, scrollingSpeed: newSpeed }),
           () => { this._sliding = false })
       });
       this._sliding = true;
@@ -73,22 +74,29 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   setSpeed = (operation: string) => () => {
     const [scrollingSpeed] = this.state.scrollingSpeed;
-    let scrollingSpeedToSet: number = 0;
+    let newScrollingSpeed: number = 0;
 
     if (operation === 'increment')
-      scrollingSpeedToSet = Math.min(scrollingSpeed + 10, AutoScrollControl.maxScrollingSpeed)
+      newScrollingSpeed = Math.min(scrollingSpeed + 10, AutoScrollControl.maxScrollingSpeed)
     else
-      scrollingSpeedToSet = Math.max(scrollingSpeed - 10, AutoScrollControl.minScrollingSpeed);
+      newScrollingSpeed = Math.max(scrollingSpeed - 10, AutoScrollControl.minScrollingSpeed);
 
-    this.handleScrollSpeedChange([scrollingSpeedToSet]);
+    this.handleScrollSpeedChange([newScrollingSpeed]);
   }
 
-  toggleAutoScrollState = () => {
-    if (this.state.isScrolling) {
+  toggleAutoScrollState = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (this.props.isAutoScrolling) {
       this.removeScroll();
     } else {
       this.startScroll();
     }
+  }
+
+  handleIconClick = (e: React.MouseEvent) => {
+    e.preventDefault();
   }
 
   clearScrollInterval = () => {
@@ -96,13 +104,10 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 
   startScroll = () => {
-    this.setState(() => ({ ...this.state, isScrolling: true }),
-      () => {
-        this.props.setAutoScrolling && this.props.setAutoScrolling(true);
-        this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
-        this._nextScrollPosition = document.documentElement.scrollTop;
-        this._interval = requestAnimationFrame(this.handleAutoScroll);
-      })
+    this.props.setAutoScrolling && this.props.setAutoScrolling(true);
+    this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
+    this._nextScrollPosition = document.documentElement.scrollTop;
+    this._interval = requestAnimationFrame(this.handleAutoScroll);
   }
 
   handleScrollbarClick = (e: MouseEvent) => {
@@ -113,15 +118,12 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 
   removeScroll = () => {
-    this.setState(() => ({ ...this.state, isScrolling: false }),
-      () => {
-        this.props.setAutoScrolling && this.props.setAutoScrolling(false);
-        this.clearScrollInterval()
-      });
+    this.props.setAutoScrolling && this.props.setAutoScrolling(false);
+    this.clearScrollInterval()
   }
 
   handleAutoScroll = () => {
-    if (this.state.isScrolling) {
+    if (this.props.isAutoScrolling) {
       const scrollY = document.documentElement.scrollTop;
 
       if (scrollY >= this._maxScrollPossible) {
@@ -131,12 +133,14 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
       const [scrollingSpeed] = this.state.scrollingSpeed;
 
       // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
-      const movement = toFixedFloat((AutoScrollControl.minScrollPixelMovement +
-        ((scrollingSpeed / 100) *
-          (AutoScrollControl.maxScrollPixelMovement - AutoScrollControl.minScrollPixelMovement))), 2);
+      // We are having 2 different threshold for speeds controls - higher and lower
 
-      // Only allow the scrolling if we have surpassed previous scrolls
-      if (scrollY >= Math.floor(this._nextScrollPosition)) {
+      const movement = toFixedFloat((0.1 +
+        ((scrollingSpeed / 100) *
+          (scrollingSpeed < 70 ? AutoScrollControl.lowerSpeedThreshHold : AutoScrollControl.higherSpeedThreshHold))), 2);
+
+      // Only allow the scrolling if we have surpassed previous scrolls or if it's firefox browser.
+      if (this._isFirefoxAgent || scrollY >= Math.floor(this._nextScrollPosition)) {
         this._nextScrollPosition += movement;
         window.scrollTo({ left: 0, top: this._nextScrollPosition, behavior: 'smooth' });
       }
@@ -169,19 +173,10 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   componentDidMount = () => {
     this.addListeners();
 
+    this._isFirefoxAgent = navigator.userAgent.indexOf("Firefox") > -1;
+
     // For now, once this component mounts we are in autoscroll-mode.
     this.setAutoScrollModeDOMChanges(true);
-  }
-
-  componentDidUpdate = (prevProps: IAutoScrollControlProps) => {
-    if (prevProps.isAutoScrolling !== this.props.isAutoScrolling) {
-      if (this.props.isAutoScrolling !== this.state.isScrolling) {
-        if (this.props.isAutoScrolling)
-          this.startScroll()
-
-        this.removeScroll();
-      }
-    }
   }
 
   componentWillUnmount = () => {
@@ -193,11 +188,16 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   };
 
   render() {
-    const { isScrolling, scrollingSpeed } = this.state;
-    const { isBackgroundTransparent, isControlsAlwaysVisible } = this.props;
+    console.log(this.props.isAutoScrolling, "isAutoscrolling visible")
+    const { scrollingSpeed } = this.state;
     const hideSliderClass = this.getHideSliderClass();
+    const {
+      isBackgroundTransparent,
+      isAutoScrolling,
+      isControlsAlwaysVisible
+    } = this.props;
     const autoScrollControlBgClass = isBackgroundTransparent ? 'backgroundTransparent' : '';
-    const isShowControls = isControlsAlwaysVisible || isScrolling;
+    const isShowControls = isControlsAlwaysVisible || isAutoScrolling;
 
     return (
       <div className={`autoScrollControl ${autoScrollControlBgClass}`}>
@@ -219,9 +219,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
                 renderTrack={({ props, children }) => (
                   <div
                     className={`autoScrollControlSliderTrack ${hideSliderClass}`}
-                    style={{
-                      ...props.style,
-                    }}
                     {...props}
                   >
                     {children}
@@ -229,9 +226,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
                 )}
                 renderThumb={({ props }) => (
                   <div className={`autoScrollControlSliderThumb ${hideSliderClass}`}
-                    style={{
-                      ...props.style,
-                    }}
                     {...props}
                   />
                 )}
@@ -245,9 +239,11 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
         <button
           onClick={this.toggleAutoScrollState}
           className="autoScrollControlPlayBtn">
-          {isScrolling ? <Pause /> : <Play />}
+          {isAutoScrolling ?
+            <Pause onClick={this.handleIconClick} /> :
+            <Play onClick={this.handleIconClick} />}
         </button>
-      </ div >
+      </div>
     )
   }
 }

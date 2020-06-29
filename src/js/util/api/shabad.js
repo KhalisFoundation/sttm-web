@@ -12,7 +12,9 @@ export const getGurmukhiVerse = shabad => shabad.verse.gurmukhi;
 
 export const getVerseId = shabad => shabad.verseId;
 
-export const getShabadId = shabad => shabad.shabadId || shabad.ceremonyID || shabad.baniID;
+export const getShabadId = shabad => {
+  return shabad.shabadId || shabad.ceremonyID || shabad.baniID;
+}
 
 export const translationMap = {
   spanish: shabad => shabad.translation.es.sn,

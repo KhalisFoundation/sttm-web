@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cx from 'classnames';
+import throttle from 'lodash.throttle';
+
 import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 
@@ -31,7 +33,7 @@ import {
 
 export const supportedMedia = _s;
 
-class Controls extends React.PureComponent {
+class Controls extends React.Component {
   state = {
     showBorder: false,
     lastScrollPos: 0,
@@ -40,6 +42,9 @@ class Controls extends React.PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    this.lastScroll = 0;
+    this.originalWrapperTop = this.$wrapper.offsetTop;
+    this.showAdvancedOptions = this.props.showAdvancedOptions;
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
@@ -50,31 +55,32 @@ class Controls extends React.PureComponent {
     });
   }
 
-  scrollListener = () => {
-    if (window.scrollY >= this.$wrapper.offsetTop) {
+  scrollListener = throttle(() => {
+    if (window.scrollY >= this.originalWrapperTop) {
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });
       }
 
-      const currentScroll = this.$wrapper.offsetTop;
       const { showAdvancedOptions } = this.props;
-      this.setState(prevState => {
-        const { showControls, lastScrollPos } = prevState;
+      const currentScroll = this.$wrapper.offsetTop;
 
-        if (lastScrollPos >= currentScroll) {
+      if (this.showAdvancedOptions !== showAdvancedOptions) {
+        this.showAdvancedOptions = this.props.showAdvancedOptions;
+        this.lastScroll = currentScroll;
+        return;
+      }
+      this.setState(prevState => {
+        if (this.lastScroll >= currentScroll) {
+          this.lastScroll = currentScroll;
           return {
-            lastScrollPos: currentScroll,
-            showControls: !showControls
-              ? true
-              : showControls
+            ...prevState,
+            showControls: true
           };
         }
+        this.lastScroll = currentScroll;
         return {
-          lastScrollPos: currentScroll,
-          showControls: showControls &&
-            !showAdvancedOptions ?
-            false :
-            showControls
+          ...prevState,
+          showControls: false
         };
       });
     } else {
@@ -82,7 +88,7 @@ class Controls extends React.PureComponent {
         this.setState({ showBorder: false });
       }
     }
-  };
+  }, 100);
 
   setRef = node => (this.$wrapper = node);
 
@@ -94,6 +100,7 @@ class Controls extends React.PureComponent {
       'show-controls': showControls,
       'hide-controls': !showControls,
     });
+
     return (
       <>
         <ShareButtons {...this.props} />
