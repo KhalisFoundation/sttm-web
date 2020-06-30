@@ -80,8 +80,6 @@ class Controls extends React.Component {
 
     // since we are doing position sticky so top offset gonna change.
     this.lastScroll = oldOffsetTop;
-
-    console.log(this.lastScroll, this.$wrapper.offsetTop, '>........')
   }
 
   scrollListener = throttle(() => {
@@ -107,7 +105,6 @@ class Controls extends React.Component {
       this.setState(prevState => {
         // We are moving in up direction
         if (this.lastScroll > controlsOffsetTop) {
-          console.log(this.lastScroll, controlsOffsetTop, "IN UP DIRECTION");
           this.applyControlStyles(true);
 
           return {
