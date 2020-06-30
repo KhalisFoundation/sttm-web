@@ -43,7 +43,6 @@ class Controls extends React.Component {
   componentDidMount() {
     this.mounted = true;
     this.lastScroll = 0;
-    this.originalWrapperTop = this.$wrapper.offsetTop;
     this.showAdvancedOptions = this.props.showAdvancedOptions;
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
@@ -56,27 +55,39 @@ class Controls extends React.Component {
   }
 
   scrollListener = throttle(() => {
-    if (window.scrollY >= this.originalWrapperTop) {
+    this.originalWrapperBottom = this.$wrapper.offsetTop + this.$wrapper.offsetHeight;
+    // console.log(this.$wrapper.style.position, window.scrollY, '> original wrapper botttom <')
+    const controlsOffset = this.$wrapper.style.position === 'sticky' ? this.$wrapper.offsetTop : this.originalWrapperBottom;
+    if (window.scrollY >= controlsOffset) {
+      this.$wrapper.style.opacity = '0';
+      this.$wrapper.style.position = 'sticky';
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });
       }
 
       const { showAdvancedOptions } = this.props;
-      const currentScroll = this.$wrapper.offsetTop;
+      const currentScroll = this.originalWrapperBottom;
 
       if (this.showAdvancedOptions !== showAdvancedOptions) {
-        this.showAdvancedOptions = this.props.showAdvancedOptions;
+        this.showAdvancedOptions = showAdvancedOptions;
         this.lastScroll = currentScroll;
+        window.scrollBy({
+          top: -2,
+        })
         return;
       }
+
       this.setState(prevState => {
         if (this.lastScroll >= currentScroll) {
+          this.$wrapper.style.opacity = '1';
           this.lastScroll = currentScroll;
           return {
             ...prevState,
             showControls: true
           };
         }
+
+        this.$wrapper.style.opacity = '0';
         this.lastScroll = currentScroll;
         return {
           ...prevState,
@@ -84,6 +95,7 @@ class Controls extends React.Component {
         };
       });
     } else {
+      this.$wrapper.style.position = 'static';
       if (this.mounted && this.state.showBorder === true) {
         this.setState({ showBorder: false });
       }
