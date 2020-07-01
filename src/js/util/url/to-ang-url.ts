@@ -1,4 +1,4 @@
-import { objectToQueryParams } from "..";
+import { objectToQueryParams } from "../misc";
 
 interface IToAngURLArguments {
   ang: number,

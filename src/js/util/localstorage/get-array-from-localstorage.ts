@@ -1,4 +1,4 @@
-import { isFalsy } from "..";
+import { isFalsy } from "../misc";
 
 export const getArrayFromLocalStorage = (key: string, defaultValue = []) => {
   const value = localStorage.getItem(key) as string;

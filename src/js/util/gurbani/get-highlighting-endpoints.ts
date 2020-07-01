@@ -1,3 +1,4 @@
+
 export const getHighlightingEndpoints = (baani, query) => {
   const startChar = baani.indexOf(query);
   let start;

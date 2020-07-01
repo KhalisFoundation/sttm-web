@@ -1,7 +1,7 @@
 import { buildApiUrl } from '@sttm/banidb';
 import { toShabadURL } from '../url';
 import { translationMap, getGurmukhiVerse } from '../api/shabad';
-import { getHighlightIndices } from '..';
+import { getHighlightIndices } from '../gurbani';
 
 export const getShabadList = (q, { type, source }) => {
   const offset = 1;
