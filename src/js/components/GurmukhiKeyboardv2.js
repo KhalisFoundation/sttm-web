@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ArrowIcon from './Icons/Arrow';
 import SpaceBar from './Icons/Spacebar';
-import { SEARCH_TYPES } from '@/constants.ts'
+import { SEARCH_TYPES } from '@/constants'
 
 const defaultMatraValue = {
   w: 'Aw',

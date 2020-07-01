@@ -120,7 +120,7 @@ export default class Pankti extends React.PureComponent {
         larivaarAssist={larivaarAssist}
         fontSize={fontSize}
         fontFamily={fontFamily}
-        visraam={shabad.visraam}
+        VISRAAM={shabad.VISRAAM}
       />
     );
     const markup = gurbani.map((shabad, lineIndex) => (
