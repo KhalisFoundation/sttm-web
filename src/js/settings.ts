@@ -322,14 +322,14 @@ export const ADVANCED_SETTINGS = ({
     },
     {
       type: 'dropdown',
-      label: 'VISRAAM Source',
+      label: 'Visraam Source',
       value: visraamSource,
       action: setVisraamSource,
       options: VISRAAM.SOURCES,
     },
     {
       type: 'dropdown',
-      label: 'VISRAAM Style',
+      label: 'Visraam Style',
       value: visraamStyle,
       action: setVisraamStyle,
       options: VISRAAM.TYPES,

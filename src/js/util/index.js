@@ -516,7 +516,7 @@ export const getVisraamClass = (verse, akharIndex, visraams) => {
         visraams[visraamSource].forEach((visraam) => {
           if (parseInt(visraam.p, 10) === akharIndex) {
             visraamClass += visraam.t === 'v' ?
-              ` visraamvis-${visraamSource}-main ` :
+              ` visraam-${visraamSource}-main ` :
               ` visraam-${visraamSource}-yamki `;
           }
         });
