@@ -14,7 +14,7 @@ export class MultiSelect extends React.PureComponent {
   }
   componentDidMount = () => {
     document.body.addEventListener('click', (e) => {
-      // console.log('this.wrapper', this.wrapper, this.listController)
+
       // Checking if current event target occurs on any part of multiselect list.
       if (!this.state.collapsed) {
         const isTargetMultiSelectList = this.wrapper.contains(e.target) || this.listController.contains(e.target)
