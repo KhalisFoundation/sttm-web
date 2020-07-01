@@ -206,6 +206,10 @@
   transition: 0.2s right ease-out;
   z-index: 10;
 
+  &.sg-hide svg {
+    transform: rotate(-180deg);
+  }
+
   .toggle-button {
     background: white;
     border-top-left-radius: 16px;
@@ -218,16 +222,12 @@
     transform: rotate(-90deg);
 
     span {
-      padding-right:8px;
-      
+      padding-right: 8px;
+
       svg {
         fill: $sttm-orange;
       }
     }
-  }
-
-  &.sg-hide svg {
-    transform:rotate(-180deg);
   }
 
   .sidebar {
