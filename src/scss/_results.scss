@@ -11,13 +11,6 @@
   list-style: none;
   padding: 0.5rem 1rem;
 
-  & .show-all-results {
-    text-align: center;
-     & > a {
-       color: $sttm-blue;
-     }
-  }
-
   .dark-mode & {
     border-color: $sttm-dark-grey;
   }
@@ -41,6 +34,14 @@
 
     .dark-mode & {
       color: $sttm-light-blue-60;
+    }
+  }
+
+  & .show-all-results {
+    text-align: center;
+
+    & > a {
+      color: $sttm-blue;
     }
   }
 
