@@ -8,6 +8,7 @@
   padding: 0.5rem 0 0 3rem;
   top: 0;
   transition: transform 0.2s;
+  transform-origin: top center;
   z-index: 1;
 
   .dark-mode & {
@@ -21,15 +22,6 @@
   &.with-border {
     box-shadow: 0 8px 6px -10px black;
     max-width: 75rem;
-  }
-
-  &.show-controls {
-    transform: rotateX(0deg);
-  }
-
-  &.hide-controls {
-    transform: rotateX(90deg) perspective(500px);
-    transform-origin: top center;
   }
 
   > div {

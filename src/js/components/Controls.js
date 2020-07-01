@@ -136,14 +136,19 @@ class Controls extends React.Component {
     const classNames = cx({
       'no-select': true,
       'with-border': showBorder,
-      'show-controls': showControls,
-      'hide-controls': !showControls,
     });
+
+    const controlStyles = showControls ? {
+      transform: 'rotateX(0deg)'
+    } : {
+        transform: 'rotateX(90deg) perspective(500px)'
+      }
 
     return (
       <>
         <ShareButtons {...this.props} />
         <div
+          style={controlStyles}
           id="controls-wrapper"
           className={classNames}
           ref={this.setRef}
