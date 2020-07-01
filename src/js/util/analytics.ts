@@ -1,5 +1,4 @@
 /* globals ga */
-
 export const CATEGORIES = {
   CLICK: 'click',
   ERROR: 'error',
@@ -23,6 +22,12 @@ export const ACTIONS = {
   SOHILAA_SAHIB_LINK: 'sohilaa-sahib-link'
 };
 
+interface IEventArguments {
+  category?: string,
+  action: string,
+  label: string
+}
+
 export const pageView = page =>
   requestAnimationFrame(() =>
     ga('send', {
@@ -31,11 +36,8 @@ export const pageView = page =>
     })
   );
 
-/**
- * Basic event
- * @param {{ category: string, action: string, label: string }} event
- */
-export const event = ({ category = '-', action = '-', label = '-' }) =>
+// Basic event
+export const event = ({ category = '-', action = '-', label = '-' }: IEventArguments) =>
   requestAnimationFrame(() =>
     ga('send', {
       hitType: 'event',
@@ -45,16 +47,10 @@ export const event = ({ category = '-', action = '-', label = '-' }) =>
     })
   );
 
-/**
- * Sets category as click
- * @param {{ action: string, label: string }} event
- */
-export const clickEvent = ({ action, label }) =>
+//Sets category as click
+export const clickEvent = ({ action, label }: IEventArguments) =>
   event({ category: CATEGORIES.CLICK, action, label });
 
-/**
- * Sets category as error
- * @param {{ action: string, label: string }} param0
- */
-export const errorEvent = ({ action, label }) =>
+//Sets category as error
+export const errorEvent = ({ action, label }: IEventArguments) =>
   event({ category: CATEGORIES.ERROR, action, label });

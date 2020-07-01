@@ -1,8 +1,12 @@
 /* globals BANNERS_URL */
 import React from 'react';
 
-import { saveToLocalStorage, getStringFromLocalStorage } from '@/util';
-import { dateMath } from '../util/index.js';
+import {
+  dateMath,
+  saveToLocalStorage,
+  getStringFromLocalStorage
+} from '@/util';
+
 import CrossIcon from './Icons/Times';
 
 export default class Banner extends React.PureComponent {
