@@ -195,6 +195,14 @@
       line-height: 42px;
       margin-bottom: 0;
       padding: 0 1rem;
+
+      svg {
+        fill: $sttm-dark-grey;
+
+        .dark-mode > & {
+          fill: $sttm-light-grey;
+        }
+      }
     }
 
     .list-wrapper {

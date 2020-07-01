@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { getBaniCategories } from '@/util/api/sundar-gutka';
+import { DownArrowIcon } from '@/components/Icons/CustomIcons';
 
 export default class SlideControls extends React.PureComponent {
   constructor(props) {
@@ -23,8 +24,6 @@ export default class SlideControls extends React.PureComponent {
 
   sendSlide = e => {
     const activeSlide = e.currentTarget;
-    console.log(activeSlide);
-
     const prevSlide = document.querySelector(".active-slide");
     prevSlide && prevSlide.classList.remove("active-slide");
     activeSlide.classList.add("active-slide");
@@ -42,6 +41,13 @@ export default class SlideControls extends React.PureComponent {
         id: 3
       });
     } else if (activeSlide.classList.contains('bani-slide')) {
+      document.querySelector('.sg-list-container').classList.toggle('sg-hide');
+      this.props.socket.emit('data', {
+        host: "sttm-web",
+        type: "bani",
+        baniId: activeSlide.dataset.baniId,
+        pin: this.props.controllerPin,
+      });
       this.props.specialHandler({
         type: 'bani',
         id: activeSlide.dataset.baniId
@@ -108,7 +114,7 @@ export default class SlideControls extends React.PureComponent {
     if (baniList) {
       const categories = getBaniCategories(baniList);
       const markup = categories.map(c => (
-        <>
+        <div key={"baniCategory" + c.heading} >
           <p className="bani-category">{c.heading}</p>
           {c.banis.map(bani => (
             <li key={"bani" + bani.ID} className="gurbani-font bani-slide"
@@ -117,7 +123,7 @@ export default class SlideControls extends React.PureComponent {
             </li>
           ))}
           <hr />
-        </>
+        </div>
       ))
       baniMarkup = (
         <ul className="sidebar sg-sidebar">
@@ -151,7 +157,10 @@ export default class SlideControls extends React.PureComponent {
         <div className="list-container sg-list-container sg-hide">
           <div className="toggle-button" onClick={() => {
             document.querySelector('.sg-list-container').classList.toggle('sg-hide');
-          }}>All Banis</div>
+          }}>
+            <DownArrowIcon />
+            All Banis
+          </div>
           {baniMarkup}
         </div>
       </>

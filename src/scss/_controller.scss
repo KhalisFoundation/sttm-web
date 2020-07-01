@@ -204,12 +204,30 @@
   position: fixed;
   top: 0;
   transition: 0.2s right ease-out;
-  z-index: 20;
+  z-index: 10;
 
   .toggle-button {
+    background: white;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    color: $sttm-light-black;
     cursor: pointer;
+    margin-right: -42px;
+    padding: 4px 16px;
     text-align: left;
     transform: rotate(-90deg);
+
+    span {
+      padding-right:8px;
+      
+      svg {
+        fill: $sttm-orange;
+      }
+    }
+  }
+
+  &.sg-hide svg {
+    transform:rotate(-180deg);
   }
 
   .sidebar {
@@ -237,6 +255,10 @@
       color: $sttm-darker-grey;
       padding: 4px;
 
+      &.active-slide {
+        color: $sttm-white;
+      }
+
       &:hover {
         background-color: $sttm-lighter-grey;
       }
@@ -245,6 +267,7 @@
 
   &.sg-hide {
     right: -330px;
+    z-index: 0;
   }
 }
 
