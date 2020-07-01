@@ -1,10 +1,6 @@
 /* globals API_URL */
 import {
-  DEFAULT_SEARCH_TYPE,
-  DEFAULT_SEARCH_SOURCE,
-  SHORT_DOMAIN,
   SEARCH_TYPES,
-  LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
   BANI_LENGTH_COLS,
   VISRAAM_CONSTANTS,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
@@ -18,23 +14,16 @@ import { translationMap, getGurmukhiVerse } from './api/shabad';
 
 import { buildApiUrl } from '@sttm/banidb';
 
-export * from './numbers';
 export * from './get-classnames-for-shabad-ratings';
 
-/**
- * Date Time Helpers
- */
+export * from './numbers';
 export * from './date-time-math';
-
-/**
- * Hukamnama Helpers
- */
 export * from './hukamnama';
-
-/**
- * Routes Helpers
- */
 export * from './routes';
+export * from './url';
+export * from './localstorage';
+export * from './ang';
+export * from './shabad';
 
 
 /**
@@ -50,73 +39,6 @@ export const throwError = (msg, err) => {
   throw new Error(err);
 };
 
-/**
- * URL QueryParam reader
- *
- * @param {string} _name of parameter to read from query params
- * @param {string} [url=window.location.href] to read query params from
- * @returns {string}
- */
-export function getParameterByName(_name, url = window.location.href) {
-  const name = _name.replace(/[[\]]/g, '\\$&');
-  const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
-  const results = regex.exec(url);
-  if (!results) return undefined;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-
-/**
- * Returns query param object derived from a given url
- * @param {string} str containing query params
- * @returns {object}
- */
-export function getQueryParams(str = document.location.search) {
-  const qs = str.replace(/\+/g, ' ');
-  const params = {};
-  const re = /[?&]?([^=]+)=([^&]*)/g;
-  let tokens;
-
-  while ((tokens = re.exec(qs))) {
-    params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-  }
-
-  return params;
-}
-
-/**
- * sttm.co URL shortner service
- *
- * @param {string} url
- */
-
-const shortURLSource = (source) => {
-  const urlSource = {
-    'G': 'g',
-    'D': 'd',
-    'B': 'v',
-    'S': 'gs'
-  }
-  return urlSource[source];
-}
-
-export function shortenURL(url = window.location.href) {
-  const path = window.location.pathname;
-  const URL = `http://${SHORT_DOMAIN}`;
-
-  switch (path) {
-    case '/shabad':
-      return `${URL}/s/${getParameterByName('id')}/${getParameterByName(
-        'highlight'
-      ) || ''}`;
-    case '/ang':
-      return `${URL}/${shortURLSource(getParameterByName('source'))}/${getParameterByName('ang')}`;
-    case '/hukamnama':
-      return `${URL}/h`;
-    default:
-      return url.replace(window.location.hostname, SHORT_DOMAIN);
-  }
-}
 
 /**
  * Shows a toast
@@ -197,48 +119,6 @@ export const copyToClipboard = text =>
 export const isFalsy = value =>
   [null, 'null', '', undefined, 'undefined'].some(v => value === v);
 
-export const getArrayFromLocalStorage = (key, defaultValue = []) => {
-  const value = localStorage.getItem(key);
-
-  if (isFalsy(value)) {
-    localStorage.setItem(key, JSON.stringify(defaultValue));
-    return defaultValue;
-  }
-
-  try {
-    return JSON.parse(value);
-  } catch (err) {
-    localStorage.setItem(key, JSON.stringify(defaultValue));
-    return defaultValue;
-  }
-};
-
-export const getNumberFromLocalStorage = (key, defaultValue = null) => {
-  const value = localStorage.getItem(key);
-  if (value === null) return defaultValue;
-  return parseFloat(value, 10);
-};
-
-export const getStringFromLocalStorage = (key, defaultValue = null) => {
-  const value = localStorage.getItem(key);
-  if (value === null) return defaultValue;
-  return value;
-};
-
-export const getBooleanFromLocalStorage = (key, defaultValue = null) => {
-  const value = localStorage.getItem(key);
-  if (value === null) return defaultValue;
-  return value === 'true';
-};
-
-/**
- * Saves to localStorage in next animation frame.
- *
- * @param {string} key
- * @param {string} value
- */
-export const saveToLocalStorage = (key, value) =>
-  requestAnimationFrame(() => localStorage.setItem(key, value));
 
 export const toggleItemInArray = (item, arr) =>
   arr.includes(item) ? arr.filter(k => k !== item) : [...arr, item];
@@ -249,47 +129,8 @@ export const objectToQueryParams = object =>
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
 
-export const toSearchURL = ({
-  query: q,
-  type = DEFAULT_SEARCH_TYPE,
-  source = DEFAULT_SEARCH_SOURCE,
-  offset = '',
-}) =>
-  `/search?${objectToQueryParams({
-    q: encodeURIComponent(q),
-    type,
-    source,
-    offset,
-  })}`;
 
-/**
- *
- * @param {object} options
- * @param {{ shabadId: string | number, id?: string | number }} options.shabad
- * @param {string} [options.q]
- * @param {string} [options.type]
- * @param {string} [options.source]
- */
-export const toShabadURL = ({
-  shabad: { shabadId: id, verseId: highlight },
-  q,
-  type = undefined,
-  source = undefined,
-}) =>
-  `/shabad?${objectToQueryParams({
-    id,
-    q,
-    type,
-    source,
-    highlight,
-  })}`;
 
-export const toAngURL = ({ ang, source, highlight }) =>
-  `/ang?${objectToQueryParams({
-    ang,
-    source,
-    highlight,
-  })}`;
 
 export const versesToGurbani = (verses, baniLength = 'extralong', mangalPosition = 'current') => {
   const processedVerses = mangalPosition === 'ceremony' ?
@@ -419,48 +260,6 @@ const getHighlightingEndpoints = (baani, query) => {
   return [-1, -1]
 }
 
-export const numbersRange = (start, stop, step) =>
-  Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step));
-
-/**
- * Should save ang to localStorage
- * @param {object} data
- * @property {string} type
- * @property {{ source: { id: string }}} info
- */
-export const shouldSaveAng = ({ type, info }) =>
-  type === 'ang' && info.source.sourceId === 'G';
-
-/**
- * Previously read ang
- * @returns {number}
- */
-export const readAng = () =>
-  parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG));
-
-/**
- * Saves ang to localStorage
- * @param {number} ang
- */
-export const saveAng = ang =>
-  saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG, ang);
-
-/**
- * Generates link based on type and source
- * @param {object} data
- * @property {string} type
- * @property {{ source: { sourceId: string }}} info
- */
-export function toNavURL({ type, info }) {
-  switch (type) {
-    case 'hukamnama':
-      return 'hukamnama?date=';
-    case 'shabad':
-      return 'shabad?id=';
-    case 'ang':
-      return `ang?source=${info.source.sourceId}&ang=`;
-  }
-}
 
 /**
  * Removes any previous text selection &
@@ -473,40 +272,6 @@ export const makeSelection = selectedDiv => {
   range.selectNode(selectedDiv);
   window.getSelection().addRange(range);
 };
-
-export const getShabadList = (q, { type, source }) => {
-  const offset = 1;
-  const livesearch = true;
-  const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL, livesearch }));
-
-  return new Promise((resolve, reject) => {
-    const json = fetch(url).then((response) => response.json());
-    json.then(
-      (data) => {
-        const { verses } = data;
-        let panktiList = [];
-        for (const shabad of verses) {
-          const highlightPankti = type === 3 ? translationMap["english"](shabad) : getGurmukhiVerse(shabad);
-          const highlightIndex = getHighlightIndices(
-            highlightPankti,
-            q,
-            type
-          );
-          panktiList.push({
-            pankti: getGurmukhiVerse(shabad),
-            translation: translationMap["english"](shabad),
-            query: q,
-            url: toShabadURL({ shabad, q, type, source }),
-            highlightIndex,
-          })
-        }
-        resolve(panktiList);
-      },
-      (error) => { reject(error); });
-  });
-}
-
-
 export const getVisraamClass = (verse, akharIndex, visraams) => {
   let visraamClass = '';
 
