@@ -1,20 +1,20 @@
 /* stylelint-disable at-rule-no-unknown */
 
-@mixin vishraamStyles($VISRAAM, $yamki) {
-  $VISRAAM-main: $VISRAAM;
-  $VISRAAM-yamki: $yamki;
-  $VISRAAM-sources: ('sttm', 'sttm2', 'igurbani');
+@mixin vishraamStyles($visraam, $yamki) {
+  $visraam-main: $visraam;
+  $visraam-yamki: $yamki;
+  $visraam-sources: ('sttm', 'sttm2', 'igurbani');
 
-  @each $source in $VISRAAM-sources {
+  @each $source in $visraam-sources {
     &.display-visraams.vishraam-vishraam-options-colored-words.vishraam-vishraam-source-#{$source} {
       .gurlipi,
       .unicode {
-        .VISRAAM-#{$source}-main {
-          color: $VISRAAM-main;
+        .visraam-#{$source}-main {
+          color: $visraam-main;
         }
 
-        .VISRAAM-#{$source}-yamki {
-          color: $VISRAAM-yamki;
+        .visraam-#{$source}-yamki {
+          color: $visraam-yamki;
         }
       }
     }
@@ -26,26 +26,26 @@
           border-radius: 15px;
         }
 
-        .padchhed .VISRAAM-#{$source}-main,
-        .padchhed .VISRAAM-#{$source}-yamki {
+        .padchhed .visraam-#{$source}-main,
+        .padchhed .visraam-#{$source}-yamki {
           padding-right: 5px;
         }
 
-        .VISRAAM-#{$source}-main {
+        .visraam-#{$source}-main {
           background:
             linear-gradient(
               to right,
               rgba(229, 229, 229, 0) 20%,
-              rgba($VISRAAM-main, 0.7) 100%
+              rgba($visraam-main, 0.7) 100%
             );
         }
 
-        .VISRAAM-#{$source}-yamki {
+        .visraam-#{$source}-yamki {
           background:
             linear-gradient(
               to right,
               rgba(229, 229, 229, 0) 20%,
-              rgba($VISRAAM-yamki, 0.7) 100%
+              rgba($visraam-yamki, 0.7) 100%
             );
         }
       }

@@ -172,7 +172,7 @@ export default class Baani extends React.PureComponent {
         fontSize={fontSize}
         lineHeight={lineHeight}
         fontFamily={fontFamily}
-        VISRAAM={shabad.VISRAAM}
+        visraam={shabad.visraam}
       />
     )
   }

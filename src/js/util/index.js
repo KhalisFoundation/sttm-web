@@ -513,11 +513,11 @@ export const getVisraamClass = (verse, akharIndex, visraams) => {
   if (visraams) {
     Object.keys(visraams).forEach((visraamSource) => {
       if (visraams[visraamSource].length) {
-        visraams[visraamSource].forEach((VISRAAM) => {
-          if (parseInt(VISRAAM.p, 10) === akharIndex) {
-            visraamClass += VISRAAM.t === 'v' ?
-              ` VISRAAM-${visraamSource}-main ` :
-              ` VISRAAM-${visraamSource}-yamki `;
+        visraams[visraamSource].forEach((visraam) => {
+          if (parseInt(visraam.p, 10) === akharIndex) {
+            visraamClass += visraam.t === 'v' ?
+              ` visraamvis-${visraamSource}-main ` :
+              ` visraam-${visraamSource}-yamki `;
           }
         });
       }

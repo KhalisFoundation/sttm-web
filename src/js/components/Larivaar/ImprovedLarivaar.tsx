@@ -10,7 +10,7 @@ export interface ILarivaarProps {
   unicode: boolean;
   children: string;
   query: string;
-  VISRAAM: object;
+  visraam: object;
 }
 
 function Larivaar(props: ILarivaarProps) {
@@ -21,7 +21,7 @@ function Larivaar(props: ILarivaarProps) {
     children,
     unicode,
     query,
-    VISRAAM,
+    visraam,
   } = props;
 
   if (!enable) {
@@ -29,7 +29,7 @@ function Larivaar(props: ILarivaarProps) {
       <HighlightedSearchResult
         highlightIndex={highlightIndex}
         query={query}
-        visraams={VISRAAM}
+        visraams={visraam}
       >
         {children}
       </HighlightedSearchResult>
@@ -44,7 +44,7 @@ function Larivaar(props: ILarivaarProps) {
         }
 
         const highlight = word.includes(query);
-        const visraamClass = getVisraamClass(children, index, VISRAAM);
+        const visraamClass = getVisraamClass(children, index, visraam);
 
         return (
           <LarivaarWord
