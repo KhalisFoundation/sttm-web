@@ -2,19 +2,8 @@
 import {
   SEARCH_TYPES,
   BANI_LENGTH_COLS,
-  VISRAAM_CONSTANTS,
-  LOCAL_STORAGE_KEY_FOR_VISRAAMS,
-  LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
-  LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
-  DEFAULT_VISRAAM_SOURCE,
-  DEFAULT_VISRAAM_STYLE,
 } from '../constants';
 
-import { translationMap, getGurmukhiVerse } from './api/shabad';
-
-import { buildApiUrl } from '@sttm/banidb';
-
-export * from './get-classnames-for-shabad-ratings';
 
 export * from './numbers';
 export * from './date-time-math';
@@ -24,6 +13,7 @@ export * from './url';
 export * from './localstorage';
 export * from './ang';
 export * from './shabad';
+export * from './visraam';
 
 
 /**
@@ -128,8 +118,6 @@ export const objectToQueryParams = object =>
     .filter(([, value]) => [undefined, NaN, null, ''].every(n => n !== value))
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
-
-
 
 
 export const versesToGurbani = (verses, baniLength = 'extralong', mangalPosition = 'current') => {
@@ -272,41 +260,3 @@ export const makeSelection = selectedDiv => {
   range.selectNode(selectedDiv);
   window.getSelection().addRange(range);
 };
-export const getVisraamClass = (verse, akharIndex, visraams) => {
-  let visraamClass = '';
-
-  if (visraams) {
-    Object.keys(visraams).forEach((visraamSource) => {
-      if (visraams[visraamSource].length) {
-        visraams[visraamSource].forEach((visraam) => {
-          if (parseInt(visraam.p, 10) === akharIndex) {
-            visraamClass += visraam.t === 'v' ?
-              ` visraam-${visraamSource}-main ` :
-              ` visraam-${visraamSource}-yamki `;
-          }
-        });
-      }
-    });
-  }
-  return visraamClass;
-}
-
-export const clearVisraamClass = () => {
-  Object.keys(VISRAAM_CONSTANTS.SOURCES).forEach(element => {
-    document.body.classList.remove(VISRAAM_CONSTANTS.SOURCE_CLASS(element));
-  });
-  Object.keys(VISRAAM_CONSTANTS.TYPES).forEach(element => {
-    document.body.classList.remove(VISRAAM_CONSTANTS.TYPE_CLASS(element));
-  });
-}
-
-export const addVisraamClass = () => {
-  clearVisraamClass();
-  document.body.classList[getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS) ? 'add' : 'remove'](
-    VISRAAM_CONSTANTS.CLASS_NAME,
-    VISRAAM_CONSTANTS.SOURCE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE) ||
-      DEFAULT_VISRAAM_SOURCE),
-    VISRAAM_CONSTANTS.TYPE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE) ||
-      DEFAULT_VISRAAM_STYLE)
-  );
-}
