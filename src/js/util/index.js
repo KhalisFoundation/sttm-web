@@ -6,7 +6,7 @@ import {
   SEARCH_TYPES,
   LOCAL_STORAGE_KEY_FOR_PREVIOUSLY_READ_ANG,
   BANI_LENGTH_COLS,
-  VISRAAM_CONSTANTS,
+  VISRAAM,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
   LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
@@ -527,21 +527,21 @@ export const getVisraamClass = (verse, akharIndex, visraams) => {
 }
 
 export const clearVisraamClass = () => {
-  Object.keys(VISRAAM_CONSTANTS.SOURCES).forEach(element => {
-    document.body.classList.remove(VISRAAM_CONSTANTS.SOURCE_CLASS(element));
+  Object.keys(VISRAAM.SOURCES).forEach(element => {
+    document.body.classList.remove(VISRAAM.SOURCE_CLASS(element));
   });
-  Object.keys(VISRAAM_CONSTANTS.TYPES).forEach(element => {
-    document.body.classList.remove(VISRAAM_CONSTANTS.TYPE_CLASS(element));
+  Object.keys(VISRAAM.TYPES).forEach(element => {
+    document.body.classList.remove(VISRAAM.TYPE_CLASS(element));
   });
 }
 
 export const addVisraamClass = () => {
   clearVisraamClass();
   document.body.classList[getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS) ? 'add' : 'remove'](
-    VISRAAM_CONSTANTS.CLASS_NAME,
-    VISRAAM_CONSTANTS.SOURCE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE) ||
+    VISRAAM.CLASS_NAME,
+    VISRAAM.SOURCE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE) ||
       DEFAULT_VISRAAM_SOURCE),
-    VISRAAM_CONSTANTS.TYPE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE) ||
+    VISRAAM.TYPE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE) ||
       DEFAULT_VISRAAM_STYLE)
   );
 }

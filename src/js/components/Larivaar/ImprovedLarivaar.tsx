@@ -2,8 +2,7 @@ import React, { memo } from 'react';
 
 import LarivaarWord from './Word';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
-import { getVisraamClass } from '@/util/index';
-
+import { getVisraamClass } from '../../util';
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
   highlightIndex?: Array<number>;

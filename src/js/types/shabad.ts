@@ -1,16 +1,4 @@
-type Gurbani = Array<{
-  shabad: Shabad;
-}>;
-
-type BaaniType = {
-  ID: number;
-  transliteration: string;
-  gurmukhiUni: string;
-};
-
-type ShabadTypes = 'shabad' | 'ang' | 'hukamnama';
-
-type Shabad = {
+export type Shabad = {
   shabadid: string;
   id: string;
   gurbani: {

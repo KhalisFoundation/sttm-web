@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { VISRAAM_CONSTANTS } from '../constants';
+import { VISRAAM } from '../constants';
 import { clearVisraamClass } from '../util';
 import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
 import { MultiSelect } from '../components/MultiSelect';
@@ -143,9 +143,9 @@ class ShabadControls extends React.PureComponent {
   componentDidUpdate() {
     clearVisraamClass();
     document.body.classList[this.props.visraams ? 'add' : 'remove'](
-      VISRAAM_CONSTANTS.CLASS_NAME,
-      VISRAAM_CONSTANTS.SOURCE_CLASS(this.props.visraamSource),
-      VISRAAM_CONSTANTS.TYPE_CLASS(this.props.visraamStyle)
+      VISRAAM.CLASS_NAME,
+      VISRAAM.SOURCE_CLASS(this.props.visraamSource),
+      VISRAAM.TYPE_CLASS(this.props.visraamStyle)
     );
   }
 

@@ -8,7 +8,7 @@ import Hour24 from './Icons/Hour24';
 import { withRouter } from 'react-router-dom';
 import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
 
-import { PAGE_NAME_CONSTANTS } from '../constants';
+import { PAGE_NAME } from '../constants';
 
 /**
  *
@@ -123,7 +123,7 @@ class Meta extends React.PureComponent {
                     source: getSourceId(info),
                   })}
                 >
-                  {getSourceId(info) == 'G' ? PAGE_NAME_CONSTANTS.ANG[contentType] : PAGE_NAME_CONSTANTS.PANNA[contentType]}{' '}
+                  {getSourceId(info) == 'G' ? PAGE_NAME.ANG[contentType] : PAGE_NAME.PANNA[contentType]}{' '}
                   {info.source.pageNo}
                 </Link>
               </Item>

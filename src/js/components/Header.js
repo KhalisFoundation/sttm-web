@@ -228,7 +228,6 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <Autocomplete
-                                    isShowFullResults
                                     getSuggestions={getShabadList}
                                     searchOptions={{ type: parseInt(type), source }}
                                     value={query}
