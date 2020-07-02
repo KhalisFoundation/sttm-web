@@ -37,6 +37,14 @@
     }
   }
 
+  & .show-all-results {
+    text-align: center;
+
+    & > a {
+      color: $sttm-blue;
+    }
+  }
+
   p {
     margin-bottom: 0;
   }

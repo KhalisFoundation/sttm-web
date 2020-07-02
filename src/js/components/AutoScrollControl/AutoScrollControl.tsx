@@ -188,7 +188,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   };
 
   render() {
-    console.log(this.props.isAutoScrolling, "isAutoscrolling visible")
+
     const { scrollingSpeed } = this.state;
     const hideSliderClass = this.getHideSliderClass();
     const {

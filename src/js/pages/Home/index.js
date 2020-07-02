@@ -154,6 +154,7 @@ export default class Home extends React.PureComponent {
                       />
                     </div>
                     <Autocomplete
+                      isShowFullResults
                       getSuggestions={getShabadList}
                       searchOptions={{ type, source }}
                       value={query}
