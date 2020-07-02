@@ -2,7 +2,7 @@ import {
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
   FONT_OPTIONS,
-  VISRAAM_CONSTANTS,
+  VISRAAM,
 } from './constants';
 
 import { toggleItemInArray, toFixedFloat } from './util';
@@ -325,14 +325,14 @@ export const ADVANCED_SETTINGS = ({
       label: 'Visraam Source',
       value: visraamSource,
       action: setVisraamSource,
-      options: VISRAAM_CONSTANTS.SOURCES,
+      options: VISRAAM.SOURCES,
     },
     {
       type: 'dropdown',
       label: 'Visraam Style',
       value: visraamStyle,
       action: setVisraamStyle,
-      options: VISRAAM_CONSTANTS.TYPES,
+      options: VISRAAM.TYPES,
     },
     {
       type: 'dropdown',

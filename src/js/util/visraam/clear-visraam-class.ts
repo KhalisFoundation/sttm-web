@@ -1,10 +1,10 @@
-import { VISRAAM_CONSTANTS } from "../../constants";
+import { VISRAAM } from "../../constants";
 
 export const clearVisraamClass = () => {
-  Object.keys(VISRAAM_CONSTANTS.SOURCES).forEach(element => {
-    document.body.classList.remove(VISRAAM_CONSTANTS.SOURCE_CLASS(element));
+  Object.keys(VISRAAM.SOURCES).forEach(element => {
+    document.body.classList.remove(VISRAAM.SOURCE_CLASS(element));
   });
-  Object.keys(VISRAAM_CONSTANTS.TYPES).forEach(element => {
-    document.body.classList.remove(VISRAAM_CONSTANTS.TYPE_CLASS(element));
+  Object.keys(VISRAAM.TYPES).forEach(element => {
+    document.body.classList.remove(VISRAAM.TYPE_CLASS(element));
   });
 }
