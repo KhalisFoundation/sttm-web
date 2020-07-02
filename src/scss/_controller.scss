@@ -196,6 +196,81 @@
   }
 }
 
+.list-container {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  overflow-y: hidden;
+  position: fixed;
+  top: 0;
+  transition: 0.2s right ease-out;
+  z-index: 10;
+
+  &.sg-hide svg {
+    transform: rotate(-180deg);
+  }
+
+  .toggle-button {
+    background: white;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    color: $sttm-light-black;
+    cursor: pointer;
+    margin-right: -42px;
+    padding: 4px 16px;
+    text-align: left;
+    transform: rotate(-90deg);
+
+    span {
+      padding-right: 8px;
+
+      svg {
+        fill: $sttm-orange;
+      }
+    }
+  }
+
+  .sidebar {
+    background-color: $sttm-dark-white;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    height: 100%;
+    list-style-type: none;
+    overflow-y: auto;
+    padding: 20px;
+    top: 0;
+  }
+}
+
+.sg-list-container {
+  right: 0;
+
+  .sg-sidebar {
+    .bani-category {
+      color: $sttm-orange;
+      font-weight: 700;
+    }
+
+    .bani-slide {
+      border-radius: 2px;
+      color: $sttm-darker-grey;
+      padding: 4px;
+
+      &.active-slide {
+        color: $sttm-white;
+      }
+
+      &:hover {
+        background-color: $sttm-lighter-grey;
+      }
+    }
+  }
+
+  &.sg-hide {
+    right: -330px;
+    z-index: 0;
+  }
+}
+
 @media screen and (max-width: 55.99em) {
   .controller-row .search-page {
     padding-top: 5px;

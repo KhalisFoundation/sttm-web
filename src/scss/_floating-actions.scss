@@ -13,7 +13,7 @@
   right: 24px;
   transition: all 0.2s ease-in;
   width: auto;
-  z-index: 1;
+  z-index: 99;
 
   @media screen and (max-width: 600px) {
     opacity: 1;
