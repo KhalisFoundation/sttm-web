@@ -103,7 +103,10 @@
   background-color: $sttm-blue;
   border-radius: 10px;
   color: white;
-  height: 6em;
+  display: flex;
+  flex-direction: column;
+  height: 8em;
+  justify-content: space-between;
   padding: 1rem;
 
   &:hover {
@@ -121,7 +124,7 @@
 
 .sgCardEnglish {
   font-size: smaller;
-  margin-top: 2em;
+  margin-top: 1em;
   text-align: right;
   text-transform: capitalize;
 }
@@ -129,6 +132,12 @@
 /* Screen larger than 600px? 2 column */
 @media (min-width: 600px) {
   .sgCards { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 700px) {
+  .sgCardEnglish {
+    margin-top: 2em;
+  }
 }
 
 /* Screen larger than 900px? 3 columns */
