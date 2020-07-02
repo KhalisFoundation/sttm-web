@@ -126,11 +126,6 @@ const initialState = {
   ),
 };
 
-console.log("larivaar", getBooleanFromLocalStorage(
-  LOCAL_STORAGE_KEY_FOR_LARIVAAR,
-  DEFAULT_LARIVAAR
-), initialState, "INITIAL STATE,")
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(applyMiddleware(createDebounce(), thunk));
 const store = createStore(reducer, initialState, enhancer);
