@@ -44,6 +44,9 @@ class Controls extends React.Component {
     this.mounted = true;
     this.lastScroll = 0;
     this.isChangeInControls = false;
+
+    //explicitely setting the controls to have show.
+    this.$wrapper.style.transform = 'rotateX(0deg)'
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
@@ -63,8 +66,9 @@ class Controls extends React.Component {
 
   resetControlStyles = () => {
     this.lastScroll = 0;
-    this.$wrapper.style.position = 'static';
-    this.$wrapper.style.opacity = 1;
+    this.$wrapper.style.transform = 'rotateX(0deg)';
+    this.$wrapper.style.position = '';
+    this.$wrapper.style.opacity = '';
   }
 
   applyControlStyles = (isShowWrapper) => {
@@ -124,7 +128,7 @@ class Controls extends React.Component {
       this.resetControlStyles();
 
       if (this.mounted && this.state.showBorder === true) {
-        this.setState({ showBorder: false });
+        this.setState({ showBorder: false, showControls: true });
       }
     }
   }, 100);
