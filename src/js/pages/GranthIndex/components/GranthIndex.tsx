@@ -61,20 +61,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
                   )}
                   {/* Amrit keertan Index */}
                   <li>
-                    <details>
-                      <summary>Amrit Keertan</summary>
-                      <ul>
-                        {data.headers.map(({ GurmukhiUni: name }) => (
-                          <li key={name}>
-                            <a
-                              onClick={(e: MouseEvent<HTMLAnchorElement>) => scrollToHash(name)}
-                              href={`#${name.split(' ').join('-')}`}>
-                              {name}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
+                    <a href="#amritKeertan">Amrit Keertan</a>
                   </li>
                 </ul>
               </div>
@@ -114,10 +101,10 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
                 <AmritKeertanIndex data={data.headers} />
               </main>
             </div>
-          </div>
+          </div >
         )
       }}
-    </Fetch>
+    </Fetch >
   );
 }
 
