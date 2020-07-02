@@ -6,9 +6,8 @@
   flex-wrap: wrap;
   justify-content: flex-end;
   padding: 0.5rem 0 0 3rem;
-  position: -webkit-sticky;
-  position: sticky;
   top: 0;
+  transform-origin: top center;
   transition: transform 0.2s;
   z-index: 1;
 
@@ -23,15 +22,6 @@
   &.with-border {
     box-shadow: 0 8px 6px -10px black;
     max-width: 75rem;
-  }
-
-  &.show-controls {
-    transform: rotateX(0deg);
-  }
-
-  &.hide-controls {
-    transform: rotateX(90deg) perspective(500px);
-    transform-origin: top;
   }
 
   > div {

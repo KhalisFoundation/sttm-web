@@ -43,9 +43,15 @@ class Controls extends React.Component {
   componentDidMount() {
     this.mounted = true;
     this.lastScroll = 0;
-    this.originalWrapperTop = this.$wrapper.offsetTop;
-    this.showAdvancedOptions = this.props.showAdvancedOptions;
+    this.isChangeInControls = false;
     window.addEventListener('scroll', this.scrollListener, { passive: true });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
+      this.isChangeInControls = true;
+      this.lastScroll = this.$wrapper.offsetTop;
+    }
   }
 
   componentWillUnmount() {
@@ -55,35 +61,68 @@ class Controls extends React.Component {
     });
   }
 
+  resetControlStyles = () => {
+    this.lastScroll = 0;
+    this.$wrapper.style.position = 'static';
+    this.$wrapper.style.opacity = 1;
+  }
+
+  applyControlStyles = (isShowWrapper) => {
+
+    if (isShowWrapper) {
+      this.$wrapper.style.opacity = 1;
+    } else {
+      this.$wrapper.style.opacity = 0;
+    }
+
+    const oldOffsetTop = this.$wrapper.offsetTop;
+    this.$wrapper.style.position = 'sticky';
+
+    // since we are doing position sticky so top offset gonna change.
+    this.lastScroll = oldOffsetTop;
+  }
+
   scrollListener = throttle(() => {
-    if (window.scrollY >= this.originalWrapperTop) {
+    const controlsOffsetTop = this.$wrapper.offsetTop;
+    const controlsHeight = this.$wrapper.offsetHeight;
+    const controlsBottom = controlsOffsetTop + controlsHeight;
+    const controlsOffset = this.$wrapper.style.position === 'sticky' ? controlsOffsetTop : controlsBottom;
+
+    if (window.scrollY >= controlsOffset) {
+      this.$wrapper.style.opacity = 0;
+
       if (this.mounted && this.state.showBorder === false) {
         this.setState({ showBorder: true });
       }
 
-      const { showAdvancedOptions } = this.props;
-      const currentScroll = this.$wrapper.offsetTop;
-
-      if (this.showAdvancedOptions !== showAdvancedOptions) {
-        this.showAdvancedOptions = this.props.showAdvancedOptions;
-        this.lastScroll = currentScroll;
+      if (this.isChangeInControls) {
+        this.isChangeInControls = false;
+        this.$wrapper.style.opacity = 1;
         return;
       }
+
+
       this.setState(prevState => {
-        if (this.lastScroll >= currentScroll) {
-          this.lastScroll = currentScroll;
+        // We are moving in up direction
+        if (this.lastScroll > controlsOffsetTop) {
+          this.applyControlStyles(true);
+
           return {
             ...prevState,
             showControls: true
           };
         }
-        this.lastScroll = currentScroll;
+
+        // We are moving in downward direction
+        this.applyControlStyles(false);
         return {
           ...prevState,
           showControls: false
         };
       });
     } else {
+      this.resetControlStyles();
+
       if (this.mounted && this.state.showBorder === true) {
         this.setState({ showBorder: false });
       }
@@ -97,14 +136,19 @@ class Controls extends React.Component {
     const classNames = cx({
       'no-select': true,
       'with-border': showBorder,
-      'show-controls': showControls,
-      'hide-controls': !showControls,
     });
+
+    const controlStyles = showControls ? {
+      transform: 'rotateX(0deg)'
+    } : {
+        transform: 'rotateX(90deg) perspective(500px)'
+      }
 
     return (
       <>
         <ShareButtons {...this.props} />
         <div
+          style={controlStyles}
           id="controls-wrapper"
           className={classNames}
           ref={this.setRef}
