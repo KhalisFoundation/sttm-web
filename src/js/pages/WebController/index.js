@@ -52,22 +52,25 @@ export default class WebControllerPage extends React.PureComponent {
   }
 
   handleCeremony = (ceremonyID, highlight) => {
+    this.setState({ loading: true, shabadData: null });
     fetch(`${CEREMONIES_URL}${ceremonyID}`)
       .then(r => r.json())
       .then((data) => {
         if (data) {
+          this.finishLoading();
           const processedData = data;
           processedData.verses = versesToGurbani(data.verses, false, 'ceremony');
           processedData.type = 'ceremony';
           processedData.highlight = highlight || processedData.verses[0].verseId;
           processedData.homeId = processedData.verses[0].verseId;
-          this.setState({ searchData: null, shabadData: processedData }, this.finishLoading);
+          this.setState({ searchData: null, shabadData: processedData, loading: false });
         }
       }
       );
   }
 
-  handleBani = (baniID, highlight, baniLength, mangalPosition) => {
+  handleBani = (baniID, highlight, baniLength = 'extralong', mangalPosition = 'above') => {
+    this.setState({ loading: true, shabadData: null });
     fetch(`${BANIS_API_URL}/${baniID}`)
       .then(r => r.json())
       .then((data) => {
@@ -77,7 +80,7 @@ export default class WebControllerPage extends React.PureComponent {
           processedData.type = 'bani';
           processedData.highlight = highlight || processedData.verses[0].verseId;
           processedData.homeId = processedData.verses[0].verseId;
-          this.setState({ searchData: null, shabadData: processedData }, this.finishLoading);
+          this.setState({ searchData: null, shabadData: processedData, loading: false });
         }
       }
       );
@@ -161,6 +164,7 @@ export default class WebControllerPage extends React.PureComponent {
       pinError,
       codeError,
       shabadData,
+      loading,
     } = this.state;
 
     let errorMessage;
@@ -171,7 +175,7 @@ export default class WebControllerPage extends React.PureComponent {
         TEXTS.CONTROLLER_ERROR();
     }
 
-    if (this.state.loading) return (<Stub />);
+    if (loading && !connected) return (<Stub />);
 
     return (
       <div className="row controller-row" id="content-root">
@@ -186,9 +190,12 @@ export default class WebControllerPage extends React.PureComponent {
               <SearchInput onSearch={this.handleSearch} />
               <SlideControls
                 socket={socket}
-                specialHandler={this.handleCeremony}
                 controllerPin={controllerPin}
                 default={(shabadData && shabadData.type === 'ceremony') ? shabadData.ceremonyInfo.ceremonyID : null} />
+
+              {loading && (
+                <Stub />
+              )}
 
               {shabadData && (
                 <ControllerShabad
