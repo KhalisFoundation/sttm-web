@@ -1,4 +1,3 @@
-
 export const makeSelection = (selectedDiv: HTMLElement) => {
   window.getSelection().removeAllRanges();
   var range = document.createRange();
