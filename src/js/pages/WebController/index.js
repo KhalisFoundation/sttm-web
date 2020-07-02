@@ -86,14 +86,6 @@ export default class WebControllerPage extends React.PureComponent {
       );
   }
 
-  handleShortcuts = ({ type, id }) => {
-    if (type === 'ceremony') {
-      this.handleCeremony(id);
-    } else if (type === 'bani') {
-      this.handleBani(id);
-    }
-  }
-
   handleSubmit = (code, pin) => {
     this.setState({ loading: true });
     fetch(`${SYNC_API_URL}sync/join/${code}`)
@@ -198,7 +190,6 @@ export default class WebControllerPage extends React.PureComponent {
               <SearchInput onSearch={this.handleSearch} />
               <SlideControls
                 socket={socket}
-                specialHandler={this.handleShortcuts}
                 controllerPin={controllerPin}
                 default={(shabadData && shabadData.type === 'ceremony') ? shabadData.ceremonyInfo.ceremonyID : null} />
 

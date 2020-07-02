@@ -17,7 +17,6 @@ export default class SlideControls extends React.PureComponent {
 
   static propTypes = {
     socket: PropTypes.object,
-    specialHandler: PropTypes.func,
     controllerPin: PropTypes.number,
     default: PropTypes.any,
   };
@@ -36,10 +35,6 @@ export default class SlideControls extends React.PureComponent {
         verseId: 26106,
         pin: this.props.controllerPin,
       });
-      this.props.specialHandler({
-        type: 'ceremony',
-        id: 3
-      });
     } else if (activeSlide.classList.contains('bani-slide')) {
       document.querySelector('.sg-list-container').classList.toggle('sg-hide');
       this.props.socket.emit('data', {
@@ -47,10 +42,6 @@ export default class SlideControls extends React.PureComponent {
         type: "bani",
         baniId: activeSlide.dataset.baniId,
         pin: this.props.controllerPin,
-      });
-      this.props.specialHandler({
-        type: 'bani',
-        id: activeSlide.dataset.baniId
       });
     } else {
       const slideText = {
