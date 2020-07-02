@@ -1,4 +1,4 @@
-const isProduction = process.env.NODE_ENV !== 'production';
+const isProduction = process.env.NODE_ENV == 'production';
 
 module.exports = {
   BANIS: isProduction ? '//api.banidb.com/v2/banis' : "//api.khajana.org/v2/banis",
