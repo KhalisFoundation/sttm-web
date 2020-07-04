@@ -197,13 +197,11 @@
 }
 
 .list-container {
-  align-items: center;
-  display: flex;
-  height: 100vh;
-  overflow-y: hidden;
+  height: 100%;
   position: fixed;
   top: 0;
   transition: 0.2s right ease-out;
+  width: 312px;
   z-index: 10;
 
   &.sg-hide svg {
@@ -216,16 +214,20 @@
     border-top-right-radius: 16px;
     color: $sttm-light-black;
     cursor: pointer;
-    margin-right: -42px;
+    display: inline-block;
     padding: 4px 16px;
+    position: absolute;
     text-align: left;
+    top: 50%;
     transform: rotate(-90deg);
+    white-space: nowrap;
 
     span {
       padding-right: 8px;
 
       svg {
         fill: $sttm-orange;
+        transition: 0.4s all ease;
       }
     }
   }
@@ -233,6 +235,7 @@
   .sidebar {
     background-color: $sttm-dark-white;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    display: inline-block;
     height: 100%;
     list-style-type: none;
     overflow-y: auto;
@@ -243,6 +246,10 @@
 
 .sg-list-container {
   right: 0;
+
+  .toggle-button {
+    left: -78px;
+  }
 
   .sg-sidebar {
     .bani-category {
@@ -266,8 +273,7 @@
   }
 
   &.sg-hide {
-    right: -330px;
-    z-index: 0;
+    right: -312px;
   }
 }
 
@@ -278,10 +284,6 @@
 
   .top-bar-title {
     margin: 0;
-  }
-
-  #open-mobile-menu {
-    // line-height: 36px;
   }
 }
 
