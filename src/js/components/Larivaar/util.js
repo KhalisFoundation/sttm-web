@@ -57,8 +57,11 @@ export function fixLarivaarUnicode(str) {
 }
 
 export const getLarivaarStrengthBrightness = (strength) => {
+  if (MAX_LARIVAAR_ASSIST_STRENGTH === strength) {
+    return 100;
+  }
   const perUnitBrightness = 100 / MAX_LARIVAAR_ASSIST_STRENGTH;
-  return 100 - (perUnitBrightness * (strength - 1));
+  return strength * perUnitBrightness;
 }
 
 const isConsonant = char =>
