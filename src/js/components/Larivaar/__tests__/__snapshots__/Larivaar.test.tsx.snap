@@ -90,7 +90,7 @@ Object {
           class=""
         >
           <span
-            style="filter: brightness(100%);"
+            style="filter: brightness(20%);"
           >
             V
             <wbr />
@@ -100,7 +100,7 @@ Object {
           class=""
         >
           <span
-            style="filter: brightness(100%);"
+            style="filter: brightness(20%);"
           >
             a
             <wbr />
@@ -110,7 +110,7 @@ Object {
           class=""
         >
           <span
-            style="filter: brightness(100%);"
+            style="filter: brightness(20%);"
           >
             h
             <wbr />
@@ -124,7 +124,7 @@ Object {
           class=" larivaar-assist-word"
         >
           <span
-            style="filter: brightness(100%);"
+            style="filter: brightness(20%);"
           >
             Gu
             <wbr />
@@ -134,7 +134,7 @@ Object {
           class=" larivaar-assist-word"
         >
           <span
-            style="filter: brightness(100%);"
+            style="filter: brightness(20%);"
           >
             ru
             <wbr />
@@ -151,7 +151,7 @@ Object {
         class=""
       >
         <span
-          style="filter: brightness(100%);"
+          style="filter: brightness(20%);"
         >
           V
           <wbr />
@@ -161,7 +161,7 @@ Object {
         class=""
       >
         <span
-          style="filter: brightness(100%);"
+          style="filter: brightness(20%);"
         >
           a
           <wbr />
@@ -171,7 +171,7 @@ Object {
         class=""
       >
         <span
-          style="filter: brightness(100%);"
+          style="filter: brightness(20%);"
         >
           h
           <wbr />
@@ -185,7 +185,7 @@ Object {
         class=" larivaar-assist-word"
       >
         <span
-          style="filter: brightness(100%);"
+          style="filter: brightness(20%);"
         >
           Gu
           <wbr />
@@ -195,7 +195,7 @@ Object {
         class=" larivaar-assist-word"
       >
         <span
-          style="filter: brightness(100%);"
+          style="filter: brightness(20%);"
         >
           ru
           <wbr />
