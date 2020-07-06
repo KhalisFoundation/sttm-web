@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import PropTypes from 'prop-types';
-import { fixLarivaarUnicode, fixLarivaarGurmukhiFont } from './util';
+
+import { getLarivaarStrengthBrightness, fixLarivaarUnicode, fixLarivaarGurmukhiFont } from './util';
 
 export interface ILarivaarWordProps {
   word: string;
@@ -19,7 +19,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
     word,
     unicode,
     larivaarAssist,
-    larivaarAssistStrength,
+    larivaarAssistStrength = 1,
     index,
     highlight,
     visraamClass,
@@ -29,6 +29,10 @@ function LarivaarWord(props: ILarivaarWordProps) {
   const segments = unicode
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
+
+  const akharStyles = {
+    filter: `brightness(${getLarivaarStrengthBrightness(larivaarAssistStrength)}%)`
+  }
 
   return (
     <span className={visraamClass}>
@@ -53,7 +57,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
             <span
               key={key}
               className={akharClass}
-              style={{ display: 'inline-block' }}
+              style={{ display: 'inline-block', ...akharStyles }}
             >
               {item}
               <wbr />
@@ -62,8 +66,10 @@ function LarivaarWord(props: ILarivaarWordProps) {
         }
 
         return (
-          <span key={key} className={akharClass}>
-            <span>
+          <span
+            key={key}
+            className={akharClass}>
+            <span style={akharStyles}>
               {item}
               <wbr />
             </span>

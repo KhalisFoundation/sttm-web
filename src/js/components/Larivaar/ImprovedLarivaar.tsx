@@ -38,8 +38,6 @@ function Larivaar(props: ILarivaarProps) {
     );
   }
 
-  console.log(larivaarAssistStrength, '.....')
-
   return (
     <>
       {children.split(' ').map((word, index) => {
