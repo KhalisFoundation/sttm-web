@@ -74,7 +74,8 @@ function LarivaarWord(props: ILarivaarWordProps) {
           <span
             key={key}
             className={akharClass}>
-            <span style={akharStyles}>
+            <span
+              style={akharStyles}>
               {item}
               <wbr />
             </span>

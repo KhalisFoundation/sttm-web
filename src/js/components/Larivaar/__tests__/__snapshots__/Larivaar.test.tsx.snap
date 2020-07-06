@@ -23,7 +23,9 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     <span
       class=""
     >
-      <span>
+      <span
+        style="filter: brightness(100%);"
+      >
         V
         <wbr />
       </span>
@@ -31,7 +33,9 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     <span
       class=""
     >
-      <span>
+      <span
+        style="filter: brightness(100%);"
+      >
         a
         <wbr />
       </span>
@@ -39,7 +43,9 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     <span
       class=""
     >
-      <span>
+      <span
+        style="filter: brightness(100%);"
+      >
         h
         <wbr />
       </span>
@@ -49,17 +55,21 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     class=""
   >
     <span
-      class="larivaar-word"
+      class=""
     >
-      <span>
+      <span
+        style="filter: brightness(100%);"
+      >
         Gu
         <wbr />
       </span>
     </span>
     <span
-      class="larivaar-word"
+      class=""
     >
-      <span>
+      <span
+        style="filter: brightness(100%);"
+      >
         ru
         <wbr />
       </span>
@@ -79,7 +89,9 @@ Object {
         <span
           class=""
         >
-          <span>
+          <span
+            style="filter: brightness(100%);"
+          >
             V
             <wbr />
           </span>
@@ -87,7 +99,9 @@ Object {
         <span
           class=""
         >
-          <span>
+          <span
+            style="filter: brightness(100%);"
+          >
             a
             <wbr />
           </span>
@@ -95,7 +109,9 @@ Object {
         <span
           class=""
         >
-          <span>
+          <span
+            style="filter: brightness(100%);"
+          >
             h
             <wbr />
           </span>
@@ -105,17 +121,21 @@ Object {
         class=""
       >
         <span
-          class="larivaar-word larivaar-assist-word"
+          class=" larivaar-assist-word"
         >
-          <span>
+          <span
+            style="filter: brightness(100%);"
+          >
             Gu
             <wbr />
           </span>
         </span>
         <span
-          class="larivaar-word larivaar-assist-word"
+          class=" larivaar-assist-word"
         >
-          <span>
+          <span
+            style="filter: brightness(100%);"
+          >
             ru
             <wbr />
           </span>
@@ -130,7 +150,9 @@ Object {
       <span
         class=""
       >
-        <span>
+        <span
+          style="filter: brightness(100%);"
+        >
           V
           <wbr />
         </span>
@@ -138,7 +160,9 @@ Object {
       <span
         class=""
       >
-        <span>
+        <span
+          style="filter: brightness(100%);"
+        >
           a
           <wbr />
         </span>
@@ -146,7 +170,9 @@ Object {
       <span
         class=""
       >
-        <span>
+        <span
+          style="filter: brightness(100%);"
+        >
           h
           <wbr />
         </span>
@@ -156,17 +182,21 @@ Object {
       class=""
     >
       <span
-        class="larivaar-word larivaar-assist-word"
+        class=" larivaar-assist-word"
       >
-        <span>
+        <span
+          style="filter: brightness(100%);"
+        >
           Gu
           <wbr />
         </span>
       </span>
       <span
-        class="larivaar-word larivaar-assist-word"
+        class=" larivaar-assist-word"
       >
-        <span>
+        <span
+          style="filter: brightness(100%);"
+        >
           ru
           <wbr />
         </span>
