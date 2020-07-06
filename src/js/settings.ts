@@ -343,7 +343,7 @@ export const ADVANCED_SETTINGS = ({
     },
     larivaarAssist ? {
       type: 'icon-toggle',
-      label: 'Larivaar assist color',
+      label: 'Larivaar color strength',
       controlsList: [
         {
           icon: MinusIcon,

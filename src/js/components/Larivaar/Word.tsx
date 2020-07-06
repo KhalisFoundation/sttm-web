@@ -42,11 +42,12 @@ function LarivaarWord(props: ILarivaarWordProps) {
     <span className={visraamClass}>
       {segments.map((item, i) => {
         const key = `${index}.${i}`;
-        let akharClass = larivaarAssist && isOddIdx ? 'larivaar-assist-word' : '';
-
+        let akharClass = '';
         if (isOddIdx) {
-          akharClass += ' larivaar-word';
+          akharClass += 'larivaar-word';
         }
+
+        akharClass = larivaarAssist && isOddIdx ? ' larivaar-assist-word' : '';
 
         // If this is a search result
         if (highlightIndex !== undefined) {

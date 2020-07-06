@@ -152,7 +152,6 @@ class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props, "...")
     const settings = QUICK_SETTINGS(this.props);
     const advanced = ADVANCED_SETTINGS(this.props);
 
