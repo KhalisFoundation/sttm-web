@@ -165,8 +165,8 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                             <h3 className={'relatedShabadTitle ' + fontClassName}>
                               <Larivaar
                                 enable={larivaar}
-                                larivaarAssist={larivaarAssistStrength}
                                 larivaarAssist={larivaarAssist}
+                                larivaarAssistStrength={larivaarAssistStrength}
                                 unicode={unicode}
                               >
                                 {unicode ? s.GurmukhiUni : s.Gurmukhi}

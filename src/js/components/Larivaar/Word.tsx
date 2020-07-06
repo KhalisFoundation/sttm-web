@@ -1,6 +1,10 @@
 import React, { memo } from 'react';
 
-import { getLarivaarStrengthBrightness, fixLarivaarUnicode, fixLarivaarGurmukhiFont } from './util';
+import {
+  getLarivaarStrengthBrightness,
+  fixLarivaarUnicode,
+  fixLarivaarGurmukhiFont
+} from './util';
 
 export interface ILarivaarWordProps {
   word: string;

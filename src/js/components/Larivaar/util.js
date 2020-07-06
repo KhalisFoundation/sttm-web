@@ -56,7 +56,7 @@ export function fixLarivaarUnicode(str) {
   return arrWordBreak;
 }
 
-export const getLarivaarStrengthBrigtness = (strength) => {
+export const getLarivaarStrengthBrightness = (strength) => {
   const perUnitBrightness = 100 / MAX_LARIVAAR_ASSIST_STRENGTH;
   return 100 - (perUnitBrightness * (strength - 1));
 }
