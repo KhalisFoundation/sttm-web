@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
@@ -43,6 +44,7 @@ const plugins = PRODUCTION
       CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
       DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
     }),
+    new CleanWebpackPlugin(),
   ]);
 
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');
@@ -54,8 +56,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'public/assets', 'js'),
-    chunkFilename: 'chunks/[name]-[hash].js',
-    filename: '[name]-[hash].js',
+    chunkFilename: PRODUCTION ? 'chunks/[name]-[hash]' : 'chunks/[name].js',
+    filename: PRODUCTION ? '[name]-[hash]' : '[name].js',
     publicPath: '/assets/js/',
   },
   devtool: PRODUCTION ? undefined : 'inline-source-map',
