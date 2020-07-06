@@ -152,31 +152,22 @@ class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    const {
-      history,
-      match,
-      location,
-      ...others
-    } = this.props;
-
-    const isParagraphMode = isShowParagraphModeRoute(location.pathname);
-    const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
-
-    const settings = QUICK_SETTINGS(others);
-    const advanced = ADVANCED_SETTINGS(others);
+    console.log(this.props, "...")
+    const settings = QUICK_SETTINGS(this.props);
+    const advanced = ADVANCED_SETTINGS(this.props);
 
     const quickSettingsPanel = (
       <>
         {settings.map((element, i) => {
-          if (element.label === 'Paragraph' && !isParagraphMode) {
-            return null;
+          if (element.type) {
+            return (
+              <div key={`settings-${i}`}
+                className={`qs-option controller-option ${element.type}`}>
+                {this.bakeSettings(element)}
+              </div>
+            )
           }
-          return (
-            <div key={`settings-${i}`}
-              className={`qs-option controller-option ${element.type}`}>
-              {this.bakeSettings(element)}
-            </div>
-          )
+          return null;
         })}
       </>
     );
@@ -190,14 +181,14 @@ class ShabadControls extends React.PureComponent {
           {this.props.showAdvancedOptions && (
             <div className="advanced-options">
               {advanced.map((element, i) => {
-                if (element.label === 'Auto Scroll' && !isShowAutoScroll) {
-                  return null;
+                if (element.type) {
+                  return (
+                    <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
+                      {this.bakeSettings(element)}
+                    </div>
+                  )
                 }
-                return (
-                  <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
-                    {this.bakeSettings(element)}
-                  </div>
-                )
+                return null;
               })}
               {quickSettingsPanel}
             </div>

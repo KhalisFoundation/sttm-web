@@ -5,7 +5,12 @@ import {
   VISRAAM,
 } from './constants';
 
-import { toggleItemInArray, toFixedFloat } from './util';
+import {
+  toggleItemInArray,
+  toFixedFloat,
+  isShowParagraphModeRoute,
+  isShowAutoScrollRoute
+} from './util';
 
 import {
   LarivaarIcon,
@@ -43,6 +48,9 @@ export interface SETTING_ACTIONS {
   toggleAdvancedOptions: Function,
   setLarivaarAssistStrength: Function,
 
+  location: {
+    pathname: string,
+  },
   larivaarAssistStrength: number,
   translationLanguages: string[],
   transliterationLanguages: string[],
@@ -89,7 +97,10 @@ export const QUICK_SETTINGS = ({
   splitView,
   showAdvancedOptions,
   darkMode,
+  location,
 }: SETTING_ACTIONS) => {
+
+  const isParagraphMode = isShowParagraphModeRoute(location.pathname);
 
   return [
     {
@@ -172,7 +183,7 @@ export const QUICK_SETTINGS = ({
         },
       ],
     },
-    {
+    isParagraphMode ? {
       type: 'icon-toggle',
       label: "Paragraph",
       controlsList: [
@@ -182,7 +193,7 @@ export const QUICK_SETTINGS = ({
           value: paragraphMode,
         }
       ]
-    },
+    } : {},
     {
       type: 'icon-toggle',
       label: 'Larivaar',
@@ -244,6 +255,8 @@ export const ADVANCED_SETTINGS = ({
   larivaarAssistStrength,
   lineHeight,
   changeFont,
+  larivaar,
+  larivaarAssist,
 
   setLarivaarAssistStrength,
   toggleAutoScrollMode,
@@ -255,13 +268,17 @@ export const ADVANCED_SETTINGS = ({
   setTransliterationFontSize,
   translationFontSize,
   transliterationFontSize,
-}: SETTING_ACTIONS) => [
-    {
+  location
+}: SETTING_ACTIONS) => {
+  const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
+
+  return [
+    isShowAutoScroll ? {
       type: 'toggle-option',
       label: 'Auto Scroll',
       checked: autoScrollMode,
       action: toggleAutoScrollMode,
-    },
+    } : {},
     {
       type: 'icon-toggle',
       label: 'Line Height',
@@ -324,7 +341,7 @@ export const ADVANCED_SETTINGS = ({
         },
       ],
     },
-    {
+    larivaarAssist ? {
       type: 'icon-toggle',
       label: 'Larivaar assist color',
       controlsList: [
@@ -344,7 +361,7 @@ export const ADVANCED_SETTINGS = ({
           action: () => setLarivaarAssistStrength(Math.min(larivaarAssistStrength + 1, 5))
         },
       ],
-    },
+    } : {},
     {
       type: 'dropdown',
       label: 'Visraam Source',
@@ -367,3 +384,4 @@ export const ADVANCED_SETTINGS = ({
       options: FONT_OPTIONS,
     },
   ]
+}

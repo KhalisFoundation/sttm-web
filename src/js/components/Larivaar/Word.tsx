@@ -35,7 +35,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
     : fixLarivaarGurmukhiFont(word);
 
   const akharStyles = {
-    filter: `brightness(${getLarivaarStrengthBrightness(larivaarAssistStrength)}%)`
+    filter: `brightness(${larivaarAssist ? getLarivaarStrengthBrightness(larivaarAssistStrength) : 100}%)`
   }
 
   return (
