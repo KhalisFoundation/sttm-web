@@ -4,7 +4,7 @@ import { TEXTS } from '@/constants';
 import { IStore } from '@/features/types';
 import Larivaar from '@/components/Larivaar';
 import { clickEvent, ACTIONS } from '@/util/analytics';
-import { toShabadURL, getClassnamesForShabadRatings } from '@/util';
+import { toShabadURL } from '@/util';
 
 export interface IRelatedShabadData {
   ShabadID: number;
@@ -56,6 +56,15 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
     this.state = {
       visibleShabads: RelatedShabads.showMoreShabads //default value
     }
+  }
+
+  getClassnamesForShabadRatings = (avgScore: number): string => {
+    if (avgScore >= 70) {
+      return 'Excellent'
+    } else if (avgScore >= 40) {
+      return 'Good';
+    }
+    return 'Poor'
   }
 
   setVisibleShabadsState = (noOfShabads: number) => {
@@ -155,7 +164,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                             style={{
                               transform: `scaleX(${shabadBarScale})`,
                             }}
-                            className={`relatedShabadAvgRatingMeter relatedShabadAvgRating${getClassnamesForShabadRatings(
+                            className={`relatedShabadAvgRatingMeter relatedShabadAvgRating${this.getClassnamesForShabadRatings(
                               shabadScores
                             )}`}
                           />

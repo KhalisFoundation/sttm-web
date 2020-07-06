@@ -76,17 +76,17 @@ export default function getEmbedCode({ gurbani, info }) {
         #sttm-root .sttm-line {
           margin: 10px;
         }
-        
+
         #sttm-root .sttm-line .sttm-baani {
           font-size: 1.3em;
         }
-        
+
         #sttm-root .sttm-line .sttm-transliteration {
           display: none;
           color: #01669b;
           font-style: italic;
         }
-        
+
         #sttm-root .sttm-line .sttm-translation {
           display: none;
           color: grey;
@@ -121,45 +121,45 @@ export default function getEmbedCode({ gurbani, info }) {
           </div>
           <div>
             <a href="https://sikhitothemax.org/shabad?id=${
-              info.id
-            }" target="_blank">
+    info.id
+    }" target="_blank">
               <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="30" width="30" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
             </a>
           </div>
         </div>
         <div class="sttm-shabad-controls"></div>
         <h3 class="sttm-shabad-meta">
-          ${info.writer.english} | 
-          ${info.source.english}: 
+          ${info.writer.english} |
+          ${info.source.english}:
           <a href="https://sikhitothemax.org/ang?ang=${
-            info.source.pageno
-          }&source=${info.source.id}">
+    info.source.pageno
+    }&source=${info.source.id}">
             ${info.source.pageno}
           </a>
         </h3>
         <div class="sttm-shabad-content">
         ${gurbani
-          .map(
-            ({ shabad }) =>
-              `
+      .map(
+        ({ shabad }) =>
+          `
               <div class="sttm-line">
                 <div class="sttm-baani">${shabad.gurbani.unicode}</div>
                 <div class="sttm-transliteration">${
-                  shabad.transliteration
-                }</div>
+          shabad.transliteration
+          }</div>
                 <div class="sttm-translation sttm-english sttm-enabled">${
-                  shabad.translation.english.ssk
-                }</div>
+          shabad.translation.english.ssk
+          }</div>
                 <div class="sttm-translation sttm-punjabi">${
-                  shabad.translation.punjabi.bms.unicode
-                }</div>
+          shabad.translation.punjabi.bms.unicode
+          }</div>
                 <div class="sttm-translation sttm-spanish">${
-                  shabad.translation.spanish
-                }</div>
+          shabad.translation.spanish
+          }</div>
               </div>
         `
-          )
-          .join('')}
+      )
+      .join('')}
         </div>
       </div>
       <script async src="${window.location.origin}/embed.js"></script>
