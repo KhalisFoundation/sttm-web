@@ -6,7 +6,7 @@ import { VISRAAM } from '../constants';
 import { clearVisraamClass } from '../util';
 import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
 import { MultiSelect } from '../components/MultiSelect';
-import { isShowAutoScrollRoute } from '../../js/util';
+import { isShowAutoScrollRoute, isShowParagraphModeRoute } from '../../js/util';
 class ShabadControls extends React.PureComponent {
   static propTypes = {
     setTranslationLanguages: PropTypes.func.isRequired,
@@ -29,6 +29,7 @@ class ShabadControls extends React.PureComponent {
     setVisraamStyle: PropTypes.func.isRequired,
     changeFont: PropTypes.func.isRequired,
     toggleAdvancedOptions: PropTypes.func.isRequired,
+    setLarivaarAssistStrength: PropTypes.func.isRequired,
 
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -40,6 +41,7 @@ class ShabadControls extends React.PureComponent {
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    larivaarAssistStrength: PropTypes.number.isRequired,
     translationFontSize: PropTypes.number.isRequired,
     transliterationFontSize: PropTypes.number.isRequired,
     lineHeight: PropTypes.number.isRequired,
@@ -157,7 +159,7 @@ class ShabadControls extends React.PureComponent {
       ...others
     } = this.props;
 
-    const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
+    const isParagraphMode = isShowParagraphModeRoute(location.pathname);
     const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
 
     const settings = QUICK_SETTINGS(others);
@@ -166,7 +168,7 @@ class ShabadControls extends React.PureComponent {
     const quickSettingsPanel = (
       <>
         {settings.map((element, i) => {
-          if (element.label === 'Paragraph' && !isSundarGutkaRoute) {
+          if (element.label === 'Paragraph' && !isParagraphMode) {
             return null;
           }
           return (

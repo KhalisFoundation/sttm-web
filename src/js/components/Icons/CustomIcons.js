@@ -34,7 +34,7 @@ const fontControlCommonStyles = {
   textAlignLast: 'center',
   width: 'inherit',
 }
-export const FontSizeControl = props => {
+export const SizeControl = props => {
   const { options = defaultMultiSelectOptions, className, onChange, value } = props;
 
   return (
@@ -51,7 +51,7 @@ export const FontSizeControl = props => {
     </select >
   )
 }
-FontSizeControl.propTypes = multiSelectPropTypes;
+SizeControl.propTypes = multiSelectPropTypes;
 
 export const MinusIcon = props => (
   <span onClick={props.onClick}

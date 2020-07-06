@@ -1,4 +1,5 @@
 import {
+  DEFAULT_LARIVAAR_ASSIST_STRENGTH,
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLATION_FONT_SIZE,
   DEFAULT_TRANSLITERATION_LANGUAGES,
@@ -87,6 +88,9 @@ export const setTranslationFontSize = createAction(SET_TRANSLATION_FONT_SIZE);
 export const SET_TRANSLITERATION_FONT_SIZE = 'SET_TRANSLITERATION_FONT_SIZE';
 export const setTransliterationFontSize = createAction(SET_TRANSLITERATION_FONT_SIZE);
 
+export const SET_LARIVAAR_ASSIST_STRENGTH = 'SET_LARIVAAR_ASSIST_STRENGTH';
+export const setLarivaarAssistStrength = createAction(SET_LARIVAAR_ASSIST_STRENGTH);
+
 export const SET_LINE_HEIGHT = 'SET_LINE_HEIGHT';
 export const setLineHeight = createAction(SET_LINE_HEIGHT);
 
@@ -124,6 +128,7 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setVisraamSource(DEFAULT_VISRAAM_SOURCE));
   dispatch(setVisraamStyle(DEFAULT_VISRAAM_STYLE));
   dispatch(setCenterAlignOption(DEFAULT_CENTER_ALIGN_GURBANI));
+  dispatch(setLarivaarAssistStrength(DEFAULT_LARIVAAR_ASSIST_STRENGTH));
   dispatch(setSplitView(DEFAULT_SPLIT_VIEW));
 };
 

@@ -12,7 +12,7 @@ import {
   LarivaarAssistIcon,
   PlusIcon,
   MinusIcon,
-  FontSizeControl,
+  SizeControl,
   AlignCenterIcon,
   AlignLeftIcon,
   SplitViewIcon,
@@ -41,7 +41,9 @@ export interface SETTING_ACTIONS {
   setVisraamStyle: Function,
   changeFont: Function,
   toggleAdvancedOptions: Function,
+  setLarivaarAssistStrength: Function,
 
+  larivaarAssistStrength: number,
   translationLanguages: string[],
   transliterationLanguages: string[],
   visraams: boolean,
@@ -125,7 +127,7 @@ export const QUICK_SETTINGS = ({
           },
         },
         {
-          control: FontSizeControl,
+          control: SizeControl,
           actionType: 'change',
           action: (size: any) => { setFontSize(toFixedFloat((size / 10))); },
           value: Math.floor(fontSize * 10),
@@ -239,9 +241,11 @@ export const ADVANCED_SETTINGS = ({
   setVisraamSource,
   setVisraamStyle,
   setLineHeight,
+  larivaarAssistStrength,
   lineHeight,
   changeFont,
 
+  setLarivaarAssistStrength,
   toggleAutoScrollMode,
   autoScrollMode,
   visraamSource,
@@ -267,7 +271,7 @@ export const ADVANCED_SETTINGS = ({
           action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - 0.2), 1)),
         },
         {
-          control: FontSizeControl,
+          control: SizeControl,
           controlOptions: [1, 1.2, 1.4, 1.6, 1.8, 2],
           actionType: 'change',
           action: (val: number) => setLineHeight(toFixedFloat(val)),
@@ -288,7 +292,7 @@ export const ADVANCED_SETTINGS = ({
           action: () => setTranslationFontSize(Math.max(toFixedFloat(translationFontSize - 0.4), 1.2))
         },
         {
-          control: FontSizeControl,
+          control: SizeControl,
           controlOptions: [12, 16, 20, 24],
           actionType: 'change',
           action: (size: number) => setTranslationFontSize(toFixedFloat((size / 10))),
@@ -309,7 +313,7 @@ export const ADVANCED_SETTINGS = ({
           action: () => setTransliterationFontSize(Math.max(toFixedFloat(transliterationFontSize - 0.4), 1.2))
         },
         {
-          control: FontSizeControl,
+          control: SizeControl,
           actionType: 'change',
           action: (size: number) => setTransliterationFontSize(toFixedFloat((size / 10))),
           value: Math.floor(transliterationFontSize * 10),
@@ -317,6 +321,27 @@ export const ADVANCED_SETTINGS = ({
         {
           icon: PlusIcon,
           action: () => setTransliterationFontSize(Math.min(toFixedFloat(transliterationFontSize + 0.4), 3.2))
+        },
+      ],
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Larivaar assist color',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => setLarivaarAssistStrength(Math.max(larivaarAssistStrength - 1, 1))
+        },
+        {
+          control: SizeControl,
+          controlOptions: [1, 2, 3, 4, 5],
+          actionType: 'change',
+          action: (strength: number) => setLarivaarAssistStrength(Number(strength)),
+          value: larivaarAssistStrength,
+        },
+        {
+          icon: PlusIcon,
+          action: () => setLarivaarAssistStrength(Math.min(larivaarAssistStrength + 1, 5))
         },
       ],
     },

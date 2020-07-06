@@ -6,6 +6,7 @@ export interface ILarivaarWordProps {
   word: string;
   unicode: boolean;
   larivaarAssist?: boolean;
+  larivaarAssistStrength?: number;
   index: number;
   highlightIndex?: Array<number>;
   highlight?: boolean;
@@ -18,11 +19,13 @@ function LarivaarWord(props: ILarivaarWordProps) {
     word,
     unicode,
     larivaarAssist,
+    larivaarAssistStrength,
     index,
     highlight,
     visraamClass,
   } = props;
 
+  const isOddIdx = index % 2 === 1;
   const segments = unicode
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
@@ -30,26 +33,19 @@ function LarivaarWord(props: ILarivaarWordProps) {
   return (
     <span className={visraamClass}>
       {segments.map((item, i) => {
-        let akharClass = '';
-        let assistLarivaar;
+        const key = `${index}.${i}`;
+        let akharClass = larivaarAssist && isOddIdx ? 'larivaar-assist-word' : '';
 
-        if (index % 2 === 1) {
-          akharClass += 'larivaar-word';
+        if (isOddIdx) {
+          akharClass += ' larivaar-word';
         }
 
-        // If this isn't a search result
-        if (!(highlightIndex !== undefined)) {
-          assistLarivaar = larivaarAssist && index % 2 === 1;
-        } else {
+        // If this is a search result
+        if (highlightIndex !== undefined) {
           if (highlight || (highlightIndex.includes(index))) {
             akharClass += ' search-highlight-word';
           }
-          assistLarivaar = larivaarAssist && index % 2 === 1;
         }
-
-        akharClass += assistLarivaar ? ' larivaar-assist-word' : '';
-
-        const key = `${index}.${i}`;
 
         if (item.includes('´')) {
           // handle space break for this special character

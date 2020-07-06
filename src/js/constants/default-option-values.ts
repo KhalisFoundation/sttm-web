@@ -12,6 +12,7 @@ export const DEFAULT_FONT_SIZE = 2;
 export const DEFAULT_TRANSLATION_FONT_SIZE = 1.2;
 export const DEFAULT_TRANSLITERATION_FONT_SIZE = 1.2;
 export const DEFAULT_LINE_HEIGHT = 1.2;
+export const DEFAULT_LARIVAAR_ASSIST_STRENGTH = 1;
 export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;

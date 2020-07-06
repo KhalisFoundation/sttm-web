@@ -1,8 +1,9 @@
 import React from 'react';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
+
 import BaaniLine from '@/components/BaaniLine';
 import { SHABAD_CONTENT_CLASSNAME } from '@/constants';
-import cx from 'classnames';
 import { getVerseId, getShabadId } from '@/util/api/shabad';
 import HomeIcon from '@/components/Icons/Home';
 
