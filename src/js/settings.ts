@@ -255,7 +255,6 @@ export const ADVANCED_SETTINGS = ({
   larivaarAssistStrength,
   lineHeight,
   changeFont,
-  larivaar,
   larivaarAssist,
 
   setLarivaarAssistStrength,
@@ -343,7 +342,7 @@ export const ADVANCED_SETTINGS = ({
     },
     larivaarAssist ? {
       type: 'icon-toggle',
-      label: 'Larivaar color strength',
+      label: 'Larivaar contrast',
       controlsList: [
         {
           icon: MinusIcon,

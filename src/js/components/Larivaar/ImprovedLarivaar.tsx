@@ -16,7 +16,7 @@ export interface ILarivaarProps {
   visraam: object;
 }
 
-const Larivaar: React.FC<ILarivaarProps> = (props) => {
+export const Larivaar: React.FC<ILarivaarProps> = (props) => {
   const {
     highlightIndex,
     larivaarAssist,
