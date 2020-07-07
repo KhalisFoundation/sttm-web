@@ -1,5 +1,14 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import createDebounce from 'redux-debounced';
+import thunk from 'redux-thunk';
+
+import { blendColors } from '@/util';
+import {
+  TEXT_COLOR,
+  DARKMODE_TEXT_COLOR,
+  LARIVAAR_ASSIST_COLOR
+} from '@/constants';
+
 import reducer from '../reducers';
 import {
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
@@ -47,7 +56,7 @@ import {
   getNumberFromLocalStorage,
   getStringFromLocalStorage,
 } from '../../util';
-import thunk from 'redux-thunk';
+
 
 const initialState = {
   online: window !== undefined ? window.navigator.onLine : true,

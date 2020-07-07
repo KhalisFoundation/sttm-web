@@ -65,7 +65,7 @@ class Controls extends React.Component {
 
   resetControlStyles = () => {
     this.lastScroll = 0;
-    this.$wrapper.style.transform = 'rotateX(0deg)';
+    this.$wrapper.style.transform = '';
     this.$wrapper.style.position = '';
     this.$wrapper.style.opacity = '';
   }
@@ -141,7 +141,7 @@ class Controls extends React.Component {
     });
 
     const controlStyles = showControls ? {
-      transform: 'rotateX(0deg)'
+      transform: ''
     } : {
         transform: 'rotateX(90deg) perspective(500px)'
       }
