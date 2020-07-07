@@ -9,8 +9,6 @@ export const baaniNameToIdMapper = (baanies: any, baaniIdOrName: string) => {
     }
   })
 
-  console.log(allBaanies, baaniIdOrName, 'all baanies')
-
   for (let cntr = 0; cntr < allBaanies.length; ++cntr) {
     if (allBaanies[cntr].id == baaniIdOrName ||
       allBaanies[cntr].name == baaniIdOrName) {

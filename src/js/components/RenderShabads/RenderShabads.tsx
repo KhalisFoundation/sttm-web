@@ -29,8 +29,6 @@ export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location, 
   const baaniUrl = getBaaniUrl({ id, routeValue });
   const pageViewUrl = getPageView({ id, routeValue });
 
-  console.log(id, baaniUrl, '--------- props in the render shabads')
-
   useEffect(() => {
     pageView(`${pageViewUrl}`);
     // Just making sure that we are always on top of page
