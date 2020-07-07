@@ -35,8 +35,12 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
     : fixLarivaarGurmukhiFont(word);
 
   const assignAkharColor = (node) => {
-    if (node && isColoredLarivaarAssist) {
-      node.style.setProperty('color', larivaarAssistColor, 'important');
+    if (node) {
+      if (isColoredLarivaarAssist) {
+        node.style.setProperty('color', larivaarAssistColor, 'important');
+      } else {
+        node.style.setProperty('color', '');
+      }
     }
   }
 
