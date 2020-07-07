@@ -14,19 +14,22 @@ import {
 
 interface MatchParams {
   shabadId?: string;
-  baaniId?: string;
 }
 
 interface IRenderShabadsProps extends RouteComponentProps<MatchParams> {
   location: Location
+  sundarGutkaBaaniId?: number
 }
 
-export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location }) => {
-  const { url, params: { shabadId, baaniId } } = match;
+export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location, sundarGutkaBaaniId }) => {
+  const { url, params: { shabadId } } = match;
   const { pathname } = location;
+  const id = shabadId || sundarGutkaBaaniId;
   const routeValue = getRouteValue(pathname);
-  const baaniUrl = getBaaniUrl({ shabadId, baaniId, routeValue });
-  const pageViewUrl = getPageView({ shabadId, baaniId, routeValue });
+  const baaniUrl = getBaaniUrl({ id, routeValue });
+  const pageViewUrl = getPageView({ id, routeValue });
+
+  console.log(id, baaniUrl, '--------- props in the render shabads')
 
   useEffect(() => {
     pageView(`${pageViewUrl}`);

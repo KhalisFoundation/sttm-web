@@ -9,7 +9,7 @@ import { RenderShabads } from '../../components/RenderShabads';
 import BreadCrumb from '../../components/Breadcrumb';
 import Android from '../../components/Icons/Android';
 import AppleiOS from '../../components/Icons/AppleiOS';
-
+import { sanitizeBaani, baaniNameToIdMapper } from './utils';
 
 class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -38,6 +38,7 @@ class SundarGutka extends React.PureComponent {
   render() {
     const {
       props: {
+        location: { pathname },
         match: { isExact: isSundarGutkaHome },
         transliterationLanguages,
       },
@@ -47,6 +48,10 @@ class SundarGutka extends React.PureComponent {
     const links = isSundarGutkaHome
       ? SundarGutka.HOME_LINKS
       : SundarGutka.BAANI_LINKS;
+
+    //eg /sundar-gutka/japji-sahib [ so picked up japji-sahib
+    const baaniIdOrName = pathname.split('/')[2];
+    const baaniId = baanies ? baaniNameToIdMapper(baanies, baaniIdOrName) : baaniIdOrName;
 
     return (
       <div className="row" id="content-root">
@@ -108,8 +113,7 @@ class SundarGutka extends React.PureComponent {
                         <div
                           className="sgCardEnglish"
                         >{transliterationLanguages.includes('english') &&
-                          `${SundarGutka.sanitize(transliteration)}`}
-
+                          `${sanitizeBaani(transliteration)}`}
                         </div>
                       </div>
                     </Link>
@@ -118,9 +122,9 @@ class SundarGutka extends React.PureComponent {
             </div>
           ) : (
                 <Route
-                  path={this.props.match.url + '/:baaniId'}
-                  render={routeProps => <RenderShabads {...routeProps} />
-                  } />
+                  path={this.props.match.url + '/:baaniIdOrName'}
+                  render={routeProps => <RenderShabads sundarGutkaBaaniId={baaniId} {...routeProps} />}
+                />
               )}
         </div>
       </div>

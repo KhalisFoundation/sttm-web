@@ -1,5 +1,4 @@
 export interface IUtilArguments {
-  shabadId?: string;
-  baaniId?: string;
+  id: number | string;
   routeValue: number;
 }
