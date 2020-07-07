@@ -34,15 +34,15 @@ function LarivaarWord(props: ILarivaarWordProps) {
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
 
-  const akharStyles = {
-    filter: `brightness(${larivaarAssist ? getLarivaarStrengthBrightness(larivaarAssistStrength) : 100}%)`
-  }
-
   return (
     <span className={visraamClass}>
       {segments.map((item, i) => {
         const key = `${index}.${i}`;
         let akharClass = '';
+        const akharStyles = {
+          filter: `brightness(${larivaarAssist && isOddIdx ? getLarivaarStrengthBrightness(larivaarAssistStrength) : 100}%)`
+        }
+
         if (isOddIdx) {
           akharClass += 'larivaar-word';
         }
