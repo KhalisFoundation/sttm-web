@@ -33,7 +33,6 @@ export interface IRelatedShabadsProps
   | 'translationLanguages'
   | 'larivaar'
   | 'larivaarAssist'
-  | 'larivaarAssistStrength'
   | 'unicode'
   | 'transliterationLanguages'
   > {
@@ -102,7 +101,6 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
       // transliterationLanguages,
       larivaar,
       larivaarAssist,
-      larivaarAssistStrength,
       forShabadID,
       count = 20,
     } = this.props;
@@ -175,7 +173,6 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                               <Larivaar
                                 enable={larivaar}
                                 larivaarAssist={larivaarAssist}
-                                larivaarAssistStrength={larivaarAssistStrength}
                                 unicode={unicode}
                               >
                                 {unicode ? s.GurmukhiUni : s.Gurmukhi}

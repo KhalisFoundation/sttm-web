@@ -1,7 +1,6 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import {
-  getLarivaarStrengthBrightness,
   fixLarivaarUnicode,
   fixLarivaarGurmukhiFont
 } from './util';
@@ -10,44 +9,49 @@ export interface ILarivaarWordProps {
   word: string;
   unicode: boolean;
   larivaarAssist?: boolean;
-  larivaarAssistStrength?: number;
+  larivaarAssistColor: string;
   index: number;
   highlightIndex?: Array<number>;
   highlight?: boolean;
   visraamClass: string;
 }
 
-function LarivaarWord(props: ILarivaarWordProps) {
+const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
   const {
     highlightIndex,
     word,
     unicode,
     larivaarAssist,
-    larivaarAssistStrength = 1,
+    larivaarAssistColor,
     index,
     highlight,
     visraamClass,
   } = props;
 
   const isOddIdx = index % 2 === 1;
+  const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
   const segments = unicode
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
+
+  const assignAkharColor = (node) => {
+    if (node && isColoredLarivaarAssist) {
+      node.style.setProperty('color', larivaarAssistColor, 'important');
+    }
+  }
 
   return (
     <span className={visraamClass}>
       {segments.map((item, i) => {
         const key = `${index}.${i}`;
         let akharClass = '';
-        const akharStyles = {
-          filter: `brightness(${larivaarAssist && isOddIdx ? getLarivaarStrengthBrightness(larivaarAssistStrength) : 100}%)`
-        }
 
         if (isOddIdx) {
           akharClass += 'larivaar-word';
+          if (isColoredLarivaarAssist) {
+            akharClass += ' larivaar-assist-word';
+          }
         }
-
-        akharClass = larivaarAssist && isOddIdx ? ' larivaar-assist-word' : '';
 
         // If this is a search result
         if (highlightIndex !== undefined) {
@@ -56,13 +60,16 @@ function LarivaarWord(props: ILarivaarWordProps) {
           }
         }
 
+        // handle space break for this special character
         if (item.includes('´')) {
-          // handle space break for this special character
+          // currently react don't support assigning important as inline
+          // so need to use this hack of reference
           return (
             <span
+              ref={assignAkharColor}
               key={key}
               className={akharClass}
-              style={{ display: 'inline-block', ...akharStyles }}
+              style={{ display: 'inline-block' }}
             >
               {item}
               <wbr />
@@ -70,12 +77,13 @@ function LarivaarWord(props: ILarivaarWordProps) {
           );
         }
 
+        // currently react don't support assigning important as inline
+        // so need to use this hack of reference
         return (
           <span
             key={key}
             className={akharClass}>
-            <span
-              style={akharStyles}>
+            <span ref={assignAkharColor}>
               {item}
               <wbr />
             </span>

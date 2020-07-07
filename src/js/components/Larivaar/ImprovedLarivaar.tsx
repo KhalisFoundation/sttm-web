@@ -1,12 +1,14 @@
 import React, { memo } from 'react';
+import { connect } from 'react-redux';
 
 import LarivaarWord from './Word';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
+import { getLarivaarAssistColor } from '../../features/selectors';
 import { getVisraamClass } from '../../util';
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
-  larivaarAssistStrength?: number;
-  highlightIndex?: Array<number>;
+  larivaarAssistColor: string;
+  highlightIndex?: number[];
   enable?: boolean;
   unicode: boolean;
   children: string;
@@ -14,11 +16,11 @@ export interface ILarivaarProps {
   visraam: object;
 }
 
-function Larivaar(props: ILarivaarProps) {
+const Larivaar: React.FC<ILarivaarProps> = (props) => {
   const {
     highlightIndex,
-    larivaarAssist = false,
-    larivaarAssistStrength,
+    larivaarAssist,
+    larivaarAssistColor,
     enable = true,
     children,
     unicode,
@@ -55,7 +57,7 @@ function Larivaar(props: ILarivaarProps) {
             word={word}
             unicode={unicode}
             larivaarAssist={larivaarAssist}
-            larivaarAssistStrength={larivaarAssistStrength}
+            larivaarAssistColor={larivaarAssistColor}
             index={index}
             highlight={highlight}
             visraamClass={visraamClass}
@@ -66,4 +68,9 @@ function Larivaar(props: ILarivaarProps) {
   );
 }
 
-export default memo(Larivaar);
+const mapStateToProps = (state: any) =>
+  ({
+    larivaarAssistColor: getLarivaarAssistColor(state)
+  })
+
+export default memo(connect(mapStateToProps, {})(Larivaar));

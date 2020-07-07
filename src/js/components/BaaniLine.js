@@ -9,7 +9,6 @@ export default class BaaniLine extends React.PureComponent {
       gurmukhi: PropTypes.string,
     }).isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
-    larivaarAssistStrength: PropTypes.number.isRequired,
     shouldHighlight: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
@@ -23,7 +22,6 @@ export default class BaaniLine extends React.PureComponent {
     const {
       larivaar,
       larivaarAssist,
-      larivaarAssistStrength,
       shouldHighlight,
       fontSize,
       lineHeight,
@@ -48,7 +46,6 @@ export default class BaaniLine extends React.PureComponent {
         >
           <Larivaar
             larivaarAssist={larivaarAssist}
-            larivaarAssistStrength={larivaarAssistStrength}
             enable={larivaar}
             unicode={unicode}
             visraam={visraam}

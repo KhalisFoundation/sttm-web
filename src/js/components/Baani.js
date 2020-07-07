@@ -29,7 +29,6 @@ export default class Baani extends React.PureComponent {
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
-    larivaarAssistStrength: PropTypes.number.isRequired,
     highlight: PropTypes.number,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
@@ -154,7 +153,6 @@ export default class Baani extends React.PureComponent {
   getBaniLine = shabad => {
     const {
       larivaarAssist,
-      larivaarAssistStrength,
       larivaar,
       unicode,
       fontSize,
@@ -171,7 +169,6 @@ export default class Baani extends React.PureComponent {
         shouldHighlight={showFullScreen ? false : highlight === parseInt(getVerseId(shabad), 10)}
         larivaar={larivaar}
         larivaarAssist={larivaarAssist}
-        larivaarAssistStrength={larivaarAssistStrength}
         fontSize={fontSize}
         lineHeight={lineHeight}
         fontFamily={fontFamily}

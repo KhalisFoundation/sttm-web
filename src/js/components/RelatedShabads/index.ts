@@ -6,7 +6,6 @@ export default connect(
   ({
     larivaar,
     larivaarAssist,
-    larivaarAssistStrength,
     unicode,
     translationLanguages,
     transliterationLanguages,
@@ -14,7 +13,6 @@ export default connect(
     translationLanguages,
     larivaar,
     larivaarAssist,
-    larivaarAssistStrength,
     unicode,
     transliterationLanguages,
   })
