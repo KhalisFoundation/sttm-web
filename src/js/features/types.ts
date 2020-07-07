@@ -6,6 +6,7 @@ export interface IStore {
   translationLanguages: ['english', 'punjabi', 'spanish'];
   transliterationLanguages: ['english'];
   larivaarAssist: boolean;
+  larivaarAssistStrength: number;
   larivaar: boolean;
   unicode: boolean;
   splitView: boolean;

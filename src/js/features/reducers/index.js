@@ -20,6 +20,7 @@ import {
   SET_AUTOSCROLLING,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
+  SET_LARIVAAR_ASSIST_STRENGTH,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
   SET_AUTO_SCROLL_MODE,
@@ -33,6 +34,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_UNICODE,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
+  LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST_STRENGTH,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
   LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE,
   LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE,
@@ -303,6 +305,19 @@ export default function reducer(state, action) {
       return {
         ...state,
         translationLanguages,
+      };
+    }
+    case SET_LARIVAAR_ASSIST_STRENGTH: {
+      const larivaarAssistStrength = action.payload;
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST_STRENGTH,
+        JSON.stringify(larivaarAssistStrength)
+      )
+
+      return {
+        ...state,
+        larivaarAssistStrength,
       };
     }
     case SET_TRANSLITERATION_LANGUAGES: {

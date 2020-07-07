@@ -1,3 +1,5 @@
+import { MAX_LARIVAAR_ASSIST_STRENGTH } from '@/constants/';
+
 const matrasThatAppearAtRightSideOfChar = 'wIuUyYoOW';
 const halfCharThatAppearAtRightSideOfChar = 'Í´R@˜®';
 const nasalSoundCaharacter = 'NMµ';
@@ -52,6 +54,14 @@ export function fixLarivaarUnicode(str) {
     }
   }
   return arrWordBreak;
+}
+
+export const getLarivaarStrengthBrightness = (strength) => {
+  if (MAX_LARIVAAR_ASSIST_STRENGTH === strength) {
+    return 100;
+  }
+  const perUnitBrightness = 100 / MAX_LARIVAAR_ASSIST_STRENGTH;
+  return strength * perUnitBrightness;
 }
 
 const isConsonant = char =>

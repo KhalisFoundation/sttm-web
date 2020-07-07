@@ -1,11 +1,16 @@
 import React, { memo } from 'react';
-import PropTypes from 'prop-types';
-import { fixLarivaarUnicode, fixLarivaarGurmukhiFont } from './util';
+
+import {
+  getLarivaarStrengthBrightness,
+  fixLarivaarUnicode,
+  fixLarivaarGurmukhiFont
+} from './util';
 
 export interface ILarivaarWordProps {
   word: string;
   unicode: boolean;
   larivaarAssist?: boolean;
+  larivaarAssistStrength?: number;
   index: number;
   highlightIndex?: Array<number>;
   highlight?: boolean;
@@ -18,38 +23,38 @@ function LarivaarWord(props: ILarivaarWordProps) {
     word,
     unicode,
     larivaarAssist,
+    larivaarAssistStrength = 1,
     index,
     highlight,
     visraamClass,
   } = props;
 
+  const isOddIdx = index % 2 === 1;
   const segments = unicode
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
 
+  const akharStyles = {
+    filter: `brightness(${larivaarAssist ? getLarivaarStrengthBrightness(larivaarAssistStrength) : 100}%)`
+  }
+
   return (
     <span className={visraamClass}>
       {segments.map((item, i) => {
+        const key = `${index}.${i}`;
         let akharClass = '';
-        let assistLarivaar;
-
-        if (index % 2 === 1) {
+        if (isOddIdx) {
           akharClass += 'larivaar-word';
         }
 
-        // If this isn't a search result
-        if (!(highlightIndex !== undefined)) {
-          assistLarivaar = larivaarAssist && index % 2 === 1;
-        } else {
+        akharClass = larivaarAssist && isOddIdx ? ' larivaar-assist-word' : '';
+
+        // If this is a search result
+        if (highlightIndex !== undefined) {
           if (highlight || (highlightIndex.includes(index))) {
             akharClass += ' search-highlight-word';
           }
-          assistLarivaar = larivaarAssist && index % 2 === 1;
         }
-
-        akharClass += assistLarivaar ? ' larivaar-assist-word' : '';
-
-        const key = `${index}.${i}`;
 
         if (item.includes('´')) {
           // handle space break for this special character
@@ -57,7 +62,7 @@ function LarivaarWord(props: ILarivaarWordProps) {
             <span
               key={key}
               className={akharClass}
-              style={{ display: 'inline-block' }}
+              style={{ display: 'inline-block', ...akharStyles }}
             >
               {item}
               <wbr />
@@ -66,8 +71,11 @@ function LarivaarWord(props: ILarivaarWordProps) {
         }
 
         return (
-          <span key={key} className={akharClass}>
-            <span>
+          <span
+            key={key}
+            className={akharClass}>
+            <span
+              style={akharStyles}>
               {item}
               <wbr />
             </span>

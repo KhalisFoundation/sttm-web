@@ -6,7 +6,7 @@ import { VISRAAM } from '../constants';
 import { clearVisraamClass } from '../util';
 import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
 import { MultiSelect } from '../components/MultiSelect';
-import { isShowAutoScrollRoute } from '../../js/util';
+
 class ShabadControls extends React.PureComponent {
   static propTypes = {
     setTranslationLanguages: PropTypes.func.isRequired,
@@ -29,6 +29,7 @@ class ShabadControls extends React.PureComponent {
     setVisraamStyle: PropTypes.func.isRequired,
     changeFont: PropTypes.func.isRequired,
     toggleAdvancedOptions: PropTypes.func.isRequired,
+    setLarivaarAssistStrength: PropTypes.func.isRequired,
 
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
@@ -40,6 +41,7 @@ class ShabadControls extends React.PureComponent {
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    larivaarAssistStrength: PropTypes.number.isRequired,
     translationFontSize: PropTypes.number.isRequired,
     transliterationFontSize: PropTypes.number.isRequired,
     lineHeight: PropTypes.number.isRequired,
@@ -150,31 +152,21 @@ class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    const {
-      history,
-      match,
-      location,
-      ...others
-    } = this.props;
-
-    const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
-    const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
-
-    const settings = QUICK_SETTINGS(others);
-    const advanced = ADVANCED_SETTINGS(others);
+    const settings = QUICK_SETTINGS(this.props);
+    const advanced = ADVANCED_SETTINGS(this.props);
 
     const quickSettingsPanel = (
       <>
         {settings.map((element, i) => {
-          if (element.label === 'Paragraph' && !isSundarGutkaRoute) {
-            return null;
+          if (element.type) {
+            return (
+              <div key={`settings-${i}`}
+                className={`qs-option controller-option ${element.type}`}>
+                {this.bakeSettings(element)}
+              </div>
+            )
           }
-          return (
-            <div key={`settings-${i}`}
-              className={`qs-option controller-option ${element.type}`}>
-              {this.bakeSettings(element)}
-            </div>
-          )
+          return null;
         })}
       </>
     );
@@ -188,14 +180,14 @@ class ShabadControls extends React.PureComponent {
           {this.props.showAdvancedOptions && (
             <div className="advanced-options">
               {advanced.map((element, i) => {
-                if (element.label === 'Auto Scroll' && !isShowAutoScroll) {
-                  return null;
+                if (element.type) {
+                  return (
+                    <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
+                      {this.bakeSettings(element)}
+                    </div>
+                  )
                 }
-                return (
-                  <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
-                    {this.bakeSettings(element)}
-                  </div>
-                )
+                return null;
               })}
               {quickSettingsPanel}
             </div>

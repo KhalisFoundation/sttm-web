@@ -15,9 +15,3 @@ export const TYPES = _TYPES.filter((value, index) =>
 
 export const SHORT_DOMAIN = 'sttm.co';
 
-export const MAX_ANGS = {
-  G: 1430,
-  D: 1428,
-  B: 40,
-  S: 28
-}

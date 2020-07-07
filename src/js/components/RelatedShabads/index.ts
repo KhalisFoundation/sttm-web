@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
-import RelatedShabads, { IRelatedShabadsProps } from './RelatedShabads';
+import RelatedShabads from './RelatedShabads';
 import { IStore } from '@/features/types';
-
-export type IRelatedShabadsProps = IRelatedShabadsProps;
 
 export default connect(
   ({
     larivaar,
     larivaarAssist,
+    larivaarAssistStrength,
     unicode,
     translationLanguages,
     transliterationLanguages,
@@ -15,6 +14,7 @@ export default connect(
     translationLanguages,
     larivaar,
     larivaarAssist,
+    larivaarAssistStrength,
     unicode,
     transliterationLanguages,
   })

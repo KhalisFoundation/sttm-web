@@ -6,6 +6,7 @@ export * from './default-option-values';
 export * from './font-options';
 export * from './languages-supported';
 export * from './local-storage-keys';
+export * from './maximum';
 export * from './misc';
 export * from './page-name';
 export * from './placeholders';

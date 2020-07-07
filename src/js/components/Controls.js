@@ -13,6 +13,7 @@ import {
   setLineHeight,
   setTranslationLanguages,
   setTransliterationLanguages,
+  setLarivaarAssistStrength,
   resetDisplayOptions,
   resetFontOptions,
   toggleAdvancedOptions,
@@ -45,8 +46,6 @@ class Controls extends React.Component {
     this.lastScroll = 0;
     this.isChangeInControls = false;
 
-    //explicitely setting the controls to have show.
-    this.$wrapper.style.transform = 'rotateX(0deg)'
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
@@ -157,7 +156,6 @@ class Controls extends React.Component {
           ref={this.setRef}
         >
           <ShabadControls {...this.props} />
-
         </div>
       </>
     );
@@ -173,6 +171,7 @@ const dispatchToProps = {
   setTransliterationFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
+  setLarivaarAssistStrength,
   resetDisplayOptions,
   resetFontOptions,
   toggleAdvancedOptions,

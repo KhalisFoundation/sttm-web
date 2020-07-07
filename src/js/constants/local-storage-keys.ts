@@ -6,6 +6,7 @@ export const LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES =
 export const LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES =
   'transliterationLanguages';
 export const LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST = 'larivaarAssist';
+export const LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST_STRENGTH = 'larivaarAssistStrength';
 export const LOCAL_STORAGE_KEY_FOR_LARIVAAR = 'larivaar';
 export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';

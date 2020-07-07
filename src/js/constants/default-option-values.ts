@@ -1,3 +1,4 @@
+import { MAX_LARIVAAR_ASSIST_STRENGTH } from './maximum';
 import { SEARCH_TYPES } from "./search-types";
 
 export const DEFAULT_SEARCH_TYPE = SEARCH_TYPES.FIRST_LETTERS;
@@ -12,6 +13,7 @@ export const DEFAULT_FONT_SIZE = 2;
 export const DEFAULT_TRANSLATION_FONT_SIZE = 1.2;
 export const DEFAULT_TRANSLITERATION_FONT_SIZE = 1.2;
 export const DEFAULT_LINE_HEIGHT = 1.2;
+export const DEFAULT_LARIVAAR_ASSIST_STRENGTH = MAX_LARIVAAR_ASSIST_STRENGTH;
 export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;

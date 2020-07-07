@@ -5,6 +5,7 @@ import HighlightedSearchResult from '../SearchResults/HighlightedResult';
 import { getVisraamClass } from '../../util';
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
+  larivaarAssistStrength?: number;
   highlightIndex?: Array<number>;
   enable?: boolean;
   unicode: boolean;
@@ -17,6 +18,7 @@ function Larivaar(props: ILarivaarProps) {
   const {
     highlightIndex,
     larivaarAssist = false,
+    larivaarAssistStrength,
     enable = true,
     children,
     unicode,
@@ -53,6 +55,7 @@ function Larivaar(props: ILarivaarProps) {
             word={word}
             unicode={unicode}
             larivaarAssist={larivaarAssist}
+            larivaarAssistStrength={larivaarAssistStrength}
             index={index}
             highlight={highlight}
             visraamClass={visraamClass}
