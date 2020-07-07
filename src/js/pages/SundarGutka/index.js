@@ -97,7 +97,7 @@ class SundarGutka extends React.PureComponent {
                   .filter(SundarGutka.filter(q))
                   .map(({ ID, transliteration, gurmukhiUni }, i) => (
                     <Link
-                      to={`/sundar-gutka/${ID}`}
+                      to={`/sundar-gutka/${sanitizeBaani(transliteration).split(' ').join('-')}`}
                       key={ID}
                     >
                       <div
