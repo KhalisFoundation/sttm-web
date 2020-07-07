@@ -2,12 +2,11 @@ import { IUtilArguments } from "./types";
 import { routes } from "../constants";
 
 export const getPageView = ({
-  baaniId,
-  shabadId,
+  id,
   routeValue
 }: IUtilArguments) => {
   switch (routeValue) {
-    case routes.sundarGutka: `/sundar-gutka/${baaniId}`
-    case routes.amritKeertan: `/amrit-keertan/shabads/${shabadId}`
+    case routes.sundarGutka: `/sundar-gutka/${id}`
+    case routes.amritKeertan: `/amrit-keertan/shabads/${id}`
   }
 }

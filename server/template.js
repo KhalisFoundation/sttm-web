@@ -3,12 +3,17 @@ import fs from 'fs';
 import { resolve } from 'path';
 import { ONLINE_COLOR } from '../common/constants';
 
-const manifest = JSON.parse(
-  fs.readFileSync(
-    resolve(__dirname, '../', 'public', 'assets', 'js', 'manifest.json'),
-    'utf-8'
-  )
-);
+let manifest;
+try {
+  manifest = JSON.parse(
+    fs.readFileSync(
+      resolve(__dirname, '../', 'public', 'assets', 'js', 'manifest.json'),
+      'utf-8'
+    )
+  );
+} catch (err) {
+  // console.error(err, ' mani fest error')
+}
 
 export default ({ url, bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
@@ -196,7 +201,7 @@ const stylesheetsHTML = stylesheets
   .map(s => `<link href="${s}" rel="stylesheet" />`)
   .join('');
 
-const scripts = [manifest['vendor.js'], manifest['app.js']];
+const scripts = manifest ? [manifest['vendor.js'], manifest['app.js']] : [];
 const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('');
 const preloadScriptsHTML = scripts
   .map(s => `<link async rel="preload" href="${s}" as="script" />`)
