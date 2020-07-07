@@ -5,7 +5,6 @@ import { ONLINE_COLOR } from '../common/constants';
 
 let manifest;
 try {
-
   manifest = JSON.parse(
     fs.readFileSync(
       resolve(__dirname, '../', 'public', 'assets', 'js', 'manifest.json'),
@@ -13,7 +12,7 @@ try {
     )
   );
 } catch (err) {
-  console.log(err, ' mani fest error')
+  // console.error(err, ' mani fest error')
 }
 
 export default ({ url, bodyClass, title, description }) => marinate`
