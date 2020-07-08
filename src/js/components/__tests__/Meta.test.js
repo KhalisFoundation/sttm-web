@@ -3,7 +3,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import { shabad } from './__mocks__/';
+import { shabad } from '../__mocks__/';
 import Meta from '../Meta';
 
 //NOTE: MemoryRouter - https://testing-library.com/docs/example-react-router#reducing-boilerplate
@@ -12,7 +12,7 @@ describe('<Meta />', () => {
   const translationLanguages = ['english', 'spanish', 'punjabi'];
   const transliterationLanguages = ['english'];
 
-  describe('type=ang', () => {
+  describe('<Meta type="ang" />', () => {
     it('renders correctly', () => {
       const { container } = render(
         <Meta
@@ -27,7 +27,7 @@ describe('<Meta />', () => {
     })
   });
 
-  describe('type=shabad', () => {
+  describe('<Meta type="shabad" />', () => {
     let renderedComponent = null;
     beforeEach(() => {
       renderedComponent = render(
@@ -52,7 +52,7 @@ describe('<Meta />', () => {
     });
   });
 
-  describe('type=hukamnama', () => {
+  describe('<Meta type="hukamnama" />', () => {
     let renderedComponent = null;
     beforeEach(() => {
       renderedComponent = render(
