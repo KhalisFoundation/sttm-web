@@ -1,9 +1,16 @@
 
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+import {
+  toBeVisible
+} from '@testing-library/jest-dom/matchers'
 
-import { shabad } from '../__mocks__/';
+expect.extend({ toBeVisible })
+
+import { shabad, mockStore } from '../__mocks__/';
+import FullScreen from '../FloatingActions/FullScreen';
 import Meta from '../Meta';
 
 //NOTE: MemoryRouter - https://testing-library.com/docs/example-react-router#reducing-boilerplate
@@ -11,6 +18,33 @@ import Meta from '../Meta';
 describe('<Meta />', () => {
   const translationLanguages = ['english', 'spanish', 'punjabi'];
   const transliterationLanguages = ['english'];
+
+  it('shows properly on fullscreen mode', async () => {
+    const store = mockStore({ darkMode: false, autoScrollMode: false });
+    const { container } = render(
+      <Provider store={store}>
+        <div>
+          <FullScreen />
+          <Meta
+            type="ang"
+            isUnicode={false}
+            info={shabad.shabadInfo}
+            translationLanguages={translationLanguages}
+            transliterationLanguages={transliterationLanguages} />
+        </div>
+      </Provider >,
+      { wrapper: MemoryRouter }
+    );
+    const fullscreen = container.querySelector('.fullscreen');
+    const navElems = container.querySelectorAll('.shabad-nav');
+    const navElemLeft = navElems[0];
+    const navElemRight = navElems[1];
+
+    await fireEvent.click(fullscreen);
+
+    expect(navElemLeft).toBeVisible();
+    expect(navElemRight).toBeVisible();
+  });
 
   describe('<Meta type=\"ang\" />', () => {
     it('renders correctly', () => {
