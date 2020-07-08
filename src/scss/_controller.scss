@@ -147,15 +147,16 @@
     flex-direction: row;
     margin: 8px;
 
-    .gurmukhi, .line-count {
+    .gurmukhi,
+    .line-count {
       padding: 12px;
     }
 
     .line-count {
       align-items: center;
       background-color: $sttm-dark-blue;
-      border-top-left-radius: 12px;
       border-bottom-left-radius: 12px;
+      border-top-left-radius: 12px;
       color: $sttm-light-blue-60;
       display: flex;
       justify-content: center;
@@ -169,9 +170,9 @@
       flex-grow: 1;
       justify-content: space-between;
 
-      svg {
-        opacity: 0.6;
+      > svg {
         margin: 16px;
+        opacity: 0.6;
       }
     }
 
