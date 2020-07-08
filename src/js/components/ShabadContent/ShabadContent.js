@@ -4,8 +4,15 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GlobalHotKeys } from 'react-hotkeys';
 
-import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
-import { showToast, copyToClipboard } from '@/util';
+import {
+  showToast,
+  copyToClipboard,
+  clickEvent,
+  ACTIONS,
+  isShowParagraphModeRoute,
+  isShowRelatedShabadsRoute,
+  errorEvent
+} from '@/util';
 import Controls, { supportedMedia } from '@/components/Controls';
 import FootNav from '@/components/FootNav';
 import Meta from '@/components/Meta';
@@ -125,14 +132,12 @@ class Shabad extends React.PureComponent {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
 
-    const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
-    const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
+    const isParagraphMode = paragraphMode && isShowParagraphModeRoute(location.pathname);
+    const isShowRelatedShabads = isShowRelatedShabadsRoute(location.pathname);
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
-
         <React.Fragment >
-
           {this.props.hideControls === false && (
             <Controls
               media={
@@ -176,16 +181,14 @@ class Shabad extends React.PureComponent {
                 transliterationLanguages={transliterationLanguages}
                 centerAlignGurbani={centerAlignGurbani}
                 showFullScreen={showFullScreen}
-                isParagraphMode={paragraphMode && isSundarGutkaRoute}
+                isParagraphMode={isParagraphMode}
               />
 
               {this.props.hideMeta === false && (
                 <FootNav info={info} type={type} nav={nav} />
               )}
 
-              {!isAmritKeertanRoute
-                &&
-                <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
+              {isShowRelatedShabads && <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
           <ProgressBar percent={this.state.progress} />
