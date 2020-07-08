@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Meta /> type=ang renders correctly 1`] = `
+exports[`<Meta /> <Meta type="ang" /> renders correctly 1`] = `
 <div>
   <div
     id="metadata"
@@ -79,7 +79,7 @@ exports[`<Meta /> type=ang renders correctly 1`] = `
 </div>
 `;
 
-exports[`<Meta /> type=hukamnama renders correctly 1`] = `
+exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
 <div>
   <div
     id="metadata"
@@ -178,7 +178,7 @@ exports[`<Meta /> type=hukamnama renders correctly 1`] = `
 </div>
 `;
 
-exports[`<Meta /> type=shabad renders correctly 1`] = `
+exports[`<Meta /> <Meta type="shabad" /> renders correctly 1`] = `
 <div>
   <div
     id="metadata"

@@ -12,7 +12,7 @@ describe('<Meta />', () => {
   const translationLanguages = ['english', 'spanish', 'punjabi'];
   const transliterationLanguages = ['english'];
 
-  describe('<Meta type="ang" />', () => {
+  describe('<Meta type=\"ang\" />', () => {
     it('renders correctly', () => {
       const { container } = render(
         <Meta
@@ -27,7 +27,7 @@ describe('<Meta />', () => {
     })
   });
 
-  describe('<Meta type="shabad" />', () => {
+  describe('<Meta type=\"shabad\" />', () => {
     let renderedComponent = null;
     beforeEach(() => {
       renderedComponent = render(
@@ -52,7 +52,7 @@ describe('<Meta />', () => {
     });
   });
 
-  describe('<Meta type="hukamnama" />', () => {
+  describe('<Meta type=\"hukamnama\" />', () => {
     let renderedComponent = null;
     beforeEach(() => {
       renderedComponent = render(
