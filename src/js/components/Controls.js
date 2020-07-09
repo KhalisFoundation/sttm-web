@@ -94,10 +94,6 @@ class Controls extends React.Component {
     if (window.scrollY >= controlsOffset) {
       this.$wrapper.style.opacity = 0;
 
-      if (this.mounted && this.state.showBorder === false) {
-        this.setState({ showBorder: true });
-      }
-
       if (this.isChangeInControls) {
         this.isChangeInControls = false;
         this.$wrapper.style.opacity = 1;
@@ -106,11 +102,12 @@ class Controls extends React.Component {
 
       this.setState(prevState => {
         // We are moving in up direction
-        if (this.lastScroll > controlsOffsetTop) {
+        if (this.lastScroll >= controlsOffsetTop) {
           this.applyControlStyles(true);
 
           return {
             ...prevState,
+            showBorder: true,
             showControls: true
           };
         }
@@ -119,15 +116,21 @@ class Controls extends React.Component {
         this.applyControlStyles(false);
         return {
           ...prevState,
+          showBorder: false,
           showControls: false
         };
       });
     } else {
       this.resetControlStyles();
 
-      if (this.mounted && this.state.showBorder === true) {
-        this.setState({ showBorder: false, showControls: true });
-      }
+      // if (this.mounted && this.state.showBorder === true) {
+      this.setState(prevState =>
+        ({
+          ...prevState,
+          showBorder: false,
+          showControls: true
+        }));
+      // }
     }
   }, 100);
 
@@ -140,9 +143,11 @@ class Controls extends React.Component {
       'with-border': showBorder,
     });
 
-    const controlStyles = showControls ? {
-      transform: ''
-    } : {
+    const controlStyles = showControls ?
+      {
+        transform: '',
+      } :
+      {
         transform: 'rotateX(90deg) perspective(500px)'
       }
 
