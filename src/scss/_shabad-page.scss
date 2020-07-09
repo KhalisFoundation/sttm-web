@@ -112,6 +112,15 @@ blockquote {
   }
 }
 
+.metadata-hukamnama,
+.pagination-hukamnama {
+  .shabad-nav {
+    .fullscreen-view & {
+      display: none;
+    }
+  }
+}
+
 .shabad-container {
   margin-top: 10px;
   width: 100%;

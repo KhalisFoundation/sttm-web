@@ -2,12 +2,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { render, fireEvent } from '@testing-library/react';
 import {
-  toBeVisible
-} from '@testing-library/jest-dom/matchers'
-
-expect.extend({ toBeVisible })
+  render,
+  fireEvent,
+  screen,
+} from '@testing-library/react';
+import { toHaveClass } from '@testing-library/jest-dom/matchers'
+expect.extend({ toHaveClass });
 
 import { shabad, mockStore } from '../__mocks__/';
 import FullScreen from '../FloatingActions/FullScreen';
@@ -18,47 +19,42 @@ import Meta from '../Meta';
 describe('<Meta />', () => {
   const translationLanguages = ['english', 'spanish', 'punjabi'];
   const transliterationLanguages = ['english'];
-
-  it('shows properly on fullscreen mode', async () => {
-    const store = mockStore({ darkMode: false, autoScrollMode: false });
-    const { container } = render(
-      <Provider store={store}>
-        <div>
-          <FullScreen />
-          <Meta
-            type="ang"
-            isUnicode={false}
-            info={shabad.shabadInfo}
-            translationLanguages={translationLanguages}
-            transliterationLanguages={transliterationLanguages} />
-        </div>
-      </Provider >,
-      { wrapper: MemoryRouter }
-    );
-    const fullscreen = container.querySelector('.fullscreen');
-    const navElems = container.querySelectorAll('.shabad-nav');
-    const navElemLeft = navElems[0];
-    const navElemRight = navElems[1];
-
-    await fireEvent.click(fullscreen);
-
-    expect(navElemLeft).toBeVisible();
-    expect(navElemRight).toBeVisible();
-  });
+  const store = mockStore({ darkMode: false, autoScrollMode: false });
 
   describe('<Meta type=\"ang\" />', () => {
-    it('renders correctly', () => {
-      const { container } = render(
-        <Meta
-          type="ang"
-          isUnicode={false}
-          info={shabad.shabadInfo}
-          translationLanguages={translationLanguages}
-          transliterationLanguages={transliterationLanguages} />,
+    let renderedComponent = null;
+
+    beforeEach(() => {
+      renderedComponent = render(
+        <Provider store={store}>
+          <div>
+            <FullScreen />
+            <Meta
+              type="ang"
+              isUnicode={false}
+              info={shabad.shabadInfo}
+              translationLanguages={translationLanguages}
+              transliterationLanguages={transliterationLanguages} />
+          </div>
+        </Provider >,
         { wrapper: MemoryRouter }
       );
+    });
+
+    it('renders correctly', () => {
+      const { container } = renderedComponent;
       expect(container).toMatchSnapshot();
     })
+
+    it('shows navigation arrows properly on fullscreen mode', async () => {
+      const { container } = renderedComponent;
+      const fullscreen = container.querySelector('.fullscreen');
+      await fireEvent.click(fullscreen);
+
+      // Basic limitation with css style as we can't test style changes on nav items
+      const body = document.querySelector('body');
+      expect(body).toHaveClass('fullscreen-view');
+    });
   });
 
   describe('<Meta type=\"shabad\" />', () => {
@@ -90,15 +86,19 @@ describe('<Meta />', () => {
     let renderedComponent = null;
     beforeEach(() => {
       renderedComponent = render(
-        <Meta
-          type="hukamnama"
-          isUnicode={false}
-          info={shabad.shabadInfo}
-          translationLanguages={translationLanguages}
-          transliterationLanguages={transliterationLanguages} />,
+        <Provider store={store}>
+          <div>
+            <FullScreen />
+            <Meta
+              type="hukamnama"
+              isUnicode={false}
+              info={shabad.shabadInfo}
+              translationLanguages={translationLanguages}
+              transliterationLanguages={transliterationLanguages} />
+          </div>
+        </Provider >,
         { wrapper: MemoryRouter }
       );
-
     })
     it('renders correctly', () => {
       const { container } = renderedComponent;
@@ -107,7 +107,17 @@ describe('<Meta />', () => {
 
     it('shows hours navigation buttons', () => {
       const { queryAllByTestId } = renderedComponent;
-      expect(queryAllByTestId('hour24')).toHaveLength(2);
+      expect(screen.queryAllByTestId('hour24')).toHaveLength(2);
+    });
+
+    it('dont show navigation arrows on fullscreen mode', async () => {
+      const { container } = renderedComponent;
+      const fullscreen = container.querySelector('.fullscreen');
+      await fireEvent.click(fullscreen);
+
+      // Basic limitation with css style as we can't test style changes on nav items
+      const body = document.querySelector('body');
+      expect(body).toHaveClass('fullscreen-view');
     });
   });
 });
