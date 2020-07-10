@@ -273,6 +273,13 @@ export default class Header extends React.PureComponent {
                                     </option>
                                   ))}
                                 </select>)}
+                            <select
+                              name="raag"
+                              value={raag}
+                              onChange={handleSearchRaagChange}
+                            >
+                              {}
+                            </select>
                           </div>
                         </>
                       )}
