@@ -106,7 +106,7 @@ class Controls extends React.Component {
 
       this.setState(prevState => {
         // We are moving in up direction
-        if (this.lastScroll > controlsOffsetTop) {
+        if (this.lastScroll >= controlsOffsetTop) {
           this.applyControlStyles(true);
 
           return {
