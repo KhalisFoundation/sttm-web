@@ -97,6 +97,7 @@
   text-align: center;
   top: 0;
   transition: 0.1s background-color ease;
+  z-index: 1;
 
   .dark-mode & {
     background-color: $sttm-light-black;
@@ -154,14 +155,18 @@
 
     .line-count {
       align-items: center;
-      background-color: $sttm-dark-blue;
+      background-color: $sttm-darker-blue;
       border-bottom-left-radius: 12px;
       border-top-left-radius: 12px;
-      color: $sttm-light-blue-60;
+      color: $sttm-lighter-blue;
       display: flex;
       justify-content: center;
       margin-right: 8px;
       min-width: 48px;
+
+      .dark-mode & {
+        background-color: $sttm-darkest-blue;
+      }
     }
 
     .pankti-wrapper {
@@ -173,10 +178,11 @@
 
     &.visited {
       background-color: $sttm-light-grey;
+      opacity: 0.8;
 
       .line-count {
-        background-color: $sttm-lighter-grey;
-        color: $sttm-darker-grey;
+        background-color: $sttm-lighter-black;
+        color: $sttm-lighter-grey;
       }
 
       .dark-mode & {
@@ -186,13 +192,19 @@
 
     &.active-slide {
       background-color: $sttm-blue;
+      opacity: 1;
 
       .line-count {
-        background-color: $sttm-dark-blue;
-        color: $sttm-light-blue-60;
+        background-color: $sttm-darker-blue;
+        color: $sttm-lighter-blue;
+
+        .dark-mode & {
+          background-color: $sttm-darkest-blue;
+        }
       }
 
       .dark-mode & {
+        background-color: $sttm-darker-blue-2;
         color: $sttm-white;
       }
     }
