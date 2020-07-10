@@ -74,10 +74,15 @@ const ViewerShortcutHanders = {
   toggleVishraams: () => {
     store.dispatch({ type: "TOGGLE_VISRAAMS" })
   },
+<<<<<<< HEAD
   toggleAutoScrollMode: () => {
     store.dispatch({ type: "TOGGLE_AUTO_SCROLL_MODE" })
   },
   centerAlign: () => {
+=======
+  centerAlign: (e) => {
+    e.preventDefault()
+>>>>>>> f0560c01b8ae5b9c3467fc514b4a5ba526f0ddc3
     const state = store.getState();
     store.dispatch({ type: "SET_CENTER_ALIGN_OPTION", payload: !state.centerAlignGurbani })
   },
