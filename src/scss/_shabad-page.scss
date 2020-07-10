@@ -67,10 +67,6 @@ blockquote {
       }
     }
   }
-
-  .fullscreen-view & {
-    display: none;
-  }
 }
 
 .meta {
@@ -112,6 +108,15 @@ blockquote {
 
     &.right span {
       margin-right: 10px;
+    }
+  }
+}
+
+.metadata-hukamnama,
+.pagination-hukamnama {
+  .shabad-nav {
+    .fullscreen-view & {
+      display: none;
     }
   }
 }
