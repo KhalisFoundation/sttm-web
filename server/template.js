@@ -66,7 +66,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
   ${stylesheetsHTML}
 </head>
 
-<body class="${bodyClass}">
+<body data-testid="bodyElement" class="${bodyClass}">
   <div id="toast-notification" class="toast-notification hidden"></div>
 
   <div id="app-root"></div>

@@ -157,7 +157,7 @@ class Shabad extends React.PureComponent {
               transliterationLanguages={transliterationLanguages}
             />
           )}
-          <div id="shabad" className="shabad display">
+          <div id="shabad" className={`shabad display display-${type}`}>
             <div className="shabad-container">
               <Baani
                 type={type}
