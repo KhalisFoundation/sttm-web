@@ -27,6 +27,7 @@ import {
   SET_PARAGRAPH_MODE,
   SET_VISRAAMS,
   SET_SPLIT_VIEW,
+  SET_FULLSCREEN_MODE,
   CHANGE_FONT,
 } from '../actions';
 import {
@@ -57,11 +58,21 @@ import { DARK_MODE_COOKIE } from '../../../../common/constants';
 export default function reducer(state, action) {
   switch (action.type) {
     case SET_ONLINE_MODE: {
-      return {
-        ...state,
-        online: action.payload,
-      };
+      {
+        return {
+          ...state,
+          online: action.payload
+        }
+      }
     }
+    case SET_FULLSCREEN_MODE:
+      {
+        return {
+          ...state,
+          fullScreenMode: action.payload,
+        };
+      }
+
     case TOGGLE_TRANSLITERATION_OPTIONS: {
       const showTransliterationOptions = !state.showTransliterationOptions;
       clickEvent({
