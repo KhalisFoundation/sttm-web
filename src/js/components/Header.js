@@ -71,6 +71,8 @@ export default class Header extends React.PureComponent {
     const {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
+      raag: defaultRaag = null,
+      writer: defaultWriter = null,
     } = getQueryParams(location.search);
 
     const key = `${defaultQuery}${defaultSource}${defaultType}`;
@@ -115,7 +117,8 @@ export default class Header extends React.PureComponent {
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
             defaultType={defaultType}
-            submitOnChangeOf={['type', 'source']}
+            defaultWriter={defaultWriter}
+            submitOnChangeOf={['type', 'source', 'raag', 'writer']}
             onSubmit={handleFormSubmit}
           >
             {({

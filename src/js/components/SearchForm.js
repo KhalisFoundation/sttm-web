@@ -5,12 +5,16 @@ import {
   SOURCES,
   LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+  LOCAL_STORAGE_KEY_FOR_SEARCH_RAAG,
+  LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
   PLACEHOLDERS,
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
+  DEFAULT_SEARCH_RAAG,
+  DEFAULT_SEARCH_WRITER,
   SEARCH_TYPES,
   SOURCES_WITH_ANG,
-} from '../constants';
+} from '@/constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import { getNumberFromLocalStorage } from '../util';
 
@@ -40,6 +44,8 @@ export default class SearchForm extends React.PureComponent {
    * @property {function} handleSearchChange
    * @property {function} handleSearchSourceChange
    * @property {function} handleSearchTypeChange
+   * @property {function} handleSearchRaagChange
+   * @property {function} handleSearchWriterChange
    * @property {function} handleSubmit
    *
    * @typedef {object} SearchFormProps
@@ -47,6 +53,8 @@ export default class SearchForm extends React.PureComponent {
    * @property {string} defaultQuery to initialize with
    * @property {string} defaultType to initialize with
    * @property {string} defaultSource to initiaize with
+   * @property {number} defaultRaag
+   * @property {number} defaultWriter
    * @property {Array<'type'|'source'|'query'>} submitOnChangeOf given fields
    * @property {function} onSubmit event handler
    *
@@ -59,7 +67,7 @@ export default class SearchForm extends React.PureComponent {
     defaultType: PropTypes.oneOf(Object.keys(TYPES)),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     submitOnChangeOf: PropTypes.arrayOf(
-      PropTypes.oneOf(['type', 'source', 'query'])
+      PropTypes.oneOf(['type', 'source', 'raag', 'writer', 'query'])
     ),
     onSubmit: props => {
       if (
@@ -87,6 +95,18 @@ export default class SearchForm extends React.PureComponent {
       this.props.defaultSource ||
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
       DEFAULT_SEARCH_SOURCE,
+    raag:
+      this.props.defaultRaag ||
+      getNumberFromLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_SEARCH_RAAG,
+        DEFAULT_SEARCH_RAAG
+      ),
+    writer:
+      this.props.defaultWriter ||
+      getNumberFromLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
+        DEFAULT_SEARCH_WRITER
+      ),
     placeholder: '',
     isAnimatingPlaceholder: false,
   };
@@ -263,6 +283,46 @@ export default class SearchForm extends React.PureComponent {
       }
     );
 
+  handleSearchRaagChange = ({ currentTarget: { value } }) => {
+    this.setState((previousState) => {
+      return {
+        ...previousState,
+        raag: parseInt(value, 10),
+        shouldSubmit:
+          this.props.submitOnChangeOf.includes('source') &&
+          this.state.query !== '',
+      }
+    },
+      () => {
+        clickEvent({
+          action: ACTIONS.SEARCH_RAAG,
+          label: this.state.raag,
+        });
+        localStorage.setItem(
+          LOCAL_STORAGE_KEY_FOR_SEARCH_RAAG,
+          this.state.raag
+        );
+      })
+  }
+
+  handleSearchWriterChange = ({ currentTarget: { value } }) => {
+    this.setState((previousState) => {
+      return {
+        ...previousState,
+        writer: parseInt(value, 10)
+      }
+    }, () => {
+      clickEvent({
+        action: ACTIONS.SEARCH_WRITER,
+        label: this.state.writer,
+      });
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
+        this.state.writer
+      );
+    })
+  }
+
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
 
     const isSearchTypeToAngType = this.state.type !== SEARCH_TYPES['ANG'] && Number(value) === SEARCH_TYPES['ANG'];
@@ -274,6 +334,8 @@ export default class SearchForm extends React.PureComponent {
           source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
             Object.keys(SOURCES_WITH_ANG).includes(this.state.source) ?
             this.state.source : 'G',
+          raag: 'all',
+          writer: 'all',
           query: isSearchTypeToAngType ? '' : this.state.query,
           shouldSubmit: isSearchTypeToAngType ? false :
             this.props.submitOnChangeOf.includes('type') &&
