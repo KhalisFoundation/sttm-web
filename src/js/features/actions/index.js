@@ -79,6 +79,10 @@ export const setVisraamStyle = createAction(SET_VISRAAM_STYLE);
 export const SET_UNICODE = 'SET_UNICODE';
 export const setUnicode = createAction(SET_UNICODE);
 
+
+export const SET_FULLSCREEN_MODE = 'SET_FULLSCREEN_MODE';
+export const setFullScreenMode = createAction(SET_FULLSCREEN_MODE);
+
 export const SET_FONT_SIZE = 'SET_FONT_SIZE';
 export const setFontSize = createAction(SET_FONT_SIZE);
 

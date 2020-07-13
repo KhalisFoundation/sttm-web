@@ -1,14 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { setFullScreenMode } from '../../features/actions';
 import FullscreenIcon from '../Icons/FullscreenIcon';
 
-/**
- *
- *
- * @export
- * @class FullScreen
- * @extends {React.PureComponent}
- */
-export default class FullScreen extends React.PureComponent {
+interface IFullScreenProps {
+  setFullScreenMode: (payload: boolean) => {}
+}
+
+interface IFullScreenState {
+  isFullScreen: boolean
+}
+
+class FullScreen extends React.PureComponent<IFullScreenProps, IFullScreenState> {
 
   state = {
     isFullScreen: false,
@@ -31,13 +35,16 @@ export default class FullScreen extends React.PureComponent {
 
   componentDidUpdate() {
     const html = this.$htmlNode;
+    const { setFullScreenMode } = this.props;
     if (this.state.isFullScreen) {
       document.body.classList.add('fullscreen-view');
       html.requestFullscreen && html.requestFullscreen();
       html.webkitRequestFullscreen && html.webkitRequestFullscreen();
+      setFullScreenMode(true);
     } else {
       document.fullscreen && document.exitFullscreen();
       document.body.classList.remove('fullscreen-view');
+      setFullScreenMode(false);
     }
   }
 
@@ -54,3 +61,11 @@ export default class FullScreen extends React.PureComponent {
     );
   }
 }
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps: any = {
+  setFullScreenMode
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FullScreen);
