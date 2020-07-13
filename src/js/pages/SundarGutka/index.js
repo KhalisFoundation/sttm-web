@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { pageView } from '../../util/analytics';
 import PropTypes from 'prop-types';
 import { TEXTS } from '../../constants';
-import Baani from './Baani';
+import { RenderShabads } from '../../components/RenderShabads';
 import BreadCrumb from '../../components/Breadcrumb';
 import Android from '../../components/Icons/Android';
 import AppleiOS from '../../components/Icons/AppleiOS';
+import { sanitizeBaani, baaniNameToIdMapper } from './utils';
 
 class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -37,6 +38,7 @@ class SundarGutka extends React.PureComponent {
   render() {
     const {
       props: {
+        location: { pathname },
         match: { isExact: isSundarGutkaHome },
         transliterationLanguages,
       },
@@ -47,6 +49,10 @@ class SundarGutka extends React.PureComponent {
       ? SundarGutka.HOME_LINKS
       : SundarGutka.BAANI_LINKS;
 
+    //eg /sundar-gutka/japji-sahib, picked up japji-sahib from this
+    const baaniIdOrName = pathname.split('/')[2];
+    const baaniId = baanies ? baaniNameToIdMapper(baanies, baaniIdOrName) : baaniIdOrName;
+
     return (
       <div className="row" id="content-root">
         <BreadCrumb links={links} />
@@ -54,11 +60,11 @@ class SundarGutka extends React.PureComponent {
           {baanies === null ? (
             <div className="spinner" />
           ) : isSundarGutkaHome ? (
-            <div className="wrapper" style={{ width: '100%' }}>
+            <div className="wrapper" style={{ width: '100%', }}>
               <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
               <div className="show-on-mobile sundar-gutka-app-promo">
                 {TEXTS.SUNDAR_GUTKA_APP}{' '}
-                <a
+                <br /><a
                   href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
                   target="_blank"
                   className="playstore--link"
@@ -86,35 +92,40 @@ class SundarGutka extends React.PureComponent {
                 onChange={this.handleSearch}
                 placeholder="Search"
               />
-              <ul className="list">
+              <div className="sgCards">
                 {baanies
                   .filter(SundarGutka.filter(q))
                   .map(({ ID, transliteration, gurmukhiUni }, i) => (
                     <Link
-                      to={`/sundar-gutka/${ID}`}
+                      to={`/sundar-gutka/${sanitizeBaani(transliteration).split(' ').join('-')}`}
                       key={ID}
-                      className="list--link"
                     >
-                      <li
-                        className="list--item"
+                      <div
+                        className="sgCard"
                         style={{
                           animationDelay: i < 15 ? `${20 * i}ms` : 0,
                         }}
                       >
-                        {gurmukhiUni}{' '}
-                        {transliterationLanguages.includes('english') &&
-                          `- ${SundarGutka.sanitize(transliteration)}`}
-                      </li>
+                        <div
+                          className="sgCardGurmukhi"
+                        >{gurmukhiUni}{' '}</div>
+
+                        <div
+                          className="sgCardEnglish"
+                        >{transliterationLanguages.includes('english') &&
+                          `${sanitizeBaani(transliteration)}`}
+                        </div>
+                      </div>
                     </Link>
                   ))}
-              </ul>
+              </div>
             </div>
           ) : (
-            <Route
-              path={this.props.match.url + '/:currentBaaniId'}
-              component={Baani}
-            />
-          )}
+                <Route
+                  path={this.props.match.url + '/:baaniIdOrName'}
+                  render={routeProps => <RenderShabads sundarGutkaBaaniId={baaniId} {...routeProps} />}
+                />
+              )}
         </div>
       </div>
     );

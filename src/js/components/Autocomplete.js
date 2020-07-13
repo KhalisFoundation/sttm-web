@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import Larivaar from '../components/Larivaar';
+import { Link } from 'react-router-dom';
 
+import Larivaar from '../components/Larivaar';
+import { toSearchURL } from '../util';
 class Autocomplete extends Component {
   static propTypes = {
+    isShowFullResults: PropTypes.bool,
     getSuggestions: PropTypes.func.isRequired,
     searchOptions: PropTypes.object.isRequired,
     value: PropTypes.string.isRequired,
@@ -24,7 +27,8 @@ class Autocomplete extends Component {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     if (e.keyCode === 13) {
-      activeSuggestion !== -1 && e.preventDefault();
+      if (activeSuggestion !== -1) e.preventDefault();
+
       window.location = filteredSuggestions[activeSuggestion].url;
       this.setState({
         activeSuggestion: -1,
@@ -62,15 +66,16 @@ class Autocomplete extends Component {
 
       if (userInput.length >= 2 && this.props.searchOptions.type !== 5) {
         const suggestionTimeout = setTimeout(() => {
-          const data = getSuggestions(userInput, searchOptions);
 
-          data.then(suggestions => {
-            this.setState({
-              activeSuggestion: -1,
-              filteredSuggestions: suggestions,
-              showSuggestions: true,
+          getSuggestions(userInput, searchOptions)
+            .then(suggestions => {
+              this.setState({
+                activeSuggestion: -1,
+                filteredSuggestions: suggestions,
+                showSuggestions: true,
+              });
             });
-          });
+
         }, 400);
         this.setState({ suggestionTimeout });
       } else {
@@ -95,6 +100,7 @@ class Autocomplete extends Component {
         showSuggestions,
       },
       props: {
+        isShowFullResults = false,
         value,
         searchOptions,
       }
@@ -133,11 +139,34 @@ class Autocomplete extends Component {
                       {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                     </Larivaar>
                     {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-
                   </a>
                 </li>
               );
             })}
+            {isShowFullResults &&
+              <li
+                className="show-all-results"
+                ref={el => this.lastItem = el}
+                onMouseOver={() => {
+                  this.setState(prevState => ({
+                    ...prevState,
+                    activeSuggestion: -1,
+                  }))
+                  this.lastItem.classList.add('suggestion-active');
+                }}
+                onMouseLeave={() => {
+                  this.lastItem.classList.remove('suggestion-active');
+                }}
+              >
+                <Link
+                  to={toSearchURL({
+                    ...searchOptions,
+                    query: value,
+                  })}
+                >
+                  Show all results
+                </Link>
+              </li>}
           </ul>
         );
       } else {

@@ -1,13 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cx from 'classnames';
+import throttle from 'lodash.throttle';
+
 import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
+
 import {
   setFontSize,
+  setTranslationFontSize,
+  setTransliterationFontSize,
   setLineHeight,
   setTranslationLanguages,
   setTransliterationLanguages,
+  setLarivaarAssistStrength,
   resetDisplayOptions,
   resetFontOptions,
   toggleAdvancedOptions,
@@ -17,6 +23,8 @@ import {
   toggleTransliterationOptions,
   toggleSplitViewOption,
   toggleDarkMode,
+  toggleAutoScrollMode,
+  toggleParagraphMode,
   toggleVisraams,
   setVisraamSource,
   setVisraamStyle,
@@ -26,7 +34,7 @@ import {
 
 export const supportedMedia = _s;
 
-class Controls extends React.PureComponent {
+class Controls extends React.Component {
   state = {
     showBorder: false,
     lastScrollPos: 0,
@@ -34,50 +42,96 @@ class Controls extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.mounted = true;
+    this.lastScroll = 0;
+    this.isChangeInControls = false;
+
     window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
+      this.isChangeInControls = true;
+      this.lastScroll = this.$wrapper.offsetTop;
+    }
+  }
+
   componentWillUnmount() {
-    this.mounted = false;
+
     window.removeEventListener('scroll', this.scrollListener, {
       passive: true,
     });
   }
 
-  scrollListener = () => {
-    if (window.scrollY >= this.$wrapper.offsetTop) {
-      if (this.mounted && this.state.showBorder === false) {
-        this.setState({ showBorder: true });
-      }
+  resetControlStyles = () => {
+    this.lastScroll = 0;
+    this.$wrapper.style.transform = '';
+    this.$wrapper.style.position = '';
+    this.$wrapper.style.opacity = '';
+  }
 
-      const currentScroll = this.$wrapper.offsetTop;
-      const { showAdvancedOptions } = this.props;
-      this.setState(prevState => {
-        const { showControls, lastScrollPos } = prevState;
+  applyControlStyles = (isShowWrapper) => {
 
-        if (lastScrollPos >= currentScroll) {
-          return {
-            lastScrollPos: currentScroll,
-            showControls: !showControls
-              ? true
-              : showControls
-          };
-        }
-        return {
-          lastScrollPos: currentScroll,
-          showControls: showControls &&
-            !showAdvancedOptions ?
-            false :
-            showControls
-        };
-      });
+    if (isShowWrapper) {
+      this.$wrapper.style.opacity = 1;
     } else {
-      if (this.mounted && this.state.showBorder === true) {
-        this.setState({ showBorder: false });
+      this.$wrapper.style.opacity = 0;
+    }
+
+    const oldOffsetTop = this.$wrapper.offsetTop;
+    this.$wrapper.style.position = 'sticky';
+
+    // since we are doing position sticky so top offset gonna change.
+    this.lastScroll = oldOffsetTop;
+  }
+
+  scrollListener = throttle(() => {
+    const { fullScreenMode } = this.props;
+    if (!fullScreenMode) {
+      const controlsOffsetTop = this.$wrapper.offsetTop;
+      const controlsHeight = this.$wrapper.offsetHeight;
+      const controlsBottom = controlsOffsetTop + controlsHeight;
+      const controlsOffset = this.$wrapper.style.position === 'sticky' ? controlsOffsetTop : controlsBottom;
+
+      if (window.scrollY >= controlsOffset) {
+        this.$wrapper.style.opacity = 0;
+
+        if (this.isChangeInControls) {
+          this.isChangeInControls = false;
+          this.$wrapper.style.opacity = 1;
+          return;
+        }
+
+        return this.setState(prevState => {
+          // We are moving in up direction
+          if (this.lastScroll >= controlsOffsetTop) {
+            this.applyControlStyles(true);
+
+            return {
+              ...prevState,
+              showBorder: true,
+              showControls: true
+            };
+          }
+
+          // We are moving in downward direction
+          this.applyControlStyles(false);
+          return {
+            ...prevState,
+            showBorder: false,
+            showControls: false
+          };
+        });
       }
     }
-  };
+    // Reset state.
+    this.resetControlStyles();
+    return this.setState(prevState => ({
+      ...prevState,
+      showBorder: false,
+      showControls: true
+    }))
+
+  }, 100);
 
   setRef = node => (this.$wrapper = node);
 
@@ -86,13 +140,21 @@ class Controls extends React.PureComponent {
     const classNames = cx({
       'no-select': true,
       'with-border': showBorder,
-      'show-controls': showControls,
-      'hide-controls': !showControls,
     });
+
+    const controlStyles = showControls ?
+      {
+        transform: '',
+      } :
+      {
+        transform: 'rotateX(90deg) perspective(500px)'
+      }
+
     return (
       <>
         <ShareButtons {...this.props} />
         <div
+          style={controlStyles}
           id="controls-wrapper"
           className={classNames}
           ref={this.setRef}
@@ -109,8 +171,11 @@ const stateToProps = state => state;
 
 const dispatchToProps = {
   setFontSize,
+  setTranslationFontSize,
+  setTransliterationFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
+  setLarivaarAssistStrength,
   resetDisplayOptions,
   resetFontOptions,
   toggleAdvancedOptions,
@@ -119,7 +184,9 @@ const dispatchToProps = {
   toggleTranslationOptions,
   toggleTransliterationOptions,
   toggleSplitViewOption,
+  toggleParagraphMode,
   toggleDarkMode,
+  toggleAutoScrollMode,
   toggleVisraams,
   setLineHeight,
   setVisraamSource,

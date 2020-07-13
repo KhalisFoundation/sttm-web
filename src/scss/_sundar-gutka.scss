@@ -91,3 +91,60 @@
     white-space: pre;
   }
 }
+
+.sgCards {
+  display: grid;
+  grid-gap: 1rem;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.sgCard {
+  background-color: $sttm-blue;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 8em;
+  justify-content: space-between;
+  padding: 1rem;
+
+  &:hover {
+    background-color: $sttm-dark-blue;
+    box-shadow: 0 4px 8px $sttm-pure-black;
+    transition: 0.3s;
+  }
+}
+
+.sgCardGurmukhi {
+  border-left: 2px solid $sttm-orange;
+  font-size: 1.2em;
+  padding-left: 10px;
+}
+
+.sgCardEnglish {
+  font-size: smaller;
+  margin-top: 1em;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+/* Screen larger than 600px? 2 column */
+@media (min-width: 600px) {
+  .sgCards { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 700px) {
+  .sgCardEnglish {
+    margin-top: 2em;
+  }
+}
+
+/* Screen larger than 900px? 3 columns */
+@media (min-width: 900px) {
+  .sgCards { grid-template-columns: repeat(3, 1fr); }
+}
+
+input[type=search] {
+  color: $sttm-blue;
+}

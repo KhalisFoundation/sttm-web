@@ -1,5 +1,6 @@
-.larivaar-assist-word {
-  color: #f39c1d;
+.larivaar-assist-word,
+.larivaar-assist-word span {
+  color: #f39c1d !important;
 }
 
 .search-results {
@@ -34,6 +35,14 @@
 
     .dark-mode & {
       color: $sttm-light-blue-60;
+    }
+  }
+
+  & .show-all-results {
+    text-align: center;
+
+    & > a {
+      color: $sttm-blue;
     }
   }
 

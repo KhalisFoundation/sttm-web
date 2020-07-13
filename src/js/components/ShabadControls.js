@@ -6,7 +6,7 @@ import {
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
   FONT_OPTIONS,
-  VISRAAM_CONSTANTS,
+  VISRAAM,
 } from '../constants';
 import TelevisionIcon from './Icons/Television';
 import SlidersIcon from './Icons/Sliders';
@@ -24,6 +24,7 @@ export default class ShabadControls extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    autoScrollMode: PropTypes.bool.isRequired,
     visraams: PropTypes.bool.isRequired,
     visraamSource: PropTypes.string.isRequired,
     visraamStyle: PropTypes.string.isRequired,
@@ -55,9 +56,9 @@ export default class ShabadControls extends React.PureComponent {
   componentDidUpdate() {
     clearVisraamClass();
     document.body.classList[this.props.visraams ? 'add' : 'remove'](
-      VISRAAM_CONSTANTS.CLASS_NAME,
-      VISRAAM_CONSTANTS.SOURCE_CLASS(this.props.visraamSource),
-      VISRAAM_CONSTANTS.TYPE_CLASS(this.props.visraamStyle)
+      VISRAAM.CLASS_NAME,
+      VISRAAM.SOURCE_CLASS(this.props.visraamSource),
+      VISRAAM.TYPE_CLASS(this.props.visraamStyle)
     );
   }
 
@@ -83,6 +84,7 @@ export default class ShabadControls extends React.PureComponent {
       larivaarAssist,
       larivaar,
       darkMode,
+      autoScrollMode,
       visraams,
       visraamSource,
       visraamStyle,
@@ -238,13 +240,13 @@ export default class ShabadControls extends React.PureComponent {
                 <div className="display-option-type">
                   <div className="display-option-header">Vishraam Options</div>
                   <div className="display-option-content">
-                    {this.createSelectFromObj(VISRAAM_CONSTANTS.TYPES, visraamStyle, setVisraamStyle)}
+                    {this.createSelectFromObj(VISRAAM.TYPES, visraamStyle, setVisraamStyle)}
                   </div>
                 </div>
                 <div className="display-option-type">
                   <div className="display-option-header">Vishraam Source</div>
                   <div className="display-option-content">
-                    {this.createSelectFromObj(VISRAAM_CONSTANTS.SOURCES, visraamSource, setVisraamSource)}
+                    {this.createSelectFromObj(VISRAAM.SOURCES, visraamSource, setVisraamSource)}
                   </div>
                 </div>
               </>

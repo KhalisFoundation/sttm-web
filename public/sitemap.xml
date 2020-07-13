@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type='text/xsl' href='sitemap.xsl'?>
+<!-- <?xml-stylesheet type='text/xsl' href='sitemap.xsl'?> -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">  
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://www.sikhitothemax.org/</loc>
     <changefreq>Monthly</changefreq>
@@ -45,7 +45,7 @@
     <changefreq>Monthly</changefreq>
     <priority>1</priority>
     <lastmod>2019-10-04T08:46:32Z</lastmod>
-  </url> 
+  </url>
   <url>
     <loc>https://www.sikhitothemax.org/sundar-gutka</loc>
     <changefreq>Monthly</changefreq>
@@ -111,11 +111,11 @@
     <changefreq>Monthly</changefreq>
     <priority>1</priority>
     <lastmod>2019-10-07T08:46:32Z</lastmod>
-  </url>                      
+  </url>
   <url>
     <loc>https://www.sikhitothemax.org/sync</loc>
     <changefreq>Monthly</changefreq>
     <priority>1</priority>
     <lastmod>2019-10-07T08:46:32Z</lastmod>
-  </url> 
+  </url>
 </urlset>

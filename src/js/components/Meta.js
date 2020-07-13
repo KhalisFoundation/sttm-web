@@ -8,7 +8,7 @@ import Hour24 from './Icons/Hour24';
 import { withRouter } from 'react-router-dom';
 import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
 
-import { PAGE_NAME_CONSTANTS } from '../constants';
+import { PAGE_NAME } from '../constants';
 
 /**
  *
@@ -71,13 +71,14 @@ class Meta extends React.PureComponent {
       transliterationLanguages.includes('english');
 
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
+    const isHukamnama = type === 'hukamnama';
 
     return (
-      <div id="metadata">
+      <div id="metadata" className={`metadata-${type}`}>
         {isFalsy(nav.previous) === false ? (
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
-              {type === 'hukamnama' ? (
+              {isHukamnama ? (
                 <div className='hukamnama-nav-icon'>
                   <Hour24 direction='previous' />
                   <span>{dateMath.expand(nav.previous, false)}</span>
@@ -90,7 +91,7 @@ class Meta extends React.PureComponent {
         ) : type !== 'sync' ? (
           <div className="shabad-nav left disabled-nav">
             <a>
-              {type === 'hukamnama' ? (
+              {isHukamnama ? (
                 <Hour24 direction='previous' />
               ) : (
                   <Chevron direction={Chevron.DIRECTIONS.LEFT} />
@@ -99,7 +100,7 @@ class Meta extends React.PureComponent {
           </div>
         ) : ''}
         <div className="meta">
-          {['hukamnama'].includes(type) && (
+          {isHukamnama && (
             <h4>
               <Link to={`/shabad?id=${info.shabadId}`}>
                 {TEXTS.GO_TO_SHABAD}
@@ -123,7 +124,7 @@ class Meta extends React.PureComponent {
                     source: getSourceId(info),
                   })}
                 >
-                  {getSourceId(info) == 'G' ? PAGE_NAME_CONSTANTS.ANG[contentType] : PAGE_NAME_CONSTANTS.PANNA[contentType]}{' '}
+                  {getSourceId(info) == 'G' ? PAGE_NAME.ANG[contentType] : PAGE_NAME.PANNA[contentType]}{' '}
                   {info.source.pageNo}
                 </Link>
               </Item>
@@ -160,7 +161,7 @@ class Meta extends React.PureComponent {
         {isFalsy(nav.next) === false ? (
           <div className="shabad-nav right">
             <a role="button" aria-label="next" onClick={this.goToNextAng}>
-              {type === 'hukamnama' ? (
+              {isHukamnama ? (
                 <div className='hukamnama-nav-icon'>
                   <Hour24 direction='next' />
                   <span>{dateMath.expand(nav.next, false)}</span>
@@ -173,7 +174,7 @@ class Meta extends React.PureComponent {
         ) : type !== 'sync' ? (
           <div className="shabad-nav right disabled-nav">
             <a>
-              {type === 'hukamnama' ? (
+              {isHukamnama ? (
                 <Hour24 direction='next' />
               ) : (
                   <Chevron direction={Chevron.DIRECTIONS.RIGHT} />

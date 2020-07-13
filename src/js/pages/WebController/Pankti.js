@@ -1,8 +1,9 @@
 import React from 'react';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
+
 import BaaniLine from '@/components/BaaniLine';
 import { SHABAD_CONTENT_CLASSNAME } from '@/constants';
-import cx from 'classnames';
 import { getVerseId, getShabadId } from '@/util/api/shabad';
 import HomeIcon from '@/components/Icons/Home';
 
@@ -136,8 +137,11 @@ export default class Pankti extends React.PureComponent {
         // line count is equal to lineIndex + 1 because lineIndex starts from 0
         onClick={e => this.clickedPankti(e, getVerseId(shabad), getShabadId(shabad), lineIndex + 1)}
       >
-        {getBaniLine(shabad)}
-        {homeId === parseInt(getVerseId(shabad), 10) && (<HomeIcon />)}
+        <p className="line-count">{lineIndex + 1}</p>
+        <div class="pankti-wrapper">
+          {getBaniLine(shabad)}
+          {homeId === parseInt(getVerseId(shabad), 10) && (<HomeIcon />)}
+        </div>
       </div>
     ));
 

@@ -67,10 +67,6 @@ blockquote {
       }
     }
   }
-
-  .fullscreen-view & {
-    display: none;
-  }
 }
 
 .meta {
@@ -116,7 +112,17 @@ blockquote {
   }
 }
 
+.metadata-hukamnama,
+.pagination-hukamnama {
+  .shabad-nav {
+    .fullscreen-view & {
+      display: none;
+    }
+  }
+}
+
 .shabad-container {
+  margin-top: 10px;
   width: 100%;
 }
 
@@ -138,7 +144,7 @@ blockquote {
   display: flex;
   justify-content: center;
   margin: 0;
-  padding: 0 1rem;
+  padding: 4px 1rem;
   width: 100%;
 
   .line {
@@ -192,9 +198,111 @@ blockquote {
     }
   }
 
-  .mixed-view-baani {
-    .line {
+  .split-view-baani {
+    &-line {
+      &.paragraph-mode > * {
+        display: inline;
+      }
+    }
+
+    &-paragraph {
+      margin-bottom: 4px;
       position: relative;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        .share {
+          display: none;
+        }
+      }
+    }
+
+    &-translation {
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        &.translation {
+          margin: 0;
+          margin-right: 4px;
+          padding: 0;
+        }
+      }
+    }
+
+    &-transliteration {
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        & .transliteration {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &-wrapper {
+      &.paragraph-mode {
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .mixed-view-baani {
+    &-paragraph {
+      margin-bottom: 4px;
+      position: relative;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        .share {
+          display: none;
+        }
+      }
+    }
+
+    &-translation {
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        & .translation {
+          margin: 0;
+          margin-right: 4px;
+          padding: 0;
+        }
+      }
+    }
+
+    &-transliteration {
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        & .transliteration {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &-wrapper {
+      margin-top: 15px;
+
+      &.paragraph-mode {
+        margin-bottom: 16px;
+
+        & div[class^="mixed-view-baani-translation-"],
+        & div[class^="mixed-view-baani-transliteration-"] {
+          display: block;
+          margin-bottom: 4px;
+        }
+      }
     }
   }
 
@@ -253,7 +361,7 @@ blockquote {
   }
 
   .shabad {
-    padding: 0 2rem 0 3rem;
+    padding: 4px 2rem 0 3rem;
   }
 
   .dark-mode #share-menu {
@@ -295,7 +403,7 @@ blockquote {
     color: $sttm-light-grey;
 
     &:hover {
-      box-shadow: 0 8px 16px 0 $sttm-dark-grey;
+      box-shadow: 0 8px 16px 0 $sttm-pure-black;
     }
   }
 

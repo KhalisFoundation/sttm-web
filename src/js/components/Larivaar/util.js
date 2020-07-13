@@ -1,3 +1,5 @@
+import { MAX_LARIVAAR_ASSIST_STRENGTH } from '@/constants/';
+
 const matrasThatAppearAtRightSideOfChar = 'wIuUyYoOW';
 const halfCharThatAppearAtRightSideOfChar = 'Í´R@˜®';
 const nasalSoundCaharacter = 'NMµ';

@@ -1,0 +1,1 @@
+export const FIRST_HUKAMNAMA_DATE = '2002/01/01';

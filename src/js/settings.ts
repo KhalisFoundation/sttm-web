@@ -2,45 +2,56 @@ import {
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
   FONT_OPTIONS,
-  VISRAAM_CONSTANTS,
+  VISRAAM,
 } from './constants';
 
-import { toggleItemInArray, toFixedFloat } from './util';
+import {
+  toggleItemInArray,
+  toFixedFloat,
+  isShowParagraphModeRoute,
+  isShowAutoScrollRoute
+} from './util';
 
 import {
   LarivaarIcon,
   LarivaarAssistIcon,
   PlusIcon,
   MinusIcon,
-  FontSizeControl,
+  SizeControl,
   AlignCenterIcon,
   AlignLeftIcon,
   SplitViewIcon,
+  ParagraphIcon,
   GearsIcon,
 } from '@/components/Icons/CustomIcons';
-import { LineHeightControl } from './components/Icons/CustomIcons';
 
-const LINE_HEIGHT_CHANGE = 0.2;
-const MAX_LINE_HEIGHT = 2;
-const MIN_LINE_HEIGHT = 1;
 export interface SETTING_ACTIONS {
   setTranslationLanguages: Function,
   setTransliterationLanguages: Function,
   resetDisplayOptions: Function,
   resetFontOptions: Function,
   toggleVisraams: Function,
+  toggleAutoScrollMode: Function,
   toggleLarivaarOption: Function,
   toggleLarivaarAssistOption: Function,
   setFontSize: Function,
+  setTranslationFontSize: Function,
+  setTransliterationFontSize: Function,
   setLineHeight: Function,
   toggleCenterAlignOption: Function,
   toggleSplitViewOption: Function,
   toggleDarkMode: Function,
+  toggleParagraphMode: Function,
   setVisraamSource: Function,
   setVisraamStyle: Function,
   changeFont: Function,
   toggleAdvancedOptions: Function,
+  setLarivaarAssistStrength: Function,
 
+  location: {
+    pathname: string,
+  },
+  larivaarAssistStrength: number,
   translationLanguages: string[],
   transliterationLanguages: string[],
   visraams: boolean,
@@ -48,7 +59,11 @@ export interface SETTING_ACTIONS {
   visraamStyle: string,
   larivaarAssist: boolean,
   larivaar: boolean,
-  fontSize: any,
+  fontSize: number,
+  translationFontSize: number,
+  transliterationFontSize: number,
+  paragraphMode: boolean,
+  autoScrollMode: boolean,
   lineHeight: number,
   centerAlignGurbani: boolean,
   splitView: boolean,
@@ -69,6 +84,7 @@ export const QUICK_SETTINGS = ({
   toggleCenterAlignOption,
   toggleSplitViewOption,
   toggleAdvancedOptions,
+  toggleParagraphMode,
   toggleDarkMode,
   translationLanguages,
   transliterationLanguages,
@@ -76,11 +92,15 @@ export const QUICK_SETTINGS = ({
   larivaarAssist,
   larivaar,
   fontSize,
+  paragraphMode,
   centerAlignGurbani,
   splitView,
   showAdvancedOptions,
   darkMode,
+  location,
 }: SETTING_ACTIONS) => {
+
+  const isParagraphMode = isShowParagraphModeRoute(location.pathname);
 
   return [
     {
@@ -116,10 +136,9 @@ export const QUICK_SETTINGS = ({
           action: () => {
             fontSize >= 1.6 && setFontSize(toFixedFloat(fontSize - 0.4));
           },
-          // value: Math.floor(fontSize * 10)
         },
         {
-          control: FontSizeControl,
+          control: SizeControl,
           actionType: 'change',
           action: (size: any) => { setFontSize(toFixedFloat((size / 10))); },
           value: Math.floor(fontSize * 10),
@@ -129,7 +148,6 @@ export const QUICK_SETTINGS = ({
           action: () => {
             fontSize < 3.2 && setFontSize(toFixedFloat(fontSize + 0.4));
           },
-          // value: Math.floor(fontSize * 10)
         },
       ],
     },
@@ -165,6 +183,17 @@ export const QUICK_SETTINGS = ({
         },
       ],
     },
+    isParagraphMode ? {
+      type: 'icon-toggle',
+      label: "Paragraph",
+      controlsList: [
+        {
+          icon: ParagraphIcon,
+          action: toggleParagraphMode,
+          value: paragraphMode,
+        }
+      ]
+    } : {},
     {
       type: 'icon-toggle',
       label: 'Larivaar',
@@ -223,45 +252,128 @@ export const ADVANCED_SETTINGS = ({
   setVisraamSource,
   setVisraamStyle,
   setLineHeight,
+  larivaarAssistStrength,
   lineHeight,
   changeFont,
+  larivaarAssist,
+
+  setLarivaarAssistStrength,
+  toggleAutoScrollMode,
+  autoScrollMode,
   visraamSource,
   visraamStyle,
   fontFamily,
-}: SETTING_ACTIONS) => [
+  setTranslationFontSize,
+  setTransliterationFontSize,
+  translationFontSize,
+  transliterationFontSize,
+  location
+}: SETTING_ACTIONS) => {
+  const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
+
+  return [
+    isShowAutoScroll ? {
+      type: 'toggle-option',
+      label: 'Auto Scroll',
+      checked: autoScrollMode,
+      action: toggleAutoScrollMode,
+    } : {},
     {
       type: 'icon-toggle',
       label: 'Line Height',
       controlsList: [
         {
           icon: MinusIcon,
-          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - LINE_HEIGHT_CHANGE), MIN_LINE_HEIGHT)),
+          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - 0.2), 1.2)),
         },
         {
-          control: LineHeightControl,
+          control: SizeControl,
+          controlOptions: [1.2, 1.4, 1.6, 1.8, 2],
           actionType: 'change',
           action: (val: number) => setLineHeight(toFixedFloat(val)),
           value: lineHeight
         },
         {
           icon: PlusIcon,
-          action: () => setLineHeight(Math.min(toFixedFloat(lineHeight + LINE_HEIGHT_CHANGE), MAX_LINE_HEIGHT)),
+          action: () => setLineHeight(Math.min(toFixedFloat(lineHeight + 0.2), 2)),
         },
       ],
     },
+    {
+      type: 'icon-toggle',
+      label: 'Translation',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => setTranslationFontSize(Math.max(toFixedFloat(translationFontSize - 0.4), 1.2))
+        },
+        {
+          control: SizeControl,
+          controlOptions: [12, 16, 20, 24],
+          actionType: 'change',
+          action: (size: number) => setTranslationFontSize(toFixedFloat((size / 10))),
+          value: Math.floor(translationFontSize * 10),
+        },
+        {
+          icon: PlusIcon,
+          action: () => setTranslationFontSize(Math.min(toFixedFloat(translationFontSize + 0.4), 2.4))
+        },
+      ],
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Transliteration',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => setTransliterationFontSize(Math.max(toFixedFloat(transliterationFontSize - 0.4), 1.2))
+        },
+        {
+          control: SizeControl,
+          actionType: 'change',
+          action: (size: number) => setTransliterationFontSize(toFixedFloat((size / 10))),
+          value: Math.floor(transliterationFontSize * 10),
+        },
+        {
+          icon: PlusIcon,
+          action: () => setTransliterationFontSize(Math.min(toFixedFloat(transliterationFontSize + 0.4), 3.2))
+        },
+      ],
+    },
+    larivaarAssist ? {
+      type: 'icon-toggle',
+      label: 'Larivaar contrast',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => setLarivaarAssistStrength(Math.max(larivaarAssistStrength - 1, 1))
+        },
+        {
+          control: SizeControl,
+          controlOptions: [1, 2, 3, 4, 5],
+          actionType: 'change',
+          action: (strength: number) => setLarivaarAssistStrength(Number(strength)),
+          value: larivaarAssistStrength,
+        },
+        {
+          icon: PlusIcon,
+          action: () => setLarivaarAssistStrength(Math.min(larivaarAssistStrength + 1, 5))
+        },
+      ],
+    } : {},
     {
       type: 'dropdown',
       label: 'Visraam Source',
       value: visraamSource,
       action: setVisraamSource,
-      options: VISRAAM_CONSTANTS.SOURCES,
+      options: VISRAAM.SOURCES,
     },
     {
       type: 'dropdown',
       label: 'Visraam Style',
       value: visraamStyle,
       action: setVisraamStyle,
-      options: VISRAAM_CONSTANTS.TYPES,
+      options: VISRAAM.TYPES,
     },
     {
       type: 'dropdown',
@@ -271,3 +383,4 @@ export const ADVANCED_SETTINGS = ({
       options: FONT_OPTIONS,
     },
   ]
+}

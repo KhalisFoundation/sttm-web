@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GlobalHotKeys } from 'react-hotkeys';
 
@@ -15,7 +15,6 @@ import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
 import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
-
 
 /**
  *
@@ -70,6 +69,9 @@ class Shabad extends React.PureComponent {
     hideControls: PropTypes.bool,
     controlProps: PropTypes.object,
 
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     random: PropTypes.bool.isRequired,
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
@@ -78,9 +80,13 @@ class Shabad extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
+    lineHeight: PropTypes.number.isRequired,
+    transliterationFontSize: PropTypes.number.isRequired,
+    translationFontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
+    paragraphMode: PropTypes.bool,
   };
 
   constructor(props) {
@@ -90,6 +96,7 @@ class Shabad extends React.PureComponent {
     const {
       props: {
         gurbani,
+        location,
         nav,
         info,
         type,
@@ -103,9 +110,12 @@ class Shabad extends React.PureComponent {
         unicode,
         fontSize,
         lineHeight,
+        translationFontSize,
+        transliterationFontSize,
         fontFamily,
         centerAlignGurbani,
         showFullScreen,
+        paragraphMode
       },
       handleEmbed,
       handleCopyAll,
@@ -114,6 +124,9 @@ class Shabad extends React.PureComponent {
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
+
+    const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
+    const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
@@ -144,7 +157,7 @@ class Shabad extends React.PureComponent {
               transliterationLanguages={transliterationLanguages}
             />
           )}
-          <div id="shabad" className="shabad display">
+          <div id="shabad" className={`shabad display display-${type}`}>
             <div className="shabad-container">
               <Baani
                 type={type}
@@ -154,6 +167,8 @@ class Shabad extends React.PureComponent {
                 highlight={highlight}
                 larivaar={larivaar}
                 fontSize={fontSize}
+                translationFontSize={translationFontSize}
+                transliterationFontSize={transliterationFontSize}
                 lineHeight={lineHeight}
                 fontFamily={fontFamily}
                 larivaarAssist={larivaarAssist}
@@ -161,13 +176,16 @@ class Shabad extends React.PureComponent {
                 transliterationLanguages={transliterationLanguages}
                 centerAlignGurbani={centerAlignGurbani}
                 showFullScreen={showFullScreen}
+                isParagraphMode={paragraphMode && isSundarGutkaRoute}
               />
 
               {this.props.hideMeta === false && (
                 <FootNav info={info} type={type} nav={nav} />
               )}
 
-              <RelatedShabads forShabadID={getShabadId(this.props.info)} />
+              {!isAmritKeertanRoute
+                &&
+                <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
           <ProgressBar percent={this.state.progress} />
@@ -238,4 +256,4 @@ class Shabad extends React.PureComponent {
 }
 
 const stateToProps = state => state;
-export default connect(stateToProps)(Shabad);
+export default connect(stateToProps)(withRouter(Shabad));

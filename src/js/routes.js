@@ -211,6 +211,33 @@ export default [
     },
   },
   {
+    path: '/amrit-keertan/shabads/:shabadId',
+    render(props) {
+      return (
+        <Layout title="Amrit Keertan shabads - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(
+                /* webpackChunkName: "AmritKeertan" */ './pages/AmritKeertanShabads'
+              )
+            }
+          >
+            {({ pending, resolved: { AmritKeertanShabads } = {}, rejected }) =>
+              pending ? null : AmritKeertanShabads ? (
+                <AmritKeertanShabads {...props} />
+              ) : (
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
+                )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    }
+  },
+  {
     path: '/help',
     render(props) {
       return (
@@ -394,11 +421,13 @@ export default [
     },
   },
   {
-    path: '/control',
+    path: ['/control/:namespaceString', '/control'],
     render(props) {
+      const { match: { params: { namespaceString } } } = props;
+      const codeRegex = new RegExp('[A-Z,a-z]{3}-[A-Z,a-z]{3}');
       return (
         <Layout title={`${TEXTS.CONTROLLER} - SikhiToTheMax`} isController={true} {...props} >
-          <WebControllerPage />
+          <WebControllerPage namespaceString={codeRegex.test(namespaceString) ? namespaceString : ''} />
         </ Layout>
       )
     },

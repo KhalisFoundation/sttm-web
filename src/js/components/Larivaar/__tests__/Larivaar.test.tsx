@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Larivaar from '..';
+import { Larivaar } from '..';
 
 describe('<Larivaar />', () => {
   it('renders children when disabled', () => {

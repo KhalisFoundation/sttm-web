@@ -57,7 +57,9 @@ export default class Header extends React.PureComponent {
     this.handleFormSubmit(data);
   };
 
-  handleFormSubmit = data => this.props.history.push(toSearchURL(data));
+  handleFormSubmit = data => {
+    this.props.history.push(toSearchURL(data));
+  }
 
   render() {
     const {

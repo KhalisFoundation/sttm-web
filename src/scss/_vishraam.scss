@@ -10,11 +10,11 @@
       .gurlipi,
       .unicode {
         .visraam-#{$source}-main {
-          color: $visraam-main;
+          color: $visraam-main !important;
         }
 
         .visraam-#{$source}-yamki {
-          color: $visraam-yamki;
+          color: $visraam-yamki !important;
         }
       }
     }
@@ -37,7 +37,7 @@
               to right,
               rgba(229, 229, 229, 0) 20%,
               rgba($visraam-main, 0.7) 100%
-            );
+            ) !important;
         }
 
         .visraam-#{$source}-yamki {
@@ -46,7 +46,7 @@
               to right,
               rgba(229, 229, 229, 0) 20%,
               rgba($visraam-yamki, 0.7) 100%
-            );
+            ) !important;
         }
       }
     }
