@@ -150,15 +150,11 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
             <div id="help">
               <div id="sidebar">
                 <ul>
-                  {Object.entries(raagIndices).map(
-                    ([key, { name: granthName }]) => (
-                      <li key={key}>
-                        <details>
-                          <summary>{granthName}</summary>
-                        </details>
-                      </li>
-                    )
-                  )}
+                  {Object.entries(raagIndices).map(([key, { name }]) => (
+                    <li key={key}>
+                      <a href={`#${sanitizeHash(name)}`}>{name}</a>
+                    </li>
+                  ))}
                   {/* Amrit keertan Index */}
                   <li>
                     <a href="#amritKeertan">Amrit Keertan</a>
