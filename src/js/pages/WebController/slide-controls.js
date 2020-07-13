@@ -84,6 +84,12 @@ export default class SlideControls extends React.PureComponent {
       const activeSlide = document.querySelector("#anand-slide");
       activeSlide.classList.add("active-slide");
     }
+    document.body.addEventListener('click', (e) => {
+      var sgList = document.querySelector('.sg-list-container');
+      if (!sgList.contains(e.target)) {
+        document.querySelector('.sg-list-container').classList.add('sg-hide');
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -91,6 +97,7 @@ export default class SlideControls extends React.PureComponent {
     window.removeEventListener('scroll', this.scrollListener, {
       passive: true,
     });
+    document.body.removeEventListener('click');
   }
 
   render() {
