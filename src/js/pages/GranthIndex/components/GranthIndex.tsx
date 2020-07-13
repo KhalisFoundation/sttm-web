@@ -67,11 +67,14 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
             source: localSource,
             description,
             subSets,
-            highlight,
+            // Give a default value if highlight is undefined
+            highlight = 0,
           },
           i
         ) => {
-          if (localSource) {
+          if (localSource == null) {
+            localSource = source;
+          } else {
             source = localSource;
           }
 
