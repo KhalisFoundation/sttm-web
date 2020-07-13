@@ -6,13 +6,12 @@ export const useFetchSearchLists =
     isShowSearchByWriters: boolean,
   }) => {
     const [isFetching, setIsFetching] = useState<Boolean>(false);
+
     const [raags, setRaags] = useState<{ id: string }[]>([]);
     const [writers, setWriters] = useState<{ id: string }[]>([]);
 
     useEffect(() => {
-      setIsFetching(true);
-
-      const fetchListAsync = async (apiUrl: string, type: string) => {
+      const fetchListAsync = async (apiUrl: string, type?: string) => {
         const response = await fetch(apiUrl);
         if (response.status !== 200) {
           throw new Error('There was some error fetching data');
@@ -20,24 +19,24 @@ export const useFetchSearchLists =
 
         if (type === 'raag') {
           const raags = await response.json();
-          const searchRaags = raags.map(
-            ({ raagID: id, RaagUnicode: unicode, RaagEnglish: en }) => {
+          const searchRaags = raags.rows.map(
+            ({ RaagID: id, RaagEnglish: en }) => {
               const searchRaag = {
-                [id]: id === 0 ? 'all' : en,
+                [id]: id === 0 ? 'All' : en,
               }
               return searchRaag;
             }
-
           );
           setRaags(searchRaags);
           return;
         }
 
         const writers = await response.json();
-        const searchWriters = writers.map(
-          ({ WriterID: id, WriterUnicode: unicode, WriterEnglish: en }) => {
+        console.log(writers, "writers ........")
+        const searchWriters = writers.rows.map(
+          ({ WriterID: id, WriterEnglish: en }) => {
             const searchWriter = {
-              [id]: id === 0 ? 'all' : en,
+              [id]: id === 0 ? 'All' : en,
             }
             return searchWriter;
           }
@@ -45,14 +44,19 @@ export const useFetchSearchLists =
         setWriters(searchWriters);
       }
 
-      if (isShowSearchByRaags) {
-        fetchListAsync(`${API_URL}/raags`, 'raag');
-      }
-      if (isShowSearchByWriters) {
-        fetchListAsync(`${API_URL}/writers`, 'writer');
-      }
+      (async () => {
+        setIsFetching(true);
 
-      setIsFetching(false);
+        if (isShowSearchByRaags) {
+          await fetchListAsync(`${API_URL}/raags`, 'raag');
+        }
+        if (isShowSearchByWriters) {
+          await fetchListAsync(`${API_URL}/writers`);
+        }
+
+        setIsFetching(false);
+      })();
+
     }, []);
 
     return {

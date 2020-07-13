@@ -118,7 +118,7 @@ class Autocomplete extends Component {
               if (index === activeSuggestion) {
                 className += "suggestion-active";
               }
-
+              console.log(suggestion.url, "..........")
               return (
                 <li
                   className={className}
@@ -127,7 +127,7 @@ class Autocomplete extends Component {
                     this.setState({ activeSuggestion: index });
                   }}
                 >
-                  <a href={suggestion.url}>
+                  <Link to={suggestion.url}>
                     <Larivaar
                       larivaarAssist={false}
                       enable={false}
@@ -139,7 +139,7 @@ class Autocomplete extends Component {
                       {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                     </Larivaar>
                     {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                  </a>
+                  </Link>
                 </li>
               );
             })}

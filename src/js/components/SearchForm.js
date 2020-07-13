@@ -164,6 +164,7 @@ export default class SearchForm extends React.PureComponent {
 
   componentWillUnmount() {
     this._mounted = false;
+    console.log("UNMOUNTING THE SEARCH FORM....")
   }
 
   render() {
@@ -174,6 +175,8 @@ export default class SearchForm extends React.PureComponent {
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
+      handleSearchRaagChange,
+      handleSearchWriterChange,
       handleSubmit,
     } = this;
 
@@ -207,6 +210,8 @@ export default class SearchForm extends React.PureComponent {
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
+      handleSearchRaagChange,
+      handleSearchWriterChange,
       handleSubmit,
     });
   }
@@ -324,32 +329,39 @@ export default class SearchForm extends React.PureComponent {
   }
 
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
-
-    const isSearchTypeToAngType = this.state.type !== SEARCH_TYPES['ANG'] && Number(value) === SEARCH_TYPES['ANG'];
+    const {
+      type,
+      raag,
+      writer,
+      source,
+      query
+    } = this.state;
+    const { submitOnChangeOf } = this.props;
+    const isSearchTypeToAngType = type !== SEARCH_TYPES['ANG'] && Number(value) === SEARCH_TYPES['ANG'];
 
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
         {
           type: parseInt(value, 10),
           source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
-            Object.keys(SOURCES_WITH_ANG).includes(this.state.source) ?
-            this.state.source : 'G',
-          raag: 'all',
-          writer: 'all',
-          query: isSearchTypeToAngType ? '' : this.state.query,
+            Object.keys(SOURCES_WITH_ANG).includes(source) ?
+            source : 'G',
+          raag,
+          writer,
+          query: isSearchTypeToAngType ? '' : query,
           shouldSubmit: isSearchTypeToAngType ? false :
-            this.props.submitOnChangeOf.includes('type') &&
-            this.state.query !== ''
+            submitOnChangeOf.includes('type') &&
+            query !== ''
         },
         () => {
-          clickEvent({ action: ACTIONS.SEARCH_TYPE, label: this.state.type });
+          clickEvent({ action: ACTIONS.SEARCH_TYPE, label: type });
           localStorage.setItem(
             LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-            this.state.type
+            type
           );
           localStorage.setItem(
             LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
-            this.state.source
+            source
           );
           requestAnimationFrame(this.beginPlaceholderAnimation);
         }

@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import {
   TYPES,
   SOURCES,
-  LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
-  LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-  LOCAL_STORAGE_KEY_FOR_SEARCH_RAAG,
-  LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
-  PLACEHOLDERS,
-  DEFAULT_SEARCH_TYPE,
-  DEFAULT_SEARCH_SOURCE,
-  DEFAULT_SEARCH_RAAG,
-  DEFAULT_SEARCH_WRITER,
   SEARCH_TYPES,
   SOURCES_WITH_ANG,
 } from '@/constants';
@@ -23,69 +14,82 @@ interface ISearchTypesProps {
   isShowSearchByWriters?: boolean,
   searchType: string
   searchSource: string
-  searchRaagId?: string | number
-  searchWriterId?: string | number
-  handleSearchTypeChange: (e: React.ChangeEvent) => {}
-  handleSearchSourceChange: (e: React.ChangeEvent) => {}
-  handleSearchRaagIdChange?: (e: React.ChangeEvent) => {}
-  handleSearchWriterIdChange?: (e: React.ChangeEvent) => {}
+  searchRaag?: string | number
+  searchWriter?: string | number
+  onSearchTypeChange: (e: React.ChangeEvent) => {}
+  onSearchSourceChange: (e: React.ChangeEvent) => {}
+  onSearchRaagChange?: (e: React.ChangeEvent) => {}
+  onSearchWriterChange?: (e: React.ChangeEvent) => {}
 }
 
-export const SearchTypes: React.FC<ISearchTypesProps> = ({
+export const SearchTypes: React.FC<ISearchTypesProps> = React.memo(({
   isShowSearchByRaags = true,
   isShowSearchByWriters = true,
   searchType,
   searchSource,
-  searchRaagId,
-  searchWriterId,
-  handleSearchTypeChange,
-  handleSearchSourceChange,
-  handleSearchRaagIdChange,
-  handleSearchWriterIdChange,
+  searchRaag,
+  searchWriter,
+  onSearchTypeChange,
+  onSearchSourceChange,
+  onSearchRaagChange,
+  onSearchWriterChange,
 }) => {
-  const { isFetching, raags, writers } = useFetchSearchLists({ isShowSearchByRaags, isShowSearchByWriters })
+  const { isFetching, raags: searchRaagsList, writers: searchWritersList } = useFetchSearchLists({ isShowSearchByRaags, isShowSearchByWriters })
   const isSearchTypeAng = parseInt(searchType) === SEARCH_TYPES['ANG'];
   const allSearchSourcesAng = Object.keys(SOURCES_WITH_ANG);
+
+  // Just converting it to [{key: value}] format
+  const searchTypesList = useMemo(() => TYPES.map((type, idx) => ({ [idx]: type })), [TYPES]);
+  const searchSourcesList = useMemo(() => Object.entries(isSearchTypeAng ? SOURCES_WITH_ANG : SOURCES).map(([key, value]) => ({ [key]: value })), [isSearchTypeAng]);
+
+  useEffect(() => {
+    return () => console.log('DISMANTLE<<<<<<<<<<<<<,,')
+  }, []);
+
+  if (isFetching) {
+    return <div className="spinner"></div>
+  }
 
   return (
     <div>
       {/* DIFFERENT SEARCH TYPES */}
-      <select
-        name="type"
-        id="search-type"
-        value={searchType}
-        onChange={handleSearchTypeChange}
-      >
-        <SearchOptions list={TYPES} />
-      </select>
+      {searchTypesList
+        && <select
+          name="type"
+          id="search-type"
+          value={searchType}
+          onChange={onSearchTypeChange}
+        >
+          <SearchOptions list={searchTypesList} />
+        </select>}
 
       {/* BAANI SOURCE SEARCH TYPE */}
       <select
         name="source"
         value={isSearchTypeAng && !allSearchSourcesAng.includes(searchSource) ? 'G' : searchSource}
-        onChange={handleSearchSourceChange}
+        onChange={onSearchSourceChange}
       >
-        <SearchOptions list={isSearchTypeAng ? SOURCES_WITH_ANG : SOURCES} />
+        <SearchOptions list={searchSourcesList} />
       </select>
 
       {/*RAAG SEARCH TYPE*/}
       {isShowSearchByRaags &&
         <select
           name="raag"
-          value={searchRaagId} onChange={handleSearchRaagIdChange}
+          value={searchRaag} onChange={onSearchRaagChange}
         >
-          <SearchOptions list={raags} />
+          <SearchOptions list={searchRaagsList} />
         </select>}
 
       {/*WRITER SEARCH TYPE*/}
       {isShowSearchByWriters &&
         <select
           name="writer"
-          value={searchWriterId}
-          onChange={handleSearchWriterIdChange}
+          value={searchWriter}
+          onChange={onSearchWriterChange}
         >
-          <SearchOptions list={writers} />
+          <SearchOptions list={searchWritersList} />
         </select>}
     </div>
   )
-};
+});

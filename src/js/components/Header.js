@@ -12,6 +12,7 @@ import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+import { SearchTypes } from '@/components/SearchTypes';
 export default class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
 
@@ -52,13 +53,19 @@ export default class Header extends React.PureComponent {
   }
 
   onFormSubmit = ({ handleSubmit, ...data }) => e => {
+    console.log(e, 'EVENT CODE')
     e.preventDefault();
     handleSubmit();
     this.handleFormSubmit(data);
   };
 
   handleFormSubmit = data => {
+    console.log(toSearchURL(data), '>>>>>>>>>>>>>>>>> :( ')
     this.props.history.push(toSearchURL(data));
+  }
+
+  componentWillUnmount = () => {
+    console.log('THIS IS UNMOUNTING...')
   }
 
   render() {
@@ -75,8 +82,9 @@ export default class Header extends React.PureComponent {
       writer: defaultWriter = null,
     } = getQueryParams(location.search);
 
-    const key = `${defaultQuery}${defaultSource}${defaultType}`;
+    const id = `${defaultQuery}${defaultSource}${defaultType}${defaultRaag}${defaultWriter}`;
 
+    // console.log(key, "key updated ?")
     const controllerHeader = (
       <div className="top-bar no-select" id="controller-bar">
         <div className="top-bar-wrapper row controller-header">
@@ -113,7 +121,8 @@ export default class Header extends React.PureComponent {
             </div>
           )}
           <SearchForm
-            key={key}
+            id={id}
+            // key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
             defaultType={defaultType}
@@ -130,6 +139,8 @@ export default class Header extends React.PureComponent {
               query,
               type,
               source,
+              raag,
+              writer,
               action,
               name,
               placeholder,
@@ -138,6 +149,8 @@ export default class Header extends React.PureComponent {
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
+              handleSearchRaagChange,
+              handleSearchWriterChange,
               handleSubmit,
             }) => (
                 <React.Fragment>
@@ -152,6 +165,8 @@ export default class Header extends React.PureComponent {
                               handleSubmit,
                               type,
                               source,
+                              raag,
+                              writer,
                               query,
                             })}
                             className="search-form"
@@ -240,7 +255,7 @@ export default class Header extends React.PureComponent {
                             </ul>
                           </form>
                           <div id="search-options">
-                            <select
+                            {/* <select
                               name="type"
                               id="search-type"
                               value={type}
@@ -275,14 +290,18 @@ export default class Header extends React.PureComponent {
                                       {children}
                                     </option>
                                   ))}
-                                </select>)}
-                            <select
-                              name="raag"
-                              value={raag}
-                              onChange={handleSearchRaagChange}
-                            >
-                              {}
-                            </select>
+                                </select>)} */}
+                            <SearchTypes
+                              key={`${type}${source}${raag}${writer}`}
+                              searchType={type}
+                              searchSource={source}
+                              searchRaag={raag}
+                              searchWriter={writer}
+                              onSearchTypeChange={handleSearchTypeChange}
+                              onSearchSourceChange={handleSearchSourceChange}
+                              onSearchRaagChange={handleSearchRaagChange}
+                              onSearchWriterChange={handleSearchWriterChange}
+                            />
                           </div>
                         </>
                       )}
