@@ -200,11 +200,12 @@
   height: 100%;
   position: fixed;
   top: 0;
-  transition: 0.2s right ease-out;
+  transition: 0.2s all ease-out;
   width: 312px;
   z-index: 10;
 
-  &.sg-hide svg {
+  &.sg-hide svg,
+  &.shortcut-hide svg {
     transform: rotate(-180deg);
   }
 
@@ -241,6 +242,35 @@
     overflow-y: auto;
     padding: 20px;
     top: 0;
+  }
+}
+
+.shortcut-list-container {
+  left: 0;
+
+  .toggle-button {
+    right: -78px;
+    transform: rotate(90deg);
+  }
+
+  .shortcut-sidebar {
+    width: 100%;
+
+    .shortcut-slide {
+      align-items: center;
+      background: $sttm-light-blue-30;
+      border-radius: 4px;
+      display: flex;
+      height: 129px;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+  }
+
+  &.shortcut-hide {
+    left: -312px;
   }
 }
 

@@ -28,6 +28,7 @@ export default class SlideControls extends React.PureComponent {
     activeSlide.classList.add("active-slide");
 
     if (activeSlide.id === 'anand-slide') {
+      document.querySelector('.shortcut-list-container').classList.toggle('shortcut-hide');
       this.props.socket.emit('data', {
         host: "sttm-web",
         type: "ceremony",
@@ -44,6 +45,7 @@ export default class SlideControls extends React.PureComponent {
         pin: this.props.controllerPin,
       });
     } else {
+      document.querySelector('.shortcut-list-container').classList.toggle('shortcut-hide');
       const slideText = {
         'waheguru-slide': 'vwihgurU',
         'moolmantra-slide': '<> siq nwmu krqw purKu inrBau inrvYru Akwl mUriq AjUnI sYBM gur pRswid ]',
@@ -129,25 +131,43 @@ export default class SlideControls extends React.PureComponent {
       );
     }
 
+    const shortcutMarkup = (
+      <ul className="sidebar shortcut-sidebar">
+        <li className="gurbani-font shortcut-slide" id="waheguru-slide"
+          onClick={this.sendSlide}>
+          vwihgurU
+        </li>
+        <li className="shortcut-slide" id="moolmantra-slide"
+          onClick={this.sendSlide}>
+          Mool Mantra
+        </li>
+        <li className="shortcut-slide" id="blank-slide"
+          onClick={this.sendSlide}>
+          Blank Slide
+        </li>
+        <li className="shortcut-slide" id="anand-slide"
+          onClick={this.sendSlide}>
+          Anand Sahib
+        </li>
+      </ul>
+    )
+
     return (
       <>
-        <div className={classNames} id="slide-container" ref={this.setRef}>
-          <div className="slide-type" id="waheguru-slide" onClick={this.sendSlide}>
-            <p className="gurbani-font">vwihgurU</p>
+        <div className="list-container shortcut-list-container shortcut-hide">
+          <div className="toggle-button" onClick={() => {
+            document.querySelector('.shortcut-list-container').classList
+              .toggle('shortcut-hide');
+          }}>
+            Shortcuts
+            <DownArrowIcon />
           </div>
-          <div className="slide-type" id="moolmantra-slide" onClick={this.sendSlide}>
-            <p>Mool Mantra</p>
-          </div>
-          <div className="slide-type" id="blank-slide" onClick={this.sendSlide}>
-            <p>Blank Slide</p>
-          </div>
-          <div className="slide-type" id="anand-slide" onClick={this.sendSlide}>
-            <p>Anand Sahib</p>
-          </div>
+          {shortcutMarkup}
         </div>
         <div className="list-container sg-list-container sg-hide">
           <div className="toggle-button" onClick={() => {
-            document.querySelector('.sg-list-container').classList.toggle('sg-hide');
+            document.querySelector('.sg-list-container').classList
+              .toggle('sg-hide');
           }}>
             <DownArrowIcon />
             All Banis
