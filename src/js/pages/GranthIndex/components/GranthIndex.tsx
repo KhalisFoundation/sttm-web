@@ -25,14 +25,9 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
   );
 
   // Helps check if a list item is selected to show subSets and description
-  const isSelected = useCallback(
-    (name: string) => {
-      if (selection.includes(name)) {
-        return true;
-      }
-    },
-    [selection]
-  );
+  const isSelected = useCallback((name: string) => selection.includes(name), [
+    selection,
+  ]);
 
   // Called onClick to show description and subSets
   const changeSelection = useCallback(
@@ -74,8 +69,6 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
         ) => {
           if (localSource == null) {
             localSource = source;
-          } else {
-            source = localSource;
           }
 
           return (
