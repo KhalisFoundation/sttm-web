@@ -153,6 +153,11 @@
       padding: 12px;
     }
 
+    .dark-mode & {
+      background-color: $sttm-darker-blue-2;
+      color: $sttm-white;
+    }
+
     .line-count {
       align-items: center;
       background-color: $sttm-darker-blue;
@@ -192,6 +197,7 @@
 
     &.active-slide {
       background-color: $sttm-blue;
+      color: $sttm-white;
       opacity: 1;
 
       .line-count {
@@ -204,7 +210,6 @@
       }
 
       .dark-mode & {
-        background-color: $sttm-darker-blue-2;
         color: $sttm-white;
       }
     }
