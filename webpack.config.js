@@ -56,8 +56,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'public/assets', 'js'),
-    chunkFilename: PRODUCTION ? 'chunks/[name]-[hash]' : 'chunks/[name].js',
-    filename: PRODUCTION ? '[name]-[hash]' : '[name].js',
+    chunkFilename: PRODUCTION ? 'chunks/[name]-[hash].js' : 'chunks/[name].js',
+    filename: PRODUCTION ? '[name]-[hash].js' : '[name].js',
     publicPath: '/assets/js/',
   },
   devtool: PRODUCTION ? undefined : 'inline-source-map',
