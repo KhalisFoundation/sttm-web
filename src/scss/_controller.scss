@@ -316,11 +316,10 @@
       width: 100%;
 
       &.active-slide {
-        color: $sttm-white;
         background-color: $sttm-blue;
+        color: $sttm-white;
       }
     }
-
   }
 
   &.shortcut-hide {
