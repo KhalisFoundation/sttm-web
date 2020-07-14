@@ -2,13 +2,6 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import createDebounce from 'redux-debounced';
 import thunk from 'redux-thunk';
 
-import { blendColors } from '@/util';
-import {
-  TEXT_COLOR,
-  DARKMODE_TEXT_COLOR,
-  LARIVAAR_ASSIST_COLOR
-} from '@/constants';
-
 import reducer from '../reducers';
 import {
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
@@ -63,6 +56,7 @@ const initialState = {
   showAdvancedOptions: false,
   showTransliterationOptions: false,
   showTranslationOptions: false,
+  fullScreenMode: false,
   translationLanguages: getArrayFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
     DEFAULT_TRANSLATION_LANGUAGES

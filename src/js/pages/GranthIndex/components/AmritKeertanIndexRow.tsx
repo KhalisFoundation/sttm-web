@@ -49,33 +49,28 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
       id={headerName}
       className="amritKeertanIndexRow"
       onClick={!shabads.length ? fetchShabads : undefined}>
-      {shabads.length ?
-        <td>
-          <details open ref={row}>
-            <summary>{name}</summary>
-            <ul className="amritKeertanIndexRowShabads">
-              {shabads.map(({ GurmukhiUni: shabadName, ShabadID }) => {
-                return (
-                  <li key={shabadName} className="amritKeertanIndexRowShabad">
-                    <Link to={
-                      {
-                        pathname: `/amrit-keertan/shabads/${ShabadID}`,
-                        state: {
-                          prevPath: `/index/#${headerName}`
-                        }
-                      }} >
-                      {shabadName}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </details>
-        </td> :
-        <td>
-          <a>{name}</a>
-        </td>
-      }
-    </tr >
+      <td>
+        <details open={!!shabads.length} ref={row}>
+          <summary>{name}</summary>
+          {shabads.length ? <ul className="amritKeertanIndexRowShabads">
+            {shabads.map(({ GurmukhiUni: shabadName, ShabadID }) => {
+              return (
+                <li key={shabadName} className="amritKeertanIndexRowShabad">
+                  <Link to={
+                    {
+                      pathname: `/amrit-keertan/shabads/${ShabadID}`,
+                      state: {
+                        prevPath: `/index/#${headerName}`
+                      }
+                    }} >
+                    {shabadName}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul> : null}
+        </details>
+      </td>
+    </tr>
   )
 }

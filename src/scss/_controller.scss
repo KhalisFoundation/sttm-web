@@ -97,6 +97,7 @@
   text-align: center;
   top: 0;
   transition: 0.1s background-color ease;
+  z-index: 1;
 
   .dark-mode & {
     background-color: $sttm-light-black;
@@ -140,18 +141,54 @@
   }
 
   .line {
-    align-items: center;
     background-color: $sttm-light-blue-30;
     border-radius: 12px;
     cursor: pointer;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     margin: 8px;
-    padding: 12px;
+
+    .gurmukhi,
+    .line-count {
+      padding: 12px;
+    }
+
+    .dark-mode & {
+      background-color: $sttm-darker-blue-2;
+      color: $sttm-white;
+    }
+
+    .line-count {
+      align-items: center;
+      background-color: $sttm-darker-blue;
+      border-bottom-left-radius: 12px;
+      border-top-left-radius: 12px;
+      color: $sttm-lighter-blue;
+      display: flex;
+      justify-content: center;
+      margin-right: 8px;
+      min-width: 48px;
+
+      .dark-mode & {
+        background-color: $sttm-darkest-blue;
+      }
+    }
+
+    .pankti-wrapper {
+      align-items: center;
+      display: flex;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
 
     &.visited {
       background-color: $sttm-light-grey;
+      opacity: 0.8;
+
+      .line-count {
+        background-color: $sttm-lighter-black;
+        color: $sttm-lighter-grey;
+      }
 
       .dark-mode & {
         color: $sttm-light-black;
@@ -160,6 +197,17 @@
 
     &.active-slide {
       background-color: $sttm-blue;
+      color: $sttm-white;
+      opacity: 1;
+
+      .line-count {
+        background-color: $sttm-darker-blue;
+        color: $sttm-lighter-blue;
+
+        .dark-mode & {
+          background-color: $sttm-darkest-blue;
+        }
+      }
 
       .dark-mode & {
         color: $sttm-white;
@@ -171,10 +219,11 @@
       display: inline-block;
       padding-left: 0;
     }
+  }
 
-    > svg {
-      opacity: 0.6;
-    }
+  svg {
+    margin: 16px;
+    opacity: 0.6;
   }
 }
 

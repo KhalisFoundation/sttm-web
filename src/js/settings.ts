@@ -284,11 +284,11 @@ export const ADVANCED_SETTINGS = ({
       controlsList: [
         {
           icon: MinusIcon,
-          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - 0.2), 1)),
+          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - 0.2), 1.2)),
         },
         {
           control: SizeControl,
-          controlOptions: [1, 1.2, 1.4, 1.6, 1.8, 2],
+          controlOptions: [1.2, 1.4, 1.6, 1.8, 2],
           actionType: 'change',
           action: (val: number) => setLineHeight(toFixedFloat(val)),
           value: lineHeight
