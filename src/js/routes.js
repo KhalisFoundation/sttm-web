@@ -14,6 +14,8 @@ import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
 import WebControllerPage from './pages/WebController'
 import {
+  DEFAULT_SEARCH_RAAG,
+  DEFAULT_SEARCH_WRITER,
   DEFAULT_SEARCH_SOURCE,
   DEFAULT_SEARCH_TYPE,
   SEARCH_TYPES,
@@ -319,13 +321,15 @@ export default [
       const {
         location: { search },
       } = props;
-      const params = ['type', 'source', 'q', 'offset'];
+      const params = ['type', 'source', 'q', 'offset', 'raag', 'writer'];
 
       const [
         type = DEFAULT_SEARCH_TYPE,
         source = DEFAULT_SEARCH_SOURCE,
         q = '',
         offset = 1,
+        raag = DEFAULT_SEARCH_RAAG,
+        writer = DEFAULT_SEARCH_WRITER,
       ] = params.map(v => getParameterByName(v, search));
 
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
@@ -349,6 +353,8 @@ export default [
                   q={q && decodeURIComponent(q)}
                   type={parseInt(type, 10)}
                   source={source}
+                  raag={raag}
+                  writer={writer}
                   offset={parseInt(offset)}
                   {...props}
                 />

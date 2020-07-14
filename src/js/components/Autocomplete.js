@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Larivaar from '../components/Larivaar';
 import { toSearchURL } from '../util';
 class Autocomplete extends Component {
   static propTypes = {
     isShowFullResults: PropTypes.bool,
+    onItemClick: PropTypes.func,
     getSuggestions: PropTypes.func.isRequired,
     searchOptions: PropTypes.object.isRequired,
     value: PropTypes.string.isRequired,
@@ -23,18 +24,27 @@ class Autocomplete extends Component {
     };
   }
 
+  resetSearchResults = () => {
+    this.setState((prevState) =>
+      ({
+        ...prevState,
+        activeSuggestion: -1,
+        filteredSuggestions: [],
+        showSuggestions: false,
+      })
+    );
+  }
+
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     if (e.keyCode === 13) {
       if (activeSuggestion !== -1) e.preventDefault();
 
-      window.location = filteredSuggestions[activeSuggestion].url;
-      this.setState({
-        activeSuggestion: -1,
-        filteredSuggestions: [],
-        showSuggestions: false,
-      });
+      this.resetSearchResults();
+      this.props.history.push(filteredSuggestions[activeSuggestion].url);
+      this.props.onItemClick && this.props.onItemClick();
+
     } else if (e.keyCode === 38) {
       e.preventDefault();
       if (activeSuggestion !== -1) {
@@ -111,14 +121,17 @@ class Autocomplete extends Component {
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul className="search-result" id="suggestions" onKeyDown={this.onKeyDown}>
+          <ul
+            id="suggestions"
+            className="search-result"
+            onKeyDown={this.onKeyDown}>
             {filteredSuggestions.map((suggestion, index) => {
               let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
 
               if (index === activeSuggestion) {
                 className += "suggestion-active";
               }
-              console.log(suggestion.url, "..........")
+
               return (
                 <li
                   className={className}
@@ -127,7 +140,14 @@ class Autocomplete extends Component {
                     this.setState({ activeSuggestion: index });
                   }}
                 >
-                  <Link to={suggestion.url}>
+                  <Link
+                    to={suggestion.url}
+                    onClick={() => {
+                      setTimeout(this.resetSearchResults, 2000);
+                      if (this.props.onItemClick)
+                        this.props.onItemClick();
+                    }}
+                  >
                     <Larivaar
                       larivaarAssist={false}
                       enable={false}
@@ -186,4 +206,4 @@ class Autocomplete extends Component {
   }
 }
 
-export default Autocomplete;
+export default withRouter(Autocomplete);

@@ -66,6 +66,8 @@ export default class SearchForm extends React.PureComponent {
     defaultQuery: PropTypes.string,
     defaultType: PropTypes.oneOf(Object.keys(TYPES)),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
+    defaultRaag: PropTypes.number,
+    defaultWriter: PropTypes.number,
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'raag', 'writer', 'query'])
     ),
@@ -217,10 +219,10 @@ export default class SearchForm extends React.PureComponent {
   }
   componentDidUpdate() {
     const {
-      state: { shouldSubmit, source, type, query },
+      state: { shouldSubmit, raag, writer, source, type, query },
       props: { onSubmit },
     } = this;
-
+    console.log(raag, writer, source, type, query, ">>>>>>>>.")
     if (shouldSubmit) {
       this.setState(
         {
@@ -230,6 +232,8 @@ export default class SearchForm extends React.PureComponent {
           this.handleSubmit();
           onSubmit({
             source,
+            raag,
+            writer,
             type,
             query,
           });
@@ -260,7 +264,7 @@ export default class SearchForm extends React.PureComponent {
   handleSearchChange = ({ target }) => {
     const cursorStart = target.selectionStart;
     const cursorEnd = target.selectionEnd;
-
+    console.log(target.value, " target .value ...")
     this.setQueryAs(target.value)().then(() => {
       if (cursorStart !== null) {
         return target.setSelectionRange(cursorStart, cursorEnd)
@@ -289,41 +293,47 @@ export default class SearchForm extends React.PureComponent {
     );
 
   handleSearchRaagChange = ({ currentTarget: { value } }) => {
+    const newRaag = parseInt(value, 10);
     this.setState((previousState) => {
       return {
         ...previousState,
-        raag: parseInt(value, 10),
+        raag: newRaag,
         shouldSubmit:
-          this.props.submitOnChangeOf.includes('source') &&
+          this.props.submitOnChangeOf.includes('raag') &&
           this.state.query !== '',
       }
     },
       () => {
         clickEvent({
           action: ACTIONS.SEARCH_RAAG,
-          label: this.state.raag,
+          label: newRaag,
         });
         localStorage.setItem(
           LOCAL_STORAGE_KEY_FOR_SEARCH_RAAG,
-          this.state.raag
+          newRaag
         );
       })
   }
 
   handleSearchWriterChange = ({ currentTarget: { value } }) => {
+    const newWriter = parseInt(value, 10);
+
     this.setState((previousState) => {
       return {
         ...previousState,
-        writer: parseInt(value, 10)
+        writer: newWriter,
+        shouldSubmit:
+          this.props.submitOnChangeOf.includes('writer') &&
+          this.state.query !== '',
       }
     }, () => {
       clickEvent({
         action: ACTIONS.SEARCH_WRITER,
-        label: this.state.writer,
+        label: newWriter,
       });
       localStorage.setItem(
         LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
-        this.state.writer
+        newWriter
       );
     })
   }
@@ -338,7 +348,7 @@ export default class SearchForm extends React.PureComponent {
     } = this.state;
     const { submitOnChangeOf } = this.props;
     const isSearchTypeToAngType = type !== SEARCH_TYPES['ANG'] && Number(value) === SEARCH_TYPES['ANG'];
-
+    debugger;
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
         {

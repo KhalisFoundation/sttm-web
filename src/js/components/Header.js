@@ -82,6 +82,8 @@ export default class Header extends React.PureComponent {
       writer: defaultWriter = null,
     } = getQueryParams(location.search);
 
+    console.log(defaultSource, defaultType, defaultRaag, defaultWriter, 'get query params,....')
+
     const id = `${defaultQuery}${defaultSource}${defaultType}${defaultRaag}${defaultWriter}`;
 
     // console.log(key, "key updated ?")
@@ -124,9 +126,10 @@ export default class Header extends React.PureComponent {
             id={id}
             // key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
+            defaultRaag={parseInt(defaultRaag, 10)}
             defaultSource={defaultSource}
-            defaultType={defaultType}
-            defaultWriter={defaultWriter}
+            defaultType={parseInt(defaultType, 10)}
+            defaultWriter={parseInt(defaultWriter, 10)}
             submitOnChangeOf={['type', 'source', 'raag', 'writer']}
             onSubmit={handleFormSubmit}
           >
@@ -246,8 +249,9 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <Autocomplete
+                                    onItemClick={() => setQueryAs('')}
                                     getSuggestions={getShabadList}
-                                    searchOptions={{ type: parseInt(type), source }}
+                                    searchOptions={{ type: parseInt(type), source, raag, writer }}
                                     value={query}
                                   />
                                 </div>
@@ -292,7 +296,6 @@ export default class Header extends React.PureComponent {
                                   ))}
                                 </select>)} */}
                             <SearchTypes
-                              key={`${type}${source}${raag}${writer}`}
                               searchType={type}
                               searchSource={source}
                               searchRaag={raag}

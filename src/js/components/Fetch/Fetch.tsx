@@ -43,6 +43,7 @@ export default class Fetch extends React.PureComponent<
   public componentDidMount() {
     this.mounted = true;
     const { url, options, transform, timeout } = this.props;
+    console.log(url, options, "this.props.componentDidMount,")
 
     this.fetchData(url, options, transform, timeout);
   }

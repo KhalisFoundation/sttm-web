@@ -22,8 +22,8 @@ export const toSearchURL = ({
   raag = DEFAULT_SEARCH_RAAG,
   writer = DEFAULT_SEARCH_WRITER,
   offset = '',
-}: IToSearchURLArguments) =>
-  `/search?${objectToQueryParams({
+}: IToSearchURLArguments) => {
+  const searchUrl = `/search?${objectToQueryParams({
     q: encodeURIComponent(q),
     type,
     raag,
@@ -31,3 +31,6 @@ export const toSearchURL = ({
     source,
     offset,
   })}`;
+  console.log(searchUrl, 'SEARCH URL');
+  return searchUrl;
+}

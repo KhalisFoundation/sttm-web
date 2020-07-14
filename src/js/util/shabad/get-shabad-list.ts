@@ -1,13 +1,18 @@
 import { buildApiUrl } from '@sttm/banidb';
+import {
+  DEFAULT_SEARCH_RAAG,
+  DEFAULT_SEARCH_WRITER
+} from '@/constants';
 import { toShabadURL } from '../url';
-import { translationMap, getGurmukhiVerse } from '../api/shabad';
 import { getHighlightIndices } from '../gurbani';
+import { translationMap, getGurmukhiVerse } from '../api/shabad';
 
-export const getShabadList = (q, { type, source }) => {
+export const getShabadList = (q, { type, source, raag = DEFAULT_SEARCH_RAAG, writer = DEFAULT_SEARCH_WRITER }) => {
   const offset = 1;
   const livesearch = true;
-  const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL, livesearch }));
+  const url = encodeURI(buildApiUrl({ q, type, source, raag, writer, offset, API_URL, livesearch }));
 
+  console.log(url, "URL >>>>>>>>>>>>>>>>>> <<<<<<<<<<<<")
   return new Promise((resolve, reject) => {
     const json = fetch(url).then((response) => response.json());
     json.then(
@@ -25,7 +30,7 @@ export const getShabadList = (q, { type, source }) => {
             pankti: getGurmukhiVerse(shabad),
             translation: translationMap["english"](shabad),
             query: q,
-            url: toShabadURL({ shabad, q, type, source }),
+            url: toShabadURL({ shabad, q, type, source, raag, writer }),
             highlightIndex,
           })
         }
