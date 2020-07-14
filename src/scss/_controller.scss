@@ -314,6 +314,11 @@
       justify-content: center;
       margin-bottom: 20px;
       width: 100%;
+
+      &.active-slide {
+        color: $sttm-white;
+        background-color: $sttm-blue;
+      }
     }
 
   }

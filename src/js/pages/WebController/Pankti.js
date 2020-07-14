@@ -138,7 +138,7 @@ export default class Pankti extends React.PureComponent {
         onClick={e => this.clickedPankti(e, getVerseId(shabad), getShabadId(shabad), lineIndex + 1)}
       >
         <p className="line-count">{lineIndex + 1}</p>
-        <div class="pankti-wrapper">
+        <div className="pankti-wrapper">
           {getBaniLine(shabad)}
           {homeId === parseInt(getVerseId(shabad), 10) && (<HomeIcon />)}
         </div>

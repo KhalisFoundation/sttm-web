@@ -28,7 +28,7 @@ export default class SlideControls extends React.PureComponent {
     activeSlide.classList.add("active-slide");
 
     if (activeSlide.id === 'anand-slide') {
-      document.querySelector('.shortcut-list-container').classList.toggle('shortcut-hide');
+      document.querySelector('.shortcut-list-container').classList.add('shortcut-hide');
       this.props.socket.emit('data', {
         host: "sttm-web",
         type: "ceremony",
@@ -37,7 +37,7 @@ export default class SlideControls extends React.PureComponent {
         pin: this.props.controllerPin,
       });
     } else if (activeSlide.classList.contains('bani-slide')) {
-      document.querySelector('.sg-list-container').classList.toggle('sg-hide');
+      document.querySelector('.sg-list-container').classList.add('sg-hide');
       this.props.socket.emit('data', {
         host: "sttm-web",
         type: "bani",
@@ -45,7 +45,6 @@ export default class SlideControls extends React.PureComponent {
         pin: this.props.controllerPin,
       });
     } else {
-      document.querySelector('.shortcut-list-container').classList.toggle('shortcut-hide');
       const slideText = {
         'waheguru-slide': 'vwihgurU',
         'moolmantra-slide': '<> siq nwmu krqw purKu inrBau inrvYru Akwl mUriq AjUnI sYBM gur pRswid ]',
@@ -63,14 +62,6 @@ export default class SlideControls extends React.PureComponent {
     }
   }
 
-  setRef = node => (this.$wrapper = node);
-
-  scrollListener = () => {
-    if (this.mounted) {
-      this.setState({ showBorder: window.scrollY >= this.$wrapper.offsetTop });
-    }
-  };
-
   componentDidMount() {
     this.mounted = true;
     fetch(BANIS_API_URL)
@@ -78,7 +69,6 @@ export default class SlideControls extends React.PureComponent {
       .then(baniList => {
         this.setState({ baniList });
       });
-    window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
   componentDidUpdate() {
@@ -88,17 +78,15 @@ export default class SlideControls extends React.PureComponent {
     }
     document.body.addEventListener('click', (e) => {
       var sgList = document.querySelector('.sg-list-container');
-      if (!sgList.contains(e.target)) {
+      var scList = document.querySelector('.shortcut-list-container');
+      if (!sgList.contains(e.target) && !scList.contains(e.target)) {
         document.querySelector('.sg-list-container').classList.add('sg-hide');
+        document.querySelector('.shortcut-list-container').classList.add('shortcut-hide');
       }
     });
   }
 
   componentWillUnmount() {
-    this.mounted = false;
-    window.removeEventListener('scroll', this.scrollListener, {
-      passive: true,
-    });
     document.body.removeEventListener('click');
   }
 
@@ -163,8 +151,8 @@ export default class SlideControls extends React.PureComponent {
       <>
         <div className="list-container shortcut-list-container shortcut-hide">
           <div className="toggle-button" onClick={() => {
-            document.querySelector('.shortcut-list-container').classList
-              .toggle('shortcut-hide');
+            document.querySelector('.shortcut-list-container').classList.toggle('shortcut-hide');
+            document.querySelector('.sg-list-container').classList.add('sg-hide');
           }}>
             Shortcuts
             <DownArrowIcon />
@@ -173,8 +161,8 @@ export default class SlideControls extends React.PureComponent {
         </div>
         <div className="list-container sg-list-container sg-hide">
           <div className="toggle-button" onClick={() => {
-            document.querySelector('.sg-list-container').classList
-              .toggle('sg-hide');
+            document.querySelector('.sg-list-container').classList.toggle('sg-hide');
+            document.querySelector('.shortcut-list-container').classList.add('shortcut-hide');
           }}>
             <DownArrowIcon />
             All Banis
