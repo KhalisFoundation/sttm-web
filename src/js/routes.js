@@ -332,11 +332,15 @@ export default [
         writer = DEFAULT_SEARCH_WRITER,
       ] = params.map(v => getParameterByName(v, search));
 
+
+      console.log(source, "SEARCH LAYOUT ............")
+
       const shabadQueryParams = {
         q,
+        type: parseInt(type),
         raag: parseInt(raag),
         writer: parseInt(writer),
-        source: parseInt(source),
+        source: source,
         offset: parseInt(offset),
       }
 
@@ -400,8 +404,8 @@ export default [
       const otherProps = {
         id,
         q,
-        type,
-        source: source !== undefined ? parseInt(source) : DEFAULT_SEARCH_SOURCE,
+        type: parseInt(type),
+        source: source !== undefined ? source : DEFAULT_SEARCH_SOURCE,
         raag: raag !== undefined ? parseInt(raag) : DEFAULT_SEARCH_RAAG,
         writer: writer !== undefined ? parseInt(writer) : DEFAULT_SEARCH_WRITER,
         random: random !== undefined && random === '' ? true : false,

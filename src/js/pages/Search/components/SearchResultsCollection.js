@@ -2,20 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Pagination from '../../components/Pagination';
-import { toShabadURL, toSearchURL } from '../../util';
-import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '../../constants';
+
+import Pagination from '@/components/Pagination';
+import Controls from '@/components/Controls';
+import GenericError, { SachKaur } from '@/components/GenericError';
+import SearchResults from '@/components/SearchResults/SearchResults';
 import {
+  toShabadURL,
+  toSearchURL,
   ACTIONS,
   pageView,
   errorEvent,
   clickEvent,
-} from '../../util/analytics';
-import Controls from '../../components/Controls';
-import GenericError, { SachKaur } from '../../components/GenericError';
-import SearchResults from '../../components/SearchResults/SearchResults';
+} from '@/util';
+import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '@/constants';
 
-class SearchPage extends React.PureComponent {
+class SearchResultsCollection extends React.PureComponent {
   static contextTypes = {
     router: PropTypes.object,
   };
@@ -132,4 +134,4 @@ class SearchPage extends React.PureComponent {
 }
 
 const stateToProps = state => state;
-export default connect(stateToProps)(SearchPage);
+export default connect(stateToProps)(SearchResultsCollection);
