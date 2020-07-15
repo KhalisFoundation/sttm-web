@@ -291,6 +291,7 @@
     overflow-y: auto;
     padding: 20px;
     top: 0;
+    width: 100%;
   }
 }
 
@@ -298,13 +299,11 @@
   left: 0;
 
   .toggle-button {
-    right: -78px;
+    right: -82px;
     transform: rotate(90deg);
   }
 
   .shortcut-sidebar {
-    width: 100%;
-
     .shortcut-slide {
       align-items: center;
       background: $sttm-light-blue-30;
@@ -343,7 +342,7 @@
     .bani-slide {
       border-radius: 2px;
       color: $sttm-darker-grey;
-      padding: 4px;
+      padding: 8px 4px;
 
       &.active-slide {
         color: $sttm-white;

@@ -154,8 +154,8 @@ export default class SlideControls extends React.PureComponent {
             document.querySelector('.shortcut-list-container').classList.toggle('shortcut-hide');
             document.querySelector('.sg-list-container').classList.add('sg-hide');
           }}>
-            Shortcuts
             <DownArrowIcon />
+            Shortcuts
           </div>
           {shortcutMarkup}
         </div>
