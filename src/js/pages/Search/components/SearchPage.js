@@ -23,7 +23,7 @@ export default class SearchPage extends React.PureComponent {
   };
 
   render() {
-    const { q, type, source, offset } = this.props;
+    const { q, type, source, offset, raag, writer } = this.props;
 
     if (q === '') {
       return (
@@ -35,7 +35,7 @@ export default class SearchPage extends React.PureComponent {
       );
     }
 
-    const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL }));
+    const url = encodeURI(buildApiUrl({ q, type, source, raag, writer, offset, API_URL }));
 
     return (
       <PageLoader url={url}>
@@ -61,6 +61,8 @@ export default class SearchPage extends React.PureComponent {
               shabads={verses}
               q={q}
               type={type}
+              raag={raag}
+              writer={writer}
               source={source}
             />
           );
