@@ -1,9 +1,11 @@
 /* globals API_URL */
 import React from 'react';
 import { buildApiUrl } from '@sttm/banidb';
+
 import PageLoader from '../PageLoader';
 import PropTypes from 'prop-types';
-import Layout, { Stub } from './Layout';
+import Layout from './Layout';
+import { Spinner } from '@/components/Spinner';
 
 export default class Hukamnama extends React.PureComponent {
   static propTypes = {
@@ -19,7 +21,7 @@ export default class Hukamnama extends React.PureComponent {
 
     return (
       <PageLoader url={url}>
-        {({ loading, data }) => (loading ? <Stub /> : <Layout data={data} />)}
+        {({ loading, data }) => (loading ? <Spinner /> : <Layout data={data} />)}
       </PageLoader>
     );
   }

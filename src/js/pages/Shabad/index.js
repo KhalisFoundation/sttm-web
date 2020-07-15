@@ -8,8 +8,7 @@ import ShabadContent from '../../components/ShabadContent';
 import { toShabadURL } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
 import { TEXTS } from '../../constants';
-const Stub = () => <div className="spinner" />;
-
+import { Spinner } from '@/components/Spinner';
 export default class Shabad extends React.PureComponent {
   static propTypes = {
     random: PropTypes.bool,
@@ -28,7 +27,7 @@ export default class Shabad extends React.PureComponent {
       <PageLoader url={url}>
         {({ data, loading }) =>
           loading ? (
-            <Stub />
+            <Spinner />
           ) : (
               <div className="row" id="content-root">
                 <BreadCrumb links={[{ title: TEXTS.URIS.SHABAD }]} />

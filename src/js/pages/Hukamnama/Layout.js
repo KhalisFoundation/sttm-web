@@ -6,9 +6,6 @@ import ShabadContent from '@/components/ShabadContent';
 import BreadCrumb from '@/components/Breadcrumb';
 import { getHukamnama } from '@/util/index';
 import GenericError, { BalpreetSingh } from '@/components/GenericError';
-
-export const Stub = () => <div className="spinner" />;
-
 export default class Layout extends React.PureComponent {
   static propTypes = {
     data: PropTypes.object.isRequired,
@@ -43,20 +40,20 @@ export default class Layout extends React.PureComponent {
         image={BalpreetSingh}
       />
     ) : (
-      <div className="row" id="content-root">
-        <BreadCrumb
-          links={[{ title: TEXTS.HUKAMNAMA + ' | ' + shabad.expandedDate }]}
-        />
-        <ShabadContent
-          gurbani={shabad.verses}
-          info={shabad.shabadInfo}
-          nav={shabad.nav}
-          random={false}
-          type={'hukamnama'}
-          source={shabad.shabadInfo.source}
-        />
-      </div>
-    );
+        <div className="row" id="content-root">
+          <BreadCrumb
+            links={[{ title: TEXTS.HUKAMNAMA + ' | ' + shabad.expandedDate }]}
+          />
+          <ShabadContent
+            gurbani={shabad.verses}
+            info={shabad.shabadInfo}
+            nav={shabad.nav}
+            random={false}
+            type={'hukamnama'}
+            source={shabad.shabadInfo.source}
+          />
+        </div>
+      );
   }
   componentDidMount() {
     pageView('/hukamnama');

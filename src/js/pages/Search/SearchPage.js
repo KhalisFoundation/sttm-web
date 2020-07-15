@@ -15,11 +15,7 @@ import Controls from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import SearchResults from '../../components/SearchResults/SearchResults';
 
-export function Stub() {
-  return <div className="spinner" />;
-}
-
-class Layout extends React.PureComponent {
+class SearchPage extends React.PureComponent {
   static contextTypes = {
     router: PropTypes.object,
   };
@@ -37,8 +33,10 @@ class Layout extends React.PureComponent {
       q,
       type,
       source,
-      resultsCount,
+      raag,
+      writer,
       shabads,
+      resultsCount,
       ...props
     } = this.props;
 
@@ -76,7 +74,7 @@ class Layout extends React.PureComponent {
     // I'm feeling lucky
     if (parseInt(resultsCount, 10) === 1) {
       const [shabad] = shabads;
-      return <Redirect to={toShabadURL({ shabad, q, type, source })} />;
+      return <Redirect to={toShabadURL({ shabad, q, type, source, raag, writer })} />;
     }
 
     const currentPage = offset;
@@ -88,6 +86,8 @@ class Layout extends React.PureComponent {
           q={q}
           type={type}
           source={source}
+          raag={raag}
+          writer={writer}
           shabads={shabads}
           {...props}
         />
@@ -102,7 +102,7 @@ class Layout extends React.PureComponent {
   }
 
   handlePageClick = pageNumber => {
-    const { q, type, source, offset } = this.props;
+    const { q, type, source, offset, raag, writer } = this.props;
 
     const currentPage = offset;
 
@@ -117,16 +117,19 @@ class Layout extends React.PureComponent {
         query: q,
         type,
         source,
+        raag,
+        writer,
         offset: pageNumber,
       })
     );
   };
 
   componentDidMount() {
-    const { q, type, offset, source } = this.props;
-    pageView(toSearchURL({ q, type, source, offset }));
+    const { q: query, type, offset, source, raag, writer } = this.props;
+    console.log(raag, writer, "LAYOUT SEARCH>>>>>>>>..")
+    pageView(toSearchURL({ query, type, source, offset, raag, writer }));
   }
 }
 
 const stateToProps = state => state;
-export default connect(stateToProps)(Layout);
+export default connect(stateToProps)(SearchPage);

@@ -15,6 +15,7 @@ import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+
 /**
  *
  *
@@ -22,16 +23,15 @@ import Autocomplete from '@/components/Autocomplete';
  * @class Home
  * @extends {React.PureComponent}
  */
+
 export default class Home extends React.PureComponent {
   static propTypes = {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
-
   state = {
     showDoodle: false,
     doodleData: null
   }
-
   fetchDoodle = () => {
     fetch(`${DOODLE_URL}`)
       .then(r => r.json())
@@ -42,8 +42,7 @@ export default class Home extends React.PureComponent {
       }, (error) => {
         console.log(error);
         this.setState({ showDoodle: false, doodleData: null });
-      }
-      );
+      });
   }
 
   onSubmit = ({ handleSubmit, ...data }) => e => {

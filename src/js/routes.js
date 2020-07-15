@@ -332,14 +332,23 @@ export default [
         writer = DEFAULT_SEARCH_WRITER,
       ] = params.map(v => getParameterByName(v, search));
 
+      const shabadQueryParams = {
+        q,
+        raag: parseInt(raag),
+        writer: parseInt(writer),
+        source: parseInt(source),
+        offset: parseInt(offset),
+      }
+
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
         return <Redirect to={toAngURL({ ang: q, source })} />;
       }
 
       return (
         <Layout
-          defaultQuery={q}
           title="Search Results - SikhiToTheMax"
+          defaultQuery={q}
+          {...shabadQueryParams}
           {...props}
         >
           <RenderPromise
@@ -351,11 +360,7 @@ export default [
               pending ? null : Search ? (
                 <Search
                   q={q && decodeURIComponent(q)}
-                  type={parseInt(type, 10)}
-                  source={source}
-                  raag={raag}
-                  writer={writer}
-                  offset={parseInt(offset)}
+                  {...shabadQueryParams}
                   {...props}
                 />
               ) : (
@@ -381,11 +386,14 @@ export default [
         return <Redirect to="/random" />;
       }
 
-      const [random, id, q, type, highlight] = [
+      const [random, id, q, type, source, raag, writer, highlight] = [
         'random',
         'id',
         'q',
         'type',
+        'source',
+        'raag',
+        'writer',
         'highlight',
       ].map(v => getParameterByName(v, search));
 
@@ -393,13 +401,21 @@ export default [
         id,
         q,
         type,
+        source: source !== undefined ? parseInt(source) : DEFAULT_SEARCH_SOURCE,
+        raag: raag !== undefined ? parseInt(raag) : DEFAULT_SEARCH_RAAG,
+        writer: writer !== undefined ? parseInt(writer) : DEFAULT_SEARCH_WRITER,
         random: random !== undefined && random === '' ? true : false,
         highlight:
           highlight === undefined ? undefined : parseInt(highlight, 10),
       };
 
       return (
-        <Layout defaultQuery={q} title="Shabad - SikhiToTheMax" {...props}>
+        <Layout
+          title="Shabad - SikhiToTheMax"
+          defaultQuery={q}
+          {...props}
+          {...otherProps}
+        >
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "Shabad" */ './pages/Shabad')

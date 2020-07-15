@@ -7,10 +7,11 @@ import PageLoader from '../PageLoader';
 
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Pagination from '../../components/Pagination';
-import { Stub } from '../../pages/Search/Layout';
+
 import Larivaar from '../../components/Larivaar';
 import { getHighlightIndices } from '../../util';
 import ControllerShabad from './shabad';
+import { Spinner } from '@/components/Spinner';
 
 import {
   getUnicodeVerse,
@@ -108,7 +109,7 @@ export default class ControllerSearch extends React.PureComponent {
     return (
       <PageLoader url={url}>
         {({ loading, data }) => {
-          if (loading || data === undefined) return <Stub />;
+          if (loading || data === undefined) return <Spinner />;
 
           if (!this.state.openShabad && data.resultsInfo) {
             const { resultsInfo, verses } = data;
@@ -158,7 +159,8 @@ export default class ControllerSearch extends React.PureComponent {
             );
           } else {
             return (
-              <ControllerShabad data={data}
+              <ControllerShabad
+                data={data}
                 socket={this.props.socket}
                 highlight={this.state.verseId}
                 homeId={this.state.homeId || this.state.verseId}

@@ -82,8 +82,6 @@ export default class Header extends React.PureComponent {
       writer: defaultWriter = null,
     } = getQueryParams(location.search);
 
-    console.log(defaultSource, defaultType, defaultRaag, defaultWriter, 'get query params,....')
-
     const id = `${defaultQuery}${defaultSource}${defaultType}${defaultRaag}${defaultWriter}`;
 
     // console.log(key, "key updated ?")
@@ -157,6 +155,7 @@ export default class Header extends React.PureComponent {
               handleSubmit,
             }) => (
                 <React.Fragment>
+                  {console.log(query, 'new query....')}
                   <div id="responsive-menu">
                     <div className="top-bar-left">
                       {!isHome && (
@@ -251,7 +250,7 @@ export default class Header extends React.PureComponent {
                                   <Autocomplete
                                     onItemClick={() => setQueryAs('')}
                                     getSuggestions={getShabadList}
-                                    searchOptions={{ type: parseInt(type), source, raag, writer }}
+                                    searchOptions={{ type: parseInt(type), source, raag: parseInt(raag), writer: parseInt(writer) }}
                                     value={query}
                                   />
                                 </div>

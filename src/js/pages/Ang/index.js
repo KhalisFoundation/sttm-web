@@ -2,9 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
-import PageLoader from '../PageLoader';
-import Layout, { Stub } from './Layout';
+
+import { Spinner } from '@/components/Spinner';
 import { saveAng } from '@/util//index';
+import PageLoader from '../PageLoader';
+import Layout from './Layout';
 
 export default class Ang extends React.PureComponent {
   static propTypes = {
@@ -22,7 +24,7 @@ export default class Ang extends React.PureComponent {
       <PageLoader url={url}>
         {({ loading, data }) =>
           loading ? (
-            <Stub />
+            <Spinner />
           ) : (
               <Layout
                 data={data}

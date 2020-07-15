@@ -69,7 +69,14 @@ class Autocomplete extends Component {
 
   componentDidUpdate(prevProps) {
     const prevInput = prevProps.value;
-    if (this.props.value !== prevInput) {
+    const { searchOptions } = this.props;
+    const { searchOptions: prevSearchOptions } = prevProps;
+    if (this.props.value !== prevInput ||
+      searchOptions.raag !== prevSearchOptions.raag ||
+      searchOptions.source !== prevSearchOptions.source ||
+      searchOptions.writer !== prevSearchOptions.writer ||
+      searchOptions.type !== prevSearchOptions.type
+    ) {
       const { getSuggestions, searchOptions } = this.props;
       const userInput = this.props.value;
       clearTimeout(this.state.suggestionTimeout);
@@ -115,6 +122,8 @@ class Autocomplete extends Component {
         searchOptions,
       }
     } = this;
+
+    console.log(this.props, 'AUTOCOMPLETE...')
 
     let suggestionsListComponent;
 

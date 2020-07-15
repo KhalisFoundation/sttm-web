@@ -5,8 +5,8 @@ import { buildApiUrl } from '@sttm/banidb';
 import { TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
 import GenericError, { SachKaur } from '../../components/GenericError';
-import Layout, { Stub } from './Layout';
-
+import SearchPage from './SearchPage';
+import { Spinner } from '@/components/Spinner';
 export default class Search extends React.PureComponent {
   static defaultProps = {
     offset: 0,
@@ -15,6 +15,8 @@ export default class Search extends React.PureComponent {
   static propTypes = {
     q: PropTypes.string.isRequired,
     type: PropTypes.number,
+    raag: PropTypes.number,
+    writer: PropTypes.number,
     source: PropTypes.string,
     offset: PropTypes.number,
   };
@@ -37,12 +39,12 @@ export default class Search extends React.PureComponent {
     return (
       <PageLoader url={url}>
         {({ loading, data }) => {
-          if (loading || data === undefined) return <Stub />;
+          if (loading || data === undefined) return <Spinner />;
 
           const { resultsInfo, verses } = data;
 
           return (
-            <Layout
+            <SearchPage
               pages={Array.from(
                 Array(
                   parseInt(

@@ -23,6 +23,7 @@ export const toSearchURL = ({
   writer = DEFAULT_SEARCH_WRITER,
   offset = '',
 }: IToSearchURLArguments) => {
+  debugger;
   const searchUrl = `/search?${objectToQueryParams({
     q: encodeURIComponent(q),
     type,
