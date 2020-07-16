@@ -113,16 +113,9 @@ export default class Baani extends React.PureComponent {
   };*/
 
   _scrollToHiglight = () => {
-    console.log(this.$highlightedBaaniLine, 'top .....')
     if (this.$highlightedBaaniLine) {
-      if ('offsetTop' in this.$highlightedBaaniLine) {
-        const { offsetTop, offsetHeight } = this.$highlightedBaaniLine;
-        // console.log(offsetTop, offsetHeight, this.$highlightedBaaniLine, 'highlighted baaniline ?');
-        const { top } = this.$highlightedBaaniLine.getBoundingClientRect();
-        requestAnimationFrame(() => {
-          window.scrollTo(0, top)
-        });
-      }
+      const { top } = this.$highlightedBaaniLine.getBoundingClientRect();
+      requestAnimationFrame(() => window.scrollTo(0, top));
     }
   };
 
@@ -268,8 +261,8 @@ export default class Baani extends React.PureComponent {
     const { highlight } = this.props;
     const verseId = parseInt(getVerseId(shabad), 10);
     const isHighlighted = highlight === verseId;
-    const uniqueKey = `${verseId}-${nodeToRender}`;
-    console.log(isHighlighted, isMatchHighlighted, "HIGHLIGHT")
+    const uniqueKey = `${verseId}-line`;
+
     return (
       <div
         key={uniqueKey}
