@@ -62,6 +62,15 @@ export default class SlideControls extends React.PureComponent {
     }
   }
 
+  collapseSidebar = e => {
+    var sgList = document.querySelector('.sg-list-container');
+    var scList = document.querySelector('.shortcut-list-container');
+    if (!sgList.contains(e.target) && !scList.contains(e.target)) {
+      document.querySelector('.sg-list-container').classList.add('sg-hide');
+      document.querySelector('.shortcut-list-container').classList.add('shortcut-hide');
+    }
+  }
+
   componentDidMount() {
     this.mounted = true;
     fetch(BANIS_API_URL)
@@ -69,6 +78,8 @@ export default class SlideControls extends React.PureComponent {
       .then(baniList => {
         this.setState({ baniList });
       });
+
+    document.body.addEventListener('click', this.collapseSidebar);
   }
 
   componentDidUpdate() {
@@ -76,18 +87,10 @@ export default class SlideControls extends React.PureComponent {
       const activeSlide = document.querySelector("#anand-slide");
       activeSlide.classList.add("active-slide");
     }
-    document.body.addEventListener('click', (e) => {
-      var sgList = document.querySelector('.sg-list-container');
-      var scList = document.querySelector('.shortcut-list-container');
-      if (!sgList.contains(e.target) && !scList.contains(e.target)) {
-        document.querySelector('.sg-list-container').classList.add('sg-hide');
-        document.querySelector('.shortcut-list-container').classList.add('shortcut-hide');
-      }
-    });
   }
 
   componentWillUnmount() {
-    document.body.removeEventListener('click');
+    document.body.removeEventListener('click', this.collapseSidebar);
   }
 
   render() {
