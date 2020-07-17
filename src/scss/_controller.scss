@@ -249,11 +249,12 @@
   height: 100%;
   position: fixed;
   top: 0;
-  transition: 0.2s right ease-out;
+  transition: 0.2s all ease-out;
   width: 312px;
   z-index: 10;
 
-  &.sg-hide svg {
+  &.sg-hide svg,
+  &.shortcut-hide svg {
     transform: rotate(-180deg);
   }
 
@@ -290,6 +291,38 @@
     overflow-y: auto;
     padding: 20px;
     top: 0;
+    width: 100%;
+  }
+}
+
+.shortcut-list-container {
+  left: 0;
+
+  .toggle-button {
+    right: -82px;
+    transform: rotate(90deg);
+  }
+
+  .shortcut-sidebar {
+    .shortcut-slide {
+      align-items: center;
+      background: $sttm-light-blue-30;
+      border-radius: 4px;
+      display: flex;
+      height: 129px;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 100%;
+
+      &.active-slide {
+        background-color: $sttm-blue;
+        color: $sttm-white;
+      }
+    }
+  }
+
+  &.shortcut-hide {
+    left: -312px;
   }
 }
 
@@ -309,7 +342,7 @@
     .bani-slide {
       border-radius: 2px;
       color: $sttm-darker-grey;
-      padding: 4px;
+      padding: 8px 4px;
 
       &.active-slide {
         color: $sttm-white;

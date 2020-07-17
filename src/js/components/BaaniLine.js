@@ -13,8 +13,8 @@ export default class BaaniLine extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
-    lineHeight: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
+    lineHeight: PropTypes.number,
     visraam: PropTypes.object,
   };
 
