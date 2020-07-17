@@ -114,13 +114,8 @@ export default class Baani extends React.PureComponent {
 
   _scrollToHiglight = () => {
     if (this.$highlightedBaaniLine) {
-      if ('offsetTop' in this.$highlightedBaaniLine) {
-        const { offsetTop, offsetHeight } = this.$highlightedBaaniLine;
-
-        requestAnimationFrame(() =>
-          window.scrollTo(0, offsetTop - offsetHeight)
-        );
-      }
+      const { top } = this.$highlightedBaaniLine.getBoundingClientRect();
+      requestAnimationFrame(() => window.scrollTo(0, top));
     }
   };
 
@@ -262,22 +257,24 @@ export default class Baani extends React.PureComponent {
       />
     ));
   }
-
-  createShabadLine = (shabad, textToRender) => {
+  createShabadLine = (shabad, nodeToRender, isMatchHighlighted = false) => {
     const { highlight } = this.props;
+    const verseId = parseInt(getVerseId(shabad), 10);
+    const isHighlighted = highlight === verseId;
+    const uniqueKey = `${verseId}-line`;
+
     return (
       <div
-        key={getVerseId(shabad)}
-        id={`line-${getVerseId(shabad)}`}
+        key={uniqueKey}
         className="line"
         onMouseDown={this.removeSelection}
         ref={node =>
-          highlight === parseInt(getVerseId(shabad), 10)
+          isMatchHighlighted && isHighlighted
             ? (this.$highlightedBaaniLine = node)
             : null
         }
       >
-        {textToRender}
+        {nodeToRender}
       </div>
     )
   }
@@ -315,34 +312,38 @@ export default class Baani extends React.PureComponent {
 
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
-        {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
-          <div key={idx} className={`${mixedViewBaaniClass}-wrapper ${paragraphModeClass}`}>
-            <div className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
-              {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad)))}
-            </div>
-            <div className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
-              {availableTransliterations.map(language =>
-                <div
-                  key={language}
-                  className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
-                  {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
-                </div>
-              )}
-            </div>
-            <div className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
-              {availableTranslations.map(language =>
-                <div
-                  key={language}
-                  className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
-                  {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
-                </div>
-              )}
-            </div>
-            <div className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
-              {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
-            </div>
-          </div>
-        ))}
+        {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
+          return (
+            <div
+              key={idx}
+              className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
+            >
+              <div className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
+                {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad), true))}
+              </div>
+              <div className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
+                {availableTransliterations.map(language =>
+                  <div
+                    key={language}
+                    className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
+                    {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
+                  </div>
+                )}
+              </div>
+              <div className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
+                {availableTranslations.map(language =>
+                  <div
+                    key={language}
+                    className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
+                    {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
+                  </div>
+                )}
+              </div>
+              <div className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
+                {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
+              </div>
+            </div>)
+        })}
       </div>
     )
   }
@@ -425,6 +426,7 @@ export default class Baani extends React.PureComponent {
             <div className={`${splitViewBaaniClass}-paragraph ${paragraphModeClass}`} key={idx}>
               {shabads.map(shabad =>
                 (<div
+                  id={`line${getVerseId(shabad)}-line`}
                   key={getVerseId(shabad)}
                   className="line"
                   ref={node =>

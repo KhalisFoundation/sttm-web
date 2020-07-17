@@ -30,7 +30,7 @@ export interface IBaaniLineActionsProps {
 
 export default class BaaniLineActions extends React.PureComponent<
   IBaaniLineActionsProps
-> {
+  > {
   public static defaultProps = {
     disabledActions: [],
   };
