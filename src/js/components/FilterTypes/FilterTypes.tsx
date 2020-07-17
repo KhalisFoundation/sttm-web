@@ -59,7 +59,7 @@ export const FilterTypes: React.FC<FilterTypesProps> = React.memo(
     }
 
     return (
-      <div>
+      <>
         {/* SEARCH FILTER TYPE */}
         {filterTypesList && (
           <select
@@ -103,7 +103,7 @@ export const FilterTypes: React.FC<FilterTypesProps> = React.memo(
             <FilterOptions list={filterWritersList} />
           </select>
         )}
-      </div>
+      </>
     );
   }
 );

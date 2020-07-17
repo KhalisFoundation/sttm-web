@@ -28,7 +28,7 @@ export const useFetchFilterLists = ({
         const filterRaags = raags.rows.map(
           ({ RaagID: id, RaagEnglish: en }) => {
             const filterRaag = {
-              [id]: id === 0 ? 'All' : en,
+              [id]: id === 0 ? 'All Raags' : en,
             };
             return filterRaag;
           }
@@ -44,7 +44,7 @@ export const useFetchFilterLists = ({
       const filterWriters = writers.rows.map(
         ({ WriterID: id, WriterEnglish: en }) => {
           const filterWriter = {
-            [id]: id === 0 ? 'All' : en,
+            [id]: id === 0 ? 'All Writers' : en,
           };
           return filterWriter;
         }
