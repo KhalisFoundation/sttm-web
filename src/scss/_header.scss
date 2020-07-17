@@ -101,8 +101,8 @@
       }
 
       @media screen and (max-width: 500px) {
-        margin-right: 0;
         margin-bottom: 1rem;
+        margin-right: 0;
         width: 100%;
 
         &:nth-child(1) {
@@ -183,8 +183,7 @@
 #search-container {
   background-color: $sttm-pure-white;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 $sttm-transparent-black,
-    0 0 0 1px $sttm-transparent-light-black;
+  box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   display: flex;
   flex-wrap: wrap;
   height: 44px;
@@ -267,8 +266,7 @@
 #suggestions {
   background-color: $sttm-white;
   border: none;
-  box-shadow: 0 2px 2px 0 $sttm-transparent-black,
-    0 0 0 1px $sttm-transparent-light-black;
+  box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   list-style-type: none;
   margin: 0;
   max-height: 250px;
@@ -327,8 +325,7 @@
 .gurmukhi-keyboard {
   background-color: $sttm-pure-white;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 $sttm-transparent-black,
-    0 0 0 1px $sttm-transparent-light-black;
+  box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
   font-size: 0;
   height: 0;
   opacity: 0;
