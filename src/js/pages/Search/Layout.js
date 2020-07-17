@@ -21,10 +21,6 @@ export function Stub() {
 }
 
 class Layout extends React.PureComponent {
-  static contextTypes = {
-    router: PropTypes.object,
-  };
-
   static propTypes = {
     pages: PropTypes.array,
     offset: PropTypes.number,
