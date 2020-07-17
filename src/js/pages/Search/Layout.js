@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import Pagination from '../../components/Pagination';
 import { toShabadURL, toSearchURL } from '../../util';
 import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '../../constants';
@@ -101,7 +102,7 @@ class Layout extends React.PureComponent {
     );
   }
 
-  handlePageClick = pageNumber => {
+  handlePageClick = (pageNumber) => {
     const { q, type, source, offset } = this.props;
 
     const currentPage = offset;
@@ -112,7 +113,7 @@ class Layout extends React.PureComponent {
 
     clickEvent({ action: TEXTS.OPEN_PAGE, label: pageNumber });
     window.scrollTo(0, 0);
-    this.context.router.history.push(
+    this.props.history.push(
       toSearchURL({
         query: q,
         type,
@@ -128,5 +129,5 @@ class Layout extends React.PureComponent {
   }
 }
 
-const stateToProps = state => state;
-export default connect(stateToProps)(Layout);
+const stateToProps = (state) => state;
+export default connect(stateToProps)(withRouter(Layout));
