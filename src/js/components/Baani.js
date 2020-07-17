@@ -378,7 +378,8 @@ export default class Baani extends React.PureComponent {
       translationLanguages,
       gurbani
     } = this.props;
-    const shabad = gurbani[0];
+    // Sundar-gutka baani have first verse as baani name
+    const shabad = gurbani[1] || gurbani[0];
     const translatedShabad = {};
 
     translatedShabad.english = !!translationMap.english(shabad);
@@ -392,7 +393,9 @@ export default class Baani extends React.PureComponent {
       gurbani,
       transliterationLanguages
     } = this.props;
-    const shabad = gurbani[0];
+
+    // Sundar-gutka baani have first verse as baani name
+    const shabad = gurbani[1] || gurbani[0];
     const transliteratedShabad = {};
     transliteratedShabad.english = !!transliterationMap.english(shabad);
     transliteratedShabad.hindi = !!transliterationMap.hindi(shabad);
