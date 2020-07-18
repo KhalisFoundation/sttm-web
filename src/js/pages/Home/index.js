@@ -58,7 +58,7 @@ export default class Home extends React.PureComponent {
     const { showDoodle, doodleData } = this.state;
 
     return (
-      <SearchForm>
+      <SearchForm isHomePage>
         {({
           pattern,
           title,

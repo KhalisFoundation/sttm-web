@@ -255,19 +255,19 @@ select {
 }
 
 .hide-mobile {
-  @media screen and (max-width: 480px) {
+  @media #{$mobile-down} {
     display: none;
   }
 }
 
 .hide-tablet {
-  @media screen and (max-width: 700px) {
+  @media #{$tablet-down} {
     display: none;
   }
 }
 
 .hide-desktop {
-  @media screen and (max-width: 1000px) {
+  @media #{$desktop-down} {
     display: none;
   }
 }

@@ -28,11 +28,13 @@ import { getNumberFromLocalStorage } from '../util';
 export default class SearchForm extends React.PureComponent {
   static defaultProps = {
     defaultQuery: '',
+    isHomePage: false,
     submitOnChangeOf: [],
   };
 
   /**
    * @typedef {object} SearchFormRenderProps
+   * @property {boolean} isHomePage
    * @property {string} pattern attribute of input field
    * @property {string} title of input field
    * @property {string} className className of input field
@@ -63,6 +65,7 @@ export default class SearchForm extends React.PureComponent {
    */
   static propTypes = {
     children: PropTypes.func.isRequired,
+    isHomePage: PropTypes.bool,
     defaultQuery: PropTypes.string,
     defaultType: PropTypes.oneOf(Object.keys(TYPES)),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
@@ -220,7 +223,7 @@ export default class SearchForm extends React.PureComponent {
   componentDidUpdate() {
     const {
       state: { shouldSubmit, raag, writer, source, type, query },
-      props: { onSubmit },
+      props: { onSubmit, isHomePage },
     } = this;
     console.log(raag, writer, source, type, query, ">>>>>>>>.")
     if (shouldSubmit) {
@@ -228,7 +231,8 @@ export default class SearchForm extends React.PureComponent {
         {
           shouldSubmit: false,
         },
-        () => {
+        // only submit the filters if search form is applied on home page.
+        isHomePage ? () => {
           this.handleSubmit();
           onSubmit({
             source,
@@ -237,7 +241,7 @@ export default class SearchForm extends React.PureComponent {
             type,
             query,
           });
-        }
+        } : null
       );
     }
   }

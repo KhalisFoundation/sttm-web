@@ -2,8 +2,9 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { Link, withRouter } from 'react-router-dom';
 
-import Larivaar from '../components/Larivaar';
-import { toSearchURL } from '../util';
+import CrossIcon from '@/components/Icons/Times';
+import Larivaar from '@/components/Larivaar';
+import { toSearchURL } from '@/util';
 class Autocomplete extends Component {
   static propTypes = {
     isShowFullResults: PropTypes.bool,
@@ -133,7 +134,13 @@ class Autocomplete extends Component {
           <ul
             id="suggestions"
             className="search-result"
-            onKeyDown={this.onKeyDown}>
+            onKeyDown={this.onKeyDown} >
+            <button
+              className="clear-autocomplete"
+              onClick={setQueryAs('')}
+            >
+              <CrossIcon />
+            </button>
             {filteredSuggestions.map((suggestion, index) => {
               let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
 

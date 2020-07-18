@@ -3,10 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  SOURCES,
   SEARCH_TYPES,
-  TYPES,
-  SOURCES_WITH_ANG,
   MAX_ANGS,
 } from '../constants';
 import { Link } from 'react-router-dom';
@@ -67,6 +64,10 @@ export default class Header extends React.PureComponent {
     this.handleFormSubmit(data);
   };
 
+  handleApplyFiltersClick = (data) => () => {
+    this.handleFormSubmit(data);
+  }
+
   handleFormSubmit = (data) => {
     console.log(toSearchURL(data), '>>>>>>>>>>>>>>>>> :( ');
     this.props.history.push(toSearchURL(data));
@@ -82,7 +83,9 @@ export default class Header extends React.PureComponent {
       state: { showDoodle, doodleData },
       onFormSubmit,
       handleFormSubmit,
+      handleApplyFiltersClick,
     } = this;
+
     const {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
@@ -315,8 +318,19 @@ export default class Header extends React.PureComponent {
                               onFilterWriterChange={handleSearchWriterChange}
                             />
                           </div>
-                          <div className="searchPageFiltersBtnWrapper">
-                            <button className="primaryBtn searchPageFiltersBtn">Apply filters</button>
+                          <div
+                            className="searchPageFiltersBtnWrapper">
+                            <button
+                              onClick={handleApplyFiltersClick({
+                                type,
+                                source,
+                                raag,
+                                writer,
+                                query,
+                              })}
+                              className="primaryBtn searchPageFiltersBtn">
+                              Apply filters
+                            </button>
                           </div>
                         </>
                       )}
