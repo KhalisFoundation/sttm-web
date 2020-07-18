@@ -12,7 +12,7 @@ import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
 import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
-import WebControllerPage from './pages/WebController'
+import WebControllerPage from './pages/WebController';
 import {
   DEFAULT_SEARCH_SOURCE,
   DEFAULT_SEARCH_TYPE,
@@ -35,11 +35,11 @@ export function NotFound() {
           pending ? null : NotFoundLayout ? (
             <NotFoundLayout />
           ) : (
-              throwError(
-                `We are having trouble in rendering this route.`,
-                rejected
-              )
+            throwError(
+              `We are having trouble in rendering this route.`,
+              rejected
             )
+          )
         }
       </RenderPromise>
     </Layout>
@@ -78,11 +78,11 @@ export default [
               pending ? null : TermsOfService ? (
                 <TermsOfService {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -103,11 +103,11 @@ export default [
               pending ? null : About ? (
                 <About {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -117,15 +117,16 @@ export default [
   {
     path: '/ang',
     render(props) {
-      const [ang, source, highlight] = ['ang', 'source', 'highlight'].map(v =>
+      const [ang, source, highlight] = ['ang', 'source', 'highlight'].map((v) =>
         getParameterByName(v)
       );
 
       return (
         <Layout
           defaultQuery={ang}
-          title={`Ang ${ang} of ${SOURCES[source] ||
-            SOURCES.G} Ang/Page Viewer - SikhiToTheMax`}
+          title={`Ang ${ang} of ${
+            SOURCES[source] || SOURCES.G
+          } Ang/Page Viewer - SikhiToTheMax`}
           isAng={true}
           {...props}
         >
@@ -145,11 +146,11 @@ export default [
                   {...props}
                 />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -172,11 +173,11 @@ export default [
               pending ? null : Index ? (
                 <Index {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -199,11 +200,11 @@ export default [
               pending ? null : SundarGutka ? (
                 <SundarGutka {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -226,16 +227,16 @@ export default [
               pending ? null : AmritKeertanShabads ? (
                 <AmritKeertanShabads {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
       );
-    }
+    },
   },
   {
     path: '/help',
@@ -251,11 +252,11 @@ export default [
               pending ? null : Help ? (
                 <Help {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -277,11 +278,11 @@ export default [
               pending ? null : Hukamnama ? (
                 <Hukamnama date={date} {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -302,11 +303,11 @@ export default [
               pending ? null : Sync ? (
                 <Sync {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -326,7 +327,7 @@ export default [
         source = DEFAULT_SEARCH_SOURCE,
         q = '',
         offset = 1,
-      ] = params.map(v => getParameterByName(v, search));
+      ] = params.map((v) => getParameterByName(v, search));
 
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
         return <Redirect to={toAngURL({ ang: q, source })} />;
@@ -353,11 +354,11 @@ export default [
                   {...props}
                 />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -381,7 +382,7 @@ export default [
         'q',
         'type',
         'highlight',
-      ].map(v => getParameterByName(v, search));
+      ].map((v) => getParameterByName(v, search));
 
       const otherProps = {
         id,
@@ -403,11 +404,11 @@ export default [
               pending ? null : Shabad ? (
                 <Shabad {...otherProps} {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -423,13 +424,25 @@ export default [
   {
     path: ['/control/:namespaceString', '/control'],
     render(props) {
-      const { match: { params: { namespaceString } } } = props;
+      const {
+        match: {
+          params: { namespaceString },
+        },
+      } = props;
       const codeRegex = new RegExp('[A-Z,a-z]{3}-[A-Z,a-z]{3}');
       return (
-        <Layout title={`${TEXTS.CONTROLLER} - SikhiToTheMax`} isController={true} {...props} >
-          <WebControllerPage namespaceString={codeRegex.test(namespaceString) ? namespaceString : ''} />
-        </ Layout>
-      )
+        <Layout
+          title={`${TEXTS.CONTROLLER} - SikhiToTheMax`}
+          isController={true}
+          {...props}
+        >
+          <WebControllerPage
+            namespaceString={
+              codeRegex.test(namespaceString) ? namespaceString : ''
+            }
+          />
+        </Layout>
+      );
     },
   },
   {
