@@ -67,8 +67,8 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
-  <link rel="android-touch-icon" href="icon.png">
-  <link rel="windows-touch-icon" href="icon.png">
+  <link rel="android-touch-icon" href="/assets/images/sundar-gutka.png">
+  <link rel="apple-touch-icon" href="/assets/images/sundar-gutka.png">
   ${stylesheetsHTML}
 </head>
 
