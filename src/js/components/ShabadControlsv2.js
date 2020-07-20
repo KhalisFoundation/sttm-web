@@ -179,6 +179,7 @@ class ShabadControls extends React.PureComponent {
           </div>
           {this.props.showAdvancedOptions && (
             <div className="advanced-options">
+              <button className="advanced-options--close" onClick={this.props.toggleAdvancedOptions}> X </button>
               {advanced.map((element, i) => {
                 if (element.type) {
                   return (

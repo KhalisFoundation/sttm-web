@@ -56,7 +56,6 @@ class Controls extends React.Component {
   }
 
   componentWillUnmount() {
-
     window.removeEventListener('scroll', this.scrollListener, {
       passive: true,
     });
