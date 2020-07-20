@@ -2,6 +2,8 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import SmartBanner from 'react-smartbanner';
+
 import { pageView } from '../../util/analytics';
 import PropTypes from 'prop-types';
 import { TEXTS } from '../../constants';
@@ -55,6 +57,7 @@ class SundarGutka extends React.PureComponent {
 
     return (
       <div className="row" id="content-root">
+        <SmartBanner title={'SundarGutka'} />
         <BreadCrumb links={links} />
         <div id="help">
           {baanies === null ? (
@@ -62,7 +65,7 @@ class SundarGutka extends React.PureComponent {
           ) : isSundarGutkaHome ? (
             <div className="wrapper" style={{ width: '100%', }}>
               <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
-              <div className="show-on-mobile sundar-gutka-app-promo">
+              {/* <div className="show-on-mobile sundar-gutka-app-promo">
                 {TEXTS.SUNDAR_GUTKA_APP}{' '}
                 <br /><a
                   href="https://play.google.com/store/apps/details?id=com.WahegurooNetwork.SundarGutka"
@@ -81,7 +84,7 @@ class SundarGutka extends React.PureComponent {
                 >
                   <AppleiOS className="appstore--icon" /> {TEXTS.IOS}
                 </a>
-              </div>
+              </div> */}
               <input
                 type="search"
                 name="baani-query"

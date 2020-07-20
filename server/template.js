@@ -32,6 +32,10 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="theme-color" content="${ONLINE_COLOR}" />
   <meta name="description" content="${description}" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-itunes-app" content="app-id=1393849213">
+  <meta name="google-play-app" content="app-id=com.waheguroonetwork.sundargutka">
+  <meta name="apple-itunes-app" content="app-id=431446112">
+  <meta name="google-play-app" content="app-id=com.KhalisFoundation.AmritKeertan">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -63,6 +67,8 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
+  <link rel="android-touch-icon" href="icon.png">
+  <link rel="windows-touch-icon" href="icon.png">
   ${stylesheetsHTML}
 </head>
 
