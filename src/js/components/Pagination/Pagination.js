@@ -29,7 +29,6 @@ export default class Pagination extends React.PureComponent {
     if (_pages.length < 2) {
       return null;
     }
-
     const lastPage = _pages[_pages.length - 1];
     const leftPage = Math.max(currentPage - minPagesBeforeCurrent, 0) + 1;
     const rightPage = Math.min(
@@ -40,6 +39,7 @@ export default class Pagination extends React.PureComponent {
     const showLeftEllipsis = leftPage > 1;
     const showRightEllipsis =
       currentPage + maxPages - minPagesBeforeCurrent - 1 < lastPage;
+
 
     const leftEllipsisPage = parseInt(leftPage / 2);
     const rightEllipsisPage = rightPage + parseInt((lastPage - rightPage) / 2);
@@ -52,14 +52,16 @@ export default class Pagination extends React.PureComponent {
         {currentPage === 1 ? (
           <div />
         ) : (
-            <div className="searchPaginationButton">
+            <button
+              onClick={() => onPageClick(currentPage - 1)}
+              className="searchPaginationButton">
               <Chevron
+                style={{ fontSize: 28 }}
                 title="Previous Page"
                 role="button"
                 direction={Chevron.DIRECTIONS.LEFT}
-                onClick={() => onPageClick(currentPage)}
               />
-            </div>
+            </button>
           )}
         <div className="searchPagination">
           {showLeftEllipsis && (
@@ -98,14 +100,16 @@ export default class Pagination extends React.PureComponent {
         {currentPage === lastPage ? (
           <div />
         ) : (
-            <div className="searchPaginationButton">
+            <button
+              onClick={() => onPageClick(currentPage + 1)}
+              className="searchPaginationButton">
               <Chevron
+                style={{ fontSize: 28 }}
                 title="Next Page"
                 role="button"
                 direction={Chevron.DIRECTIONS.RIGHT}
-                onClick={() => onPageClick(currentPage + 1)}
               />
-            </div>
+            </button>
           )}
       </div>
     );
