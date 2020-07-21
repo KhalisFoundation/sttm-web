@@ -6,9 +6,6 @@ import { VISRAAM } from '../constants';
 import { clearVisraamClass } from '../util';
 import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
 import { MultiSelect } from '../components/MultiSelect';
-
-
-
 class ShabadControls extends React.PureComponent {
   static propTypes = {
     setTranslationLanguages: PropTypes.func.isRequired,

@@ -12,7 +12,7 @@ import BreadCrumb from '../../components/Breadcrumb';
 import Android from '../../components/Icons/Android';
 import AppleiOS from '../../components/Icons/AppleiOS';
 import { sanitizeBaani, baaniNameToIdMapper } from './utils';
-import 'node_modules/react-smartbanner/dist/main.css';
+
 class SundarGutka extends React.PureComponent {
   static propTypes = {
     transliterationLanguages: PropTypes.array.isRequired,
