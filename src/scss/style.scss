@@ -1,9 +1,7 @@
 /* stylelint-disable at-rule-no-unknown */
-@import '~react-smartbanner/dist/main.css';
-
 @import "mixin",
-  "colours",
-  "auto-scroll-control",
+"colours",
+"auto-scroll-control",
   "display-controls",
   "error-page",
   "floating-actions",
@@ -26,6 +24,7 @@
   "baani-link",
   "granth-index",
   "vishraam";
+@import 'node_modules/react-smartbanner/dist/main';
 
 html,
 body {
