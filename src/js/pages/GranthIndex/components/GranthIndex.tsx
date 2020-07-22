@@ -22,16 +22,6 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
   useEffect(() => {
     pageView('/index');
 
-    // Manually adding margin-top class to the html
-    // possible bug in react-smart app banner :/
-    setTimeout(() => {
-      const $html = document.documentElement;
-      if ($html.classList.contains('smartbanner-show')) {
-        $html.classList.add('smartbanner-margin-top');
-      }
-      scrollTo(0, 0);
-    }, 400)
-
     // making sure the element is rendered on DOM before we get to that
     setTimeout(() => {
       scrollToHash(hash)
