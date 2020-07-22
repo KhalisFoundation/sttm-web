@@ -1,6 +1,7 @@
 import React, { useEffect, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Location } from 'history';
+import SmartBanner from 'react-smartbanner';
 
 import BreadCrumb from '@/components/Breadcrumb';
 import Fetch from '@/components/Fetch';
@@ -37,6 +38,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
 
         return (
           <div className="row" id="content-root">
+            <SmartBanner title={'Amrit Keertan'} />
             <BreadCrumb links={[{ title: TEXTS.URIS.INDEX }]} />
             <div id="help">
               <div id="sidebar">
