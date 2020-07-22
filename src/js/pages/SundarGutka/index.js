@@ -54,7 +54,7 @@ class SundarGutka extends React.PureComponent {
 
     return (
       <div className="row" id="content-root">
-        <SmartBanner title={'Sundar Gutka'} />
+        <SmartBanner key="sundarGutka" title={'Sundar Gutka'} />
         <BreadCrumb links={links} />
         <div id="help">
           {baanies === null ? (
