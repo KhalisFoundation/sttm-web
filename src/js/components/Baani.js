@@ -45,10 +45,10 @@ export default class Baani extends React.PureComponent {
   getShareLine = shabad => {
     return [
       shabad.verse.unicode,
-      ...this.props.transliterationLanguages.map(language =>
+      ...this.avaiableTransliterationLanguages.map(language =>
         transliterationMap[language](shabad)
       ),
-      ...this.props.translationLanguages.map(language =>
+      ...this.availableTranslationLanguages.map(language =>
         translationMap[language](shabad)
       ),
     ].join('\n');
@@ -119,17 +119,21 @@ export default class Baani extends React.PureComponent {
     }
   };
 
-  // showShare = e => {
-  //   const currentShare = document.querySelector('.showShare');
-  //   if (currentShare) {
-  //     currentShare.classList.remove('showShare');
-  //   }
-  //   const selectedDiv = e.currentTarget;
-  //   if (window.getSelection().toString()) {
-  //     const shareDiv = selectedDiv.querySelector('.share');
-  //     shareDiv.classList.add('showShare');
-  //   }
-  // };
+  showSelectionOptions = e => {
+    const currentShare = document.querySelector('.showShare');
+
+    // Hides the active selection options panel
+    if (currentShare) {
+      currentShare.classList.remove('showShare');
+    }
+    const selectedDiv = e.currentTarget;
+    console.log(selectedDiv)
+    // Show the active selection panel for current div.
+    if (window.getSelection().toString()) {
+      const shareDiv = selectedDiv.querySelector('.share');
+      shareDiv.classList.add('showShare');
+    }
+  };
 
   removeSelection = () => {
     window.getSelection().removeAllRanges();
@@ -137,11 +141,21 @@ export default class Baani extends React.PureComponent {
 
   componentDidMount() {
     this._scrollToHiglight();
+    this.setAvailableTranslations();
+    this.setAvailableTransliterations();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.highlight !== prevProps.highlight) {
       this._scrollToHiglight();
+    }
+
+    if (this.props.translationLanguages !== prevProps.translationLanguages) {
+      this.setAvailableTranslations();
+    }
+
+    if (this.props.transliterationLanguages !== prevProps.transliterationLanguages) {
+      this.setAvailableTransliterations();
     }
   }
 
@@ -304,8 +318,6 @@ export default class Baani extends React.PureComponent {
       isParagraphMode,
     } = this.props;
 
-    const availableTranslations = this.getAvailableTranslations();
-    const availableTransliterations = this.getAvailableTransliterations();
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
     const mixedViewBaaniClass = 'mixed-view-baani';
@@ -315,14 +327,18 @@ export default class Baani extends React.PureComponent {
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
           return (
             <div
-              key={idx}
+              key={idx} // In paragraph mode, we are currently not showing social Share
+              onMouseUp={isParagraphMode ? null : this.showSelectionOptions}
+              onMouseDown={isParagraphMode ? null : this.removeSelection}
               className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
             >
-              <div className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
+              <div
+                className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
                 {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad), true))}
               </div>
-              <div className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
-                {availableTransliterations.map(language =>
+              <div
+                className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
+                {this.availableTransliterations.map(language =>
                   <div
                     key={language}
                     className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
@@ -330,8 +346,9 @@ export default class Baani extends React.PureComponent {
                   </div>
                 )}
               </div>
-              <div className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
-                {availableTranslations.map(language =>
+              <div
+                className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
+                {this.availableTranslations.map(language =>
                   <div
                     key={language}
                     className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
@@ -339,9 +356,12 @@ export default class Baani extends React.PureComponent {
                   </div>
                 )}
               </div>
-              <div className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
-                {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
-              </div>
+              {isParagraphMode ?
+                null :
+                <div
+                  className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
+                  {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
+                </div>}
             </div>)
         })}
       </div>
@@ -361,7 +381,7 @@ export default class Baani extends React.PureComponent {
               key={getVerseId(shabad)}
               id={`line-${getVerseId(shabad)}`}
               className="line"
-              onMouseUp={this.showShare}
+              onMouseUp={this.showSelectionOptions}
               onMouseDown={this.removeSelection}
             >
               {this.getBaniLine(shabad)}
@@ -374,7 +394,7 @@ export default class Baani extends React.PureComponent {
     );
   }
 
-  getAvailableTranslations = () => {
+  setAvailableTranslations = () => {
     const {
       translationLanguages,
       gurbani
@@ -386,10 +406,12 @@ export default class Baani extends React.PureComponent {
     translatedShabad.english = !!translationMap.english(shabad);
     translatedShabad.spanish = !!translationMap.spanish(shabad);
     translatedShabad.punjabi = !!translationMap.punjabi(shabad);
-    return translationLanguages.filter(language => translatedShabad[language]);
+
+    this.availableTranslations = translationLanguages.filter(language => translatedShabad[language]);
+
   }
 
-  getAvailableTransliterations = () => {
+  setAvailableTransliterations = () => {
     const {
       gurbani,
       transliterationLanguages
@@ -402,7 +424,8 @@ export default class Baani extends React.PureComponent {
     transliteratedShabad.hindi = !!transliterationMap.hindi(shabad);
     transliteratedShabad.shahmukhi = !!transliterationMap.shahmukhi(shabad);
     transliteratedShabad.IPA = !!transliterationMap.IPA(shabad);
-    return transliterationLanguages.filter(language => transliteratedShabad[language]);
+    this.availableTransliterations = transliterationLanguages.filter(language => transliteratedShabad[language]);
+
   }
   createSplitViewMarkup = () => {
     const {
@@ -412,10 +435,7 @@ export default class Baani extends React.PureComponent {
       highlight,
     } = this.props;
 
-
     const normalizedGurbani = this.normalizeGurbani();
-    const availableTranslations = this.getAvailableTranslations();
-    const availableTransliterations = this.getAvailableTransliterations();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
     const splitViewBaaniClass = 'split-view-baani';
 
@@ -443,7 +463,7 @@ export default class Baani extends React.PureComponent {
           )}
         </div>
         {
-          availableTransliterations.map(language => {
+          this.availableTransliterations.map(language => {
             return (
               <div
                 key={language}
@@ -464,7 +484,7 @@ export default class Baani extends React.PureComponent {
           })
         }
         {
-          availableTranslations.map(language => (
+          this.availableTranslations.map(language => (
             <div
               key={language}
               className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>
