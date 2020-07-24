@@ -114,7 +114,7 @@ export default class Header extends React.PureComponent {
             key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
-            defaultType={defaultType}
+            defaultType={Number(defaultType)}
             submitOnChangeOf={['type', 'source']}
             onSubmit={handleFormSubmit}
           >
@@ -130,8 +130,10 @@ export default class Header extends React.PureComponent {
               action,
               name,
               placeholder,
+              isShowKeyboard,
               setGurmukhiKeyboardVisibilityAs,
               setQueryAs,
+              handleKeyDown,
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
@@ -184,6 +186,7 @@ export default class Header extends React.PureComponent {
                                     required="required"
                                     name={name}
                                     value={query}
+                                    onKeyDown={handleKeyDown}
                                     onChange={handleSearchChange}
                                     className={className}
                                     placeholder={placeholder}
@@ -201,31 +204,33 @@ export default class Header extends React.PureComponent {
                                     <CrossIcon />
                                   </button>
 
-                                  {type > 2 ? '' : (
-                                    <button
-                                      type="button"
-                                      className={`gurmukhi-keyboard-toggle ${
-                                        displayGurmukhiKeyboard ? 'active' : ''
-                                        }`}
-                                      onClick={setGurmukhiKeyboardVisibilityAs(
-                                        !displayGurmukhiKeyboard
-                                      )}
-                                    >
-                                      <KeyboardIcon />
-                                    </button>
-                                  )}
+                                  {isShowKeyboard &&
+                                    (
+                                      <button
+                                        type="button"
+                                        className={`gurmukhi-keyboard-toggle ${
+                                          displayGurmukhiKeyboard ? 'active' : ''
+                                          }`}
+                                        onClick={setGurmukhiKeyboardVisibilityAs(
+                                          !displayGurmukhiKeyboard
+                                        )}
+                                      >
+                                        <KeyboardIcon />
+                                      </button>
+                                    )}
 
                                   <button type="submit">
                                     <SearchIcon />
                                   </button>
 
-                                  <EnhancedGurmukhiKeyboard
-                                    value={query}
-                                    searchType={parseInt(type)}
-                                    active={displayGurmukhiKeyboard}
-                                    onKeyClick={newValue => setQueryAs(newValue)()}
-                                    onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                                  />
+                                  {isShowKeyboard &&
+                                    <EnhancedGurmukhiKeyboard
+                                      value={query}
+                                      searchType={parseInt(type)}
+                                      active={displayGurmukhiKeyboard}
+                                      onKeyClick={newValue => setQueryAs(newValue)()}
+                                      onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                                    />}
 
                                   <Autocomplete
                                     getSuggestions={getShabadList}

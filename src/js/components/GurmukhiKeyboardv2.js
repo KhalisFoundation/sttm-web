@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import ArrowIcon from './Icons/Arrow';
 import SpaceBar from './Icons/Spacebar';
 import { SEARCH_TYPES } from '@/constants'
@@ -52,7 +53,7 @@ const withoutMatra = [
   ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', '|'],
   ['c', 'C', 'j', 'J', '\\', 't', 'T', 'f', 'F', 'x'],
   ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
-  ['X', 'r', 'l', 'v', 'V', 'meta'],
+  ['X', 'r', 'l', 'v', 'V', 'space', 'meta'],
 ];
 
 const withMatra = [
@@ -122,9 +123,9 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
         ({ classList = null }) =>
           classList &&
           (classList.contains('gurmukhi-keyboard') ||
-            classList.contains('gurmukhi-keyboard-toggle'))
-      ) === false &&
-      typeof this.props.onClose === 'function'
+            classList.contains('gurmukhi-keyboard-toggle'))) === false
+      &&
+      this.props.onClose
     ) {
       this.props.onClose();
     }
@@ -134,10 +135,24 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
     removeEventListener('click', this.closeOnOutsideClick);
   }
 
+  // kb keys to be disabled based on certain search types
+  //
+  getHiddenKeys = () => {
+    switch (this.props.searchType) {
+      case SEARCH_TYPES.FIRST_LETTERS:
+      case SEARCH_TYPES.FIRST_LETTERS_ANYWHERE:
+        return {
+          'space': true
+        }
+    }
+
+    return {}
+  }
+
   render() {
+    const { searchType } = this.props;
     const spaceKey = (
       <button
-        type="button"
         data-action="space"
         title="Space"
         key="space-key"
@@ -147,11 +162,11 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
       </button>
     );
 
-    const keys = parseInt(this.props.searchType) === SEARCH_TYPES['GURMUKHI_WORD']
-      ? withMatra : withoutMatra;
-
+    const isWithMatras = searchType === SEARCH_TYPES.GURMUKHI_WORD;
+    const keys = isWithMatras ? withMatra : withoutMatra;
     const keyboardGrid = [keys];
-
+    const hiddenKeys = this.getHiddenKeys();
+    console.log(hiddenKeys, searchType, 'hidden keys...')
     const meta = (
       <React.Fragment key="meta-key">
         <button
@@ -190,9 +205,14 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
                       <div className="keyboard-row-set">
                         {
                           chars.map((button, i) => {
+
+                            if (hiddenKeys[button]) {
+                              return null;
+                            }
                             if (button === 'meta') {
                               return meta;
-                            } else if (button === 'space') {
+                            }
+                            if (button === 'space') {
                               return spaceKey;
                             }
                             return (

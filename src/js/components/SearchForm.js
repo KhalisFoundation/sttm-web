@@ -9,6 +9,7 @@ import {
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
   SEARCH_TYPES,
+  SEARCH_TYPES_NOT_ALLOWED_KEYS,
   SOURCES_WITH_ANG,
 } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
@@ -155,13 +156,16 @@ export default class SearchForm extends React.PureComponent {
       handleSearchSourceChange,
       handleSearchTypeChange,
       handleSubmit,
+      handleKeyDown
     } = this;
 
-    const [, useEnglish = false] = PLACEHOLDERS[this.state.type];
+    const { type } = this.state;
+
+    const [, useEnglish = false] = PLACEHOLDERS[type];
 
     const className = useEnglish ? '' : 'gurbani-font';
 
-    const typeInt = parseInt(this.state.type);
+    const typeInt = parseInt(type);
 
     const [title, pattern] =
       typeInt === SEARCH_TYPES.ROMANIZED
@@ -173,9 +177,11 @@ export default class SearchForm extends React.PureComponent {
     const [action, name, inputType] = SearchForm.getFormDetails(
       typeInt
     );
+    const isShowKeyboard = typeInt <= 2 || typeInt === 6;
 
     return this.props.children({
       ...state,
+      isShowKeyboard,
       pattern,
       title,
       className,
@@ -188,6 +194,7 @@ export default class SearchForm extends React.PureComponent {
       handleSearchSourceChange,
       handleSearchTypeChange,
       handleSubmit,
+      handleKeyDown,
     });
   }
   componentDidUpdate() {
@@ -213,34 +220,77 @@ export default class SearchForm extends React.PureComponent {
     }
   }
 
+  isQueryAllowed = (value) => {
+    // Different search types have different criteria to tell if it's safe value to be allowed to enter or not
+    if (value) {
+      console.log(value, '........ IS SAFE QUERY')
+      switch (this.state.type) {
+        case SEARCH_TYPES.MAIN_LETTER: {
+          const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTER];
+          const lagamatrasRegExp = new RegExp(lagamatras.join('|'));
+
+          // if it's not allowed key, then return false
+          if (lagamatrasRegExp.test(value)) {
+            return false;
+          }
+        }
+          break;
+      }
+    }
+    return true;
+  }
+
   // Retuns a function
-  setGurmukhiKeyboardVisibilityAs = value => () =>
-    value !== this.state.displayGurmukhiKeyboard &&
-    this.setState({ displayGurmukhiKeyboard: value }, () => {
-      clickEvent({
-        action: ACTIONS.GURMUKHI_KEYBOARD,
-        label: value ? 1 : 0,
+  setGurmukhiKeyboardVisibilityAs = value => () => {
+    if (value !== this.state.displayGurmukhiKeyboard) {
+      this.setState({ displayGurmukhiKeyboard: value }, () => {
+        clickEvent({
+          action: ACTIONS.GURMUKHI_KEYBOARD,
+          label: value ? 1 : 0,
+        });
       });
-    });
+    }
+  }
 
   setQueryAs = value => () =>
-    this.stopPlaceholderAnimation().then(() =>
-      this.setState(() => ({
+    this.stopPlaceholderAnimation().then(() => {
+      return this.setState(() => ({
         query: value,
         shouldSubmit:
           this.props.submitOnChangeOf.includes('query') && value !== '',
       }))
-    );
+    })
+
+  handleKeyDown = (e) => {
+    console.log(e.key, " e.key...")
+    switch (this.state.type) {
+      case SEARCH_TYPES.MAIN_LETTER: {
+        const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTER];
+        console.log(lagamatras, e.key, '>>>>>>>>')
+        // if it's not allowed key, then return false
+        if (lagamatras.some((key) => key === e.key)) {
+          e.preventDefault();
+          return false;
+        }
+      }
+        break;
+    }
+    return true;
+  }
+
 
   handleSearchChange = ({ target }) => {
-    const cursorStart = target.selectionStart;
-    const cursorEnd = target.selectionEnd;
+    const query = target.value
+    if (this.isQueryAllowed(query)) {
+      const cursorStart = target.selectionStart;
+      const cursorEnd = target.selectionEnd;
 
-    this.setQueryAs(target.value)().then(() => {
-      if (cursorStart !== null) {
-        return target.setSelectionRange(cursorStart, cursorEnd)
-      }
-    });
+      this.setQueryAs(query)().then(() => {
+        if (cursorStart !== null) {
+          return target.setSelectionRange(cursorStart, cursorEnd)
+        }
+      });
+    }
   };
 
   handleSearchSourceChange = e =>
@@ -264,8 +314,9 @@ export default class SearchForm extends React.PureComponent {
     );
 
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
-
-    const isSearchTypeToAngType = this.state.type !== SEARCH_TYPES['ANG'] && Number(value) === SEARCH_TYPES['ANG'];
+    const isSearchTypeToAngType = this.state.type !== SEARCH_TYPES.ANG && Number(value) === SEARCH_TYPES.ANG;
+    const isSearchTypeToMainLetterSearchType = this.state.type !== SEARCH_TYPES.MAIN_LETTER && Number(value) === SEARCH_TYPES.MAIN_LETTER
+    const isClearQuery = isSearchTypeToAngType || isSearchTypeToMainLetterSearchType && this.isQueryAllowed(value);
 
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
