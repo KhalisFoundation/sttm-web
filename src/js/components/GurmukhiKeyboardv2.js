@@ -166,7 +166,6 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
     const keys = isWithMatras ? withMatra : withoutMatra;
     const keyboardGrid = [keys];
     const hiddenKeys = this.getHiddenKeys();
-    console.log(hiddenKeys, searchType, 'hidden keys...')
     const meta = (
       <React.Fragment key="meta-key">
         <button

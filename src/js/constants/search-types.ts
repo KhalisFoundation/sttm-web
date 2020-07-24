@@ -1,6 +1,3 @@
-
-export const LAGA_MATRAS_KB_KEYS = ['W', 'y', 'Y', 'w', 'O', 'o', 'u', 'i', 'I', 'U', 'N', 'H', 'R', 'M']
-
 interface ISearchTypes {
   [key: string]: number
 }
@@ -16,5 +13,5 @@ export const SEARCH_TYPES: ISearchTypes = {
 };
 
 export const SEARCH_TYPES_NOT_ALLOWED_KEYS = {
-  [SEARCH_TYPES.MAIN_LETTER]: LAGA_MATRAS_KB_KEYS
+  [SEARCH_TYPES.MAIN_LETTER]: ['W', 'y', 'Y', 'w', 'O', 'o', 'u', 'i', 'I', 'U', 'N', 'H', 'R', 'M']
 }

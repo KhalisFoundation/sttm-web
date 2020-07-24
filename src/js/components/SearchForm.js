@@ -57,7 +57,7 @@ export default class SearchForm extends React.PureComponent {
   static propTypes = {
     children: PropTypes.func.isRequired,
     defaultQuery: PropTypes.string,
-    defaultType: PropTypes.oneOf(Object.keys(TYPES)),
+    defaultType: PropTypes.oneOf(Object.keys(TYPES).map(type => parseInt(type))),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'query'])
@@ -160,13 +160,10 @@ export default class SearchForm extends React.PureComponent {
     } = this;
 
     const { type } = this.state;
-
-    const [, useEnglish = false] = PLACEHOLDERS[type];
-
-    const className = useEnglish ? '' : 'gurbani-font';
-
     const typeInt = parseInt(type);
-
+    const [, useEnglish = false] = PLACEHOLDERS[type];
+    const className = useEnglish ? '' : 'gurbani-font';
+    const isShowKeyboardIcon = typeInt <= 2 || typeInt === 6;
     const [title, pattern] =
       typeInt === SEARCH_TYPES.ROMANIZED
         ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
@@ -177,11 +174,10 @@ export default class SearchForm extends React.PureComponent {
     const [action, name, inputType] = SearchForm.getFormDetails(
       typeInt
     );
-    const isShowKeyboard = typeInt <= 2 || typeInt === 6;
 
     return this.props.children({
       ...state,
-      isShowKeyboard,
+      isShowKeyboardIcon,
       pattern,
       title,
       className,
@@ -220,17 +216,16 @@ export default class SearchForm extends React.PureComponent {
     }
   }
 
-  isQueryAllowed = (value) => {
-    // Different search types have different criteria to tell if it's safe value to be allowed to enter or not
-    if (value) {
-      console.log(value, '........ IS SAFE QUERY')
-      switch (this.state.type) {
+  isQueryAllowed = (query, type = this.state.type) => {
+    // Different search types have different criteria to tell if it's safe query to be allowed to enter or not
+    if (query) {
+      switch (type) {
         case SEARCH_TYPES.MAIN_LETTER: {
           const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTER];
           const lagamatrasRegExp = new RegExp(lagamatras.join('|'));
 
           // if it's not allowed key, then return false
-          if (lagamatrasRegExp.test(value)) {
+          if (lagamatrasRegExp.test(query)) {
             return false;
           }
         }
@@ -262,19 +257,19 @@ export default class SearchForm extends React.PureComponent {
     })
 
   handleKeyDown = (e) => {
-    console.log(e.key, " e.key...")
     switch (this.state.type) {
       case SEARCH_TYPES.MAIN_LETTER: {
         const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTER];
-        console.log(lagamatras, e.key, '>>>>>>>>')
+        const isPressedKeyNotAllowed = lagamatras.some((key) => key === e.key);
         // if it's not allowed key, then return false
-        if (lagamatras.some((key) => key === e.key)) {
+        if (isPressedKeyNotAllowed) {
           e.preventDefault();
           return false;
         }
       }
         break;
     }
+
     return true;
   }
 
@@ -314,31 +309,33 @@ export default class SearchForm extends React.PureComponent {
     );
 
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
-    const isSearchTypeToAngType = this.state.type !== SEARCH_TYPES.ANG && Number(value) === SEARCH_TYPES.ANG;
-    const isSearchTypeToMainLetterSearchType = this.state.type !== SEARCH_TYPES.MAIN_LETTER && Number(value) === SEARCH_TYPES.MAIN_LETTER
-    const isClearQuery = isSearchTypeToAngType || isSearchTypeToMainLetterSearchType && this.isQueryAllowed(value);
-
+    const { type, query, source } = this.state;
+    const newSearchType = Number(value);
+    const isSearchTypeToAngType = type !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
+    const isSearchTypeToMainLetterSearchType = type !== SEARCH_TYPES.MAIN_LETTER && newSearchType === SEARCH_TYPES.MAIN_LETTER
+    const isClearQuery = isSearchTypeToAngType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
+    console.log(isClearQuery, isSearchTypeToMainLetterSearchType, !this.isQueryAllowed(query, newSearchType))
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
         {
-          type: parseInt(value, 10),
+          type: newSearchType,
           source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
-            Object.keys(SOURCES_WITH_ANG).includes(this.state.source) ?
+            Object.keys(SOURCES_WITH_ANG).includes(source) ?
             this.state.source : 'G',
-          query: isSearchTypeToAngType ? '' : this.state.query,
+          query: isClearQuery ? '' : query,
           shouldSubmit: isSearchTypeToAngType ? false :
             this.props.submitOnChangeOf.includes('type') &&
-            this.state.query !== ''
+            query !== ''
         },
         () => {
-          clickEvent({ action: ACTIONS.SEARCH_TYPE, label: this.state.type });
+          clickEvent({ action: ACTIONS.SEARCH_TYPE, label: newSearchType });
           localStorage.setItem(
             LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-            this.state.type
+            newSearchType
           );
           localStorage.setItem(
             LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
-            this.state.source
+            source
           );
           requestAnimationFrame(this.beginPlaceholderAnimation);
         }
