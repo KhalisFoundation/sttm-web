@@ -7,5 +7,5 @@ export const PLACEHOLDERS = {
   [SEARCH_TYPES.ENGLISH_WORD]: ['He has extended His power', true], // translation
   [SEARCH_TYPES.ROMANIZED]: ['jo mange thakur apne te soi', true], // romanized
   [SEARCH_TYPES.ANG]: ['123', true], // ang
-  [SEARCH_TYPES.MAIN_LETTER]: ['jo mwgih Twkur Apuny qy'], // main letters
+  [SEARCH_TYPES.MAIN_LETTER]: ['j mgh Tkr Apn q'], // main letters
 };

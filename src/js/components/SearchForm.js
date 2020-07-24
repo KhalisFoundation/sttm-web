@@ -313,7 +313,7 @@ export default class SearchForm extends React.PureComponent {
     const newSearchType = Number(value);
     const isSearchTypeToAngType = type !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
     const isSearchTypeToMainLetterSearchType = type !== SEARCH_TYPES.MAIN_LETTER && newSearchType === SEARCH_TYPES.MAIN_LETTER
-    const isClearQuery = isSearchTypeToAngType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
+    const isQueryToBeCleared = isSearchTypeToAngType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
 
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
@@ -322,7 +322,7 @@ export default class SearchForm extends React.PureComponent {
           source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
             Object.keys(SOURCES_WITH_ANG).includes(source) ?
             this.state.source : 'G',
-          query: isClearQuery ? '' : query,
+          query: isQueryToBeCleared ? '' : query,
           shouldSubmit: isSearchTypeToAngType ? false :
             this.props.submitOnChangeOf.includes('type') &&
             query !== ''
