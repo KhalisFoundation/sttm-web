@@ -314,7 +314,7 @@ export default class SearchForm extends React.PureComponent {
     const isSearchTypeToAngType = type !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
     const isSearchTypeToMainLetterSearchType = type !== SEARCH_TYPES.MAIN_LETTER && newSearchType === SEARCH_TYPES.MAIN_LETTER
     const isClearQuery = isSearchTypeToAngType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
-    console.log(isClearQuery, isSearchTypeToMainLetterSearchType, !this.isQueryAllowed(query, newSearchType))
+
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
         {
