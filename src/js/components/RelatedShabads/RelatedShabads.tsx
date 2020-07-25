@@ -228,7 +228,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                   <button
                     className="relatedShabadShowMoreBtn"
                     onClick={this.handleShowMore(totalShabads)}>
-                    Show More Results
+                    More Related Results
                   </button>
                 </div>)}
             </div>
