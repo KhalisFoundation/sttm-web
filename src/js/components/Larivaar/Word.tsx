@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 
 import {
   fixLarivaarUnicode,
@@ -34,7 +34,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
 
-  const assignAkharColor = (node) => {
+  const assignAkharColor = (node: HTMLElement) => {
     if (node) {
       if (isColoredLarivaarAssist) {
         node.style.setProperty('color', larivaarAssistColor, 'important');
