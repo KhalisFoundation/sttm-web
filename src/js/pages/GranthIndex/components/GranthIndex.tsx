@@ -58,7 +58,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
         (
           {
             name,
-            pages: [from, to],
+            ang: [from, to],
             source: localSource,
             description,
             subSets,
