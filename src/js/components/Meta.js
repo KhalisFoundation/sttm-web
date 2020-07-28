@@ -72,7 +72,7 @@ class Meta extends React.PureComponent {
 
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
-
+    // const isShabad = type === 'shabad';
     return (
       <div id="metadata" className={`metadata-${type}`}>
         {isFalsy(nav.previous) === false ? (

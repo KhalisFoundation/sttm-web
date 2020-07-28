@@ -220,8 +220,8 @@ export default class SearchForm extends React.PureComponent {
     // Different search types have different criteria to tell if it's safe query to be allowed to enter or not
     if (query) {
       switch (type) {
-        case SEARCH_TYPES.MAIN_LETTER: {
-          const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTER];
+        case SEARCH_TYPES.MAIN_LETTERS: {
+          const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS];
           const lagamatrasRegExp = new RegExp(lagamatras.join('|'));
 
           // if it's not allowed key, then return false
@@ -258,8 +258,8 @@ export default class SearchForm extends React.PureComponent {
 
   handleKeyDown = (e) => {
     switch (this.state.type) {
-      case SEARCH_TYPES.MAIN_LETTER: {
-        const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTER];
+      case SEARCH_TYPES.MAIN_LETTERS: {
+        const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS];
         const isPressedKeyNotAllowed = lagamatras.some((key) => key === e.key);
         // if it's not allowed key, then return false
         if (isPressedKeyNotAllowed) {
@@ -312,7 +312,7 @@ export default class SearchForm extends React.PureComponent {
     const { type, query, source } = this.state;
     const newSearchType = Number(value);
     const isSearchTypeToAngType = type !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
-    const isSearchTypeToMainLetterSearchType = type !== SEARCH_TYPES.MAIN_LETTER && newSearchType === SEARCH_TYPES.MAIN_LETTER
+    const isSearchTypeToMainLetterSearchType = type !== SEARCH_TYPES.MAIN_LETTERS && newSearchType === SEARCH_TYPES.MAIN_LETTERS
     const isQueryToBeCleared = isSearchTypeToAngType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
 
     this.stopPlaceholderAnimation().then(() =>

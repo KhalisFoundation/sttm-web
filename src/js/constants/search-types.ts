@@ -9,9 +9,9 @@ export const SEARCH_TYPES: ISearchTypes = {
   ENGLISH_WORD: 3,
   ROMANIZED: 4,
   ANG: 5,
-  MAIN_LETTER: 6,
+  MAIN_LETTERS: 6,
 };
 
 export const SEARCH_TYPES_NOT_ALLOWED_KEYS = {
-  [SEARCH_TYPES.MAIN_LETTER]: ['W', 'y', 'Y', 'w', 'O', 'o', 'u', 'i', 'I', 'U', 'N', 'H', 'R', 'M']
+  [SEARCH_TYPES.MAIN_LETTERS]: ['W', 'y', 'Y', 'w', 'O', 'o', 'u', 'i', 'I', 'U', 'N', 'H', 'R', 'M']
 }
