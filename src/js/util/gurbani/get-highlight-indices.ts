@@ -62,7 +62,7 @@ export const getHighlightIndices = (baani: string, query: string, type: number):
     case SEARCH_TYPES.ENGLISH_WORD: // eslint-disable-line no-fallthrough
     case SEARCH_TYPES.GURMUKHI_WORD:
     case SEARCH_TYPES.MAIN_LETTERS: {
-      console.log(mainQuery, "main query...")
+
       if (isEnglishWordSearch) {
         mainQuery = mainQuery.toLowerCase();
         baani = baani.toLowerCase();

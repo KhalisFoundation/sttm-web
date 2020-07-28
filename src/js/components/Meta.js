@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng, dateMath } from '../util';
+import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
 import { withRouter } from 'react-router-dom';

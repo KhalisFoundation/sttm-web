@@ -6,7 +6,7 @@ import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../con
 import { Link } from 'react-router-dom';
 import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
-import { toSearchURL, getQueryParams, getShabadList } from '../util';
+import { toSearchURL, getQueryParams, getShabadList, reformatSearchTypes } from '../util';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
@@ -46,7 +46,6 @@ export default class Header extends React.PureComponent {
       }
       );
   }
-
   componentDidMount() {
     this.fetchDoodle();
   }
@@ -247,9 +246,9 @@ export default class Header extends React.PureComponent {
                               value={type.toString()}
                               onChange={handleSearchTypeChange}
                             >
-                              {TYPES.map((children, value) => (
+                              {reformatSearchTypes(TYPES).map(({ type, value }) => (
                                 <option key={value} value={value}>
-                                  {children}
+                                  {type}
                                 </option>
                               ))}
                             </select>
