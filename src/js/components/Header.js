@@ -73,8 +73,6 @@ export default class Header extends React.PureComponent {
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
     } = getQueryParams(location.search);
 
-    console.log('query defualt', defaultQuery, 'default query..')
-
     const key = `${defaultQuery}${defaultSource}${defaultType}`;
 
     const controllerHeader = (

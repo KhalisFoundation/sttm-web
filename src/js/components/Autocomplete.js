@@ -112,7 +112,7 @@ class Autocomplete extends Component {
 
     let suggestionsListComponent;
     const isShowFullResultsSelected = isShowFullResults && filteredSuggestions.length === activeSuggestion;
-    console.log(isShowFullResultsSelected, "????")
+
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
