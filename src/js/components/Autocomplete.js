@@ -150,7 +150,7 @@ class Autocomplete extends Component {
                 onMouseOver={() => {
                   this.setState(prevState => ({
                     ...prevState,
-                    activeSuggestion: -1,
+                    activeSuggestion: filteredSuggestions.length + 1,
                   }))
                   this.lastItem.classList.add('suggestion-active');
                 }}
