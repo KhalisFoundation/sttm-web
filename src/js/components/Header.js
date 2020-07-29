@@ -73,6 +73,7 @@ export default class Header extends React.PureComponent {
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
     } = getQueryParams(location.search);
 
+    const isSearchPageRoute = location.pathname.includes('search');
     const key = `${defaultQuery}${defaultSource}${defaultType}`;
 
     const controllerHeader = (
@@ -228,7 +229,7 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <Autocomplete
-                                    isShowFullResults={decodeURI(defaultQuery) !== query}
+                                    isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
                                     getSuggestions={getShabadList}
                                     searchOptions={{ type: parseInt(type), source }}
                                     value={query}
