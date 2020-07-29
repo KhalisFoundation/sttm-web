@@ -25,6 +25,7 @@ class Autocomplete extends Component {
 
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions } = this.state;
+    const { isShowFullResults } = this.props;
 
     if (e.keyCode === 13) {
       if (activeSuggestion !== -1) e.preventDefault();
@@ -44,10 +45,13 @@ class Autocomplete extends Component {
       }
     } else if (e.keyCode === 40) {
       e.preventDefault();
-      if (activeSuggestion + 1 < filteredSuggestions.length) {
-        this.setState({ activeSuggestion: activeSuggestion + 1 });
-        const newScroll = document.querySelector('.suggestion-active').offsetHeight;
-        activeSuggestion + 1 !== 0 && document.getElementById('suggestions').scrollBy(0, newScroll);
+      const totalSuggestions = isShowFullResults ? filteredSuggestions.length + 1 : filteredSuggestions.length;
+
+      if (activeSuggestion + 1 < totalSuggestions) {
+        this.setState({ activeSuggestion: activeSuggestion + 1 }, () => {
+          const newScroll = document.querySelector('.suggestion-active').offsetHeight;
+          activeSuggestion + 1 !== 0 && document.getElementById('suggestions').scrollBy(0, newScroll);
+        });
       }
     }
   };
@@ -107,7 +111,8 @@ class Autocomplete extends Component {
     } = this;
 
     let suggestionsListComponent;
-
+    const isShowFullResultsSelected = isShowFullResults && filteredSuggestions.length === activeSuggestion;
+    console.log(isShowFullResultsSelected, "????")
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
@@ -145,17 +150,12 @@ class Autocomplete extends Component {
             })}
             {isShowFullResults &&
               <li
-                className="show-all-results"
-                ref={el => this.lastItem = el}
+                className={`show-all-results ${isShowFullResultsSelected ? 'suggestion-active' : ''}`}
                 onMouseOver={() => {
                   this.setState(prevState => ({
                     ...prevState,
-                    activeSuggestion: filteredSuggestions.length + 1,
+                    activeSuggestion: filteredSuggestions.length,
                   }))
-                  this.lastItem.classList.add('suggestion-active');
-                }}
-                onMouseLeave={() => {
-                  this.lastItem.classList.remove('suggestion-active');
                 }}
               >
                 <Link
