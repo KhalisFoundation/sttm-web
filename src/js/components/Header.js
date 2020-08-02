@@ -60,7 +60,6 @@ export default class Header extends React.PureComponent {
   handleFormSubmit = data => {
     this.props.history.push(toSearchURL(data));
   }
-
   render() {
     const {
       props: { defaultQuery, isHome, isAng, isController },
@@ -68,11 +67,13 @@ export default class Header extends React.PureComponent {
       onFormSubmit,
       handleFormSubmit,
     } = this;
+
     const {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
     } = getQueryParams(location.search);
 
+    const isSearchPageRoute = location.pathname.includes('search');
     const key = `${defaultQuery}${defaultSource}${defaultType}`;
 
     const controllerHeader = (
@@ -228,6 +229,7 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <Autocomplete
+                                    isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
                                     getSuggestions={getShabadList}
                                     searchOptions={{ type: parseInt(type), source }}
                                     value={query}

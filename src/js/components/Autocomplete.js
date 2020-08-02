@@ -44,10 +44,13 @@ class Autocomplete extends Component {
       }
     } else if (e.keyCode === 40) {
       e.preventDefault();
-      if (activeSuggestion + 1 < filteredSuggestions.length) {
-        this.setState({ activeSuggestion: activeSuggestion + 1 });
-        const newScroll = document.querySelector('.suggestion-active').offsetHeight;
-        activeSuggestion + 1 !== 0 && document.getElementById('suggestions').scrollBy(0, newScroll);
+      const totalSuggestions = filteredSuggestions.length;
+
+      if (activeSuggestion + 1 < totalSuggestions) {
+        this.setState({ activeSuggestion: activeSuggestion + 1 }, () => {
+          const newScroll = document.querySelector('.suggestion-active').offsetHeight;
+          activeSuggestion + 1 !== 0 && document.getElementById('suggestions').scrollBy(0, newScroll);
+        });
       }
     }
   };
@@ -60,15 +63,26 @@ class Autocomplete extends Component {
   componentDidUpdate(prevProps) {
     const prevInput = prevProps.value;
     if (this.props.value !== prevInput) {
-      const { getSuggestions, searchOptions } = this.props;
-      const userInput = this.props.value;
+      const { isShowFullResults, getSuggestions, searchOptions, value: userInput } = this.props;
+      const isQueryValid = userInput.length >= 2 && searchOptions.type !== 5;
       clearTimeout(this.state.suggestionTimeout);
 
-      if (userInput.length >= 2 && this.props.searchOptions.type !== 5) {
+      if (isQueryValid) {
         const suggestionTimeout = setTimeout(() => {
 
           getSuggestions(userInput, searchOptions)
             .then(suggestions => {
+
+              if (isShowFullResults && suggestions.length > 0) {
+                suggestions.push({
+                  name: 'Show full results',
+                  url: toSearchURL({
+                    ...searchOptions,
+                    query: userInput,
+                  })
+                });
+              }
+
               this.setState({
                 activeSuggestion: -1,
                 filteredSuggestions: suggestions,
@@ -113,7 +127,9 @@ class Autocomplete extends Component {
         suggestionsListComponent = (
           <ul className="search-result" id="suggestions" onKeyDown={this.onKeyDown}>
             {filteredSuggestions.map((suggestion, index) => {
-              let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
+              const isLastIdx = index === (filteredSuggestions.length - 1);
+              const isShowFullResultsListItem = isShowFullResults && isLastIdx;
+              let className = searchOptions.type !== 3 ? isShowFullResultsListItem ? "show-all-results " : "gurbani-font " : " ";
 
               if (index === activeSuggestion) {
                 className += "suggestion-active";
@@ -127,46 +143,29 @@ class Autocomplete extends Component {
                     this.setState({ activeSuggestion: index });
                   }}
                 >
-                  <a href={suggestion.url}>
-                    <Larivaar
-                      larivaarAssist={false}
-                      enable={false}
-                      unicode={false}
-                      highlightIndex={suggestion.highlightIndex}
-                      query={suggestion.query}
-                      type={searchOptions.type}
+                  {isShowFullResultsListItem ?
+                    (<Link
+                      to={suggestion.url}
                     >
-                      {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
-                    </Larivaar>
-                    {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                  </a>
+                      {suggestion.name}
+                    </Link>)
+                    :
+                    (<a href={suggestion.url}>
+                      <Larivaar
+                        larivaarAssist={false}
+                        enable={false}
+                        unicode={false}
+                        highlightIndex={suggestion.highlightIndex}
+                        query={suggestion.query}
+                        type={searchOptions.type}
+                      >
+                        {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
+                      </Larivaar>
+                      {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
+                    </a>)}
                 </li>
               );
             })}
-            {isShowFullResults &&
-              <li
-                className="show-all-results"
-                ref={el => this.lastItem = el}
-                onMouseOver={() => {
-                  this.setState(prevState => ({
-                    ...prevState,
-                    activeSuggestion: -1,
-                  }))
-                  this.lastItem.classList.add('suggestion-active');
-                }}
-                onMouseLeave={() => {
-                  this.lastItem.classList.remove('suggestion-active');
-                }}
-              >
-                <Link
-                  to={toSearchURL({
-                    ...searchOptions,
-                    query: value,
-                  })}
-                >
-                  Show all results
-                </Link>
-              </li>}
           </ul>
         );
       } else {
