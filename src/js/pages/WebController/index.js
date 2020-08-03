@@ -13,6 +13,7 @@ import ControllerSearch from './search';
 import { Stub } from '../Search/Layout';
 import ControllerShabad from '@/pages/WebController/shabad';
 import { versesToGurbani } from '@/util';
+import ShabadControls from '@/components/ShabadControlsv2';
 
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
@@ -86,6 +87,15 @@ export default class WebControllerPage extends React.PureComponent {
       );
   }
 
+  updateSettings = (settings) => {
+    this.state.socket.emit('data', {
+      host: "sttm-web",
+      pin: this.state.controllerPin,
+      type: "settings",
+      settings,
+    });
+  }
+
   handleSubmit = (code, pin) => {
     this.setState({ loading: true });
     fetch(`${SYNC_API_URL}sync/join/${code}`)
@@ -116,6 +126,7 @@ export default class WebControllerPage extends React.PureComponent {
             );
 
             this._socket.on('data', data => {
+              console.log(data);
               if (data['type'] === 'response-control') {
                 data['success'] ?
                   this.setState({
@@ -125,6 +136,7 @@ export default class WebControllerPage extends React.PureComponent {
                     socket: this._socket,
                     pinError: false,
                     codeError: false,
+                    desktopSettings: data.settings
                   }, this.finishLoading) :
                   this.setState({
                     connected: false,
@@ -158,6 +170,7 @@ export default class WebControllerPage extends React.PureComponent {
       socket,
       controllerPin,
       connected,
+      desktopSettings,
       searchData,
       namespaceString,
       error,
@@ -188,6 +201,13 @@ export default class WebControllerPage extends React.PureComponent {
           {connected ? (
             <React.Fragment>
               <SearchInput onSearch={this.handleSearch} />
+
+              <ShabadControls {...this.props}
+                isBaniController={true}
+                updateSettings={this.updateSettings}
+                desktopSettings={desktopSettings}
+              />
+
               <SlideControls
                 socket={socket}
                 controllerPin={controllerPin}

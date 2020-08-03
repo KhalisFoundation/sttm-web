@@ -4,54 +4,59 @@ import { withRouter } from 'react-router-dom';
 
 import { VISRAAM } from '../constants';
 import { clearVisraamClass } from '../util';
-import { QUICK_SETTINGS, ADVANCED_SETTINGS } from '../settings';
+import { QUICK_SETTINGS, ADVANCED_SETTINGS, CONTROLLER_SETTINGS, CONTROLLER_ADVANCED_SETTINGS } from '../constants/settings';
 import { MultiSelect } from '../components/MultiSelect';
 
 class ShabadControls extends React.PureComponent {
   static propTypes = {
-    setTranslationLanguages: PropTypes.func.isRequired,
-    setTransliterationLanguages: PropTypes.func.isRequired,
-    resetDisplayOptions: PropTypes.func.isRequired,
-    resetFontOptions: PropTypes.func.isRequired,
-    toggleVisraams: PropTypes.func.isRequired,
-    toggleLarivaarOption: PropTypes.func.isRequired,
-    toggleLarivaarAssistOption: PropTypes.func.isRequired,
-    setFontSize: PropTypes.func.isRequired,
-    setTranslationFontSize: PropTypes.func.isRequired,
-    setTransliterationFontSize: PropTypes.func.isRequired,
-    setLineHeight: PropTypes.func.isRequired,
-    toggleCenterAlignOption: PropTypes.func.isRequired,
-    toggleSplitViewOption: PropTypes.func.isRequired,
-    toggleDarkMode: PropTypes.func.isRequired,
-    toggleAutoScrollMode: PropTypes.func.isRequired,
-    toggleParagraphMode: PropTypes.func.isRequired,
-    setVisraamSource: PropTypes.func.isRequired,
-    setVisraamStyle: PropTypes.func.isRequired,
-    changeFont: PropTypes.func.isRequired,
-    toggleAdvancedOptions: PropTypes.func.isRequired,
-    setLarivaarAssistStrength: PropTypes.func.isRequired,
+    setTranslationLanguages: PropTypes.func,
+    setTransliterationLanguages: PropTypes.func,
+    resetDisplayOptions: PropTypes.func,
+    resetFontOptions: PropTypes.func,
+    toggleVisraams: PropTypes.func,
+    toggleLarivaarOption: PropTypes.func,
+    toggleLarivaarAssistOption: PropTypes.func,
+    setFontSize: PropTypes.func,
+    setTranslationFontSize: PropTypes.func,
+    setTransliterationFontSize: PropTypes.func,
+    setLineHeight: PropTypes.func,
+    toggleCenterAlignOption: PropTypes.func,
+    toggleSplitViewOption: PropTypes.func,
+    toggleDarkMode: PropTypes.func,
+    toggleAutoScrollMode: PropTypes.func,
+    toggleParagraphMode: PropTypes.func,
+    setVisraamSource: PropTypes.func,
+    setVisraamStyle: PropTypes.func,
+    changeFont: PropTypes.func,
+    toggleAdvancedOptions: PropTypes.func,
+    setLarivaarAssistStrength: PropTypes.func,
 
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    visraams: PropTypes.bool.isRequired,
-    visraamSource: PropTypes.string.isRequired,
-    visraamStyle: PropTypes.string.isRequired,
-    larivaarAssist: PropTypes.bool.isRequired,
-    larivaar: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired,
-    larivaarAssistStrength: PropTypes.number.isRequired,
-    translationFontSize: PropTypes.number.isRequired,
-    transliterationFontSize: PropTypes.number.isRequired,
-    lineHeight: PropTypes.number.isRequired,
-    centerAlignGurbani: PropTypes.bool.isRequired,
-    splitView: PropTypes.bool.isRequired,
-    darkMode: PropTypes.bool.isRequired,
-    autoScrollMode: PropTypes.bool.isRequired,
-    paragraphMode: PropTypes.bool.isRequired,
-    fontFamily: PropTypes.string.isRequired,
-    showAdvancedOptions: PropTypes.bool.isRequired,
+    translationLanguages: PropTypes.array,
+    transliterationLanguages: PropTypes.array,
+    history: PropTypes.object,
+    location: PropTypes.object,
+    visraams: PropTypes.bool,
+    visraamSource: PropTypes.string,
+    visraamStyle: PropTypes.string,
+    larivaarAssist: PropTypes.bool,
+    larivaar: PropTypes.bool,
+    fontSize: PropTypes.number,
+    larivaarAssistStrength: PropTypes.number,
+    translationFontSize: PropTypes.number,
+    transliterationFontSize: PropTypes.number,
+    lineHeight: PropTypes.number,
+    centerAlignGurbani: PropTypes.bool,
+    splitView: PropTypes.bool,
+    darkMode: PropTypes.bool,
+    autoScrollMode: PropTypes.bool,
+    paragraphMode: PropTypes.bool,
+    fontFamily: PropTypes.string,
+    showAdvancedOptions: PropTypes.bool,
+
+    desktopSettings: PropTypes.object,
+    isBaniController: PropTypes.bool,
+    updateSettings: PropTypes.func,
+    desktopSettings: PropTypes.object,
   };
 
   bakeSettings = settingsObj => {
@@ -152,8 +157,17 @@ class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    const settings = QUICK_SETTINGS(this.props);
-    const advanced = ADVANCED_SETTINGS(this.props);
+    const { isBaniController, updateSettings, desktopSettings } = this.props;
+    let settings = [];
+    let advanced = [];
+
+    if (isBaniController) {
+      settings = CONTROLLER_SETTINGS(updateSettings, desktopSettings);
+      advanced = CONTROLLER_ADVANCED_SETTINGS();
+    } else {
+      settings = QUICK_SETTINGS(this.props);
+      advanced = ADVANCED_SETTINGS(this.props);
+    }
 
     const quickSettingsPanel = (
       <>
