@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
 import { Link } from 'react-router-dom';
-import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
+import GurmukhiKeyboard from './GurmukhiKeyboardv2';
 import SearchForm from './SearchForm';
 import { toSearchURL, getQueryParams, getShabadList, reformatSearchTypes } from '../util';
 import CrossIcon from './Icons/Times';
@@ -195,7 +195,6 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <button
-                                    type="button"
                                     className="clear-search-toggle"
                                     onClick={setQueryAs('')}
                                   >
@@ -205,7 +204,6 @@ export default class Header extends React.PureComponent {
                                   {isShowKeyboardIcon &&
                                     (
                                       <button
-                                        type="button"
                                         className={`gurmukhi-keyboard-toggle ${
                                           displayGurmukhiKeyboard ? 'active' : ''
                                           }`}
@@ -222,7 +220,7 @@ export default class Header extends React.PureComponent {
                                   </button>
 
                                   {isShowKeyboardIcon &&
-                                    <EnhancedGurmukhiKeyboard
+                                    <GurmukhiKeyboard
                                       value={query}
                                       searchType={parseInt(type)}
                                       active={displayGurmukhiKeyboard}

@@ -5,64 +5,8 @@ import { Link } from 'react-router-dom';
 import ArrowIcon from './Icons/Arrow';
 import SpaceBar from './Icons/Spacebar';
 import { SEARCH_TYPES } from '@/constants'
-
-const defaultMatraValue = {
-  w: 'Aw',
-  i: 'ie',
-  I: 'eI',
-  u: 'au',
-  U: 'aU',
-  y: 'ey',
-  Y: 'AY',
-  o: 'Ao',
-  O: 'AO',
-  M: ' M',
-  '`': ' `',
-  R: ' R',
-  H: ' H',
-  ' ': ' '
-};
-
-let matras = Object.keys(defaultMatraValue);
-matras.push('a');
-
-const getButtonValue = (button, query) => {
-  const labelVal = Object.keys(defaultMatraValue).includes(button) ?
-    matraAkhar(button, query) : button;
-  const lastChar = query[query.length - 1];
-  if (lastChar && lastChar.includes(labelVal)) {
-    return button;
-  } else {
-    return labelVal;
-  }
-}
-
-const matraAkhar = (matra, query) => {
-  const lastChar = query[query.length - 1];
-  const matraValue = defaultMatraValue[matra];
-  const notMatraRegex = new RegExp("[^" + matra + "]", "g");
-
-  if (query.length && !matras.includes(lastChar)) {
-    return matraValue.replace(notMatraRegex, lastChar);
-  } else {
-    return matraValue;
-  }
-}
-
-const withoutMatra = [
-  ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', '|'],
-  ['c', 'C', 'j', 'J', '\\', 't', 'T', 'f', 'F', 'x'],
-  ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
-  ['X', 'r', 'l', 'v', 'V', 'space', 'meta'],
-];
-
-const withMatra = [
-  ['w', 'i', 'I', 'u', 'U', 'y', 'Y', 'o', 'O', 'M'],
-  ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', '`'],
-  ['c', 'C', 'j', 'J', 't', 'T', 'f', 'F', 'x', 'H'],
-  ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
-  ['X', 'r', 'l', 'v', 'V', 'R', '^', 'space', 'meta'],
-];
+import { getKeyboardKeyValue, getMatraAkhar } from './utils';
+import { defaultMatraValue, matras, withMatra, withoutMatra } from './constants';
 
 export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
   static propTypes = {
@@ -135,8 +79,7 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
     removeEventListener('click', this.closeOnOutsideClick);
   }
 
-  // kb keys to be disabled based on certain search types
-  //
+  // keyboard keys to be disabled based on certain search types
   getHiddenKeys = () => {
     switch (this.props.searchType) {
       case SEARCH_TYPES.FIRST_LETTERS:
@@ -153,8 +96,8 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
     const { searchType } = this.props;
     const spaceKey = (
       <button
-        data-action="space"
         title="Space"
+        data-action="space"
         key="space-key"
         onClick={this.handleSpace}
       >
@@ -162,14 +105,15 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
       </button>
     );
 
+    const defaultMatraKeys = Object.keys(defaultMatraValue);
     const isWithMatras = searchType === SEARCH_TYPES.GURMUKHI_WORD;
     const keys = isWithMatras ? withMatra : withoutMatra;
     const keyboardGrid = [keys];
     const hiddenKeys = this.getHiddenKeys();
+
     const meta = (
       <React.Fragment key="meta-key">
         <button
-          type="button"
           data-action="bksp"
           title="Backspace"
           key="backspace-key"
@@ -183,11 +127,10 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
       </React.Fragment>
     );
 
+
     return (
       <div
-        className={`gurmukhi-keyboard gurbani-font ${
-          this.props.active ? 'active' : ''
-          }`}
+        className={`gurmukhi-keyboard gurbani-font ${this.props.active ? 'active' : ''}`}
         onClick={this.click}
       >
         {
@@ -203,29 +146,28 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
                     <div key={`${index}-${rowIndex}`} className="keyboard-row">
                       <div className="keyboard-row-set">
                         {
-                          chars.map((button, i) => {
+                          chars.map((keyboardKey, i) => {
 
-                            if (hiddenKeys[button]) {
+                            if (hiddenKeys[keyboardKey]) {
                               return null;
                             }
-                            if (button === 'meta') {
+                            if (keyboardKey === 'meta') {
                               return meta;
                             }
-                            if (button === 'space') {
+                            if (keyboardKey === 'space') {
                               return spaceKey;
                             }
+
+                            const isCurrentKeyDefaultMatraKey = defaultMatraKeys.includes(keyboardKey);
+
                             return (
-                              <button key={i}
-                                data-value={getButtonValue(button, this.props.value)}
-                                type="button"
-                                className={
-                                  Object.keys(defaultMatraValue).includes(button) ? 'matra-button' : ''
-                                }
+                              <button
+                                key={i}
+                                data-value={getKeyboardKeyValue(keyboardKey, this.props.value)}
+                                className={isCurrentKeyDefaultMatraKey ? 'matra-button' : ''}
                                 onClick={this.handleClick}>
-                                {
-                                  Object.keys(defaultMatraValue).includes(button) ?
-                                    matraAkhar(button, this.props.value) : button
-                                }
+                                {isCurrentKeyDefaultMatraKey ?
+                                  getMatraAkhar(keyboardKey, this.props.value) : keyboardKey}
                               </button>
                             )
                           })
