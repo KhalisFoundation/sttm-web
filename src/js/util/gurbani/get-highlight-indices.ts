@@ -82,7 +82,6 @@ export const getHighlightIndices = (baani: string, query: string, type: number):
           });
         } else {
           const [start, end] = getHighlightingEndpoints(baani, subQuery);
-          console.log([start, end], baani, subQuery, 'SEARCH_TYPE.MAIN_LETTERS')
           if (start !== -1) {
             highlightIndices = highlightIndices.concat(numbersRange(start, end, 1));
           }

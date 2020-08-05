@@ -73,7 +73,8 @@ class Autocomplete extends Component {
 
     if (this.props.value !== prevInput) {
       const { isShowFullResults, getSuggestions, searchOptions, value: userInput } = this.props;
-      const isQueryValid = userInput.length >= 2 && searchOptions.type !== 5;
+      const isSearchTypeAng = searchOptions.type === 5;
+      const isQueryValid = userInput.length >= 2 && !isSearchTypeAng;
       clearTimeout(this.state.suggestionTimeout);
 
       if (isQueryValid) {
@@ -82,6 +83,7 @@ class Autocomplete extends Component {
           getSuggestions(userInput, searchOptions)
             .then(suggestions => {
 
+              // if any suggestion exists, only then add this as final result item
               if (isShowFullResults && suggestions.length > 0) {
                 suggestions.push({
                   name: 'Show full results',
@@ -147,7 +149,6 @@ class Autocomplete extends Component {
               if (index === activeSuggestion) {
                 className += "suggestion-active";
               }
-
               return (
                 <li
                   className={className}
@@ -157,13 +158,13 @@ class Autocomplete extends Component {
                   }}
                 >
                   {isShowFullResultsListItem ?
-                    (<Link
+                    <Link
                       to={suggestion.url}
                     >
                       {suggestion.name}
-                    </Link>)
+                    </Link>
                     :
-                    (<a href={suggestion.url}>
+                    <a href={suggestion.url}>
                       <Larivaar
                         larivaarAssist={false}
                         enable={false}
@@ -175,7 +176,7 @@ class Autocomplete extends Component {
                         {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                       </Larivaar>
                       {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                    </a>)}
+                    </a>}
                 </li>
               );
             })}

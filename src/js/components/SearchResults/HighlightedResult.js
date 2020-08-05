@@ -11,15 +11,14 @@ export default class HighlightedSearchResult extends React.PureComponent {
   };
 
   render() {
-    const { children, highlightIndex, query, visraams } = this.props;
+    const { children, highlightIndex, visraams } = this.props;
     if (children === null || typeof children === 'undefined') {
       return null;
     }
 
-    console.log(children, 'HIGHLIGHT BUG..')
     return children.split(' ').map((word, i) => {
       let akharClass = getVisraamClass(children, i, visraams);
-      akharClass += (highlightIndex && highlightIndex.includes(i)) || word.includes(query)
+      akharClass += (highlightIndex && highlightIndex.includes(i))
         ? 'search-highlight-word'
         : ''
       return (

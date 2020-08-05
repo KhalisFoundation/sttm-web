@@ -49,7 +49,6 @@ export const Larivaar: React.FC<ILarivaarProps> = (props) => {
 
         const highlight = word.includes(query);
         const visraamClass = getVisraamClass(children, index, visraam);
-
         return (
           <LarivaarWord
             highlightIndex={highlightIndex}
