@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import ArrowIcon from './Icons/Arrow';
-import SpaceBar from './Icons/Spacebar';
+import ArrowIcon from '../Icons/Arrow';
+import SpaceBar from '../Icons/Spacebar';
 import { SEARCH_TYPES } from '@/constants'
 import { getKeyboardKeyValue, getMatraAkhar } from './utils';
 import { defaultMatraValue, matras, withMatra, withoutMatra } from './constants';
 
-export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
+export class EnhancedGurmukhiKeyboard extends React.PureComponent {
   static propTypes = {
     value: PropTypes.string.isRequired,
     searchType: PropTypes.number.isRequired,
@@ -96,9 +96,9 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
     const { searchType } = this.props;
     const spaceKey = (
       <button
+        key="space-key"
         title="Space"
         data-action="space"
-        key="space-key"
         onClick={this.handleSpace}
       >
         <SpaceBar />

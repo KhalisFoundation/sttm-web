@@ -4,14 +4,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
 import { Link } from 'react-router-dom';
-import GurmukhiKeyboard from './GurmukhiKeyboardv2';
+
+import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
-import { toSearchURL, getQueryParams, getShabadList, reformatSearchTypes } from '../util';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+
+import {
+  toSearchURL,
+  getQueryParams,
+  getShabadList,
+  reformatSearchTypes
+} from '@/util';
 export default class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
 
@@ -220,7 +227,7 @@ export default class Header extends React.PureComponent {
                                   </button>
 
                                   {isShowKeyboardIcon &&
-                                    <GurmukhiKeyboard
+                                    <EnhancedGurmukhiKeyboard
                                       value={query}
                                       searchType={parseInt(type)}
                                       active={displayGurmukhiKeyboard}

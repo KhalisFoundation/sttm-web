@@ -6,14 +6,15 @@ import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../../constants';
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
-import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
-import SehajPaathLink from '../../components/SehajPaathLink';
-import { BaaniLinks } from '../../components/BaaniLinks/';
-import SearchForm from '../../components/SearchForm';
-import Logo from '../../components/Icons/Logo';
-import CrossIcon from '../../components/Icons/Times';
-import KeyboardIcon from '../../components/Icons/Keyboard';
-import SearchIcon from '../../components/Icons/Search';
+
+import { EnhancedGurmukhiKeyboard } from '@/components/EnhancedGurmukhiKeyboard';
+import SehajPaathLink from '@/components/SehajPaathLink';
+import { BaaniLinks } from '@/components/BaaniLinks/';
+import SearchForm from '@/components/SearchForm';
+import Logo from '@/components/Icons/Logo';
+import CrossIcon from '@/components/Icons/Times';
+import KeyboardIcon from '@/components/Icons/Keyboard';
+import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
 /**
  *

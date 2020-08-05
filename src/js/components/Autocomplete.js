@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from 'react-router-dom';
 
 import Larivaar from '../components/Larivaar';
-import { toSearchURL } from '../util';
+import { toSearchURL } from '@/util';
 class Autocomplete extends Component {
   static propTypes = {
     isShowFullResults: PropTypes.bool,
@@ -25,25 +25,34 @@ class Autocomplete extends Component {
 
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions } = this.state;
+    const isEnterKey = e.keyCode == 13;
+    const isArrowDownKey = e.keyCode == 38;
+    const isArrowUpKey = e.keyCode == 40;
+    const isActiveSuggestion = activeSuggestion !== -1;
 
-    if (e.keyCode === 13) {
-      if (activeSuggestion !== -1) e.preventDefault();
+    if (isEnterKey) {
+      if (isActiveSuggestion) e.preventDefault();
 
       window.location = filteredSuggestions[activeSuggestion].url;
+
       this.setState({
         activeSuggestion: -1,
         filteredSuggestions: [],
         showSuggestions: false,
       });
-    } else if (e.keyCode === 38) {
+
+    }
+    else if (isArrowDownKey) {
       e.preventDefault();
-      if (activeSuggestion !== -1) {
+      if (isActiveSuggestion) {
         this.setState({ activeSuggestion: activeSuggestion - 1 });
         const newScroll = document.querySelector('.suggestion-active').offsetHeight;
         document.getElementById('suggestions').scrollBy(0, -newScroll);
       }
-    } else if (e.keyCode === 40) {
+    }
+    else if (isArrowUpKey) {
       e.preventDefault();
+
       if (activeSuggestion + 1 < filteredSuggestions.length) {
         this.setState({ activeSuggestion: activeSuggestion + 1 });
         const newScroll = document.querySelector('.suggestion-active').offsetHeight;
@@ -59,12 +68,15 @@ class Autocomplete extends Component {
 
   componentDidUpdate(prevProps) {
     const prevInput = prevProps.value;
+
     if (this.props.value !== prevInput) {
       const { getSuggestions, searchOptions } = this.props;
       const userInput = this.props.value;
+      const isSearchTypeAng = this.props.searchOptions.type === 5;
+
       clearTimeout(this.state.suggestionTimeout);
 
-      if (userInput.length >= 2 && this.props.searchOptions.type !== 5) {
+      if (userInput.length >= 2 && !isSearchTypeAng) {
         const suggestionTimeout = setTimeout(() => {
 
           getSuggestions(userInput, searchOptions)
@@ -85,6 +97,7 @@ class Autocomplete extends Component {
         });
       }
     }
+
     if (this.state.showSuggestions) {
       document.addEventListener('keydown', this.onKeyDown);
     } else {
@@ -111,7 +124,10 @@ class Autocomplete extends Component {
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul className="search-result" id="suggestions" onKeyDown={this.onKeyDown}>
+          <ul
+            className="search-result"
+            id="suggestions"
+            onKeyDown={this.onKeyDown} >
             {filteredSuggestions.map((suggestion, index) => {
               let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
 

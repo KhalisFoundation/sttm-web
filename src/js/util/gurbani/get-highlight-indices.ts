@@ -22,7 +22,6 @@ export const getHighlightIndices = (baani: string, query: string, type: number):
   if (isMainLetterSearch) {
     const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS]
     const removeLettersRegex = new RegExp(notAllowedKeys.join('|'), 'g') // eg  w|i|x|a ...
-
     baani = baani.replace(removeLettersRegex, '');
   }
 
@@ -60,8 +59,8 @@ export const getHighlightIndices = (baani: string, query: string, type: number):
     }
 
     case SEARCH_TYPES.ENGLISH_WORD: // eslint-disable-line no-fallthrough
-    case SEARCH_TYPES.GURMUKHI_WORD:
-    case SEARCH_TYPES.MAIN_LETTERS: {
+    case SEARCH_TYPES.GURMUKHI_WORD: {
+      // case SEARCH_TYPES.MAIN_LETTERS: { // it covers the case when only two words are together
 
       if (isEnglishWordSearch) {
         mainQuery = mainQuery.toLowerCase();
