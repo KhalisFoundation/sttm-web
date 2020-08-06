@@ -55,14 +55,18 @@ export default class SearchResult extends React.PureComponent {
       ? `${_source} - ${shabadPageNo}`
       : null;
 
+    const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
+    const shabadEnglishTranslation = translationMap['english'](shabad)
+
+    // Since for english-word search type we needs to highlight index
+    // for english translations.
     const highlightIndex = getHighlightIndices(
-      shabad.verse.gurmukhi,
+      isSearchTypeEnglishWord ? shabadEnglishTranslation : shabad.verse.gurmukhi,
       q,
-      type
+      type,
     );
 
-    const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
-    console.log(highlightIndex, 'highlightIndex')
+    console.log(highlightIndex, type, isSearchTypeEnglishWord, 'highlightIndex,/.....')
     return (
       <React.Fragment key={shabad.id}>
         <li
@@ -78,6 +82,7 @@ export default class SearchResult extends React.PureComponent {
             {unicode ? (
               <div className={`unicode ${larivaar ? 'larivaar' : ''}`}>
                 <Larivaar
+                  type={type}
                   larivaarAssist={larivaarAssist}
                   enable={larivaar}
                   unicode={unicode}
@@ -91,6 +96,7 @@ export default class SearchResult extends React.PureComponent {
             ) : (
                 <div className={`gurlipi ${larivaar ? 'larivaar' : ''}`}>
                   <Larivaar
+                    type={type}
                     larivaarAssist={larivaarAssist}
                     enable={larivaar}
                     highlightIndex={highlightIndex}
@@ -154,10 +160,10 @@ export default class SearchResult extends React.PureComponent {
                   query={q}
                   type={type}
                 >
-                  {translationMap['english'](shabad)}
+                  {shabadEnglishTranslation}
                 </Larivaar>
 
-                : translationMap['english'](shabad)
+                : shabadEnglishTranslation
               }
             </blockquote>
           )}

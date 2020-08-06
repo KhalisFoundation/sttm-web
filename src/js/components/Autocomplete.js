@@ -127,14 +127,17 @@ class Autocomplete extends Component {
         suggestionsListComponent = (
           <ul className="search-result" id="suggestions" onKeyDown={this.onKeyDown}>
             {filteredSuggestions.map((suggestion, index) => {
+              let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
               const isLastIdx = index === (filteredSuggestions.length - 1);
               const isShowFullResultsListItem = isShowFullResults && isLastIdx;
-              let className = searchOptions.type !== 3 ? isShowFullResultsListItem ? "show-all-results " : "gurbani-font " : " ";
+
+              if (isShowFullResultsListItem) {
+                className = "show-all-results "
+              }
 
               if (index === activeSuggestion) {
                 className += "suggestion-active";
               }
-              console.log(suggestion, "SUGGESTION...")
               return (
                 <li
                   className={className}
