@@ -16,10 +16,30 @@
     border-color: $sttm-dark-grey;
   }
 
+  .show-full-results & {
+    text-align: center;
+  }
+
   a {
     color: $sttm-blue-30;
     text-decoration: none;
     transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+    .show-all-results & {
+      color: $sttm-blue;
+    }
+
+    .english-translation-search & {
+      color: $sttm-blue;
+    }
+
+    .dark-mode & {
+      color: $sttm-light-blue-60;
+
+      & .english-translation-search {
+        color: $sttm-light-blue;
+      }
+    }
 
     .search-highlight-word {
       color: $sttm-blue;
@@ -32,18 +52,11 @@
     .larivaar-assist-word {
       color: #f39c1d;
     }
-
-    .dark-mode & {
-      color: $sttm-light-blue-60;
-    }
   }
 
-  & .show-all-results {
-    text-align: center;
-
-    & > a {
-      color: $sttm-blue;
-    }
+  .meta a {
+    color: grey;
+    padding-right: 5px;
   }
 
   p {
@@ -54,11 +67,6 @@
     color: green;
     display: block;
     word-wrap: break-word;
-  }
-
-  .meta a {
-    color: grey;
-    padding-right: 5px;
   }
 }
 
