@@ -93,7 +93,6 @@ export default class SearchForm extends React.PureComponent {
 
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
-    console.log(finalPlaceholder, ">>>>>>>>>>>>>>.")
     const tick = () =>
       (this.timer = setTimeout(
         () =>

@@ -66,7 +66,6 @@ export default class SearchResult extends React.PureComponent {
       type,
     );
 
-    console.log(highlightIndex, type, isSearchTypeEnglishWord, 'highlightIndex,/.....')
     return (
       <React.Fragment key={shabad.id}>
         <li
