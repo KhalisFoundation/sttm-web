@@ -18,15 +18,15 @@ blockquote {
   margin: 0 auto;
 
   &.translation.english {
+    .search-highlight-word {
+      color: $sttm-black;
+      font-size: 0.95em;
+    }
+
     .dark-mode & {
       .search-highlight-word {
         color: $sttm-white;
       }
-    }
-
-    .search-highlight-word {
-      color: $sttm-black;
-      font-size: 0.95em;
     }
   }
 }
