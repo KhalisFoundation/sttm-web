@@ -15,8 +15,7 @@ export default class HighlightedSearchResult extends React.PureComponent {
     if (children === null || typeof children === 'undefined') {
       return null;
     }
-
-    console.log(children, 'HIGHLIGHT BUG..')
+    console.log(children, highlightIndex, "HIGHLIGHTED RESULT")
     return children.split(' ').map((word, i) => {
       let akharClass = getVisraamClass(children, i, visraams);
       akharClass += (highlightIndex && highlightIndex.includes(i)) || word.includes(query)

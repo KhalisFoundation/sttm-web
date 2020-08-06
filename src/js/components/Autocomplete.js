@@ -134,7 +134,7 @@ class Autocomplete extends Component {
               if (index === activeSuggestion) {
                 className += "suggestion-active";
               }
-
+              console.log(suggestion, "SUGGESTION...")
               return (
                 <li
                   className={className}
@@ -144,13 +144,13 @@ class Autocomplete extends Component {
                   }}
                 >
                   {isShowFullResultsListItem ?
-                    (<Link
+                    <Link
                       to={suggestion.url}
                     >
                       {suggestion.name}
-                    </Link>)
+                    </Link>
                     :
-                    (<a href={suggestion.url}>
+                    <a href={suggestion.url}>
                       <Larivaar
                         larivaarAssist={false}
                         enable={false}
@@ -162,7 +162,7 @@ class Autocomplete extends Component {
                         {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                       </Larivaar>
                       {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                    </a>)}
+                    </a>}
                 </li>
               );
             })}

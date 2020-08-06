@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SearchResult from './Result';
+import { SEARCH_TYPES } from '@/constants';
 import { getVerseId } from '@/util/api/shabad';
 
 export default class SearchResults extends React.PureComponent {
@@ -20,10 +21,11 @@ export default class SearchResults extends React.PureComponent {
   };
 
   render() {
-    const { shabads, ...props } = this.props;
-
+    const { shabads, type, ...props } = this.props;
+    const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
+    console.log(shabads, "shabads...")
     return (
-      <ul className="search-results display">
+      <ul className={`search-results display ${isSearchTypeEnglishWord ? 'english-translation-search' : ''}`}>
         {shabads.map(shabad => {
           return (
             <SearchResult key={getVerseId(shabad)} shabad={shabad} {...props} />

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   TYPES,
   SOURCES,
@@ -10,9 +11,8 @@ import {
   DEFAULT_SEARCH_SOURCE,
   SEARCH_TYPES,
   SOURCES_WITH_ANG,
-} from '../constants';
-import { clickEvent, ACTIONS } from '../util/analytics';
-import { getNumberFromLocalStorage } from '../util';
+} from '@/constants';
+import { getNumberFromLocalStorage, clickEvent, ACTIONS } from '@/util';
 
 /**
  *
@@ -93,7 +93,7 @@ export default class SearchForm extends React.PureComponent {
 
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
-
+    console.log(finalPlaceholder, ">>>>>>>>>>>>>>.")
     const tick = () =>
       (this.timer = setTimeout(
         () =>
@@ -149,14 +149,13 @@ export default class SearchForm extends React.PureComponent {
   render() {
     const {
       state,
-      setGurmukhiKeyboardVisibilityAs,
       setQueryAs,
+      setGurmukhiKeyboardVisibilityAs,
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
       handleSubmit,
     } = this;
-
     const [, useEnglish = false] = PLACEHOLDERS[this.state.type];
 
     const className = useEnglish ? '' : 'gurbani-font';
@@ -182,13 +181,14 @@ export default class SearchForm extends React.PureComponent {
       action,
       name,
       inputType,
-      setGurmukhiKeyboardVisibilityAs,
       setQueryAs,
+      setGurmukhiKeyboardVisibilityAs,
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
       handleSubmit,
     });
+
   }
   componentDidUpdate() {
     const {

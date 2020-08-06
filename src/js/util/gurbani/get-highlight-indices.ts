@@ -72,7 +72,10 @@ export const getHighlightIndices = (baani: string, query: string, type: number):
             highlightIndices.push(location);
           });
         } else {
+          console.log(baani, subQuery, ">>>>>>>.")
           const [start, end] = getHighlightingEndpoints(baani, subQuery);
+
+          console.log(start, end, "ENGLISH WORD SEARCH...")
           if (start !== -1) {
             highlightIndices = highlightIndices.concat(numbersRange(start, end, 1));
           }

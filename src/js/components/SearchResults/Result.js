@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices } from '../../util';
 import {
+  SEARCH_TYPES
+} from '@/constants';
+
+import {
   getAng,
   getSource,
   getUnicodeVerse,
@@ -57,11 +61,17 @@ export default class SearchResult extends React.PureComponent {
       type
     );
 
+    const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
+    console.log(highlightIndex, 'highlightIndex')
     return (
       <React.Fragment key={shabad.id}>
-        <li className="search-result">
+        <li
+          className="search-result">
           <Link
-            style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}` }}
+            style={{
+              fontSize: `${fontSize}em`,
+              fontFamily: `${fontFamily}`
+            }}
             to={toShabadURL({ shabad, q, type, source })}
             className="gurbani-font gurbani-display"
           >
@@ -135,7 +145,20 @@ export default class SearchResult extends React.PureComponent {
 
           {translationLanguages.includes('english') && (
             <blockquote className="translation english">
-              {translationMap['english'](shabad)}
+              {isSearchTypeEnglishWord ?
+                <Larivaar
+                  larivaarAssist={false}
+                  enable={false}
+                  unicode={false}
+                  highlightIndex={highlightIndex}
+                  query={q}
+                  type={type}
+                >
+                  {translationMap['english'](shabad)}
+                </Larivaar>
+
+                : translationMap['english'](shabad)
+              }
             </blockquote>
           )}
 

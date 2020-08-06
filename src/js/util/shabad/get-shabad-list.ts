@@ -28,6 +28,7 @@ export const getShabadList = (q, { type, source }) => {
             url: toShabadURL({ shabad, q, type, source }),
             highlightIndex,
           })
+          console.log(panktiList, 'PANKTI LIST...')
         }
         resolve(panktiList);
       },
