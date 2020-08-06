@@ -136,7 +136,7 @@ export default class WebControllerPage extends React.PureComponent {
                     socket: this._socket,
                     pinError: false,
                     codeError: false,
-                    desktopSettings: data.settings
+                    desktopSettings: data.settings || null
                   }, this.finishLoading) :
                   this.setState({
                     connected: false,
@@ -151,6 +151,8 @@ export default class WebControllerPage extends React.PureComponent {
                   this.handleCeremony(data.id, data.highlight);
                 data['type'] === 'bani' &&
                   this.handleBani(data.id, data.highlight, data.baniLength, data.mangalPosition);
+                data['type'] === 'settings' &&
+                  this.setState({ desktopSettings: data.settings });
               }
             });
           }
