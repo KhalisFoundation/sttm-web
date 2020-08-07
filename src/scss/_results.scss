@@ -7,21 +7,38 @@
   margin: 0.5rem 0;
 }
 
+/* stylelint-disable no-descending-specificity */
 .search-result {
   border-bottom: 1px solid $sttm-lighter-grey;
   list-style: none;
   padding: 0.5rem 1rem;
 
+  a {
+    color: $sttm-blue-30;
+    text-decoration: none;
+    transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+    .search-highlight-word {
+      color: $sttm-blue;
+    }
+
+    .larivaar-assist-word {
+      color: #f39c1d;
+    }
+  }
+
   .dark-mode & {
     border-color: $sttm-dark-grey;
+
+    a {
+      .search-highlight-word {
+        color: $sttm-light-blue;
+      }
+    }
   }
 
-  & .show-all-results {
-    color: $sttm-blue;
-    text-align: center;
-  }
-
-  .english-translation-search & {
+  .english-translation-search &,
+  .main-letter-search & {
     .gurbani-display {
       color: $sttm-blue;
 
@@ -29,28 +46,20 @@
         color: $sttm-light-blue;
       }
     }
-  }
-
-  a {
-    color: $sttm-blue-30;
-    text-decoration: none;
-    transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-
-    .dark-mode & {
-      color: $sttm-light-blue-60;
-    }
 
     .search-highlight-word {
-      color: $sttm-blue;
+      color: $sttm-black;
+      font-size: 0.95em;
 
       .dark-mode & {
-        color: $sttm-light-blue;
+        color: $sttm-white;
       }
     }
+  }
 
-    .larivaar-assist-word {
-      color: #f39c1d;
-    }
+  .show-all-results {
+    color: $sttm-blue;
+    text-align: center;
   }
 
   .meta a {

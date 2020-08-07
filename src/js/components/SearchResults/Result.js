@@ -85,7 +85,7 @@ export default class SearchResult extends React.PureComponent {
                   larivaarAssist={larivaarAssist}
                   enable={larivaar}
                   unicode={unicode}
-                  highlightIndex={highlightIndex}
+                  highlightIndex={isSearchTypeEnglishWord ? [] : highlightIndex}
                   query={q}
                   visraam={shabad.visraam}
                 >
@@ -98,7 +98,7 @@ export default class SearchResult extends React.PureComponent {
                     type={type}
                     larivaarAssist={larivaarAssist}
                     enable={larivaar}
-                    highlightIndex={highlightIndex}
+                    highlightIndex={isSearchTypeEnglishWord ? [] : highlightIndex}
                     query={q}
                     visraam={shabad.visraam}
                   >

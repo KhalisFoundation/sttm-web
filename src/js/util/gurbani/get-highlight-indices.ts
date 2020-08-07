@@ -102,7 +102,8 @@ export const getHighlightIndices = (
 
     // if we are checking for english translation,
     if (isSearchTypeEnglishWord) {
-      const lettersToExcludeRegex = new RegExp('[\,\;\.]', 'g');
+
+      const lettersToExcludeRegex = new RegExp('[\,\;\.\?\!]', 'g');
       // we need to check for lowercase letters for highlight as well.
       baaniWords = baaniWords.map(word => word.toLowerCase().replace(lettersToExcludeRegex, ''))
       query = query.toLowerCase();
@@ -115,6 +116,8 @@ export const getHighlightIndices = (
       }
     });
   }
+
+  console.log(highlightIndices, ">>>>>>>>>>")
 
   return highlightIndices;
 };
