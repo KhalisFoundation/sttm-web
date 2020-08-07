@@ -46,8 +46,6 @@ export const Larivaar: React.FC<ILarivaarProps> = (props) => {
         if (['॥', ']'].some(v => word.includes(v))) {
           return `${word} `;
         }
-
-        const highlight = word.includes(query);
         const visraamClass = getVisraamClass(children, index, visraam);
         return (
           <LarivaarWord
@@ -58,7 +56,6 @@ export const Larivaar: React.FC<ILarivaarProps> = (props) => {
             larivaarAssist={larivaarAssist}
             larivaarAssistColor={larivaarAssistColor}
             index={index}
-            highlight={highlight}
             visraamClass={visraamClass}
           />
         );

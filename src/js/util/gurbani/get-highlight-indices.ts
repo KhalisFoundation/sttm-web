@@ -2,13 +2,19 @@ import { numbersRange } from "../numbers";
 import { SEARCH_TYPES, SEARCH_TYPES_NOT_ALLOWED_KEYS } from "../../constants";
 import { getHighlightingEndpoints } from "./get-highlighting-endpoints";
 
-export const getHighlightIndices = (baani: string, query: string, type: number): any[] => {
+export const getHighlightIndices = (
+  baani: string,
+  query: string,
+  type: number,
+): any[] => {
+
   let start = -1;
   let end = -1;
   let highlightIndices = [];
   const isMainLetterSearch = type === SEARCH_TYPES.MAIN_LETTERS;
   const isEnglishWordSearch = type === SEARCH_TYPES.ENGLISH_WORD
 
+  const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   // Handles " search operator
   let mainQuery = query.replace(/"/g, '');
 
@@ -82,6 +88,7 @@ export const getHighlightIndices = (baani: string, query: string, type: number):
           });
         } else {
           const [start, end] = getHighlightingEndpoints(baani, subQuery);
+
           if (start !== -1) {
             highlightIndices = highlightIndices.concat(numbersRange(start, end, 1));
           }
@@ -89,6 +96,25 @@ export const getHighlightIndices = (baani: string, query: string, type: number):
       });
       break;
     }
+  }
+
+  // if there is no highlightIndices, we gonna do simple check
+  if (!highlightIndices.length) {
+
+    // if we are checking for english translation,
+    if (isSearchTypeEnglishWord) {
+
+      // we need to check for lowercase letters for highlight as well.
+      baaniWords.map(word => word.toLowerCase());
+      query = query.toLowerCase();
+    }
+
+    baaniWords.forEach((word, idx) => {
+      const isHighlightIdx = isSearchTypeEnglishWord ? word === query : word.includes(query);
+      if (isHighlightIdx) {
+        highlightIndices.push(idx);
+      }
+    });
   }
 
   return highlightIndices;

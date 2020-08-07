@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   TYPES,
   SOURCES,
@@ -11,9 +12,8 @@ import {
   SEARCH_TYPES,
   SEARCH_TYPES_NOT_ALLOWED_KEYS,
   SOURCES_WITH_ANG,
-} from '../constants';
-import { clickEvent, ACTIONS } from '../util/analytics';
-import { getNumberFromLocalStorage } from '../util';
+} from '@/constants';
+import { getNumberFromLocalStorage, clickEvent, ACTIONS } from '@/util';
 
 /**
  *
@@ -94,7 +94,6 @@ export default class SearchForm extends React.PureComponent {
 
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
-
     const tick = () =>
       (this.timer = setTimeout(
         () =>
@@ -150,8 +149,8 @@ export default class SearchForm extends React.PureComponent {
   render() {
     const {
       state,
-      setGurmukhiKeyboardVisibilityAs,
       setQueryAs,
+      setGurmukhiKeyboardVisibilityAs,
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
@@ -184,14 +183,15 @@ export default class SearchForm extends React.PureComponent {
       action,
       name,
       inputType,
-      setGurmukhiKeyboardVisibilityAs,
       setQueryAs,
+      setGurmukhiKeyboardVisibilityAs,
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
       handleSubmit,
       handleKeyDown,
     });
+
   }
   componentDidUpdate() {
     const {
@@ -311,9 +311,9 @@ export default class SearchForm extends React.PureComponent {
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
     const { type, query, source } = this.state;
     const newSearchType = Number(value);
-    const isSearchTypeToAngType = type !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
+    const isSearchTypeToAngSearchType = type !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
     const isSearchTypeToMainLetterSearchType = type !== SEARCH_TYPES.MAIN_LETTERS && newSearchType === SEARCH_TYPES.MAIN_LETTERS
-    const isQueryToBeCleared = isSearchTypeToAngType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
+    const isQueryToBeCleared = isSearchTypeToAngSearchType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
 
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
@@ -323,7 +323,7 @@ export default class SearchForm extends React.PureComponent {
             Object.keys(SOURCES_WITH_ANG).includes(source) ?
             this.state.source : 'G',
           query: isQueryToBeCleared ? '' : query,
-          shouldSubmit: isSearchTypeToAngType ? false :
+          shouldSubmit: isSearchTypeToAngSearchType ? false :
             this.props.submitOnChangeOf.includes('type') &&
             query !== ''
         },
