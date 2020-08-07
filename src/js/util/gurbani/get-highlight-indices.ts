@@ -117,7 +117,6 @@ export const getHighlightIndices = (
     });
   }
 
-  console.log(highlightIndices, ">>>>>>>>>>")
 
   return highlightIndices;
 };
