@@ -11,9 +11,8 @@ export const getHighlightIndices = (
   let start = -1;
   let end = -1;
   let highlightIndices = [];
-  const isMainLetterSearch = type === SEARCH_TYPES.MAIN_LETTERS;
-  const isEnglishWordSearch = type === SEARCH_TYPES.ENGLISH_WORD
 
+  const isSearchTypeMainLetter = type === SEARCH_TYPES.MAIN_LETTERS;
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   // Handles " search operator
   let mainQuery = query.replace(/"/g, '');
@@ -25,11 +24,11 @@ export const getHighlightIndices = (
     return [start, end];
   }
 
-  if (isMainLetterSearch) {
-    const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS]
-    const removeLettersRegex = new RegExp(notAllowedKeys.join('|'), 'g') // eg  w|i|x|a ...
-    baani = baani.replace(removeLettersRegex, '');
-  }
+  // if (isSearchTypeMainLetter) {
+  //   const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS]
+  //   const removeLettersRegex = new RegExp(notAllowedKeys.join('|'), 'g') // eg  w|i|x|a ...
+  //   baani = baani.replace(removeLettersRegex, '');
+  // }
 
   let baaniWords = baani.split(' ');
 
@@ -68,11 +67,11 @@ export const getHighlightIndices = (
     case SEARCH_TYPES.GURMUKHI_WORD: {
       // case SEARCH_TYPES.MAIN_LETTERS: { // it covers the case when only two words are together
 
-      if (isEnglishWordSearch) {
-        mainQuery = mainQuery.toLowerCase();
-        baani = baani.toLowerCase();
-        baaniWords = baani.split(" ");
-      }
+      // if (isSearchTypeMainLetter) {
+      //   mainQuery = mainQuery.toLowerCase();
+      //   baani = baani.toLowerCase();
+      //   baaniWords = baani.split(" ");
+      // }
 
       let q = mainQuery.split('+');
       q = q.map(r => r.trim());
@@ -99,13 +98,13 @@ export const getHighlightIndices = (
   }
 
   // if there is no highlightIndices, we gonna do simple check
-  if (!highlightIndices.length) {
+  if (!highlightIndices.length && !isSearchTypeMainLetter) {
 
     // if we are checking for english translation,
     if (isSearchTypeEnglishWord) {
-
+      const lettersToExcludeRegex = new RegExp('[\,\;\.]', 'g');
       // we need to check for lowercase letters for highlight as well.
-      baaniWords.map(word => word.toLowerCase());
+      baaniWords = baaniWords.map(word => word.toLowerCase().replace(lettersToExcludeRegex, ''))
       query = query.toLowerCase();
     }
 

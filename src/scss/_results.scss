@@ -16,8 +16,19 @@
     border-color: $sttm-dark-grey;
   }
 
-  .show-full-results & {
+  & .show-all-results {
+    color: $sttm-blue;
     text-align: center;
+  }
+
+  .english-translation-search & {
+    .gurbani-display {
+      color: $sttm-blue;
+
+      .dark-mode & {
+        color: $sttm-light-blue;
+      }
+    }
   }
 
   a {
@@ -25,20 +36,8 @@
     text-decoration: none;
     transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
-    .show-all-results & {
-      color: $sttm-blue;
-    }
-
-    .english-translation-search & {
-      color: $sttm-blue;
-    }
-
     .dark-mode & {
       color: $sttm-light-blue-60;
-
-      & .english-translation-search {
-        color: $sttm-light-blue;
-      }
     }
 
     .search-highlight-word {

@@ -153,6 +153,7 @@ class Autocomplete extends Component {
               if (index === activeSuggestion) {
                 className += "suggestion-active";
               }
+
               return (
                 <li
                   className={className}
