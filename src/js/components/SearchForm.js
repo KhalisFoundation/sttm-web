@@ -263,20 +263,25 @@ export default class SearchForm extends React.PureComponent {
     );
 
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
-
-    const isSearchTypeToAngType = this.state.type !== SEARCH_TYPES['ANG'] && Number(value) === SEARCH_TYPES['ANG'];
+    const newSearchType = Number(value);
+    const { type: currentSearchType, displayGurmukhiKeyboard } = this.state;
+    const isSearchTypeToAngType = currentSearchType !== SEARCH_TYPES['ANG'] && newSearchType === SEARCH_TYPES['ANG'];
+    const isShowKeyboard = newSearchType !== SEARCH_TYPES['ANG'] &&
+      newSearchType !== SEARCH_TYPES['ENGLISH_WORD'] &&
+      newSearchType !== SEARCH_TYPES['ROMANIZED'] && displayGurmukhiKeyboard;
 
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
         {
-          type: parseInt(value, 10),
-          source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
+          type: newSearchType,
+          source: newSearchType === SEARCH_TYPES['ANG'] &&
             Object.keys(SOURCES_WITH_ANG).includes(this.state.source) ?
             this.state.source : 'G',
           query: isSearchTypeToAngType ? '' : this.state.query,
           shouldSubmit: isSearchTypeToAngType ? false :
             this.props.submitOnChangeOf.includes('type') &&
-            this.state.query !== ''
+            this.state.query !== '',
+          displayGurmukhiKeyboard: isShowKeyboard
         },
         () => {
           clickEvent({ action: ACTIONS.SEARCH_TYPE, label: this.state.type });
