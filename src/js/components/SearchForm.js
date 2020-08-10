@@ -266,9 +266,14 @@ export default class SearchForm extends React.PureComponent {
     const newSearchType = Number(value);
     const { type: currentSearchType, displayGurmukhiKeyboard } = this.state;
     const isSearchTypeToAngType = currentSearchType !== SEARCH_TYPES['ANG'] && newSearchType === SEARCH_TYPES['ANG'];
+
+    // We are only showing keyboard :
+    // If they falls in the gurmukhi keyboard category && keyboard is already open/active.
+    // If keyboard is closed already, no need to set it as active.
     const isShowKeyboard = newSearchType !== SEARCH_TYPES['ANG'] &&
       newSearchType !== SEARCH_TYPES['ENGLISH_WORD'] &&
-      newSearchType !== SEARCH_TYPES['ROMANIZED'] && displayGurmukhiKeyboard;
+      newSearchType !== SEARCH_TYPES['ROMANIZED']
+      && displayGurmukhiKeyboard;
 
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
