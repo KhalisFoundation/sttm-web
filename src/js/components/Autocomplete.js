@@ -127,14 +127,17 @@ class Autocomplete extends Component {
         suggestionsListComponent = (
           <ul className="search-result" id="suggestions" onKeyDown={this.onKeyDown}>
             {filteredSuggestions.map((suggestion, index) => {
+              let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
               const isLastIdx = index === (filteredSuggestions.length - 1);
               const isShowFullResultsListItem = isShowFullResults && isLastIdx;
-              let className = searchOptions.type !== 3 ? isShowFullResultsListItem ? "show-all-results " : "gurbani-font " : " ";
+
+              if (isShowFullResultsListItem) {
+                className = "show-all-results "
+              }
 
               if (index === activeSuggestion) {
                 className += "suggestion-active";
               }
-
               return (
                 <li
                   className={className}
@@ -144,13 +147,13 @@ class Autocomplete extends Component {
                   }}
                 >
                   {isShowFullResultsListItem ?
-                    (<Link
+                    <Link
                       to={suggestion.url}
                     >
                       {suggestion.name}
-                    </Link>)
+                    </Link>
                     :
-                    (<a href={suggestion.url}>
+                    <a href={suggestion.url}>
                       <Larivaar
                         larivaarAssist={false}
                         enable={false}
@@ -162,7 +165,7 @@ class Autocomplete extends Component {
                         {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                       </Larivaar>
                       {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                    </a>)}
+                    </a>}
                 </li>
               );
             })}

@@ -1,5 +1,5 @@
 
-export const getHighlightingEndpoints = (baani, query) => {
+export const getHighlightingEndpoints = (baani: string, query: string) => {
   const startChar = baani.indexOf(query);
   let start;
   let end;
@@ -16,6 +16,7 @@ export const getHighlightingEndpoints = (baani, query) => {
       manualCount++; // Counts the space in baani string
     }
     end = start + (query.split(" ").length - 1);
+
     return [start, end];
   }
   return [-1, -1]

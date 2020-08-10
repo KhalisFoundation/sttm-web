@@ -1,5 +1,4 @@
 /* stylelint-disable at-rule-no-unknown */
-
 @import "mixin",
   "colours",
   "auto-scroll-control",
@@ -25,6 +24,7 @@
   "baani-link",
   "granth-index",
   "vishraam";
+@import 'node_modules/react-smartbanner/dist/main';
 
 html,
 body {
@@ -37,7 +37,6 @@ body {
   height: auto;
   min-height: 100%;
   padding-bottom: 100px;
-  position: relative;
 
   &.dark-mode {
     background-color: $sttm-light-black;
@@ -281,4 +280,8 @@ select {
     color: $sttm-white;
     transition: 0.2s;
   }
+}
+
+.smartbanner-show {
+  margin-top: 80px;
 }
