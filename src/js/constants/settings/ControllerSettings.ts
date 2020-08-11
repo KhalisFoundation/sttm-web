@@ -26,7 +26,7 @@ export const CONTROLLER_SETTINGS = (updateSettings: Function,
                     icon: PlusIcon,
                     action: () => updateSettings({
                         action: 'changeFontSize',
-                        target: 'Gurbani',
+                        target: 'gurbani',
                         value: 'plus',
                     })
                 },

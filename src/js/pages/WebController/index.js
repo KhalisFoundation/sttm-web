@@ -32,6 +32,7 @@ export default class WebControllerPage extends React.PureComponent {
       codeError: false,
 
       loading: false,
+      desktopSettings: {},
     };
   }
 
