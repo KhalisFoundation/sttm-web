@@ -103,37 +103,6 @@ export default class EnhancedGurmukhiKeyboard extends React.PureComponent {
     }
     this.props.onKeyClick(newValue);
   };
-
-  componentDidMount() {
-    addEventListener('click', this.closeOnOutsideClick);
-  }
-
-  closeOnOutsideClick = e => {
-    const path =
-      typeof e.composedPath === 'function' ? e.composedPath() : e.path || [];
-
-    // If path is empty, let's assume browser doesn't support it and don't do anything.
-    if (path.length === 0) {
-      return;
-    }
-
-    if (
-      path.some(
-        ({ classList = null }) =>
-          classList &&
-          (classList.contains('gurmukhi-keyboard') ||
-            classList.contains('gurmukhi-keyboard-toggle'))
-      ) === false &&
-      typeof this.props.onClose === 'function'
-    ) {
-      this.props.onClose();
-    }
-  };
-
-  componentWillUnmount() {
-    removeEventListener('click', this.closeOnOutsideClick);
-  }
-
   render() {
     const spaceKey = (
       <button
