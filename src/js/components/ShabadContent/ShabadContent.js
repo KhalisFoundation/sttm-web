@@ -127,6 +127,7 @@ class Shabad extends React.PureComponent {
 
     const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
     const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
+    const infiniteLoading
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
@@ -178,6 +179,10 @@ class Shabad extends React.PureComponent {
                 showFullScreen={showFullScreen}
                 isParagraphMode={paragraphMode && isSundarGutkaRoute}
               />
+
+              {this.props.withInfiniteLoading
+                && readyToLoadNext
+                <Shabad />}
 
               {this.props.hideMeta === false && (
                 <FootNav info={info} type={type} nav={nav} />
