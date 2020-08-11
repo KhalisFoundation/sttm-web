@@ -31,14 +31,15 @@ export default class Layout extends React.PureComponent<ILayoutProps> {
         <GenericError
           title={TEXTS.ANG_NOT_FOUND}
           description={
-            <React.Fragment>
+            <>
               {TEXTS.ANG_NOT_FOUND_DESCRIPTION(ang, SOURCES[source])}
               <Link to="/help#Desktop-i-cant-find-my-shabad.">
                 {' '}
                 {TEXTS.HELP_SECTION}
               </Link>{' '}
-              or <Link to="/index"> {TEXTS.INDEX_SECTION}</Link>.
-            </React.Fragment>
+              or
+              <Link to="/index"> {TEXTS.INDEX_SECTION}</Link>.
+            </>
           }
           image={BalpreetSingh}
         />
