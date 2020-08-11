@@ -94,7 +94,6 @@ export default class Header extends React.PureComponent {
       return controllerHeader;
     }
 
-
     return (
       <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
         <div className="top-bar-wrapper row">
@@ -137,7 +136,10 @@ export default class Header extends React.PureComponent {
               handleSearchSourceChange,
               handleSearchTypeChange,
               handleSubmit,
-            }) => (
+            }) => {
+              const isShowKeyboard = type !== SEARCH_TYPES['ANG'] && type !== SEARCH_TYPES['ENGLISH_WORD'] && type !== SEARCH_TYPES['ROMANIZED'];
+
+              return (
                 <React.Fragment>
                   <div id="responsive-menu">
                     <div className="top-bar-left">
@@ -202,7 +204,7 @@ export default class Header extends React.PureComponent {
                                     <CrossIcon />
                                   </button>
 
-                                  {type > 2 ? '' : (
+                                  {isShowKeyboard && (
                                     <button
                                       type="button"
                                       className={`gurmukhi-keyboard-toggle ${
@@ -220,13 +222,15 @@ export default class Header extends React.PureComponent {
                                     <SearchIcon />
                                   </button>
 
-                                  <EnhancedGurmukhiKeyboard
-                                    value={query}
-                                    searchType={parseInt(type)}
-                                    active={displayGurmukhiKeyboard}
-                                    onKeyClick={newValue => setQueryAs(newValue)()}
-                                    onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                                  />
+                                  {isShowKeyboard && (
+                                    <EnhancedGurmukhiKeyboard
+                                      value={query}
+                                      searchType={parseInt(type)}
+                                      active={displayGurmukhiKeyboard}
+                                      onKeyClick={newValue => setQueryAs(newValue)()}
+                                      onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                                    />
+                                  )}
 
                                   <Autocomplete
                                     isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
@@ -284,7 +288,8 @@ export default class Header extends React.PureComponent {
                     />
                   </div>
                 </React.Fragment>
-              )}
+              )
+            }}
           </SearchForm>
         </div>
       </div>
