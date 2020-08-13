@@ -118,7 +118,8 @@ export default class Baani extends React.PureComponent {
   _scrollToHiglight = () => {
     if (this.$highlightedBaaniLine) {
       const { top } = this.$highlightedBaaniLine.getBoundingClientRect();
-      requestAnimationFrame(() => window.scrollTo(0, top));
+      const newTopPosition = window.scrollY + top;
+      requestAnimationFrame(() => window.scrollTo(0, newTopPosition));
     }
   };
 
@@ -316,12 +317,16 @@ export default class Baani extends React.PureComponent {
     const mixedViewBaaniClass = 'mixed-view-baani';
     const availableTransliterations = this.getAvailableTransliterations();
     const availableTranslations = this.getAvailableTranslations();
+    const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
 
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
+          const isLastParagraph = totalParagraphs == idx;
+          const dataAttributeToRender = isLastParagraph ? { 'data-last-paragraph': true } : {}
           return (
             <div
+              {...dataAttributeToRender}
               key={idx} // In paragraph mode, we are currently not showing social Share
               onMouseUp={isParagraphMode ? null : this.showSelectionOptions}
               onMouseDown={isParagraphMode ? null : this.removeSelection}
@@ -358,8 +363,9 @@ export default class Baani extends React.PureComponent {
                   {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
                 </div>}
             </div>)
-        })}
-      </div>
+        })
+        }
+      </div >
     )
   }
   createFullScreenMarkup = () => {

@@ -65,10 +65,12 @@ class Shabad extends React.PureComponent {
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
+    pages: PropTypes.array,
     hideMeta: PropTypes.bool,
     hideControls: PropTypes.bool,
     controlProps: PropTypes.object,
-
+    isLoadingContent: PropTypes.bool,
+    isMultiPage: PropTypes.bool,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
@@ -95,10 +97,13 @@ class Shabad extends React.PureComponent {
   render() {
     const {
       props: {
+        isMultiPage,
+        isLoadingContent,
         gurbani,
         location,
         nav,
         info,
+        pages,
         type,
         random,
         splitView,
@@ -157,27 +162,52 @@ class Shabad extends React.PureComponent {
               transliterationLanguages={transliterationLanguages}
             />
           )}
-          <div id="shabad" className={`shabad display display-${type}`}>
+          <div id="shabad" className={`shabad display display-${type}`} ang>
             <div className="shabad-container">
-              <Baani
-                type={type}
-                gurbani={gurbani}
-                splitView={splitView}
-                unicode={unicode}
-                highlight={highlight}
-                larivaar={larivaar}
-                fontSize={fontSize}
-                translationFontSize={translationFontSize}
-                transliterationFontSize={transliterationFontSize}
-                lineHeight={lineHeight}
-                fontFamily={fontFamily}
-                larivaarAssist={larivaarAssist}
-                translationLanguages={translationLanguages}
-                transliterationLanguages={transliterationLanguages}
-                centerAlignGurbani={centerAlignGurbani}
-                showFullScreen={showFullScreen}
-                isParagraphMode={paragraphMode && isSundarGutkaRoute}
-              />
+              {isMultiPage ?
+                pages.map(({ page: gurbani }, idx) =>
+                  <Baani
+                    key={idx}
+                    type={type}
+                    gurbani={gurbani}
+                    splitView={splitView}
+                    unicode={unicode}
+                    highlight={highlight}
+                    larivaar={larivaar}
+                    fontSize={fontSize}
+                    translationFontSize={translationFontSize}
+                    transliterationFontSize={transliterationFontSize}
+                    lineHeight={lineHeight}
+                    fontFamily={fontFamily}
+                    larivaarAssist={larivaarAssist}
+                    translationLanguages={translationLanguages}
+                    transliterationLanguages={transliterationLanguages}
+                    centerAlignGurbani={centerAlignGurbani}
+                    showFullScreen={showFullScreen}
+                    isParagraphMode={paragraphMode && isSundarGutkaRoute}
+                  />
+                )
+                :
+                <Baani
+                  type={type}
+                  gurbani={gurbani}
+                  splitView={splitView}
+                  unicode={unicode}
+                  highlight={highlight}
+                  larivaar={larivaar}
+                  fontSize={fontSize}
+                  translationFontSize={translationFontSize}
+                  transliterationFontSize={transliterationFontSize}
+                  lineHeight={lineHeight}
+                  fontFamily={fontFamily}
+                  larivaarAssist={larivaarAssist}
+                  translationLanguages={translationLanguages}
+                  transliterationLanguages={transliterationLanguages}
+                  centerAlignGurbani={centerAlignGurbani}
+                  showFullScreen={showFullScreen}
+                  isParagraphMode={paragraphMode && isSundarGutkaRoute}
+                />}
+              {isLoadingContent && <div className="spinner" />}
 
               {this.props.hideMeta === false && (
                 <FootNav info={info} type={type} nav={nav} />

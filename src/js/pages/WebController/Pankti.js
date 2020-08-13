@@ -41,6 +41,9 @@ export default class Pankti extends React.PureComponent {
   };
 
   _scrollToHighlight = () => {
+    debugger;
+    console.log(this.$highlightedBaaniLine, "000000000000000 scroll")
+
     if (this.$highlightedBaaniLine) {
       if ('offsetTop' in this.$highlightedBaaniLine) {
         const { offsetTop, offsetHeight } = this.$highlightedBaaniLine;

@@ -9,6 +9,7 @@ export const useFetchAngData = (url: string) => {
   useEffect(() => {
     const fetchAngData = async (url: string) => {
       setFetchingAngData(true);
+
       const response = await fetch(url)
       console.log(response, '>>>>>>')
       if (response.status !== 200) {
@@ -20,6 +21,7 @@ export const useFetchAngData = (url: string) => {
       cache.angsDataMap[url] = angData;
       console.log(cache.angsDataMap, ".... cache data")
       setangsDataMap(cache.angsDataMap);
+
       setFetchingAngData(false);
     }
 

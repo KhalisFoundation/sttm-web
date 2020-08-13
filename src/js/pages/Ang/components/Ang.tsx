@@ -1,7 +1,8 @@
 /* globals API_URL */
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { buildApiUrl } from '@sttm/banidb';
+
 
 import GenericError, { BalpreetSingh } from '@/components/GenericError';
 import ShabadContent from '@/components/ShabadContent';
@@ -23,24 +24,62 @@ interface IAngProps {
 const Ang: React.FC<IAngProps> = ({
   ang,
   source,
-  highlight
+  highlight,
+  ...others
 }) => {
-
   const url = buildApiUrl({ ang, source, API_URL });
+  const history = useHistory();
   const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData(url);
+
+  const keyDownHandler = React.useCallback((e) => {
+    const angData = angsDataMap[url];
+    if (e.key === 'ArrowDown') {
+      const nextVerseToHighlight = highlight + 1;
+      const isLastVerseOfCurrentPage = highlight === angData.page[angData.page.length - 1].verseId;
+
+      // If it's last verse we need to load next page
+      if (isLastVerseOfCurrentPage) {
+        history.push(`/ang?ang=${ang + 1}&source=G&highlight=${nextVerseToHighlight}`);
+      } else {
+        history.push(`/ang?ang=${ang}&source=G&highlight=${nextVerseToHighlight}`);
+      }
+    }
+
+    if (e.key === 'ArrowUp') {
+      const nextVerseToHighlight = highlight - 1;
+
+      const isFirstVerseOfCurrentPage = highlight === angData.page[0].verseId;
+      if (isFirstVerseOfCurrentPage) {
+        history.push(`/ang?ang=${ang - 1}&source=G&highlight=${nextVerseToHighlight}`);
+      } else {
+        history.push(`/ang?ang=${ang}&source=G&highlight=${nextVerseToHighlight}`);
+      }
+    }
+  }, [angsDataMap, highlight, url]);
+
+  useEffect(() => {
+    // const observer = new new IntersectionObserver(callback, {
+    //   threshold
+    // });
+    // observer.observe(element);
+    // const interval = setInterval((ang) => {
+    //   history.push(`/ang?ang=${ang + 1}&source=G`)
+    // }, 10000, ang);
+
+    // return () => clearInterval(interval);
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => document.removeEventListener('keydown', keyDownHandler);
+  }, [angsDataMap, url, highlight])
 
   if (source === 'G') {
     saveAng(ang);
   }
 
-  if (isFetchingAngData) {
-    return <Stub />
-  }
-
   if (errorFetchingAngData) {
     errorEvent({
       action: ACTIONS.ANG_NOT_FOUND,
-      label: `ang:${ang},source:${source}`,
+      label: `ang: ${ang}, source: ${source}`,
     });
     return (
       <GenericError
@@ -61,21 +100,25 @@ const Ang: React.FC<IAngProps> = ({
     )
   }
 
-  console.log(angsDataMap, isFetchingAngData, errorFetchingAngData, 'angs data')
-
-  if (!angsDataMap[url]) {
-    return null;
+  let nav = {};
+  let info = { source: '' };
+  if (!isFetchingAngData && angsDataMap[url]) {
+    console.log(isFetchingAngData, angsDataMap, '...')
+    nav = Array.isArray(angsDataMap[url].navigation) ? {} : angsDataMap[url].navigation;
+    info = { source: angsDataMap[url].source }
   }
 
   return (
     <div className="row" id="content-root">
       <BreadCrumb links={[{ title: TEXTS.URIS.ANG }]} />
       <ShabadContent
-        gurbani={angsDataMap[url].page}
-        highlight={highlight}
-        nav={Array.isArray(angsDataMap[url].navigation) ? {} : angsDataMap[url].navigation}
-        info={{ source: angsDataMap[url].source }}
         type="ang"
+        isMultiPage={true}
+        isLoadingContent={isFetchingAngData}
+        pages={Object.values(angsDataMap)}
+        highlight={highlight || 1}
+        nav={nav}
+        info={info}
       />
     </div>
   )
