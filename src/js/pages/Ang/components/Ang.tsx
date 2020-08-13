@@ -31,45 +31,79 @@ const Ang: React.FC<IAngProps> = ({
   const history = useHistory();
   const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData(url);
 
-  const keyDownHandler = React.useCallback((e) => {
+  const changeAngInView = (observedPanktis: IntersectionObserverEntry[]) => {
+    observedPanktis.forEach(pankti => {
+      if (pankti.isIntersecting) {
+        if (pankti.intersectionRatio > 0) {
+          const { target: observedPankti } = pankti;
+          const observedAng = Number(observedPankti.getAttribute('data-ang'));
+          const observedUrl = buildApiUrl({ ang, source, API_URL });
+          const observedAngData = angsDataMap[observedUrl];
+          console.log(observedAngData, observedAng, 'observed nag...')
+
+          if (observedAng === ang) {
+            // We are on currently loaded ang, so we need to load new ang
+            const lastHighlightedVerse = observedAngData.page[observedAngData.page.length - 1].verseId;
+            history.push(`/ang?ang=${ang + 1}&source=G&highlight=${lastHighlightedVerse + 1}`)
+          }
+          else {
+            // Loads from cache the ang
+            const nextHighlightVerse = observedAngData.page[observedAngData.page.length - 1].verseId;
+            history.push(`/ang?ang=${observedAng}&source=G&highlight=${nextHighlightVerse}`)
+          }
+        }
+      }
+    })
+  }
+
+  const changeHighlightedPankti = ({ url, highlight, angsDataMap }) => (e) => {
     const angData = angsDataMap[url];
     if (e.key === 'ArrowDown') {
-      const nextVerseToHighlight = highlight + 1;
+      const nextHighlightVerse = highlight + 1;
       const isLastVerseOfCurrentPage = highlight === angData.page[angData.page.length - 1].verseId;
 
       // If it's last verse we need to load next page
       if (isLastVerseOfCurrentPage) {
-        history.push(`/ang?ang=${ang + 1}&source=G&highlight=${nextVerseToHighlight}`);
+        history.push(`/ang?ang=${ang + 1}&source=G&highlight=${nextHighlightVerse}`);
       } else {
-        history.push(`/ang?ang=${ang}&source=G&highlight=${nextVerseToHighlight}`);
+        history.push(`/ang?ang=${ang}&source=G&highlight=${nextHighlightVerse}`);
       }
     }
 
     if (e.key === 'ArrowUp') {
-      const nextVerseToHighlight = highlight - 1;
+      const nextHighlightVerse = highlight - 1;
 
       const isFirstVerseOfCurrentPage = highlight === angData.page[0].verseId;
       if (isFirstVerseOfCurrentPage) {
-        history.push(`/ang?ang=${ang - 1}&source=G&highlight=${nextVerseToHighlight}`);
+        history.push(`/ang?ang=${ang - 1}&source=G&highlight=${nextHighlightVerse}`);
       } else {
-        history.push(`/ang?ang=${ang}&source=G&highlight=${nextVerseToHighlight}`);
+        history.push(`/ang?ang=${ang}&source=G&highlight=${nextHighlightVerse}`);
       }
     }
-  }, [angsDataMap, highlight, url]);
+  }
+
 
   useEffect(() => {
-    // const observer = new new IntersectionObserver(callback, {
-    //   threshold
-    // });
-    // observer.observe(element);
-    // const interval = setInterval((ang) => {
-    //   history.push(`/ang?ang=${ang + 1}&source=G`)
-    // }, 10000, ang);
+    const timeoutId = setTimeout(() => {
+      const allLastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
+      const lastPankti = allLastPanktis[allLastPanktis.length - 1];
 
-    // return () => clearInterval(interval);
-    document.addEventListener('keydown', keyDownHandler);
+      const observer = new IntersectionObserver(changeAngInView, {
+        rootMargin: '0px',
+        threshold: [0, 1],
+      });
 
-    return () => document.removeEventListener('keydown', keyDownHandler);
+      observer.observe(lastPankti);
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
+  }, [ang])
+
+  useEffect(() => {
+    const changeHighlightedPanktiHandler = changeHighlightedPankti({ url, highlight, angsDataMap });
+    document.addEventListener('keydown', changeHighlightedPanktiHandler);
+
+    return () => document.removeEventListener('keydown', changeHighlightedPanktiHandler);
   }, [angsDataMap, url, highlight])
 
   if (source === 'G') {

@@ -23,6 +23,7 @@ export default class Baani extends React.PureComponent {
   };
 
   static propTypes = {
+    ang: PropTypes.number,
     gurbani: PropTypes.array.isRequired,
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
     splitView: PropTypes.bool.isRequired,
@@ -309,6 +310,7 @@ export default class Baani extends React.PureComponent {
 
   createMixedViewMarkup = () => {
     const {
+      ang,
       isParagraphMode,
     } = this.props;
 
@@ -323,7 +325,7 @@ export default class Baani extends React.PureComponent {
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
           const isLastParagraph = totalParagraphs == idx;
-          const dataAttributeToRender = isLastParagraph ? { 'data-last-paragraph': true } : {}
+          const dataAttributeToRender = isLastParagraph ? { 'data-last-paragraph': true, 'data-ang': ang } : {}
           return (
             <div
               {...dataAttributeToRender}

@@ -165,8 +165,9 @@ class Shabad extends React.PureComponent {
           <div id="shabad" className={`shabad display display-${type}`} ang>
             <div className="shabad-container">
               {isMultiPage ?
-                pages.map(({ page: gurbani }, idx) =>
+                pages.map(({ page: gurbani, source }, idx) =>
                   <Baani
+                    ang={source.pageNo}
                     key={idx}
                     type={type}
                     gurbani={gurbani}
