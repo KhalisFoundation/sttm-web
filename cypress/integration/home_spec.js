@@ -6,9 +6,6 @@ describe('Home page Search tests', () => {
       .clear()
       .type('bhb')
 
-    // get api response
-    cy.wait(3000)
-
     cy.get('.search-result')
       .should('contain', 'bwqn')
       .should('contain', 'bMdau')
