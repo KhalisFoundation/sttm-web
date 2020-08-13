@@ -1,9 +1,8 @@
 describe('Home page Search tests', () => {
-  it('should search shabad Jo Mange Thakur Apne Te with default settings', () => {
+  it('should return search results for "bhb" in drop-down', () => {
     cy.visit('/')
 
     cy.get('#search')
-      .clear()
       .type('bhb')
 
     cy.get('.search-result')
@@ -12,7 +11,58 @@ describe('Home page Search tests', () => {
       .should('contain', 'bMdk')
       .should('contain', 'bwqn')
 
-    cy.get('.search-highlight-word')
-
   })
+
+  it('should hightlight only first words in sentence', () => {
+    cy.get('.search-highlight-word')
+      .eq(0)
+      .should('contain', 'bwqn')
+
+    cy.get('.search-highlight-word')
+      .eq(1)
+      .should('contain', 'hI')
+
+    cy.get('.search-highlight-word')
+      .eq(2)
+      .should('contain', 'bYkuMT')
+  })
+
+  it('should open search results page on clicking the associated button', () => {
+    cy.get('.search-result')
+      .last()
+      .scrollTo('bottom')
+
+    cy.get('.toast-notification-close-button')
+      .click()
+
+    cy.get('.search-result a')
+      .last()
+      .should('have.text', 'Show full results')
+      .click()
+
+    cy.url().should('include', '/search?q=bhb&type=0&source=all')
+  })
+
+  it('should open search results page on typing "bhb" in search field and pressing enter', () => {
+    cy.visit('/')
+
+    cy.get('#search')
+      .type('bhb')
+
+    cy.get('.search-form').submit()
+
+    cy.url().should('include', '/search?q=bhb&type=0&source=all')
+  })
+
+  it('should open search results page on typing "bhb" in search field and pressing enter', () => {
+    cy.visit('/')
+
+    cy.get('#search')
+      .type('bhb')
+      .type('{downarrow}')
+      .type('{enter}')
+
+    cy.url().should('include', '/search?q=bhb&type=0&source=all')
+  })
+
 })
