@@ -30,7 +30,7 @@ export default class SearchResults extends React.PureComponent {
           return (
             <SearchResult
               key={getVerseId(shabad)}
-              type={type}
+              type={type} 
               shabad={shabad}
               {...props} />
           );
