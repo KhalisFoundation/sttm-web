@@ -309,23 +309,33 @@ export default class SearchForm extends React.PureComponent {
     );
 
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
-    const { type, query, source } = this.state;
+    const { type: currentSearchType, query, source, displayGurmukhiKeyboard } = this.state;
     const newSearchType = Number(value);
-    const isSearchTypeToAngSearchType = type !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
-    const isSearchTypeToMainLetterSearchType = type !== SEARCH_TYPES.MAIN_LETTERS && newSearchType === SEARCH_TYPES.MAIN_LETTERS
+    const isSearchTypeToAngSearchType = currentSearchType !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
+    const isSearchTypeToMainLetterSearchType = currentSearchType !== SEARCH_TYPES.MAIN_LETTERS && newSearchType === SEARCH_TYPES.MAIN_LETTERS
     const isQueryToBeCleared = isSearchTypeToAngSearchType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
+
+
+    // We are only showing keyboard :
+    // If they falls in the gurmukhi keyboard category && keyboard is already open/active.
+    // If keyboard is closed already, no need to set it as active.
+    const isShowKeyboard = newSearchType !== SEARCH_TYPES['ANG'] &&
+      newSearchType !== SEARCH_TYPES['ENGLISH_WORD'] &&
+      newSearchType !== SEARCH_TYPES['ROMANIZED']
+      && displayGurmukhiKeyboard;
 
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
         {
           type: newSearchType,
-          source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
-            Object.keys(SOURCES_WITH_ANG).includes(source) ?
+          source: newSearchType === SEARCH_TYPES['ANG'] &&
+            Object.keys(SOURCES_WITH_ANG).includes(this.state.source) ?
             this.state.source : 'G',
           query: isQueryToBeCleared ? '' : query,
           shouldSubmit: isSearchTypeToAngSearchType ? false :
             this.props.submitOnChangeOf.includes('type') &&
-            query !== ''
+            this.state.query !== '',
+          displayGurmukhiKeyboard: isShowKeyboard
         },
         () => {
           clickEvent({ action: ACTIONS.SEARCH_TYPE, label: newSearchType });

@@ -136,7 +136,6 @@ export default class Header extends React.PureComponent {
               action,
               name,
               placeholder,
-              isShowKeyboardIcon,
               setGurmukhiKeyboardVisibilityAs,
               setQueryAs,
               handleKeyDown,
@@ -144,7 +143,10 @@ export default class Header extends React.PureComponent {
               handleSearchSourceChange,
               handleSearchTypeChange,
               handleSubmit,
-            }) => (
+            }) => {
+              const isShowKeyboard = type !== SEARCH_TYPES['ANG'] && type !== SEARCH_TYPES['ENGLISH_WORD'] && type !== SEARCH_TYPES['ROMANIZED'];
+
+              return (
                 <React.Fragment>
                   <div id="responsive-menu">
                     <div className="top-bar-left">
@@ -209,32 +211,33 @@ export default class Header extends React.PureComponent {
                                     <CrossIcon />
                                   </button>
 
-                                  {isShowKeyboardIcon &&
-                                    (
-                                      <button
-                                        className={`gurmukhi-keyboard-toggle ${
-                                          displayGurmukhiKeyboard ? 'active' : ''
-                                          }`}
-                                        onClick={setGurmukhiKeyboardVisibilityAs(
-                                          !displayGurmukhiKeyboard
-                                        )}
-                                      >
-                                        <KeyboardIcon />
-                                      </button>
-                                    )}
+                                  {isShowKeyboard && (
+                                    <button
+                                      type="button"
+                                      className={`gurmukhi-keyboard-toggle ${
+                                        displayGurmukhiKeyboard ? 'active' : ''
+                                        }`}
+                                      onClick={setGurmukhiKeyboardVisibilityAs(
+                                        !displayGurmukhiKeyboard
+                                      )}
+                                    >
+                                      <KeyboardIcon />
+                                    </button>
+                                  )}
 
                                   <button type="submit">
                                     <SearchIcon />
                                   </button>
 
-                                  {isShowKeyboardIcon &&
+                                  {isShowKeyboard && (
                                     <EnhancedGurmukhiKeyboard
                                       value={query}
                                       searchType={parseInt(type)}
                                       active={displayGurmukhiKeyboard}
                                       onKeyClick={newValue => setQueryAs(newValue)()}
                                       onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                                    />}
+                                    />
+                                  )}
 
                                   <Autocomplete
                                     isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
@@ -292,7 +295,8 @@ export default class Header extends React.PureComponent {
                     />
                   </div>
                 </React.Fragment>
-              )}
+              )
+            }}
           </SearchForm>
         </div>
       </div>

@@ -43,7 +43,7 @@ export default class SearchResults extends React.PureComponent {
             );
           })
         }
-      </ul >
+      </ul>
     );
   }
 }
