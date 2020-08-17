@@ -21,63 +21,91 @@ interface IAngProps {
   highlight: number
 }
 
+interface IObserversMap {
+  [key: number]: IntersectionObserver | typeof undefined;
+}
+
+const observersMap: IObserversMap = {};
+
 const Ang: React.FC<IAngProps> = ({
   ang,
   source,
   highlight,
-  ...others
 }) => {
   const url = buildApiUrl({ ang, source, API_URL });
   const history = useHistory();
-  const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData(url);
+  const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData(ang, url);
 
   const changeAngInView = (observedPanktis: IntersectionObserverEntry[]) => {
-    observedPanktis.forEach(pankti => {
-      if (pankti.isIntersecting) {
-        if (pankti.intersectionRatio > 0) {
-          const { target: observedPankti } = pankti;
-          const observedAng = Number(observedPankti.getAttribute('data-ang'));
-          const observedUrl = buildApiUrl({ ang, source, API_URL });
-          const observedAngData = angsDataMap[observedUrl];
-          console.log(observedAngData, observedAng, 'observed nag...')
+    observedPanktis.forEach(observedPankti => {
+      const { target: targetPankti } = observedPankti;
 
-          if (observedAng === ang) {
-            // We are on currently loaded ang, so we need to load new ang
-            const lastHighlightedVerse = observedAngData.page[observedAngData.page.length - 1].verseId;
-            history.push(`/ang?ang=${ang + 1}&source=G&highlight=${lastHighlightedVerse + 1}`)
-          }
-          else {
-            // Loads from cache the ang
-            const nextHighlightVerse = observedAngData.page[observedAngData.page.length - 1].verseId;
-            history.push(`/ang?ang=${observedAng}&source=G&highlight=${nextHighlightVerse}`)
-          }
+      const observedPanktiOffsetY = window.scrollY + observedPankti.boundingClientRect.y;
+      // It's y position for window bottom => windowTop + currenViewPortHeight.
+      const windowBottomOffsetY = window.scrollY + window.innerHeight;
+
+      const isScrolledUpObservedPankti = windowBottomOffsetY > observedPanktiOffsetY;
+      const isScrolledDownObservedPankti = windowBottomOffsetY <= observedPanktiOffsetY;
+
+      const observedAng = Number(targetPankti.getAttribute('data-ang'));
+
+      const urlQueryParams = new URLSearchParams(location.search);
+      const highlight = urlQueryParams.get('highlight');
+
+      if (isScrolledUpObservedPankti) {
+        if (observedPankti.isIntersecting &&
+          observedPankti.intersectionRatio === 1) {
+          const newUrl = toAngURL({ ang: observedAng + 1, source, highlight: undefined });
+
+          console.log(newUrl, "NEW URLS")
+          // We are on currently loaded ang, so we need to load new ang
+          history.push(newUrl);
+        }
+      }
+
+      if (isScrolledDownObservedPankti) {
+        if (!observedPankti.isIntersecting &&
+          observedPankti.intersectionRatio === 0) {
+          const newUrl = toAngURL({ ang: observedAng, source, highlight: undefined });
+
+          console.log(newUrl, 'NEW URLS')
+          // We are on currently are on observed ang, so load that
+          history.push(newUrl);
         }
       }
     })
   }
 
-  const changeHighlightedPankti = ({ url, highlight, angsDataMap }) => (e) => {
-    const angData = angsDataMap[url];
-    if (e.key === 'ArrowDown') {
-      const nextHighlightVerse = highlight + 1;
-      const isLastVerseOfCurrentPage = highlight === angData.page[angData.page.length - 1].verseId;
+  const changeHighlightedPankti = ({ ang, source, highlight, angsDataMap }) => (e) => {
+    if (highlight) {
+      const angData = angsDataMap[ang];
+      if (e.key === 'ArrowDown') {
+        const nextHighlightVerse = highlight + 1;
+        const isLastVerseOfCurrentPage = highlight === angData.page[angData.page.length - 1].verseId;
+        // console.log(isLastverseOfCurrentPage, 'isLastVerseOfCurrentPage');
+        // If it's last verse we need to load next page
 
-      // If it's last verse we need to load next page
-      if (isLastVerseOfCurrentPage) {
-        history.push(`/ang?ang=${ang + 1}&source=G&highlight=${nextHighlightVerse}`);
-      } else {
-        history.push(`/ang?ang=${ang}&source=G&highlight=${nextHighlightVerse}`);
+        const newUrl = toAngURL({
+          ang: isLastVerseOfCurrentPage ? (ang + 1) : ang,
+          source,
+          highlight: isLastVerseOfCurrentPage ? highlight : nextHighlightVerse
+        });
+
+        history.push(newUrl);
       }
-    }
 
-    if (e.key === 'ArrowUp') {
-      const nextHighlightVerse = highlight - 1;
+      if (e.key === 'ArrowUp') {
+        const nextHighlightVerse = highlight - 1;
+        const isFirstVerseOfCurrentPage = highlight === angData.page[0].verseId;
 
-      const isFirstVerseOfCurrentPage = highlight === angData.page[0].verseId;
-      if (isFirstVerseOfCurrentPage) {
-        history.push(`/ang?ang=${ang - 1}&source=G&highlight=${nextHighlightVerse}`);
-      } else {
-        history.push(`/ang?ang=${ang}&source=G&highlight=${nextHighlightVerse}`);
+        //If it's first verse of current page, we need to load the previous page;
+        const newUrl = toAngURL({
+          ang: isFirstVerseOfCurrentPage ? (ang - 1) : ang,
+          source,
+          highlight: isFirstVerseOfCurrentPage ? highlight : nextHighlightVerse
+        });
+
+        history.push(newUrl);
       }
     }
   }
@@ -85,26 +113,44 @@ const Ang: React.FC<IAngProps> = ({
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      const allLastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
-      const lastPankti = allLastPanktis[allLastPanktis.length - 1];
+      const lastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
+      // lastPanktis.forEach(lastPankti => {
+      const lastPankti = lastPanktis[lastPanktis.length - 1];
+      const lastPanktiAngValue = Number(lastPankti.getAttribute('data-ang'));
 
-      const observer = new IntersectionObserver(changeAngInView, {
-        rootMargin: '0px',
-        threshold: [0, 1],
-      });
-
-      observer.observe(lastPankti);
+      if (!observersMap[lastPanktiAngValue]) {
+        const lastPanktiObserver = new IntersectionObserver(changeAngInView, {
+          rootMargin: '0px',
+          threshold: [0, 1],
+        });
+        lastPanktiObserver.observe(lastPankti);
+        observersMap[lastPanktiAngValue] = lastPanktiObserver;
+      }
+      // })
     }, 0);
 
-    return () => clearTimeout(timeoutId);
-  }, [ang])
+    return () => {
+      clearTimeout(timeoutId);
+
+      // Object.values(observersMap).forEach(observer => {
+      //   if (observer) {
+      //     observer.disconnect();
+      //   }
+      // })
+
+      // Object.keys(observersMap).forEach((angStr: string) => {
+      //   const ang = Number(angStr);
+      //   observersMap[ang] = undefined;
+      // })
+    };
+  }, [angsDataMap[ang]])
 
   useEffect(() => {
-    const changeHighlightedPanktiHandler = changeHighlightedPankti({ url, highlight, angsDataMap });
+    const changeHighlightedPanktiHandler = changeHighlightedPankti({ ang, source, highlight, angsDataMap });
     document.addEventListener('keydown', changeHighlightedPanktiHandler);
 
     return () => document.removeEventListener('keydown', changeHighlightedPanktiHandler);
-  }, [angsDataMap, url, highlight])
+  }, [ang, source, highlight, angsDataMap])
 
   if (source === 'G') {
     saveAng(ang);
@@ -136,10 +182,9 @@ const Ang: React.FC<IAngProps> = ({
 
   let nav = {};
   let info = { source: '' };
-  if (!isFetchingAngData && angsDataMap[url]) {
-    console.log(isFetchingAngData, angsDataMap, '...')
-    nav = Array.isArray(angsDataMap[url].navigation) ? {} : angsDataMap[url].navigation;
-    info = { source: angsDataMap[url].source }
+  if (!isFetchingAngData && angsDataMap[ang]) {
+    nav = Array.isArray(angsDataMap[ang].navigation) ? {} : angsDataMap[ang].navigation;
+    info = { source: angsDataMap[ang].source }
   }
 
   return (

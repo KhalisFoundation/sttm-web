@@ -1,14 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Actions from './BaaniLineActions';
 import Translation from './Translation';
 import Transliteration from './Transliteration';
 import BaaniLine from './BaaniLine';
-import { clickEvent, ACTIONS } from '../util/analytics';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
 import { copyToClipboard, showToast, shortenURL } from '../util';
 
-import { translationMap, transliterationMap, getVerseId } from '@/util/api/shabad';
+import {
+  clickEvent,
+  ACTIONS,
+  translationMap,
+  transliterationMap,
+  getVerseId,
+} from '@/util';
 
 /**
  *
@@ -311,6 +317,7 @@ export default class Baani extends React.PureComponent {
   createMixedViewMarkup = () => {
     const {
       ang,
+      onBaaniLineClick,
       isParagraphMode,
     } = this.props;
 
@@ -324,13 +331,17 @@ export default class Baani extends React.PureComponent {
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
+
           const isLastParagraph = totalParagraphs == idx;
-          const dataAttributeToRender = isLastParagraph ? { 'data-last-paragraph': true, 'data-ang': ang } : {}
+          const lastParagraphAttributes = isLastParagraph ? { 'data-last-paragraph': true, 'data-ang': ang } : {}
+          const highlightVerseId = shabads[0].verseId;
+
           return (
             <div
-              {...dataAttributeToRender}
-              key={idx} // In paragraph mode, we are currently not showing social Share
-              onMouseUp={isParagraphMode ? null : this.showSelectionOptions}
+              key={idx}
+              {...lastParagraphAttributes}
+              onClick={onBaaniLineClick(highlightVerseId)}
+              onMouseUp={isParagraphMode ? null : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
               onMouseDown={isParagraphMode ? null : this.removeSelection}
               className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
             >
@@ -448,19 +459,20 @@ export default class Baani extends React.PureComponent {
           {Object.entries(normalizedGurbani).map(([idx, shabads]) =>
             <div className={`${splitViewBaaniClass}-paragraph ${paragraphModeClass}`} key={idx}>
               {shabads.map(shabad =>
-                (<div
-                  id={`line${getVerseId(shabad)}-line`}
-                  key={getVerseId(shabad)}
-                  className="line"
-                  ref={node =>
-                    highlight === parseInt(getVerseId(shabad), 10)
-                      ? (this.$highlightedBaaniLine = node)
-                      : null
-                  }
-                >
-                  {this.getBaniLine(shabad)}
-                  {this.getActions(shabad)}
-                </div>
+                (
+                  <div
+                    id={`line${getVerseId(shabad)}-line`}
+                    key={getVerseId(shabad)}
+                    className="line"
+                    ref={node =>
+                      highlight === parseInt(getVerseId(shabad), 10)
+                        ? (this.$highlightedBaaniLine = node)
+                        : null
+                    }
+                  >
+                    {this.getBaniLine(shabad)}
+                    {this.getActions(shabad)}
+                  </div>
                 ))}
             </div>
           )}

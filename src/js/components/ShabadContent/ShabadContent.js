@@ -4,16 +4,25 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GlobalHotKeys } from 'react-hotkeys';
 
-import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
-import { showToast, copyToClipboard } from '@/util';
 import Controls, { supportedMedia } from '@/components/Controls';
 import FootNav from '@/components/FootNav';
 import Meta from '@/components/Meta';
 import ProgressBar from '@/components/ProgressBar';
 import Baani from '@/components/Baani';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
-import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
+
+import {
+  getShabadId,
+  getSourceId,
+  getAng,
+  showToast,
+  copyToClipboard,
+  toAngURL,
+  clickEvent,
+  ACTIONS,
+  errorEvent
+} from '@/util';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
 
 /**
@@ -97,6 +106,7 @@ class Shabad extends React.PureComponent {
   render() {
     const {
       props: {
+        history,
         isMultiPage,
         isLoadingContent,
         gurbani,
@@ -132,7 +142,7 @@ class Shabad extends React.PureComponent {
 
     const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
     const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
-
+    const isParagraphMode = paragraphMode && isSundarGutkaRoute
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
 
@@ -173,6 +183,16 @@ class Shabad extends React.PureComponent {
                     gurbani={gurbani}
                     splitView={splitView}
                     unicode={unicode}
+                    onBaaniLineClick={(highlightVerseId) =>
+                      () => {
+                        const newUrl = toAngURL({
+                          ang: source.pageNo,
+                          source: source.sourceId,
+                          highlight: highlightVerseId
+                        });
+
+                        history.push(newUrl);
+                      }}
                     highlight={highlight}
                     larivaar={larivaar}
                     fontSize={fontSize}
@@ -185,7 +205,7 @@ class Shabad extends React.PureComponent {
                     transliterationLanguages={transliterationLanguages}
                     centerAlignGurbani={centerAlignGurbani}
                     showFullScreen={showFullScreen}
-                    isParagraphMode={paragraphMode && isSundarGutkaRoute}
+                    isParagraphMode={false}
                   />
                 )
                 :
@@ -206,7 +226,7 @@ class Shabad extends React.PureComponent {
                   transliterationLanguages={transliterationLanguages}
                   centerAlignGurbani={centerAlignGurbani}
                   showFullScreen={showFullScreen}
-                  isParagraphMode={paragraphMode && isSundarGutkaRoute}
+                  isParagraphMode={isParagraphMode}
                 />}
               {isLoadingContent && <div className="spinner" />}
 
