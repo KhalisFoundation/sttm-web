@@ -133,6 +133,7 @@ const initialState = {
     LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
     DEFAULT_CENTER_ALIGN_GURBANI
   ),
+  isLoadingAng: false
 };
 
 

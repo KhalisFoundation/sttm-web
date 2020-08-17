@@ -20,8 +20,7 @@ export const useObserveLastPanktis = (source: string, angData: any) => {
 
       if (!observersMap[lastPanktiAngValue]) {
         const lastPanktiObserver = new IntersectionObserver(handleChangeAngInView, {
-          rootMargin: '0px',
-          threshold: [0, 1],
+          threshold: [0.2, 1],
         });
         lastPanktiObserver.observe(lastPankti);
         observersMap[lastPanktiAngValue] = lastPanktiObserver;

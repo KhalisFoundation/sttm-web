@@ -1,5 +1,5 @@
 /* globals API_URL */
-import React, { useMemo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { buildApiUrl } from '@sttm/banidb';
 
@@ -27,17 +27,16 @@ const Ang: React.FC<IAngProps> = ({
   source,
   highlight,
 }) => {
-  const url = buildApiUrl({ ang, source, API_URL });
   const history = useHistory();
-  const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData(ang, url);
+  const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData(ang, source);
   const angData = angsDataMap[ang];
-  const changeHighlightedPanktiHandler = (useCallback(changeHighlightedPankti({
+  const changeHighlightedPanktiHandler = useCallback(changeHighlightedPankti({
     ang,
     source,
     highlight,
     angData,
     history
-  }), [ang, source, highlight, angData, history])) as unknown as EventListener;
+  }), [ang, source, highlight, angData, history]) as unknown as EventListener;
   useObserveLastPanktis(source, angData);
   useKeydownEventHandler(changeHighlightedPanktiHandler)
 

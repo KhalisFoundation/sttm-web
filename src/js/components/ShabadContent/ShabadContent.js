@@ -142,13 +142,17 @@ class Shabad extends React.PureComponent {
 
     const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
     const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
-    const isParagraphMode = paragraphMode && isSundarGutkaRoute
+    const isParagraphMode = paragraphMode && isSundarGutkaRoute;
+    const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
+    const isShowMetaData = this.props.hideMeta === false;
+    const isShowControls = this.props.hideControls === false;
+
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
 
         <React.Fragment >
 
-          {this.props.hideControls === false && (
+          {isShowControls && (
             <Controls
               media={
                 ['shabad', 'hukamnama', 'ang'].includes(type)
@@ -162,7 +166,7 @@ class Shabad extends React.PureComponent {
               {...this.props.controlProps}
             />
           )}
-          {this.props.hideMeta === false && (
+          {isShowMetaData && (
             <Meta
               isUnicode={unicode}
               info={info}
@@ -230,7 +234,7 @@ class Shabad extends React.PureComponent {
                 />}
               {isLoadingContent && <div className="spinner" />}
 
-              {this.props.hideMeta === false && (
+              {isShowFooterNav && (
                 <FootNav info={info} type={type} nav={nav} />
               )}
 

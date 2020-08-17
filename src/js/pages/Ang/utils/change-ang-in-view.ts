@@ -10,12 +10,12 @@ export const changeAngInView = (history: History, source: string) => (observedPa
     // It's y position for window bottom => windowTop + currenViewPortHeight.
     const windowBottomOffsetY = window.scrollY + window.innerHeight;
 
-    const isScrolledUpObservedPankti = windowBottomOffsetY > observedPanktiOffsetY;
-    const isScrolledDownObservedPankti = windowBottomOffsetY <= observedPanktiOffsetY;
+    const isObservedPanktiCrossedBy = windowBottomOffsetY > observedPanktiOffsetY;
+    const isObservedPanktiAboutToHide = windowBottomOffsetY <= observedPanktiOffsetY + 20;
 
     const observedAng = Number(targetPankti.getAttribute('data-ang'));
 
-    if (isScrolledUpObservedPankti) {
+    if (isObservedPanktiCrossedBy) {
       if (observedPankti.isIntersecting &&
         observedPankti.intersectionRatio === 1) {
         const newUrl = toAngURL({ ang: observedAng + 1, source, highlight: undefined });
@@ -25,7 +25,7 @@ export const changeAngInView = (history: History, source: string) => (observedPa
       }
     }
 
-    if (isScrolledDownObservedPankti) {
+    if (isObservedPanktiAboutToHide) {
       if (!observedPankti.isIntersecting &&
         observedPankti.intersectionRatio === 0) {
         const newUrl = toAngURL({ ang: observedAng, source, highlight: undefined });
