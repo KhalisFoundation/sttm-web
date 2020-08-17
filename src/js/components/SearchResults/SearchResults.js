@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import SearchResult from './Result';
 import { SEARCH_TYPES } from '@/constants';
@@ -22,19 +23,26 @@ export default class SearchResults extends React.PureComponent {
 
   render() {
     const { shabads, type, ...props } = this.props;
-    const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
+
+    const searchResultsClassName = cx({
+      'search-results-display': true,
+      'english-translation-search': type === SEARCH_TYPES.ENGLISH_WORD,
+      'main-letter-search': type === SEARCH_TYPES.MAIN_LETTERS
+    });
 
     return (
-      <ul className={`search-results display ${isSearchTypeEnglishWord ? 'english-translation-search' : ''}`}>
-        {shabads.map(shabad => {
-          return (
-            <SearchResult
-              key={getVerseId(shabad)}
-              type={type} 
-              shabad={shabad}
-              {...props} />
-          );
-        })}
+      <ul className={searchResultsClassName}>
+        {
+          shabads.map(shabad => {
+            return (
+              <SearchResult
+                key={getVerseId(shabad)}
+                type={type}
+                shabad={shabad}
+                {...props} />
+            );
+          })
+        }
       </ul>
     );
   }

@@ -4,14 +4,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
 import { Link } from 'react-router-dom';
-import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
+
+import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
-import { toSearchURL, getQueryParams, getShabadList } from '../util';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+
+import {
+  toSearchURL,
+  getQueryParams,
+  getShabadList,
+  reformatSearchTypes
+} from '@/util';
 export default class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
 
@@ -46,7 +53,6 @@ export default class Header extends React.PureComponent {
       }
       );
   }
-
   componentDidMount() {
     this.fetchDoodle();
   }
@@ -114,7 +120,7 @@ export default class Header extends React.PureComponent {
             key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
-            defaultType={defaultType}
+            defaultType={Number(defaultType)}
             submitOnChangeOf={['type', 'source']}
             onSubmit={handleFormSubmit}
           >
@@ -132,6 +138,7 @@ export default class Header extends React.PureComponent {
               placeholder,
               setGurmukhiKeyboardVisibilityAs,
               setQueryAs,
+              handleKeyDown,
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
@@ -187,6 +194,7 @@ export default class Header extends React.PureComponent {
                                     required="required"
                                     name={name}
                                     value={query}
+                                    onKeyDown={handleKeyDown}
                                     onChange={handleSearchChange}
                                     className={className}
                                     placeholder={placeholder}
@@ -197,7 +205,6 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <button
-                                    type="button"
                                     className="clear-search-toggle"
                                     onClick={setQueryAs('')}
                                   >
@@ -246,12 +253,12 @@ export default class Header extends React.PureComponent {
                             <select
                               name="type"
                               id="search-type"
-                              value={type}
+                              value={type.toString()}
                               onChange={handleSearchTypeChange}
                             >
-                              {TYPES.map((children, value) => (
+                              {reformatSearchTypes(TYPES).map(({ type, value }) => (
                                 <option key={value} value={value}>
-                                  {children}
+                                  {type}
                                 </option>
                               ))}
                             </select>

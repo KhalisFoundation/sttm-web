@@ -47,7 +47,6 @@ export const Larivaar: React.FC<ILarivaarProps> = (props) => {
           return `${word} `;
         }
         const visraamClass = getVisraamClass(children, index, visraam);
-
         return (
           <LarivaarWord
             highlightIndex={highlightIndex}

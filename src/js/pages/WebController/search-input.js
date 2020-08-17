@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CrossIcon from '../../components/Icons/Times';
 import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
-import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
+import { EnhancedGurmukhiKeyboard } from '../../components/EnhancedGurmukhiKeyboard';
 import SearchForm from '../../components/SearchForm';
 
 import {

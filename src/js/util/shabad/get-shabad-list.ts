@@ -21,6 +21,7 @@ export const getShabadList = (q, { type, source }) => {
             q,
             type
           );
+
           panktiList.push({
             pankti: getGurmukhiVerse(shabad),
             translation: translationMap["english"](shabad),

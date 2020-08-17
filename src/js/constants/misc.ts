@@ -14,4 +14,3 @@ export const TYPES = _TYPES.filter((value, index) =>
   Object.values(SEARCH_TYPES).includes(index));
 
 export const SHORT_DOMAIN = 'sttm.co';
-

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SEARCH_TYPES } from '@/constants';
 import { getVisraamClass } from '../../util';
 
 export default class HighlightedSearchResult extends React.PureComponent {

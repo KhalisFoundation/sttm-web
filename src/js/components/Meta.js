@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, toNavURL, saveAng, shouldSaveAng, dateMath } from '../util';
+import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
 import { withRouter } from 'react-router-dom';
@@ -72,7 +72,7 @@ class Meta extends React.PureComponent {
 
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
-
+    // const isShabad = type === 'shabad';
     return (
       <div id="metadata" className={`metadata-${type}`}>
         {isFalsy(nav.previous) === false ? (
