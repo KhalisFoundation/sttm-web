@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setFullScreenMode } from '../../features/actions';
-import FullscreenIcon from '../Icons/FullscreenIcon';
-
+import FullscreenIcon from '../../Icons/FullscreenIcon';
+import { setFullScreenMode } from '../../../features/actions';
 interface IFullScreenProps {
   setFullScreenMode: (payload: boolean) => {}
 }

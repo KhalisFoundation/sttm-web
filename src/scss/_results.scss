@@ -7,41 +7,39 @@
   margin: 0.5rem 0;
 }
 
+/* stylelint-disable no-descending-specificity */
 .search-result {
   border-bottom: 1px solid $sttm-lighter-grey;
   list-style: none;
   padding: 0.5rem 1rem;
-
-  .dark-mode & {
-    border-color: $sttm-dark-grey;
-  }
-
-  .show-full-results & {
-    text-align: center;
-  }
 
   a {
     color: $sttm-blue-30;
     text-decoration: none;
     transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
-    .show-all-results & {
+    .search-highlight-word {
       color: $sttm-blue;
     }
 
-    .english-translation-search & {
-      color: $sttm-blue;
+    .larivaar-assist-word {
+      color: #f39c1d;
     }
+  }
 
-    .dark-mode & {
-      color: $sttm-light-blue-60;
+  .dark-mode & {
+    border-color: $sttm-dark-grey;
 
-      & .english-translation-search {
+    a {
+      .search-highlight-word {
         color: $sttm-light-blue;
       }
     }
+  }
 
-    .search-highlight-word {
+  .english-translation-search &,
+  .main-letter-search & {
+    .gurbani-display {
       color: $sttm-blue;
 
       .dark-mode & {
@@ -49,9 +47,19 @@
       }
     }
 
-    .larivaar-assist-word {
-      color: #f39c1d;
+    .search-highlight-word {
+      color: $sttm-black;
+      font-size: 0.95em;
+
+      .dark-mode & {
+        color: $sttm-white;
+      }
     }
+  }
+
+  .show-all-results {
+    color: $sttm-blue;
+    text-align: center;
   }
 
   .meta a {

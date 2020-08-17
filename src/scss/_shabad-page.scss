@@ -16,19 +16,6 @@ blockquote {
 .search-results blockquote {
   font-size: 0.85em;
   margin: 0 auto;
-
-  &.translation.english {
-    .search-highlight-word {
-      color: $sttm-black;
-      font-size: 0.95em;
-    }
-
-    .dark-mode & {
-      .search-highlight-word {
-        color: $sttm-white;
-      }
-    }
-  }
 }
 
 #metadata {
