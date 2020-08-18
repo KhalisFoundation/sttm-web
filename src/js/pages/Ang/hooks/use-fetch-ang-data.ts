@@ -4,7 +4,13 @@ import { buildApiUrl, SOURCES } from '@sttm/banidb';
 import { SET_LOADING_ANG } from '../../../features/actions';
 import cache from '../cache-angs-data';
 
-export const useFetchAngData = (ang: number, source: keyof typeof SOURCES) => {
+interface IUseFetchAngData {
+  ang: number
+  source: keyof typeof SOURCES
+  setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
+}
+
+export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngData) => {
   const [isFetchingAngData, setFetchingAngData] = useState<boolean>(false);
   const [errorFetchingAngData, setErrorFetchingAngData] = useState<string>('');
   const [angsDataMap, setangsDataMap] = useState<any>([]);
@@ -24,6 +30,7 @@ export const useFetchAngData = (ang: number, source: keyof typeof SOURCES) => {
       cache.angsDataMap[ang] = angData;
       setangsDataMap(cache.angsDataMap);
       setFetchingAngData(false);
+      setPrefetchAng(-1);
 
       setTimeout(() => {
         dispatch({ type: SET_LOADING_ANG, payload: false });

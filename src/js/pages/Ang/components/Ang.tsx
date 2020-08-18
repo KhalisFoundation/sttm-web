@@ -1,5 +1,5 @@
 /* globals API_URL */
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { buildApiUrl } from '@sttm/banidb';
 
@@ -10,7 +10,7 @@ import { saveAng, errorEvent, ACTIONS } from '@/util';
 import { SOURCES, TEXTS } from '@/constants';
 
 import { useKeydownEventHandler } from '@/hooks';
-import { useObserveLastPanktis, useFetchAngData } from '../hooks';
+import { useObservePanktis, useFetchAngData } from '../hooks';
 import { changeHighlightedPankti } from '../utils';
 
 export const Stub = () => <div className="spinner" />;
@@ -28,7 +28,8 @@ const Ang: React.FC<IAngProps> = ({
   highlight,
 }) => {
   const history = useHistory();
-  const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData(ang, source);
+  const [prefetchAng, setPrefetchAng] = useState<number>(ang);
+  const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng });
   const angData = angsDataMap[ang];
   const changeHighlightedPanktiHandler = useCallback(changeHighlightedPankti({
     ang,
@@ -37,7 +38,7 @@ const Ang: React.FC<IAngProps> = ({
     angData,
     history
   }), [ang, source, highlight, angData, history]) as unknown as EventListener;
-  useObserveLastPanktis(source, angData);
+  useObservePanktis(source, angData, setPrefetchAng);
   useKeydownEventHandler(changeHighlightedPanktiHandler)
 
   if (source === 'G') {

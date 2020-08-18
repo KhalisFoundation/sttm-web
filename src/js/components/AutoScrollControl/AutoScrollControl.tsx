@@ -133,11 +133,9 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   handleAutoScroll = () => {
     if (this.props.isAutoScrolling) {
       const scrollY = document.documentElement.scrollTop;
-      console.log(this.props.isLoadingAng, "...")
       if (scrollY >= this._maxScrollPossible && !this.props.isLoadingAng) {
         // we are rechecking the maxscroll value since it can hold old value by now.
         const isMaxScrollCrossed = this.reEvaluateMaxScrollPossible(scrollY);
-        console.log(isMaxScrollCrossed, this._maxScrollPossible, 'isMaxScrollCrossed');
         if (isMaxScrollCrossed) {
           this.removeScroll();
         }

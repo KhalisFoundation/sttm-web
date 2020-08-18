@@ -332,13 +332,16 @@ export default class Baani extends React.PureComponent {
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
 
-          const isLastParagraph = totalParagraphs == idx;
+          const isFirstParagraph = idx == 0;
+          const isLastParagraph = idx == totalParagraphs;
           const lastParagraphAttributes = isLastParagraph ? { 'data-last-paragraph': true, 'data-ang': ang } : {}
+          const firstParagraphAttributes = isFirstParagraph ? { 'data-first-paragraph': true, 'data-ang': ang } : {}
           const highlightVerseId = shabads[0].verseId;
 
           return (
             <div
               key={idx}
+              {...firstParagraphAttributes}
               {...lastParagraphAttributes}
               onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
               onMouseUp={isParagraphMode ? null : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
