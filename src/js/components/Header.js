@@ -130,6 +130,7 @@ export default class Header extends React.PureComponent {
               className,
               inputType,
               displayGurmukhiKeyboard,
+              isShowKeyboard,
               query,
               type,
               source,
@@ -144,7 +145,6 @@ export default class Header extends React.PureComponent {
               handleSearchTypeChange,
               handleSubmit,
             }) => {
-              const isShowKeyboard = type !== SEARCH_TYPES['ANG'] && type !== SEARCH_TYPES['ENGLISH_WORD'] && type !== SEARCH_TYPES['ROMANIZED'];
 
               return (
                 <React.Fragment>

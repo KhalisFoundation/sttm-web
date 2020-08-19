@@ -12,7 +12,8 @@ export const getHighlightIndices = (
   let end = -1;
   let highlightIndices = [];
 
-  const isSearchTypeMainLetter = type === SEARCH_TYPES.MAIN_LETTERS;
+  const isSearchTypeMainLetters = type === SEARCH_TYPES.MAIN_LETTERS;
+  const isSearchTypeRomanizedFirstLetters = type === SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE;
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   // Handles " search operator
   let mainQuery = query.replace(/"/g, '');
@@ -31,7 +32,7 @@ export const getHighlightIndices = (
   // }
 
   let baaniWords = baani.split(' ');
-
+  console.log(mainQuery, 'mainquery')
   switch (type) {
     // TODO: This is obviously not the best way to handle it.
     case SEARCH_TYPES.ROMANIZED: {
@@ -95,10 +96,39 @@ export const getHighlightIndices = (
       });
       break;
     }
+
+    case SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE: {
+      baaniWords = baaniWords.map(w => (w.startsWith('i') ? w.slice(1) : w));
+      const baaniLetters = baaniWords.map(word => word[0]).join('');
+
+      let q = mainQuery.split('+');
+      q.forEach(subQuery => {
+        if (subQuery.includes('*')) {
+          let subWords = subQuery.split('*');
+          subWords.forEach(sw => {
+            start = baaniLetters.indexOf(sw);
+            end = start + sw.length;
+            highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
+          });
+        } else {
+          start = baaniLetters.toLowerCase().indexOf(subQuery);
+          console.log(start, baaniLetters, "baani letters")
+          if (start !== -1) {
+            end = start + subQuery.length;
+            highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
+          }
+        }
+      });
+    }
+      break;
   }
 
+
   // if there is no highlightIndices, we gonna do simple check
-  if (!highlightIndices.length && !isSearchTypeMainLetter) {
+  if (!highlightIndices.length
+    && !isSearchTypeMainLetters
+    && !isSearchTypeRomanizedFirstLetters
+  ) {
 
     // if we are checking for english translation,
     if (isSearchTypeEnglishWord) {
