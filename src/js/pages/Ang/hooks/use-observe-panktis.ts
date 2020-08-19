@@ -1,7 +1,14 @@
 import { useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { History } from 'history';
 import { changeAngInView } from '../utils/change-ang-in-view';
 import { prefetchNextAng } from '../utils/prefetch-next-ang';
+
+interface IUseObservePanktis {
+  history: History
+  source: string
+  setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
+}
+
 interface IObserversMap {
   [key: number]: IntersectionObserver | typeof undefined;
 }
@@ -22,13 +29,11 @@ const clearObservers = (observersMap: IObserversMap) => {
   })
 }
 
-export const useObservePanktis = (source: string, angData: any, setPrefetchAng: React.Dispatch<React.SetStateAction<number>>) => {
-  const history = useHistory();
+export const useObservePanktis = ({ source, history, setPrefetchAng }: IUseObservePanktis) => {
   const handleChangeAngInView = useCallback(changeAngInView(history, source), [history, source]);
   const handlePrefetchNextAng = useCallback(prefetchNextAng(setPrefetchAng), [setPrefetchAng]);
 
   useEffect(() => {
-
     const firstPanktis = Array.from(document.querySelectorAll('[data-first-paragraph="true"]'));
     const lastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
     const firstPankti = firstPanktis[firstPanktis.length - 1];

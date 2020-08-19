@@ -344,8 +344,8 @@ export default class Baani extends React.PureComponent {
               {...firstParagraphAttributes}
               {...lastParagraphAttributes}
               onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
-              onMouseUp={isParagraphMode ? null : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
-              onMouseDown={isParagraphMode ? null : this.removeSelection}
+              onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
+              onMouseDown={isParagraphMode ? undefined : this.removeSelection}
               className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
             >
               <div

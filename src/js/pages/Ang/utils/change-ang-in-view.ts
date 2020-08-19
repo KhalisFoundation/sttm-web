@@ -15,7 +15,6 @@ export const changeAngInView =
 
         const observedAng = Number(targetPankti.getAttribute('data-ang'));
 
-
         if (observedPankti.isIntersecting && observedPankti.intersectionRatio > 0) {
           let newUrl = '';
           if (isObservedPanktiCrossedBy) {

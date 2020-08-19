@@ -37,8 +37,9 @@ const Ang: React.FC<IAngProps> = ({
     highlight,
     angData,
     history
-  }), [ang, source, highlight, angData, history]) as unknown as EventListener;
-  useObservePanktis(source, angData, setPrefetchAng);
+  }),
+    [ang, source, highlight, angData, history]) as unknown as EventListener;
+  useObservePanktis({ source, history, setPrefetchAng });
   useKeydownEventHandler(changeHighlightedPanktiHandler)
 
   if (source === 'G') {
