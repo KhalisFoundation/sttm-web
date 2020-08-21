@@ -5,18 +5,22 @@ import {
 } from '@/components/Icons/CustomIcons';
 
 interface IGetControlsList {
-  decrementAction: () => {}
-  incrementAction: () => {}
-  value: string
+  controlAction: (obj: any) => {},
+  target: string,
+  value: string,
 }
 
-const getControlsList = (
-  { decrementAction, incrementAction, value }: IGetControlsList
+const getControlList = (
+  { controlAction, value, target }: IGetControlsList
 ) => {
   return [
     {
       icon: MinusIcon,
-      action: decrementAction
+      action: () => controlAction({
+        action: 'changeFontSize',
+        target,
+        value: 'minus',
+      })
     },
     {
       control: IconLabel,
@@ -24,111 +28,58 @@ const getControlsList = (
     },
     {
       icon: PlusIcon,
-      action: incrementAction
-    },
+      action: () => controlAction({
+        action: 'changeFontSize',
+        target,
+        value: 'plus',
+      })
+    }
   ]
 }
 
-export const CONTROLLER_SETTINGS =
-  (updateSettings: Function, desktopSettings: any) => {
-    const { gurbani, translation, teeka, transliteration } = desktopSettings.fontSizes;
+export const CONTROLLER_SETTINGS = (
+  updateSettings: (obj: any) => {},
+  desktopSettings: any
+) => {
+  const { gurbani, translation, teeka, transliteration } = desktopSettings.fontSizes;
 
-    return [
-      {
-        type: 'icon-toggle',
-        label: 'Gurbani',
-        controlsList: getControlsList({
-          value: gurbani,
-          decrementAction: () => updateSettings({
-            action: 'changeFontSize',
-            target: 'gurbani',
-            value: 'minus',
-          }),
-          incrementAction: () => updateSettings({
-            action: 'changeFontSize',
-            target: 'gurbani',
-            value: 'plus',
-          })
-        })
-      },
-      {
-        type: 'icon-toggle',
-        label: 'Translation',
-        controlsList: [
-          {
-            icon: MinusIcon,
-            action: () => updateSettings({
-              action: 'changeFontSize',
-              target: 'translation',
-              value: 'minus',
-            })
-          },
-          {
-            control: IconLabel,
-            value: desktopSettings.fontSizes.translation,
-          },
-          {
-            icon: PlusIcon,
-            action: () => updateSettings({
-              action: 'changeFontSize',
-              target: 'translation',
-              value: 'plus',
-            })
-          },
-        ],
-      },
-      {
-        type: 'icon-toggle',
-        label: 'Teeka',
-        controlsList: [
-          {
-            icon: MinusIcon,
-            action: () => updateSettings({
-              action: 'changeFontSize',
-              target: 'teeka',
-              value: 'minus',
-            })
-          },
-          {
-            control: IconLabel,
-            value: desktopSettings.fontSizes.teeka,
-          },
-          {
-            icon: PlusIcon,
-            action: () => updateSettings({
-              action: 'changeFontSize',
-              target: 'teeka',
-              value: 'plus',
-            })
-          }
-        ],
-      },
-      {
-        type: 'icon-toggle',
-        label: 'Transliteration',
-        controlsList: [
-          {
-            icon: MinusIcon,
-            action: () => updateSettings({
-              action: 'changeFontSize',
-              target: 'transliteration',
-              value: 'minus',
-            })
-          },
-          {
-            control: IconLabel,
-            value: desktopSettings.fontSizes.transliteration,
-          },
-          {
-            icon: PlusIcon,
-            action: () => updateSettings({
-              action: 'changeFontSize',
-              target: 'transliteration',
-              value: 'plus',
-            })
-          }
-        ],
-      },
-    ];
-  }
+  return [
+    {
+      type: 'icon-toggle',
+      label: 'Gurbani',
+      controlsList: getControlList({
+        value: gurbani,
+        target: 'gurbani',
+        controlAction: updateSettings,
+      })
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Translation',
+      controlsList: getControlList({
+        value: translation,
+        target: 'translation',
+        controlAction: updateSettings,
+      })
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Teeka',
+      controlsList: getControlList({
+        value: teeka,
+        target: 'teeka',
+        controlAction: updateSettings,
+      })
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Transliteration',
+      controlsList: getControlList({
+        value: transliteration,
+        target: 'transliteration',
+        controlAction: updateSettings,
+      })
+    },
+  ];
+}
 export const CONTROLLER_ADVANCED_SETTINGS = () => [];
