@@ -174,6 +174,7 @@ export default class SearchForm extends React.PureComponent {
       typeInt
     );
 
+
     return this.props.children({
       ...state,
       isShowKeyboardIcon,

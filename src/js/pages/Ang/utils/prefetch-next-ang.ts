@@ -5,7 +5,7 @@ export const prefetchNextAng =
     (observedPanktis: IntersectionObserverEntry[]) => {
       observedPanktis.forEach(observedPankti => {
         if (observedPankti.isIntersecting) {
-          if (observedPankti.intersectionRatio === 1) {
+          if (observedPankti.intersectionRatio > 0) {
             const { target: targetPankti } = observedPankti;
             const angValue = Number(targetPankti.getAttribute('data-ang'));
 

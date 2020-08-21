@@ -7,7 +7,8 @@ import GenericError, { BalpreetSingh } from '@/components/GenericError';
 import ShabadContent from '@/components/ShabadContent';
 import BreadCrumb from '@/components/Breadcrumb';
 import { saveAng, errorEvent, ACTIONS } from '@/util';
-import { SOURCES, TEXTS } from '@/constants';
+import { SOURCES, TEXTS, MAX_ANGS } from '@/constants';
+
 
 import { useKeydownEventHandler } from '@/hooks';
 import { useObservePanktis, useFetchAngData } from '../hooks';
@@ -76,6 +77,8 @@ const Ang: React.FC<IAngProps> = ({
     nav = Array.isArray(angsDataMap[ang].navigation) ? {} : angsDataMap[ang].navigation;
     info = { source: angsDataMap[ang].source }
   }
+
+  const isMaxAngsNotReached = ang < (MAX_ANGS[source] || MAX_ANGS['G']);
 
   return (
     <div className="row" id="content-root">

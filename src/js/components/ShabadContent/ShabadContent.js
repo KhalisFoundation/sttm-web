@@ -10,6 +10,7 @@ import Meta from '@/components/Meta';
 import ProgressBar from '@/components/ProgressBar';
 import Baani from '@/components/Baani';
 import RelatedShabads from '@/components/RelatedShabads';
+import { MultiPageBaani } from './MultiPageBaani';
 
 import {
   getShabadId,
@@ -22,7 +23,7 @@ import {
   ACTIONS,
   errorEvent
 } from '@/util';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME, MAX_ANGS } from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
 
 /**
@@ -179,24 +180,14 @@ class Shabad extends React.PureComponent {
           <div id="shabad" className={`shabad display display-${type}`} ang>
             <div className="shabad-container">
               {isMultiPage ?
-                pages.map(({ page: gurbani, source }, idx) =>
-                  <Baani
-                    ang={source.pageNo}
-                    key={idx}
+                <>
+                  <MultiPageBaani
+                    pages={pages}
+                    history={history}
                     type={type}
                     gurbani={gurbani}
                     splitView={splitView}
                     unicode={unicode}
-                    onBaaniLineClick={(highlightVerseId) =>
-                      () => {
-                        const newUrl = toAngURL({
-                          ang: source.pageNo,
-                          source: source.sourceId,
-                          highlight: highlightVerseId
-                        });
-
-                        history.push(newUrl);
-                      }}
                     highlight={highlight}
                     larivaar={larivaar}
                     fontSize={fontSize}
@@ -209,9 +200,9 @@ class Shabad extends React.PureComponent {
                     transliterationLanguages={transliterationLanguages}
                     centerAlignGurbani={centerAlignGurbani}
                     showFullScreen={showFullScreen}
-                    isParagraphMode={false}
                   />
-                )
+                  {this.getContinueButton()}
+                </>
                 :
                 <Baani
                   type={type}
@@ -247,6 +238,42 @@ class Shabad extends React.PureComponent {
         </React.Fragment>
       </GlobalHotKeys>
     );
+  }
+
+  getContinueButton = () => {
+    const { pages, history } = this.props;
+
+    if (pages.length > 0) {
+      const lastPage = pages[pages.length - 1];
+      const lastAng = lastPage.source.pageNo;
+      const source = lastPage.source.sourceId;
+      const isMaxAngsReached = lastAng === (MAX_ANGS[source] || MAX_ANGS['G']);
+
+      if (isMaxAngsReached) {
+        return null;
+      }
+
+      const newUrl = toAngURL({
+        ang: lastAng + 1,
+        source,
+        highlight: undefined
+      });
+
+      const loadNextAng = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        history.push(newUrl);
+      }
+
+      return (
+        <div className="continue">
+          <button className="btn btn-primary"
+            onClick={loadNextAng}>
+            Load next ang
+          </button>
+        </div>
+      )
+    }
   }
 
   scrollListener = () => {

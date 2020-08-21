@@ -192,7 +192,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   componentDidUpdate = () => {
     this.reEvaluateMaxScrollPossible();
-    console.log(this._maxScrollPossible, "MAX SCROLL POSSIBLE");
   }
 
   componentWillUnmount = () => {
