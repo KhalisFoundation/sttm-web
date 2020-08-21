@@ -32,7 +32,6 @@ export const getHighlightIndices = (
   // }
 
   let baaniWords = baani.split(' ');
-  console.log(mainQuery, 'mainquery')
   switch (type) {
     // TODO: This is obviously not the best way to handle it.
     case SEARCH_TYPES.ROMANIZED: {
@@ -112,7 +111,6 @@ export const getHighlightIndices = (
           });
         } else {
           start = baaniLetters.toLowerCase().indexOf(subQuery);
-          console.log(start, baaniLetters, "baani letters")
           if (start !== -1) {
             end = start + subQuery.length;
             highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
