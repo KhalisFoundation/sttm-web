@@ -11,10 +11,10 @@ interface IUseFetchAngData {
 }
 
 export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngData) => {
+  const dispatch = useDispatch();
   const [isFetchingAngData, setFetchingAngData] = useState<boolean>(false);
   const [errorFetchingAngData, setErrorFetchingAngData] = useState<string>('');
   const [angsDataMap, setangsDataMap] = useState<any>([]);
-  const dispatch = useDispatch();
   const url = useMemo(() => buildApiUrl({ ang: ang, source, API_URL }), [ang, source, API_URL]);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngDat
 
       setTimeout(() => {
         dispatch({ type: SET_LOADING_ANG, payload: false });
-      }, 1000) // kind of hack to make sure our DOM gets populated with data by now.
+      }, 0) // kind of hack to make sure our DOM gets populated with data by now.
     }
 
     fetchAngData(url);
