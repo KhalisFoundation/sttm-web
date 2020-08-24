@@ -1,5 +1,6 @@
 // NOTE: letter mapping from gurmukhi to english
-export const GURMUKHI_TO_ENGLISH_MAP = {
+// which can be used interchangeably
+export const GURMUKHI_TO_ENGLISH_MAP: Record<string, string> = {
   'q': 't',
   't': 'q',
   'f': 'd',

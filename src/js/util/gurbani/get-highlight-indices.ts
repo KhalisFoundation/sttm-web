@@ -114,7 +114,6 @@ export const getHighlightIndices = (
           // There are few gurmukhi letters
           // which have multiple mappings in english language
           // for eg q and t are used interchangeably
-          
           const subQueryModified = subQuery
             .toLowerCase()
             .split('')
