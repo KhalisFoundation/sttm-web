@@ -1,5 +1,5 @@
 import { numbersRange } from "../numbers";
-import { SEARCH_TYPES, SEARCH_TYPES_NOT_ALLOWED_KEYS } from "../../constants";
+import { SEARCH_TYPES, SEARCH_TYPES_NOT_ALLOWED_KEYS, GURMUKHI_TO_ENGLISH_MAP } from "../../constants";
 import { getHighlightingEndpoints } from "./get-highlighting-endpoints";
 
 export const getHighlightIndices = (
@@ -110,7 +110,27 @@ export const getHighlightIndices = (
             highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
           });
         } else {
-          start = baaniLetters.toLowerCase().indexOf(subQuery);
+
+          // There are few gurmukhi letters
+          // which have multiple mappings in english language
+          // for eg q and t are used interchangeably
+          
+          const subQueryModified = subQuery
+            .toLowerCase()
+            .split('')
+            .map((letter: string) => {
+              const otherLetter = GURMUKHI_TO_ENGLISH_MAP[letter];
+              if (otherLetter) {
+                return `[${letter},${otherLetter}]`;
+              }
+
+              return letter;
+            })
+            .join('');
+
+          const subQueryRegex = new RegExp(subQueryModified, 'g');
+          start = baaniLetters.toLowerCase().search(subQueryRegex);
+
           if (start !== -1) {
             end = start + subQuery.length;
             highlightIndices = highlightIndices.concat(numbersRange(start, end - 1, 1));
