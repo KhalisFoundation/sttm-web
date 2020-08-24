@@ -19,7 +19,7 @@ import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '@/constants';
 
 class SearchResultsCollection extends React.PureComponent {
   static contextTypes = {
-    router: PropTypes.object,
+    r) outer: PropTypes.object,
   };
 
   static propTypes = {
@@ -133,10 +133,5 @@ class SearchResultsCollection extends React.PureComponent {
   }
 }
 
-<<<<<<< HEAD:src/js/pages/Search/components/SearchResultsCollection.js
 const stateToProps = state => state;
-export default connect(stateToProps)(SearchResultsCollection);
-=======
-const stateToProps = (state) => state;
-export default connect(stateToProps)(withRouter(Layout));
->>>>>>> 5364c3d2d3b3d512ff9481846c400d103e7a5ec0:src/js/pages/Search/Layout.js
+export default connect(stateToProps)(withRouter(SearchResultsCollection));

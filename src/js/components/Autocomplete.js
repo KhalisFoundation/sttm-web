@@ -165,7 +165,6 @@ class Autocomplete extends Component {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
           <ul
-<<<<<<< HEAD
             id="suggestions"
             className="search-result"
             onKeyDown={this.onKeyDown} >
@@ -175,11 +174,6 @@ class Autocomplete extends Component {
             >
               <CrossIcon />
             </button>
-=======
-            className="search-result"
-            id="suggestions"
-            onKeyDown={this.onKeyDown} >
->>>>>>> 5364c3d2d3b3d512ff9481846c400d103e7a5ec0
             {filteredSuggestions.map((suggestion, index) => {
               let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
               const isLastIdx = index === (filteredSuggestions.length - 1);
@@ -201,28 +195,6 @@ class Autocomplete extends Component {
                     this.setState({ activeSuggestion: index });
                   }}
                 >
-<<<<<<< HEAD
-                  <Link
-                    to={suggestion.url}
-                    onClick={() => {
-                      setTimeout(this.resetSearchResults, 2000);
-                      if (this.props.onItemClick)
-                        this.props.onItemClick();
-                    }}
-                  >
-                    <Larivaar
-                      larivaarAssist={false}
-                      enable={false}
-                      unicode={false}
-                      highlightIndex={suggestion.highlightIndex}
-                      query={suggestion.query}
-                      type={searchOptions.type}
-                    >
-                      {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
-                    </Larivaar>
-                    {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                  </Link>
-=======
                   {isShowFullResultsListItem ?
                     <Link
                       to={suggestion.url}
@@ -243,11 +215,10 @@ class Autocomplete extends Component {
                       </Larivaar>
                       {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
                     </a>}
->>>>>>> 5364c3d2d3b3d512ff9481846c400d103e7a5ec0
-                </li>
+                </li >
               );
             })}
-          </ul>
+          </ul >
         );
       } else {
         suggestionsListComponent = (
