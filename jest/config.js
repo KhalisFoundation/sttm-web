@@ -8,6 +8,7 @@ module.exports = {
   transform: {
     '^.+\\.js|jsx|ts|tsx$': '<rootDir>/jest/transform.js',
   },
+  testPathIgnorePatterns: ['<rootDir>/cypress'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
 };
