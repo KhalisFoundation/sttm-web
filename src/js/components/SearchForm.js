@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   TYPES,
   SOURCES,
@@ -13,10 +14,10 @@ import {
   DEFAULT_SEARCH_RAAG,
   DEFAULT_SEARCH_WRITER,
   SEARCH_TYPES,
+  SEARCH_TYPES_NOT_ALLOWED_KEYS,
   SOURCES_WITH_ANG,
 } from '@/constants';
-import { clickEvent, ACTIONS } from '../util/analytics';
-import { getNumberFromLocalStorage } from '../util';
+import { getNumberFromLocalStorage, clickEvent, ACTIONS } from '@/util';
 
 /**
  *
@@ -67,7 +68,7 @@ export default class SearchForm extends React.PureComponent {
     children: PropTypes.func.isRequired,
     isHomePage: PropTypes.bool,
     defaultQuery: PropTypes.string,
-    defaultType: PropTypes.oneOf(Object.keys(TYPES)),
+    defaultType: PropTypes.oneOf(Object.keys(TYPES).map(type => parseInt(type))),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     defaultRaag: PropTypes.number,
     defaultWriter: PropTypes.number,
@@ -118,7 +119,6 @@ export default class SearchForm extends React.PureComponent {
 
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
-
     const tick = () =>
       (this.timer = setTimeout(
         () =>
@@ -175,22 +175,22 @@ export default class SearchForm extends React.PureComponent {
   render() {
     const {
       state,
-      setGurmukhiKeyboardVisibilityAs,
       setQueryAs,
+      setGurmukhiKeyboardVisibilityAs,
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
       handleSearchRaagChange,
       handleSearchWriterChange,
       handleSubmit,
+      handleKeyDown
     } = this;
 
-    const [, useEnglish = false] = PLACEHOLDERS[this.state.type];
-
+    const { type } = this.state;
+    const typeInt = parseInt(type);
+    const [, useEnglish = false] = PLACEHOLDERS[type];
     const className = useEnglish ? '' : 'gurbani-font';
-
-    const typeInt = parseInt(this.state.type);
-
+    const isShowKeyboardIcon = typeInt <= 2 || typeInt === 6;
     const [title, pattern] =
       typeInt === SEARCH_TYPES.ROMANIZED
         ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
@@ -204,21 +204,24 @@ export default class SearchForm extends React.PureComponent {
 
     return this.props.children({
       ...state,
+      isShowKeyboardIcon,
       pattern,
       title,
       className,
       action,
       name,
       inputType,
-      setGurmukhiKeyboardVisibilityAs,
       setQueryAs,
+      setGurmukhiKeyboardVisibilityAs,
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
       handleSearchRaagChange,
       handleSearchWriterChange,
       handleSubmit,
+      handleKeyDown,
     });
+
   }
   componentDidUpdate() {
     const {
@@ -246,34 +249,76 @@ export default class SearchForm extends React.PureComponent {
     }
   }
 
+  isQueryAllowed = (query, type = this.state.type) => {
+    // Different search types have different criteria to tell if it's safe query to be allowed to enter or not
+    if (query) {
+      switch (type) {
+        case SEARCH_TYPES.MAIN_LETTERS: {
+          const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS];
+          const lagamatrasRegExp = new RegExp(lagamatras.join('|'));
+
+          // if it's not allowed key, then return false
+          if (lagamatrasRegExp.test(query)) {
+            return false;
+          }
+        }
+          break;
+      }
+    }
+    return true;
+  }
+
   // Retuns a function
-  setGurmukhiKeyboardVisibilityAs = value => () =>
-    value !== this.state.displayGurmukhiKeyboard &&
-    this.setState({ displayGurmukhiKeyboard: value }, () => {
-      clickEvent({
-        action: ACTIONS.GURMUKHI_KEYBOARD,
-        label: value ? 1 : 0,
+  setGurmukhiKeyboardVisibilityAs = value => () => {
+    if (value !== this.state.displayGurmukhiKeyboard) {
+      this.setState({ displayGurmukhiKeyboard: value }, () => {
+        clickEvent({
+          action: ACTIONS.GURMUKHI_KEYBOARD,
+          label: value ? 1 : 0,
+        });
       });
-    });
+    }
+  }
 
   setQueryAs = value => () =>
-    this.stopPlaceholderAnimation().then(() =>
-      this.setState(() => ({
+    this.stopPlaceholderAnimation().then(() => {
+      return this.setState(() => ({
         query: value,
         shouldSubmit:
           this.props.submitOnChangeOf.includes('query') && value !== '',
       }))
-    );
+    })
+
+  handleKeyDown = (e) => {
+    switch (this.state.type) {
+      case SEARCH_TYPES.MAIN_LETTERS: {
+        const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS];
+        const isPressedKeyNotAllowed = lagamatras.some((key) => key === e.key);
+        // if it's not allowed key, then return false
+        if (isPressedKeyNotAllowed) {
+          e.preventDefault();
+          return false;
+        }
+      }
+        break;
+    }
+
+    return true;
+  }
+
 
   handleSearchChange = ({ target }) => {
-    const cursorStart = target.selectionStart;
-    const cursorEnd = target.selectionEnd;
-    console.log(target.value, " target .value ...")
-    this.setQueryAs(target.value)().then(() => {
-      if (cursorStart !== null) {
-        return target.setSelectionRange(cursorStart, cursorEnd)
-      }
-    });
+    const query = target.value
+    if (this.isQueryAllowed(query)) {
+      const cursorStart = target.selectionStart;
+      const cursorEnd = target.selectionEnd;
+
+      this.setQueryAs(query)().then(() => {
+        if (cursorStart !== null) {
+          return target.setSelectionRange(cursorStart, cursorEnd)
+        }
+      });
+    }
   };
 
   handleSearchSourceChange = e =>
@@ -321,7 +366,6 @@ export default class SearchForm extends React.PureComponent {
 
   handleSearchWriterChange = ({ currentTarget: { value } }) => {
     const newWriter = parseInt(value, 10);
-
     this.setState((previousState) => {
       return {
         ...previousState,
@@ -343,53 +387,70 @@ export default class SearchForm extends React.PureComponent {
   }
 
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
-    const {
-      type,
-      raag,
-      writer,
-      source,
-      query
-    } = this.state;
-    const { submitOnChangeOf } = this.props;
-    const isSearchTypeToAngType = type !== SEARCH_TYPES['ANG'] && Number(value) === SEARCH_TYPES['ANG'];
-    debugger;
-    this.stopPlaceholderAnimation().then(() =>
-      this.setState(
-        {
-          type: parseInt(value, 10),
-          source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
-            Object.keys(SOURCES_WITH_ANG).includes(source) ?
-            source : 'G',
-          raag,
-          writer,
-          query: isSearchTypeToAngType ? '' : query,
-          shouldSubmit: isSearchTypeToAngType ? false :
-            submitOnChangeOf.includes('type') &&
-            query !== ''
-        },
-        () => {
-          clickEvent({ action: ACTIONS.SEARCH_TYPE, label: type });
-          localStorage.setItem(
-            LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-            type
-          );
-          localStorage.setItem(
-            LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
-            source
-          );
-          requestAnimationFrame(this.beginPlaceholderAnimation);
-        }
-      )
-    );
-  }
+    const { type: currentSearchType, query, source, displayGurmukhiKeyboard } = this.state;
+    const newSearchType = Number(value);
+    const isSearchTypeToAngSearchType = currentSearchType !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
+    const isSearchTypeToMainLetterSearchType = currentSearchType !== SEARCH_TYPES.MAIN_LETTERS && newSearchType === SEARCH_TYPES.MAIN_LETTERS
+    const isQueryToBeCleared = isSearchTypeToAngSearchType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
 
-  handleSubmit = () => {
-    /* Possible Validations, Analytics */
-    clickEvent({
-      action: ACTIONS.SEARCH_QUERY,
-      label: this.state.query,
-    });
-  };
+
+    // We are only showing keyboard :
+    // If they falls in the gurmukhi keyboard category && keyboard is already open/active.
+    // If keyboard is closed already, no need to set it as active.
+    const isShowKeyboard = newSearchType !== SEARCH_TYPES['ANG'] &&
+      newSearchType !== SEARCH_TYPES['ENGLISH_WORD'] &&
+      newSearchType !== SEARCH_TYPES['ROMANIZED']
+      && displayGurmukhiKeyboard;
+
+    handleSearchTypeChange = ({ currentTarget: { value } }) => {
+      const {
+        type,
+        raag,
+        writer,
+        source,
+        query
+      } = this.state;
+      const { submitOnChangeOf } = this.props;
+      const isSearchTypeToAngType = type !== SEARCH_TYPES['ANG'] && Number(value) === SEARCH_TYPES['ANG'];
+      debugger;
+      this.stopPlaceholderAnimation().then(() =>
+        this.setState(
+          {
+            type: newSearchType,
+            source: parseInt(value, 10) === SEARCH_TYPES['ANG'] &&
+              Object.keys(SOURCES_WITH_ANG).includes(source) ?
+              source : 'G',
+            raag,
+            writer,
+            query: isQueryToBeCleared ? '' : query,
+            shouldSubmit: isSearchTypeToAngType ? false :
+              submitOnChangeOf.includes('type') &&
+              query !== '',
+            displayGurmukhiKeyboard: isShowKeyboard
+          },
+          () => {
+            clickEvent({ action: ACTIONS.SEARCH_TYPE, label: newSearchType });
+            localStorage.setItem(
+              LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+              newSearchType
+            );
+            localStorage.setItem(
+              LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
+              source
+            );
+            requestAnimationFrame(this.beginPlaceholderAnimation);
+          }
+        )
+      );
+    }
+
+    handleSubmit = () => {
+      /* Possible Validations, Analytics */
+      clickEvent({
+        action: ACTIONS.SEARCH_QUERY,
+        label: this.state.query,
+      });
+    };
 
   /**
    * Returns an array of form action, input name and input type

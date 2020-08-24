@@ -1,1 +1,1 @@
-export * from './FloatingActions';
+export * from './components/FloatingActions';

@@ -7,15 +7,22 @@ import {
   MAX_ANGS,
 } from '../constants';
 import { Link } from 'react-router-dom';
-import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
+
+import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
-import { toSearchURL, getQueryParams, getShabadList } from '../util';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
 import { FilterTypes } from '@/components/FilterTypes';
+
+import {
+  toSearchURL,
+  getQueryParams,
+  getShabadList,
+  reformatSearchTypes
+} from '@/util';
 export default class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
 
@@ -69,12 +76,12 @@ export default class Header extends React.PureComponent {
   }
 
   handleFormSubmit = (data) => {
-    console.log(toSearchURL(data), '>>>>>>>>>>>>>>>>> :( ');
+
     this.props.history.push(toSearchURL(data));
   };
 
   componentWillUnmount = () => {
-    console.log('THIS IS UNMOUNTING...');
+
   };
 
   render() {
@@ -94,6 +101,7 @@ export default class Header extends React.PureComponent {
     } = getQueryParams(location.search);
 
     const id = `${defaultQuery}${defaultSource}${defaultType}${defaultRaag}${defaultWriter}`;
+    const isSearchPageRoute = location.pathname.includes('search');
 
     // console.log(key, "key updated ?")
     const controllerHeader = (
@@ -173,13 +181,17 @@ export default class Header extends React.PureComponent {
               placeholder,
               setGurmukhiKeyboardVisibilityAs,
               setQueryAs,
+              handleKeyDown,
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
               handleSearchRaagChange,
               handleSearchWriterChange,
               handleSubmit,
-            }) => (
+            }) => {
+              const isShowKeyboard = type !== SEARCH_TYPES['ANG'] && type !== SEARCH_TYPES['ENGLISH_WORD'] && type !== SEARCH_TYPES['ROMANIZED'];
+
+              return (
                 <React.Fragment>
                   {console.log(query, 'new query....')}
                   <div id="responsive-menu">
@@ -235,6 +247,7 @@ export default class Header extends React.PureComponent {
                                     required="required"
                                     name={name}
                                     value={query}
+                                    onKeyDown={handleKeyDown}
                                     onChange={handleSearchChange}
                                     className={className}
                                     placeholder={placeholder}
@@ -249,47 +262,42 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <button
-                                    type="button"
                                     className="clear-search-toggle"
                                     onClick={setQueryAs('')}
                                   >
                                     <CrossIcon />
                                   </button>
 
-                                  {type > 2 ? (
-                                    ''
-                                  ) : (
-                                      <button
-                                        type="button"
-                                        className={`gurmukhi-keyboard-toggle ${
-                                          displayGurmukhiKeyboard ? 'active' : ''
-                                          }`}
-                                        onClick={setGurmukhiKeyboardVisibilityAs(
-                                          !displayGurmukhiKeyboard
-                                        )}
-                                      >
-                                        <KeyboardIcon />
-                                      </button>
-                                    )}
+                                  {isShowKeyboard && (
+                                    <button
+                                      type="button"
+                                      className={`gurmukhi-keyboard-toggle ${
+                                        displayGurmukhiKeyboard ? 'active' : ''
+                                        }`}
+                                      onClick={setGurmukhiKeyboardVisibilityAs(
+                                        !displayGurmukhiKeyboard
+                                      )}
+                                    >
+                                      <KeyboardIcon />
+                                    </button>
+                                  )}
 
                                   <button type="submit">
                                     <SearchIcon />
                                   </button>
 
-                                  <EnhancedGurmukhiKeyboard
-                                    value={query}
-                                    searchType={parseInt(type)}
-                                    active={displayGurmukhiKeyboard}
-                                    onKeyClick={(newValue) =>
-                                      setQueryAs(newValue)()
-                                    }
-                                    onClose={setGurmukhiKeyboardVisibilityAs(
-                                      false
-                                    )}
-                                  />
+                                  {isShowKeyboard && (
+                                    <EnhancedGurmukhiKeyboard
+                                      value={query}
+                                      searchType={parseInt(type)}
+                                      active={displayGurmukhiKeyboard}
+                                      onKeyClick={newValue => setQueryAs(newValue)()}
+                                      onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                                    />
+                                  )}
 
                                   <Autocomplete
-                                    onItemClick={() => setQueryAs('')}
+                                    isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
                                     getSuggestions={getShabadList}
                                     searchOptions={{
                                       type: parseInt(type),
@@ -338,7 +346,8 @@ export default class Header extends React.PureComponent {
                     <Menu isHome={isHome} />
                   </div>
                 </React.Fragment>
-              )}
+              )
+            }}
           </SearchForm>
         </div>
       </div >

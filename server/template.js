@@ -33,6 +33,8 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="theme-color" content="${ONLINE_COLOR}" />
   <meta name="description" content="${description}" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-itunes-app" content="app-id=431446112" />
+  <meta name="google-play-app" content="app-id=com.WahegurooNetwork.SundarGutka" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -58,16 +60,18 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="STTM">
-  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png">
+  <!-- <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png"> -->
 
   <!-- Windows Tile -->
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
+  <link rel="android-touch-icon" href="/assets/images/sundar-gutka-icon.png">
+  <link rel="apple-touch-icon" href="/assets/images/sundar-gutka-icon.png">
   ${stylesheetsHTML}
 </head>
 
-<body class="${bodyClass}">
+<body data-testid="bodyElement" class="${bodyClass}">
   <div id="toast-notification" class="toast-notification hidden"></div>
 
   <div id="app-root"></div>

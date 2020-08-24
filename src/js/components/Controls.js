@@ -42,7 +42,6 @@ class Controls extends React.Component {
   };
 
   componentDidMount() {
-    this.mounted = true;
     this.lastScroll = 0;
     this.isChangeInControls = false;
 
@@ -57,7 +56,6 @@ class Controls extends React.Component {
   }
 
   componentWillUnmount() {
-    this.mounted = false;
     window.removeEventListener('scroll', this.scrollListener, {
       passive: true,
     });
@@ -86,49 +84,52 @@ class Controls extends React.Component {
   }
 
   scrollListener = throttle(() => {
-    const controlsOffsetTop = this.$wrapper.offsetTop;
-    const controlsHeight = this.$wrapper.offsetHeight;
-    const controlsBottom = controlsOffsetTop + controlsHeight;
-    const controlsOffset = this.$wrapper.style.position === 'sticky' ? controlsOffsetTop : controlsBottom;
+    const { fullScreenMode } = this.props;
+    if (!fullScreenMode) {
+      const controlsOffsetTop = this.$wrapper.offsetTop;
+      const controlsHeight = this.$wrapper.offsetHeight;
+      const controlsBottom = controlsOffsetTop + controlsHeight;
+      const controlsOffset = this.$wrapper.style.position === 'sticky' ? controlsOffsetTop : controlsBottom;
 
-    if (window.scrollY >= controlsOffset) {
-      this.$wrapper.style.opacity = 0;
+      if (window.scrollY >= controlsOffset) {
+        this.$wrapper.style.opacity = 0;
 
-      if (this.mounted && this.state.showBorder === false) {
-        this.setState({ showBorder: true });
-      }
-
-      if (this.isChangeInControls) {
-        this.isChangeInControls = false;
-        this.$wrapper.style.opacity = 1;
-        return;
-      }
-
-      this.setState(prevState => {
-        // We are moving in up direction
-        if (this.lastScroll > controlsOffsetTop) {
-          this.applyControlStyles(true);
-
-          return {
-            ...prevState,
-            showControls: true
-          };
+        if (this.isChangeInControls) {
+          this.isChangeInControls = false;
+          this.$wrapper.style.opacity = 1;
+          return;
         }
 
-        // We are moving in downward direction
-        this.applyControlStyles(false);
-        return {
-          ...prevState,
-          showControls: false
-        };
-      });
-    } else {
-      this.resetControlStyles();
+        return this.setState(prevState => {
+          // We are moving in up direction
+          if (this.lastScroll >= controlsOffsetTop) {
+            this.applyControlStyles(true);
 
-      if (this.mounted && this.state.showBorder === true) {
-        this.setState({ showBorder: false, showControls: true });
+            return {
+              ...prevState,
+              showBorder: true,
+              showControls: true
+            };
+          }
+
+          // We are moving in downward direction
+          this.applyControlStyles(false);
+          return {
+            ...prevState,
+            showBorder: false,
+            showControls: false
+          };
+        });
       }
     }
+    // Reset state.
+    this.resetControlStyles();
+    return this.setState(prevState => ({
+      ...prevState,
+      showBorder: false,
+      showControls: true
+    }))
+
   }, 100);
 
   setRef = node => (this.$wrapper = node);
@@ -140,9 +141,11 @@ class Controls extends React.Component {
       'with-border': showBorder,
     });
 
-    const controlStyles = showControls ? {
-      transform: ''
-    } : {
+    const controlStyles = showControls ?
+      {
+        transform: '',
+      } :
+      {
         transform: 'rotateX(90deg) perspective(500px)'
       }
 

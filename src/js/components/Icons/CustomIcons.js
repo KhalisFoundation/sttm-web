@@ -66,22 +66,24 @@ export const AlignCenterIcon = props => (
     <svg id="Layer" enableBackground="new 0 0 64 64" height="25" viewBox="0 0 64 64" width="25" xmlns="http://www.w3.org/2000/svg"><path d="m54 8h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m54 52h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m46 23c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" /><path d="m54 30h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m46 45c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" /></svg>
   </span>
 );
-AlignCenterIcon.propTypes = iconPropTypes
+AlignCenterIcon.propTypes = iconPropTypes;
+
 export const AlignLeftIcon = props => (
   <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>
     <svg id="Layer" enableBackground="new 0 0 64 64" height="25" viewBox="0 0 64 64" width="25" xmlns="http://www.w3.org/2000/svg"><path d="m54 8h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m54 52h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m10 23h28c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" /><path d="m54 30h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" /><path d="m10 45h28c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" /></svg>
   </span>
 );
-AlignLeftIcon.propTypes = iconPropTypes
+AlignLeftIcon.propTypes = iconPropTypes;
 
 export const LarivaarIcon = props => (
   <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>ੳਅ</span>
 );
-LarivaarIcon.propTypes = iconPropTypes
+LarivaarIcon.propTypes = iconPropTypes;
+
 export const LarivaarAssistIcon = props => (
   <span onClick={props.onClick} className={`custom-fa  custom-fa-assist ${props.value ? 'enabled' : ''}`}>ੳ</span>
 );
-LarivaarAssistIcon.propTypes = iconPropTypes
+LarivaarAssistIcon.propTypes = iconPropTypes;
 
 export const SplitViewIcon = props => (
   <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>
@@ -105,7 +107,8 @@ export const SplitViewIcon = props => (
     </svg>
   </span>
 );
-SplitViewIcon.propTypes = iconPropTypes
+SplitViewIcon.propTypes = iconPropTypes;
+
 export const ParagraphIcon = props => (
   <span
     onClick={props.onClick}
@@ -121,7 +124,7 @@ export const ParagraphIcon = props => (
   </span>
 )
 
-ParagraphIcon.propTypes = iconPropTypes
+ParagraphIcon.propTypes = iconPropTypes;
 
 export const GearsIcon = props => (
   <span onClick={props.onClick} className={`custom-fa gear-icon ${props.value ? 'enabled' : ''}`}>
@@ -130,7 +133,7 @@ export const GearsIcon = props => (
     </svg>
   </span>
 )
-GearsIcon.propTypes = iconPropTypes
+GearsIcon.propTypes = iconPropTypes;
 
 export const DownArrowIcon = () => (
   <span className={`downarrow-key`}>
@@ -139,3 +142,10 @@ export const DownArrowIcon = () => (
     </svg>
   </span>
 )
+
+export const IconLabel = props => (
+  <span>{props.value}</span>
+)
+IconLabel.propTypes = {
+  value: PropTypes.number
+};

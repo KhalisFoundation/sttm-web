@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Pagination from '@/components/Pagination';
@@ -114,7 +114,7 @@ class SearchResultsCollection extends React.PureComponent {
 
     clickEvent({ action: TEXTS.OPEN_PAGE, label: pageNumber });
     window.scrollTo(0, 0);
-    this.context.router.history.push(
+    this.props.history.push(
       toSearchURL({
         query: q,
         type,
@@ -133,5 +133,10 @@ class SearchResultsCollection extends React.PureComponent {
   }
 }
 
+<<<<<<< HEAD:src/js/pages/Search/components/SearchResultsCollection.js
 const stateToProps = state => state;
 export default connect(stateToProps)(SearchResultsCollection);
+=======
+const stateToProps = (state) => state;
+export default connect(stateToProps)(withRouter(Layout));
+>>>>>>> 5364c3d2d3b3d512ff9481846c400d103e7a5ec0:src/js/pages/Search/Layout.js

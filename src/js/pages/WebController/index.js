@@ -13,6 +13,7 @@ import ControllerSearch from './search';
 import ControllerShabad from '@/pages/WebController/shabad';
 import { versesToGurbani } from '@/util';
 import { Spinner } from '@/components/Spinner';
+import ShabadControls from '@/components/ShabadControlsv2';
 
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
@@ -31,6 +32,7 @@ export default class WebControllerPage extends React.PureComponent {
       codeError: false,
 
       loading: false,
+      desktopSettings: {},
     };
   }
 
@@ -86,6 +88,15 @@ export default class WebControllerPage extends React.PureComponent {
       );
   }
 
+  updateSettings = (settings) => {
+    this.state.socket.emit('data', {
+      host: "sttm-web",
+      pin: this.state.controllerPin,
+      type: "settings",
+      settings,
+    });
+  }
+
   handleSubmit = (code, pin) => {
     this.setState({ loading: true });
     fetch(`${SYNC_API_URL}sync/join/${code}`)
@@ -116,6 +127,7 @@ export default class WebControllerPage extends React.PureComponent {
             );
 
             this._socket.on('data', data => {
+              console.log(data);
               if (data['type'] === 'response-control') {
                 data['success'] ?
                   this.setState({
@@ -125,6 +137,7 @@ export default class WebControllerPage extends React.PureComponent {
                     socket: this._socket,
                     pinError: false,
                     codeError: false,
+                    desktopSettings: data.settings || null
                   }, this.finishLoading) :
                   this.setState({
                     connected: false,
@@ -139,6 +152,8 @@ export default class WebControllerPage extends React.PureComponent {
                   this.handleCeremony(data.id, data.highlight);
                 data['type'] === 'bani' &&
                   this.handleBani(data.id, data.highlight, data.baniLength, data.mangalPosition);
+                data['type'] === 'settings' &&
+                  this.setState({ desktopSettings: data.settings });
               }
             });
           }
@@ -158,6 +173,7 @@ export default class WebControllerPage extends React.PureComponent {
       socket,
       controllerPin,
       connected,
+      desktopSettings,
       searchData,
       namespaceString,
       error,
@@ -188,6 +204,13 @@ export default class WebControllerPage extends React.PureComponent {
           {connected ? (
             <React.Fragment>
               <SearchInput onSearch={this.handleSearch} />
+
+              <ShabadControls {...this.props}
+                isBaniController={true}
+                updateSettings={this.updateSettings}
+                desktopSettings={desktopSettings}
+              />
+
               <SlideControls
                 socket={socket}
                 controllerPin={controllerPin}

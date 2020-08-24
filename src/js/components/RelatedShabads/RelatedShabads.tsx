@@ -1,10 +1,11 @@
 import React, { memo } from 'react';
-import Fetch from '../Fetch';
-import { TEXTS } from '@/constants';
-import { IStore } from '@/features/types';
+
+import Fetch from '@/components/Fetch';
 import Larivaar from '@/components/Larivaar';
-import { clickEvent, ACTIONS } from '@/util/analytics';
-import { toShabadURL } from '@/util';
+
+import { IStore } from '@/features/types';
+import { TEXTS } from '@/constants';
+import { toShabadURL, clickEvent, ACTIONS } from '@/util';
 
 export interface IRelatedShabadData {
   ShabadID: number;
@@ -29,12 +30,12 @@ export interface IRelatedShabadData {
 
 export interface IRelatedShabadsProps
   extends Pick<
-    IStore,
-    | 'translationLanguages'
-    | 'larivaar'
-    | 'larivaarAssist'
-    | 'unicode'
-    | 'transliterationLanguages'
+  IStore,
+  | 'translationLanguages'
+  | 'larivaar'
+  | 'larivaarAssist'
+  | 'unicode'
+  | 'transliterationLanguages'
   > {
   forShabadID: number;
   count?: number;
@@ -47,7 +48,7 @@ interface IRelatedShabadsState {
 class RelatedShabads extends React.PureComponent<
   IRelatedShabadsProps,
   IRelatedShabadsState
-> {
+  > {
   static showMoreShabads = 4;
   static maxVisibleShabads = 20;
   static shabadMatchingScoreScale = 1.5;
@@ -241,7 +242,7 @@ class RelatedShabads extends React.PureComponent<
                     className="relatedShabadShowMoreBtn primaryBtn"
                     onClick={this.handleShowMore(totalShabads)}
                   >
-                    Show More Results
+                    More Related Results
                   </button>
                 </div>
               )}

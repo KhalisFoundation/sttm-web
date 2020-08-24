@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices } from '../../util';
 import {
+  SEARCH_TYPES
+} from '@/constants';
+
+import {
   getAng,
   getSource,
   getUnicodeVerse,
@@ -51,27 +55,37 @@ export default class SearchResult extends React.PureComponent {
       ? `${_source} - ${shabadPageNo}`
       : null;
 
+    const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
+    const shabadEnglishTranslation = translationMap['english'](shabad)
+
+    // Since for english-word search type we needs to highlight index
+    // for english translations.
     const highlightIndex = getHighlightIndices(
-      shabad.verse.gurmukhi,
+      isSearchTypeEnglishWord ? shabadEnglishTranslation : shabad.verse.gurmukhi,
       q,
-      type
+      type,
     );
 
     return (
       <React.Fragment key={shabad.id}>
-        <li className="search-result">
+        <li
+          className="search-result">
           <Link
-            style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}` }}
+            style={{
+              fontSize: `${fontSize}em`,
+              fontFamily: `${fontFamily}`
+            }}
             to={toShabadURL({ shabad, q, type, source })}
             className="gurbani-font gurbani-display"
           >
             {unicode ? (
               <div className={`unicode ${larivaar ? 'larivaar' : ''}`}>
                 <Larivaar
+                  type={type}
                   larivaarAssist={larivaarAssist}
                   enable={larivaar}
                   unicode={unicode}
-                  highlightIndex={highlightIndex}
+                  highlightIndex={isSearchTypeEnglishWord ? [] : highlightIndex}
                   query={q}
                   visraam={shabad.visraam}
                 >
@@ -81,9 +95,10 @@ export default class SearchResult extends React.PureComponent {
             ) : (
                 <div className={`gurlipi ${larivaar ? 'larivaar' : ''}`}>
                   <Larivaar
+                    type={type}
                     larivaarAssist={larivaarAssist}
                     enable={larivaar}
-                    highlightIndex={highlightIndex}
+                    highlightIndex={isSearchTypeEnglishWord ? [] : highlightIndex}
                     query={q}
                     visraam={shabad.visraam}
                   >
@@ -135,7 +150,20 @@ export default class SearchResult extends React.PureComponent {
 
           {translationLanguages.includes('english') && (
             <blockquote className="translation english">
-              {translationMap['english'](shabad)}
+              {isSearchTypeEnglishWord ?
+                <Larivaar
+                  larivaarAssist={false}
+                  enable={false}
+                  unicode={false}
+                  highlightIndex={highlightIndex}
+                  query={q}
+                  type={type}
+                >
+                  {shabadEnglishTranslation}
+                </Larivaar>
+
+                : shabadEnglishTranslation
+              }
             </blockquote>
           )}
 

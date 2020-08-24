@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AutoScrollControl from '../AutoScrollControl';
+import AutoScrollControl from '../../AutoScrollControl';
 import ScrollToTop from './ScrollToTop';
 import FullScreen from './FullScreen';
 

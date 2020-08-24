@@ -8,11 +8,13 @@ import {
   throwError,
 } from './util';
 import { Redirect } from 'react-router-dom';
+
 import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
 import RedirectExternal from './components/RedirectExternal';
 import Home from './pages/Home';
-import WebControllerPage from './pages/WebController'
+import WebControllerPage from './pages/WebController';
+import { updateSmartAppBannerMetaTags } from '@/util';
 import {
   DEFAULT_SEARCH_RAAG,
   DEFAULT_SEARCH_WRITER,
@@ -119,15 +121,16 @@ export default [
   {
     path: '/ang',
     render(props) {
-      const [ang, source, highlight] = ['ang', 'source', 'highlight'].map(v =>
+      const [ang, source, highlight] = ['ang', 'source', 'highlight'].map((v) =>
         getParameterByName(v)
       );
 
       return (
         <Layout
           defaultQuery={ang}
-          title={`Ang ${ang} of ${SOURCES[source] ||
-            SOURCES.G} Ang/Page Viewer - SikhiToTheMax`}
+          title={`Ang ${ang} of ${
+            SOURCES[source] || SOURCES.G
+            } Ang/Page Viewer - SikhiToTheMax`}
           isAng={true}
           {...props}
         >
@@ -161,6 +164,13 @@ export default [
   {
     path: '/index',
     render(props) {
+      // update the meta tags to display banner for sundar-gutka
+      updateSmartAppBannerMetaTags({
+        appIdApple: 1393849213,
+        appIdGoogle: "com.KhalisFoundation.AmritKeertan",
+        appIconPath: '/assets/images/amrit-keertan-icon.png',
+      })
+
       return (
         <Layout title="Index - SikhiToTheMax" {...props}>
           <RenderPromise
@@ -188,6 +198,13 @@ export default [
   {
     path: '/sundar-gutka',
     render(props) {
+      // update the meta tags to display banner for sundar-gutka
+      updateSmartAppBannerMetaTags({
+        appIdApple: 431446112,
+        appIdGoogle: "com.WahegurooNetwork.SundarGutka",
+        appIconPath: '/assets/images/sundar-gutka-icon.png',
+      })
+
       return (
         <Layout title="Sundar Gutka - SikhiToTheMax" {...props}>
           <RenderPromise
@@ -237,7 +254,7 @@ export default [
           </RenderPromise>
         </Layout>
       );
-    }
+    },
   },
   {
     path: '/help',
@@ -332,9 +349,6 @@ export default [
         writer = DEFAULT_SEARCH_WRITER,
       ] = params.map(v => getParameterByName(v, search));
 
-
-      console.log(source, "SEARCH LAYOUT ............")
-
       const shabadQueryParams = {
         q,
         type: parseInt(type),
@@ -399,7 +413,7 @@ export default [
         'raag',
         'writer',
         'highlight',
-      ].map(v => getParameterByName(v, search));
+      ].map((v) => getParameterByName(v, search));
 
       const otherProps = {
         id,
@@ -449,13 +463,25 @@ export default [
   {
     path: ['/control/:namespaceString', '/control'],
     render(props) {
-      const { match: { params: { namespaceString } } } = props;
+      const {
+        match: {
+          params: { namespaceString },
+        },
+      } = props;
       const codeRegex = new RegExp('[A-Z,a-z]{3}-[A-Z,a-z]{3}');
       return (
-        <Layout title={`${TEXTS.CONTROLLER} - SikhiToTheMax`} isController={true} {...props} >
-          <WebControllerPage namespaceString={codeRegex.test(namespaceString) ? namespaceString : ''} />
-        </ Layout>
-      )
+        <Layout
+          title={`${TEXTS.CONTROLLER} - SikhiToTheMax`}
+          isController={true}
+          {...props}
+        >
+          <WebControllerPage
+            namespaceString={
+              codeRegex.test(namespaceString) ? namespaceString : ''
+            }
+          />
+        </Layout>
+      );
     },
   },
   {

@@ -35,6 +35,23 @@
 }
 
 .controller-row {
+  .quick-settings {
+    justify-content: center;
+  }
+
+  .icon-toggle {
+    .fontsize-icon {
+      background-color: $sttm-white;
+      border-radius: 8px;
+      margin: 0 8px;
+      padding: 12px 16px;
+
+      &:hover {
+        background-color: $sttm-blue;
+      }
+    }
+  }
+
   .search-page {
     padding-top: 20px;
   }
@@ -97,6 +114,7 @@
   text-align: center;
   top: 0;
   transition: 0.1s background-color ease;
+  z-index: 1;
 
   .dark-mode & {
     background-color: $sttm-light-black;
@@ -140,18 +158,54 @@
   }
 
   .line {
-    align-items: center;
     background-color: $sttm-light-blue-30;
     border-radius: 12px;
     cursor: pointer;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     margin: 8px;
-    padding: 12px;
+
+    .gurmukhi,
+    .line-count {
+      padding: 12px;
+    }
+
+    .dark-mode & {
+      background-color: $sttm-darker-blue-2;
+      color: $sttm-white;
+    }
+
+    .line-count {
+      align-items: center;
+      background-color: $sttm-darker-blue;
+      border-bottom-left-radius: 12px;
+      border-top-left-radius: 12px;
+      color: $sttm-lighter-blue;
+      display: flex;
+      justify-content: center;
+      margin-right: 8px;
+      min-width: 48px;
+
+      .dark-mode & {
+        background-color: $sttm-darkest-blue;
+      }
+    }
+
+    .pankti-wrapper {
+      align-items: center;
+      display: flex;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
 
     &.visited {
       background-color: $sttm-light-grey;
+      opacity: 0.8;
+
+      .line-count {
+        background-color: $sttm-lighter-black;
+        color: $sttm-lighter-grey;
+      }
 
       .dark-mode & {
         color: $sttm-light-black;
@@ -160,6 +214,17 @@
 
     &.active-slide {
       background-color: $sttm-blue;
+      color: $sttm-white;
+      opacity: 1;
+
+      .line-count {
+        background-color: $sttm-darker-blue;
+        color: $sttm-lighter-blue;
+
+        .dark-mode & {
+          background-color: $sttm-darkest-blue;
+        }
+      }
 
       .dark-mode & {
         color: $sttm-white;
@@ -171,10 +236,11 @@
       display: inline-block;
       padding-left: 0;
     }
+  }
 
-    > svg {
-      opacity: 0.6;
-    }
+  svg {
+    margin: 16px;
+    opacity: 0.6;
   }
 }
 
@@ -200,11 +266,12 @@
   height: 100%;
   position: fixed;
   top: 0;
-  transition: 0.2s right ease-out;
+  transition: 0.2s all ease-out;
   width: 312px;
   z-index: 10;
 
-  &.sg-hide svg {
+  &.sg-hide svg,
+  &.shortcut-hide svg {
     transform: rotate(-180deg);
   }
 
@@ -241,6 +308,38 @@
     overflow-y: auto;
     padding: 20px;
     top: 0;
+    width: 100%;
+  }
+}
+
+.shortcut-list-container {
+  left: 0;
+
+  .toggle-button {
+    right: -82px;
+    transform: rotate(90deg);
+  }
+
+  .shortcut-sidebar {
+    .shortcut-slide {
+      align-items: center;
+      background: $sttm-light-blue-30;
+      border-radius: 4px;
+      display: flex;
+      height: 129px;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 100%;
+
+      &.active-slide {
+        background-color: $sttm-blue;
+        color: $sttm-white;
+      }
+    }
+  }
+
+  &.shortcut-hide {
+    left: -312px;
   }
 }
 
@@ -260,7 +359,7 @@
     .bani-slide {
       border-radius: 2px;
       color: $sttm-darker-grey;
-      padding: 4px;
+      padding: 8px 4px;
 
       &.active-slide {
         color: $sttm-white;
