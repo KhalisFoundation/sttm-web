@@ -49,12 +49,6 @@ export default class Baani extends React.PureComponent {
     isParagraphMode: PropTypes.bool.isRequired,
     onBaaniLineClick: PropTypes.func,
   };
-  constructor(props) {
-    super(props);
-
-    this.currentPageRef = React.createRef();
-  }
-
   getShareLine = shabad => {
     const availableTransliterations = this.getAvailableTransliterations();
     const availableTranslations = this.getAvailableTranslations();
@@ -557,7 +551,6 @@ export default class Baani extends React.PureComponent {
 
     return (
       <div
-        ref={this.currentPageRef}
         className={`${SHABAD_CONTENT_CLASSNAME} ${
           centerAlignGurbani || showFullScreen ? ' center-align' : ''
           }`}

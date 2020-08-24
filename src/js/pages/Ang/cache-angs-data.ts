@@ -1,7 +1,5 @@
 interface Cache {
-  angsDataMap: {
-    [key: string]: any
-  }
+  angsDataMap: Record<string, any>
 }
 
 const cache: Cache = {
