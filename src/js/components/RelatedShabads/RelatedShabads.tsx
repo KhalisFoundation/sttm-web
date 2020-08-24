@@ -1,10 +1,11 @@
 import React, { memo } from 'react';
-import Fetch from '../Fetch';
-import { TEXTS } from '@/constants';
-import { IStore } from '@/features/types';
+
+import Fetch from '@/components/Fetch';
 import Larivaar from '@/components/Larivaar';
-import { clickEvent, ACTIONS } from '@/util/analytics';
-import { toShabadURL } from '@/util';
+
+import { IStore } from '@/features/types';
+import { TEXTS } from '@/constants';
+import { toShabadURL, clickEvent, ACTIONS } from '@/util';
 
 export interface IRelatedShabadData {
   ShabadID: number;
@@ -44,8 +45,10 @@ interface IRelatedShabadsState {
   visibleShabads: number;
 }
 
-class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedShabadsState> {
-
+class RelatedShabads extends React.PureComponent<
+  IRelatedShabadsProps,
+  IRelatedShabadsState
+  > {
   static showMoreShabads = 4;
   static maxVisibleShabads = 20;
   static shabadMatchingScoreScale = 1.5;
@@ -53,27 +56,27 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
   constructor(props: Readonly<IRelatedShabadsProps>) {
     super(props);
     this.state = {
-      visibleShabads: RelatedShabads.showMoreShabads //default value
-    }
+      visibleShabads: RelatedShabads.showMoreShabads, //default value
+    };
   }
 
   getClassnamesForShabadRatings = (avgScore: number): string => {
     if (avgScore >= 70) {
-      return 'Excellent'
+      return 'Excellent';
     } else if (avgScore >= 40) {
       return 'Good';
     }
-    return 'Poor'
-  }
+    return 'Poor';
+  };
 
   setVisibleShabadsState = (noOfShabads: number) => {
     this.setState(() => {
       return {
         ...this.state,
-        visibleShabads: noOfShabads
-      }
-    })
-  }
+        visibleShabads: noOfShabads,
+      };
+    });
+  };
 
   getShabadScoreForTitle = (avgScore: number) => {
     const decimal = avgScore - parseInt(avgScore.toString(), 10);
@@ -82,17 +85,20 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
     }
 
     return Math.floor(avgScore).toString();
-  }
+  };
 
   handleShabadClick = (shabadId: number) => () => {
     clickEvent({ action: ACTIONS.RELATED_SHABAD, label: String(shabadId) });
   };
 
   handleShowMore = (totalShabads: number) => () => {
-    const shabadsToShow = Math.min(totalShabads, this.state.visibleShabads + RelatedShabads.showMoreShabads);
+    const shabadsToShow = Math.min(
+      totalShabads,
+      this.state.visibleShabads + RelatedShabads.showMoreShabads
+    );
 
-    this.setVisibleShabadsState(shabadsToShow)
-  }
+    this.setVisibleShabadsState(shabadsToShow);
+  };
 
   render() {
     const {
@@ -105,9 +111,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
       count = 20,
     } = this.props;
 
-    const {
-      visibleShabads
-    } = this.state;
+    const { visibleShabads } = this.state;
 
     return (
       <Fetch url={`${SYNC_API_URL}related/shabad/${forShabadID}`}>
@@ -122,7 +126,9 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
           if (totalShabads === 0) {
             return null;
           }
-          const sortedShabads = shabads.sort((s1, s2) => s2.AvgScore - s1.AvgScore);
+          const sortedShabads = shabads.sort(
+            (s1, s2) => s2.AvgScore - s1.AvgScore
+          );
 
           const fontClassName = unicode ? '' : 'gurbani-font';
 
@@ -137,12 +143,14 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
               <h3>{TEXTS.RELATED_SHABADS}</h3>
               <div className="relatedShabadContainer">
                 {sortedShabads.map((s, idx) => {
-
                   if (idx + 1 > visibleShabads) {
                     return null;
                   }
 
-                  const shabadScores = Math.min(s.AvgScore * RelatedShabads.shabadMatchingScoreScale, 100);
+                  const shabadScores = Math.min(
+                    s.AvgScore * RelatedShabads.shabadMatchingScoreScale,
+                    100
+                  );
                   const shabadBarScale = shabadScores / 100;
 
                   return (
@@ -156,8 +164,11 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                     >
                       <div className="relatedShabadInner">
                         <div
-                          title={`${this.getShabadScoreForTitle(shabadScores)}% matches`}
-                          className="relatedShabadAvgRating">
+                          title={`${this.getShabadScoreForTitle(
+                            shabadScores
+                          )}% matches`}
+                          className="relatedShabadAvgRating"
+                        >
                           <div
                             style={{
                               transform: `scaleX(${shabadBarScale})`,
@@ -169,7 +180,9 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                         </div>
                         <div className="relatedShabadContent">
                           <div className="relatedShabadContentBody">
-                            <h3 className={'relatedShabadTitle ' + fontClassName}>
+                            <h3
+                              className={'relatedShabadTitle ' + fontClassName}
+                            >
                               <Larivaar
                                 enable={larivaar}
                                 larivaarAssist={larivaarAssist}
@@ -219,18 +232,20 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                           </p>
                         </div>
                       </div>
-                    </a>)
+                    </a>
+                  );
                 })}
               </div>
-              {visibleShabads < totalShabads
-                &&
-                (<div className="relatedShabadShowMore">
+              {visibleShabads < totalShabads && (
+                <div className="relatedShabadShowMore">
                   <button
-                    className="relatedShabadShowMoreBtn"
-                    onClick={this.handleShowMore(totalShabads)}>
+                    className="relatedShabadShowMoreBtn primaryBtn"
+                    onClick={this.handleShowMore(totalShabads)}
+                  >
                     More Related Results
                   </button>
-                </div>)}
+                </div>
+              )}
             </div>
           );
         }}

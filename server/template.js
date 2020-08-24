@@ -28,6 +28,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
   ${prefetchImagesHTML}
 
   <!-- Meta Tags -->
+  <meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL">
   <meta charset="utf-8" />
   <meta name="theme-color" content="${ONLINE_COLOR}" />
   <meta name="description" content="${description}" />

@@ -2,7 +2,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
+import {
+  SEARCH_TYPES,
+  MAX_ANGS,
+} from '../constants';
 import { Link } from 'react-router-dom';
 
 import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
@@ -12,6 +15,7 @@ import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+import { FilterTypes } from '@/components/FilterTypes';
 
 import {
   toSearchURL,
@@ -36,58 +40,78 @@ export default class Header extends React.PureComponent {
   state = {
     showDoodle: false,
     doodleData: null,
-  }
+  };
 
   fetchDoodle = () => {
     fetch(`${DOODLE_URL}`)
-      .then(r => r.json())
-      .then((data) => {
-        if (data.error) {
+      .then((r) => r.json())
+      .then(
+        (data) => {
+          if (data.error) {
+            this.setState({ showDoodle: false, doodleData: null });
+          } else if (data.rows.length) {
+            this.setState({ showDoodle: true, doodleData: data.rows[0] });
+          }
+        },
+        (error) => {
+          console.log(error);
           this.setState({ showDoodle: false, doodleData: null });
-        } else if (data.rows.length) {
-          this.setState({ showDoodle: true, doodleData: data.rows[0] });
         }
-      }, (error) => {
-        console.log(error);
-        this.setState({ showDoodle: false, doodleData: null });
-      }
       );
-  }
+  };
+
   componentDidMount() {
     this.fetchDoodle();
   }
 
-  onFormSubmit = ({ handleSubmit, ...data }) => e => {
+  onFormSubmit = ({ handleSubmit, ...data }) => (e) => {
+    console.log(e, 'EVENT CODE');
     e.preventDefault();
     handleSubmit();
     this.handleFormSubmit(data);
   };
 
-  handleFormSubmit = data => {
-    this.props.history.push(toSearchURL(data));
+  handleApplyFiltersClick = (data) => () => {
+    this.handleFormSubmit(data);
   }
+
+  handleFormSubmit = (data) => {
+
+    this.props.history.push(toSearchURL(data));
+  };
+
+  componentWillUnmount = () => {
+
+  };
+
   render() {
     const {
       props: { defaultQuery, isHome, isAng, isController },
       state: { showDoodle, doodleData },
       onFormSubmit,
       handleFormSubmit,
+      handleApplyFiltersClick,
     } = this;
 
     const {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
+      raag: defaultRaag = null,
+      writer: defaultWriter = null,
     } = getQueryParams(location.search);
 
+    const id = `${defaultQuery}${defaultSource}${defaultType}${defaultRaag}${defaultWriter}`;
     const isSearchPageRoute = location.pathname.includes('search');
-    const key = `${defaultQuery}${defaultSource}${defaultType}`;
 
+    // console.log(key, "key updated ?")
     const controllerHeader = (
       <div className="top-bar no-select" id="controller-bar">
         <div className="top-bar-wrapper row controller-header">
           <div className="top-bar-title">
             <Link id="sync-logo" to="/" />
-            <span className="logo-text"><span className="bolder">Bani</span> Controller</span>
+            <span className="logo-text">
+              <span className="bolder">Bani</span> Controller
+            </span>
           </div>
           <div className="responsive-menu">
             <Menu isHome={true} />
@@ -101,27 +125,44 @@ export default class Header extends React.PureComponent {
     }
 
     return (
-      <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
+      <div
+        id="nav-bar"
+        className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}
+      >
         <div className="top-bar-wrapper row">
           {!isHome && (
             <div className="top-bar-title">
-              {showDoodle ?
-                (<>
-                  <Link to="/" title={doodleData['Description']} className="doodle-link icon"
-                    style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
-                  <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
-                    style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
-                </>) :
-                (<Link to="/" />)
-              }
+              {showDoodle ? (
+                <>
+                  <Link
+                    to="/"
+                    title={doodleData['Description']}
+                    className="doodle-link icon"
+                    style={{
+                      backgroundImage: `url(${doodleData['ImageSquare']}) `,
+                    }}
+                  />
+                  <Link
+                    to="/"
+                    title={doodleData['Description']}
+                    className="doodle-link bigger-image"
+                    style={{ backgroundImage: `url(${doodleData['Image']}) ` }}
+                  />
+                </>
+              ) : (
+                  <Link to="/" />
+                )}
             </div>
           )}
           <SearchForm
-            key={key}
+            id={id}
+            // key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
+            defaultRaag={parseInt(defaultRaag, 10)}
             defaultSource={defaultSource}
-            defaultType={Number(defaultType)}
-            submitOnChangeOf={['type', 'source']}
+            defaultType={parseInt(defaultType, 10)}
+            defaultWriter={parseInt(defaultWriter, 10)}
+            submitOnChangeOf={['type', 'source', 'raag', 'writer']}
             onSubmit={handleFormSubmit}
           >
             {({
@@ -133,6 +174,8 @@ export default class Header extends React.PureComponent {
               query,
               type,
               source,
+              raag,
+              writer,
               action,
               name,
               placeholder,
@@ -142,12 +185,15 @@ export default class Header extends React.PureComponent {
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
+              handleSearchRaagChange,
+              handleSearchWriterChange,
               handleSubmit,
             }) => {
               const isShowKeyboard = type !== SEARCH_TYPES['ANG'] && type !== SEARCH_TYPES['ENGLISH_WORD'] && type !== SEARCH_TYPES['ROMANIZED'];
 
               return (
                 <React.Fragment>
+                  {console.log(query, 'new query....')}
                   <div id="responsive-menu">
                     <div className="top-bar-left">
                       {!isHome && (
@@ -159,6 +205,8 @@ export default class Header extends React.PureComponent {
                               handleSubmit,
                               type,
                               source,
+                              raag,
+                              writer,
                               query,
                             })}
                             className="search-form"
@@ -183,7 +231,12 @@ export default class Header extends React.PureComponent {
                                 />
                               </li>
                               <li>
-                                <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
+                                <div
+                                  id="search-container"
+                                  className={
+                                    displayGurmukhiKeyboard ? 'kb-active' : ''
+                                  }
+                                >
                                   <input
                                     type={inputType}
                                     id="search"
@@ -201,7 +254,11 @@ export default class Header extends React.PureComponent {
                                     title={title}
                                     pattern={pattern}
                                     min={name === 'ang' ? 1 : undefined}
-                                    max={name === 'ang' ? MAX_ANGS[source] : undefined}
+                                    max={
+                                      name === 'ang'
+                                        ? MAX_ANGS[source]
+                                        : undefined
+                                    }
                                   />
 
                                   <button
@@ -242,64 +299,58 @@ export default class Header extends React.PureComponent {
                                   <Autocomplete
                                     isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
                                     getSuggestions={getShabadList}
-                                    searchOptions={{ type: parseInt(type), source }}
+                                    searchOptions={{
+                                      type: parseInt(type),
+                                      source,
+                                      raag: parseInt(raag),
+                                      writer: parseInt(writer),
+                                    }}
                                     value={query}
                                   />
                                 </div>
                               </li>
                             </ul>
                           </form>
-                          <div id="search-options">
-                            <select
-                              name="type"
-                              id="search-type"
-                              value={type.toString()}
-                              onChange={handleSearchTypeChange}
-                            >
-                              {reformatSearchTypes(TYPES).map(({ type, value }) => (
-                                <option key={value} value={value}>
-                                  {type}
-                                </option>
-                              ))}
-                            </select>
-                            {parseInt(type) === SEARCH_TYPES['ANG'] ? (
-                              <select
-                                name="source"
-                                value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
-                                onChange={handleSearchSourceChange}
-                              >
-                                {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
-                                  <option key={value} value={value}>
-                                    {children}
-                                  </option>
-                                ))}
-                              </select>
-                            ) : (
-                                <select
-                                  name="source"
-                                  value={source}
-                                  onChange={handleSearchSourceChange}
-                                >
-                                  {Object.entries(SOURCES).map(([value, children]) => (
-                                    <option key={value} value={value}>
-                                      {children}
-                                    </option>
-                                  ))}
-                                </select>)}
+                          <div
+                            id="search-options"
+                            className="searchPageFilters"
+                          >
+                            <FilterTypes
+                              filterType={type}
+                              filterSource={source}
+                              filterRaag={raag}
+                              filterWriter={writer}
+                              onFilterTypeChange={handleSearchTypeChange}
+                              onFilterSourceChange={handleSearchSourceChange}
+                              onFilterRaagChange={handleSearchRaagChange}
+                              onFilterWriterChange={handleSearchWriterChange}
+                            />
+                          </div>
+                          <div
+                            className="searchPageFiltersBtnWrapper">
+                            <button
+                              onClick={handleApplyFiltersClick({
+                                type,
+                                source,
+                                raag,
+                                writer,
+                                query,
+                              })}
+                              className="primaryBtn searchPageFiltersBtn">
+                              Apply filters
+                            </button>
                           </div>
                         </>
                       )}
                     </div>
-                    <Menu
-                      isHome={isHome}
-                    />
+                    <Menu isHome={isHome} />
                   </div>
                 </React.Fragment>
               )
             }}
           </SearchForm>
         </div>
-      </div>
+      </div >
     );
   }
 }

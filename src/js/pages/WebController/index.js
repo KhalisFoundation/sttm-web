@@ -10,9 +10,9 @@ import BreadCrumb from '@/components/Breadcrumb';
 import SearchInput from './search-input';
 import SlideControls from './slide-controls';
 import ControllerSearch from './search';
-import { Stub } from '../Search/Layout';
 import ControllerShabad from '@/pages/WebController/shabad';
 import { versesToGurbani } from '@/util';
+import { Spinner } from '@/components/Spinner';
 import ShabadControls from '@/components/ShabadControlsv2';
 
 export default class WebControllerPage extends React.PureComponent {
@@ -191,7 +191,7 @@ export default class WebControllerPage extends React.PureComponent {
         TEXTS.CONTROLLER_ERROR();
     }
 
-    if (loading && !connected) return (<Stub />);
+    if (loading && !connected) return (<Spinner />);
 
     return (
       <div className="row controller-row" id="content-root">
@@ -217,7 +217,7 @@ export default class WebControllerPage extends React.PureComponent {
                 default={(shabadData && shabadData.type === 'ceremony') ? shabadData.ceremonyInfo.ceremonyID : null} />
 
               {loading && (
-                <Stub />
+                <Spinner />
               )}
 
               {shabadData && (

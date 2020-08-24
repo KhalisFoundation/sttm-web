@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-import Larivaar from '../components/Larivaar';
+import CrossIcon from '@/components/Icons/Times';
+import Larivaar from '@/components/Larivaar';
 import { toSearchURL } from '@/util';
 class Autocomplete extends Component {
   static propTypes = {
     isShowFullResults: PropTypes.bool,
+    onItemClick: PropTypes.func,
     getSuggestions: PropTypes.func.isRequired,
     searchOptions: PropTypes.object.isRequired,
     value: PropTypes.string.isRequired,
@@ -23,6 +25,17 @@ class Autocomplete extends Component {
     };
   }
 
+  resetSearchResults = () => {
+    this.setState((prevState) =>
+      ({
+        ...prevState,
+        activeSuggestion: -1,
+        filteredSuggestions: [],
+        showSuggestions: false,
+      })
+    );
+  }
+
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions } = this.state;
     const isEnterKey = e.keyCode == 13;
@@ -33,6 +46,11 @@ class Autocomplete extends Component {
     if (isEnterKey) {
       if (isActiveSuggestion) e.preventDefault();
 
+      this.resetSearchResults();
+      this.props.history.push(filteredSuggestions[activeSuggestion].url);
+      this.props.onItemClick && this.props.onItemClick();
+
+    } else if (e.keyCode === 38) {
       window.location = filteredSuggestions[activeSuggestion].url;
 
       this.setState({
@@ -70,9 +88,16 @@ class Autocomplete extends Component {
 
   componentDidUpdate(prevProps) {
     const prevInput = prevProps.value;
-
-    if (this.props.value !== prevInput) {
-      const { isShowFullResults, getSuggestions, searchOptions, value: userInput } = this.props;
+    const { searchOptions } = this.props;
+    const { searchOptions: prevSearchOptions } = prevProps;
+    if (this.props.value !== prevInput ||
+      searchOptions.raag !== prevSearchOptions.raag ||
+      searchOptions.source !== prevSearchOptions.source ||
+      searchOptions.writer !== prevSearchOptions.writer ||
+      searchOptions.type !== prevSearchOptions.type
+    ) {
+      const { getSuggestions, searchOptions } = this.props;
+      const userInput = this.props.value;
       const isSearchTypeAng = searchOptions.type === 5;
       const isQueryValid = userInput.length >= 2 && !isSearchTypeAng;
       clearTimeout(this.state.suggestionTimeout);
@@ -132,15 +157,23 @@ class Autocomplete extends Component {
       }
     } = this;
 
+    console.log(this.props, 'AUTOCOMPLETE...')
+
     let suggestionsListComponent;
 
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
           <ul
-            className="search-result"
             id="suggestions"
+            className="search-result"
             onKeyDown={this.onKeyDown} >
+            <button
+              className="clear-autocomplete"
+              onClick={setQueryAs('')}
+            >
+              <CrossIcon />
+            </button>
             {filteredSuggestions.map((suggestion, index) => {
               let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
               const isLastIdx = index === (filteredSuggestions.length - 1);
@@ -182,10 +215,10 @@ class Autocomplete extends Component {
                       </Larivaar>
                       {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
                     </a>}
-                </li>
+                </li >
               );
             })}
-          </ul>
+          </ul >
         );
       } else {
         suggestionsListComponent = (
@@ -204,4 +237,4 @@ class Autocomplete extends Component {
   }
 }
 
-export default Autocomplete;
+export default withRouter(Autocomplete);

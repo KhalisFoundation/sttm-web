@@ -128,7 +128,7 @@ footer {
       }
     }
 
-    @media screen and (max-width: 480px) {
+    @media #{$mobile-down} {
       align-items: center;
 
       .version {

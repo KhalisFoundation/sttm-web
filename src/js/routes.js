@@ -16,6 +16,8 @@ import Home from './pages/Home';
 import WebControllerPage from './pages/WebController';
 import { updateSmartAppBannerMetaTags } from '@/util';
 import {
+  DEFAULT_SEARCH_RAAG,
+  DEFAULT_SEARCH_WRITER,
   DEFAULT_SEARCH_SOURCE,
   DEFAULT_SEARCH_TYPE,
   SEARCH_TYPES,
@@ -336,14 +338,25 @@ export default [
       const {
         location: { search },
       } = props;
-      const params = ['type', 'source', 'q', 'offset'];
+      const params = ['type', 'source', 'q', 'offset', 'raag', 'writer'];
 
       const [
         type = DEFAULT_SEARCH_TYPE,
         source = DEFAULT_SEARCH_SOURCE,
         q = '',
         offset = 1,
-      ] = params.map((v) => getParameterByName(v, search));
+        raag = DEFAULT_SEARCH_RAAG,
+        writer = DEFAULT_SEARCH_WRITER,
+      ] = params.map(v => getParameterByName(v, search));
+
+      const shabadQueryParams = {
+        q,
+        type: parseInt(type),
+        raag: parseInt(raag),
+        writer: parseInt(writer),
+        source: source,
+        offset: parseInt(offset),
+      }
 
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
         return <Redirect to={toAngURL({ ang: q, source })} />;
@@ -351,8 +364,9 @@ export default [
 
       return (
         <Layout
-          defaultQuery={q}
           title="Search Results - SikhiToTheMax"
+          defaultQuery={q}
+          {...shabadQueryParams}
           {...props}
         >
           <RenderPromise
@@ -364,9 +378,7 @@ export default [
               pending ? null : Search ? (
                 <Search
                   q={q && decodeURIComponent(q)}
-                  type={parseInt(type, 10)}
-                  source={source}
-                  offset={parseInt(offset)}
+                  {...shabadQueryParams}
                   {...props}
                 />
               ) : (
@@ -392,25 +404,36 @@ export default [
         return <Redirect to="/random" />;
       }
 
-      const [random, id, q, type, highlight] = [
+      const [random, id, q, type, source, raag, writer, highlight] = [
         'random',
         'id',
         'q',
         'type',
+        'source',
+        'raag',
+        'writer',
         'highlight',
       ].map((v) => getParameterByName(v, search));
 
       const otherProps = {
         id,
         q,
-        type,
+        type: parseInt(type),
+        source: source !== undefined ? source : DEFAULT_SEARCH_SOURCE,
+        raag: raag !== undefined ? parseInt(raag) : DEFAULT_SEARCH_RAAG,
+        writer: writer !== undefined ? parseInt(writer) : DEFAULT_SEARCH_WRITER,
         random: random !== undefined && random === '' ? true : false,
         highlight:
           highlight === undefined ? undefined : parseInt(highlight, 10),
       };
 
       return (
-        <Layout defaultQuery={q} title="Shabad - SikhiToTheMax" {...props}>
+        <Layout
+          title="Shabad - SikhiToTheMax"
+          defaultQuery={q}
+          {...props}
+          {...otherProps}
+        >
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "Shabad" */ './pages/Shabad')

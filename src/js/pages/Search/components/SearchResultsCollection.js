@@ -3,24 +3,25 @@ import PropTypes from 'prop-types';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Pagination from '../../components/Pagination';
-import { toShabadURL, toSearchURL } from '../../util';
-import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '../../constants';
+import Pagination from '@/components/Pagination';
+import Controls from '@/components/Controls';
+import GenericError, { SachKaur } from '@/components/GenericError';
+import SearchResults from '@/components/SearchResults/SearchResults';
 import {
+  toShabadURL,
+  toSearchURL,
   ACTIONS,
   pageView,
   errorEvent,
   clickEvent,
-} from '../../util/analytics';
-import Controls from '../../components/Controls';
-import GenericError, { SachKaur } from '../../components/GenericError';
-import SearchResults from '../../components/SearchResults/SearchResults';
+} from '@/util';
+import { TYPES, SOURCES, PLACEHOLDERS, TEXTS } from '@/constants';
 
-export function Stub() {
-  return <div className="spinner" />;
-}
+class SearchResultsCollection extends React.PureComponent {
+  static contextTypes = {
+    r) outer: PropTypes.object,
+  };
 
-class Layout extends React.PureComponent {
   static propTypes = {
     pages: PropTypes.array,
     offset: PropTypes.number,
@@ -34,8 +35,10 @@ class Layout extends React.PureComponent {
       q,
       type,
       source,
-      resultsCount,
+      raag,
+      writer,
       shabads,
+      resultsCount,
       ...props
     } = this.props;
 
@@ -73,7 +76,7 @@ class Layout extends React.PureComponent {
     // I'm feeling lucky
     if (parseInt(resultsCount, 10) === 1) {
       const [shabad] = shabads;
-      return <Redirect to={toShabadURL({ shabad, q, type, source })} />;
+      return <Redirect to={toShabadURL({ shabad, q, type, source, raag, writer })} />;
     }
 
     const currentPage = offset;
@@ -85,6 +88,8 @@ class Layout extends React.PureComponent {
           q={q}
           type={type}
           source={source}
+          raag={raag}
+          writer={writer}
           shabads={shabads}
           {...props}
         />
@@ -98,8 +103,8 @@ class Layout extends React.PureComponent {
     );
   }
 
-  handlePageClick = (pageNumber) => {
-    const { q, type, source, offset } = this.props;
+  handlePageClick = pageNumber => {
+    const { q, type, source, offset, raag, writer } = this.props;
 
     const currentPage = offset;
 
@@ -114,16 +119,19 @@ class Layout extends React.PureComponent {
         query: q,
         type,
         source,
+        raag,
+        writer,
         offset: pageNumber,
       })
     );
   };
 
   componentDidMount() {
-    const { q, type, offset, source } = this.props;
-    pageView(toSearchURL({ q, type, source, offset }));
+    const { q: query, type, offset, source, raag, writer } = this.props;
+    console.log(raag, writer, "LAYOUT SEARCH>>>>>>>>..")
+    pageView(toSearchURL({ query, type, source, offset, raag, writer }));
   }
 }
 
-const stateToProps = (state) => state;
-export default connect(stateToProps)(withRouter(Layout));
+const stateToProps = state => state;
+export default connect(stateToProps)(withRouter(SearchResultsCollection));

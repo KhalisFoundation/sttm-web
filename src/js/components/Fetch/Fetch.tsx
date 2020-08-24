@@ -43,6 +43,7 @@ export default class Fetch extends React.PureComponent<
   public componentDidMount() {
     this.mounted = true;
     const { url, options, transform, timeout } = this.props;
+    console.log(url, options, "this.props.componentDidMount,")
 
     this.fetchData(url, options, transform, timeout);
   }
@@ -75,7 +76,7 @@ export default class Fetch extends React.PureComponent<
       setTimeout(reject, timeout, TEXTS.TIMEOUT_ERROR)
     );
 
-
+    debugger;
     // If timeoutPromise completes before fetch the top level catch is executed
     return Promise.race([timeoutPromise, fetch(url, options)])
       .then(res =>

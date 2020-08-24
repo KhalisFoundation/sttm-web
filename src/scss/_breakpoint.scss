@@ -1,0 +1,9 @@
+// BREAKPOINTS
+$mobile: 480px;
+$tablet: 720px;
+$desktop: 1024px;
+
+// MEDIA QUERY HELPERS
+$mobile-down: 'only screen and (max-width: #{$mobile})';
+$tablet-down: 'only screen and (max-width: #{$tablet})';
+$desktop-down: 'only screen and (max-width: #{$desktop})';

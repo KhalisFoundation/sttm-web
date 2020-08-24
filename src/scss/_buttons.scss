@@ -1,0 +1,13 @@
+.primaryBtn {
+  background-color: $sttm-blue;
+  border: none;
+  border-radius: 5px;
+  color: $sttm-white;
+  outline: none;
+  padding: 10px;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    background-color: $sttm-bright-blue;
+  }
+}
