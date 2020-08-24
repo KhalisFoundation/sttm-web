@@ -8,6 +8,7 @@
     "es6": true,
     "browser": true,
     "node": true,
-    "jest": true
+    "jest": true,
+    "cy": true
   }
 }
