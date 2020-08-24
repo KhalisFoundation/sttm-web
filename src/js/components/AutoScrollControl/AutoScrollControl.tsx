@@ -38,7 +38,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   _nextScrollPosition!: number;
   _sliding!: boolean;
   _interval!: number;
-  _isFirefoxAgent: boolean;
+  _isFirefoxAgent: boolean = false;
 
   static defaultProps = {
     isBackgroundTransparent: false,
@@ -106,8 +106,8 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   startScroll = () => {
     this.props.setAutoScrolling && this.props.setAutoScrolling(true);
-    this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
     this._nextScrollPosition = document.documentElement.scrollTop;
+    this._setMaxScrollPossible();
     this._interval = requestAnimationFrame(this.handleAutoScroll);
   }
 
@@ -123,19 +123,18 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     this.clearScrollInterval()
   }
 
-  reEvaluateMaxScrollPossible = (scrollY?: number) => {
+  _setMaxScrollPossible = () => {
     this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
-    if (scrollY) {
-      return scrollY >= this._maxScrollPossible;
-    }
   }
 
   handleAutoScroll = () => {
     if (this.props.isAutoScrolling) {
       const scrollY = document.documentElement.scrollTop;
       if (scrollY >= this._maxScrollPossible && !this.props.isLoadingAng) {
-        // we are rechecking the maxscroll value since it can hold old value by now.
-        const isMaxScrollCrossed = this.reEvaluateMaxScrollPossible(scrollY);
+        // we are resetting the maxscroll value since it can hold old value by now.
+        this._setMaxScrollPossible();
+
+        const isMaxScrollCrossed = this._maxScrollPossible >= scrollY;
         if (isMaxScrollCrossed) {
           this.removeScroll();
         }
@@ -188,10 +187,6 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
     // For now, once this component mounts we are in autoscroll-mode.
     this.setAutoScrollModeDOMChanges(true);
-  }
-
-  componentDidUpdate = () => {
-    this.reEvaluateMaxScrollPossible();
   }
 
   componentWillUnmount = () => {
