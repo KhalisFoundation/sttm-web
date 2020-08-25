@@ -1,13 +1,15 @@
+import { SEARCH_TYPES } from '../../../src/js/constants';
+const searchType = SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE.toString();
 
 describe('Home page Search tests', () => {
-  const searchString = 'jmtaqssd';
+  let searchString = 'jmtatssd';
 
   describe('Romanized First Letter Search anywhere(E)', () => {
     beforeEach(() => {
       cy.visit('/');
 
       cy.get('#search-type')
-        .select('7');
+        .select(searchType);
     });
 
     it(`should return search results for ${searchString} in drop-down`, () => {
@@ -25,21 +27,26 @@ describe('Home page Search tests', () => {
         .should('contain', 'dyvY')
     });
 
-    // it.only(`should contain ${searchString} in first letters of the words [in results]`, () => {
-    //   cy.get('#search')
-    //     .type(searchString);
+    before(() => {
+      searchString = 'jmta';
+    })
 
-    //   cy.get('.search-highlight-word').as('result')
+    it.only(`should contain ${searchString} in first letters of the words [in results]`, () => {
+      cy.get('#search')
+        .type(searchString);
 
-    //   let firstLetterSearch = '';
-    //   cy.get('@result').then(searchHighlightedWordsNodes => {
-    //     console.log(searchHighlightedWordsNodes, 'NODES>>>>>')
-    //     firstLetterSearch += result.innerHtml[0];
-    //     console.log(firstLetterSearch, "FIRST LETTER SEARCH")
-    //   });
-    //   // console.log(firstLetterSearch)
-    //   // const isMatched = firstLetterSearch.contains(searchString);
-    //   // expect(isMatched).to.be.true;
-    //   // console.log(firstLetterSearch);
-    // })
+      cy.get('.search-result li:first-child .search-highlight-word').as('result')
+
+      cy.get('@result').then(searchHighlightedWordsNodes => {
+        const firstLetters = [];
+
+        // Getting the first letters of the highlighted words.
+        searchHighlightedWordsNodes.each((idx, highlightedNode) => {
+          const highlightedWord = highlightedNode.textContent.trim();
+          firstLetters.push(highlightedWord[0]);
+        });
+
+        expect(firstLetters.join('').toLowerCase()).to.contains(searchString);
+      });
+    })
   })
