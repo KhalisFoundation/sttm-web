@@ -55,21 +55,20 @@ describe('Home page Search tests', () => {
       });
     })
 
-    it.only(`should open all search results page on clicking the ${showAllResultsBtn} button`, () => {
+    it(`should open all search results page on clicking the ${showAllResultsBtn} button`, () => {
 
       cy.get('#search')
-        .type(searchString2);
-
-      cy.scrollTo('bottom')
+        .type(searchString2)
 
       cy.get('#suggestions')
         .as('suggestions')
 
       cy.get('@suggestions')
         .scrollTo('bottom')
-        .find('.show-all-results')
+        .find('.show-all-results a')
         .should('exist')
-        .click()
+        .scrollIntoView()
+        .click({ force: true })
 
       cy.url().should('include', `/search?q=${searchString2}&type=${searchType}&source=G`);
     })
