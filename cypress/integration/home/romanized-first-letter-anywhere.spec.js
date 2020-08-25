@@ -2,17 +2,25 @@ import { SEARCH_TYPES } from '../../../src/js/constants';
 const searchType = SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE.toString();
 
 describe('Home page Search tests', () => {
-  let searchString = 'jmtatssd';
+  const searchString = 'jmtatssd';
+  const searchString2 = 'jmta';
+  const showAllResultsBtn = 'Show full results';
 
   describe('Romanized First Letter Search anywhere(E)', () => {
     beforeEach(() => {
       cy.visit('/');
+
+      cy
+        .get('#toast-notification')
+        .find('.toast-notification-close-button')
+        .click();
 
       cy.get('#search-type')
         .select(searchType);
     });
 
     it(`should return search results for ${searchString} in drop-down`, () => {
+
       cy.get('#search')
         .type(searchString);
 
@@ -27,13 +35,10 @@ describe('Home page Search tests', () => {
         .should('contain', 'dyvY')
     });
 
-    before(() => {
-      searchString = 'jmta';
-    })
+    it(`should contain ${searchString2} in first letters of the words [in results]`, () => {
 
-    it.only(`should contain ${searchString} in first letters of the words [in results]`, () => {
       cy.get('#search')
-        .type(searchString);
+        .type(searchString2);
 
       cy.get('.search-result li:first-child .search-highlight-word').as('result')
 
@@ -46,7 +51,27 @@ describe('Home page Search tests', () => {
           firstLetters.push(highlightedWord[0]);
         });
 
-        expect(firstLetters.join('').toLowerCase()).to.contains(searchString);
+        expect(firstLetters.join('').toLowerCase()).to.contains(searchString2);
       });
     })
+
+    it.only(`should open all search results page on clicking the ${showAllResultsBtn} button`, () => {
+
+      cy.get('#search')
+        .type(searchString2);
+
+      cy.scrollTo('bottom')
+
+      cy.get('#suggestions')
+        .as('suggestions')
+
+      cy.get('@suggestions')
+        .scrollTo('bottom')
+        .find('.show-all-results')
+        .should('exist')
+        .click()
+
+      cy.url().should('include', `/search?q=${searchString2}&type=${searchType}&source=G`);
+    })
   })
+})
