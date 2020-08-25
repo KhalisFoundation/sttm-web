@@ -1,14 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Actions from './BaaniLineActions';
 import Translation from './Translation';
 import Transliteration from './Transliteration';
 import BaaniLine from './BaaniLine';
-import { clickEvent, ACTIONS } from '../util/analytics';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
 import { copyToClipboard, showToast, shortenURL } from '../util';
 
-import { translationMap, transliterationMap, getVerseId } from '@/util/api/shabad';
+import {
+  clickEvent,
+  ACTIONS,
+  translationMap,
+  transliterationMap,
+  getVerseId,
+} from '@/util';
 
 /**
  *
@@ -23,6 +29,7 @@ export default class Baani extends React.PureComponent {
   };
 
   static propTypes = {
+    ang: PropTypes.number,
     gurbani: PropTypes.array.isRequired,
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
     splitView: PropTypes.bool.isRequired,
@@ -40,8 +47,8 @@ export default class Baani extends React.PureComponent {
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
     isParagraphMode: PropTypes.bool.isRequired,
+    onBaaniLineClick: PropTypes.func,
   };
-
   getShareLine = shabad => {
     const availableTransliterations = this.getAvailableTransliterations();
     const availableTranslations = this.getAvailableTranslations();
@@ -118,7 +125,8 @@ export default class Baani extends React.PureComponent {
   _scrollToHiglight = () => {
     if (this.$highlightedBaaniLine) {
       const { top } = this.$highlightedBaaniLine.getBoundingClientRect();
-      requestAnimationFrame(() => window.scrollTo(0, top));
+      const newTopPosition = window.scrollY + top;
+      requestAnimationFrame(() => window.scrollTo(0, newTopPosition));
     }
   };
 
@@ -308,6 +316,8 @@ export default class Baani extends React.PureComponent {
 
   createMixedViewMarkup = () => {
     const {
+      ang,
+      onBaaniLineClick,
       isParagraphMode,
     } = this.props;
 
@@ -316,15 +326,26 @@ export default class Baani extends React.PureComponent {
     const mixedViewBaaniClass = 'mixed-view-baani';
     const availableTransliterations = this.getAvailableTransliterations();
     const availableTranslations = this.getAvailableTranslations();
+    const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
 
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
+
+          const isFirstParagraph = idx == 0;
+          const isLastParagraph = idx == totalParagraphs;
+          const lastParagraphAttributes = isLastParagraph ? { 'data-last-paragraph': true, 'data-ang': ang } : {}
+          const firstParagraphAttributes = isFirstParagraph ? { 'data-first-paragraph': true, 'data-ang': ang } : {}
+          const highlightVerseId = shabads[0].verseId;
+
           return (
             <div
-              key={idx} // In paragraph mode, we are currently not showing social Share
-              onMouseUp={isParagraphMode ? null : this.showSelectionOptions}
-              onMouseDown={isParagraphMode ? null : this.removeSelection}
+              key={idx}
+              {...firstParagraphAttributes}
+              {...lastParagraphAttributes}
+              onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
+              onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
+              onMouseDown={isParagraphMode ? undefined : this.removeSelection}
               className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
             >
               <div
@@ -358,8 +379,9 @@ export default class Baani extends React.PureComponent {
                   {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
                 </div>}
             </div>)
-        })}
-      </div>
+        })
+        }
+      </div >
     )
   }
   createFullScreenMarkup = () => {
@@ -440,19 +462,20 @@ export default class Baani extends React.PureComponent {
           {Object.entries(normalizedGurbani).map(([idx, shabads]) =>
             <div className={`${splitViewBaaniClass}-paragraph ${paragraphModeClass}`} key={idx}>
               {shabads.map(shabad =>
-                (<div
-                  id={`line${getVerseId(shabad)}-line`}
-                  key={getVerseId(shabad)}
-                  className="line"
-                  ref={node =>
-                    highlight === parseInt(getVerseId(shabad), 10)
-                      ? (this.$highlightedBaaniLine = node)
-                      : null
-                  }
-                >
-                  {this.getBaniLine(shabad)}
-                  {this.getActions(shabad)}
-                </div>
+                (
+                  <div
+                    id={`line${getVerseId(shabad)}-line`}
+                    key={getVerseId(shabad)}
+                    className="line"
+                    ref={node =>
+                      highlight === parseInt(getVerseId(shabad), 10)
+                        ? (this.$highlightedBaaniLine = node)
+                        : null
+                    }
+                  >
+                    {this.getBaniLine(shabad)}
+                    {this.getActions(shabad)}
+                  </div>
                 ))}
             </div>
           )}

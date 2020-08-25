@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+/// <reference types="Cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
