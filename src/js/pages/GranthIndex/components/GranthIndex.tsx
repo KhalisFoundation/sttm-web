@@ -75,7 +75,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
               <main>
                 {Object.entries(raagIndices).map(
                   ([key, { name: granthName, source, indices }]) => (
-                    <React.Fragment key={key}>
+                    <div className="granthIndex" key={key}>
                       <h3 id={granthName}> {granthName}</h3>
                       <table>
                         <thead>
@@ -101,7 +101,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
                           ))}
                         </tbody>
                       </table>
-                    </React.Fragment>
+                    </div>
                   )
                 )}
                 <AmritKeertanIndex data={data.headers} />
