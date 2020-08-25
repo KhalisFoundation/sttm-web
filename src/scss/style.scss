@@ -23,7 +23,8 @@
   "banner",
   "baani-link",
   "granth-index",
-  "vishraam";
+  "vishraam",
+  "ui-controls";
 @import 'node_modules/react-smartbanner/dist/main';
 
 html,
@@ -280,6 +281,13 @@ select {
     color: $sttm-white;
     transition: 0.2s;
   }
+}
+
+.continue {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
 }
 
 .smartbanner-show {

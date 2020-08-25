@@ -28,6 +28,7 @@ import {
   SET_VISRAAMS,
   SET_SPLIT_VIEW,
   SET_FULLSCREEN_MODE,
+  SET_LOADING_ANG,
   CHANGE_FONT,
 } from '../actions';
 import {
@@ -57,6 +58,12 @@ import { DARK_MODE_COOKIE } from '../../../../common/constants';
 
 export default function reducer(state, action) {
   switch (action.type) {
+    case SET_LOADING_ANG: {
+      return {
+        ...state,
+        isLoadingAng: action.payload
+      }
+    }
     case SET_ONLINE_MODE: {
       {
         return {

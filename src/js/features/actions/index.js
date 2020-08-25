@@ -119,6 +119,8 @@ export const setVisraams = createAction(SET_VISRAAMS);
 export const SET_SPLIT_VIEW = 'SET_SPLIT_VIEW';
 export const setSplitView = createAction(SET_SPLIT_VIEW);
 
+export const SET_LOADING_ANG = 'SET_LOADING_ANG';
+
 export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));

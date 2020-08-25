@@ -25,6 +25,7 @@ interface IAutoScrollControlProps extends IReduxDispatchProps, IReduxStateAsProp
   hideSliderScreenSize: HideSliderScreenSize;
   isControlsAlwaysVisible: boolean;
   isBackgroundTransparent: boolean;
+  isLoadingAng: boolean;
 }
 
 class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAutoScrollControlState> {
@@ -37,7 +38,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   _nextScrollPosition!: number;
   _sliding!: boolean;
   _interval!: number;
-  _isFirefoxAgent: boolean;
+  _isFirefoxAgent: boolean = false;
 
   static defaultProps = {
     isBackgroundTransparent: false,
@@ -105,8 +106,8 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
   startScroll = () => {
     this.props.setAutoScrolling && this.props.setAutoScrolling(true);
-    this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
     this._nextScrollPosition = document.documentElement.scrollTop;
+    this._setMaxScrollPossible();
     this._interval = requestAnimationFrame(this.handleAutoScroll);
   }
 
@@ -122,12 +123,21 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     this.clearScrollInterval()
   }
 
+  _setMaxScrollPossible = () => {
+    this._maxScrollPossible = document.documentElement.scrollHeight - window.innerHeight;
+  }
+
   handleAutoScroll = () => {
     if (this.props.isAutoScrolling) {
       const scrollY = document.documentElement.scrollTop;
+      if (scrollY >= this._maxScrollPossible && !this.props.isLoadingAng) {
+        // we are resetting the maxscroll value since it can hold old value by now.
+        this._setMaxScrollPossible();
 
-      if (scrollY >= this._maxScrollPossible) {
-        this.removeScroll();
+        const isMaxScrollCrossed = this._maxScrollPossible >= scrollY;
+        if (isMaxScrollCrossed) {
+          this.removeScroll();
+        }
       }
 
       const [scrollingSpeed] = this.state.scrollingSpeed;
@@ -248,7 +258,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   }
 }
 
-const mapStateToProps = ({ isAutoScrolling }: any) => ({ isAutoScrolling })
+const mapStateToProps = ({ isAutoScrolling, isLoadingAng }: any) => ({ isAutoScrolling, isLoadingAng })
 
 const mapDispatchToProps: IReduxDispatchProps = {
   setAutoScrolling
