@@ -73,8 +73,10 @@ export default class Home extends React.PureComponent {
           action,
           name,
           placeholder,
+          isShowKeyboard,
           setGurmukhiKeyboardVisibilityAs,
           setQueryAs,
+          handleKeyDown,
           handleSearchChange,
           handleSearchSourceChange,
           handleSubmit,
@@ -97,8 +99,10 @@ export default class Home extends React.PureComponent {
                     <div className="flex justify-center align-center">
                       <div>
                         {showDoodle ? (
-                          <Logo className="logo-long" doodle={doodleData} />
-                        ) : (<Logo className="logo-long" />)}
+                          <Logo className="logo-long" doodle={doodleData} />)
+                          : (
+                            <Logo className="logo-long" />
+                          )}
                       </div>
                     </div>
 
@@ -114,6 +118,7 @@ export default class Home extends React.PureComponent {
                         spellCheck={false}
                         required="required"
                         value={query}
+                        onKeyDown={handleKeyDown}
                         onChange={handleSearchChange}
                         className={className}
                         placeholder={placeholder}
@@ -129,7 +134,7 @@ export default class Home extends React.PureComponent {
                       >
                         <CrossIcon />
                       </button>
-                      {type > 2 ? '' : (
+                      {isShowKeyboard && (
                         <button
                           type="button"
                           className={`gurmukhi-keyboard-toggle ${
@@ -146,13 +151,13 @@ export default class Home extends React.PureComponent {
                         <SearchIcon />
                       </button>
 
-                      <EnhancedGurmukhiKeyboard
+                      {isShowKeyboard && <EnhancedGurmukhiKeyboard
                         value={query}
                         searchType={type}
                         active={displayGurmukhiKeyboard}
                         onKeyClick={newValue => setQueryAs(newValue)()}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                      />
+                      />}
                     </div>
                     <Autocomplete
                       isShowFullResults

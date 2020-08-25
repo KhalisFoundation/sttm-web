@@ -1,2 +1,2 @@
 export * from './settings';
-export * from './ControllerSettings';
+export * from './controller-settings';

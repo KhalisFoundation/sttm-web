@@ -10,8 +10,10 @@ export const SEARCH_TYPES: ISearchTypes = {
   ROMANIZED: 4,
   ANG: 5,
   MAIN_LETTERS: 6,
+  ROMANIZED_FIRST_LETTERS_ANYWHERE: 7
 };
 
 export const SEARCH_TYPES_NOT_ALLOWED_KEYS = {
-  [SEARCH_TYPES.MAIN_LETTERS]: ['W', 'y', 'Y', 'w', 'O', 'o', 'u', 'i', 'I', 'U', 'N', 'H', 'R', 'M']
+  [SEARCH_TYPES.MAIN_LETTERS]: ['W', 'y', 'Y', 'w', 'O', 'o', 'u', 'i', 'I', 'U', 'N', 'H', 'R', 'M'],
+  [SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE]: [' ']
 }

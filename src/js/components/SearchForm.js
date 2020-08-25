@@ -94,26 +94,27 @@ export default class SearchForm extends React.PureComponent {
 
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
-    const tick = () =>
-      (this.timer = setTimeout(
-        () =>
-          this._setState(
-            ({ isAnimatingPlaceholder, placeholder }) => {
-              if (!isAnimatingPlaceholder) return null;
+    const millisecondPerLetter = 2000 / finalPlaceholder.length;
+    const tick = () => {
+      this.timer = setTimeout(
+        () => this._setState(({ isAnimatingPlaceholder, placeholder }) => {
+          if (!isAnimatingPlaceholder) return null;
 
-              if (placeholder === finalPlaceholder) {
-                return { isAnimatingPlaceholder: false };
-              } else if (finalPlaceholder[placeholder.length]) {
-                return {
-                  placeholder:
-                    placeholder + finalPlaceholder[placeholder.length],
-                };
-              }
-            },
-            () => this.state.isAnimatingPlaceholder && tick()
-          ),
-        2000 / finalPlaceholder.length
-      ));
+          if (placeholder === finalPlaceholder) {
+            return { isAnimatingPlaceholder: false };
+          }
+          else if (finalPlaceholder[placeholder.length]) {
+            return {
+              placeholder:
+                placeholder + finalPlaceholder[placeholder.length],
+            };
+          }
+        },
+          () => this.state.isAnimatingPlaceholder && tick()
+        ),
+        millisecondPerLetter
+      )
+    };
 
     tick();
   };
@@ -146,6 +147,15 @@ export default class SearchForm extends React.PureComponent {
     this._mounted = false;
   }
 
+  _isShowKeyboard(type) {
+    const searchType = this.state.searchType || type;
+    return (
+      searchType === SEARCH_TYPES.GURMUKHI_WORD ||
+      searchType === SEARCH_TYPES.FIRST_LETTERS ||
+      searchType === SEARCH_TYPES.FIRST_LETTERS_ANYWHERE
+    );
+  }
+
   render() {
     const {
       state,
@@ -162,7 +172,7 @@ export default class SearchForm extends React.PureComponent {
     const typeInt = parseInt(type);
     const [, useEnglish = false] = PLACEHOLDERS[type];
     const className = useEnglish ? '' : 'gurbani-font';
-    const isShowKeyboardIcon = typeInt <= 2 || typeInt === 6;
+    const isShowKeyboard = this._isShowKeyboard();
     const [title, pattern] =
       typeInt === SEARCH_TYPES.ROMANIZED
         ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
@@ -177,7 +187,7 @@ export default class SearchForm extends React.PureComponent {
 
     return this.props.children({
       ...state,
-      isShowKeyboardIcon,
+      isShowKeyboard,
       pattern,
       title,
       className,
@@ -218,15 +228,17 @@ export default class SearchForm extends React.PureComponent {
   }
 
   isQueryAllowed = (query, type = this.state.type) => {
-    // Different search types have different criteria to tell if it's safe query to be allowed to enter or not
+    // Different search types have different criteria to tell
+    // if it's allowed to be entered or not
     if (query) {
       switch (type) {
-        case SEARCH_TYPES.MAIN_LETTERS: {
-          const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS];
-          const lagamatrasRegExp = new RegExp(lagamatras.join('|'));
+        case SEARCH_TYPES.MAIN_LETTERS:
+        case SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE: {
+          const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS];
+          const notAllowedKeysRegex = new RegExp(notAllowedKeys.join('|'));
 
           // if it's not allowed key, then return false
-          if (lagamatrasRegExp.test(query)) {
+          if (notAllowedKeysRegex.test(query)) {
             return false;
           }
         }
@@ -258,10 +270,13 @@ export default class SearchForm extends React.PureComponent {
     })
 
   handleKeyDown = (e) => {
-    switch (this.state.type) {
-      case SEARCH_TYPES.MAIN_LETTERS: {
-        const lagamatras = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS];
-        const isPressedKeyNotAllowed = lagamatras.some((key) => key === e.key);
+    const { type } = this.state;
+    switch (type) {
+      case SEARCH_TYPES.MAIN_LETTERS:
+      case SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE: {
+        const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[type];
+        const isPressedKeyNotAllowed = notAllowedKeys.some((key) => key === e.key);
+
         // if it's not allowed key, then return false
         if (isPressedKeyNotAllowed) {
           e.preventDefault();
@@ -316,14 +331,10 @@ export default class SearchForm extends React.PureComponent {
     const isSearchTypeToMainLetterSearchType = currentSearchType !== SEARCH_TYPES.MAIN_LETTERS && newSearchType === SEARCH_TYPES.MAIN_LETTERS
     const isQueryToBeCleared = isSearchTypeToAngSearchType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
 
-
     // We are only showing keyboard :
     // If they falls in the gurmukhi keyboard category && keyboard is already open/active.
     // If keyboard is closed already, no need to set it as active.
-    const isShowKeyboard = newSearchType !== SEARCH_TYPES['ANG'] &&
-      newSearchType !== SEARCH_TYPES['ENGLISH_WORD'] &&
-      newSearchType !== SEARCH_TYPES['ROMANIZED']
-      && displayGurmukhiKeyboard;
+    const isShowKeyboard = this._isShowKeyboard(newSearchType) && displayGurmukhiKeyboard;
 
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
