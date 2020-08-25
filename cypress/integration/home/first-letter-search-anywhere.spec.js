@@ -4,6 +4,9 @@ describe('Home page Search tests', () => {
     it('should return search results for "ApAb" in drop-down', () => {
       cy.visit('/');
 
+      cy.get('.toast-notification-close-button')
+        .click();
+
       cy.get('#search-type')
         .select('1');
 
@@ -37,19 +40,19 @@ describe('Home page Search tests', () => {
     });
 
     it('should open all search results page on clicking the "Show All Results" button', () => {
-      cy.get('.toast-notification-close-button')
-        .click();
-
       cy.get('.search-result a')
         .last()
         .should('have.text', 'Show full results')
-        .click();
+        .click({ force: true });
 
       cy.url().should('include', '/search?q=ApAb&type=1&source=G');
     });
 
     it('should open all search results page on typing "ApAb" in search field and pressing enter', () => {
       cy.visit('/');
+
+      cy.get('.toast-notification-close-button')
+        .click();
 
       cy.get('#search-type')
         .select('1');
@@ -64,6 +67,9 @@ describe('Home page Search tests', () => {
 
     it('should open Shabad page on typing "ApAb" in search field, highlight search result and pressing enter', () => {
       cy.visit('/');
+
+      cy.get('.toast-notification-close-button')
+        .click();
 
       cy.get('#search-type')
         .select('1');
@@ -83,6 +89,9 @@ describe('Home page Search tests', () => {
 
     it('should open Shabad page on typing "ApAb" in search field and clicking a search result', () => {
       cy.visit('/');
+
+      cy.get('.toast-notification-close-button')
+        .click();
 
       cy.get('#search-type')
         .select('1');
