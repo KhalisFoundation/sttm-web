@@ -97,7 +97,7 @@ export const getHighlightIndices = (
     }
 
     case SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE: {
-      baaniWords = baaniWords.map(w => (w.startsWith('i') ? w.slice(1) : w));
+      // baaniWords = baaniWords.map(w => (w.startsWith('i') ? w.slice(1) : w));
       const baaniLetters = baaniWords.map(word => word[0]).join('');
 
       let q = mainQuery.split('+');
