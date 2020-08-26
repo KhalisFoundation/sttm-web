@@ -277,10 +277,8 @@ export default class SearchForm extends React.PureComponent {
       case SEARCH_TYPES.MAIN_LETTERS:
       case SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE: {
         const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[type];
-        console.log(notAllowedKeys.length, "---- NOT ALLOWED KEYS");
         if (notAllowedKeys.length > 0) {
           const isPressedKeyNotAllowed = notAllowedKeys.some((key) => key === e.key);
-          console.log(isPressedKeyNotAllowed, "---- NOT ALLOWED KEYS");
           // if it's not allowed key, then return false
           if (isPressedKeyNotAllowed) {
             e.preventDefault();
@@ -290,7 +288,6 @@ export default class SearchForm extends React.PureComponent {
       }
         break;
     }
-    console.log('RETURNING TRUE');
 
     return true;
   }
