@@ -234,12 +234,14 @@ export default class SearchForm extends React.PureComponent {
       switch (type) {
         case SEARCH_TYPES.MAIN_LETTERS:
         case SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE: {
-          const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[SEARCH_TYPES.MAIN_LETTERS];
-          const notAllowedKeysRegex = new RegExp(notAllowedKeys.join('|'));
+          const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[type];
+          if (notAllowedKeys.length > 0) {
+            const notAllowedKeysRegex = new RegExp(notAllowedKeys.join('|'));
 
-          // if it's not allowed key, then return false
-          if (notAllowedKeysRegex.test(query)) {
-            return false;
+            // if it's not allowed key, then return false
+            if (notAllowedKeysRegex.test(query)) {
+              return false;
+            }
           }
         }
           break;
@@ -275,21 +277,23 @@ export default class SearchForm extends React.PureComponent {
       case SEARCH_TYPES.MAIN_LETTERS:
       case SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE: {
         const notAllowedKeys = SEARCH_TYPES_NOT_ALLOWED_KEYS[type];
-        const isPressedKeyNotAllowed = notAllowedKeys.some((key) => key === e.key);
-
-        // if it's not allowed key, then return false
-        if (isPressedKeyNotAllowed) {
-          e.preventDefault();
-          return false;
+        console.log(notAllowedKeys.length, "---- NOT ALLOWED KEYS");
+        if (notAllowedKeys.length > 0) {
+          const isPressedKeyNotAllowed = notAllowedKeys.some((key) => key === e.key);
+          console.log(isPressedKeyNotAllowed, "---- NOT ALLOWED KEYS");
+          // if it's not allowed key, then return false
+          if (isPressedKeyNotAllowed) {
+            e.preventDefault();
+            return false;
+          }
         }
       }
         break;
     }
+    console.log('RETURNING TRUE');
 
     return true;
   }
-
-
   handleSearchChange = ({ target }) => {
     const query = target.value
     if (this.isQueryAllowed(query)) {
@@ -327,6 +331,7 @@ export default class SearchForm extends React.PureComponent {
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
     const { type: currentSearchType, query, source, displayGurmukhiKeyboard } = this.state;
     const newSearchType = Number(value);
+    let newSourceType = source;
     const isSearchTypeToAngSearchType = currentSearchType !== SEARCH_TYPES.ANG && newSearchType === SEARCH_TYPES.ANG;
     const isSearchTypeToMainLetterSearchType = currentSearchType !== SEARCH_TYPES.MAIN_LETTERS && newSearchType === SEARCH_TYPES.MAIN_LETTERS
     const isQueryToBeCleared = isSearchTypeToAngSearchType || (isSearchTypeToMainLetterSearchType && !this.isQueryAllowed(query, newSearchType));
@@ -336,13 +341,15 @@ export default class SearchForm extends React.PureComponent {
     // If keyboard is closed already, no need to set it as active.
     const isShowKeyboard = this._isShowKeyboard(newSearchType) && displayGurmukhiKeyboard;
 
+    if (isSearchTypeToAngSearchType) {
+      newSourceType = Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'
+    }
+
     this.stopPlaceholderAnimation().then(() =>
       this.setState(
         {
           type: newSearchType,
-          source: newSearchType === SEARCH_TYPES['ANG'] &&
-            Object.keys(SOURCES_WITH_ANG).includes(this.state.source) ?
-            this.state.source : 'G',
+          source: newSourceType,
           query: isQueryToBeCleared ? '' : query,
           shouldSubmit: isSearchTypeToAngSearchType ? false :
             this.props.submitOnChangeOf.includes('type') &&

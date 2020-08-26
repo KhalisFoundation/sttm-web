@@ -1,11 +1,13 @@
 import { buildApiUrl } from '@sttm/banidb';
+import { SEARCH_TYPES } from '@/constants';
 import { toShabadURL } from '../url';
-import { translationMap, getGurmukhiVerse } from '../api/shabad';
+import { translationMap, transliterationMap, getGurmukhiVerse } from '../api/shabad';
 import { getHighlightIndices } from '../gurbani';
 
 export const getShabadList = (q, { type, source }) => {
   const offset = 1;
-  const livesearch = true;
+  const isSearchTypeRomanizedFirstLetters = type === SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE;
+  const livesearch = !isSearchTypeRomanizedFirstLetters;
   const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL, livesearch }));
 
   return new Promise((resolve, reject) => {
@@ -15,7 +17,15 @@ export const getShabadList = (q, { type, source }) => {
         const { verses } = data;
         let panktiList = [];
         for (const shabad of verses) {
-          const highlightPankti = type === 3 ? translationMap["english"](shabad) : getGurmukhiVerse(shabad);
+          let highlightPankti = getGurmukhiVerse(shabad);
+          if (type === 3) {
+            highlightPankti = translationMap["english"](shabad);
+          }
+
+          if (isSearchTypeRomanizedFirstLetters) {
+            highlightPankti = transliterationMap["english"](shabad);
+          }
+
           const highlightIndex = getHighlightIndices(
             highlightPankti,
             q,
