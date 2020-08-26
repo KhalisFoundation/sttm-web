@@ -1,4 +1,4 @@
-import React, { useEffect, MouseEvent } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Location } from 'history';
 import SmartBanner from 'react-smartbanner';
@@ -11,7 +11,6 @@ import { pageView } from '../../../util/analytics';
 import { AmritKeertanIndex } from './AmritKeertanIndex';
 import { sanitizeHash, scrollToHash } from '../util';
 import { TEXTS } from '../../../constants';
-
 interface IGranthIndexProps {
   location: Location
 }
