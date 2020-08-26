@@ -1,10 +1,13 @@
 
 describe('Home page Search tests', () => {
-  const searchString = 'jmtaqssd';
+  const searchString = 'jmtatssd';
 
   describe('Romanized First Letter Search anywhere(E)', () => {
     beforeEach(() => {
       cy.visit('/');
+
+      cy.get('.toast-notification-close-button')
+        .click();
 
       cy.get('#search-type')
         .select('7');
@@ -42,4 +45,5 @@ describe('Home page Search tests', () => {
     //   // expect(isMatched).to.be.true;
     //   // console.log(firstLetterSearch);
     // })
-  })
+  });
+});

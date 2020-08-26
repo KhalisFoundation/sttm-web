@@ -29,23 +29,20 @@ describe('Home page Search tests', () => {
     });
 
     it('should open all search results page on clicking the "Show All Results" button', () => {
-      cy.get('.search-result')
-        .last()
-        .scrollTo('bottom');
-
-      cy.get('.toast-notification-close-button')
-        .click();
 
       cy.get('.search-result a')
         .last()
         .should('have.text', 'Show full results')
-        .click();
+        .click({ force: true });
 
       cy.url().should('include', '/search?q=bhb&type=0&source=all');
     });
 
     it('should open all search results page on typing "bhb" in search field and pressing enter', () => {
       cy.visit('/');
+
+      cy.get('.toast-notification-close-button')
+        .click();
 
       cy.get('#search')
         .type('bhb');
@@ -73,6 +70,9 @@ describe('Home page Search tests', () => {
 
     it('should open Shabad page on typing "bhb" in search field and clicking a search result', () => {
       cy.visit('/');
+
+      cy.get('.toast-notification-close-button')
+        .click();
 
       cy.get('#search')
         .type('bhb');
