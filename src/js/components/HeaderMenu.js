@@ -56,7 +56,7 @@ export default class Menu extends React.PureComponent {
                 Random Shabad
               </Link>
             </li>
-            <li>
+            <li data-cy="sundar-gutka-page">
               <Link to="/sundar-gutka" onClick={toggleMenu}>
                 Sundar Gutka
               </Link>
