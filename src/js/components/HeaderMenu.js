@@ -66,7 +66,7 @@ export default class Menu extends React.PureComponent {
                 Index
               </Link>
             </li>
-            <li className="submenu">
+            <li data-cy="sync" className="submenu">
               <p>Sync
               <BackIcon /></p>
               <div className="submenu-items">
