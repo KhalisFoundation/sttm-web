@@ -21,23 +21,6 @@ Cypress.Commands.add('checkSgCard', function checkGranthIndices({ childNo, engli
     .should('have.text', english)
 });
 
-
-Cypress.Commands.add('loadAmritKeertanFirstChapter', () => {
-  // Amrit Keertan
-  cy.get('.granthIndex')
-    .eq(2)
-    .find('tbody tr')
-    .as('amritKeertanRows')
-
-  // Clicking on first row will load the shabads for that chapter
-  cy.get('@amritKeertanRows')
-    .first()
-    .click({ force: true })
-    .get('.amritKeertanIndexRowShabad')
-    .as('firstChapterShabads')
-    .should('have.length.gt', 0)
-})
-
 describe('Navigation', () => {
   const sundarGutkaBaanis = 104;
 
@@ -61,6 +44,16 @@ describe('Navigation', () => {
       cy.checkSgCard({ childNo: 0, english: 'gur mantr', gurmukhi: 'ਗੁਰ ਮੰਤ੍ਰ' })
 
       cy.checkSgCard({ childNo: sundarGutkaBaanis - 1, english: 'kaanaRe kee vaar mahalaa chauthhaa', gurmukhi: 'ਕਾਨੜੇ ਕੀ ਵਾਰ ਮਹਲਾ ੪' })
+    })
+
+    it.only('should open correct bani on clicking sundar gutka card', () => {
+
+      cy.get('.sgCard')
+        .first()
+        .click()
+
+      cy.url().should('contain', '/sundar-gutka/gur-mantr');
+
     })
 
   })

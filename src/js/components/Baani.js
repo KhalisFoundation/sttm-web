@@ -357,7 +357,7 @@ export default class Baani extends React.PureComponent {
                 {availableTransliterations.map(language =>
                   <div
                     key={language}
-                    className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
+                    className={`${mixedViewBaaniClass}-transliteration-${language} ${paragraphModeClass}`} >
                     {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
                   </div>
                 )}
