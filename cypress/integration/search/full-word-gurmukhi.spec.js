@@ -1,7 +1,7 @@
 import { SEARCH_TYPES } from '../../../src/js/constants';
 const searchType = SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE.toString();
 
-describe('Home page Search tests', () => {
+describe('Search', () => {
   const searchString = 'jmtatssd';
   const searchString2 = 'jmta';
   const showAllResultsBtn = 'Show full results';
