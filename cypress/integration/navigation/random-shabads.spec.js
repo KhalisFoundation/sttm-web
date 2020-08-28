@@ -1,3 +1,6 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
+import { API_URL } from '../../../common/constants';
+
 describe('Navigation', () => {
   context('Random Shabad page', () => {
     beforeEach(() => {
@@ -18,41 +21,81 @@ describe('Navigation', () => {
 
     it('should render next/previous shabads on clicking next/previous buttons', () => {
 
-      cy.url().then(url => {
-        const shabadId = url.split('id=')[1];
+      cy.url()
+        .should('include', '/shabad?id')
+        .then(url => {
+          const shabadId = Number(url.split('id=')[1]);
 
-        cy.get('shabad-nav.left')
-          .click();
+          cy.get('.shabad-nav.left a')
+            .first()
+            .click();
 
-        cy.url().should('include', `/shabad?id=${shabadId - 1}`);
+          cy.url().should('include', `/shabad?id=${shabadId - 1}`);
 
-        cy.get('#shabad').should('be.visible');
+          cy.get('#shabad').should('be.visible');
 
-        cy.get('shabad-nav.right')
-          .click();
+          cy.get('.shabad-nav.right a')
+            .first()
+            .click();
 
-        cy.url().should('include', `/shabad?id=${shabadId}`);
-      });
-
+          cy.url().should('include', `/shabad?id=${shabadId}`);
+        });
     })
 
-    // it('should open bani-controller page on clicking bani-controller option', () => {
+    it('should display related shabads properly, if they exists', () => {
+      cy.server();
 
-    //   cy.get('[data-cy=sync]')
-    //     .find('.submenu-items')
-    //     .invoke('show')
-    //     .find('a')
-    //     .last()
-    //     .click()
+      cy.route({ method: 'get', url: `http://stgapi.sikhitothemax.org/related/shabad/**` }).as('relatedShabads');
 
-    //   cy.url().should('include', '/control')
+      cy.get('@relatedShabads')
+        .then(relatedShabads => {
+          if (relatedShabads) {
+            cy.get('.relatedShabadWrapper').should('be.visible');
+          } else {
+            cy.get('.relatedShabadWrapper').should('not.be.visible');
+          }
+        })
+    })
 
-    //   cy.get('#code').should('be.visible');
+    it.only('should work properly on clicking scroll-to-top/fullscreen button', () => {
+      cy.get('#shabad').should('be.visible');
 
-    //   cy.get('#syncPassword').should('be.visible');
+      cy.get('.fab.fullscreen').as('fullscreenIcon')
+        .should('be.visible')
+        .scrollIntoView()
+        .then(() => {
+          // TODO: using a better logic
+          cy.wait(1000).then(() => {
 
-    //   cy.get('.sync-form--button')
-    //     .should('be.visible');
-    // })
+            // Synchronous testing whether element is available or not
+            if (Cypress.$('.fab.scroll-to-top').length > 0) {
+              cy.get('.fab.scroll-to-top').as('scrollToTopIcon')
+              // Action on clicking scroll-to-top
+              cy.get('@scrollToTopIcon')
+                .click()
+
+              // Random wait for scrolling time
+              cy.wait(1000).then(() => {
+                cy.window().then($window => {
+                  expect($window.scrollY).to.be.closeTo(0, 50);
+                })
+              });
+            }
+
+            // Action on clicking fullscreen icon
+            cy
+              .get('@fullscreenIcon')
+              .click()
+
+            cy.get('body').should('have.class', 'fullscreen-view')
+
+            cy
+              .get('@fullscreenIcon')
+              .click()
+
+            cy.get('body').should('not.have.class', 'fullscreen-view')
+          })
+        })
+    })
   })
 })
