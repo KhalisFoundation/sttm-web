@@ -14,8 +14,9 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './index-page.commands.js';
-import './commands'
+import './index-page.commands';
+import './sundar-gutka.commands';
+import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

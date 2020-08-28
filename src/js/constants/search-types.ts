@@ -15,5 +15,5 @@ export const SEARCH_TYPES: ISearchTypes = {
 
 export const SEARCH_TYPES_NOT_ALLOWED_KEYS = {
   [SEARCH_TYPES.MAIN_LETTERS]: ['W', 'y', 'Y', 'w', 'O', 'o', 'u', 'i', 'I', 'U', 'N', 'H', 'R', 'M'],
-  [SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE]: [' ']
+  [SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE]: []
 }
