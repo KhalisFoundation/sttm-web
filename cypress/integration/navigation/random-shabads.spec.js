@@ -1,8 +1,8 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-import { API_URL } from '../../../common/constants';
 
 describe('Navigation', () => {
   context('Random Shabad page', () => {
+
     beforeEach(() => {
       cy.visit('/');
 
@@ -17,6 +17,46 @@ describe('Navigation', () => {
       cy.url().should('include', '/shabad?id')
 
       cy.get('#shabad').should('be.visible');
+    })
+
+    it('should work properly on clicking scroll-to-top/fullscreen button', () => {
+
+      cy.get('.fab.fullscreen').as('fullscreenIcon')
+        .should('be.visible')
+        .scrollIntoView()
+        .then(() => {
+          // TODO: using a better logic
+          cy.wait(1000).then(() => {
+
+            // Synchronous testing whether element is available or not
+            if (Cypress.$('.fab.scroll-to-top').length > 0) {
+              cy.get('.fab.scroll-to-top').as('scrollToTopIcon')
+              // Action on clicking scroll-to-top
+              cy.get('@scrollToTopIcon')
+                .click()
+
+              // Random wait for scrolling time
+              cy.wait(1000).then(() => {
+                cy.window().then($window => {
+                  expect($window.scrollY).to.be.closeTo(0, 50);
+                })
+              });
+            }
+
+            // Action on clicking fullscreen icon
+            cy
+              .get('@fullscreenIcon')
+              .click()
+
+            cy.get('body').should('have.class', 'fullscreen-view')
+
+            cy
+              .get('@fullscreenIcon')
+              .click()
+
+            cy.get('body').should('not.have.class', 'fullscreen-view')
+          })
+        })
     })
 
     it('should render next/previous shabads on clicking next/previous buttons', () => {
@@ -54,47 +94,6 @@ describe('Navigation', () => {
           } else {
             cy.get('.relatedShabadWrapper').should('not.be.visible');
           }
-        })
-    })
-
-    it.only('should work properly on clicking scroll-to-top/fullscreen button', () => {
-      cy.get('#shabad').should('be.visible');
-
-      cy.get('.fab.fullscreen').as('fullscreenIcon')
-        .should('be.visible')
-        .scrollIntoView()
-        .then(() => {
-          // TODO: using a better logic
-          cy.wait(1000).then(() => {
-
-            // Synchronous testing whether element is available or not
-            if (Cypress.$('.fab.scroll-to-top').length > 0) {
-              cy.get('.fab.scroll-to-top').as('scrollToTopIcon')
-              // Action on clicking scroll-to-top
-              cy.get('@scrollToTopIcon')
-                .click()
-
-              // Random wait for scrolling time
-              cy.wait(1000).then(() => {
-                cy.window().then($window => {
-                  expect($window.scrollY).to.be.closeTo(0, 50);
-                })
-              });
-            }
-
-            // Action on clicking fullscreen icon
-            cy
-              .get('@fullscreenIcon')
-              .click()
-
-            cy.get('body').should('have.class', 'fullscreen-view')
-
-            cy
-              .get('@fullscreenIcon')
-              .click()
-
-            cy.get('body').should('not.have.class', 'fullscreen-view')
-          })
         })
     })
   })
