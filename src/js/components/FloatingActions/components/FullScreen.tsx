@@ -54,7 +54,7 @@ class FullScreen extends React.PureComponent<IFullScreenProps, IFullScreenState>
   render() {
     const { isFullScreen } = this.state;
     return (
-      <div className="fab scroll-to-top fullscreen" onClick={this.handleClick}>
+      <div className="fab fullscreen" onClick={this.handleClick}>
         <FullscreenIcon state={isFullScreen} />
       </div>
     );
