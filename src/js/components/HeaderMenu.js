@@ -61,7 +61,7 @@ export default class Menu extends React.PureComponent {
                 Sundar Gutka
               </Link>
             </li>
-            <li>
+            <li data-cy="index">
               <Link to="/index" onClick={toggleMenu}>
                 Index
               </Link>

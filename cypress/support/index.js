@@ -14,6 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+import './index-page.commands';
 import './sundar-gutka.commands';
 import './commands';
 
