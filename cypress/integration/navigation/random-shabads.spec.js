@@ -26,7 +26,7 @@ describe('Navigation', () => {
         .scrollIntoView()
         .then(() => {
           // TODO: using a better logic
-          cy.wait(1000).then(() => {
+          cy.wait(500).then(() => {
 
             // Synchronous testing whether element is available or not
             if (Cypress.$('.fab.scroll-to-top').length > 0) {
@@ -36,7 +36,7 @@ describe('Navigation', () => {
                 .click()
 
               // Random wait for scrolling time
-              cy.wait(1000).then(() => {
+              cy.wait(500).then(() => {
                 cy.window().then($window => {
                   expect($window.scrollY).to.be.closeTo(0, 50);
                 })
