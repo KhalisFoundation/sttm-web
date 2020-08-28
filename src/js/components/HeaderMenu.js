@@ -51,7 +51,7 @@ export default class Menu extends React.PureComponent {
                 Hukamnama
             </Link>
             </li>
-            <li>
+            <li data-cy="random-shabad">
               <Link to="/shabad?random" onClick={toggleMenu}>
                 Random Shabad
               </Link>
