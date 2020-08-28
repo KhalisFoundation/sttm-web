@@ -10,9 +10,7 @@ describe('Home page Search tests', () => {
     beforeEach(() => {
       cy.visit('/');
 
-      cy
-        .get('#toast-notification')
-        .find('.toast-notification-close-button')
+      cy.get('.toast-notification-close-button')
         .click();
 
       cy.get('#search-type')

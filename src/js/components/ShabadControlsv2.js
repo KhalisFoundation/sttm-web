@@ -173,7 +173,7 @@ class ShabadControls extends React.PureComponent {
         {settings.map((element, i) => {
           if (element.type) {
             return (
-              <div key={`settings-${i}`}
+              <div data-cy={element.label} key={`settings-${i}`}
                 className={`qs-option controller-option ${element.type}`}>
                 {this.bakeSettings(element)}
               </div>
@@ -196,7 +196,10 @@ class ShabadControls extends React.PureComponent {
               {advanced.map((element, i) => {
                 if (element.type) {
                   return (
-                    <div key={`settings-${i}`} className={`controller-option ${element.type}`}>
+                    <div
+                      data-cy={element.label}
+                      key={`settings-${i}`}
+                      className={`controller-option ${element.type}`}>
                       {this.bakeSettings(element)}
                     </div>
                   )
