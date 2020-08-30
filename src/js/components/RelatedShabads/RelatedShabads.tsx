@@ -224,13 +224,15 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
               </div>
               {visibleShabads < totalShabads
                 &&
-                (<div className="btn btn-primary">
-                  <button
-                    className="btn"
-                    onClick={this.handleShowMore(totalShabads)}>
-                    More Related Results
+                (
+                  <div className="relatedShabadShowMore">
+                    <button
+                      className="btn btn-primary"
+                      onClick={this.handleShowMore(totalShabads)}>
+                      More Related Results
                   </button>
-                </div>)}
+                  </div>
+                )}
             </div>
           );
         }}
