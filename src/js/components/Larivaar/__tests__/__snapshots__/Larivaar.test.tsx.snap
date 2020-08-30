@@ -3,12 +3,12 @@
 exports[`<Larivaar /> renders children when disabled 1`] = `
 <div>
   <span
-    class=""
+    class=" "
   >
      Vahi 
   </span>
   <span
-    class=""
+    class=" "
   >
      Guru 
   </span>

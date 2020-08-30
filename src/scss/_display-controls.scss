@@ -403,7 +403,31 @@
   flex-wrap: wrap;
   margin: 1rem auto 0.5rem 0;
   padding: 1rem;
+  position: relative;
   width: calc(100% - 2rem);
+
+  &--close {
+    align-items: center;
+    border: 1px solid $sttm-grey;
+    border-radius: 50%;
+    color: $sttm-grey;
+    display: flex;
+    font-size: 13px;
+    height: 34px;
+    justify-content: center;
+    outline: none;
+    padding: 8px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    transition: all 0.2s ease-in;
+    width: 34px;
+
+    &:hover {
+      border-color: $sttm-red;
+      color: $sttm-red;
+    }
+  }
 
   .controller-option {
     margin: 10px;

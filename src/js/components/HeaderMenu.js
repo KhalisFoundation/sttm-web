@@ -51,22 +51,22 @@ export default class Menu extends React.PureComponent {
                 Hukamnama
             </Link>
             </li>
-            <li>
+            <li data-cy="random-shabad">
               <Link to="/shabad?random" onClick={toggleMenu}>
                 Random Shabad
               </Link>
             </li>
-            <li>
+            <li data-cy="sundar-gutka-page">
               <Link to="/sundar-gutka" onClick={toggleMenu}>
                 Sundar Gutka
               </Link>
             </li>
-            <li>
+            <li data-cy="index">
               <Link to="/index" onClick={toggleMenu}>
                 Index
               </Link>
             </li>
-            <li className="submenu">
+            <li data-cy="sync" className="submenu">
               <p>Sync
               <BackIcon /></p>
               <div className="submenu-items">

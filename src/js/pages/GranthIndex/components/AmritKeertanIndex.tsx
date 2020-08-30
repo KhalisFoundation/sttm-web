@@ -11,7 +11,7 @@ interface IAmritKeertanProps {
 export const AmritKeertanIndex: React.FC<IAmritKeertanProps> = ({ data }) => {
 
   return (
-    <div>
+    <div className="granthIndex">
       <h3 id='amritKeertan'> Amrit Keertan</h3>
       <table>
         <thead>

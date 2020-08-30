@@ -4,14 +4,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
 import { Link } from 'react-router-dom';
-import EnhancedGurmukhiKeyboard from './GurmukhiKeyboardv2';
+
+import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
-import { toSearchURL, getQueryParams, getShabadList } from '../util';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+
+import {
+  toSearchURL,
+  getQueryParams,
+  getShabadList,
+  reformatSearchTypes
+} from '@/util';
 export default class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
 
@@ -46,7 +53,6 @@ export default class Header extends React.PureComponent {
       }
       );
   }
-
   componentDidMount() {
     this.fetchDoodle();
   }
@@ -60,7 +66,6 @@ export default class Header extends React.PureComponent {
   handleFormSubmit = data => {
     this.props.history.push(toSearchURL(data));
   }
-
   render() {
     const {
       props: { defaultQuery, isHome, isAng, isController },
@@ -68,11 +73,13 @@ export default class Header extends React.PureComponent {
       onFormSubmit,
       handleFormSubmit,
     } = this;
+
     const {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
     } = getQueryParams(location.search);
 
+    const isSearchPageRoute = location.pathname.includes('search');
     const key = `${defaultQuery}${defaultSource}${defaultType}`;
 
     const controllerHeader = (
@@ -92,7 +99,6 @@ export default class Header extends React.PureComponent {
     if (isController) {
       return controllerHeader;
     }
-
 
     return (
       <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
@@ -114,7 +120,7 @@ export default class Header extends React.PureComponent {
             key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
-            defaultType={defaultType}
+            defaultType={Number(defaultType)}
             submitOnChangeOf={['type', 'source']}
             onSubmit={handleFormSubmit}
           >
@@ -124,6 +130,7 @@ export default class Header extends React.PureComponent {
               className,
               inputType,
               displayGurmukhiKeyboard,
+              isShowKeyboard,
               query,
               type,
               source,
@@ -132,11 +139,14 @@ export default class Header extends React.PureComponent {
               placeholder,
               setGurmukhiKeyboardVisibilityAs,
               setQueryAs,
+              handleKeyDown,
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
               handleSubmit,
-            }) => (
+            }) => {
+
+              return (
                 <React.Fragment>
                   <div id="responsive-menu">
                     <div className="top-bar-left">
@@ -184,6 +194,7 @@ export default class Header extends React.PureComponent {
                                     required="required"
                                     name={name}
                                     value={query}
+                                    onKeyDown={handleKeyDown}
                                     onChange={handleSearchChange}
                                     className={className}
                                     placeholder={placeholder}
@@ -194,14 +205,13 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <button
-                                    type="button"
                                     className="clear-search-toggle"
                                     onClick={setQueryAs('')}
                                   >
                                     <CrossIcon />
                                   </button>
 
-                                  {type > 2 ? '' : (
+                                  {isShowKeyboard && (
                                     <button
                                       type="button"
                                       className={`gurmukhi-keyboard-toggle ${
@@ -219,15 +229,18 @@ export default class Header extends React.PureComponent {
                                     <SearchIcon />
                                   </button>
 
-                                  <EnhancedGurmukhiKeyboard
-                                    value={query}
-                                    searchType={parseInt(type)}
-                                    active={displayGurmukhiKeyboard}
-                                    onKeyClick={newValue => setQueryAs(newValue)()}
-                                    onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                                  />
+                                  {isShowKeyboard && (
+                                    <EnhancedGurmukhiKeyboard
+                                      value={query}
+                                      searchType={parseInt(type)}
+                                      active={displayGurmukhiKeyboard}
+                                      onKeyClick={newValue => setQueryAs(newValue)()}
+                                      onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                                    />
+                                  )}
 
                                   <Autocomplete
+                                    isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
                                     getSuggestions={getShabadList}
                                     searchOptions={{ type: parseInt(type), source }}
                                     value={query}
@@ -240,12 +253,12 @@ export default class Header extends React.PureComponent {
                             <select
                               name="type"
                               id="search-type"
-                              value={type}
+                              value={type.toString()}
                               onChange={handleSearchTypeChange}
                             >
-                              {TYPES.map((children, value) => (
+                              {reformatSearchTypes(TYPES).map(({ type, value }) => (
                                 <option key={value} value={value}>
-                                  {children}
+                                  {type}
                                 </option>
                               ))}
                             </select>
@@ -281,50 +294,9 @@ export default class Header extends React.PureComponent {
                       isHome={isHome}
                     />
                   </div>
-                  {/*!isHome && (
-                    <div id="search-options">
-                      <select
-                        name="type"
-                        id="search-type"
-                        value={type}
-                        onChange={handleSearchTypeChange}
-                      >
-                        {TYPES.map((children, value) => (
-                          <option key={value} value={value}>
-                            {children}
-                          </option>
-                        ))}
-                      </select>
-                      {parseInt(type) === SEARCH_TYPES['ANG'] ? (
-                        <select
-                          name="source"
-                          value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
-                          onChange={handleSearchSourceChange}
-                        >
-                          {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
-                            <option key={value} value={value}>
-                              {children}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                          <select
-                            name="source"
-                            value={source}
-                            onChange={handleSearchSourceChange}
-                          >
-                            {Object.entries(SOURCES).map(([value, children]) => (
-                              <option key={value} value={value}>
-                                {children}
-                              </option>
-                            ))}
-                          </select>
-                        )
-                      }
-                    </div>
-                  )*/}
                 </React.Fragment>
-              )}
+              )
+            }}
           </SearchForm>
         </div>
       </div>

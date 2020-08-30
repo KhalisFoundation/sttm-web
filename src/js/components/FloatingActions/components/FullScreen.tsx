@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setFullScreenMode } from '../../features/actions';
-import FullscreenIcon from '../Icons/FullscreenIcon';
-
+import FullscreenIcon from '../../Icons/FullscreenIcon';
+import { setFullScreenMode } from '../../../features/actions';
 interface IFullScreenProps {
   setFullScreenMode: (payload: boolean) => {}
 }
@@ -55,7 +54,7 @@ class FullScreen extends React.PureComponent<IFullScreenProps, IFullScreenState>
   render() {
     const { isFullScreen } = this.state;
     return (
-      <div className="fab scroll-to-top fullscreen" onClick={this.handleClick}>
+      <div className="fab fullscreen" onClick={this.handleClick}>
         <FullscreenIcon state={isFullScreen} />
       </div>
     );

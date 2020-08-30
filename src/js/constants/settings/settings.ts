@@ -3,14 +3,14 @@ import {
   TRANSLITERATION_LANGUAGES,
   FONT_OPTIONS,
   VISRAAM,
-} from './constants';
+} from '@/constants';
 
 import {
   toggleItemInArray,
   toFixedFloat,
   isShowParagraphModeRoute,
   isShowAutoScrollRoute
-} from './util';
+} from '@/util';
 
 import {
   LarivaarIcon,

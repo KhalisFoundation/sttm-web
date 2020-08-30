@@ -4,16 +4,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../../constants';
-import { toSearchURL, getShabadList } from '../../util';
+import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
-import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
-import SehajPaathLink from '../../components/SehajPaathLink';
-import { BaaniLinks } from '../../components/BaaniLinks/';
-import SearchForm from '../../components/SearchForm';
-import Logo from '../../components/Icons/Logo';
-import CrossIcon from '../../components/Icons/Times';
-import KeyboardIcon from '../../components/Icons/Keyboard';
-import SearchIcon from '../../components/Icons/Search';
+
+import { EnhancedGurmukhiKeyboard } from '@/components/EnhancedGurmukhiKeyboard';
+import SehajPaathLink from '@/components/SehajPaathLink';
+import { BaaniLinks } from '@/components/BaaniLinks/';
+import SearchForm from '@/components/SearchForm';
+import Logo from '@/components/Icons/Logo';
+import CrossIcon from '@/components/Icons/Times';
+import KeyboardIcon from '@/components/Icons/Keyboard';
+import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
 /**
  *
@@ -72,8 +73,10 @@ export default class Home extends React.PureComponent {
           action,
           name,
           placeholder,
+          isShowKeyboard,
           setGurmukhiKeyboardVisibilityAs,
           setQueryAs,
+          handleKeyDown,
           handleSearchChange,
           handleSearchSourceChange,
           handleSubmit,
@@ -115,6 +118,7 @@ export default class Home extends React.PureComponent {
                         spellCheck={false}
                         required="required"
                         value={query}
+                        onKeyDown={handleKeyDown}
                         onChange={handleSearchChange}
                         className={className}
                         placeholder={placeholder}
@@ -130,7 +134,7 @@ export default class Home extends React.PureComponent {
                       >
                         <CrossIcon />
                       </button>
-                      {type > 2 ? '' : (
+                      {isShowKeyboard && (
                         <button
                           type="button"
                           className={`gurmukhi-keyboard-toggle ${
@@ -147,13 +151,13 @@ export default class Home extends React.PureComponent {
                         <SearchIcon />
                       </button>
 
-                      <EnhancedGurmukhiKeyboard
+                      {isShowKeyboard && <EnhancedGurmukhiKeyboard
                         value={query}
                         searchType={type}
                         active={displayGurmukhiKeyboard}
                         onKeyClick={newValue => setQueryAs(newValue)()}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                      />
+                      />}
                     </div>
                     <Autocomplete
                       isShowFullResults
@@ -169,9 +173,9 @@ export default class Home extends React.PureComponent {
                           value={type}
                           onChange={handleSearchTypeChange}
                         >
-                          {TYPES.map((children, value) => (
+                          {reformatSearchTypes(TYPES).map(({ type, value }) => (
                             <option key={value} value={value}>
-                              {children}
+                              {type}
                             </option>
                           ))}
                         </select>

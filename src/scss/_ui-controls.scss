@@ -1,0 +1,16 @@
+.btn {
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+  transition: 0.2s ease-in;
+
+  &-primary {
+    background-color: $sttm-blue;
+    color: $sttm-white;
+
+    &:hover {
+      background-color: $sttm-bright-blue;
+    }
+  }
+}

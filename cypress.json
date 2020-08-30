@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://localhost:8080",
+  "_baseUrl": "https://stg.sikhitothemax.org",
+  "__baseUrl": "https://sikhitothemax.org",
+  "experimentalFetchPolyfill": true
+}

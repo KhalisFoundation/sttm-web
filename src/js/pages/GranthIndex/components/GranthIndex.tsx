@@ -1,6 +1,7 @@
-import React, { useEffect, MouseEvent } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Location } from 'history';
+import SmartBanner from 'react-smartbanner';
 
 import BreadCrumb from '@/components/Breadcrumb';
 import Fetch from '@/components/Fetch';
@@ -10,7 +11,6 @@ import { pageView } from '../../../util/analytics';
 import { AmritKeertanIndex } from './AmritKeertanIndex';
 import { sanitizeHash, scrollToHash } from '../util';
 import { TEXTS } from '../../../constants';
-
 interface IGranthIndexProps {
   location: Location
 }
@@ -20,8 +20,12 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
 
   useEffect(() => {
     pageView('/index');
+
     // making sure the element is rendered on DOM before we get to that
-    setTimeout(() => scrollToHash(hash), 800);
+    setTimeout(() => {
+      scrollToHash(hash)
+    }, 800);
+
   }, [])
 
   return (
@@ -37,6 +41,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
 
         return (
           <div className="row" id="content-root">
+            <SmartBanner key="amritKeertan" position="top" title={'Amrit Keertan'} />
             <BreadCrumb links={[{ title: TEXTS.URIS.INDEX }]} />
             <div id="help">
               <div id="sidebar">
@@ -69,7 +74,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
               <main>
                 {Object.entries(raagIndices).map(
                   ([key, { name: granthName, source, indices }]) => (
-                    <React.Fragment key={key}>
+                    <div className="granthIndex" key={key}>
                       <h3 id={granthName}> {granthName}</h3>
                       <table>
                         <thead>
@@ -95,7 +100,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
                           ))}
                         </tbody>
                       </table>
-                    </React.Fragment>
+                    </div>
                   )
                 )}
                 <AmritKeertanIndex data={data.headers} />

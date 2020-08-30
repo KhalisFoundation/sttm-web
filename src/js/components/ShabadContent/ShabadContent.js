@@ -4,16 +4,26 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GlobalHotKeys } from 'react-hotkeys';
 
-import { clickEvent, ACTIONS, errorEvent } from '@/util/analytics';
-import { showToast, copyToClipboard } from '@/util';
 import Controls, { supportedMedia } from '@/components/Controls';
 import FootNav from '@/components/FootNav';
 import Meta from '@/components/Meta';
 import ProgressBar from '@/components/ProgressBar';
 import Baani from '@/components/Baani';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import RelatedShabads from '@/components/RelatedShabads';
-import { getShabadId, getSourceId, getAng } from '@/util/api/shabad';
+import { MultiPageBaani } from './MultiPageBaani';
+
+import {
+  getShabadId,
+  getSourceId,
+  getAng,
+  showToast,
+  copyToClipboard,
+  toAngURL,
+  clickEvent,
+  ACTIONS,
+  errorEvent
+} from '@/util';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME, MAX_ANGS } from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
 
 /**
@@ -65,10 +75,12 @@ class Shabad extends React.PureComponent {
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
+    pages: PropTypes.array,
     hideMeta: PropTypes.bool,
     hideControls: PropTypes.bool,
     controlProps: PropTypes.object,
-
+    isLoadingContent: PropTypes.bool,
+    isMultiPage: PropTypes.bool,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
@@ -95,10 +107,14 @@ class Shabad extends React.PureComponent {
   render() {
     const {
       props: {
+        history,
+        isMultiPage,
+        isLoadingContent,
         gurbani,
         location,
         nav,
         info,
+        pages,
         type,
         random,
         splitView,
@@ -127,13 +143,17 @@ class Shabad extends React.PureComponent {
 
     const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
     const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
+    const isParagraphMode = paragraphMode && isSundarGutkaRoute;
+    const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
+    const isShowMetaData = this.props.hideMeta === false;
+    const isShowControls = this.props.hideControls === false;
 
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
 
         <React.Fragment >
 
-          {this.props.hideControls === false && (
+          {isShowControls && (
             <Controls
               media={
                 ['shabad', 'hukamnama', 'ang'].includes(type)
@@ -147,7 +167,7 @@ class Shabad extends React.PureComponent {
               {...this.props.controlProps}
             />
           )}
-          {this.props.hideMeta === false && (
+          {isShowMetaData && (
             <Meta
               isUnicode={unicode}
               info={info}
@@ -157,29 +177,55 @@ class Shabad extends React.PureComponent {
               transliterationLanguages={transliterationLanguages}
             />
           )}
-          <div id="shabad" className={`shabad display display-${type}`}>
+          <div id="shabad" className={`shabad display display-${type}`} ang>
             <div className="shabad-container">
-              <Baani
-                type={type}
-                gurbani={gurbani}
-                splitView={splitView}
-                unicode={unicode}
-                highlight={highlight}
-                larivaar={larivaar}
-                fontSize={fontSize}
-                translationFontSize={translationFontSize}
-                transliterationFontSize={transliterationFontSize}
-                lineHeight={lineHeight}
-                fontFamily={fontFamily}
-                larivaarAssist={larivaarAssist}
-                translationLanguages={translationLanguages}
-                transliterationLanguages={transliterationLanguages}
-                centerAlignGurbani={centerAlignGurbani}
-                showFullScreen={showFullScreen}
-                isParagraphMode={paragraphMode && isSundarGutkaRoute}
-              />
+              {isMultiPage ?
+                <>
+                  <MultiPageBaani
+                    pages={pages}
+                    history={history}
+                    type={type}
+                    gurbani={gurbani}
+                    splitView={splitView}
+                    unicode={unicode}
+                    highlight={highlight}
+                    larivaar={larivaar}
+                    fontSize={fontSize}
+                    translationFontSize={translationFontSize}
+                    transliterationFontSize={transliterationFontSize}
+                    lineHeight={lineHeight}
+                    fontFamily={fontFamily}
+                    larivaarAssist={larivaarAssist}
+                    translationLanguages={translationLanguages}
+                    transliterationLanguages={transliterationLanguages}
+                    centerAlignGurbani={centerAlignGurbani}
+                    showFullScreen={showFullScreen}
+                  />
+                  {this.getContinueButton()}
+                </>
+                :
+                <Baani
+                  type={type}
+                  gurbani={gurbani}
+                  splitView={splitView}
+                  unicode={unicode}
+                  highlight={highlight}
+                  larivaar={larivaar}
+                  fontSize={fontSize}
+                  translationFontSize={translationFontSize}
+                  transliterationFontSize={transliterationFontSize}
+                  lineHeight={lineHeight}
+                  fontFamily={fontFamily}
+                  larivaarAssist={larivaarAssist}
+                  translationLanguages={translationLanguages}
+                  transliterationLanguages={transliterationLanguages}
+                  centerAlignGurbani={centerAlignGurbani}
+                  showFullScreen={showFullScreen}
+                  isParagraphMode={isParagraphMode}
+                />}
+              {isLoadingContent && <div className="spinner" />}
 
-              {this.props.hideMeta === false && (
+              {isShowFooterNav && (
                 <FootNav info={info} type={type} nav={nav} />
               )}
 
@@ -192,6 +238,42 @@ class Shabad extends React.PureComponent {
         </React.Fragment>
       </GlobalHotKeys>
     );
+  }
+
+  getContinueButton = () => {
+    const { pages, history } = this.props;
+
+    if (pages.length > 0) {
+      const lastPage = pages[pages.length - 1];
+      const lastAng = lastPage.source.pageNo;
+      const source = lastPage.source.sourceId;
+      const isMaxAngsReached = lastAng === (MAX_ANGS[source] || MAX_ANGS['G']);
+
+      if (isMaxAngsReached) {
+        return null;
+      }
+
+      const newUrl = toAngURL({
+        ang: lastAng + 1,
+        source,
+        highlight: undefined
+      });
+
+      const loadNextAng = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        history.push(newUrl);
+      }
+
+      return (
+        <div className="continue">
+          <button className="btn btn-primary"
+            onClick={loadNextAng}>
+            Load next ang
+          </button>
+        </div>
+      )
+    }
   }
 
   scrollListener = () => {

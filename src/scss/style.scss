@@ -1,5 +1,4 @@
 /* stylelint-disable at-rule-no-unknown */
-
 @import "mixin",
   "colours",
   "auto-scroll-control",
@@ -24,7 +23,9 @@
   "banner",
   "baani-link",
   "granth-index",
-  "vishraam";
+  "vishraam",
+  "ui-controls";
+@import 'node_modules/react-smartbanner/dist/main';
 
 html,
 body {
@@ -37,7 +38,6 @@ body {
   height: auto;
   min-height: 100%;
   padding-bottom: 100px;
-  position: relative;
 
   &.dark-mode {
     background-color: $sttm-light-black;
@@ -188,7 +188,7 @@ select {
   }
 }
 
-.scroll-to-top {
+.fab {
   animation: grow ease-in-out 0.25s;
   cursor: pointer;
   height: 18px;
@@ -281,4 +281,15 @@ select {
     color: $sttm-white;
     transition: 0.2s;
   }
+}
+
+.continue {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.smartbanner-show {
+  margin-top: 80px;
 }

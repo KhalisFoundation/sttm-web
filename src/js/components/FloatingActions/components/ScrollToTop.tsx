@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { setAutoScrolling } from '@/features/actions';
-import Chevron from '../Icons/Chevron';
+import { setAutoScrolling } from '../../../features/actions';
+import Chevron from '../../Icons/Chevron';
 
 /**
  *

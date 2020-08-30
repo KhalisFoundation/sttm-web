@@ -10,9 +10,14 @@
     "rootDir": "src/js",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/js/*"]
+      "@/*": [
+        "./src/js/*"
+      ]
     },
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": [
+      "cypress"
+    ]
   }
 }
