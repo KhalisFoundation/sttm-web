@@ -21,7 +21,6 @@ describe('Navigation', () => {
 
       cy.get('li[data-cy=index] a')
         .click();
-
     })
 
     it('should open with indexes of SGGS, SDGS, Amrit Keertan', () => {

@@ -5,7 +5,7 @@
   "experimentalFetchPolyfill": true,
   "env": {
     "colors": {
-      "sttmBlue": "rgb(1,102,155)"
+      "sttmBlue": "rgb(1, 102, 155)"
     }
   }
 }
