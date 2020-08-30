@@ -339,7 +339,7 @@ export default class SearchForm extends React.PureComponent {
     const isShowKeyboard = this._isShowKeyboard(newSearchType) && displayGurmukhiKeyboard;
 
     if (isSearchTypeToAngSearchType) {
-      newSourceType = Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'
+      newSourceType = Object.keys(SOURCES_WITH_ANG).includes(newSourceType) ? newSourceType : 'G'
     }
 
     this.stopPlaceholderAnimation().then(() =>

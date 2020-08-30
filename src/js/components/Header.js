@@ -190,7 +190,7 @@ export default class Header extends React.PureComponent {
                                     autoComplete="off"
                                     autoCapitalize="none"
                                     autoCorrect="off"
-                                    spellCheck="false"
+                                    spellCheck={false}
                                     required="required"
                                     name={name}
                                     value={query}
@@ -199,7 +199,7 @@ export default class Header extends React.PureComponent {
                                     className={className}
                                     placeholder={placeholder}
                                     title={title}
-                                    pattern={pattern}
+                                    pattern={type === SEARCH_TYPES.MAIN_LETTERS ? '' : pattern}
                                     min={name === 'ang' ? 1 : undefined}
                                     max={name === 'ang' ? MAX_ANGS[source] : undefined}
                                   />
