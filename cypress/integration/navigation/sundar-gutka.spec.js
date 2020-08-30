@@ -1,13 +1,12 @@
 import { getRandomNumber } from '../../utils';
 import { sanitizeBaani } from '../../../src/js/pages/SundarGutka/utils';
 
-
 describe('Navigation', () => {
   const sttmLarivaarAssistColor = 'rgb(243, 156, 29)';
   const sundarGutkaBaanis = 104;
   const searchString = 'jaa';
 
-  context('Sundar-Gutka page', () => {
+  describe('Sundar-Gutka page', () => {
     beforeEach(() => {
       cy.visit('/');
 

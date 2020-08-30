@@ -1,7 +1,7 @@
 import { raagIndices } from '../../../src/js/pages/GranthIndex/constants/raag-indices';
 
 describe('Navigation', () => {
-  context('Index page', () => {
+  describe('Index page', () => {
 
     const { SGGS, DG } = raagIndices;
     const totalSggsRows = SGGS.indices.length;
