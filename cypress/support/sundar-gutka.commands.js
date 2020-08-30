@@ -1,4 +1,4 @@
-Cypress.Commands.add('checkSgCard', function checkGranthIndices({ childNo, english, gurmukhi }) {
+Cypress.Commands.add('checkSgCard', ({ childNo, english, gurmukhi }) => {
   const sttmBlue = 'rgb(1, 102, 155)';
   const em = 18; //no of pixel
 
