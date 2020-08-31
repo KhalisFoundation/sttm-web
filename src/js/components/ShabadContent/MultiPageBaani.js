@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
 
@@ -20,8 +21,9 @@ export const MultiPageBaani = React.memo(({
   showFullScreen,
   transliterationLanguages,
   translationLanguages,
-  history,
 }) => {
+
+  const history = useHistory();
 
   return (
     <React.Fragment>
@@ -34,6 +36,7 @@ export const MultiPageBaani = React.memo(({
             gurbani={gurbani}
             splitView={splitView}
             unicode={unicode}
+            history={history}
             // offsetY={isLastPage ? lastScrollPosition : -1}
             onBaaniLineClick={(highlightVerseId) => () => {
               const newUrl = toAngURL({

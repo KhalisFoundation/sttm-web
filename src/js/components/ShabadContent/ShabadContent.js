@@ -107,35 +107,27 @@ class Shabad extends React.PureComponent {
   render() {
     const {
       props: {
-        history,
+        random,
         isMultiPage,
         isLoadingContent,
-        gurbani,
+        paragraphMode,
         location,
         nav,
-        info,
+        history,
         pages,
-        type,
-        random,
-        splitView,
-        translationLanguages,
-        transliterationLanguages,
-        larivaarAssist,
-        larivaar,
-        highlight,
-        unicode,
-        fontSize,
-        lineHeight,
-        translationFontSize,
-        transliterationFontSize,
-        fontFamily,
-        centerAlignGurbani,
-        showFullScreen,
-        paragraphMode
+        ...baniProps
       },
       handleEmbed,
       handleCopyAll,
     } = this;
+
+    const {
+      info,
+      type,
+      translationLanguages,
+      transliterationLanguages,
+      unicode,
+    } = baniProps;
 
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
@@ -182,45 +174,16 @@ class Shabad extends React.PureComponent {
               {isMultiPage ?
                 <>
                   <MultiPageBaani
-                    pages={pages}
+                    {...baniProps}
                     history={history}
-                    type={type}
-                    gurbani={gurbani}
-                    splitView={splitView}
-                    unicode={unicode}
-                    highlight={highlight}
-                    larivaar={larivaar}
-                    fontSize={fontSize}
-                    translationFontSize={translationFontSize}
-                    transliterationFontSize={transliterationFontSize}
-                    lineHeight={lineHeight}
-                    fontFamily={fontFamily}
-                    larivaarAssist={larivaarAssist}
-                    translationLanguages={translationLanguages}
-                    transliterationLanguages={transliterationLanguages}
-                    centerAlignGurbani={centerAlignGurbani}
-                    showFullScreen={showFullScreen}
+                    pages={pages}
+                    isParagraphMode={isParagraphMode}
                   />
                   {this.getContinueButton()}
                 </>
                 :
                 <Baani
-                  type={type}
-                  gurbani={gurbani}
-                  splitView={splitView}
-                  unicode={unicode}
-                  highlight={highlight}
-                  larivaar={larivaar}
-                  fontSize={fontSize}
-                  translationFontSize={translationFontSize}
-                  transliterationFontSize={transliterationFontSize}
-                  lineHeight={lineHeight}
-                  fontFamily={fontFamily}
-                  larivaarAssist={larivaarAssist}
-                  translationLanguages={translationLanguages}
-                  transliterationLanguages={transliterationLanguages}
-                  centerAlignGurbani={centerAlignGurbani}
-                  showFullScreen={showFullScreen}
+                  {...baniProps}
                   isParagraphMode={isParagraphMode}
                 />}
               {isLoadingContent && <div className="spinner" />}

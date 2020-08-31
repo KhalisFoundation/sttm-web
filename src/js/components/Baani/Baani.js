@@ -1,12 +1,14 @@
+import { InView } from 'react-intersection-observer'
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Actions from './BaaniLineActions';
-import Translation from './Translation';
-import Transliteration from './Transliteration';
-import BaaniLine from './BaaniLine';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
-import { copyToClipboard, showToast, shortenURL } from '../util';
+import Actions from '../BaaniLineActions';
+import Translation from '../Translation';
+import Transliteration from '../Transliteration';
+import BaaniLine from '../BaaniLine';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
+import { copyToClipboard, showToast, shortenURL } from '@/util';
+import { changeAng } from './utils';
 
 import {
   clickEvent,
@@ -346,8 +348,11 @@ export default class Baani extends React.PureComponent {
           } : {}
           const highlightVerseId = shabads[0].verseId;
 
+          const Wrapper = isLastParagraph ? InView : 'div';
+
           return (
-            <div
+            <Wrapper
+              onChange={changeAng({ history, source: 'G', ang })}
               key={idx}
               {...firstParagraphAttributes}
               {...lastParagraphAttributes}
@@ -386,7 +391,7 @@ export default class Baani extends React.PureComponent {
                   className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
                   {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
                 </div>}
-            </div>)
+            </Wrapper>)
         })
         }
       </div >
