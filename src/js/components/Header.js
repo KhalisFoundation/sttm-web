@@ -59,6 +59,7 @@ export default class Header extends React.PureComponent {
 
   onFormSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
+    e.stopPropagation();
     handleSubmit();
     this.handleFormSubmit(data);
   };
@@ -145,7 +146,7 @@ export default class Header extends React.PureComponent {
               handleSearchTypeChange,
               handleSubmit,
             }) => {
-
+              // console.log(query, type, name, source, "HEADER...")
               return (
                 <React.Fragment>
                   <div id="responsive-menu">
@@ -153,6 +154,7 @@ export default class Header extends React.PureComponent {
                       {!isHome && (
                         <>
                           <form
+                            noValidate="novalidate"
                             action={action}
                             id="top-bar-search-form"
                             onSubmit={onFormSubmit({
@@ -199,12 +201,13 @@ export default class Header extends React.PureComponent {
                                     className={className}
                                     placeholder={placeholder}
                                     title={title}
-                                    pattern={type === SEARCH_TYPES.MAIN_LETTERS ? '' : pattern}
+                                    pattern={pattern}
                                     min={name === 'ang' ? 1 : undefined}
                                     max={name === 'ang' ? MAX_ANGS[source] : undefined}
                                   />
 
                                   <button
+                                    type="button"
                                     className="clear-search-toggle"
                                     onClick={setQueryAs('')}
                                   >
@@ -225,7 +228,8 @@ export default class Header extends React.PureComponent {
                                     </button>
                                   )}
 
-                                  <button type="submit">
+                                  <button
+                                    type="submit">
                                     <SearchIcon />
                                   </button>
 

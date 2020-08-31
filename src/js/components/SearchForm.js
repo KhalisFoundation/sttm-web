@@ -262,14 +262,15 @@ export default class SearchForm extends React.PureComponent {
     }
   }
 
-  setQueryAs = value => () =>
-    this.stopPlaceholderAnimation().then(() => {
+  setQueryAs = value => () => {
+    return this.stopPlaceholderAnimation().then(() => {
       return this.setState(() => ({
         query: value,
         shouldSubmit:
           this.props.submitOnChangeOf.includes('query') && value !== '',
       }))
     })
+  }
 
   handleKeyDown = (e) => {
     const { type } = this.state;
@@ -292,11 +293,10 @@ export default class SearchForm extends React.PureComponent {
     return true;
   }
   handleSearchChange = ({ target }) => {
-    const query = target.value
+    const query = target.value;
     if (this.isQueryAllowed(query)) {
       const cursorStart = target.selectionStart;
       const cursorEnd = target.selectionEnd;
-
       this.setQueryAs(query)().then(() => {
         if (cursorStart !== null) {
           return target.setSelectionRange(cursorStart, cursorEnd)
