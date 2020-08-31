@@ -148,8 +148,10 @@ export default class SearchForm extends React.PureComponent {
   }
 
   _isShowKeyboard(type) {
-    const searchType = this.state.searchType || type;
+    const searchType = type || this.state.type;
+
     return (
+      searchType === SEARCH_TYPES.MAIN_LETTERS ||
       searchType === SEARCH_TYPES.GURMUKHI_WORD ||
       searchType === SEARCH_TYPES.FIRST_LETTERS ||
       searchType === SEARCH_TYPES.FIRST_LETTERS_ANYWHERE
