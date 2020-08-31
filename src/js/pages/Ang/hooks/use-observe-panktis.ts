@@ -17,16 +17,13 @@ const lastPanktisObserversMap: IObserversMap = {};
 const firstPanktisObserversMap: IObserversMap = {};
 
 const clearObservers = (observersMap: IObserversMap) => {
-  Object.values(observersMap).forEach(observer => {
+  Object.entries(observersMap).forEach(([angStr, observer]) => {
     if (observer) {
       observer.disconnect();
     }
-  })
-
-  Object.keys(observersMap).forEach((angStr: string) => {
     const ang = Number(angStr);
     observersMap[ang] = undefined;
-  })
+  });
 }
 
 export const useObservePanktis = ({ source, history, setPrefetchAng }: IUseObservePanktis) => {
@@ -38,24 +35,46 @@ export const useObservePanktis = ({ source, history, setPrefetchAng }: IUseObser
     const lastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
     const firstPankti = firstPanktis[firstPanktis.length - 1];
     const lastPankti = lastPanktis[lastPanktis.length - 1];
+    console.log(lastPankti, 'lastPankti')
     if (lastPankti) {
       const angValue = Number(lastPankti.getAttribute('data-ang'));
 
-      if (!lastPanktisObserversMap[angValue]) {
+      lastPanktis.forEach(lastPankti => {
         const lastPanktiObserver = new IntersectionObserver(handleChangeAngInView, {
           threshold: [1],
         });
         lastPanktiObserver.observe(lastPankti);
+        if (lastPanktisObserversMap[angValue]) {
+          lastPanktisObserversMap[angValue].disconnect();
+        }
         lastPanktisObserversMap[angValue] = lastPanktiObserver;
-      }
+      })
+      // if (!lastPanktisObserversMap[angValue]) {
+      // const lastPanktiObserver = new IntersectionObserver(handleChangeAngInView, {
+      //   threshold: [1],
+      // });
+      // lastPanktiObserver.observe(lastPankti);
+      // lastPanktisObserversMap[angValue] = lastPanktiObserver;
+      // }
 
-      if (!firstPanktisObserversMap[angValue]) {
+      firstPanktis.forEach(firstPankti => {
         const firstPanktiObserver = new IntersectionObserver(handlePrefetchNextAng, {
           threshold: [1]
         });
         firstPanktiObserver.observe(firstPankti);
+        if (firstPanktisObserversMap[angValue]) {
+          firstPanktisObserversMap[angValue].disconnect();
+        }
         firstPanktisObserversMap[angValue] = firstPanktiObserver;
-      }
+      })
+
+      // if (!firstPanktisObserversMap[angValue]) {
+      // const firstPanktiObserver = new IntersectionObserver(handlePrefetchNextAng, {
+      //   threshold: [1]
+      // });
+      // firstPanktiObserver.observe(firstPankti);
+      // firstPanktisObserversMap[angValue] = firstPanktiObserver;
+      // }
     }
 
     // return () => clearTimeout(timeoutId);

@@ -1,5 +1,5 @@
 /* globals API_URL */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import GenericError, { BalpreetSingh } from '@/components/GenericError';
@@ -76,6 +76,10 @@ const Ang: React.FC<IAngProps> = ({
     info = { source: angsDataMap[ang].source }
   }
 
+  const pages = useMemo(() => Object.values(angsDataMap).filter(pageData => !!pageData), [ang, angsDataMap])
+
+  console.log(angsDataMap, "ANGS DATA MAP")
+
   return (
     <div className="row" id="content-root">
       <BreadCrumb links={[{ title: TEXTS.URIS.ANG }]} />
@@ -83,7 +87,7 @@ const Ang: React.FC<IAngProps> = ({
         type="ang"
         isMultiPage={true}
         isLoadingContent={isFetchingAngData}
-        pages={getPages()}
+        pages={pages}
         highlight={highlight || 1}
         nav={nav}
         info={info}

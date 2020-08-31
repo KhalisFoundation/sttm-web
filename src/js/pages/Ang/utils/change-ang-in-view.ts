@@ -23,9 +23,13 @@ export const changeAngInView =
         if (observedPankti.isIntersecting) {
           if (observedPankti.intersectionRatio > 0) {
             if (isObservedPanktiAppears) {
-              newUrl = toAngURL({ ang: observedAng, source, highlight: undefined });
-              // We are on currently loaded ang, so we need to load new ang
-              history.push(newUrl);
+              const qParams = new URLSearchParams(window.location.search);
+              const currentAng = Number(qParams.get('ang'));
+              if (observedAng != currentAng) {
+                newUrl = toAngURL({ ang: observedAng, source, highlight: undefined });
+                // We are on currently loaded ang, so we need to load new ang
+                history.push(newUrl);
+              }
             }
           }
         }

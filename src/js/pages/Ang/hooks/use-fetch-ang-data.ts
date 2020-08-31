@@ -12,15 +12,18 @@ interface IUseFetchAngData {
 }
 
 const _getFetchedAngs = (cacheAngsData: typeof LRU, currentAng: number) => {
-  return [cacheAngsData.get(currentAng - 1), cacheAngsData.get(currentAng), cacheAngsData.get(currentAng + 1)]
-    .filter(pageData => !!pageData);
+  return {
+    [currentAng - 1]: cacheAngsData.get(currentAng - 1),
+    [currentAng]: cacheAngsData.get(currentAng),
+    [currentAng + 1]: cacheAngsData.get(currentAng + 1)
+  }
 }
 
 export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngData) => {
   const dispatch = useDispatch();
   const [isFetchingAngData, setFetchingAngData] = useState<boolean>(false);
   const [errorFetchingAngData, setErrorFetchingAngData] = useState<string>('');
-  const [angsDataMap, setangsDataMap] = useState<any>([]);
+  const [angsDataMap, setangsDataMap] = useState<any>({});
   const url = useMemo(() => buildApiUrl({ ang: ang, source, API_URL }), [ang, source, API_URL]);
 
   useEffect(() => {

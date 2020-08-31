@@ -334,8 +334,16 @@ export default class Baani extends React.PureComponent {
 
           const isFirstParagraph = idx == 0;
           const isLastParagraph = idx == totalParagraphs;
-          const lastParagraphAttributes = isLastParagraph ? { 'data-last-paragraph': true, 'data-ang': ang } : {}
-          const firstParagraphAttributes = isFirstParagraph ? { 'data-first-paragraph': true, 'data-ang': ang } : {}
+          const lastParagraphAttributes = isLastParagraph ? {
+            'data-last-paragraph': true, 'data-ang': ang, ...{
+              style: { backgroundColor: 'red' }
+            }
+          } : {}
+          const firstParagraphAttributes = isFirstParagraph ? {
+            'data-first-paragraph': true, 'data-ang': ang, ...{
+              style: { backgroundColor: 'blue' }
+            }
+          } : {}
           const highlightVerseId = shabads[0].verseId;
 
           return (
