@@ -1,13 +1,19 @@
+import LRU from 'lru';
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux'
 import { buildApiUrl, SOURCES } from '@sttm/banidb';
 import { SET_LOADING_ANG } from '../../../features/actions';
-import cache from '../cache-angs-data';
+import cacheAngsData from '../cache-angs-data';
 
 interface IUseFetchAngData {
   ang: number
   source: keyof typeof SOURCES
   setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
+}
+
+const _getFetchedAngs = (cacheAngsData: typeof LRU, currentAng: number) => {
+  return [cacheAngsData.get(currentAng - 1), cacheAngsData.get(currentAng), cacheAngsData.get(currentAng + 1)]
+    .filter(pageData => !!pageData);
 }
 
 export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngData) => {
@@ -27,8 +33,8 @@ export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngDat
         setErrorFetchingAngData("Error fetching ang");
       }
       const angData = await response.json();
-      cache.angsDataMap[ang] = angData;
-      setangsDataMap(cache.angsDataMap);
+      cacheAngsData.set(ang, angData);
+      setangsDataMap(_getFetchedAngs(cacheAngsData, ang));
       setFetchingAngData(false);
       setPrefetchAng(-1);
 

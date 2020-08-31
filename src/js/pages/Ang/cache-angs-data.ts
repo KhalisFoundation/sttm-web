@@ -1,9 +1,5 @@
-interface Cache {
-  angsDataMap: Record<string, any>
-}
+import LRU from 'lru';
 
-const cache: Cache = {
-  angsDataMap: {}
-}
+const cache: Cache = new LRU(5);
 
 export default cache;
