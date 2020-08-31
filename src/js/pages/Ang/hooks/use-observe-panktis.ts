@@ -33,13 +33,13 @@ export const useObservePanktis = ({ source, history, setPrefetchAng }: IUseObser
   useEffect(() => {
     const firstPanktis = Array.from(document.querySelectorAll('[data-first-paragraph="true"]'));
     const lastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
-    const firstPankti = firstPanktis[firstPanktis.length - 1];
-    const lastPankti = lastPanktis[lastPanktis.length - 1];
-    console.log(lastPankti, 'lastPankti')
-    if (lastPankti) {
-      const angValue = Number(lastPankti.getAttribute('data-ang'));
+    // const firstPankti = firstPanktis[firstPanktis.length - 1];
+    // const lastPankti = lastPanktis[lastPanktis.length - 1];
+    console.log(lastPanktis, 'lastPankti')
+    if (lastPanktis) {
 
       lastPanktis.forEach(lastPankti => {
+        const angValue = Number(lastPankti.getAttribute('data-ang'));
         const lastPanktiObserver = new IntersectionObserver(handleChangeAngInView, {
           threshold: [1],
         });
@@ -58,6 +58,7 @@ export const useObservePanktis = ({ source, history, setPrefetchAng }: IUseObser
       // }
 
       firstPanktis.forEach(firstPankti => {
+        const angValue = Number(firstPankti.getAttribute('data-ang'));
         const firstPanktiObserver = new IntersectionObserver(handlePrefetchNextAng, {
           threshold: [1]
         });
