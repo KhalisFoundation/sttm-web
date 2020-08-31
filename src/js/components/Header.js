@@ -146,7 +146,7 @@ export default class Header extends React.PureComponent {
               handleSearchTypeChange,
               handleSubmit,
             }) => {
-              // console.log(query, type, name, source, "HEADER...")
+
               return (
                 <React.Fragment>
                   <div id="responsive-menu">
