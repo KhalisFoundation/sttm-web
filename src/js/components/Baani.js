@@ -332,7 +332,7 @@ export default class Baani extends React.PureComponent {
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
 
-          const isFirstParagraph = idx == 0;
+          const isFirstParagraph = idx == Math.ceil(totalParagraphs / 2);
           const isLastParagraph = idx == totalParagraphs;
           const lastParagraphAttributes = isLastParagraph ? {
             'data-last-paragraph': true, 'data-ang': ang, ...{

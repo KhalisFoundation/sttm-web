@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useLayoutEffect, useCallback } from 'react';
 import { History } from 'history';
 import { changeAngInView } from '../utils/change-ang-in-view';
 import { prefetchNextAng } from '../utils/prefetch-next-ang';
@@ -26,11 +26,11 @@ const clearObservers = (observersMap: IObserversMap) => {
   });
 }
 
-export const useObservePanktis = ({ source, history, setPrefetchAng }: IUseObservePanktis) => {
+export const useObservePanktis = ({ ang, source, history, setPrefetchAng }: IUseObservePanktis) => {
   const handleChangeAngInView = useCallback(changeAngInView(history, source), [history, source]);
   const handlePrefetchNextAng = useCallback(prefetchNextAng(setPrefetchAng), [setPrefetchAng]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const firstPanktis = Array.from(document.querySelectorAll('[data-first-paragraph="true"]'));
     const lastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
     // const firstPankti = firstPanktis[firstPanktis.length - 1];
@@ -80,7 +80,7 @@ export const useObservePanktis = ({ source, history, setPrefetchAng }: IUseObser
 
     // return () => clearTimeout(timeoutId);
 
-  });
+  }, [ang]);
 
 
   useEffect(() => {
