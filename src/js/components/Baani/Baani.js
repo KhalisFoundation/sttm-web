@@ -318,6 +318,8 @@ export default class Baani extends React.PureComponent {
 
   createMixedViewMarkup = () => {
     const {
+      history,
+      source,
       ang,
       onBaaniLineClick,
       isParagraphMode,
@@ -349,10 +351,11 @@ export default class Baani extends React.PureComponent {
           const highlightVerseId = shabads[0].verseId;
 
           const Wrapper = isLastParagraph ? InView : 'div';
+          console.log(Wrapper, 'Wrappper')
 
           return (
             <Wrapper
-              onChange={changeAng({ history, source: 'G', ang })}
+              onChange={changeAng({ history, source, ang })}
               key={idx}
               {...firstParagraphAttributes}
               {...lastParagraphAttributes}

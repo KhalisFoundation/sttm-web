@@ -1,9 +1,8 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
-
 export const MultiPageBaani = React.memo(({
+  history,
   pages,
   type,
   splitView,
@@ -23,14 +22,13 @@ export const MultiPageBaani = React.memo(({
   translationLanguages,
 }) => {
 
-  const history = useHistory();
-
   return (
     <React.Fragment>
       {pages.map(({ page: gurbani, source }, idx) => {
         return (
           <Baani
             key={idx}
+            source={source.sourceId}
             ang={source.pageNo}
             type={type}
             gurbani={gurbani}
