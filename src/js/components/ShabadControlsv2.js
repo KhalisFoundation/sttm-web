@@ -14,6 +14,7 @@ class ShabadControls extends React.PureComponent {
     resetFontOptions: PropTypes.func,
     toggleVisraams: PropTypes.func,
     toggleLarivaarOption: PropTypes.func,
+    toggleSehajPaathMode: PropTypes.func,
     toggleLarivaarAssistOption: PropTypes.func,
     setFontSize: PropTypes.func,
     setTranslationFontSize: PropTypes.func,
@@ -49,6 +50,7 @@ class ShabadControls extends React.PureComponent {
     darkMode: PropTypes.bool,
     autoScrollMode: PropTypes.bool,
     paragraphMode: PropTypes.bool,
+    sehajPaathMode: PropTypes.bool,
     fontFamily: PropTypes.string,
     showAdvancedOptions: PropTypes.bool,
 

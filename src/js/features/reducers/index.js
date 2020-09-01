@@ -9,6 +9,7 @@ import {
   TOGGLE_PARAGRAPH_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
+  TOGGLE_SEHAJ_PAATH_MODE,
   SET_VISRAAM_SOURCE,
   SET_VISRAAM_STYLE,
   SET_CENTER_ALIGN_OPTION,
@@ -25,6 +26,7 @@ import {
   SET_DARK_MODE,
   SET_AUTO_SCROLL_MODE,
   SET_PARAGRAPH_MODE,
+  SET_SEHAJ_PAATH_MODE,
   SET_VISRAAMS,
   SET_SPLIT_VIEW,
   SET_FULLSCREEN_MODE,
@@ -51,6 +53,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
+  LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
 } from '../../constants';
 import { saveToLocalStorage } from '../../util';
 import { clickEvent } from '../../util/analytics';
@@ -141,6 +144,37 @@ export default function reducer(state, action) {
         autoScrollMode,
       };
     }
+
+    case SET_SEHAJ_PAATH_MODE: {
+      const sehajPaathMode = action.payload;
+
+      clickEvent({
+        action: SET_SEHAJ_PAATH_MODE,
+        label: sehajPaathMode
+      })
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE, sehajPaathMode);
+      return {
+        ...state,
+        sehajPaathMode
+      }
+    }
+
+    case TOGGLE_SEHAJ_PAATH_MODE: {
+      const sehajPaathMode = !state.sehajPaathMode;
+
+      clickEvent({
+        action: TOGGLE_SEHAJ_PAATH_MODE,
+        label: sehajPaathMode ? 1 : 0,
+      })
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE, sehajPaathMode);
+      return {
+        ...state,
+        sehajPaathMode
+      }
+    }
+
 
     case TOGGLE_PARAGRAPH_MODE: {
       const paragraphMode = !state.paragraphMode;

@@ -42,6 +42,7 @@ export interface SETTING_ACTIONS {
   toggleSplitViewOption: Function,
   toggleDarkMode: Function,
   toggleParagraphMode: Function,
+  toggleSehajPaathMode: Function,
   setVisraamSource: Function,
   setVisraamStyle: Function,
   changeFont: Function,
@@ -63,6 +64,7 @@ export interface SETTING_ACTIONS {
   translationFontSize: number,
   transliterationFontSize: number,
   paragraphMode: boolean,
+  sehajPaathMode: boolean,
   autoScrollMode: boolean,
   lineHeight: number,
   centerAlignGurbani: boolean,
@@ -255,6 +257,8 @@ export const ADVANCED_SETTINGS = ({
   larivaarAssistStrength,
   lineHeight,
   changeFont,
+  sehajPaathMode,
+  toggleSehajPaathMode,
   larivaarAssist,
 
   setLarivaarAssistStrength,
@@ -361,6 +365,12 @@ export const ADVANCED_SETTINGS = ({
         },
       ],
     } : {},
+    {
+      type: 'toggle-option',
+      label: 'Sehaj Paath Mode',
+      checked: sehajPaathMode,
+      action: toggleSehajPaathMode,
+    },
     {
       type: 'dropdown',
       label: 'Visraam Source',

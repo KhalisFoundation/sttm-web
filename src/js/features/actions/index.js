@@ -17,6 +17,7 @@ import {
   DEFAULT_FONT_FAMILY,
   DEFAULT_CENTER_ALIGN_GURBANI,
   DEFAULT_SPLIT_VIEW,
+  DEFAULT_SEHAJ_PAATH_MODE,
 } from '../../constants';
 
 export const createAction = (type, meta) => payload => ({
@@ -49,6 +50,11 @@ export const toggleTranslationOptions = createAction(
 export const TOGGLE_PARAGRAPH_MODE = 'TOGGLE_PARAGRAPH_MODE';
 export const toggleParagraphMode = createAction(
   TOGGLE_PARAGRAPH_MODE
+)
+
+export const TOGGLE_SEHAJ_PAATH_MODE = 'TOGGLE_SEHAJ_PAATH_MODE';
+export const toggleSehajPaathMode = createAction(
+  TOGGLE_SEHAJ_PAATH_MODE
 )
 
 export const TOGGLE_TRANSLITERATION_OPTIONS = 'TOGGLE_TRANSLITERATION_OPTIONS';
@@ -100,6 +106,9 @@ export const setLineHeight = createAction(SET_LINE_HEIGHT);
 export const SET_PARAGRAPH_MODE = 'SET_PARAGRAPH_MODE';
 export const setParagraphMode = createAction(SET_PARAGRAPH_MODE);
 
+export const SET_SEHAJ_PAATH_MODE = 'SET_SEHAJ_PAATH_MODE';
+export const setSehajPaathMode = createAction(SET_SEHAJ_PAATH_MODE);
+
 export const SET_TRANSLATION_LANGUAGES = 'SET_TRANSLATION_LANGUAGES';
 export const setTranslationLanguages = createAction(SET_TRANSLATION_LANGUAGES);
 
@@ -134,6 +143,7 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setCenterAlignOption(DEFAULT_CENTER_ALIGN_GURBANI));
   dispatch(setLarivaarAssistStrength(DEFAULT_LARIVAAR_ASSIST_STRENGTH));
   dispatch(setSplitView(DEFAULT_SPLIT_VIEW));
+  dispatch(setSehajPaathMode(DEFAULT_SEHAJ_PAATH_MODE));
 };
 
 export const CHANGE_FONT = 'CHANGE_FONT';
