@@ -1,5 +1,6 @@
 /* globals API_URL */
 import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
 import GenericError, { BalpreetSingh } from '@/components/GenericError';
@@ -26,9 +27,10 @@ const Ang: React.FC<IAngProps> = ({
   source,
   highlight,
 }) => {
+  const { sehajPaathMode: isSehajPaathMode, isLoadingAng } = useSelector(state => state);
   const history = useHistory();
   const [prefetchAng, setPrefetchAng] = useState<number>(ang);
-  const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng });
+  const { errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng });
   const angData = angsDataMap[ang];
   const changeHighlightedPanktiHandler = useCallback(changeHighlightedPankti({
     ang,
@@ -38,7 +40,7 @@ const Ang: React.FC<IAngProps> = ({
     history
   }),
     [ang, source, highlight, angData, history]) as unknown as EventListener;
-  useObservePanktis({ source, history, setPrefetchAng });
+  useObservePanktis({ source, history, setPrefetchAng, isSehajPaathMode });
   useKeydownEventHandler(changeHighlightedPanktiHandler)
 
   if (source === 'G') {
@@ -69,21 +71,33 @@ const Ang: React.FC<IAngProps> = ({
     )
   }
 
+  if (isLoadingAng) {
+    return <div className="spinner" />
+  }
+
   let nav = {};
   let info = { source: '' };
-  if (!isFetchingAngData && angsDataMap[ang]) {
+  if (!isLoadingAng && angsDataMap[ang]) {
     nav = Array.isArray(angsDataMap[ang].navigation) ? {} : angsDataMap[ang].navigation;
     info = { source: angsDataMap[ang].source }
   }
+
+  console.log(angsDataMap, isLoadingAng, 'ANGS DATA MAP')
+
+  const _getFetchedAngs = (angsDataMap) => {
+    return [angsDataMap[ang - 1], angsDataMap[ang], angsDataMap[ang + 1]].filter(angData => !!angData);
+  }
+
 
   return (
     <div className="row" id="content-root">
       <BreadCrumb links={[{ title: TEXTS.URIS.ANG }]} />
       <ShabadContent
         type="ang"
-        isMultiPage={true}
-        isLoadingContent={isFetchingAngData}
-        pages={Object.values(angsDataMap)}
+        isMultiPage={isSehajPaathMode}
+        isLoadingContent={isLoadingAng}
+        gurbani={isSehajPaathMode ? null : angsDataMap[ang].page}
+        pages={_getFetchedAngs(angsDataMap)}
         highlight={highlight || 1}
         nav={nav}
         info={info}

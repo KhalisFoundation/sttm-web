@@ -369,6 +369,7 @@ export const ADVANCED_SETTINGS = ({
       type: 'toggle-option',
       label: 'Sehaj Paath Mode',
       checked: sehajPaathMode,
+      stage: 'beta',
       action: toggleSehajPaathMode,
     },
     {
