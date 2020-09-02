@@ -24,6 +24,7 @@ class Autocomplete extends Component {
   }
 
   onKeyDown = e => {
+    e.stopPropagation();
     const { activeSuggestion, filteredSuggestions } = this.state;
     const isEnterKey = e.keyCode == 13;
     const isArrowDownKey = e.keyCode == 38;
@@ -31,9 +32,9 @@ class Autocomplete extends Component {
     const isActiveSuggestion = activeSuggestion !== -1;
 
     if (isEnterKey) {
-      if (isActiveSuggestion) e.preventDefault();
 
-      window.location = filteredSuggestions[activeSuggestion].url;
+      if (isActiveSuggestion)
+        window.location = filteredSuggestions[activeSuggestion].url;
 
       this.setState({
         activeSuggestion: -1,
