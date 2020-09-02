@@ -28,10 +28,12 @@ const Ang: React.FC<IAngProps> = ({
   highlight,
 }) => {
   const { sehajPaathMode, isLoadingAng } = useSelector(state => state);
+  const isSehajPaathModeRoute = isShowSehajPaathModeRoute(location.pathname);
+  const isSehajPaathMode = sehajPaathMode && isSehajPaathModeRoute;
   const history = useHistory();
   const location = useLocation();
   const [prefetchAng, setPrefetchAng] = useState<number>(ang);
-  const { errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng });
+  const { errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng, isSehajPaathMode });
   const angData = angsDataMap[ang];
   const changeHighlightedPanktiHandler = useCallback(changeHighlightedPankti({
     ang,
@@ -45,8 +47,6 @@ const Ang: React.FC<IAngProps> = ({
   useKeydownEventHandler(changeHighlightedPanktiHandler)
 
   // We keep track whether at this particular url/route can we make sehaj paath functional even if the global state for it is true
-  const isSehajPaathModeRoute = isShowSehajPaathModeRoute(location.pathname);
-  const isSehajPaathMode = sehajPaathMode && isSehajPaathModeRoute;
 
   // There is neither error, nor loading going on, nor there is data
   // then it's first time render

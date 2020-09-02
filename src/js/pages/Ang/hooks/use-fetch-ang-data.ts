@@ -7,10 +7,11 @@ import cache from '../cache-angs-data';
 interface IUseFetchAngData {
   ang: number
   source: keyof typeof SOURCES
+  isSehajPaathMode: boolean
   setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
 }
 
-export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngData) => {
+export const useFetchAngData = ({ ang, source, setPrefetchAng, isSehajPaathMode }: IUseFetchAngData) => {
   const dispatch = useDispatch();
   const [errorFetchingAngData, setErrorFetchingAngData] = useState<string>('');
   const [angsDataMap, setAngsDataMap] = useState<any>({});
@@ -43,6 +44,13 @@ export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngDat
     fetchAngData(url);
 
   }, [url]);
+
+  useEffect(() => {
+    if (!isSehajPaathMode) {
+      //clear cache
+      cache.angsDataMap = {}
+    }
+  }, [isSehajPaathMode])
 
   return {
     errorFetchingAngData,
