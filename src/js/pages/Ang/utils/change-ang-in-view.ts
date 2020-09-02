@@ -7,7 +7,7 @@ export const changeAngInView =
 
       observedPanktis.forEach(observedPankti => {
         const { target: targetPankti } = observedPankti;
-
+        console.log(target, "HANDLE CHANGE ANG IN VIEW")
         const observedPanktiOffsetY = targetPankti.getBoundingClientRect().y;
         const isObservedPanktiCrossedBy = observedPanktiOffsetY <= 0; // -ve Y value appears only when window.scrollY cross it
         const isObservedPanktiAppears = observedPanktiOffsetY > 0; // +ve Y value appears when window.scrollY yet have some distance to cross it

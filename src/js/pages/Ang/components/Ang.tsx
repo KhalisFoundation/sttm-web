@@ -27,11 +27,11 @@ const Ang: React.FC<IAngProps> = ({
   source,
   highlight,
 }) => {
+  const history = useHistory();
+  const location = useLocation();
   const { sehajPaathMode, isLoadingAng } = useSelector(state => state);
   const isSehajPaathModeRoute = isShowSehajPaathModeRoute(location.pathname);
   const isSehajPaathMode = sehajPaathMode && isSehajPaathModeRoute;
-  const history = useHistory();
-  const location = useLocation();
   const [prefetchAng, setPrefetchAng] = useState<number>(ang);
   const { errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng, isSehajPaathMode });
   const angData = angsDataMap[ang];
