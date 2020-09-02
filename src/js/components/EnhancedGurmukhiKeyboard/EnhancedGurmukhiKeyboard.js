@@ -132,6 +132,7 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
 
                             return (
                               <button
+                                type='button'
                                 key={i}
                                 data-value={getKeyboardKeyValue(keyboardKey, this.props.value)}
                                 className={isCurrentKeyDefaultMatraKey ? 'matra-button' : ''}
