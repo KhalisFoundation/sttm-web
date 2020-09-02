@@ -39,6 +39,7 @@ export const useObservePanktis = ({ source, history, setPrefetchAng, isSehajPaat
       const lastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
       const firstPankti = firstPanktis[firstPanktis.length - 1];
       const lastPankti = lastPanktis[lastPanktis.length - 1];
+      console.log(lastPankti, firstPankti, ">>>>>>>>>>>>>>.")
       if (lastPankti) {
         const angValue = Number(lastPankti.getAttribute('data-ang'));
 
@@ -60,6 +61,13 @@ export const useObservePanktis = ({ source, history, setPrefetchAng, isSehajPaat
       }
     }
   });
+
+  useEffect(() => {
+    if (!isSehajPaathMode) {
+      clearObservers(lastPanktisObserversMap);
+      clearObservers(firstPanktisObserversMap);
+    }
+  }, [isSehajPaathMode])
 
 
   useEffect(() => {
