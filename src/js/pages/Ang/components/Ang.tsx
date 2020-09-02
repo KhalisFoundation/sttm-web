@@ -90,7 +90,7 @@ const Ang: React.FC<IAngProps> = ({
   let nav = {};
   let info = { source: '' };
   if (!isLoadingAng && angsDataMap[ang]) {
-    // nav = Array.isArray(angsDataMap[ang].navigation) ? {} : angsDataMap[ang].navigation;
+    nav = Array.isArray(angsDataMap[ang].navigation) ? {} : angsDataMap[ang].navigation;
     info = { source: angsDataMap[ang].source }
   }
 
