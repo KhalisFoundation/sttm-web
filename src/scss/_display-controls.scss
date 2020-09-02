@@ -295,14 +295,10 @@
       width: 50px;
     }
 
-    .toggle-label {
-      position: relative;
-    }
-
     .feature-stage-text {
       color: $sttm-red;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       padding: 4px;
       position: absolute;
       right: -30px;
@@ -326,7 +322,6 @@
       color: $sttm-orange;
     }
   }
-
 
   &.text-option {
     border-radius: 8px;
