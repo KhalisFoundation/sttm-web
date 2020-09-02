@@ -294,12 +294,28 @@
       margin-top: 10px;
       width: 50px;
     }
+
+    .toggle-label {
+      position: relative;
+    }
+
+    .feature-stage-text {
+      color: $sttm-red;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 4px;
+      position: absolute;
+      right: -30px;
+      text-indent: 10000;
+      top: -10px;
+    }
   }
 
   .toggle-text {
     color: $sttm-blue;
     font-size: 14px;
     margin-bottom: 0;
+    position: relative;
     text-align: center;
 
     .advanced-options & {
@@ -310,6 +326,7 @@
       color: $sttm-orange;
     }
   }
+
 
   &.text-option {
     border-radius: 8px;

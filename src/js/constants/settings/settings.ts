@@ -9,7 +9,8 @@ import {
   toggleItemInArray,
   toFixedFloat,
   isShowParagraphModeRoute,
-  isShowAutoScrollRoute
+  isShowAutoScrollRoute,
+  isShowSehajPaathModeRoute,
 } from '@/util';
 
 import {
@@ -274,6 +275,7 @@ export const ADVANCED_SETTINGS = ({
   location
 }: SETTING_ACTIONS) => {
   const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
+  const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
 
   return [
     isShowAutoScroll ? {
@@ -281,6 +283,13 @@ export const ADVANCED_SETTINGS = ({
       label: 'Auto Scroll',
       checked: autoScrollMode,
       action: toggleAutoScrollMode,
+    } : {},
+    isShowSehajPaathMode ? {
+      type: 'toggle-option',
+      label: 'Sehaj Paath Mode',
+      checked: sehajPaathMode,
+      stage: 'beta',
+      action: toggleSehajPaathMode,
     } : {},
     {
       type: 'icon-toggle',
@@ -365,13 +374,6 @@ export const ADVANCED_SETTINGS = ({
         },
       ],
     } : {},
-    {
-      type: 'toggle-option',
-      label: 'Sehaj Paath Mode',
-      checked: sehajPaathMode,
-      stage: 'beta',
-      action: toggleSehajPaathMode,
-    },
     {
       type: 'dropdown',
       label: 'Visraam Source',

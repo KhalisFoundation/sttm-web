@@ -13,7 +13,7 @@ interface IUseFetchAngData {
 export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngData) => {
   const dispatch = useDispatch();
   const [errorFetchingAngData, setErrorFetchingAngData] = useState<string>('');
-  const [angsDataMap, setangsDataMap] = useState<any>({});
+  const [angsDataMap, setAngsDataMap] = useState<any>({});
   const url = useMemo(() => buildApiUrl({ ang: ang, source, API_URL }), [ang, source, API_URL]);
 
   useEffect(() => {
@@ -28,13 +28,11 @@ export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngDat
         setErrorFetchingAngData("Error fetching ang");
       }
       const angData = await response.json();
-
       // Setting cache and state
 
       cache.angsDataMap[ang] = angData;
-      setangsDataMap(cache.angsDataMap);
+      setAngsDataMap(cache.angsDataMap);
       setPrefetchAng(-1);
-
 
       // Dispatch for handling global state for ang
       setTimeout(() => {
