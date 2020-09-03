@@ -161,7 +161,7 @@ class ShabadControls extends React.PureComponent {
     let advanced = [];
 
     if (isBaniController) {
-      settings = CONTROLLER_SETTINGS(updateSettings, desktopSettings);
+      settings = desktopSettings ? CONTROLLER_SETTINGS(updateSettings, desktopSettings) : [];
       advanced = CONTROLLER_ADVANCED_SETTINGS();
     } else {
       settings = QUICK_SETTINGS(this.props);
