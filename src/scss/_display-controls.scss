@@ -294,12 +294,24 @@
       margin-top: 10px;
       width: 50px;
     }
+
+    .feature-stage-text {
+      color: $sttm-red;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 4px;
+      position: absolute;
+      right: -30px;
+      text-indent: 10000;
+      top: -10px;
+    }
   }
 
   .toggle-text {
     color: $sttm-blue;
     font-size: 14px;
     margin-bottom: 0;
+    position: relative;
     text-align: center;
 
     .advanced-options & {

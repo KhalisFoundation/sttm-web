@@ -14,6 +14,7 @@ class ShabadControls extends React.PureComponent {
     resetFontOptions: PropTypes.func,
     toggleVisraams: PropTypes.func,
     toggleLarivaarOption: PropTypes.func,
+    toggleSehajPaathMode: PropTypes.func,
     toggleLarivaarAssistOption: PropTypes.func,
     setFontSize: PropTypes.func,
     setTranslationFontSize: PropTypes.func,
@@ -49,6 +50,7 @@ class ShabadControls extends React.PureComponent {
     darkMode: PropTypes.bool,
     autoScrollMode: PropTypes.bool,
     paragraphMode: PropTypes.bool,
+    sehajPaathMode: PropTypes.bool,
     fontFamily: PropTypes.string,
     showAdvancedOptions: PropTypes.bool,
 
@@ -60,6 +62,7 @@ class ShabadControls extends React.PureComponent {
 
   bakeSettings = settingsObj => {
     let controlsMarkup, options, Icon;
+    const isBetaFeature = settingsObj.stage === 'beta';
     switch (settingsObj.type) {
       case 'multiselect_checkbox':
         return (
@@ -75,15 +78,21 @@ class ShabadControls extends React.PureComponent {
       case 'toggle-option':
         return (
           <>
-            <p className="toggle-text">{settingsObj.label}</p>
-            <input type='checkbox'
-              id={`${settingsObj.label}-control`}
-              checked={settingsObj.checked}
-              className="toggle-checkbox"
-              onChange={settingsObj.action} />
-            <label
-              className="toggle-label"
-              htmlFor={`${settingsObj.label}-control`} />
+            <p className="toggle-text">
+              {settingsObj.label}
+            </p>
+            <span style={{ position: 'relative' }}>
+              <input type='checkbox'
+                id={`${settingsObj.label}-control`}
+                checked={settingsObj.checked}
+                className="toggle-checkbox"
+                onChange={settingsObj.action} />
+              <label
+                className="toggle-label"
+                htmlFor={`${settingsObj.label}-control`} >
+              </label>
+              {isBetaFeature && <span className="feature-stage-text">beta</span>}
+            </span>
           </>
         )
       case 'icon-toggle':

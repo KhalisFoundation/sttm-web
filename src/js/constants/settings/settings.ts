@@ -9,7 +9,8 @@ import {
   toggleItemInArray,
   toFixedFloat,
   isShowParagraphModeRoute,
-  isShowAutoScrollRoute
+  isShowAutoScrollRoute,
+  isShowSehajPaathModeRoute,
 } from '@/util';
 
 import {
@@ -42,6 +43,7 @@ export interface SETTING_ACTIONS {
   toggleSplitViewOption: Function,
   toggleDarkMode: Function,
   toggleParagraphMode: Function,
+  toggleSehajPaathMode: Function,
   setVisraamSource: Function,
   setVisraamStyle: Function,
   changeFont: Function,
@@ -63,6 +65,7 @@ export interface SETTING_ACTIONS {
   translationFontSize: number,
   transliterationFontSize: number,
   paragraphMode: boolean,
+  sehajPaathMode: boolean,
   autoScrollMode: boolean,
   lineHeight: number,
   centerAlignGurbani: boolean,
@@ -255,6 +258,8 @@ export const ADVANCED_SETTINGS = ({
   larivaarAssistStrength,
   lineHeight,
   changeFont,
+  sehajPaathMode,
+  toggleSehajPaathMode,
   larivaarAssist,
 
   setLarivaarAssistStrength,
@@ -270,6 +275,7 @@ export const ADVANCED_SETTINGS = ({
   location
 }: SETTING_ACTIONS) => {
   const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
+  const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
 
   return [
     isShowAutoScroll ? {
@@ -277,6 +283,13 @@ export const ADVANCED_SETTINGS = ({
       label: 'Auto Scroll',
       checked: autoScrollMode,
       action: toggleAutoScrollMode,
+    } : {},
+    isShowSehajPaathMode ? {
+      type: 'toggle-option',
+      label: 'Sehaj Paath Mode',
+      checked: sehajPaathMode,
+      stage: 'beta',
+      action: toggleSehajPaathMode,
     } : {},
     {
       type: 'icon-toggle',
