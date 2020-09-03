@@ -30,6 +30,7 @@ class Meta extends React.PureComponent {
    * @property {array} transliterationLanguages
    * @property {object} nav
    * @property {boolean} isUnicode
+   * @property {boolean} isArrowsHidden
    *
    * @static
    * @memberof Meta
@@ -45,11 +46,107 @@ class Meta extends React.PureComponent {
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
+    isArrowsHidden: PropTypes.bool
   };
+
+  renderLeftArrow() {
+    const {
+      type,
+      nav = {},
+      isArrowsHidden,
+    } = this.props;
+
+    const link = toNavURL(this.props);
+    const isShowPreviousArrow = isFalsy(nav.previous) === false;
+    const isSync = type === 'sync';
+    const isHukamnama = type === 'hukamnama';
+
+    if (!isArrowsHidden) {
+      if (isShowPreviousArrow) {
+        return (
+          <div className="shabad-nav left">
+            <Link to={link + nav.previous}>
+              {isHukamnama ? (
+                <div className='hukamnama-nav-icon'>
+                  <Hour24 direction='previous' />
+                  <span>{dateMath.expand(nav.previous, false)}</span>
+                </div>
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                )}
+            </Link>
+          </div>
+        )
+      }
+      if (!isSync) {
+        return (
+          <div className="shabad-nav left disabled-nav">
+            <a>
+              {isHukamnama ? (
+                <Hour24 direction='previous' />
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                )}
+            </a>
+          </div>
+        )
+      }
+    }
+
+    return '';
+  }
+
+
+  renderRightArrow() {
+    const {
+      type,
+      nav = {},
+      isArrowsHidden,
+    } = this.props;
+
+    const isShowNextArrow = isFalsy(nav.next) === false
+    const isSync = type === 'sync';
+    const isHukamnama = type === 'hukamnama';
+
+    if (!isArrowsHidden) {
+
+      if (isShowNextArrow) {
+        return (
+          <div className="shabad-nav right">
+            <a role="button" aria-label="next" onClick={this.goToNextAng}>
+              {isHukamnama ? (
+                <div className='hukamnama-nav-icon'>
+                  <Hour24 direction='next' />
+                  <span>{dateMath.expand(nav.next, false)}</span>
+                </div>
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                )}
+            </a>
+          </div>
+        )
+      }
+
+      if (!isSync) {
+        return (
+          <div className="shabad-nav right disabled-nav">
+            <a>
+              {isHukamnama ? (
+                <Hour24 direction='next' />
+              ) : (
+                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                )}
+            </a>
+          </div>
+        )
+      }
+    }
+
+    return '';
+  }
 
   render() {
     const {
-      nav = {},
       type,
       info,
       isUnicode,
@@ -57,7 +154,6 @@ class Meta extends React.PureComponent {
       transliterationLanguages,
     } = this.props;
 
-    const link = toNavURL(this.props);
     const Item = ({ children, last = false }) =>
       children ? (
         <React.Fragment>
@@ -72,33 +168,12 @@ class Meta extends React.PureComponent {
 
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
+
     // const isShabad = type === 'shabad';
     return (
       <div id="metadata" className={`metadata-${type}`}>
-        {isFalsy(nav.previous) === false ? (
-          <div className="shabad-nav left">
-            <Link to={link + nav.previous}>
-              {isHukamnama ? (
-                <div className='hukamnama-nav-icon'>
-                  <Hour24 direction='previous' />
-                  <span>{dateMath.expand(nav.previous, false)}</span>
-                </div>
-              ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                )}
-            </Link>
-          </div>
-        ) : type !== 'sync' ? (
-          <div className="shabad-nav left disabled-nav">
-            <a>
-              {isHukamnama ? (
-                <Hour24 direction='previous' />
-              ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                )}
-            </a>
-          </div>
-        ) : ''}
+        {this.renderLeftArrow()}
+
         <div className="meta">
           {isHukamnama && (
             <h4>
@@ -158,30 +233,7 @@ class Meta extends React.PureComponent {
           )}
         </div>
 
-        {isFalsy(nav.next) === false ? (
-          <div className="shabad-nav right">
-            <a role="button" aria-label="next" onClick={this.goToNextAng}>
-              {isHukamnama ? (
-                <div className='hukamnama-nav-icon'>
-                  <Hour24 direction='next' />
-                  <span>{dateMath.expand(nav.next, false)}</span>
-                </div>
-              ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-                )}
-            </a>
-          </div>
-        ) : type !== 'sync' ? (
-          <div className="shabad-nav right disabled-nav">
-            <a>
-              {isHukamnama ? (
-                <Hour24 direction='next' />
-              ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-                )}
-            </a>
-          </div>
-        ) : ''}
+        {this.renderRightArrow()}
       </div>
     );
   }
