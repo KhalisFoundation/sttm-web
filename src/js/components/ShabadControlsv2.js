@@ -186,7 +186,7 @@ class ShabadControls extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <div id="shabad-controllers">
+        <div id="shabad-controllers" className={isBaniController ? 'bani-controller-settings' : 'sttm-settings'}>
           <div className="quick-settings">
             {quickSettingsPanel}
           </div>
