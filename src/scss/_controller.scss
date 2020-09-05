@@ -49,6 +49,10 @@
       &:hover {
         background-color: $sttm-blue;
       }
+
+      .dark-mode & {
+        background-color: $sttm-lighter-black;
+      }
     }
   }
 

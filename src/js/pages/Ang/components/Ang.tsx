@@ -1,11 +1,17 @@
 /* globals API_URL */
+<<<<<<< HEAD
 import React, { useCallback, useState, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+=======
+import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+>>>>>>> 66e795c8c70e59ce572ba25ad6661d5474f5fa24
 
 import GenericError, { BalpreetSingh } from '@/components/GenericError';
 import ShabadContent from '@/components/ShabadContent';
 import BreadCrumb from '@/components/Breadcrumb';
-import { saveAng, errorEvent, ACTIONS } from '@/util';
+import { saveAng, errorEvent, ACTION, isShowSehajPaathModeRoute } from '@/util';
 import { SOURCES, TEXTS } from '@/constants';
 
 import { useKeydownEventHandler } from '@/hooks';
@@ -27,8 +33,12 @@ const Ang: React.FC<IAngProps> = ({
   highlight,
 }) => {
   const history = useHistory();
+  const location = useLocation();
+  const { sehajPaathMode, isLoadingAng } = useSelector(state => state);
+  const isSehajPaathModeRoute = isShowSehajPaathModeRoute(location.pathname);
+  const isSehajPaathMode = sehajPaathMode && isSehajPaathModeRoute;
   const [prefetchAng, setPrefetchAng] = useState<number>(ang);
-  const { isFetchingAngData, errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng });
+  const { errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng, isSehajPaathMode });
   const angData = angsDataMap[ang];
   const changeHighlightedPanktiHandler = useCallback(changeHighlightedPankti({
     ang,
@@ -38,11 +48,28 @@ const Ang: React.FC<IAngProps> = ({
     history
   }),
     [ang, source, highlight, angData, history]) as unknown as EventListener;
+<<<<<<< HEAD
   // useObservePanktis({ ang, source, history, setPrefetchAng });
+=======
+  useObservePanktis({ source, history, setPrefetchAng, isSehajPaathMode });
+>>>>>>> 66e795c8c70e59ce572ba25ad6661d5474f5fa24
   useKeydownEventHandler(changeHighlightedPanktiHandler)
+
+  // We keep track whether at this particular url/route can we make sehaj paath functional even if the global state for it is true
+
+  // There is neither error, nor loading going on, nor there is data
+  // then it's first time render
+  const isInitialRender = !errorFetchingAngData && !isLoadingAng && !angsDataMap[ang];
 
   if (source === 'G') {
     saveAng(ang);
+  }
+
+  // We can't show this spinner on sehaj paath mode, as this makes it looks like a re render
+  if (!isSehajPaathMode) {
+    if (isLoadingAng || isInitialRender) {
+      return <div className="spinner" />
+    }
   }
 
   if (errorFetchingAngData) {
@@ -71,7 +98,7 @@ const Ang: React.FC<IAngProps> = ({
 
   let nav = {};
   let info = { source: '' };
-  if (!isFetchingAngData && angsDataMap[ang]) {
+  if (!isLoadingAng && angsDataMap[ang]) {
     nav = Array.isArray(angsDataMap[ang].navigation) ? {} : angsDataMap[ang].navigation;
     info = { source: angsDataMap[ang].source }
   }
@@ -85,9 +112,16 @@ const Ang: React.FC<IAngProps> = ({
       <BreadCrumb links={[{ title: TEXTS.URIS.ANG }]} />
       <ShabadContent
         type="ang"
+<<<<<<< HEAD
         isMultiPage={true}
         isLoadingContent={isFetchingAngData}
         pages={pages}
+=======
+        isMultiPage={isSehajPaathMode}
+        isLoadingContent={isLoadingAng}
+        gurbani={isSehajPaathMode ? null : angsDataMap[ang].page}
+        pages={Object.values(angsDataMap)}
+>>>>>>> 66e795c8c70e59ce572ba25ad6661d5474f5fa24
         highlight={highlight || 1}
         nav={nav}
         info={info}

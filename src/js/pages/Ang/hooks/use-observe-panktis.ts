@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { History } from 'history';
 import { changeAngInView } from '../utils/change-ang-in-view';
 import { prefetchNextAng } from '../utils/prefetch-next-ang';
@@ -6,6 +6,7 @@ import { prefetchNextAng } from '../utils/prefetch-next-ang';
 interface IUseObservePanktis {
   history: History
   source: string
+  isSehajPaathMode: boolean
   setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -26,61 +27,46 @@ const clearObservers = (observersMap: IObserversMap) => {
   });
 }
 
-export const useObservePanktis = ({ ang, source, history, setPrefetchAng }: IUseObservePanktis) => {
+export const useObservePanktis = ({ source, history, setPrefetchAng, isSehajPaathMode }: IUseObservePanktis) => {
+
   const handleChangeAngInView = useCallback(changeAngInView(history, source), [history, source]);
   const handlePrefetchNextAng = useCallback(prefetchNextAng(setPrefetchAng), [setPrefetchAng]);
 
-  useLayoutEffect(() => {
-    const firstPanktis = Array.from(document.querySelectorAll('[data-first-paragraph="true"]'));
-    const lastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
-    // const firstPankti = firstPanktis[firstPanktis.length - 1];
-    // const lastPankti = lastPanktis[lastPanktis.length - 1];
-    console.log(lastPanktis, 'lastPankti')
-    if (lastPanktis) {
+  useEffect(() => {
+    if (isSehajPaathMode) {
+      const firstPanktis = Array.from(document.querySelectorAll('[data-first-paragraph="true"]'));
+      const lastPanktis = Array.from(document.querySelectorAll('[data-last-paragraph="true"]'));
+      const firstPankti = firstPanktis[firstPanktis.length - 1];
+      const lastPankti = lastPanktis[lastPanktis.length - 1];
 
-      lastPanktis.forEach(lastPankti => {
+      if (lastPankti) {
         const angValue = Number(lastPankti.getAttribute('data-ang'));
-        const lastPanktiObserver = new IntersectionObserver(handleChangeAngInView, {
-          threshold: [1],
-        });
-        lastPanktiObserver.observe(lastPankti);
-        if (lastPanktisObserversMap[angValue]) {
-          lastPanktisObserversMap[angValue].disconnect();
-        }
-        lastPanktisObserversMap[angValue] = lastPanktiObserver;
-      })
-      // if (!lastPanktisObserversMap[angValue]) {
-      // const lastPanktiObserver = new IntersectionObserver(handleChangeAngInView, {
-      //   threshold: [1],
-      // });
-      // lastPanktiObserver.observe(lastPankti);
-      // lastPanktisObserversMap[angValue] = lastPanktiObserver;
-      // }
 
-      firstPanktis.forEach(firstPankti => {
-        const angValue = Number(firstPankti.getAttribute('data-ang'));
-        const firstPanktiObserver = new IntersectionObserver(handlePrefetchNextAng, {
-          threshold: [1]
-        });
-        firstPanktiObserver.observe(firstPankti);
-        if (firstPanktisObserversMap[angValue]) {
-          firstPanktisObserversMap[angValue].disconnect();
+        if (!lastPanktisObserversMap[angValue]) {
+          const lastPanktiObserver = new IntersectionObserver(handleChangeAngInView, {
+            threshold: [1],
+          });
+          lastPanktiObserver.observe(lastPankti);
+          lastPanktisObserversMap[angValue] = lastPanktiObserver;
         }
-        firstPanktisObserversMap[angValue] = firstPanktiObserver;
-      })
 
-      // if (!firstPanktisObserversMap[angValue]) {
-      // const firstPanktiObserver = new IntersectionObserver(handlePrefetchNextAng, {
-      //   threshold: [1]
-      // });
-      // firstPanktiObserver.observe(firstPankti);
-      // firstPanktisObserversMap[angValue] = firstPanktiObserver;
-      // }
+        if (!firstPanktisObserversMap[angValue]) {
+          const firstPanktiObserver = new IntersectionObserver(handlePrefetchNextAng, {
+            threshold: [1]
+          });
+          firstPanktiObserver.observe(firstPankti);
+          firstPanktisObserversMap[angValue] = firstPanktiObserver;
+        }
+      }
     }
+  });
 
-    // return () => clearTimeout(timeoutId);
-
-  }, [ang]);
+  useEffect(() => {
+    if (!isSehajPaathMode) {
+      clearObservers(lastPanktisObserversMap);
+      clearObservers(firstPanktisObserversMap);
+    }
+  }, [isSehajPaathMode])
 
 
   useEffect(() => {

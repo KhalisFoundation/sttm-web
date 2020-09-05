@@ -8,6 +8,7 @@ import cacheAngsData from '../cache-angs-data';
 interface IUseFetchAngData {
   ang: number
   source: keyof typeof SOURCES
+  isSehajPaathMode: boolean
   setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -19,19 +20,20 @@ const _getFetchedAngs = (cacheAngsData: typeof LRU, currentAng: number) => {
   }
 }
 
-export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngData) => {
+export const useFetchAngData = ({ ang, source, setPrefetchAng, isSehajPaathMode }: IUseFetchAngData) => {
   const dispatch = useDispatch();
-  const [isFetchingAngData, setFetchingAngData] = useState<boolean>(false);
   const [errorFetchingAngData, setErrorFetchingAngData] = useState<string>('');
   const [angsDataMap, setangsDataMap] = useState<any>({});
   const url = useMemo(() => buildApiUrl({ ang: ang, source, API_URL }), [ang, source, API_URL]);
 
   useEffect(() => {
     const fetchAngData = async (url: string) => {
-      setFetchingAngData(true);
-      dispatch({ type: SET_LOADING_ANG, payload: true });
-      const response = await fetch(url);
 
+      // Setting global state for ang loading
+      dispatch({ type: SET_LOADING_ANG, payload: true });
+
+      // Api Request and Response
+      const response = await fetch(url);
       if (response.status !== 200) {
         setErrorFetchingAngData("Error fetching ang");
       }
@@ -41,6 +43,7 @@ export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngDat
       setFetchingAngData(false);
       setPrefetchAng(-1);
 
+      // Dispatch for handling global state for ang
       setTimeout(() => {
         dispatch({ type: SET_LOADING_ANG, payload: false });
       }, 0) // kind of hack to make sure our DOM gets populated with data by now.
@@ -50,8 +53,14 @@ export const useFetchAngData = ({ ang, source, setPrefetchAng }: IUseFetchAngDat
 
   }, [url]);
 
+  useEffect(() => {
+    if (!isSehajPaathMode) {
+      //clear cache
+      cache.angsDataMap = {}
+    }
+  }, [isSehajPaathMode])
+
   return {
-    isFetchingAngData,
     errorFetchingAngData,
     angsDataMap
   }
