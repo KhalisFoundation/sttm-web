@@ -1,5 +1,5 @@
 import LRU from 'lru';
 
-const cache: Cache = new LRU(5);
+const cache: typeof LRU = new LRU(5);
 
 export default cache;

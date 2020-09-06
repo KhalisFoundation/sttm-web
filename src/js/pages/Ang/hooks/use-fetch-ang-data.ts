@@ -1,15 +1,14 @@
 import LRU from 'lru';
 import { useEffect, useState, useMemo } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { buildApiUrl, SOURCES } from '@sttm/banidb';
-import { SET_LOADING_ANG } from '../../../features/actions';
+import { SET_LOADING_ANG, SET_PREFETCH_ANG } from '../../../features/actions';
 import cacheAngsData from '../cache-angs-data';
 
 interface IUseFetchAngData {
   ang: number
   source: keyof typeof SOURCES
   isSehajPaathMode: boolean
-  setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
 }
 
 const _getFetchedAngs = (cacheAngsData: typeof LRU, currentAng: number) => {
@@ -20,11 +19,13 @@ const _getFetchedAngs = (cacheAngsData: typeof LRU, currentAng: number) => {
   }
 }
 
-export const useFetchAngData = ({ ang, source, setPrefetchAng, isSehajPaathMode }: IUseFetchAngData) => {
+export const useFetchAngData = ({ ang, source, isSehajPaathMode }: IUseFetchAngData) => {
   const dispatch = useDispatch();
+  const { prefetchAng } = useSelector(store => store);
   const [errorFetchingAngData, setErrorFetchingAngData] = useState<string>('');
-  const [angsDataMap, setangsDataMap] = useState<any>({});
-  const url = useMemo(() => buildApiUrl({ ang: ang, source, API_URL }), [ang, source, API_URL]);
+  const [angsDataMap, setAngsDataMap] = useState<any>({});
+  const angToFetch = prefetchAng || ang;
+  const url = useMemo(() => buildApiUrl({ ang: angToFetch, source, API_URL }), [angToFetch, source, API_URL]);
 
   useEffect(() => {
     const fetchAngData = async (url: string) => {
@@ -32,16 +33,21 @@ export const useFetchAngData = ({ ang, source, setPrefetchAng, isSehajPaathMode 
       // Setting global state for ang loading
       dispatch({ type: SET_LOADING_ANG, payload: true });
 
-      // Api Request and Response
-      const response = await fetch(url);
-      if (response.status !== 200) {
-        setErrorFetchingAngData("Error fetching ang");
+      if (!cacheAngsData.get(angToFetch)) {
+        // Api Request and Response
+        const response = await fetch(url);
+        if (response.status !== 200) {
+          setErrorFetchingAngData("Error fetching ang");
+        }
+        const angData = await response.json();
+        cacheAngsData.set(angToFetch, angData);
       }
-      const angData = await response.json();
-      cacheAngsData.set(ang, angData);
-      setangsDataMap(_getFetchedAngs(cacheAngsData, ang));
-      setFetchingAngData(false);
-      setPrefetchAng(-1);
+
+      setAngsDataMap(_getFetchedAngs(cacheAngsData, ang));
+
+      if (prefetchAng) {
+        dispatch({ type: SET_PREFETCH_ANG, payload: undefined });
+      }
 
       // Dispatch for handling global state for ang
       setTimeout(() => {
@@ -56,7 +62,7 @@ export const useFetchAngData = ({ ang, source, setPrefetchAng, isSehajPaathMode 
   useEffect(() => {
     if (!isSehajPaathMode) {
       //clear cache
-      cache.angsDataMap = {}
+      cacheAngsData.clear();
     }
   }, [isSehajPaathMode])
 

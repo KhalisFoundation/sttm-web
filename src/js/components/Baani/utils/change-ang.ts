@@ -12,11 +12,9 @@ export const changeAng =
       const isObservedPanktiCrossedBy = observedPanktiOffsetY <= 0; // -ve Y value appears only when window.scrollY cross it
       const isObservedPanktiAppears = observedPanktiOffsetY > 0; // +ve Y value appears when window.scrollY yet have some distance to cross it
       // const observedAng = Number(targetPankti.getAttribute('data-ang'));
-      console.log(inView, observedPankti, 'IN VIEW',)
-      let newUrl = '';
       if (isObservedPanktiCrossedBy) {
         if (ang + 1 != currentAng) {
-          newUrl = toAngURL({ ang: ang + 1, source, highlight: undefined });
+          const newUrl = toAngURL({ ang: ang + 1, source, highlight: undefined });
 
           history.push(newUrl);
         }
@@ -26,7 +24,7 @@ export const changeAng =
         if (observedPankti.intersectionRatio > 0) {
           if (isObservedPanktiAppears) {
             if (ang != currentAng) {
-              newUrl = toAngURL({ ang: ang, source, highlight: undefined });
+              const newUrl = toAngURL({ ang: ang, source, highlight: undefined });
               // We are on currently loaded ang, so we need to load new ang
               history.push(newUrl);
             }

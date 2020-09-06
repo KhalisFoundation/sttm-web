@@ -1,21 +1,16 @@
 /* globals API_URL */
-<<<<<<< HEAD
-import React, { useCallback, useState, useMemo } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-=======
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
->>>>>>> 66e795c8c70e59ce572ba25ad6661d5474f5fa24
 
 import GenericError, { BalpreetSingh } from '@/components/GenericError';
 import ShabadContent from '@/components/ShabadContent';
 import BreadCrumb from '@/components/Breadcrumb';
-import { saveAng, errorEvent, ACTION, isShowSehajPaathModeRoute } from '@/util';
+import { saveAng, errorEvent, ACTIONS, isShowSehajPaathModeRoute } from '@/util';
 import { SOURCES, TEXTS } from '@/constants';
 
 import { useKeydownEventHandler } from '@/hooks';
-import { useObservePanktis, useFetchAngData } from '../hooks';
+import { useFetchAngData } from '../hooks';
 import { changeHighlightedPankti } from '../utils';
 
 export const Stub = () => <div className="spinner" />;
@@ -35,10 +30,11 @@ const Ang: React.FC<IAngProps> = ({
   const history = useHistory();
   const location = useLocation();
   const { sehajPaathMode, isLoadingAng } = useSelector(state => state);
+  // We keep track whether at this particular url/route can we make sehaj paath functional even if the global state for it is true
   const isSehajPaathModeRoute = isShowSehajPaathModeRoute(location.pathname);
   const isSehajPaathMode = sehajPaathMode && isSehajPaathModeRoute;
-  const [prefetchAng, setPrefetchAng] = useState<number>(ang);
-  const { errorFetchingAngData, angsDataMap } = useFetchAngData({ ang: prefetchAng === -1 ? ang : prefetchAng, source, setPrefetchAng, isSehajPaathMode });
+
+  const { errorFetchingAngData, angsDataMap } = useFetchAngData({ ang, source, isSehajPaathMode });
   const angData = angsDataMap[ang];
   const changeHighlightedPanktiHandler = useCallback(changeHighlightedPankti({
     ang,
@@ -48,17 +44,10 @@ const Ang: React.FC<IAngProps> = ({
     history
   }),
     [ang, source, highlight, angData, history]) as unknown as EventListener;
-<<<<<<< HEAD
-  // useObservePanktis({ ang, source, history, setPrefetchAng });
-=======
-  useObservePanktis({ source, history, setPrefetchAng, isSehajPaathMode });
->>>>>>> 66e795c8c70e59ce572ba25ad6661d5474f5fa24
+  // useObservePanktis({ source, history, setPrefetchAng, isSehajPaathMode });
   useKeydownEventHandler(changeHighlightedPanktiHandler)
 
-  // We keep track whether at this particular url/route can we make sehaj paath functional even if the global state for it is true
-
-  // There is neither error, nor loading going on, nor there is data
-  // then it's first time render
+  // There is not an error, neither loading for ang going on nor there is ang data then it's first time render
   const isInitialRender = !errorFetchingAngData && !isLoadingAng && !angsDataMap[ang];
 
   if (source === 'G') {
@@ -82,7 +71,7 @@ const Ang: React.FC<IAngProps> = ({
         title={TEXTS.ANG_NOT_FOUND}
         description={
           <>
-            {TEXTS.ANG_NOT_FOUND_DESCRIPTION(ang, SOURCES[source])}
+            {TEXTS.ANG_NOT_FOUND_DESCRIPTION(ang.toString(), SOURCES[source])}
             <Link to="/help#Desktop-i-cant-find-my-shabad.">
               {' '}
               {TEXTS.HELP_SECTION}
@@ -103,25 +92,30 @@ const Ang: React.FC<IAngProps> = ({
     info = { source: angsDataMap[ang].source }
   }
 
-  const pages = useMemo(() => Object.values(angsDataMap).filter(pageData => !!pageData), [ang, angsDataMap])
+  // const _getFetchedAngs = (cacheAngsData: typeof LRU, currentAng: number) => {
+  //   return useMemo(() => Object.values({
+  //     [currentAng - 1]: cacheAngsData.get(currentAng - 1),
+  //     [currentAng]: cacheAngsData.get(currentAng),
+  //     [currentAng + 1]: cacheAngsData.get(currentAng + 1)
+  //   }).filter(pageData => !!pageData), [currentAng]);
+  // }
 
-  console.log(angsDataMap, "ANGS DATA MAP")
+  const pages = useMemo(() => Object.values(angsDataMap).filter(pageData => !!pageData), [angsDataMap, ang]);
+  const gurbani = useMemo(() => isSehajPaathMode ? null : angsDataMap[ang].page, [isSehajPaathMode, ang]);
+
+  useEffect(() => {
+    return console.log("ANG PAGE RE RUNNING")
+  })
 
   return (
     <div className="row" id="content-root">
       <BreadCrumb links={[{ title: TEXTS.URIS.ANG }]} />
       <ShabadContent
         type="ang"
-<<<<<<< HEAD
-        isMultiPage={true}
-        isLoadingContent={isFetchingAngData}
-        pages={pages}
-=======
         isMultiPage={isSehajPaathMode}
         isLoadingContent={isLoadingAng}
-        gurbani={isSehajPaathMode ? null : angsDataMap[ang].page}
-        pages={Object.values(angsDataMap)}
->>>>>>> 66e795c8c70e59ce572ba25ad6661d5474f5fa24
+        gurbani={gurbani}
+        pages={pages}
         highlight={highlight || 1}
         nav={nav}
         info={info}
@@ -130,4 +124,4 @@ const Ang: React.FC<IAngProps> = ({
   )
 }
 
-export default Ang;
+export default React.memo(Ang);

@@ -140,6 +140,7 @@ const initialState = {
     DEFAULT_SEHAJ_PAATH_MODE
   ),
   isLoadingAng: false,
+  prefetchAng: undefined
 };
 
 

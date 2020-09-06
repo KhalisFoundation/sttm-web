@@ -31,6 +31,7 @@ import {
   SET_SPLIT_VIEW,
   SET_FULLSCREEN_MODE,
   SET_LOADING_ANG,
+  SET_PREFETCH_ANG,
   CHANGE_FONT,
 } from '../actions';
 import {
@@ -65,6 +66,12 @@ export default function reducer(state, action) {
       return {
         ...state,
         isLoadingAng: action.payload
+      }
+    }
+    case SET_PREFETCH_ANG: {
+      return {
+        ...state,
+        prefetchAng: action.payload
       }
     }
     case SET_ONLINE_MODE: {

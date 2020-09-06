@@ -176,7 +176,6 @@ class Shabad extends React.PureComponent {
                 <>
                   <MultiPageBaani
                     {...baniProps}
-                    history={history}
                     pages={pages}
                     isParagraphMode={isParagraphMode}
                   />
@@ -198,7 +197,7 @@ class Shabad extends React.PureComponent {
                 <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
-          <ProgressBar percent={this.state.progress} />
+          <ProgressBar />
         </React.Fragment>
       </GlobalHotKeys>
     );
@@ -238,26 +237,6 @@ class Shabad extends React.PureComponent {
         </div>
       )
     }
-  }
-
-  scrollListener = () => {
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      const maxY =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const progress = parseFloat((y / maxY).toPrecision(2));
-      this.setState({ progress });
-    });
-  };
-
-  componentDidMount() {
-    addEventListener('scroll', this.scrollListener, { passive: true });
-    this.scrollListener();
-  }
-
-  componentWillUnmount() {
-    removeEventListener('scroll', this.scrollListener);
   }
 
   handleCopyAll = () =>
