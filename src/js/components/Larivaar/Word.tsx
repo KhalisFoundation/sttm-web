@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import ReactTooltip from 'react-tooltip';
 
 import {
   fixLarivaarUnicode,
@@ -59,7 +60,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
 
         // If this is a search result
         if (highlightIndex !== undefined) {
-          if (highlight || (highlightIndex.includes(index))) {
+          if (highlight || highlightIndex.includes(index)) {
             akharClass += ' search-highlight-word';
           }
         }
@@ -70,6 +71,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
           // so need to use this hack of reference
           return (
             <span
+              data-tip="hello world"
               ref={assignAkharColor}
               key={key}
               className={akharClass}
@@ -77,6 +79,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
             >
               {item}
               <wbr />
+              <ReactTooltip />
             </span>
           );
         }
@@ -85,11 +88,13 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
         // so need to use this hack of reference
         return (
           <span
+            data-tip="hello world"
             key={key}
             className={akharClass}>
             <span ref={assignAkharColor}>
               {item}
               <wbr />
+              <ReactTooltip />
             </span>
           </span>
         );
