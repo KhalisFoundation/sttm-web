@@ -9,8 +9,8 @@ interface IUseFetchAngData {
   setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
 }
 
-export const useFetchData = (url: string) => {
-  const [isFetchingData, setFetchingData] = useState<boolean>('');
+export const useFetchData = (url: string, cb?: () => {}) => {
+  const [isFetchingData, setFetchingData] = useState<boolean>(false);
   const [errorFetchingData, setErrorFetchingData] = useState<string>('');
   const [data, setData] = useState<any>({});
 
@@ -24,12 +24,21 @@ export const useFetchData = (url: string) => {
       if (response.status !== 200) {
         setErrorFetchingData("error fetching data");
       }
-      const data = await response.json();
 
       setFetchingData(false);
+
+      const data = await response.json();
+      setData(data);
+
+
+      // callback
+      cb && cb();
+
     }
 
-    fetchData(url);
+    if (url) {
+      fetchData(url);
+    }
 
   }, [url]);
 

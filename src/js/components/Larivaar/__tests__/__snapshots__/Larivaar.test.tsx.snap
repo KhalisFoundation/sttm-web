@@ -4,11 +4,19 @@ exports[`<Larivaar /> renders children when disabled 1`] = `
 <div>
   <span
     class=" "
+    data-background-color="#000"
+    data-for="mahankosh-tooltip"
+    data-place="right"
+    data-tip="loading..."
   >
      Vahi 
   </span>
   <span
     class=" "
+    data-background-color="#000"
+    data-for="mahankosh-tooltip"
+    data-place="right"
+    data-tip="loading..."
   >
      Guru 
   </span>
@@ -22,6 +30,9 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
   >
     <span
       class=""
+      data-background-color="#000"
+      data-place="right"
+      data-tip="loading..."
     >
       <span>
         V
@@ -30,6 +41,9 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     </span>
     <span
       class=""
+      data-background-color="#000"
+      data-place="right"
+      data-tip="loading..."
     >
       <span>
         a
@@ -38,6 +52,9 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     </span>
     <span
       class=""
+      data-background-color="#000"
+      data-place="right"
+      data-tip="loading..."
     >
       <span>
         h
@@ -50,6 +67,9 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
   >
     <span
       class="larivaar-word"
+      data-background-color="#000"
+      data-place="right"
+      data-tip="loading..."
     >
       <span>
         Gu
@@ -58,6 +78,9 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     </span>
     <span
       class="larivaar-word"
+      data-background-color="#000"
+      data-place="right"
+      data-tip="loading..."
     >
       <span>
         ru
@@ -78,6 +101,9 @@ Object {
       >
         <span
           class=""
+          data-background-color="#000"
+          data-place="right"
+          data-tip="loading..."
         >
           <span>
             V
@@ -86,6 +112,9 @@ Object {
         </span>
         <span
           class=""
+          data-background-color="#000"
+          data-place="right"
+          data-tip="loading..."
         >
           <span>
             a
@@ -94,6 +123,9 @@ Object {
         </span>
         <span
           class=""
+          data-background-color="#000"
+          data-place="right"
+          data-tip="loading..."
         >
           <span>
             h
@@ -106,6 +138,9 @@ Object {
       >
         <span
           class="larivaar-word larivaar-assist-word"
+          data-background-color="#000"
+          data-place="right"
+          data-tip="loading..."
         >
           <span>
             Gu
@@ -114,6 +149,9 @@ Object {
         </span>
         <span
           class="larivaar-word larivaar-assist-word"
+          data-background-color="#000"
+          data-place="right"
+          data-tip="loading..."
         >
           <span>
             ru
@@ -129,6 +167,9 @@ Object {
     >
       <span
         class=""
+        data-background-color="#000"
+        data-place="right"
+        data-tip="loading..."
       >
         <span>
           V
@@ -137,6 +178,9 @@ Object {
       </span>
       <span
         class=""
+        data-background-color="#000"
+        data-place="right"
+        data-tip="loading..."
       >
         <span>
           a
@@ -145,6 +189,9 @@ Object {
       </span>
       <span
         class=""
+        data-background-color="#000"
+        data-place="right"
+        data-tip="loading..."
       >
         <span>
           h
@@ -157,6 +204,9 @@ Object {
     >
       <span
         class="larivaar-word larivaar-assist-word"
+        data-background-color="#000"
+        data-place="right"
+        data-tip="loading..."
       >
         <span>
           Gu
@@ -165,6 +215,9 @@ Object {
       </span>
       <span
         class="larivaar-word larivaar-assist-word"
+        data-background-color="#000"
+        data-place="right"
+        data-tip="loading..."
       >
         <span>
           ru

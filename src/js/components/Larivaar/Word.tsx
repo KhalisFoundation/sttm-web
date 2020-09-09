@@ -9,25 +9,30 @@ import {
 export interface ILarivaarWordProps {
   word: string;
   unicode: boolean;
+  darkMode: boolean;
   larivaarAssist?: boolean;
   larivaarAssistColor: string;
   index: number;
   highlightIndex?: Array<number>;
   highlight?: boolean;
   visraamClass: string;
+  onMouseOver?: (word: string) => void;
+  onMouseLeave?: () => void
 }
 
-const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
-  const {
-    highlightIndex,
-    word,
-    unicode,
-    larivaarAssist,
-    larivaarAssistColor,
-    index,
-    highlight,
-    visraamClass,
-  } = props;
+const LarivaarWord: React.FC<ILarivaarWordProps> = ({
+  darkMode,
+  highlightIndex,
+  word,
+  unicode,
+  larivaarAssist,
+  larivaarAssistColor,
+  index,
+  highlight,
+  visraamClass,
+  onMouseOver,
+  onMouseLeave,
+}) => {
 
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
@@ -71,7 +76,11 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
           // so need to use this hack of reference
           return (
             <span
-              data-tip="hello world"
+              data-background-color={darkMode ? "#f39c1d" : "#000"}
+              data-place="right"
+              data-tip='loading...'
+              onMouseOver={onMouseOver ? () => onMouseOver(word) : undefined}
+              onMouseLeave={onMouseLeave}
               ref={assignAkharColor}
               key={key}
               className={akharClass}
@@ -79,7 +88,6 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
             >
               {item}
               <wbr />
-              <ReactTooltip />
             </span>
           );
         }
@@ -88,13 +96,16 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
         // so need to use this hack of reference
         return (
           <span
-            data-tip="hello world"
             key={key}
+            data-background-color={darkMode ? "#f39c1d" : "#000"}
+            data-place="right"
+            data-tip='loading...'
+            onMouseOver={onMouseOver ? () => onMouseOver(word) : undefined}
+            onMouseLeave={onMouseLeave}
             className={akharClass}>
             <span ref={assignAkharColor}>
               {item}
               <wbr />
-              <ReactTooltip />
             </span>
           </span>
         );
