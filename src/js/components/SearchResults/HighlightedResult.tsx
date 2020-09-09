@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 
+import { STTM_ORANGE, STTM_BLACK } from '@/constants';
 import { getVisraamClass } from '../../util';
 
 interface IHighlightedSearchResultProps {
@@ -29,7 +29,6 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
 
   return children.split(' ').map((word, i) => {
     let akharClass = getVisraamClass(children, i, visraams) || ' ';
-    const currentNodeRef = useRef(null);
     if (highlightIndex && highlightIndex.length > 0) {
       if (highlightIndex.includes(i)) {
         akharClass += 'search-highlight-word'
@@ -40,10 +39,9 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
       <span
         key={i}
         data-for='mahankosh-tooltip'
-        ref={currentNodeRef}
-        data-background-color={darkMode ? "#f39c1d" : "#000"}
+        data-background-color={darkMode ? STTM_ORANGE : STTM_BLACK}
         data-place="right"
-        data-tip='loading...'
+        data-tip='.....'
         onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
         onMouseLeave={onMouseLeave}
         className={akharClass} >

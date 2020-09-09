@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import ReactTooltip from 'react-tooltip';
+import { STTM_ORANGE, STTM_BLACK } from '@/constants';
 
 import {
   fixLarivaarUnicode,
@@ -76,9 +76,9 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
           // so need to use this hack of reference
           return (
             <span
-              data-background-color={darkMode ? "#f39c1d" : "#000"}
+              data-background-color={darkMode ? STTM_ORANGE : STTM_BLACK}
               data-place="right"
-              data-tip='loading...'
+              data-tip='.....'
               onMouseOver={onMouseOver ? () => onMouseOver(word) : undefined}
               onMouseLeave={onMouseLeave}
               ref={assignAkharColor}
@@ -97,9 +97,9 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
         return (
           <span
             key={key}
-            data-background-color={darkMode ? "#f39c1d" : "#000"}
+            data-background-color={darkMode ? STTM_ORANGE : STTM_BLACK}
             data-place="right"
-            data-tip='loading...'
+            data-tip='.....'
             onMouseOver={onMouseOver ? () => onMouseOver(word) : undefined}
             onMouseLeave={onMouseLeave}
             className={akharClass}>
