@@ -105,6 +105,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
       })}
       {isShowTooltipLarivaar && (
         <ReactTooltip
+          id="mahankosh-tooltip"
           getContent={() => getMahankoshExplaination(mahankoshExplaination, isFetchingMahankoshExplaination)}
           multiline
         />
