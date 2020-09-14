@@ -38,6 +38,7 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
     return (
       <span
         key={i}
+        data-event="click mouseover"
         data-for='mahankosh-tooltip'
         data-background-color={darkMode ? STTM_ORANGE : STTM_BLACK}
         data-place="right"

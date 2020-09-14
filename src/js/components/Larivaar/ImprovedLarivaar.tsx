@@ -1,13 +1,14 @@
 import React, { memo, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
 
 import LarivaarWord from './Word';
+import { MahankoshTooltip } from '../MahankoshTooltip';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
 import { getLarivaarAssistColor } from '../../features/selectors';
 import { getVisraamClass } from '../../util';
 import { useFetchData } from '@/hooks';
-import { getMahankoshExplaination } from '../SearchResults/util';;
+import { IMahankoshExplaination } from '@/types';
+
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
   larivaarAssistColor: string;
@@ -68,10 +69,10 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
         </HighlightedSearchResult>
         {
           isShowTooltipHighlightedSearchResult && (
-            <ReactTooltip
-              id="mahankosh-tooltip"
-              getContent={() => getMahankoshExplaination(mahankoshExplaination, isFetchingMahankoshExplaination)}
-              multiline
+            <MahankoshTooltip
+              gurbaniWord={selectedWord}
+              isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
+              mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
             />
           )
         }
@@ -104,10 +105,10 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
         );
       })}
       {isShowTooltipLarivaar && (
-        <ReactTooltip
-          id="mahankosh-tooltip"
-          getContent={() => getMahankoshExplaination(mahankoshExplaination, isFetchingMahankoshExplaination)}
-          multiline
+        <MahankoshTooltip
+          gurbaniWord={selectedWord}
+          isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
+          mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
         />
       )}
     </>

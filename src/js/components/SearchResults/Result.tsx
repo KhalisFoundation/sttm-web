@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices } from '../../util';
 
-import { getHighlightString } from './util';
+import { getHighlightString } from './util/get-highlight-string';
 
 import {
   SEARCH_TYPES

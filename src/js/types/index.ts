@@ -1,4 +1,4 @@
 export * from './baani';
 export * from './gurbani';
-export * from './mahankosh-data';
+export * from './mahankosh-explaination';
 export * from './shabad';

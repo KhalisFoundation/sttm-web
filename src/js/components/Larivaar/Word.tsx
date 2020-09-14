@@ -96,6 +96,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
         // so need to use this hack of reference
         return (
           <span
+            data-event="click"
             key={key}
             data-background-color={darkMode ? STTM_ORANGE : STTM_BLACK}
             data-place="right"
