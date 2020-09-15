@@ -1,0 +1,21 @@
+.mahankoshTooltip {
+  align-items: space-between;
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+
+  &Word {
+    padding: 8px;
+  }
+
+  &GurbaniWord {
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  &Source {
+    font-family: Muli, sans-serif;
+    font-size: 12px;
+    align-self: flex-end;
+  }
+}

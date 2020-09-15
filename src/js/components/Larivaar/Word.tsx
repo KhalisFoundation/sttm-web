@@ -1,10 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { STTM_ORANGE, STTM_BLACK } from '@/constants';
 
 import {
   fixLarivaarUnicode,
   fixLarivaarGurmukhiFont
 } from './util';
+import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 
 export interface ILarivaarWordProps {
   word: string;
@@ -33,6 +34,13 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
   onMouseOver,
   onMouseLeave,
 }) => {
+
+  const mahankoshAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode), [darkMode])
+  const akharAttributes = useMemo(() => ({
+    ...mahankoshAttributes,
+    onMouseOver: onMouseOver ? () => onMouseOver(word) : undefined,
+    onMouseLeave: onMouseLeave ? onMouseLeave : undefined
+  }), [mahankoshAttributes, onMouseOver, onMouseLeave]);
 
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
@@ -76,11 +84,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
           // so need to use this hack of reference
           return (
             <span
-              data-background-color={darkMode ? STTM_ORANGE : STTM_BLACK}
-              data-place="right"
-              data-tip='.....'
-              onMouseOver={onMouseOver ? () => onMouseOver(word) : undefined}
-              onMouseLeave={onMouseLeave}
+              {...akharAttributes}
               ref={assignAkharColor}
               key={key}
               className={akharClass}
@@ -96,13 +100,8 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
         // so need to use this hack of reference
         return (
           <span
-            data-event="click"
+            {...akharAttributes}
             key={key}
-            data-background-color={darkMode ? STTM_ORANGE : STTM_BLACK}
-            data-place="right"
-            data-tip='.....'
-            onMouseOver={onMouseOver ? () => onMouseOver(word) : undefined}
-            onMouseLeave={onMouseLeave}
             className={akharClass}>
             <span ref={assignAkharColor}>
               {item}

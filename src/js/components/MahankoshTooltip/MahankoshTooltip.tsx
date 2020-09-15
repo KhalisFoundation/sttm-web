@@ -2,8 +2,8 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import { IMahankoshExplaination } from '@/types';
-import { getMahankoshExplaination } from './util/get-mahankosh-explaination';
-
+import { MAHANKOSH_TOOLTIP_SOURCE } from '@/constants';
+import { getMahankoshExplaination } from './util/';
 interface IMahankoshTooltipProps {
   gurbaniWord: string
   mahankoshExplaination: IMahankoshExplaination[]
@@ -21,13 +21,16 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
       id="mahankosh-tooltip"
       multiline
     >
-      <div>
-        <span>{gurbaniWord}</span>
-        <span>
-          {isFetchingMahankoshExplaination ? '...' :
-            getMahankoshExplaination(mahankoshExplaination)}
+      <div className="mahankoshTooltip">
+        <span className="mahankoshTooltipWord">
+          <span className="mahankoshTooltipGurbaniWord">{gurbaniWord}</span>
+          <span className="mahankoshTooltipExplainations">
+            {isFetchingMahankoshExplaination ? '...' :
+              getMahankoshExplaination(mahankoshExplaination)}
+          </span>
         </span>
-        <span>Source: Mahaan kosh (Encyclopedia)</span>
+
+        <span className="mahankoshTooltipSource">{MAHANKOSH_TOOLTIP_SOURCE}</span>
       </div>
     </ReactTooltip>
   )

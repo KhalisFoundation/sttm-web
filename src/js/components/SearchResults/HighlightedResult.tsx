@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { STTM_ORANGE, STTM_BLACK } from '@/constants';
+import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 import { getVisraamClass } from '../../util';
 
 interface IHighlightedSearchResultProps {
@@ -22,7 +22,8 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
   onMouseOver,
   onMouseLeave
 }) => {
-  // console.log(tooltip, "TOOLTIP VALUE")
+  const mahankoshTooltipAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode), [darkMode])
+
   if (children == null) {
     return null;
   }
@@ -38,16 +39,12 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
     return (
       <span
         key={i}
-        data-event="click mouseover"
-        data-for='mahankosh-tooltip'
-        data-background-color={darkMode ? STTM_ORANGE : STTM_BLACK}
-        data-place="right"
-        data-tip='.....'
-        onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
-        onMouseLeave={onMouseLeave}
+        {...mahankoshTooltipAttributes}
+        onMouseOver={onMouseOver ? () => onMouseOver(word) : undefined}
+        onMouseLeave={onMouseLeave ? onMouseLeave : undefined}
         className={akharClass} >
         {` ${word} `}
-      </span>
+      </span >
     )
   });
 }

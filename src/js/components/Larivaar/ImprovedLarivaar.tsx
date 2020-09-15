@@ -1,17 +1,16 @@
 import React, { memo, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import LarivaarWord from './Word';
 import { MahankoshTooltip } from '../MahankoshTooltip';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
-import { getLarivaarAssistColor } from '../../features/selectors';
 import { getVisraamClass } from '../../util';
 import { useFetchData } from '@/hooks';
 import { IMahankoshExplaination } from '@/types';
+import { getLarivaarAssistColor } from '@/features/selectors';
 
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
-  larivaarAssistColor: string;
   highlightIndex?: number[];
   enable?: boolean;
   unicode: boolean;
@@ -23,7 +22,6 @@ export interface ILarivaarProps {
 export const Larivaar: React.FC<ILarivaarProps> = ({
   highlightIndex,
   larivaarAssist,
-  larivaarAssistColor,
   enable = true,
   children,
   unicode,
@@ -31,6 +29,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   visraam,
 }) => {
   const { darkMode } = useSelector(state => state);
+  const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
   const [tooltipHighlightsIn, setTooltipHighlightsIn] = useState<string>('');
   const [selectedWord, setSelectedWord] = useState<string>('');
   const url = selectedWord ? `${API_URL}kosh/word/${selectedWord}` : '';
@@ -53,6 +52,8 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
     setTooltipHighlightsIn('');
     setSelectedWord('');
   }
+
+  console.log(mahankoshExplaination, url, "MAHAN KOSH EXPLAINATION5")
 
   if (!enable) {
     return (
@@ -115,9 +116,4 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   );
 }
 
-const mapStateToProps = (state: any) =>
-  ({
-    larivaarAssistColor: getLarivaarAssistColor(state)
-  })
-
-export default memo(connect(mapStateToProps, {})(Larivaar));
+export default memo(Larivaar);
