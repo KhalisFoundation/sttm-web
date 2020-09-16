@@ -1,8 +1,8 @@
 .mahankosh {
   &SelectedGurbaniWord {
-    cursor: help;
     border: 1px dotted transparent;
     border-bottom-color: currentColor;
+    cursor: help;
   }
 }
 
@@ -22,8 +22,8 @@
   }
 
   &Source {
+    align-self: flex-end;
     font-family: Muli, sans-serif;
     font-size: 12px;
-    align-self: flex-end;
   }
 }
