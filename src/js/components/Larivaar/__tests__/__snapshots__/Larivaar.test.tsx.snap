@@ -25,25 +25,25 @@ exports[`<Larivaar /> renders children when disabled 1`] = `
      Guru 
   </span>
   <div
-    class="__react_component_tooltip t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2 place-top type-dark"
+    class="__react_component_tooltip tacc14123-4650-4c52-86a5-f592d855fe1e place-top type-dark"
     data-id="tooltip"
     id="mahankoshTooltip"
   >
     <style>
       
-  	.t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2 {
+  	.tacc14123-4650-4c52-86a5-f592d855fe1e {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-top {
+  	.tacc14123-4650-4c52-86a5-f592d855fe1e.place-top {
         margin-top: -10px;
     }
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-top::before {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-top::after {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -54,13 +54,13 @@ exports[`<Larivaar /> renders children when disabled 1`] = `
         border-top-width: 6px;
     }
 
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-bottom {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-bottom {
         margin-top: 10px;
     }
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-bottom::before {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-bottom::after {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -71,13 +71,13 @@ exports[`<Larivaar /> renders children when disabled 1`] = `
         border-bottom-width: 6px;
     }
 
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-left {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-left {
         margin-left: -10px;
     }
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-left::before {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-left::after {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -88,13 +88,13 @@ exports[`<Larivaar /> renders children when disabled 1`] = `
         border-left-width: 6px;
     }
 
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-right {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-right {
         margin-left: 10px;
     }
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-right::before {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-right::after {
+    .tacc14123-4650-4c52-86a5-f592d855fe1e.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -192,25 +192,25 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     </span>
   </span>
   <div
-    class="__react_component_tooltip tee464811-d11c-400e-9dc8-0d5707e5e6e1 place-top type-dark"
+    class="__react_component_tooltip t4e9ef7aa-8a42-449b-9fa1-c9535192a9df place-top type-dark"
     data-id="tooltip"
     id="mahankoshTooltip"
   >
     <style>
       
-  	.tee464811-d11c-400e-9dc8-0d5707e5e6e1 {
+  	.t4e9ef7aa-8a42-449b-9fa1-c9535192a9df {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-top {
+  	.t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-top {
         margin-top: -10px;
     }
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-top::before {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-top::before {
         border-top: 8px solid transparent;
     }
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-top::after {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -221,13 +221,13 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
         border-top-width: 6px;
     }
 
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-bottom {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-bottom {
         margin-top: 10px;
     }
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-bottom::before {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-bottom::after {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -238,13 +238,13 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
         border-bottom-width: 6px;
     }
 
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-left {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-left {
         margin-left: -10px;
     }
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-left::before {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-left::before {
         border-left: 8px solid transparent;
     }
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-left::after {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -255,13 +255,13 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
         border-left-width: 6px;
     }
 
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-right {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-right {
         margin-left: 10px;
     }
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-right::before {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-right::before {
         border-right: 8px solid transparent;
     }
-    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-right::after {
+    .t4e9ef7aa-8a42-449b-9fa1-c9535192a9df.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -362,25 +362,25 @@ Object {
         </span>
       </span>
       <div
-        class="__react_component_tooltip t2280601a-e233-4230-a425-160228f90e8f place-top type-dark"
+        class="__react_component_tooltip t504bef87-9891-42ce-8701-a938aad5c3b9 place-top type-dark"
         data-id="tooltip"
         id="mahankoshTooltip"
       >
         <style>
           
-  	.t2280601a-e233-4230-a425-160228f90e8f {
+  	.t504bef87-9891-42ce-8701-a938aad5c3b9 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t2280601a-e233-4230-a425-160228f90e8f.place-top {
+  	.t504bef87-9891-42ce-8701-a938aad5c3b9.place-top {
         margin-top: -10px;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-top::before {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-top::after {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -391,13 +391,13 @@ Object {
         border-top-width: 6px;
     }
 
-    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-bottom {
         margin-top: 10px;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom::before {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom::after {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -408,13 +408,13 @@ Object {
         border-bottom-width: 6px;
     }
 
-    .t2280601a-e233-4230-a425-160228f90e8f.place-left {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-left {
         margin-left: -10px;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-left::before {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-left::after {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -425,13 +425,13 @@ Object {
         border-left-width: 6px;
     }
 
-    .t2280601a-e233-4230-a425-160228f90e8f.place-right {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-right {
         margin-left: 10px;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-right::before {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-right::after {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -527,25 +527,25 @@ Object {
       </span>
     </span>
     <div
-      class="__react_component_tooltip t2280601a-e233-4230-a425-160228f90e8f place-top type-dark"
+      class="__react_component_tooltip t504bef87-9891-42ce-8701-a938aad5c3b9 place-top type-dark"
       data-id="tooltip"
       id="mahankoshTooltip"
     >
       <style>
         
-  	.t2280601a-e233-4230-a425-160228f90e8f {
+  	.t504bef87-9891-42ce-8701-a938aad5c3b9 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t2280601a-e233-4230-a425-160228f90e8f.place-top {
+  	.t504bef87-9891-42ce-8701-a938aad5c3b9.place-top {
         margin-top: -10px;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-top::before {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-top::after {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -556,13 +556,13 @@ Object {
         border-top-width: 6px;
     }
 
-    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-bottom {
         margin-top: 10px;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom::before {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom::after {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -573,13 +573,13 @@ Object {
         border-bottom-width: 6px;
     }
 
-    .t2280601a-e233-4230-a425-160228f90e8f.place-left {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-left {
         margin-left: -10px;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-left::before {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-left::after {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -590,13 +590,13 @@ Object {
         border-left-width: 6px;
     }
 
-    .t2280601a-e233-4230-a425-160228f90e8f.place-right {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-right {
         margin-left: 10px;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-right::before {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t2280601a-e233-4230-a425-160228f90e8f.place-right::after {
+    .t504bef87-9891-42ce-8701-a938aad5c3b9.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
