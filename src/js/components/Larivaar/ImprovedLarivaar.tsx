@@ -31,6 +31,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   const { darkMode } = useSelector(state => state);
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
   const [tooltipHighlightsIn, setTooltipHighlightsIn] = useState<string>('');
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [selectedWord, setSelectedWord] = useState<string>('');
   const url = selectedWord ? `${API_URL}kosh/word/${selectedWord}` : '';
   const {
@@ -42,23 +43,26 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   const isShowTooltipLarivaar = tooltipHighlightsIn === 'larivaar';
 
   const handleMouseOver = (highlightsIn: string) => {
-    return (selectedWord: string) => {
+    return (selectedWord: string, selectedIndex: number) => {
       setTooltipHighlightsIn(highlightsIn);
       setSelectedWord(selectedWord);
+      setSelectedIndex(selectedIndex);
     }
   }
 
   const handleMouseLeave = () => {
     setTooltipHighlightsIn('');
     setSelectedWord('');
+    setSelectedIndex(-1);
   }
 
-  console.log(mahankoshExplaination, url, "MAHAN KOSH EXPLAINATION5")
+  console.log(mahankoshExplaination, selectedIndex, "MAHAN KOSH EXPLAINATION5")
 
   if (!enable) {
     return (
       <>
         <HighlightedSearchResult
+          mahankoshIndex={(selectedIndex > -1 && mahankoshExplaination.length > 0) ? selectedIndex : -1}
           highlightIndex={highlightIndex}
           query={query}
           visraams={visraam}
@@ -68,15 +72,12 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
         >
           {children}
         </HighlightedSearchResult>
-        {
-          isShowTooltipHighlightedSearchResult && (
-            <MahankoshTooltip
-              gurbaniWord={selectedWord}
-              isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
-              mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
-            />
-          )
-        }
+        <MahankoshTooltip
+          tooltipId="mahankoshTooltipHighlightSearchResult"
+          gurbaniWord={selectedWord}
+          isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
+          mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
+        />
       </>
     );
   }
@@ -94,6 +95,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
             highlightIndex={highlightIndex}
             key={index}
             word={word}
+            selectedIndex={selectedIndex}
             onMouseOver={handleMouseOver('larivaar')}
             onMouseLeave={handleMouseLeave}
             unicode={unicode}
@@ -105,13 +107,12 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
           />
         );
       })}
-      {isShowTooltipLarivaar && (
-        <MahankoshTooltip
-          gurbaniWord={selectedWord}
-          isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
-          mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
-        />
-      )}
+      <MahankoshTooltip
+        tooltipId="mahankoshTooltipLarivaar"
+        gurbaniWord={selectedWord}
+        isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
+        mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
+      />
     </>
   );
 }

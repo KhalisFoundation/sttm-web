@@ -1,3 +1,11 @@
+.mahankosh {
+  &SelectedGurbaniWord {
+    cursor: help;
+    border: 1px dotted transparent;
+    border-bottom-color: currentColor;
+  }
+}
+
 .mahankoshTooltip {
   align-items: space-between;
   display: flex;

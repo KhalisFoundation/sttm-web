@@ -10,7 +10,8 @@ interface IHighlightedSearchResultProps {
   type: number;
   query: string[];
   visraams: any;
-  onMouseOver?: (word: string) => void;
+  mahankoshIndex?: number;
+  onMouseOver?: (word: string, index: number) => void;
   onMouseLeave?: () => void
 };
 
@@ -19,11 +20,12 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
   highlightIndex,
   visraams,
   darkMode,
+  mahankoshIndex = -1,
   onMouseOver,
   onMouseLeave
 }) => {
-  const mahankoshTooltipAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode), [darkMode])
-
+  const mahankoshTooltipAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipHighlightSearchResult'), [darkMode])
+  console.log(mahankoshIndex, 'MAHAN KOSH INDEX')
   if (children == null) {
     return null;
   }
@@ -36,11 +38,16 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
       }
     }
 
+    const isMahankoshLookupAvailable = (i === mahankoshIndex);
+    if (isMahankoshLookupAvailable) {
+      akharClass += ' mahankoshSelectedGurbaniWord';
+    }
+
     return (
       <span
         key={i}
         {...mahankoshTooltipAttributes}
-        onMouseOver={onMouseOver ? () => onMouseOver(word) : undefined}
+        onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
         onMouseLeave={onMouseLeave ? onMouseLeave : undefined}
         className={akharClass} >
         {` ${word} `}

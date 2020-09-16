@@ -1,5 +1,4 @@
 import React, { memo, useMemo } from 'react';
-import { STTM_ORANGE, STTM_BLACK } from '@/constants';
 
 import {
   fixLarivaarUnicode,
@@ -17,7 +16,7 @@ export interface ILarivaarWordProps {
   highlightIndex?: Array<number>;
   highlight?: boolean;
   visraamClass: string;
-  onMouseOver?: (word: string) => void;
+  onMouseOver?: (word: string, index: number) => void;
   onMouseLeave?: () => void
 }
 
@@ -35,12 +34,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
   onMouseLeave,
 }) => {
 
-  const mahankoshAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode), [darkMode])
-  const akharAttributes = useMemo(() => ({
-    ...mahankoshAttributes,
-    onMouseOver: onMouseOver ? () => onMouseOver(word) : undefined,
-    onMouseLeave: onMouseLeave ? onMouseLeave : undefined
-  }), [mahankoshAttributes, onMouseOver, onMouseLeave]);
+  const mahankoshAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipHighlightSearchResult'), [darkMode])
 
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
@@ -57,6 +51,8 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
       }
     }
   }
+
+  console.log(mahankoshAttributes, 'mahankosh attributes')
 
   return (
     <span className={visraamClass}>
@@ -84,9 +80,11 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
           // so need to use this hack of reference
           return (
             <span
-              {...akharAttributes}
-              ref={assignAkharColor}
               key={key}
+              {...mahankoshAttributes}
+              onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
+              onMouseLeave={onMouseLeave ? onMouseLeave : undefined}
+              ref={assignAkharColor}
               className={akharClass}
               style={{ display: 'inline-block' }}
             >
@@ -100,8 +98,10 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
         // so need to use this hack of reference
         return (
           <span
-            {...akharAttributes}
             key={key}
+            {...mahankoshAttributes}
+            onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
+            onMouseLeave={onMouseLeave ? onMouseLeave : undefined}
             className={akharClass}>
             <span ref={assignAkharColor}>
               {item}
@@ -110,7 +110,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
           </span>
         );
       })}
-    </span>
+    </span >
   );
 }
 
