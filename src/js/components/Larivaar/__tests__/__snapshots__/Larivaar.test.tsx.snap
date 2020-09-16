@@ -4,22 +4,110 @@ exports[`<Larivaar /> renders children when disabled 1`] = `
 <div>
   <span
     class=" "
+    currentitem="false"
     data-background-color="#000000"
-    data-for="mahankosh-tooltip"
-    data-place="right"
-    data-tip="....."
+    data-event="click"
+    data-for="mahankoshTooltip"
+    data-place="top"
+    data-tip="..."
   >
      Vahi 
   </span>
   <span
     class=" "
+    currentitem="false"
     data-background-color="#000000"
-    data-for="mahankosh-tooltip"
-    data-place="right"
-    data-tip="....."
+    data-event="click"
+    data-for="mahankoshTooltip"
+    data-place="top"
+    data-tip="..."
   >
      Guru 
   </span>
+  <div
+    class="__react_component_tooltip t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2 place-top type-dark"
+    data-id="tooltip"
+    id="mahankoshTooltip"
+  >
+    <style>
+      
+  	.t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-top {
+        margin-top: -10px;
+    }
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-bottom {
+        margin-top: 10px;
+    }
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-left {
+        margin-left: -10px;
+    }
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-right {
+        margin-left: 10px;
+    }
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t8a47b7b1-e80e-467f-b732-a3a32c5ad8b2.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  
+    </style>
+    
+  </div>
 </div>
 `;
 
@@ -30,9 +118,12 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
   >
     <span
       class=""
+      currentitem="false"
       data-background-color="#000000"
-      data-place="right"
-      data-tip="....."
+      data-event="click"
+      data-for="mahankoshTooltip"
+      data-place="top"
+      data-tip="..."
     >
       <span>
         V
@@ -41,9 +132,12 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     </span>
     <span
       class=""
+      currentitem="false"
       data-background-color="#000000"
-      data-place="right"
-      data-tip="....."
+      data-event="click"
+      data-for="mahankoshTooltip"
+      data-place="top"
+      data-tip="..."
     >
       <span>
         a
@@ -52,9 +146,12 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     </span>
     <span
       class=""
+      currentitem="false"
       data-background-color="#000000"
-      data-place="right"
-      data-tip="....."
+      data-event="click"
+      data-for="mahankoshTooltip"
+      data-place="top"
+      data-tip="..."
     >
       <span>
         h
@@ -67,9 +164,12 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
   >
     <span
       class="larivaar-word"
+      currentitem="false"
       data-background-color="#000000"
-      data-place="right"
-      data-tip="....."
+      data-event="click"
+      data-for="mahankoshTooltip"
+      data-place="top"
+      data-tip="..."
     >
       <span>
         Gu
@@ -78,9 +178,12 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
     </span>
     <span
       class="larivaar-word"
+      currentitem="false"
       data-background-color="#000000"
-      data-place="right"
-      data-tip="....."
+      data-event="click"
+      data-for="mahankoshTooltip"
+      data-place="top"
+      data-tip="..."
     >
       <span>
         ru
@@ -88,6 +191,90 @@ exports[`<Larivaar /> renders concatenated children when enabled 1`] = `
       </span>
     </span>
   </span>
+  <div
+    class="__react_component_tooltip tee464811-d11c-400e-9dc8-0d5707e5e6e1 place-top type-dark"
+    data-id="tooltip"
+    id="mahankoshTooltip"
+  >
+    <style>
+      
+  	.tee464811-d11c-400e-9dc8-0d5707e5e6e1 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-top {
+        margin-top: -10px;
+    }
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-bottom {
+        margin-top: 10px;
+    }
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-left {
+        margin-left: -10px;
+    }
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-right {
+        margin-left: 10px;
+    }
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tee464811-d11c-400e-9dc8-0d5707e5e6e1.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  
+    </style>
+    
+  </div>
 </div>
 `;
 
@@ -101,9 +288,12 @@ Object {
       >
         <span
           class=""
+          currentitem="false"
           data-background-color="#000000"
-          data-place="right"
-          data-tip="....."
+          data-event="click"
+          data-for="mahankoshTooltip"
+          data-place="top"
+          data-tip="..."
         >
           <span>
             V
@@ -112,9 +302,12 @@ Object {
         </span>
         <span
           class=""
+          currentitem="false"
           data-background-color="#000000"
-          data-place="right"
-          data-tip="....."
+          data-event="click"
+          data-for="mahankoshTooltip"
+          data-place="top"
+          data-tip="..."
         >
           <span>
             a
@@ -123,9 +316,12 @@ Object {
         </span>
         <span
           class=""
+          currentitem="false"
           data-background-color="#000000"
-          data-place="right"
-          data-tip="....."
+          data-event="click"
+          data-for="mahankoshTooltip"
+          data-place="top"
+          data-tip="..."
         >
           <span>
             h
@@ -138,9 +334,12 @@ Object {
       >
         <span
           class="larivaar-word larivaar-assist-word"
+          currentitem="false"
           data-background-color="#000000"
-          data-place="right"
-          data-tip="....."
+          data-event="click"
+          data-for="mahankoshTooltip"
+          data-place="top"
+          data-tip="..."
         >
           <span>
             Gu
@@ -149,9 +348,12 @@ Object {
         </span>
         <span
           class="larivaar-word larivaar-assist-word"
+          currentitem="false"
           data-background-color="#000000"
-          data-place="right"
-          data-tip="....."
+          data-event="click"
+          data-for="mahankoshTooltip"
+          data-place="top"
+          data-tip="..."
         >
           <span>
             ru
@@ -159,6 +361,90 @@ Object {
           </span>
         </span>
       </span>
+      <div
+        class="__react_component_tooltip t2280601a-e233-4230-a425-160228f90e8f place-top type-dark"
+        data-id="tooltip"
+        id="mahankoshTooltip"
+      >
+        <style>
+          
+  	.t2280601a-e233-4230-a425-160228f90e8f {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t2280601a-e233-4230-a425-160228f90e8f.place-top {
+        margin-top: -10px;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom {
+        margin-top: 10px;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t2280601a-e233-4230-a425-160228f90e8f.place-left {
+        margin-left: -10px;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t2280601a-e233-4230-a425-160228f90e8f.place-right {
+        margin-left: 10px;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  
+        </style>
+        
+      </div>
     </div>
   </body>,
   "container": <div>
@@ -167,9 +453,12 @@ Object {
     >
       <span
         class=""
+        currentitem="false"
         data-background-color="#000000"
-        data-place="right"
-        data-tip="....."
+        data-event="click"
+        data-for="mahankoshTooltip"
+        data-place="top"
+        data-tip="..."
       >
         <span>
           V
@@ -178,9 +467,12 @@ Object {
       </span>
       <span
         class=""
+        currentitem="false"
         data-background-color="#000000"
-        data-place="right"
-        data-tip="....."
+        data-event="click"
+        data-for="mahankoshTooltip"
+        data-place="top"
+        data-tip="..."
       >
         <span>
           a
@@ -189,9 +481,12 @@ Object {
       </span>
       <span
         class=""
+        currentitem="false"
         data-background-color="#000000"
-        data-place="right"
-        data-tip="....."
+        data-event="click"
+        data-for="mahankoshTooltip"
+        data-place="top"
+        data-tip="..."
       >
         <span>
           h
@@ -204,9 +499,12 @@ Object {
     >
       <span
         class="larivaar-word larivaar-assist-word"
+        currentitem="false"
         data-background-color="#000000"
-        data-place="right"
-        data-tip="....."
+        data-event="click"
+        data-for="mahankoshTooltip"
+        data-place="top"
+        data-tip="..."
       >
         <span>
           Gu
@@ -215,9 +513,12 @@ Object {
       </span>
       <span
         class="larivaar-word larivaar-assist-word"
+        currentitem="false"
         data-background-color="#000000"
-        data-place="right"
-        data-tip="....."
+        data-event="click"
+        data-for="mahankoshTooltip"
+        data-place="top"
+        data-tip="..."
       >
         <span>
           ru
@@ -225,6 +526,90 @@ Object {
         </span>
       </span>
     </span>
+    <div
+      class="__react_component_tooltip t2280601a-e233-4230-a425-160228f90e8f place-top type-dark"
+      data-id="tooltip"
+      id="mahankoshTooltip"
+    >
+      <style>
+        
+  	.t2280601a-e233-4230-a425-160228f90e8f {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t2280601a-e233-4230-a425-160228f90e8f.place-top {
+        margin-top: -10px;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom {
+        margin-top: 10px;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t2280601a-e233-4230-a425-160228f90e8f.place-left {
+        margin-left: -10px;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t2280601a-e233-4230-a425-160228f90e8f.place-right {
+        margin-left: 10px;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t2280601a-e233-4230-a425-160228f90e8f.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  
+      </style>
+      
+    </div>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],
