@@ -14,13 +14,15 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
   tooltipId,
   gurbaniWord,
   mahankoshExplaination,
-  isFetchingMahankoshExplaination
 }) => {
   return (
     <ReactTooltip
+      id={tooltipId}
       event="click"
-      eventOff="click"
-      id="mahankoshTooltip"
+      globalEventOff="click"
+      className="mahankoshTooltipWrapper"
+      place="top"
+      clickable={true}
       multiline
       getContent={() => getMahankoshTooltipContent(gurbaniWord, mahankoshExplaination)}
     />

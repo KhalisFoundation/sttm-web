@@ -1,7 +1,5 @@
 .mahankosh {
   &SelectedGurbaniWord {
-    border: 1px dotted transparent;
-    border-bottom-color: currentColor;
     cursor: help;
   }
 }
@@ -13,7 +11,10 @@
   padding: 8px;
 
   &Word {
+    display: flex;
+    flex-direction: column;
     padding: 8px;
+    margin-bottom: 32px;
   }
 
   &GurbaniWord {
@@ -22,8 +23,13 @@
   }
 
   &Source {
+    flex-shrink: 0;
     align-self: flex-end;
     font-family: Muli, sans-serif;
     font-size: 12px;
+  }
+
+  &Wrapper {
+    max-width: 800px;
   }
 }

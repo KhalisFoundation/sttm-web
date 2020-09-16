@@ -6,9 +6,13 @@ export const getMahankoshTooltipContent = (
   gurbaniWord: string,
   mahankoshExplaination: IMahankoshExplaination[]) => {
 
+  if (!gurbaniWord) {
+    return ''
+  }
+
   if (mahankoshExplaination.length > 0) {
     let explaination = mahankoshExplaination[0].definition;
-    explaination = explaination.length > 200 ? explaination.substr(0, 200) + '...' : explaination;
+    explaination = explaination.length > 300 ? explaination.substr(0, 300) + '...' : explaination;
 
     return (
       <div className="mahankoshTooltip" >

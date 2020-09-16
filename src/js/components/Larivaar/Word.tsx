@@ -31,10 +31,9 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
   highlight,
   visraamClass,
   onMouseOver,
-  onMouseLeave,
 }) => {
 
-  const mahankoshAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipHighlightSearchResult'), [darkMode])
+  const mahankoshAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipLarivaar'), [darkMode])
 
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
@@ -51,8 +50,6 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
       }
     }
   }
-
-  console.log(mahankoshAttributes, 'mahankosh attributes')
 
   return (
     <span className={visraamClass}>
@@ -83,7 +80,6 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
               key={key}
               {...mahankoshAttributes}
               onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
-              onMouseLeave={onMouseLeave ? onMouseLeave : undefined}
               ref={assignAkharColor}
               className={akharClass}
               style={{ display: 'inline-block' }}
@@ -101,7 +97,6 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
             key={key}
             {...mahankoshAttributes}
             onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
-            onMouseLeave={onMouseLeave ? onMouseLeave : undefined}
             className={akharClass}>
             <span ref={assignAkharColor}>
               {item}

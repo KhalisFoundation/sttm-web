@@ -25,7 +25,7 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
   onMouseLeave
 }) => {
   const mahankoshTooltipAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipHighlightSearchResult'), [darkMode])
-  console.log(mahankoshIndex, 'MAHAN KOSH INDEX')
+
   if (children == null) {
     return null;
   }
@@ -48,7 +48,6 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
         key={i}
         {...mahankoshTooltipAttributes}
         onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
-        onMouseLeave={onMouseLeave ? onMouseLeave : undefined}
         className={akharClass} >
         {` ${word} `}
       </span >
