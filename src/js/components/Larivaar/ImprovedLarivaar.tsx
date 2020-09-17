@@ -49,29 +49,31 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
       setSelectedIndex(selectedIndex);
     }
   }
-  const clearSearchResult = () => {
+  const clearMahankoshTooltip = () => {
     setTooltipHighlightsIn('');
     setSelectedWord('');
     setSelectedIndex(-1);
   }
 
   useEffect(() => {
-    document.addEventListener('click', clearSearchResult);
+    document.addEventListener('click', clearMahankoshTooltip);
 
-    return () => document.removeEventListener('click', clearSearchResult);
+    return () => document.removeEventListener('click', clearMahankoshTooltip);
   }, [tooltipHighlightsIn, selectedWord, selectedIndex]);
 
+  const isMahankoshExplaination = !!mahankoshExplaination && !!mahankoshExplaination[0];
+  console.log(mahankoshExplaination, selectedIndex)
 
   if (!enable) {
     return (
       <>
         <HighlightedSearchResult
-          mahankoshIndex={(selectedIndex > -1 && mahankoshExplaination.length > 0) ? selectedIndex : -1}
+          mahankoshIndex={isMahankoshExplaination && !isFetchingMahankoshExplaination ? selectedIndex : -1}
           highlightIndex={highlightIndex}
           query={query}
           visraams={visraam}
           darkMode={darkMode}
-          onMouseOver={!isShowTooltipHighlightedSearchResult ? handleMouseOver('searchResults') : undefined}
+          onMouseOver={!isMahankoshExplaination ? handleMouseOver('searchResults') : undefined}
         >
           {children}
         </HighlightedSearchResult>

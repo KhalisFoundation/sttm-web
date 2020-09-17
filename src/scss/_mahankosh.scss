@@ -1,20 +1,22 @@
 .mahankosh {
   &SelectedGurbaniWord {
     cursor: help;
+    font-weight: 700;
   }
 }
 
 .mahankoshTooltip {
   align-items: space-between;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 8px;
 
   &Word {
     display: flex;
     flex-direction: column;
-    padding: 8px;
     margin-bottom: 32px;
+    padding: 8px;
   }
 
   &GurbaniWord {
@@ -23,10 +25,11 @@
   }
 
   &Source {
-    flex-shrink: 0;
     align-self: flex-end;
+    flex-shrink: 0;
     font-family: Muli, sans-serif;
     font-size: 12px;
+    font-weight: 600;
   }
 
   &Wrapper {
