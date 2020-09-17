@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 import { getVisraamClass } from '../../util';
@@ -11,9 +12,8 @@ interface IHighlightedSearchResultProps {
   query: string[];
   visraams: any;
   mahankoshIndex?: number;
-  tooltipRef?: React.Ref<any>;
   onMouseOver?: (word: string, index: number) => void;
-  onMouseLeave?: () => void
+  isShowMahankoshTooltip: boolean;
 };
 
 const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
@@ -23,10 +23,14 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
   darkMode,
   mahankoshIndex = -1,
   onMouseOver,
-  onMouseLeave,
-  tooltipRef,
+  isShowMahankoshTooltip,
 }) => {
-  const mahankoshTooltipAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipHighlightSearchResult'), [darkMode])
+  const mahankoshTooltipAttributes = useMemo(() => {
+    if (isShowMahankoshTooltip) {
+      return getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipHighlightSearchResult')
+    }
+    return {}
+  }, [darkMode, isShowMahankoshTooltip])
 
   if (children == null) {
     return null;
@@ -50,7 +54,8 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
         key={i}
         {...mahankoshTooltipAttributes}
         onMouseOver={() => {
-          if (onMouseOver && !(tooltipRef.current && tooltipRef.current.state.show)) {
+          console.log("ON MOUSEOVER NOT WORKING,", onMouseOver?.toString())
+          if (onMouseOver) {
             onMouseOver(word, i)
           }
         }}

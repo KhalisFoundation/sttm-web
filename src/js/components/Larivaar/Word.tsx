@@ -9,19 +9,15 @@ import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 export interface ILarivaarWordProps {
   word: string;
   unicode: boolean;
-  darkMode: boolean;
   larivaarAssist?: boolean;
   larivaarAssistColor: string;
   index: number;
   highlightIndex?: Array<number>;
   highlight?: boolean;
   visraamClass: string;
-  onMouseOver?: (word: string, index: number) => void;
-  onMouseLeave?: () => void
 }
 
 const LarivaarWord: React.FC<ILarivaarWordProps> = ({
-  darkMode,
   highlightIndex,
   word,
   unicode,
@@ -30,10 +26,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
   index,
   highlight,
   visraamClass,
-  onMouseOver,
 }) => {
-
-  const mahankoshAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipLarivaar'), [darkMode])
 
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
@@ -71,6 +64,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
           }
         }
 
+
         // handle space break for this special character
         if (item.includes('´')) {
           // currently react don't support assigning important as inline
@@ -78,8 +72,6 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
           return (
             <span
               key={key}
-              {...mahankoshAttributes}
-              onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
               ref={assignAkharColor}
               className={akharClass}
               style={{ display: 'inline-block' }}
@@ -95,8 +87,6 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
         return (
           <span
             key={key}
-            {...mahankoshAttributes}
-            onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
             className={akharClass}>
             <span ref={assignAkharColor}>
               {item}

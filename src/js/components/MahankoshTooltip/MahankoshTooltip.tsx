@@ -30,10 +30,9 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
       afterShow={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true })
       }}
-      afterHide={() => { console.log("hide") }}
       className="mahankoshTooltipWrapper"
       place="top"
-      clickable={true}
+      clickable
       multiline
       getContent={() => getMahankoshTooltipContent(gurbaniWord, mahankoshExplaination)}
     />
