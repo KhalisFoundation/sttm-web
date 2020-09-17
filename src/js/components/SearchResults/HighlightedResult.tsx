@@ -11,6 +11,7 @@ interface IHighlightedSearchResultProps {
   query: string[];
   visraams: any;
   mahankoshIndex?: number;
+  tooltipRef?: React.Ref<any>;
   onMouseOver?: (word: string, index: number) => void;
   onMouseLeave?: () => void
 };
@@ -22,7 +23,8 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
   darkMode,
   mahankoshIndex = -1,
   onMouseOver,
-  onMouseLeave
+  onMouseLeave,
+  tooltipRef,
 }) => {
   const mahankoshTooltipAttributes = useMemo(() => getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipHighlightSearchResult'), [darkMode])
 
@@ -47,8 +49,13 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
       <span
         key={i}
         {...mahankoshTooltipAttributes}
-        onMouseOver={onMouseOver ? () => onMouseOver(word, i) : undefined}
-        className={akharClass} >
+        onMouseOver={() => {
+          if (onMouseOver && !(tooltipRef.current && tooltipRef.current.state.show)) {
+            onMouseOver(word, i)
+          }
+        }}
+        className={akharClass}
+      >
         {` ${word} `}
       </span >
     )

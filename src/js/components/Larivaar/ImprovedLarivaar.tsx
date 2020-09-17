@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import LarivaarWord from './Word';
@@ -29,6 +29,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   visraam,
 }) => {
   const { darkMode } = useSelector(state => state);
+  const reactTooltipRef = useRef<any>();
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
   const [tooltipHighlightsIn, setTooltipHighlightsIn] = useState<string>('');
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
@@ -73,12 +74,14 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
           query={query}
           visraams={visraam}
           darkMode={darkMode}
-          onMouseOver={!isMahankoshExplaination ? handleMouseOver('searchResults') : undefined}
+          onMouseOver={handleMouseOver('searchResults')}
+          tooltipRef={reactTooltipRef}
         >
           {children}
         </HighlightedSearchResult>
         {isShowTooltipHighlightedSearchResult &&
           <MahankoshTooltip
+            tooltipRef={reactTooltipRef}
             tooltipId="mahankoshTooltipHighlightSearchResult"
             gurbaniWord={selectedWord}
             isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
