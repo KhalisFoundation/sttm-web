@@ -1,13 +1,15 @@
 import React, { memo, useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 
 import LarivaarWord from './Word';
-import { MahankoshTooltip } from '../MahankoshTooltip';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
+import { MahankoshTooltip } from '../MahankoshTooltip';
 import { getVisraamClass } from '../../util';
 import { useFetchData } from '@/hooks';
 import { IMahankoshExplaination } from '@/types';
 import { getLarivaarAssistColor } from '@/features/selectors';
+import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
 
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
@@ -30,6 +32,8 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
 }) => {
   const { darkMode } = useSelector(state => state);
   const reactTooltipRef = useRef<any>();
+  const dispatch = useDispatch();
+  const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
   const [tooltipHighlightsIn, setTooltipHighlightsIn] = useState<string>('');
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
@@ -50,11 +54,19 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
       setSelectedIndex(selectedIndex);
     }
   }
+
   const clearMahankoshTooltip = () => {
+    console.log("CLEAR MAHANKOSH TOOLTIP RUNS?", SET_MAHANKOSH_TOOLTIP_ACTIVE)
     setTooltipHighlightsIn('');
     setSelectedWord('');
     setSelectedIndex(-1);
+    if (isMahankoshTooltipActive) {
+      dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
+      ReactTooltip.hide();
+    }
   }
+
+  console.log(isMahankoshTooltipActive, 'REDUX STATE')
 
   useEffect(() => {
     document.addEventListener('click', clearMahankoshTooltip);
@@ -74,7 +86,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
           query={query}
           visraams={visraam}
           darkMode={darkMode}
-          onMouseOver={handleMouseOver('searchResults')}
+          onMouseOver={isMahankoshTooltipActive ? clearMahankoshTooltip : handleMouseOver('searchResults')}
           tooltipRef={reactTooltipRef}
         >
           {children}

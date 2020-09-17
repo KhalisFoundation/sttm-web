@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
+import { useDispatch } from 'react-redux';
 
 import { IMahankoshExplaination } from '@/types';
 import { getMahankoshTooltipContent } from './util/';
+import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
+
 interface IMahankoshTooltipProps {
   tooltipRef: React.Ref<any>,
   tooltipId: string
@@ -17,13 +20,16 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
   gurbaniWord,
   mahankoshExplaination,
 }) => {
+  const dispatch = useDispatch();
   return (
     <ReactTooltip
       id={tooltipId}
       ref={tooltipRef}
       event="click"
       globalEventOff="click"
-      afterShow={() => { console.log("show") }}
+      afterShow={() => {
+        dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true })
+      }}
       afterHide={() => { console.log("hide") }}
       className="mahankoshTooltipWrapper"
       place="top"
