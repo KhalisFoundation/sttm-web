@@ -140,10 +140,10 @@
   z-index: 6;
 
   .toast-notification-close-button {
+    float: right;
     font-size: 44px;
     margin: 0.1em 0.6em;
     position: absolute;
-    float: right;
     right: 0;
     top: 0;
 
@@ -158,12 +158,12 @@
 
   @media screen and (max-width: 45.999999em) {
     border-radius: 0;
-    top: 0;
     box-shadow: none;
     font-size: 0.8rem;
-    text-align: left;
-    width: 100vw;
     height: 30vh;
+    text-align: left;
+    top: 0;
+    width: 100vw;
   }
 
   .dark-mode & {
