@@ -59,6 +59,7 @@ export default class Header extends React.PureComponent {
 
   onFormSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
+    e.stopPropagation();
     handleSubmit();
     this.handleFormSubmit(data);
   };
@@ -153,6 +154,7 @@ export default class Header extends React.PureComponent {
                       {!isHome && (
                         <>
                           <form
+                            noValidate="novalidate"
                             action={action}
                             id="top-bar-search-form"
                             onSubmit={onFormSubmit({
@@ -190,7 +192,7 @@ export default class Header extends React.PureComponent {
                                     autoComplete="off"
                                     autoCapitalize="none"
                                     autoCorrect="off"
-                                    spellCheck="false"
+                                    spellCheck={false}
                                     required="required"
                                     name={name}
                                     value={query}
@@ -205,6 +207,7 @@ export default class Header extends React.PureComponent {
                                   />
 
                                   <button
+                                    type="button"
                                     className="clear-search-toggle"
                                     onClick={setQueryAs('')}
                                   >
@@ -225,7 +228,8 @@ export default class Header extends React.PureComponent {
                                     </button>
                                   )}
 
-                                  <button type="submit">
+                                  <button
+                                    type="submit">
                                     <SearchIcon />
                                   </button>
 

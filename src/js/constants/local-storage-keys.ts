@@ -25,3 +25,4 @@ export const LOCAL_STORAGE_KEY_FOR_RELEASE = 'release';
 export const LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW = 'centerAlignView';
 export const LOCAL_STORAGE_KEY_FOR_SYNC_CODE = 'previous-sync';
 export const LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE = 'paragraphMode';
+export const LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE = 'sehajPaathMode';

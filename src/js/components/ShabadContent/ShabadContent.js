@@ -169,6 +169,7 @@ class Shabad extends React.PureComponent {
           )}
           {isShowMetaData && (
             <Meta
+              isArrowsHidden={isMultiPage}
               isUnicode={unicode}
               info={info}
               nav={nav}

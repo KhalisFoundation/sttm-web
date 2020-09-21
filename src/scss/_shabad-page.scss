@@ -486,20 +486,6 @@ blockquote {
     @media screen and (max-width: 700px) {
       width: 100%;
     }
-
-    &Btn {
-      background-color: $sttm-blue;
-      border: none;
-      border-radius: 5px;
-      color: $sttm-white;
-      outline: none;
-      padding: 10px;
-      transition: 0.2s ease-in;
-
-      &:hover {
-        background-color: $sttm-bright-blue;
-      }
-    }
   }
 
   &Source {
