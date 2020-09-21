@@ -338,7 +338,7 @@ export default class Baani extends React.PureComponent {
 
           const isMiddleParagraph = idx == Math.ceil(totalParagraphs / 2);
           const isFirstParagraph = idx == totalParagraphs;
-          const lastParagraphAttributes = isFirstParagraph ? {
+          const middleParagraphAttributes = isFirstParagraph ? {
             'data-middle-paragraph': true, 'data-ang': ang
           } : {}
           const firstParagraphAttributes = isMiddleParagraph ? {
@@ -353,7 +353,7 @@ export default class Baani extends React.PureComponent {
             <Wrapper
               key={idx}
               {...firstParagraphAttributes}
-              {...lastParagraphAttributes}
+              {...middleParagraphAttributes}
               onChange={isMiddleParagraph ? prefetchAng : changeAng({ history, source, ang })}
               onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
               onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
