@@ -13,11 +13,10 @@ export const changeAngInView =
         const observedAng = Number(targetPankti.getAttribute('data-ang'));
         const qParams = new URLSearchParams(window.location.search);
         const currentAng = Number(qParams.get('ang'))
-        let newUrl = '';
 
         if (isObservedPanktiCrossedBy) {
           if (observedAng + 1 !== currentAng) {
-            newUrl = toAngURL({ ang: observedAng + 1, source, highlight: undefined });
+            const newUrl = toAngURL({ ang: observedAng + 1, source, highlight: undefined });
 
             history.push(newUrl);
           }
@@ -27,7 +26,7 @@ export const changeAngInView =
           if (observedPankti.intersectionRatio > 0) {
             if (isObservedPanktiAppears) {
               if (observedAng !== currentAng) {
-                newUrl = toAngURL({ ang: observedAng, source, highlight: undefined });
+                const newUrl = toAngURL({ ang: observedAng, source, highlight: undefined });
 
                 // We are on currently loaded ang, so we need to load new ang
                 history.push(newUrl);
