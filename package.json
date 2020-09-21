@@ -123,7 +123,6 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-smartbanner": "^5.1.4",
-    "react-window": "^1.8.5",
     "redux": "^4.0.5",
     "redux-debounced": "^0.5.0",
     "redux-mock-store": "^1.5.4",

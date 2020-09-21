@@ -1,7 +1,6 @@
 import { InView } from 'react-intersection-observer'
 import React from 'react';
 import PropTypes from 'prop-types';
-import { VariableSizeList as List } from 'react-window';
 
 import Actions from '../BaaniLineActions';
 import Translation from '../Translation';
@@ -317,103 +316,15 @@ export default class Baani extends React.PureComponent {
     return this.createVersedGurbani();
   }
 
-  _getBaaniRow = ({ index: idx, style }) => {
-    const {
-      isParagraphMode,
-      history,
-      source,
-      ang,
-      onBaaniLineClick,
-    } = this.props;
-    const normalizedGurbani = this.normalizeGurbani();
-    const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
-    const mixedViewBaaniClass = 'mixed-view-baani';
-    const availableTransliterations = this.getAvailableTransliterations();
-    const availableTranslations = this.getAvailableTranslations();
-    const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
-    const isFirstParagraph = idx == Math.ceil(totalParagraphs / 2);
-    const isLastParagraph = idx == totalParagraphs;
-    const lastParagraphAttributes = isLastParagraph ? {
-      'data-last-paragraph': true, 'data-ang': ang, ...{
-        style: { backgroundColor: 'red' }
-      }
-    } : {}
-    const firstParagraphAttributes = isFirstParagraph ? {
-      'data-first-paragraph': true, 'data-ang': ang, ...{
-        style: { backgroundColor: 'blue' }
-      }
-    } : {}
-    const shabads = normalizedGurbani[idx];
-    const highlightVerseId = shabads[0].verseId;
-    const Wrapper = isFirstParagraph || isLastParagraph ? InView : 'div';
-
-    return (
-      <Wrapper
-        ref={this._baaniRowsRefs[idx]}
-        style={{
-          ...style,
-          height: this._getBaaniRowHeight(idx)
-        }}
-        key={idx}
-        {...firstParagraphAttributes}
-        {...lastParagraphAttributes}
-        onChange={isFirstParagraph ? prefetchAng(ang) : changeAng({ history, source, ang })}
-        onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
-        onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
-        onMouseDown={isParagraphMode ? undefined : this.removeSelection}
-        className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
-      >
-        <div
-          className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
-          {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad), true))}
-        </div>
-        <div
-          className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
-          {availableTransliterations.map(language =>
-            <div
-              key={language}
-              className={`${mixedViewBaaniClass}-transliteration-${language} ${paragraphModeClass}`} >
-              {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
-            </div>
-          )}
-        </div>
-        <div
-          className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
-          {availableTranslations.map(language =>
-            <div
-              key={language}
-              className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
-              {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
-            </div>
-          )}
-        </div>
-        {isParagraphMode ?
-          null :
-          <div
-            className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
-            {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
-          </div>}
-      </Wrapper>
-    )
-  }
-
-  _getBaaniRowHeight = (idx) => {
-    const currentRow = this._baaniRowsRefs[idx].current;
-    console.log(currentRow, 'current Row')
-    if (currentRow) {
-      return currentRow.getBoundingClientRect().height;
-    }
-    return 0;
-  }
-
   createMixedViewMarkup = () => {
     const {
-      history,
       source,
+      history,
       ang,
       onBaaniLineClick,
       isParagraphMode,
     } = this.props;
+
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
@@ -421,16 +332,67 @@ export default class Baani extends React.PureComponent {
     const availableTransliterations = this.getAvailableTransliterations();
     const availableTranslations = this.getAvailableTranslations();
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
-    this._baaniRowsRefs = Object.keys(normalizedGurbani).map(_b => React.createRef());
-
     return (
-      <List
-        itemSize={this._getBaaniRowHeight}
-        itemCount={totalParagraphs}
-        height={window.innerHeight}
-        className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
-        {this._getBaaniRow}
-      </List>
+      <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
+        {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
+
+          const isMiddleParagraph = idx == Math.ceil(totalParagraphs / 2);
+          const isFirstParagraph = idx == totalParagraphs;
+          const lastParagraphAttributes = isFirstParagraph ? {
+            'data-middle-paragraph': true, 'data-ang': ang
+          } : {}
+          const firstParagraphAttributes = isMiddleParagraph ? {
+            'data-first-paragraph': true, 'data-ang': ang
+          } : {}
+          // This is used for sehaj-paath mode, which don't have paragraph mode
+          // so we can safely tell it to highlight first pankti as first pankti is equal to first paragraph
+          const highlightVerseId = shabads[0].verseId;
+          const Wrapper = isMiddleParagraph || isFirstParagraph ? InView : 'div';
+
+          return (
+            <Wrapper
+              key={idx}
+              {...firstParagraphAttributes}
+              {...lastParagraphAttributes}
+              onChange={isMiddleParagraph ? prefetchAng : changeAng({ history, source, ang })}
+              onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
+              onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
+              onMouseDown={isParagraphMode ? undefined : this.removeSelection}
+              className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
+            >
+              <div
+                className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
+                {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad), true))}
+              </div>
+              <div
+                className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
+                {availableTransliterations.map(language =>
+                  <div
+                    key={language}
+                    className={`${mixedViewBaaniClass}-transliteration-${language} ${paragraphModeClass}`} >
+                    {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
+                  </div>
+                )}
+              </div>
+              <div
+                className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
+                {availableTranslations.map(language =>
+                  <div
+                    key={language}
+                    className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
+                    {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
+                  </div>
+                )}
+              </div>
+              {isParagraphMode ?
+                null :
+                <div
+                  className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
+                  {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
+                </div>}
+            </Wrapper>)
+        })}
+      </div>
     )
   }
   createFullScreenMarkup = () => {

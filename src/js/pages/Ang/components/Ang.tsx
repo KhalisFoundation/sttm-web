@@ -1,5 +1,5 @@
 /* globals API_URL */
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ import { saveAng, errorEvent, ACTIONS, isShowSehajPaathModeRoute } from '@/util'
 import { SOURCES, TEXTS } from '@/constants';
 
 import { useKeydownEventHandler } from '@/hooks';
-import { useFetchAngData } from '../hooks';
+import { useFetchAngData } from '../hooks/use-fetch-ang-data';
 import { changeHighlightedPankti } from '../utils';
 
 export const Stub = () => <div className="spinner" />;
@@ -29,7 +29,9 @@ const Ang: React.FC<IAngProps> = ({
 }) => {
   const history = useHistory();
   const location = useLocation();
-  const { sehajPaathMode, isLoadingAng } = useSelector(state => state);
+  const sehajPaathMode = useSelector(state => state.sehajPaathMode);
+  const isLoadingAng = useSelector(state => state.isLoadingAng);
+
   // We keep track whether at this particular url/route can we make sehaj paath functional even if the global state for it is true
   const isSehajPaathModeRoute = isShowSehajPaathModeRoute(location.pathname);
   const isSehajPaathMode = sehajPaathMode && isSehajPaathModeRoute;
@@ -92,20 +94,8 @@ const Ang: React.FC<IAngProps> = ({
     info = { source: angsDataMap[ang].source }
   }
 
-  // const _getFetchedAngs = (cacheAngsData: typeof LRU, currentAng: number) => {
-  //   return useMemo(() => Object.values({
-  //     [currentAng - 1]: cacheAngsData.get(currentAng - 1),
-  //     [currentAng]: cacheAngsData.get(currentAng),
-  //     [currentAng + 1]: cacheAngsData.get(currentAng + 1)
-  //   }).filter(pageData => !!pageData), [currentAng]);
-  // }
-
-  const pages = useMemo(() => Object.values(angsDataMap).filter(pageData => !!pageData), [angsDataMap, ang]);
-  const gurbani = useMemo(() => isSehajPaathMode ? null : angsDataMap[ang].page, [isSehajPaathMode, ang]);
-
-  useEffect(() => {
-    return console.log("ANG PAGE RE RUNNING")
-  })
+  const pages = Object.values(angsDataMap).filter(pageData => !!pageData);
+  const gurbani = isSehajPaathMode ? null : angsDataMap[ang].page;
 
   return (
     <div className="row" id="content-root">

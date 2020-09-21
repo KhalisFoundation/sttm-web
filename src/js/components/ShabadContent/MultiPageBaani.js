@@ -32,7 +32,7 @@ export const MultiPageBaani = React.memo(({
 
   return (
     <React.Fragment>
-      {pages.map(({ page: gurbani, source }, idx) => {
+      {pages.map(({ page: gurbani, source }) => {
         return (
           <div key={source.pageNo}>
             <Baani

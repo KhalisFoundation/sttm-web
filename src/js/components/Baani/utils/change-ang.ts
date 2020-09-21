@@ -1,8 +1,13 @@
 import { History } from 'history';
 import { toAngURL } from '@/util';
+interface IChangeAngArgs {
+  history: History
+  source: string
+  ang: number
+}
 
 export const changeAng =
-  ({ history, source, ang }: { history: History, source: string, ang: number }) =>
+  ({ history, source, ang }: IChangeAngArgs) =>
     (inView: boolean, observedPankti: IntersectionObserverEntry) => {
 
       const qParams = new URLSearchParams(window.location.search);

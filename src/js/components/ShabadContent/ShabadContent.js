@@ -139,7 +139,7 @@ class Shabad extends React.PureComponent {
     const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
     const isShowMetaData = this.props.hideMeta === false;
     const isShowControls = this.props.hideControls === false;
-
+    console.log(pages, "SHABAD CONTENT")
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
 
