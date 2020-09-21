@@ -17,6 +17,10 @@ footer {
     display: none;
   }
 
+  @media screen and (max-width: 950px) {
+    position: inherit;
+  }
+
   .footer {
     align-items: center;
     display: flex;

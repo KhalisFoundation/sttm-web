@@ -85,7 +85,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
       </ul>
       <ul class="menu footer-menu">
         <li>
-          <a href="/help">Help</a>
+          <a href="http://support.khalisfoundation.org/" target="_blank" rel="noopener noreferrer">Help</a>
         </li>
         <li>
           <a href="/about">About Us</a>
