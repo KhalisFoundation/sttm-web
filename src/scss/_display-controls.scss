@@ -420,12 +420,14 @@
 
   &--close {
     align-items: center;
-    border: 1px solid $sttm-grey;
+    background-color: $sttm-blue;
+    border: 2px solid $sttm-blue;
     border-radius: 50%;
-    color: $sttm-grey;
+    color: $sttm-white;
     display: flex;
-    font-size: 13px;
-    height: 34px;
+    font-size: 23px;
+    font-weight: bold;
+    height: 44px;
     justify-content: center;
     outline: none;
     padding: 8px;
@@ -433,12 +435,13 @@
     right: 8px;
     top: 8px;
     transition: all 0.2s ease-in;
-    width: 34px;
+    width: 44px;
 
     &:hover {
-      border-color: $sttm-red;
-      color: $sttm-red;
+      border-color: $sttm-blue;
+      color: $sttm-blue;
     }
+
   }
 
   .controller-option {
@@ -558,6 +561,13 @@
       .icon-label {
         display: none;
       }
+    }
+  }
+
+  .icon-label {
+    &.enabled {
+      background-color: $sttm-blue;
+      color: $sttm-white;
     }
   }
 }
