@@ -1,5 +1,5 @@
 
-describe('Home page Search tests', () => {
+describe('Search', () => {
   describe('First Letter Search from anywhere(G)', () => {
     it('should return search results for "ApAb" in drop-down', () => {
       cy.visit('/');

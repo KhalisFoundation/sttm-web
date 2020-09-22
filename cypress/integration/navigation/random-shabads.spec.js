@@ -1,7 +1,7 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 
 describe('Navigation', () => {
-  context('Random Shabad page', () => {
+  describe('Random Shabad page', () => {
 
     beforeEach(() => {
       cy.visit('/');
