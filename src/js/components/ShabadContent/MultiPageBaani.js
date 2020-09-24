@@ -1,42 +1,48 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
+export const MultiPageBaani = React.memo(({
+  pages,
+  type,
+  splitView,
+  unicode,
+  highlight,
+  larivaar,
+  fontSize,
+  translationFontSize,
+  transliterationFontSize,
+  lineHeight,
+  fontFamily,
+  larivaarAssist,
+  translationLanguage,
+  centerAlignGurbani,
+  showFullScreen,
+  transliterationLanguages,
+  translationLanguages,
+}) => {
+  const history = useHistory();
+  const renderedPageNumbers = useMemo(() => pages.map(page => page.source.pageNo), [pages]);
 
-export class MultiPageBaani extends React.PureComponent {
+  useEffect(() => {
+    // Compare the current pages we are rendering with previous pages
+    console.log(renderedPageNumbers, 'RENDERED PAGE NUMBERS ')
 
-  render() {
-    const {
-      pages,
-      type,
-      splitView,
-      unicode,
-      highlight,
-      larivaar,
-      fontSize,
-      translationFontSize,
-      transliterationFontSize,
-      lineHeight,
-      fontFamily,
-      larivaarAssist,
-      translationLanguage,
-      centerAlignGurbani,
-      showFullScreen,
-      transliterationLanguages,
-      translationLanguages,
-      history,
-    } = this.props;
+  }, [renderedPageNumbers]);
 
-    return (
-      <React.Fragment>
-        {pages.map(({ page: gurbani, source }, idx) => {
-          return (
+  return (
+    <React.Fragment>
+      {pages.map(({ page: gurbani, source }) => {
+        return (
+          <div key={source.pageNo}>
             <Baani
-              key={idx}
+              source={source.sourceId}
               ang={source.pageNo}
               type={type}
               gurbani={gurbani}
               splitView={splitView}
               unicode={unicode}
+              history={history}
               // offsetY={isLastPage ? lastScrollPosition : -1}
               onBaaniLineClick={(highlightVerseId) => () => {
                 const newUrl = toAngURL({
@@ -61,9 +67,9 @@ export class MultiPageBaani extends React.PureComponent {
               showFullScreen={showFullScreen}
               isParagraphMode={false}
             />
-          );
-        })}
-      </React.Fragment>
-    );
-  }
-}
+          </div>
+        );
+      })}
+    </React.Fragment>
+  );
+});

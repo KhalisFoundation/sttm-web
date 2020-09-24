@@ -1,10 +1,10 @@
 import { SEARCH_TYPES } from '../../../src/js/constants';
 const searchType = SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE.toString();
 
-describe('Home page Search tests', () => {
+describe('Search', () => {
   const searchString = 'jmtatssd';
   const searchString2 = 'jmta';
-  const showAllResultsBtn = 'Show full results';
+  const showFullResults = 'Show full results';
 
   describe('Romanized First Letter Search anywhere(E)', () => {
     beforeEach(() => {
@@ -53,22 +53,19 @@ describe('Home page Search tests', () => {
       });
     })
 
-    it(`should open all search results page on clicking the ${showAllResultsBtn} button`, () => {
+    it(`should open all search results page on clicking the ${showFullResults} link`, () => {
 
       cy.get('#search')
         .type(searchString2)
 
       cy.get('#suggestions')
-        .as('suggestions')
-
-      cy.get('@suggestions')
         .scrollTo('bottom')
         .find('.show-all-results a')
         .should('exist')
         .scrollIntoView()
         .click({ force: true })
 
-      cy.url().should('include', `/search?q=${searchString2}&type=${searchType}&source=G`);
+      cy.url().should('include', `/search?q=${searchString2}&type=${searchType}&source=all`);
     })
   })
 })

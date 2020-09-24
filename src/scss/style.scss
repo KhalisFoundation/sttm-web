@@ -43,6 +43,10 @@ body {
   &.dark-mode {
     background-color: $sttm-light-black;
     color: $sttm-white;
+
+    .translation {
+      color: $sttm-orange;
+    }
   }
 
   @include vishraamStyles($sttm-vishraam-red, $sttm-vishraam-yellow);

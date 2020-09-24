@@ -1,12 +1,14 @@
+import { InView } from 'react-intersection-observer'
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Actions from './BaaniLineActions';
-import Translation from './Translation';
-import Transliteration from './Transliteration';
-import BaaniLine from './BaaniLine';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '.././constants';
-import { copyToClipboard, showToast, shortenURL } from '../util';
+import Actions from '../BaaniLineActions';
+import Translation from '../Translation';
+import Transliteration from '../Transliteration';
+import BaaniLine from '../BaaniLine';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
+import { copyToClipboard, showToast, shortenURL } from '@/util';
+import { changeAng, prefetchAng } from './utils';
 
 import {
   clickEvent,
@@ -316,10 +318,13 @@ export default class Baani extends React.PureComponent {
 
   createMixedViewMarkup = () => {
     const {
+      source,
+      history,
       ang,
       onBaaniLineClick,
       isParagraphMode,
     } = this.props;
+
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
@@ -327,22 +332,29 @@ export default class Baani extends React.PureComponent {
     const availableTransliterations = this.getAvailableTransliterations();
     const availableTranslations = this.getAvailableTranslations();
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
-
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
 
-          const isFirstParagraph = idx == 0;
-          const isLastParagraph = idx == totalParagraphs;
-          const lastParagraphAttributes = isLastParagraph ? { 'data-last-paragraph': true, 'data-ang': ang } : {}
-          const firstParagraphAttributes = isFirstParagraph ? { 'data-first-paragraph': true, 'data-ang': ang } : {}
+          const isMiddleParagraph = idx == Math.ceil(totalParagraphs / 2);
+          const isFirstParagraph = idx == totalParagraphs;
+          const middleParagraphAttributes = isFirstParagraph ? {
+            'data-middle-paragraph': true, 'data-ang': ang
+          } : {}
+          const firstParagraphAttributes = isMiddleParagraph ? {
+            'data-first-paragraph': true, 'data-ang': ang
+          } : {}
+          // This is used for sehaj-paath mode, which don't have paragraph mode
+          // so we can safely tell it to highlight first pankti as first pankti is equal to first paragraph
           const highlightVerseId = shabads[0].verseId;
+          const Wrapper = isMiddleParagraph || isFirstParagraph ? InView : 'div';
 
           return (
-            <div
+            <Wrapper
               key={idx}
               {...firstParagraphAttributes}
-              {...lastParagraphAttributes}
+              {...middleParagraphAttributes}
+              onChange={isMiddleParagraph ? prefetchAng : changeAng({ history, source, ang })}
               onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
               onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
               onMouseDown={isParagraphMode ? undefined : this.removeSelection}
@@ -378,10 +390,9 @@ export default class Baani extends React.PureComponent {
                   className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
                   {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
                 </div>}
-            </div>)
-        })
-        }
-      </div >
+            </Wrapper>)
+        })}
+      </div>
     )
   }
   createFullScreenMarkup = () => {

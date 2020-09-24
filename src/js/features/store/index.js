@@ -141,6 +141,7 @@ const initialState = {
   ),
   isLoadingAng: false,
   isMahankoshTooltipActive: false,
+  prefetchAng: undefined
 };
 
 
