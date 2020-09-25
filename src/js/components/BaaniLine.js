@@ -45,6 +45,7 @@ export default class BaaniLine extends React.PureComponent {
             }`}
         >
           <Larivaar
+            isShowMahankoshTooltip
             larivaarAssist={larivaarAssist}
             enable={larivaar}
             unicode={unicode}
