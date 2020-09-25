@@ -323,8 +323,8 @@ export default class Baani extends React.PureComponent {
       ang,
       onBaaniLineClick,
       isParagraphMode,
+      isSehajPaathMode,
     } = this.props;
-
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
@@ -347,14 +347,17 @@ export default class Baani extends React.PureComponent {
           // This is used for sehaj-paath mode, which don't have paragraph mode
           // so we can safely tell it to highlight first pankti as first pankti is equal to first paragraph
           const highlightVerseId = shabads[0].verseId;
-          const Wrapper = isMiddleParagraph || isFirstParagraph ? InView : 'div';
-
+          const Wrapper = isSehajPaathMode && (isMiddleParagraph || isFirstParagraph) ? InView : 'div';
+          let changeHandler = undefined;
+          if (isSehajPaathMode) {
+            changeHandler = isMiddleParagraph ? prefetchAng : changeAng({ history, source, ang })
+          }
           return (
             <Wrapper
               key={idx}
               {...firstParagraphAttributes}
               {...middleParagraphAttributes}
-              onChange={isMiddleParagraph ? prefetchAng : changeAng({ history, source, ang })}
+              onChange={changeHandler}
               onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
               onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
               onMouseDown={isParagraphMode ? undefined : this.removeSelection}

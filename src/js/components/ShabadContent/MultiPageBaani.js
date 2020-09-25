@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
 export const MultiPageBaani = React.memo(({
@@ -22,13 +23,7 @@ export const MultiPageBaani = React.memo(({
   translationLanguages,
 }) => {
   const history = useHistory();
-  const renderedPageNumbers = useMemo(() => pages.map(page => page.source.pageNo), [pages]);
-
-  useEffect(() => {
-    // Compare the current pages we are rendering with previous pages
-    console.log(renderedPageNumbers, 'RENDERED PAGE NUMBERS ')
-
-  }, [renderedPageNumbers]);
+  const sehajPaathMode = useSelector(state => state.sehajPaathMode);
 
   return (
     <React.Fragment>
@@ -43,6 +38,7 @@ export const MultiPageBaani = React.memo(({
               splitView={splitView}
               unicode={unicode}
               history={history}
+              isSehajPaathMode={sehajPaathMode}
               // offsetY={isLastPage ? lastScrollPosition : -1}
               onBaaniLineClick={(highlightVerseId) => () => {
                 const newUrl = toAngURL({
