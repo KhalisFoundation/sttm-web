@@ -1,10 +1,9 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 
 import {
   fixLarivaarUnicode,
   fixLarivaarGurmukhiFont
 } from './util';
-import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 
 export interface ILarivaarWordProps {
   word: string;

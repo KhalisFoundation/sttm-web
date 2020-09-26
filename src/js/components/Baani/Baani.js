@@ -9,6 +9,7 @@ import BaaniLine from '../BaaniLine';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import { copyToClipboard, showToast, shortenURL } from '@/util';
 import { changeAng, prefetchAng } from './utils';
+import { MahankoshContext } from '@/context';
 
 import {
   clickEvent,
@@ -51,6 +52,27 @@ export default class Baani extends React.PureComponent {
     isParagraphMode: PropTypes.bool.isRequired,
     onBaaniLineClick: PropTypes.func,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedWord: '',
+      selectedWordIndex: -1,
+      selectedLine: -1
+    }
+  }
+
+  setMahankoshInformation = ({ selectedWord, selectedLine, selectedWordIndex }) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        selectedLine,
+        selectedWord,
+        selectedWordIndex
+      }
+    })
+  }
+
   getShareLine = shabad => {
     const availableTransliterations = this.getAvailableTransliterations();
     const availableTranslations = this.getAvailableTranslations();
@@ -324,6 +346,7 @@ export default class Baani extends React.PureComponent {
       onBaaniLineClick,
       isParagraphMode,
       isSehajPaathMode,
+      isMultipage,
     } = this.props;
 
     const normalizedGurbani = this.normalizeGurbani();
@@ -332,6 +355,8 @@ export default class Baani extends React.PureComponent {
     const availableTransliterations = this.getAvailableTransliterations();
     const availableTranslations = this.getAvailableTranslations();
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
+    const { selectedWord, selectedWordIndex, selectedLine } = this.state;
+
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
@@ -353,47 +378,58 @@ export default class Baani extends React.PureComponent {
             changeHandler = isMiddleParagraph ? prefetchAng : changeAng({ history, source, ang })
           }
           return (
-            <Wrapper
+            <MahankoshContext.Provider
               key={idx}
-              {...firstParagraphAttributes}
-              {...middleParagraphAttributes}
-              onChange={changeHandler}
-              onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
-              onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
-              onMouseDown={isParagraphMode ? undefined : this.removeSelection}
-              className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
+              value={{
+                currentLine: idx,
+                selectedLine,
+                selectedWord,
+                selectedWordIndex,
+                setMahankoshInformation: this.setMahankoshInformation,
+              }}
             >
-              <div
-                className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
-                {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad), true))}
-              </div>
-              <div
-                className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
-                {availableTransliterations.map(language =>
-                  <div
-                    key={language}
-                    className={`${mixedViewBaaniClass}-transliteration-${language} ${paragraphModeClass}`} >
-                    {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
-                  </div>
-                )}
-              </div>
-              <div
-                className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
-                {availableTranslations.map(language =>
-                  <div
-                    key={language}
-                    className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
-                    {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
-                  </div>
-                )}
-              </div>
-              {isParagraphMode ?
-                null :
+              <Wrapper
+                {...firstParagraphAttributes}
+                {...middleParagraphAttributes}
+                onChange={changeHandler}
+                onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
+                onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
+                onMouseDown={isParagraphMode ? undefined : this.removeSelection}
+                className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
+              >
                 <div
-                  className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
-                  {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
-                </div>}
-            </Wrapper>)
+                  className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
+                  {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad), true))}
+                </div>
+                <div
+                  className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
+                  {availableTransliterations.map(language =>
+                    <div
+                      key={language}
+                      className={`${mixedViewBaaniClass}-transliteration-${language} ${paragraphModeClass}`} >
+                      {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
+                  {availableTranslations.map(language =>
+                    <div
+                      key={language}
+                      className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
+                      {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
+                    </div>
+                  )}
+                </div>
+                {isParagraphMode ?
+                  null :
+                  <div
+                    className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
+                    {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
+                  </div>
+                }
+              </Wrapper>
+            </MahankoshContext.Provider>)
         })}
       </div>
     )
