@@ -3,6 +3,7 @@ import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
 
 import { IMahankoshExplaination } from '@/types';
+import { useFetchData } from '@/hooks';
 import { getMahankoshTooltipContent } from './util/';
 import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
 
@@ -15,20 +16,31 @@ interface IMahankoshTooltipProps {
 }
 
 export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
-  tooltipRef,
   tooltipId,
-  gurbaniWord,
-  mahankoshExplaination,
+  gurbaniWord
 }) => {
   const dispatch = useDispatch();
+  const url = gurbaniWord ? `${API_URL}kosh/word/${gurbaniWord}` : '';
+  const {
+    isFetchingData: isFetchingMahankoshExplaination,
+    data: mahankoshExplaination,
+  } = useFetchData(url);
+  const isMahankoshExplainationExists = !!mahankoshExplaination && !!mahankoshExplaination[0];
+
+  if (isFetchingMahankoshExplaination || !isMahankoshExplainationExists) {
+    return null;
+  }
+
   return (
     <ReactTooltip
       id={tooltipId}
-      ref={tooltipRef}
       event="click"
       globalEventOff="click"
       afterShow={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true })
+      }}
+      afterHide={() => {
+        console.log('TOOLTIP HIDING')
       }}
       className="mahankoshTooltipWrapper"
       place="top"

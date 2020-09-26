@@ -12,6 +12,11 @@
   justify-content: center;
   padding: 8px;
 
+  &Explainations {
+    font-size: 16px;
+    font-family: 'gurmukhi_heavy';
+  }
+
   &Word {
     display: flex;
     flex-direction: column;

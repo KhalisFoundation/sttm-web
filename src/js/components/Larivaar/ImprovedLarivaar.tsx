@@ -1,13 +1,11 @@
-import React, { memo, useState, useEffect, useRef, useContext } from 'react';
+import React, { memo, useEffect, useRef, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 
 import LarivaarWord from './Word';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
-import { MahankoshTooltip } from '../MahankoshTooltip';
+
 import { getVisraamClass } from '../../util';
-import { useFetchData } from '@/hooks';
-import { IMahankoshExplaination } from '@/types';
 import { getLarivaarAssistColor } from '@/features/selectors';
 import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
 import { MahankoshContext } from '@/context';
@@ -33,18 +31,16 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   visraam,
   isShowMahankoshTooltip = false
 }) => {
-  const reactTooltipRef = useRef<any>();
   const dispatch = useDispatch();
-  const { selectedLine, selectedWordIndex, selectedWord, currentLine, setMahankoshInformation } = useContext(MahankoshContext);
-  const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
-  const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
-
-  const url = selectedWord && !isMahankoshTooltipActive ? `${API_URL}kosh/word/${selectedWord}` : '';
   const {
-    isFetchingData: isFetchingMahankoshExplaination,
-    data: mahankoshExplaination,
-  } = useFetchData(url);
-
+    selectedLine,
+    selectedWordIndex,
+    selectedWord,
+    currentLine,
+    setMahankoshInformation
+  } = useContext(MahankoshContext);
+  const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
+  const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
   useEffect(() => {
     document.addEventListener('click', clearMahankoshTooltip);
 
@@ -53,6 +49,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
 
   const handleMouseOver = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
+      ReactTooltip.rebuild();
       setMahankoshInformation({
         selectedLine: currentLine,
         selectedWord,
@@ -62,19 +59,16 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   }
 
   const clearMahankoshTooltip = () => {
+    ReactTooltip.hide();
     setMahankoshInformation({
       selectedWord: '',
       selectedLine: -1,
       selectedWordIndex: -1
     })
-    if (isMahankoshTooltipActive) {
-      dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
-      ReactTooltip.hide();
-    }
+    dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
   }
 
-  const isMahankoshExplainationExists = !!mahankoshExplaination && !!mahankoshExplaination[0];
-  const mahankoshIndex = isMahankoshExplainationExists && !isFetchingMahankoshExplaination && currentLine === selectedLine ? selectedWordIndex : -1;
+  const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine ? selectedWordIndex : -1;
   let handleMouseOverHighlightResult = undefined;
   if (isShowMahankoshTooltip) {
     handleMouseOverHighlightResult = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMouseOver(currentLine)
@@ -93,14 +87,14 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
         >
           {children}
         </HighlightedSearchResult>
-        {isShowMahankoshTooltip &&
+        {/* {!isMahankoshTooltipActive &&
           <MahankoshTooltip
             tooltipRef={reactTooltipRef}
             tooltipId="mahankoshTooltipHighlightSearchResult"
             gurbaniWord={selectedWord}
             isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
             mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
-          />}
+          />} */}
       </>
     );
   }

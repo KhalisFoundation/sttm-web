@@ -6,18 +6,21 @@ import Actions from '../BaaniLineActions';
 import Translation from '../Translation';
 import Transliteration from '../Transliteration';
 import BaaniLine from '../BaaniLine';
+import { MahankoshTooltip } from '@/components/MahankoshTooltip';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
-import { copyToClipboard, showToast, shortenURL } from '@/util';
-import { changeAng, prefetchAng } from './utils';
-import { MahankoshContext } from '@/context';
-
 import {
+  copyToClipboard,
+  showToast,
+  shortenURL,
   clickEvent,
   ACTIONS,
   translationMap,
   transliterationMap,
   getVerseId,
 } from '@/util';
+import { MahankoshContext } from '@/context';
+import { IMahankoshExplaination } from '@/types';
+import { changeAng, prefetchAng } from './utils';
 
 /**
  *
@@ -598,7 +601,7 @@ export default class Baani extends React.PureComponent {
       centerAlignGurbani,
       showFullScreen,
     } = this.props;
-
+    const { selectedWord } = this.state;
     return (
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${
@@ -606,6 +609,10 @@ export default class Baani extends React.PureComponent {
           }`}
       >
         {this.getMarkup()}
+        <MahankoshTooltip
+          tooltipId="mahankoshTooltipHighlightSearchResult"
+          gurbaniWord={selectedWord}
+        />
       </div>
     );
   }
