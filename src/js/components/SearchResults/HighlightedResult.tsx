@@ -61,7 +61,7 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
         className={akharClass}
       >
         {` ${word} `}
-      </span >
+      </span>
     )
   });
 }

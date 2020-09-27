@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
 
 import { IMahankoshExplaination } from '@/types';
 import { useFetchData } from '@/hooks';
 import { getMahankoshTooltipContent } from './util/';
-import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
+import {
+  SET_MAHANKOSH_TOOLTIP_ACTIVE,
+  SET_MAHANKOSH_TOOLTIP_EXPLAINATION
+} from '@/features/actions';
 
 interface IMahankoshTooltipProps {
   tooltipRef: React.Ref<any>,
@@ -26,6 +29,10 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
     data: mahankoshExplaination,
   } = useFetchData(url);
   const isMahankoshExplainationExists = !!mahankoshExplaination && !!mahankoshExplaination[0];
+
+  useEffect(() => {
+    dispatch({ type: SET_MAHANKOSH_TOOLTIP_EXPLAINATION, payload: isMahankoshExplainationExists })
+  }, [isMahankoshExplainationExists])
 
   if (isFetchingMahankoshExplaination || !isMahankoshExplainationExists) {
     return null;

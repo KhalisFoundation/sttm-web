@@ -41,6 +41,8 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   } = useContext(MahankoshContext);
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
   const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
+  const isMahankoshTooltipExplaination = useSelector(state => state.isMahankoshTooltipExplaination);
+
   useEffect(() => {
     document.addEventListener('click', clearMahankoshTooltip);
 
@@ -68,7 +70,8 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
     dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
   }
 
-  const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine ? selectedWordIndex : -1;
+  const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
+  console.log(mahankoshIndex, isMahankoshTooltipExplaination, "mahankosh index..")
   let handleMouseOverHighlightResult = undefined;
   if (isShowMahankoshTooltip) {
     handleMouseOverHighlightResult = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMouseOver(currentLine)
