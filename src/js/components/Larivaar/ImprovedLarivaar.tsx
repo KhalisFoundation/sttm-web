@@ -43,12 +43,6 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
   const isMahankoshTooltipExplaination = useSelector(state => state.isMahankoshTooltipExplaination);
 
-  useEffect(() => {
-    document.addEventListener('click', clearMahankoshTooltip);
-
-    return () => document.removeEventListener('click', clearMahankoshTooltip);
-  }, [selectedLine, selectedWord, selectedWordIndex]);
-
   const handleMouseOver = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
       ReactTooltip.rebuild();
@@ -71,7 +65,6 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   }
 
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
-  console.log(mahankoshIndex, isMahankoshTooltipExplaination, "mahankosh index..")
   let handleMouseOverHighlightResult = undefined;
   if (isShowMahankoshTooltip) {
     handleMouseOverHighlightResult = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMouseOver(currentLine)

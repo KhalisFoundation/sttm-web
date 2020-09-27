@@ -15,12 +15,14 @@ interface IMahankoshTooltipProps {
   tooltipId: string
   gurbaniWord: string
   mahankoshExplaination: IMahankoshExplaination[]
+  clearMahankoshInformation: () => {}
   isFetchingMahankoshExplaination: boolean
 }
 
 export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
   tooltipId,
-  gurbaniWord
+  gurbaniWord,
+  clearMahankoshInformation
 }) => {
   const dispatch = useDispatch();
   const url = gurbaniWord ? `${API_URL}kosh/word/${gurbaniWord}` : '';
@@ -34,6 +36,12 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
     dispatch({ type: SET_MAHANKOSH_TOOLTIP_EXPLAINATION, payload: isMahankoshExplainationExists })
   }, [isMahankoshExplainationExists])
 
+  useEffect(() => {
+    document.addEventListener('click', clearMahankoshInformation);
+
+    return document.removeEventListener('click', clearMahankoshInformation);
+  }, [])
+
   if (isFetchingMahankoshExplaination || !isMahankoshExplainationExists) {
     return null;
   }
@@ -46,9 +54,7 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
       afterShow={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true })
       }}
-      afterHide={() => {
-        console.log('TOOLTIP HIDING')
-      }}
+      afterHide={clearMahankoshInformation}
       className="mahankoshTooltipWrapper"
       place="top"
       clickable

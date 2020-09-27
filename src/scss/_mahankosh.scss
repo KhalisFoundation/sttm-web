@@ -9,12 +9,14 @@
   align-items: space-between;
   display: flex;
   flex-direction: column;
+  font-family: 'gurmukhi_heavy', serif;
+  font-size: 18px;
   justify-content: center;
   padding: 8px;
 
   &Explainations {
-    font-size: 16px;
-    font-family: 'gurmukhi_heavy';
+    font-family: inherit;
+    font-size: 1em;
   }
 
   &Word {
@@ -33,7 +35,7 @@
     align-self: flex-end;
     flex-shrink: 0;
     font-family: Muli, sans-serif;
-    font-size: 12px;
+    font-size: 0.75em;
     font-weight: 600;
   }
 

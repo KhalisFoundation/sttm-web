@@ -65,6 +65,17 @@ export default class Baani extends React.PureComponent {
     }
   }
 
+  clearMahankoshInformation = () => {
+    this.setState((state) => {
+      return {
+        ...state,
+        selectedLine: -1,
+        selectedWord: '',
+        selectedWordIndex: -1
+      }
+    })
+  }
+
   setMahankoshInformation = ({ selectedWord, selectedLine, selectedWordIndex }) => {
     this.setState((state) => {
       return {
@@ -180,7 +191,6 @@ export default class Baani extends React.PureComponent {
   componentDidMount() {
     this._scrollToHiglight();
   }
-
   componentDidUpdate(prevProps) {
     if (this.props.highlight !== prevProps.highlight) {
       this._scrollToHiglight();
@@ -610,6 +620,7 @@ export default class Baani extends React.PureComponent {
       >
         {this.getMarkup()}
         <MahankoshTooltip
+          clearMahankoshInformation={this.clearMahankoshInformation}
           tooltipId="mahankoshTooltipHighlightSearchResult"
           gurbaniWord={selectedWord}
         />
