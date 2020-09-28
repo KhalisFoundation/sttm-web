@@ -59,6 +59,12 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
       place="top"
       clickable
       multiline
+      overridePosition={({ left, top }: { left: number, top: number }) => {
+        if (window.innerWidth < 500) {
+          return { top: top < 0 ? 20 : top, left: 20 }
+        }
+        return { top, left }
+      }}
       getContent={() => getMahankoshTooltipContent(gurbaniWord, mahankoshExplaination)}
     />
   )
