@@ -143,127 +143,126 @@ export const QUICK_SETTINGS = ({
             selectItemInArray(lang, steekLanguages)
           )
         }
-      },
-      {
-        type: 'icon-toggle',
-        label: 'Font Size',
-        controlsList: [
-          {
-            icon: MinusIcon,
-            action: () => {
-              fontSize >= 1.6 && setFontSize(toFixedFloat(fontSize - 0.4));
-            },
+      }],
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Font Size',
+      controlsList: [
+        {
+          icon: MinusIcon,
+          action: () => {
+            fontSize >= 1.6 && setFontSize(toFixedFloat(fontSize - 0.4));
           },
-          {
-            control: SizeControl,
-            actionType: 'change',
-            action: (size: any) => { setFontSize(toFixedFloat((size / 10))); },
-            value: Math.floor(fontSize * 10),
-          },
-          {
-            icon: PlusIcon,
-            action: () => {
-              fontSize < 3.2 && setFontSize(toFixedFloat(fontSize + 0.4));
-            },
-          },
-        ],
-      },
-      { type: 'separator' },
-      {
-        type: 'icon-toggle',
-        label: 'Text Align',
-        controlsList: [
-          {
-            icon: AlignLeftIcon,
-            action: () => {
-              centerAlignGurbani && toggleCenterAlignOption();
-            },
-            value: !centerAlignGurbani,
-          },
-          {
-            icon: AlignCenterIcon,
-            action: () => {
-              !centerAlignGurbani && toggleCenterAlignOption();
-            },
-            value: centerAlignGurbani,
-          },
-        ],
-      },
-      {
-        type: 'icon-toggle',
-        label: 'Split',
-        controlsList: [
-          {
-            icon: SplitViewIcon,
-            action: toggleSplitViewOption,
-            value: splitView,
-          },
-        ],
-      },
-      isParagraphMode ? {
-        type: 'icon-toggle',
-        label: "Paragraph",
-        controlsList: [
-          {
-            icon: ParagraphIcon,
-            action: toggleParagraphMode,
-            value: paragraphMode,
-          }
-        ]
-      } : {},
-      {
-        type: 'icon-toggle',
-        label: 'Larivaar',
-        controlsList: [
-          {
-            icon: LarivaarIcon,
-            action: () => {
-              toggleLarivaarOption();
-            },
-            value: larivaar,
-          },
-          {
-            icon: LarivaarAssistIcon,
-            action: () => {
-              toggleLarivaarAssistOption();
-            },
-            value: larivaarAssist
-          }
-        ],
-      },
-      { type: 'separator' },
-      {
-        type: 'toggle-option',
-        label: 'Dark Mode',
-        checked: darkMode,
-        action: toggleDarkMode,
-      },
-      {
-        type: 'toggle-option',
-        label: 'Vishraams',
-        checked: visraams,
-        action: toggleVisraams,
-      },
-      { type: 'separator' },
-      {
-        type: 'text-option',
-        label: 'Reset',
-        action: () => {
-          resetDisplayOptions();
-          resetFontOptions();
-          larivaarAssist && toggleLarivaarAssistOption();
-          larivaar && toggleLarivaarOption();
         },
-      },
-      {
-        type: 'icon-text-toggle',
-        icon: GearsIcon,
-        label: 'Advanced',
-        value: showAdvancedOptions,
-        action: toggleAdvancedOptions,
-      },
+        {
+          control: SizeControl,
+          actionType: 'change',
+          action: (size: any) => { setFontSize(toFixedFloat((size / 10))); },
+          value: Math.floor(fontSize * 10),
+        },
+        {
+          icon: PlusIcon,
+          action: () => {
+            fontSize < 3.2 && setFontSize(toFixedFloat(fontSize + 0.4));
+          },
+        },
+      ],
+    },
+    { type: 'separator' },
+    {
+      type: 'icon-toggle',
+      label: 'Text Align',
+      controlsList: [
+        {
+          icon: AlignLeftIcon,
+          action: () => {
+            centerAlignGurbani && toggleCenterAlignOption();
+          },
+          value: !centerAlignGurbani,
+        },
+        {
+          icon: AlignCenterIcon,
+          action: () => {
+            !centerAlignGurbani && toggleCenterAlignOption();
+          },
+          value: centerAlignGurbani,
+        },
+      ],
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Split',
+      controlsList: [
+        {
+          icon: SplitViewIcon,
+          action: toggleSplitViewOption,
+          value: splitView,
+        },
+      ],
+    },
+    isParagraphMode ? {
+      type: 'icon-toggle',
+      label: "Paragraph",
+      controlsList: [
+        {
+          icon: ParagraphIcon,
+          action: toggleParagraphMode,
+          value: paragraphMode,
+        }
       ]
-    }
+    } : {},
+    {
+      type: 'icon-toggle',
+      label: 'Larivaar',
+      controlsList: [
+        {
+          icon: LarivaarIcon,
+          action: () => {
+            toggleLarivaarOption();
+          },
+          value: larivaar,
+        },
+        {
+          icon: LarivaarAssistIcon,
+          action: () => {
+            toggleLarivaarAssistOption();
+          },
+          value: larivaarAssist
+        }
+      ],
+    },
+    { type: 'separator' },
+    {
+      type: 'toggle-option',
+      label: 'Dark Mode',
+      checked: darkMode,
+      action: toggleDarkMode,
+    },
+    {
+      type: 'toggle-option',
+      label: 'Vishraams',
+      checked: visraams,
+      action: toggleVisraams,
+    },
+    { type: 'separator' },
+    {
+      type: 'text-option',
+      label: 'Reset',
+      action: () => {
+        resetDisplayOptions();
+        resetFontOptions();
+        larivaarAssist && toggleLarivaarAssistOption();
+        larivaar && toggleLarivaarOption();
+      },
+    },
+    {
+      type: 'icon-text-toggle',
+      icon: GearsIcon,
+      label: 'Advanced',
+      value: showAdvancedOptions,
+      action: toggleAdvancedOptions,
+    },
   ];
 }
 
