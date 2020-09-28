@@ -46,13 +46,14 @@ export class MultiSelect extends React.PureComponent {
 
     const collectionsMarkup = collections.map(c => {
       const { options, action, label, checked } = c;
+      console.log(options, " OPTIONS")
       return (
         <ul key={label}>
           <p>{label}</p>
           {options.map(op => (
             <li key={op}>
               <input
-                id={`checkbox-${label}-${op}`}
+                id={`checkbox-${label}-${<op}`}
                 type="checkbox"
                 value={op}
                 onChange={() => action(op)}

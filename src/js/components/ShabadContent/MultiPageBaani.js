@@ -25,12 +25,7 @@ export const MultiPageBaani = React.memo(({
   const history = useHistory();
   const renderedPageNumbers = useMemo(() => pages.map(page => page.source.pageNo), [pages]);
 
-  useEffect(() => {
-    // Compare the current pages we are rendering with previous pages
-    console.log(renderedPageNumbers, 'RENDERED PAGE NUMBERS ')
-
-  }, [renderedPageNumbers]);
-
+  console.log(steekLanguages, "STEEK LANGUAGES")
   return (
     <React.Fragment>
       {pages.map(({ page: gurbani, source }) => {
