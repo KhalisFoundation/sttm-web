@@ -49,8 +49,11 @@ export default class Translation extends React.PureComponent {
 
   render() {
     const { defaultFontSize } = Translation;
-    const { type, unicode, text, fontSize: _fontSize } = this.props;
+    const { type, unicode, text, fontSize: _fontSize, children } = this.props;
     const fontSize = _fontSize ? _fontSize + 'em' : defaultFontSize;
+
+    const isTranslationExists = (!!text && (!!text.unicode || !!text.gurmukhi)) || !!children;
+    if (!isTranslationExists) return null;
 
     if (type === PUNJABI) {
       return (
@@ -65,7 +68,7 @@ export default class Translation extends React.PureComponent {
     } else {
       return (
         <blockquote style={{ fontSize }} className={`translation ${type}`}>
-          {this.props.children}
+          {children}
         </blockquote>
       );
     }
