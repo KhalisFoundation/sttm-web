@@ -88,6 +88,7 @@ class Shabad extends React.PureComponent {
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
+    steekLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,

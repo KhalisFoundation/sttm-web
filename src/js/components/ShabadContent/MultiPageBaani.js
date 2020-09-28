@@ -20,6 +20,7 @@ export const MultiPageBaani = React.memo(({
   showFullScreen,
   transliterationLanguages,
   translationLanguages,
+  steekLanguages,
 }) => {
   const history = useHistory();
   const renderedPageNumbers = useMemo(() => pages.map(page => page.source.pageNo), [pages]);
@@ -62,6 +63,7 @@ export const MultiPageBaani = React.memo(({
               fontFamily={fontFamily}
               larivaarAssist={larivaarAssist}
               translationLanguages={translationLanguages}
+              steekLanguages={steekLanguages}
               transliterationLanguages={transliterationLanguages}
               centerAlignGurbani={centerAlignGurbani}
               showFullScreen={showFullScreen}

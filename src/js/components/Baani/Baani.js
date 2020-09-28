@@ -34,6 +34,7 @@ export default class Baani extends React.PureComponent {
     ang: PropTypes.number,
     gurbani: PropTypes.array.isRequired,
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
+    steekLanguages: PropTypes.array.isRequired,
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,

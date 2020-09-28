@@ -5,6 +5,7 @@ export const DEFAULT_SEARCH_TYPE = SEARCH_TYPES.FIRST_LETTERS;
 export const DEFAULT_SEARCH_SOURCE = 'all';
 export const DEFAULT_TRANSLATION_LANGUAGES = ['english'];
 export const DEFAULT_TRANSLITERATION_LANGUAGES = ['english'];
+export const DEFAULT_STEEK_LANGUAGES = [];
 export const DEFAULT_LARIVAAR = false;
 export const DEFAULT_LARIVAAR_ASSIST = false;
 export const DEFAULT_UNICODE = false;

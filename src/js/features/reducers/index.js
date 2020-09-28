@@ -21,6 +21,7 @@ import {
   SET_AUTOSCROLLING,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
+  SET_STEEK_LANGUAGES,
   SET_LARIVAAR_ASSIST_STRENGTH,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
@@ -52,6 +53,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT,
   LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
+  LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
@@ -364,6 +366,21 @@ export default function reducer(state, action) {
       return {
         ...state,
         translationLanguages,
+      };
+    }
+    case SET_STEEK_LANGUAGES: {
+      const steekLanguages = action.payload || [];
+      clickEvent({
+        action: SET_STEEK_LANGUAGES,
+        label: JSON.stringify(steekLanguages),
+      });
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
+        JSON.stringify(steekLanguages)
+      );
+      return {
+        ...state,
+        steekLanguages,
       };
     }
     case SET_LARIVAAR_ASSIST_STRENGTH: {

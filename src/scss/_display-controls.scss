@@ -230,6 +230,8 @@
 
       p {
         margin-bottom: 0;
+        padding: 0 12px;
+        text-align: left;
       }
 
       li {
@@ -279,6 +281,14 @@
             color: $sttm-white;
           }
         }
+      }
+    }
+
+    &.controller-multiselect {
+      .list-wrapper {
+        flex-wrap: unset;
+        height: unset;
+        width: unset;
       }
     }
   }
