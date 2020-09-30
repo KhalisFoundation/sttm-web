@@ -1,4 +1,4 @@
-![SikhiToTheMax's logo](/public/assets/images/sttm_logo.png)
+!The Great [SikhiToTheMax's logo](/public/assets/images/sttm_logo.png)
 
 # SikhiToTheMax Website
 
