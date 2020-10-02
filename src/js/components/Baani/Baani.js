@@ -192,16 +192,9 @@ export default class Baani extends React.PureComponent {
   getTransliterations = shabad => {
     const {
       transliterationLanguages,
-      transliterationFontSize,
     } = this.props;
 
-    return transliterationLanguages.map(language => (
-      <Transliteration
-        fontSize={transliterationFontSize}
-        key={getVerseId(shabad) + language}>
-        {transliterationMap[language](shabad)}
-      </Transliteration>
-    ));
+    return transliterationLanguages.map(language => this.getTransliterationForLanguage(shabad, language));
   }
   getActions = shabad => {
     const {
@@ -226,6 +219,9 @@ export default class Baani extends React.PureComponent {
       transliterationFontSize,
     } = this.props;
 
+    const isTransliterationExists = !!transliterationMap[language](shabad);
+    if (!isTransliterationExists) return null;
+
     return (
       <Transliteration
         fontSize={transliterationFontSize}
@@ -239,41 +235,32 @@ export default class Baani extends React.PureComponent {
       unicode,
       translationFontSize
     } = this.props;
+
+    const translationObj = Translation.getTranslationProps({
+      translationMap,
+      language,
+      shabad,
+      unicode,
+    });
+    const isTranslationExists = !!translationObj.children || !!translationObj.text;
+    if (!isTranslationExists) return null;
+
     return (
       <Translation
         fontSize={translationFontSize}
         key={getVerseId(shabad) + language}
         type={language}
-        {...Translation.getTranslationProps({
-          translationMap,
-          language,
-          shabad,
-          unicode,
-        })}
+        {...translationObj}
       />
     )
   }
 
   getTranslations = shabad => {
     const {
-      unicode,
-      translationFontSize,
       translationLanguages,
     } = this.props;
 
-    return translationLanguages.map(language => (
-      <Translation
-        fontSize={translationFontSize}
-        key={getVerseId(shabad) + language}
-        type={language}
-        {...Translation.getTranslationProps({
-          translationMap,
-          language,
-          shabad,
-          unicode,
-        })}
-      />
-    ));
+    return translationLanguages.map(language => this.getTranslationForLanguage(shabad, language));
   }
   createShabadLine = (shabad, nodeToRender, isMatchHighlighted = false) => {
     const { highlight } = this.props;
@@ -324,15 +311,16 @@ export default class Baani extends React.PureComponent {
       ang,
       onBaaniLineClick,
       isParagraphMode,
+      transliterationLanguages,
+      translationLanguages,
     } = this.props;
 
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
     const mixedViewBaaniClass = 'mixed-view-baani';
-    const availableTransliterations = this.getAvailableTransliterations();
-    const availableTranslations = this.getAvailableTranslations();
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
+
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
         {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
@@ -367,7 +355,7 @@ export default class Baani extends React.PureComponent {
               </div>
               <div
                 className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
-                {availableTransliterations.map(language =>
+                {transliterationLanguages.map(language =>
                   <div
                     key={language}
                     className={`${mixedViewBaaniClass}-transliteration-${language} ${paragraphModeClass}`} >
@@ -377,7 +365,7 @@ export default class Baani extends React.PureComponent {
               </div>
               <div
                 className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
-                {availableTranslations.map(language =>
+                {translationLanguages.map(language =>
                   <div
                     key={language}
                     className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
@@ -460,13 +448,13 @@ export default class Baani extends React.PureComponent {
       unicode,
       fontSize,
       highlight,
+      translationLanguages,
+      transliterationLanguages,
     } = this.props;
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
     const splitViewBaaniClass = 'split-view-baani';
-    const availableTransliterations = this.getAvailableTransliterations();
-    const availableTranslations = this.getAvailableTranslations();
 
     return (
       <div className={`${splitViewBaaniClass} ${paragraphModeClass}`}>
@@ -493,7 +481,7 @@ export default class Baani extends React.PureComponent {
           )}
         </div>
         {
-          availableTransliterations.map(language => {
+          transliterationLanguages.map(language => {
             return (
               <div
                 key={language}
@@ -514,7 +502,7 @@ export default class Baani extends React.PureComponent {
           })
         }
         {
-          availableTranslations.map(language => (
+          translationLanguages.map(language => (
             <div
               key={language}
               className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>

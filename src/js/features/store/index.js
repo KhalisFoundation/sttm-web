@@ -146,6 +146,7 @@ const initialState = {
     DEFAULT_STEEK_LANGUAGES
   ),
   isLoadingAng: false,
+  isMahankoshTooltipActive: false,
   prefetchAng: undefined
 };
 

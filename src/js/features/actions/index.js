@@ -135,6 +135,7 @@ export const setSplitView = createAction(SET_SPLIT_VIEW);
 
 export const SET_PREFETCH_ANG = 'SET_PREFETCH_ANG';
 export const SET_LOADING_ANG = 'SET_LOADING_ANG';
+export const SET_MAHANKOSH_TOOLTIP_ACTIVE = 'SET_MAHANKOSH_TOOLTIP_ACTIVE';
 
 export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
