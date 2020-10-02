@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Actions from '../BaaniLineActions';
 import Translation from '../Translation';
 import Transliteration from '../Transliteration';
-import Steek from '../Steek';
+import Steek from './Steek';
 import BaaniLine from '../BaaniLine';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
 import {
