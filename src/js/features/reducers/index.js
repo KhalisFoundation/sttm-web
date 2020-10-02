@@ -10,6 +10,7 @@ import {
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
   TOGGLE_SEHAJ_PAATH_MODE,
+  SET_MAHANKOSH_TOOLTIP_EXPLAINATION,
   SET_MAHANKOSH_TOOLTIP_ACTIVE,
   SET_VISRAAM_SOURCE,
   SET_VISRAAM_STYLE,
@@ -63,6 +64,12 @@ import { DARK_MODE_COOKIE } from '../../../../common/constants';
 
 export default function reducer(state, action) {
   switch (action.type) {
+    case SET_MAHANKOSH_TOOLTIP_EXPLAINATION: {
+      return {
+        ...state,
+        isMahankoshTooltipExplaination: action.payload
+      }
+    }
     case SET_MAHANKOSH_TOOLTIP_ACTIVE: {
       return {
         ...state,
