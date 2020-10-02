@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
+import { isMobile } from 'react-device-detect';
 
 import { IMahankoshExplaination } from '@/types';
 import { useFetchData } from '@/hooks';
@@ -42,9 +43,10 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
     return document.removeEventListener('click', clearMahankoshInformation);
   }, [])
 
-  if (isFetchingMahankoshExplaination || !isMahankoshExplainationExists) {
-    return null;
-  }
+
+    if (isFetchingMahankoshExplaination || !isMahankoshExplainationExists) {
+      return null;
+    }
 
   return (
     <ReactTooltip
@@ -54,7 +56,11 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
       afterShow={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true })
       }}
-      afterHide={clearMahankoshInformation}
+      afterHide={() => {
+        dispatch({ type: SET_MAHANKOSH_TOOLTIP_EXPLAINATION, payload: false })
+        dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
+        clearMahankoshInformation()
+      }}
       className="mahankoshTooltipWrapper"
       place="top"
       clickable
@@ -65,7 +71,7 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
         }
         return { top, left }
       }}
-      getContent={() => getMahankoshTooltipContent(gurbaniWord, mahankoshExplaination)}
+      getContent={() => getMahankoshTooltipContent(gurbaniWord, mahankoshExplaination, isFetchingMahankoshExplaination)}
     />
   )
 }

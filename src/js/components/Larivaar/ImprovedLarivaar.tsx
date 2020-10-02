@@ -35,7 +35,6 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   const {
     selectedLine,
     selectedWordIndex,
-    selectedWord,
     currentLine,
     setMahankoshInformation
   } = useContext(MahankoshContext);
