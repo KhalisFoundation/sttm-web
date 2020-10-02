@@ -1,22 +1,24 @@
 import { InView } from 'react-intersection-observer'
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Actions from '../BaaniLineActions';
 import Translation from '../Translation';
 import Transliteration from '../Transliteration';
+import Steek from '../Steek';
 import BaaniLine from '../BaaniLine';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
-import { copyToClipboard, showToast, shortenURL } from '@/util';
-import { changeAng, prefetchAng } from './utils';
-
 import {
   clickEvent,
   ACTIONS,
   translationMap,
   transliterationMap,
   getVerseId,
+  copyToClipboard,
+  showToast,
+  shortenURL,
+  steekMap
 } from '@/util';
+import { changeAng, prefetchAng } from './utils';
 
 /**
  *
@@ -34,8 +36,8 @@ export default class Baani extends React.PureComponent {
     ang: PropTypes.number,
     gurbani: PropTypes.array.isRequired,
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
-    steekLanguages: PropTypes.array.isRequired,
     splitView: PropTypes.bool.isRequired,
+    steekLanguages: PropTypes.array.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
@@ -53,17 +55,23 @@ export default class Baani extends React.PureComponent {
     onBaaniLineClick: PropTypes.func,
   };
   getShareLine = shabad => {
-    const availableTransliterations = this.getAvailableTransliterations();
-    const availableTranslations = this.getAvailableTranslations();
+    const {
+      translationLanguages,
+      transliterationLanguages,
+      steekLanguages,
+    } = this.props;
 
     return [
       shabad.verse.unicode,
-      ...availableTransliterations.map(language =>
+      ...transliterationLanguages.map(language =>
         transliterationMap[language](shabad)
       ),
-      ...availableTranslations.map(language =>
+      ...translationLanguages.map(language =>
         translationMap[language](shabad)
       ),
+      ...steekLanguages.map(language =>
+        steekMap[language](shabad)
+      )
     ].join('\n');
   };
 
@@ -214,6 +222,19 @@ export default class Baani extends React.PureComponent {
     )
   }
 
+  getSteekForLanguage = (shabad, language) => {
+    const { unicode } = this.props;
+    return (
+      <Steek
+        key={getVerseId(shabad) + language}
+        type={language}
+        shabad={shabad}
+        unicode={unicode}
+      />
+    )
+  }
+
+
   getTransliterationForLanguage = (shabad, language) => {
     const {
       transliterationFontSize,
@@ -313,6 +334,7 @@ export default class Baani extends React.PureComponent {
       isParagraphMode,
       transliterationLanguages,
       translationLanguages,
+      steekLanguages,
     } = this.props;
 
 
@@ -378,8 +400,20 @@ export default class Baani extends React.PureComponent {
                 <div
                   className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
                   {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
-                </div>}
-            </Wrapper>)
+                </div>
+              }
+              <div
+                className={`${mixedViewBaaniClass}-steek ${paragraphModeClass}`}>
+                {steekLanguages.map(language =>
+                  <div
+                    key={language}
+                    className={`${mixedViewBaaniClass}-steek-${language} ${paragraphModeClass}`} >
+                    {shabads.map(shabad => this.createShabadLine(shabad, this.getSteekForLanguage(shabad, language)))}
+                  </div>
+                )}
+              </div>
+            </Wrapper>
+          )
         })}
       </div>
     )
