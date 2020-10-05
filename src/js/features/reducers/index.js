@@ -191,7 +191,6 @@ export default function reducer(state, action) {
       }
     }
 
-
     case TOGGLE_PARAGRAPH_MODE: {
       const paragraphMode = !state.paragraphMode;
 
@@ -362,34 +361,60 @@ export default function reducer(state, action) {
     }
     case SET_TRANSLATION_LANGUAGES: {
       const translationLanguages = action.payload || [];
+      const isSteekLanguageSelected = state.steekLanguages.length > 0;
+      const steekLanguages = isSteekLanguageSelected ? state.steekLanguages : ['bani db'];
+
       clickEvent({
         action: SET_TRANSLATION_LANGUAGES,
         label: JSON.stringify(translationLanguages),
       });
+
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
         JSON.stringify(translationLanguages)
       );
+
+      // save steeks as well to local storage
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
+        JSON.stringify(steekLanguages)
+      );
+
       return {
         ...state,
         translationLanguages,
+        steekLanguages,
       };
     }
+
     case SET_STEEK_LANGUAGES: {
       const steekLanguages = action.payload || [];
       clickEvent({
         action: SET_STEEK_LANGUAGES,
         label: JSON.stringify(steekLanguages),
       });
-      saveToLocalStorage(
-        LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
-        JSON.stringify(steekLanguages)
-      );
+
+      if (steekLanguages.length > 0) {
+        saveToLocalStorage(
+          LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
+          JSON.stringify(steekLanguages)
+        );
+        return {
+          ...state,
+          steekLanguages,
+        };
+      }
+
       return {
         ...state,
-        steekLanguages,
-      };
+        error: {
+          type: "INVALID_STEEK_OPTIONS",
+          message: 'You need to select atleast 1 steek option, if punjabi language is selected.'
+        }
+      }
+
     }
+
     case SET_LARIVAAR_ASSIST_STRENGTH: {
       const larivaarAssistStrength = action.payload;
 
@@ -403,6 +428,7 @@ export default function reducer(state, action) {
         larivaarAssistStrength,
       };
     }
+
     case SET_TRANSLITERATION_LANGUAGES: {
       const transliterationLanguages = action.payload || [];
       clickEvent({

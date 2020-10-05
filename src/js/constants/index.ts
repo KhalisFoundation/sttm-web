@@ -3,6 +3,7 @@ export * from './classnames';
 export * from './colors';
 export * from './dates';
 export * from './default-option-values';
+export * from './errors';
 export * from './font-options';
 export * from './languages-supported';
 export * from './local-storage-keys';
