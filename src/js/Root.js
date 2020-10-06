@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { GlobalHotKeys, configure } from 'react-hotkeys';
+import { Notifier } from '@/components/Notifier';
 import routes, { NotFound } from './routes';
+import { LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, TEXTS } from './constants';
+import { GlobalHandlers, GlobalShortcuts } from './Shortcuts';
 import {
   getBooleanFromLocalStorage,
   showToast,
   saveToLocalStorage,
 } from './util';
-import { LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, TEXTS } from './constants';
-import { GlobalHotKeys, configure } from 'react-hotkeys';
-import { GlobalHandlers, GlobalShortcuts } from './Shortcuts';
-
 export default class Root extends React.PureComponent {
   constructor() {
     super();
@@ -32,6 +32,7 @@ export default class Root extends React.PureComponent {
             ))}
             <Route render={() => <NotFound />} />
           </Switch>
+          <Notifier />
         </GlobalHotKeys>
       </Router>
     );

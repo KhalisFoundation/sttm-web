@@ -254,6 +254,20 @@ blockquote {
       }
     }
 
+    &-steek {
+      font-family: gurmukhi_normal, sans-serif;
+      font-size: 36px;
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        & .steek {
+          margin-right: 4px;
+        }
+      }
+    }
+
     &-wrapper {
       &.paragraph-mode {
         margin-bottom: 16px;

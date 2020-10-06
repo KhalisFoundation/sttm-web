@@ -128,8 +128,9 @@ class Shabad extends React.PureComponent {
       translationLanguages,
       transliterationLanguages,
       unicode,
+      fullScreenMode
     } = baniProps;
-
+    console.log('bani props', baniProps)
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
@@ -184,6 +185,7 @@ class Shabad extends React.PureComponent {
                 :
                 <Baani
                   {...baniProps}
+                  showFullScreen={fullScreenMode}
                   isParagraphMode={isParagraphMode}
                 />}
               {isLoadingContent && <div className="spinner" />}

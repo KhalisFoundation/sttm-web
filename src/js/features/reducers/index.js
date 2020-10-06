@@ -34,6 +34,7 @@ import {
   SET_FULLSCREEN_MODE,
   SET_LOADING_ANG,
   SET_PREFETCH_ANG,
+  SET_ERROR,
   CHANGE_FONT,
 } from '../actions';
 import {
@@ -58,9 +59,9 @@ import {
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
-} from '../../constants';
-import { saveToLocalStorage } from '../../util';
-import { clickEvent } from '../../util/analytics';
+  ERRORS,
+} from '@/constants';
+import { saveToLocalStorage, clickEvent } from '@/util';
 import { DARK_MODE_COOKIE } from '../../../../common/constants';
 
 export default function reducer(state, action) {
@@ -407,10 +408,8 @@ export default function reducer(state, action) {
 
       return {
         ...state,
-        error: {
-          type: "INVALID_STEEK_OPTIONS",
-          message: 'You need to select atleast 1 steek option, if punjabi language is selected.'
-        }
+        translationLanguages: state.translationLanguages.filter(t => t !== 'punjabi'),
+        steekLanguages
       }
 
     }
@@ -517,6 +516,16 @@ export default function reducer(state, action) {
         centerAlignGurbani,
       };
     }
+
+    case SET_ERROR: {
+      const error = action.payload;
+
+      return {
+        ...state,
+        error
+      }
+    }
+
     default:
       return state;
   }

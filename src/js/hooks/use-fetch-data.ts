@@ -1,13 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
-import { useDispatch } from 'react-redux'
-import { buildApiUrl, SOURCES } from '@sttm/banidb';
-
-interface IUseFetchAngData {
-  ang: number
-  source: keyof typeof SOURCES
-  isSehajPaathMode: boolean
-  setPrefetchAng: React.Dispatch<React.SetStateAction<number>>
-}
+import { useEffect, useState} from 'react';
 
 export const useFetchData = (url: string, cb?: () => {}) => {
   const [isFetchingData, setFetchingData] = useState<boolean>(false);

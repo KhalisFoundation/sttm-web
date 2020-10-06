@@ -482,6 +482,7 @@ export default class Baani extends React.PureComponent {
       unicode,
       fontSize,
       highlight,
+      steekLanguages,
       translationLanguages,
       transliterationLanguages,
     } = this.props;
@@ -560,8 +561,31 @@ export default class Baani extends React.PureComponent {
                       />)
                   }
                 </div>))}
-            </div>))}
-      </div>)
+            </div>))
+        }
+        {steekLanguages.map(language => (
+          <div
+            key={language}
+            className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>
+            {
+              Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+                <div
+                  key={idx}
+                  className={`${splitViewBaaniClass}-steek ${paragraphModeClass}`}
+                >
+                  {
+                    shabads.map(shabad =>
+                      <Steek
+                        key={getVerseId(shabad) + language}
+                        type={language}
+                        shabad={shabad}
+                        unicode={unicode}
+                      />
+                    )
+                  }
+                </div>))}
+          </div>))}
+      </div >)
   }
   getMarkup = () => {
     const {
