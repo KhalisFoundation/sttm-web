@@ -1,5 +1,5 @@
 /* globals API_URL */
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 

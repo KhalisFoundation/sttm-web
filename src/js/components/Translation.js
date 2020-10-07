@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TRANSLATION_LANGUAGES } from '../constants';
+import { TRANSLATION_LANGUAGES, PUNJABI_LANGUAGE } from '@/constants';
 
-const PUNJABI = 'punjabi';
 export default class Translation extends React.PureComponent {
   static defaultProps = { children: '' };
   static defaultFontSize = '18px';
@@ -10,22 +9,22 @@ export default class Translation extends React.PureComponent {
     type: PropTypes.oneOf(TRANSLATION_LANGUAGES),
     unicode: (props, propName) => {
       if (
-        props.type === PUNJABI &&
+        props.type === PUNJABI_LANGUAGE &&
         (props[propName] === undefined || typeof props[propName] !== 'boolean')
       ) {
         return new Error(
-          `${propName} is required when props.type = '${PUNJABI}'`
+          `${propName} is required when props.type = '${PUNJABI_LANGUAGE}'`
         );
       }
     },
     text: (props, propName) => {
       if (
-        props.type === PUNJABI &&
+        props.type === PUNJABI_LANGUAGE &&
         (props[propName] === undefined ||
           !['gurmukhi', 'unicode'].every(key => key in props[propName]))
       ) {
         return new Error(
-          `${propName} is required when props.type = '${PUNJABI}' of shape { gurmukhi: String, unicode: String }`
+          `${propName} is required when props.type = '${PUNJABI_LANGUAGE}' of shape { gurmukhi: String, unicode: String }`
         );
       }
     },
@@ -42,7 +41,7 @@ export default class Translation extends React.PureComponent {
     shabad,
     unicode,
   }) => {
-    return language === PUNJABI
+    return language === PUNJABI_LANGUAGE
       ? { unicode, text: translationMap.punjabi(shabad) }
       : { children: translationMap[language](shabad) };
   }
@@ -55,7 +54,7 @@ export default class Translation extends React.PureComponent {
     const isTranslationExists = (!!text && (!!text.unicode || !!text.gurmukhi)) || !!children;
     if (!isTranslationExists) return null;
 
-    if (type === PUNJABI) {
+    if (type === PUNJABI_LANGUAGE) {
       return (
         <blockquote style={{ fontSize }} className="translation punjabi gurbani-font">
           {unicode ? (

@@ -6,7 +6,7 @@ import Translation from '../Translation';
 import Transliteration from '../Transliteration';
 import Steek from './Steek';
 import BaaniLine from '../BaaniLine';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME } from '@/constants';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME, PUNJABI_LANGUAGE } from '@/constants';
 import {
   clickEvent,
   ACTIONS,
@@ -27,6 +27,7 @@ import { changeAng, prefetchAng } from './utils';
  * @class Baani
  * @extends {React.PureComponent}
  */
+
 export default class Baani extends React.PureComponent {
   static defaultProps = {
     highlight: null,
@@ -221,7 +222,6 @@ export default class Baani extends React.PureComponent {
       />
     )
   }
-
   getSteekForLanguage = (shabad, language) => {
     const { unicode } = this.props;
     return (
@@ -233,8 +233,6 @@ export default class Baani extends React.PureComponent {
       />
     )
   }
-
-
   getTransliterationForLanguage = (shabad, language) => {
     const {
       transliterationFontSize,
@@ -333,7 +331,7 @@ export default class Baani extends React.PureComponent {
       onBaaniLineClick,
       isParagraphMode,
       transliterationLanguages,
-      translationLanguages,
+      translationLanguages: _translationLanguages,
       steekLanguages,
     } = this.props;
 
@@ -342,6 +340,8 @@ export default class Baani extends React.PureComponent {
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
     const mixedViewBaaniClass = 'mixed-view-baani';
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
+    const isSteekSelected = steekLanguages.length > 0;
+    const translationLanguages = isSteekSelected ? _translationLanguages.filter(l => l !== PUNJABI_LANGUAGE) : _translationLanguages;
 
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
@@ -355,7 +355,7 @@ export default class Baani extends React.PureComponent {
           const firstParagraphAttributes = isMiddleParagraph ? {
             'data-first-paragraph': true, 'data-ang': ang
           } : {}
-          // This is used for sehaj-paath mode, which don't have paragraph mode
+          // This is used for sehaj-paath mode, where we don't have paragraph mode
           // so we can safely tell it to highlight first pankti as first pankti is equal to first paragraph
           const highlightVerseId = shabads[0].verseId;
           const Wrapper = isMiddleParagraph || isFirstParagraph ? InView : 'div';
@@ -445,37 +445,6 @@ export default class Baani extends React.PureComponent {
     );
   }
 
-  getAvailableTranslations = () => {
-    const {
-      translationLanguages,
-      gurbani
-    } = this.props;
-    // Sundar-gutka baani have first verse as baani name
-    const shabad = gurbani[1] || gurbani[0];
-    const translatedShabad = {};
-
-    translatedShabad.english = !!translationMap.english(shabad);
-    translatedShabad.spanish = !!translationMap.spanish(shabad);
-    translatedShabad.punjabi = !!translationMap.punjabi(shabad);
-
-    return translationLanguages.filter(language => translatedShabad[language]) || [];
-  }
-
-  getAvailableTransliterations = () => {
-    const {
-      gurbani,
-      transliterationLanguages
-    } = this.props;
-
-    // Sundar-gutka baani have first verse as baani name
-    const shabad = gurbani[1] || gurbani[0];
-    const transliteratedShabad = {};
-    transliteratedShabad.english = !!transliterationMap.english(shabad);
-    transliteratedShabad.hindi = !!transliterationMap.hindi(shabad);
-    transliteratedShabad.shahmukhi = !!transliterationMap.shahmukhi(shabad);
-    transliteratedShabad.IPA = !!transliterationMap.IPA(shabad);
-    return transliterationLanguages.filter(language => transliteratedShabad[language]) || [];
-  }
   createSplitViewMarkup = () => {
     const {
       isParagraphMode,
@@ -483,13 +452,15 @@ export default class Baani extends React.PureComponent {
       fontSize,
       highlight,
       steekLanguages,
-      translationLanguages,
+      translationLanguages: _translationLanguages,
       transliterationLanguages,
     } = this.props;
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
     const splitViewBaaniClass = 'split-view-baani';
+    const isSteekSelected = steekLanguages.length > 0;
+    const translationLanguages = isSteekSelected ? _translationLanguages.filter(l => l !== PUNJABI_LANGUAGE) : _translationLanguages;
 
     return (
       <div className={`${splitViewBaaniClass} ${paragraphModeClass}`}>
@@ -591,7 +562,7 @@ export default class Baani extends React.PureComponent {
   getMarkup = () => {
     const {
       splitView,
-      showFullScreen,
+      showFullScreen
     } = this.props;
 
     if (showFullScreen) {

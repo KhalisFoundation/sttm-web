@@ -54,7 +54,6 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
         key={i}
         {...mahankoshTooltipAttributes}
         onMouseOver={() => {
-          console.log("ON MOUSEOVER NOT WORKING,", onMouseOver?.toString())
           if (onMouseOver) {
             onMouseOver(word, i)
           }

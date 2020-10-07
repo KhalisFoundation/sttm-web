@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
 export const MultiPageBaani = React.memo((props) => {
-  const { pages, fullScreenMode, ...baniProps } = props;
+  const { pages, ...baniProps } = props;
   const history = useHistory();
 
   return (
@@ -26,7 +26,6 @@ export const MultiPageBaani = React.memo((props) => {
 
                 history.push(newUrl);
               }}
-              showFullScreen={fullScreenMode}
               {...baniProps}
             />
           </div>
