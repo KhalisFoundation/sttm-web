@@ -7,6 +7,8 @@ import Transliteration from '../Transliteration';
 import Steek from './Steek';
 import BaaniLine from '../BaaniLine';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME, PUNJABI_LANGUAGE } from '@/constants';
+import { MahankoshTooltip } from '@/components/MahankoshTooltip';
+
 import {
   clickEvent,
   ACTIONS,
@@ -18,6 +20,8 @@ import {
   shortenURL,
   steekMap
 } from '@/util';
+import { MahankoshContext } from '@/context';
+import { IMahankoshExplaination } from '@/types';
 import { changeAng, prefetchAng } from './utils';
 
 /**
@@ -55,6 +59,38 @@ export default class Baani extends React.PureComponent {
     isParagraphMode: PropTypes.bool.isRequired,
     onBaaniLineClick: PropTypes.func,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedWord: '',
+      selectedWordIndex: -1,
+      selectedLine: -1
+    }
+  }
+
+  clearMahankoshInformation = () => {
+    this.setState((state) => {
+      return {
+        ...state,
+        selectedLine: -1,
+        selectedWord: '',
+        selectedWordIndex: -1
+      }
+    })
+  }
+
+  setMahankoshInformation = ({ selectedWord, selectedLine, selectedWordIndex }) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        selectedLine,
+        selectedWord,
+        selectedWordIndex
+      }
+    })
+  }
+
   getShareLine = shabad => {
     const {
       translationLanguages,
@@ -164,8 +200,12 @@ export default class Baani extends React.PureComponent {
 
   componentDidMount() {
     this._scrollToHiglight();
+    document.addEventListener('click', this.clearMahankoshInformation);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('click', this.clearMahankoshInformation);
+  }
   componentDidUpdate(prevProps) {
     if (this.props.highlight !== prevProps.highlight) {
       this._scrollToHiglight();
@@ -330,11 +370,12 @@ export default class Baani extends React.PureComponent {
       ang,
       onBaaniLineClick,
       isParagraphMode,
+      isSehajPaathMode,
+      isMultipage,
       transliterationLanguages,
       translationLanguages: _translationLanguages,
       steekLanguages,
     } = this.props;
-
 
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
@@ -342,6 +383,7 @@ export default class Baani extends React.PureComponent {
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
     const isSteekSelected = steekLanguages.length > 0;
     const translationLanguages = isSteekSelected ? _translationLanguages.filter(l => l !== PUNJABI_LANGUAGE) : _translationLanguages;
+    const { selectedWord, selectedWordIndex, selectedLine } = this.state;
 
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
@@ -358,64 +400,78 @@ export default class Baani extends React.PureComponent {
           // This is used for sehaj-paath mode, where we don't have paragraph mode
           // so we can safely tell it to highlight first pankti as first pankti is equal to first paragraph
           const highlightVerseId = shabads[0].verseId;
-          const Wrapper = isMiddleParagraph || isFirstParagraph ? InView : 'div';
-
+          const Wrapper = isSehajPaathMode && (isMiddleParagraph || isFirstParagraph) ? InView : 'div';
+          let changeHandler = undefined;
+          if (isSehajPaathMode) {
+            changeHandler = isMiddleParagraph ? prefetchAng : changeAng({ history, source, ang })
+          }
           return (
-            <Wrapper
+            <MahankoshContext.Provider
               key={idx}
-              {...firstParagraphAttributes}
-              {...middleParagraphAttributes}
-              onChange={isMiddleParagraph ? prefetchAng : changeAng({ history, source, ang })}
-              onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
-              onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
-              onMouseDown={isParagraphMode ? undefined : this.removeSelection}
-              className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
+              value={{
+                currentLine: idx,
+                selectedLine,
+                selectedWord,
+                selectedWordIndex,
+                setMahankoshInformation: this.setMahankoshInformation,
+              }}
             >
-              <div
-                className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
-                {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad), true))}
-              </div>
-              <div
-                className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
-                {transliterationLanguages.map(language =>
-                  <div
-                    key={language}
-                    className={`${mixedViewBaaniClass}-transliteration-${language} ${paragraphModeClass}`} >
-                    {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
-                  </div>
-                )}
-              </div>
-              <div
-                className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
-                {translationLanguages.map(language =>
-                  <div
-                    key={language}
-                    className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
-                    {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
-                  </div>
-                )}
-              </div>
-              {isParagraphMode ?
-                null :
+              <Wrapper
+                {...firstParagraphAttributes}
+                {...middleParagraphAttributes}
+                onChange={changeHandler}
+                onClick={onBaaniLineClick ? onBaaniLineClick(highlightVerseId) : undefined}
+                onMouseUp={isParagraphMode ? undefined : this.showSelectionOptions} // In paragraph mode, we are currently not showing social Share
+                onMouseDown={isParagraphMode ? undefined : this.removeSelection}
+                className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
+              >
                 <div
-                  className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
-                  {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
+                  className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}>
+                  {shabads.map(shabad => this.createShabadLine(shabad, this.getBaniLine(shabad), true))}
                 </div>
-              }
-              <div
-                className={`${mixedViewBaaniClass}-steek ${paragraphModeClass}`}>
-                {steekLanguages.map(language =>
+                <div
+                  className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}>
+                  {transliterationLanguages.map(language =>
+                    <div
+                      key={language}
+                      className={`${mixedViewBaaniClass}-transliteration-${language} ${paragraphModeClass}`} >
+                      {shabads.map(shabad => this.createShabadLine(shabad, this.getTransliterationForLanguage(shabad, language)))}
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}>
+                  {translationLanguages.map(language =>
+                    <div
+                      key={language}
+                      className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`} >
+                      {shabads.map(shabad => this.createShabadLine(shabad, this.getTranslationForLanguage(shabad, language)))}
+                    </div>
+                  )}
+                </div>
+                {isParagraphMode ?
+                  null :
                   <div
-                    key={language}
-                    className={`${mixedViewBaaniClass}-steek-${language} ${paragraphModeClass}`} >
-                    {shabads.map(shabad => this.createShabadLine(shabad, this.getSteekForLanguage(shabad, language)))}
+                    className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}>
+                    {shabads.map(shabad => this.createShabadLine(shabad, this.getActions(shabad)))}
                   </div>
-                )}
-              </div>
-            </Wrapper>
+                }
+                <div
+                  className={`${mixedViewBaaniClass}-steek ${paragraphModeClass}`}>
+                  {steekLanguages.map(language =>
+                    <div
+                      key={language}
+                      className={`${mixedViewBaaniClass}-steek-${language} ${paragraphModeClass}`} >
+                      {shabads.map(shabad => this.createShabadLine(shabad, this.getSteekForLanguage(shabad, language)))}
+                    </div>
+                  )}
+                </div>
+              </Wrapper>
+            </MahankoshContext.Provider>
           )
-        })}
-      </div>
+        })
+        }
+      </div >
     )
   }
   createFullScreenMarkup = () => {
@@ -444,7 +500,6 @@ export default class Baani extends React.PureComponent {
       </div>
     );
   }
-
   createSplitViewMarkup = () => {
     const {
       isParagraphMode,
@@ -578,7 +633,7 @@ export default class Baani extends React.PureComponent {
       centerAlignGurbani,
       showFullScreen,
     } = this.props;
-
+    const { selectedWord } = this.state;
     return (
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${
@@ -586,6 +641,11 @@ export default class Baani extends React.PureComponent {
           }`}
       >
         {this.getMarkup()}
+        <MahankoshTooltip
+          clearMahankoshInformation={this.clearMahankoshInformation}
+          tooltipId="mahankoshTooltipHighlightSearchResult"
+          gurbaniWord={selectedWord}
+        />
       </div>
     );
   }

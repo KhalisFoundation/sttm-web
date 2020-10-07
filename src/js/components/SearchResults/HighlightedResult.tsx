@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 
 import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 import { getVisraamClass } from '../../util';
+import { useSelector } from 'react-redux';
 
 interface IHighlightedSearchResultProps {
   children: React.ReactChildren;
@@ -20,11 +20,11 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
   children,
   highlightIndex,
   visraams,
-  darkMode,
   mahankoshIndex = -1,
   onMouseOver,
   isShowMahankoshTooltip,
 }) => {
+  const darkMode = useSelector(state => state.darkMode);
   const mahankoshTooltipAttributes = useMemo(() => {
     if (isShowMahankoshTooltip) {
       return getMahankoshTooltipAttributes(darkMode, 'mahankoshTooltipHighlightSearchResult')
@@ -61,7 +61,7 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
         className={akharClass}
       >
         {` ${word} `}
-      </span >
+      </span>
     )
   });
 }
