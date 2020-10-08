@@ -21,7 +21,6 @@ import {
   steekMap
 } from '@/util';
 import { MahankoshContext } from '@/context';
-import { IMahankoshExplaination } from '@/types';
 import { changeAng, prefetchAng } from './utils';
 
 /**
