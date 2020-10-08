@@ -1,9 +1,9 @@
 /* global describe, it, expect */
-import { getHighlightIndices, toggleItemInArray } from '../';
+import { getHighlightIndices, selectItemInArray } from '../';
 
-describe('toggleItemInArray()', () => {
+describe('selectItemInArray()', () => {
   it('returns [1,3] when called with (2, [1,2,3])', () => {
-    expect(toggleItemInArray(2, [1, 2, 3])).toEqual([1, 3]);
+    expect(selectItemInArray(2, [1, 2, 3])).toEqual([1, 3]);
   });
 });
 

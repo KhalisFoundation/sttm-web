@@ -46,7 +46,6 @@ const Ang: React.FC<IAngProps> = ({
     history
   }),
     [ang, source, highlight, angData, history]) as unknown as EventListener;
-  // useObservePanktis({ source, history, setPrefetchAng, isSehajPaathMode });
   useKeydownEventHandler(changeHighlightedPanktiHandler)
 
   // There is not an error, neither loading for ang going on nor there is ang data then it's first time render

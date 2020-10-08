@@ -27,6 +27,7 @@
   "mahankosh",
   "ui-controls";
 @import 'node_modules/react-smartbanner/dist/main';
+@import 'node_modules/react-toastify/dist/ReactToastify.min';
 
 html,
 body {
@@ -44,7 +45,8 @@ body {
     background-color: $sttm-light-black;
     color: $sttm-white;
 
-    .translation {
+    .translation,
+    .steek {
       color: $sttm-orange;
     }
   }

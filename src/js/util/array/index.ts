@@ -1,1 +1,1 @@
-export * from './toggle-item-in-array';
+export * from './select-item-in-array';

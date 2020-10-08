@@ -254,6 +254,19 @@ blockquote {
       }
     }
 
+    &-steek {
+      font-family: gurmukhi_normal, sans-serif;
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        & .steek {
+          margin-right: 4px;
+        }
+      }
+    }
+
     &-wrapper {
       &.paragraph-mode {
         margin-bottom: 16px;
@@ -290,6 +303,19 @@ blockquote {
     }
 
     &-transliteration {
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        & .transliteration {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &-steek {
+      font-family: gurmukhi_normal, sans-serif;
       margin-bottom: 4px;
 
       &.paragraph-mode * {

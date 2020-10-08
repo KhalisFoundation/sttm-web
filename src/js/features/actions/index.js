@@ -2,6 +2,7 @@ import {
   DEFAULT_LARIVAAR_ASSIST_STRENGTH,
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLATION_FONT_SIZE,
+  DEFAULT_STEEK_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_FONT_SIZE,
   DEFAULT_FONT_SIZE,
@@ -97,6 +98,9 @@ export const setTranslationFontSize = createAction(SET_TRANSLATION_FONT_SIZE);
 export const SET_TRANSLITERATION_FONT_SIZE = 'SET_TRANSLITERATION_FONT_SIZE';
 export const setTransliterationFontSize = createAction(SET_TRANSLITERATION_FONT_SIZE);
 
+export const SET_STEEK_LANGUAGES = 'SET_STEEK_LANGUAGES';
+export const setSteekLanguages = createAction(SET_STEEK_LANGUAGES);
+
 export const SET_LARIVAAR_ASSIST_STRENGTH = 'SET_LARIVAAR_ASSIST_STRENGTH';
 export const setLarivaarAssistStrength = createAction(SET_LARIVAAR_ASSIST_STRENGTH);
 
@@ -134,9 +138,12 @@ export const SET_LOADING_ANG = 'SET_LOADING_ANG';
 export const SET_MAHANKOSH_TOOLTIP_ACTIVE = 'SET_MAHANKOSH_TOOLTIP_ACTIVE';
 export const SET_MAHANKOSH_TOOLTIP_EXPLAINATION = 'SET_MAHANKOSH_TOOTIP_EXPLAINATION';
 
+export const SET_ERROR = 'SET_ERROR';
+
 export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
   dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
+  dispatch(setSteekLanguages(DEFAULT_STEEK_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
   dispatch(setAutoScrollMode(DEFAULT_AUTO_SCROLL_MODE));
   dispatch(setAutoScrolling(DEFAULT_IS_AUTOSCROLLING));

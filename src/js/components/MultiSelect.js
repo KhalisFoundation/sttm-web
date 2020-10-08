@@ -46,23 +46,24 @@ export class MultiSelect extends React.PureComponent {
 
     const collectionsMarkup = collections.map(c => {
       const { options, action, label, checked } = c;
+
       return (
         <ul key={label}>
           <p>{label}</p>
-          {options.map(op => (
-            <li key={op}>
+          {options.map(option => (
+            <li key={option}>
               <input
-                id={`checkbox-${label}-${op}`}
+                id={`checkbox-${label}-${option}`}
                 type="checkbox"
-                value={op}
-                onChange={() => action(op)}
-                checked={checked.includes(op)} />
+                value={option}
+                onChange={() => action(option)}
+                checked={checked.includes(option)} />
               <span
                 className="fake-checkbox"
-                onClick={this.toggleCheckBox(op, action)} >
+                onClick={this.toggleCheckBox(option, action)} >
               </span>
               <label
-                htmlFor={`checkbox-${label}-${op}`}> {op} </label>
+                htmlFor={`checkbox-${label}-${option}`}> {option} </label>
             </li>
           ))}
         </ul>

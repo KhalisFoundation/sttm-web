@@ -1,8 +1,8 @@
-import LRU from 'lru';
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import LRU from 'lru';
 import { buildApiUrl, SOURCES } from '@sttm/banidb';
-import { SET_LOADING_ANG, SET_PREFETCH_ANG } from '../../../features/actions';
+import { SET_LOADING_ANG, SET_PREFETCH_ANG } from '@/features/actions';
 import cacheAngsData from '../cache-angs-data';
 
 interface IUseFetchAngData {
