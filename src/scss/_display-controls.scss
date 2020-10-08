@@ -273,6 +273,21 @@
           }
         }
 
+        input[type="checkbox"]:checked + .check-fareedkot {
+          background-color: $sttm-mint;
+          border: none;
+        }
+
+        input[type="checkbox"]:checked + .check-manmohan {
+          background-color: $sttm-salmon;
+          border: none;
+        }
+
+        input[type="checkbox"]:checked + .check-sahib {
+          background-color: $sttm-lilac;
+          border: none;
+        }
+
         label {
           cursor: pointer;
           font-size: 16px;
@@ -579,6 +594,28 @@
       color: $sttm-white;
     }
   }
+}
+
+.sahib,
+.fareedkot,
+.manmohan {
+  padding-left: 10px;
+}
+
+.bani {
+  font-size: 24px;
+}
+
+.fareedkot {
+  border-left: 5px double $sttm-mint;
+}
+
+.manmohan {
+  border-left: 5px double $sttm-salmon;
+}
+
+.sahib {
+  border-left: 5px double $sttm-lilac;
 }
 
 /* Remove Microsoft Edge X icon from search bar */

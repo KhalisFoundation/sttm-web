@@ -59,7 +59,7 @@ export class MultiSelect extends React.PureComponent {
                 onChange={() => action(option)}
                 checked={checked.includes(option)} />
               <span
-                className="fake-checkbox"
+                className={`fake-checkbox check-${option}`}
                 onClick={this.toggleCheckBox(option, action)} >
               </span>
               <label
