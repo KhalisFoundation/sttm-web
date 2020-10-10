@@ -166,6 +166,14 @@
     width: 1px;
   }
 
+  &.qs-option {
+    margin-right: 20px;
+
+    @media screen and (max-width: 730px) {
+      margin-right: 0;
+    }
+  }
+
   &.multiselect_checkbox {
     background-color: $sttm-white;
     border: 1px solid $sttm-light-grey;
@@ -611,6 +619,7 @@
   }
 }
 
+.bani,
 .sahib,
 .fareedkot,
 .manmohan {
@@ -619,6 +628,7 @@
 }
 
 .bani {
+  border-left: 5px double $sttm-blue;
   font-size: 24px;
 }
 
