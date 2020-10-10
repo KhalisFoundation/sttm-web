@@ -619,6 +619,7 @@
   }
 }
 
+.bani,
 .sahib,
 .fareedkot,
 .manmohan {
@@ -627,6 +628,7 @@
 }
 
 .bani {
+  border-left: 5px double $sttm-blue;
   font-size: 24px;
 }
 
