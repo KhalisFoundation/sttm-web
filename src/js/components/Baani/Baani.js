@@ -6,7 +6,7 @@ import Translation from '../Translation';
 import Transliteration from '../Transliteration';
 import Steek from './Steek';
 import BaaniLine from '../BaaniLine';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME, PUNJABI_LANGUAGE } from '@/constants';
+import { TEXTS, SHABAD_CONTENT_CLASSNAME, PUNJABI_LANGUAGE, STEEK_LANGUAGES } from '@/constants';
 import { MahankoshTooltip } from '@/components/MahankoshTooltip';
 
 import {
@@ -362,6 +362,11 @@ export default class Baani extends React.PureComponent {
     return this.createVersedGurbani();
   }
 
+  reOrderSteekLanguages = () => {
+    const { steekLanguages } = this.props;
+    return STEEK_LANGUAGES.filter(l => steekLanguages.some(sL => sL === l));
+  }
+
   createMixedViewMarkup = () => {
     const {
       source,
@@ -377,6 +382,7 @@ export default class Baani extends React.PureComponent {
     } = this.props;
 
     const normalizedGurbani = this.normalizeGurbani();
+    const reOrderedSteekLanguages = this.reOrderSteekLanguages();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
     const mixedViewBaaniClass = 'mixed-view-baani';
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
@@ -457,7 +463,7 @@ export default class Baani extends React.PureComponent {
                 }
                 <div
                   className={`${mixedViewBaaniClass}-steek ${paragraphModeClass}`}>
-                  {steekLanguages.map(language =>
+                  {reOrderedSteekLanguages.map(language =>
                     <div
                       key={language}
                       className={`${mixedViewBaaniClass}-steek-${language} ${paragraphModeClass}`} >
@@ -505,11 +511,11 @@ export default class Baani extends React.PureComponent {
       unicode,
       fontSize,
       highlight,
-      steekLanguages,
       translationLanguages: _translationLanguages,
       transliterationLanguages,
     } = this.props;
 
+    const reOrderedSteekLanguages = this.reOrderSteekLanguages();
     const normalizedGurbani = this.normalizeGurbani();
     const paragraphModeClass = isParagraphMode ? 'paragraph-mode' : '';
     const splitViewBaaniClass = 'split-view-baani';
@@ -588,7 +594,7 @@ export default class Baani extends React.PureComponent {
                 </div>))}
             </div>))
         }
-        {steekLanguages.map(language => (
+        {reOrderedSteekLanguages.map(language => (
           <div
             key={language}
             className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}>
