@@ -140,10 +140,8 @@ class Shabad extends React.PureComponent {
     const isShowMetaData = this.props.hideMeta === false;
     const isShowControls = this.props.hideControls === false;
     return (
-      <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
-
+      <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root>
         <React.Fragment >
-
           {isShowControls && (
             <Controls
               media={
@@ -169,7 +167,7 @@ class Shabad extends React.PureComponent {
               transliterationLanguages={transliterationLanguages}
             />
           )}
-          <div id="shabad" className={`shabad display display-${type}`} ang>
+          <div id="shabad" className={`shabad display display-${type}`}>
             <div className="shabad-container">
               {isMultiPage ?
                 <>
