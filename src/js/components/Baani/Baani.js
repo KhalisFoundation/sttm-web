@@ -344,7 +344,6 @@ export default class Baani extends React.PureComponent {
   createVersedGurbani = () => {
     const { gurbani } = this.props;
     const versedGurbani = {};
-
     gurbani.forEach((shabad, idx) => {
       versedGurbani[idx] = [];
       versedGurbani[idx].push(shabad);
