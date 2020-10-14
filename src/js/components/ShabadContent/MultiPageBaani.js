@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
 export const MultiPageBaani = React.memo((props) => {
-  const { pages, ...baniProps } = props;
+  const { pages, ...baaniProps } = props;
   const history = useHistory();
   const sehajPaathMode = useSelector(state => state.sehajPaathMode);
 
@@ -14,6 +14,7 @@ export const MultiPageBaani = React.memo((props) => {
         return (
           <div key={source.pageNo}>
             <Baani
+              {...baaniProps}
               source={source.sourceId}
               ang={source.pageNo}
               gurbani={gurbani}
@@ -30,7 +31,6 @@ export const MultiPageBaani = React.memo((props) => {
 
                 history.push(newUrl);
               }}
-              {...baniProps}
             />
           </div>
         );
