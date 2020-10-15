@@ -15,3 +15,17 @@ export const TYPES = _TYPES.filter((value, index) =>
 
 export const SHORT_DOMAIN = 'sttm.co';
 export const MAHANKOSH_TOOLTIP_SOURCE = 'Source: Mahaan Kosh (Encyclopedia)';
+export const SG_BAANI_TYPES = [
+  {
+    name: 'Short', type: 'S'
+  },
+  {
+    name: 'Medium', type: 'M'
+  },
+  {
+    name: 'Long', type: 'L'
+  },
+  {
+    name: 'Extra Long', type: 'XL'
+  }
+]

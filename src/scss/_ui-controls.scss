@@ -13,4 +13,15 @@
       background-color: $sttm-bright-blue;
     }
   }
+
+  &-ghost {
+    border: 1px solid $sttm-blue;
+    background-color: $sttm-white;
+    color: $sttm-blue;
+
+    &-ghost--activated {
+      background-color: $sttm-blue;
+      color: $sttm-white;
+    }
+  }
 }

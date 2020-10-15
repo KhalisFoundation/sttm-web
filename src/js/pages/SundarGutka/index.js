@@ -8,7 +8,7 @@ import SmartBanner from 'react-smartbanner';
 import { RenderShabads } from '@/components/RenderShabads';
 import { pageView } from '@/util/analytics';
 import BreadCrumb from '@/components/Breadcrumb';
-import { TEXTS } from '@/constants';
+import { TEXTS, SG_BAANI_TYPES } from '@/constants';
 import { sanitizeBaani, baaniNameToIdMapper } from './utils';
 class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -27,8 +27,6 @@ class SundarGutka extends React.PureComponent {
     { title: TEXTS.URIS.SUNDAR_GUTKA_BAANI },
   ];
 
-  $details = React.createRef();
-
   state = {
     baanies: null,
     q: '',
@@ -40,6 +38,7 @@ class SundarGutka extends React.PureComponent {
         location: { pathname },
         match: { isExact: isSundarGutkaHome },
         transliterationLanguages,
+        sgBaani: sgBaaniType
       },
       state: { baanies, q },
     } = this;
@@ -61,7 +60,16 @@ class SundarGutka extends React.PureComponent {
             <div className="spinner" />
           ) : isSundarGutkaHome ? (
             <div className="wrapper" style={{ width: '100%', }}>
-              <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
+              <h2>{TEXTS.SUNDAR_GUTKA_HEADER}
+                <div className="sgBaanis">
+                  {SG_BAANI_TYPES.map(({ name, type }) =>
+                    <button
+                      key={type}
+                      className={`btn-ghost ${sgBaaniType === type ? 'btn-ghost--activated' : ''}`}>
+                      {name}
+                    </button>)}
+                </div>
+              </h2>
               <input
                 type="search"
                 name="baani-query"
@@ -149,6 +157,8 @@ class SundarGutka extends React.PureComponent {
   }
 }
 
-export default connect(({ transliterationLanguages }) => ({
-  transliterationLanguages,
-}))(SundarGutka);
+export default connect(
+  ({ transliterationLanguages, sgBaani }) => ({
+    transliterationLanguages,
+    sgBaani
+  }))(SundarGutka);
