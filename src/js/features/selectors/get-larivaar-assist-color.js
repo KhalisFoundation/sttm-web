@@ -16,7 +16,8 @@ export const getLarivaarAssistColor = createSelector(
     const akharColor = blendColors(
       darkMode ? DARKMODE_TEXT_COLOR : TEXT_COLOR,
       LARIVAAR_ASSIST_COLOR,
-      getLarivaarStrengthPercentage(larivaarAssistStrength))
+      getLarivaarStrengthPercentage(larivaarAssistStrength)
+    )
 
     return akharColor
   }

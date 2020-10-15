@@ -1,42 +1,96 @@
-import React, { memo } from 'react';
-import { connect } from 'react-redux';
+import React, { memo, useEffect, useRef, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 
 import LarivaarWord from './Word';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
-import { getLarivaarAssistColor } from '../../features/selectors';
+
 import { getVisraamClass } from '../../util';
+import { getLarivaarAssistColor } from '@/features/selectors';
+import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
+import { MahankoshContext } from '@/context';
+
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
-  larivaarAssistColor: string;
   highlightIndex?: number[];
   enable?: boolean;
   unicode: boolean;
   children: string;
   query: string;
   visraam: object;
+  isShowMahankoshTooltip?: boolean;
 }
 
-export const Larivaar: React.FC<ILarivaarProps> = (props) => {
+export const Larivaar: React.FC<ILarivaarProps> = ({
+  highlightIndex,
+  larivaarAssist,
+  enable = true,
+  children,
+  unicode,
+  query,
+  visraam,
+  isShowMahankoshTooltip = false
+}) => {
+  const dispatch = useDispatch();
   const {
-    highlightIndex,
-    larivaarAssist,
-    larivaarAssistColor,
-    enable = true,
-    children,
-    unicode,
-    query,
-    visraam,
-  } = props;
+    selectedLine,
+    selectedWordIndex,
+    currentLine,
+    setMahankoshInformation
+  } = useContext(MahankoshContext);
+  const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
+  const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
+  const isMahankoshTooltipExplaination = useSelector(state => state.isMahankoshTooltipExplaination);
+
+  const handleMouseOver = (currentLine: number) => {
+    return (selectedWord: string, selectedWordIndex: number) => {
+      ReactTooltip.rebuild();
+      setMahankoshInformation({
+        selectedLine: currentLine,
+        selectedWord,
+        selectedWordIndex,
+      })
+    }
+  }
+
+  const clearMahankoshTooltip = () => {
+    ReactTooltip.hide();
+    setMahankoshInformation({
+      selectedWord: '',
+      selectedLine: -1,
+      selectedWordIndex: -1
+    })
+    dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
+  }
+
+  const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
+  let handleMouseOverHighlightResult = undefined;
+  if (isShowMahankoshTooltip) {
+    handleMouseOverHighlightResult = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMouseOver(currentLine)
+  }
 
   if (!enable) {
     return (
-      <HighlightedSearchResult
-        highlightIndex={highlightIndex}
-        query={query}
-        visraams={visraam}
-      >
-        {children}
-      </HighlightedSearchResult>
+      <>
+        <HighlightedSearchResult
+          isShowMahankoshTooltip={isShowMahankoshTooltip}
+          mahankoshIndex={mahankoshIndex}
+          highlightIndex={highlightIndex}
+          query={query}
+          visraams={visraam}
+          onMouseOver={handleMouseOverHighlightResult}
+        >
+          {children}
+        </HighlightedSearchResult>
+        {/* {!isMahankoshTooltipActive &&
+          <MahankoshTooltip
+            tooltipRef={reactTooltipRef}
+            tooltipId="mahankoshTooltipHighlightSearchResult"
+            gurbaniWord={selectedWord}
+            isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
+            mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
+          />} */}
+      </>
     );
   }
 
@@ -47,6 +101,7 @@ export const Larivaar: React.FC<ILarivaarProps> = (props) => {
           return `${word} `;
         }
         const visraamClass = getVisraamClass(children, index, visraam);
+
         return (
           <LarivaarWord
             highlightIndex={highlightIndex}
@@ -64,9 +119,4 @@ export const Larivaar: React.FC<ILarivaarProps> = (props) => {
   );
 }
 
-const mapStateToProps = (state: any) =>
-  ({
-    larivaarAssistColor: getLarivaarAssistColor(state)
-  })
-
-export default memo(connect(mapStateToProps, {})(Larivaar));
+export default memo(Larivaar);

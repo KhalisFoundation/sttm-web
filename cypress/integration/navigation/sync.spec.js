@@ -1,5 +1,5 @@
 describe('Navigation', () => {
-  context('Sync', () => {
+  describe('Sync', () => {
     beforeEach(() => {
       cy.visit('/');
 

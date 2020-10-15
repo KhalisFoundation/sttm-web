@@ -1,5 +1,5 @@
 
-describe('Home page Search tests', () => {
+describe('Search', () => {
   describe('First Letter Search from anywhere(G)', () => {
     it('should return search results for "ApAb" in drop-down', () => {
       cy.visit('/');
@@ -45,7 +45,7 @@ describe('Home page Search tests', () => {
         .should('have.text', 'Show full results')
         .click({ force: true });
 
-      cy.url().should('include', '/search?q=ApAb&type=1&source=G');
+      cy.url().should('include', '/search?q=ApAb&type=1&source=all');
     });
 
     it('should open all search results page on typing "ApAb" in search field and pressing enter', () => {
@@ -62,7 +62,7 @@ describe('Home page Search tests', () => {
 
       cy.get('.search-form').submit();
 
-      cy.url().should('include', '/search?q=ApAb&type=1&source=G');
+      cy.url().should('include', '/search?q=ApAb&type=1&source=all');
     });
 
     it('should open Shabad page on typing "ApAb" in search field, highlight search result and pressing enter', () => {
@@ -84,7 +84,7 @@ describe('Home page Search tests', () => {
         .type('{downarrow}')
         .type('{enter}');
 
-      cy.url().should('include', '&q=ApAb&type=1&source=G&highlight=');
+      cy.url().should('include', '&q=ApAb&type=1&source=all&highlight=');
     });
 
     it('should open Shabad page on typing "ApAb" in search field and clicking a search result', () => {
@@ -103,7 +103,7 @@ describe('Home page Search tests', () => {
         .first()
         .click();
 
-      cy.url().should('include', "&q=ApAb&type=1&source=G&highlight=");
+      cy.url().should('include', "&q=ApAb&type=1&source=all&highlight=");
     });
   });
 });

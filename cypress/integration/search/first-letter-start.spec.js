@@ -1,4 +1,4 @@
-describe('Home page Search tests', () => {
+describe('Search', () => {
   describe('First Letter Search from Start(G)', () => {
     it('should return search results for "bhb" in drop-down', () => {
       cy.visit('/');

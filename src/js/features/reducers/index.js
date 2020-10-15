@@ -10,6 +10,8 @@ import {
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
   TOGGLE_SEHAJ_PAATH_MODE,
+  SET_MAHANKOSH_TOOLTIP_EXPLAINATION,
+  SET_MAHANKOSH_TOOLTIP_ACTIVE,
   SET_VISRAAM_SOURCE,
   SET_VISRAAM_STYLE,
   SET_CENTER_ALIGN_OPTION,
@@ -21,6 +23,7 @@ import {
   SET_AUTOSCROLLING,
   SET_TRANSLATION_LANGUAGES,
   SET_TRANSLITERATION_LANGUAGES,
+  SET_STEEK_LANGUAGES,
   SET_LARIVAAR_ASSIST_STRENGTH,
   SET_ONLINE_MODE,
   SET_DARK_MODE,
@@ -31,6 +34,8 @@ import {
   SET_SPLIT_VIEW,
   SET_FULLSCREEN_MODE,
   SET_LOADING_ANG,
+  SET_PREFETCH_ANG,
+  SET_ERROR,
   CHANGE_FONT,
 } from '../actions';
 import {
@@ -51,20 +56,43 @@ import {
   LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT,
   LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
+  LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
-} from '../../constants';
-import { saveToLocalStorage } from '../../util';
-import { clickEvent } from '../../util/analytics';
+  PUNJABI_LANGUAGE
+} from '@/constants';
+import {
+  saveToLocalStorage,
+  getArrayFromLocalStorage,
+  clickEvent
+} from '@/util';
 import { DARK_MODE_COOKIE } from '../../../../common/constants';
 
 export default function reducer(state, action) {
   switch (action.type) {
+    case SET_MAHANKOSH_TOOLTIP_EXPLAINATION: {
+      return {
+        ...state,
+        isMahankoshTooltipExplaination: action.payload
+      }
+    }
+    case SET_MAHANKOSH_TOOLTIP_ACTIVE: {
+      return {
+        ...state,
+        isMahankoshTooltipActive: action.payload
+      }
+    }
     case SET_LOADING_ANG: {
       return {
         ...state,
         isLoadingAng: action.payload
+      }
+    }
+    case SET_PREFETCH_ANG: {
+      return {
+        ...state,
+        prefetchAng: action.payload
       }
     }
     case SET_ONLINE_MODE: {
@@ -174,7 +202,6 @@ export default function reducer(state, action) {
         sehajPaathMode
       }
     }
-
 
     case TOGGLE_PARAGRAPH_MODE: {
       const paragraphMode = !state.paragraphMode;
@@ -345,20 +372,72 @@ export default function reducer(state, action) {
       };
     }
     case SET_TRANSLATION_LANGUAGES: {
+      const isPunjabiIncluded = action.payload.includes('punjabi');
       const translationLanguages = action.payload || [];
+      const isSteekLanguageSelected = state.steekLanguages.length > 0;
+      let steekLanguages = [];
+      if (isPunjabiIncluded) {
+        if (isSteekLanguageSelected)
+          steekLanguages = state.steekLanguages;
+        else {
+          const storedSteekLanguages = getArrayFromLocalStorage(LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES);
+          steekLanguages = storedSteekLanguages.length > 0 ? storedSteekLanguages : ['bani db'];
+        }
+      }
+
       clickEvent({
         action: SET_TRANSLATION_LANGUAGES,
         label: JSON.stringify(translationLanguages),
       });
+
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
         JSON.stringify(translationLanguages)
       );
+
+      // save steeks as well to local storage
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
+        JSON.stringify(steekLanguages)
+      );
+
       return {
         ...state,
         translationLanguages,
+        steekLanguages,
       };
     }
+
+    case SET_STEEK_LANGUAGES: {
+      const steekLanguages = action.payload || [];
+      clickEvent({
+        action: SET_STEEK_LANGUAGES,
+        label: JSON.stringify(steekLanguages),
+      });
+
+      if (steekLanguages.length > 0) {
+        saveToLocalStorage(
+          LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
+          JSON.stringify(steekLanguages)
+        );
+        const isPunjabiTranslationIncluded = state.translationLanguages.includes(t => t === 'punjabi');
+        const translationLanguages = isPunjabiTranslationIncluded ? state.translationLanguages : [...state.translationLanguages, 'punjabi'];
+
+        return {
+          ...state,
+          steekLanguages,
+          translationLanguages
+        };
+      }
+
+      return {
+        ...state,
+        translationLanguages: state.translationLanguages.filter(t => t !== 'punjabi'),
+        steekLanguages
+      }
+
+    }
+
     case SET_LARIVAAR_ASSIST_STRENGTH: {
       const larivaarAssistStrength = action.payload;
 
@@ -372,6 +451,7 @@ export default function reducer(state, action) {
         larivaarAssistStrength,
       };
     }
+
     case SET_TRANSLITERATION_LANGUAGES: {
       const transliterationLanguages = action.payload || [];
       clickEvent({
@@ -460,6 +540,16 @@ export default function reducer(state, action) {
         centerAlignGurbani,
       };
     }
+
+    case SET_ERROR: {
+      const error = action.payload;
+
+      return {
+        ...state,
+        error
+      }
+    }
+
     default:
       return state;
   }

@@ -166,6 +166,14 @@
     width: 1px;
   }
 
+  &.qs-option {
+    margin-right: 20px;
+
+    @media screen and (max-width: 730px) {
+      margin-right: 0;
+    }
+  }
+
   &.multiselect_checkbox {
     background-color: $sttm-white;
     border: 1px solid $sttm-light-grey;
@@ -211,8 +219,8 @@
       z-index: 1;
 
       &.collapsed {
+        display: none;
         height: 0;
-        opacity: 0;
       }
 
       .dark-mode & {
@@ -230,6 +238,8 @@
 
       p {
         margin-bottom: 0;
+        padding: 0 12px;
+        text-align: left;
       }
 
       li {
@@ -271,6 +281,36 @@
           }
         }
 
+        input[type="checkbox"]:checked + .check-fareedkot {
+          background-color: $sttm-mint;
+          border: none;
+
+          .dark-mode & {
+            background-color: $sttm-mint;
+            border: none;
+          }
+        }
+
+        input[type="checkbox"]:checked + .check-manmohan {
+          background-color: $sttm-salmon;
+          border: none;
+
+          .dark-mode & {
+            background-color: $sttm-salmon;
+            border: none;
+          }
+        }
+
+        input[type="checkbox"]:checked + .check-sahib {
+          background-color: $sttm-lilac;
+          border: none;
+
+          .dark-mode & {
+            background-color: $sttm-lilac;
+            border: none;
+          }
+        }
+
         label {
           cursor: pointer;
           font-size: 16px;
@@ -279,6 +319,14 @@
             color: $sttm-white;
           }
         }
+      }
+    }
+
+    &.controller-multiselect {
+      .list-wrapper {
+        flex-wrap: unset;
+        height: unset;
+        width: unset;
       }
     }
   }
@@ -420,12 +468,14 @@
 
   &--close {
     align-items: center;
-    border: 1px solid $sttm-grey;
+    background-color: $sttm-blue;
+    border: 2px solid $sttm-blue;
     border-radius: 50%;
-    color: $sttm-grey;
+    color: $sttm-white;
     display: flex;
-    font-size: 13px;
-    height: 34px;
+    font-size: 23px;
+    font-weight: bold;
+    height: 40px;
     justify-content: center;
     outline: none;
     padding: 8px;
@@ -433,11 +483,11 @@
     right: 8px;
     top: 8px;
     transition: all 0.2s ease-in;
-    width: 34px;
+    width: 40px;
 
     &:hover {
-      border-color: $sttm-red;
-      color: $sttm-red;
+      border-color: $sttm-blue;
+      color: $sttm-light-blue;
     }
   }
 
@@ -560,6 +610,38 @@
       }
     }
   }
+
+  .icon-label {
+    &.enabled {
+      background-color: $sttm-blue;
+      color: $sttm-white;
+    }
+  }
+}
+
+.bani,
+.sahib,
+.fareedkot,
+.manmohan {
+  margin-left: 5px;
+  padding-left: 10px;
+}
+
+.bani {
+  border-left: 5px double $sttm-blue;
+  font-size: 24px;
+}
+
+.fareedkot {
+  border-left: 5px double $sttm-mint;
+}
+
+.manmohan {
+  border-left: 5px double $sttm-salmon;
+}
+
+.sahib {
+  border-left: 5px double $sttm-lilac;
 }
 
 /* Remove Microsoft Edge X icon from search bar */

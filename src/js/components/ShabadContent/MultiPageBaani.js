@@ -1,42 +1,26 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
+export const MultiPageBaani = React.memo((props) => {
+  const { pages, ...baaniProps } = props;
+  const history = useHistory();
+  const sehajPaathMode = useSelector(state => state.sehajPaathMode);
 
-export class MultiPageBaani extends React.PureComponent {
-
-  render() {
-    const {
-      pages,
-      type,
-      splitView,
-      unicode,
-      highlight,
-      larivaar,
-      fontSize,
-      translationFontSize,
-      transliterationFontSize,
-      lineHeight,
-      fontFamily,
-      larivaarAssist,
-      translationLanguage,
-      centerAlignGurbani,
-      showFullScreen,
-      transliterationLanguages,
-      translationLanguages,
-      history,
-    } = this.props;
-
-    return (
-      <React.Fragment>
-        {pages.map(({ page: gurbani, source }, idx) => {
-          return (
+  return (
+    <React.Fragment>
+      {pages.map(({ page: gurbani, source }) => {
+        return (
+          <div key={source.pageNo}>
             <Baani
-              key={idx}
+              {...baaniProps}
+              source={source.sourceId}
               ang={source.pageNo}
-              type={type}
               gurbani={gurbani}
-              splitView={splitView}
-              unicode={unicode}
+              history={history}
+              isParagraphMode={false}
+              isSehajPaathMode={sehajPaathMode}
               // offsetY={isLastPage ? lastScrollPosition : -1}
               onBaaniLineClick={(highlightVerseId) => () => {
                 const newUrl = toAngURL({
@@ -47,23 +31,10 @@ export class MultiPageBaani extends React.PureComponent {
 
                 history.push(newUrl);
               }}
-              highlight={highlight}
-              larivaar={larivaar}
-              fontSize={fontSize}
-              translationFontSize={translationFontSize}
-              transliterationFontSize={transliterationFontSize}
-              lineHeight={lineHeight}
-              fontFamily={fontFamily}
-              larivaarAssist={larivaarAssist}
-              translationLanguages={translationLanguages}
-              transliterationLanguages={transliterationLanguages}
-              centerAlignGurbani={centerAlignGurbani}
-              showFullScreen={showFullScreen}
-              isParagraphMode={false}
             />
-          );
-        })}
-      </React.Fragment>
-    );
-  }
-}
+          </div>
+        );
+      })}
+    </React.Fragment>
+  );
+});

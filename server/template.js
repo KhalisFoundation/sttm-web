@@ -59,14 +59,13 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="STTM">
-  <!-- <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png"> -->
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png">
 
   <!-- Windows Tile -->
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
-  <link rel="android-touch-icon" href="/assets/images/sundar-gutka-icon.png">
-  <link rel="apple-touch-icon" href="/assets/images/sundar-gutka-icon.png">
+  <link rel="android-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png">
   ${stylesheetsHTML}
 </head>
 
@@ -85,7 +84,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
       </ul>
       <ul class="menu footer-menu">
         <li>
-          <a href="/help">Help</a>
+          <a href="http://support.khalisfoundation.org/" target="_blank" rel="noopener noreferrer">Help</a>
         </li>
         <li>
           <a href="/about">About Us</a>
@@ -145,8 +144,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
   <!-- ServiceWorker -->
   <script>
     if ("serviceWorker" in navigator) {
-      ${
-  process.env.kill_service_worker
+      ${process.env.kill_service_worker
     ? unregisterServiceWorker
     : registerServiceWorker
   }
@@ -156,9 +154,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
     var d = new Date();
     document.getElementById("year").innerHTML = d.getFullYear();
   </script>
-<link rel="stylesheet" href="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.css" />
-<script src="https://raw.githubusercontent.com/nitinhayaran/jRange/master/jquery.range.js"></script>
-
+  
 <!-- freshwork widget -->
 <script> window.fwSettings={ 'widget_id':63000000151 }; !function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() </script> <script type='text/javascript' src='https://widget.freshworks.com/widgets/63000000151.js' async></script>
 

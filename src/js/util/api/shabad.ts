@@ -32,6 +32,14 @@ export const transliterationMap = {
   IPA: shabad => shabad.transliteration.ipa,
 };
 
+export const steekMap: any = {
+  "sahib singh": shabad => shabad.translation.pu.ss,
+  fareedkot: shabad => shabad.translation.pu.ft,
+  'bani db': shabad => shabad.translation.pu.bdb,
+  'manmohan singh': shabad => shabad.translation.pu.ms,
+};
+
+
 export const getRaag = (shabad) => ({
   english: shabad.raag ? shabad.raag.english : '',
   gurmukhi: shabad.raag ? shabad.raag.gurmukhi : '',

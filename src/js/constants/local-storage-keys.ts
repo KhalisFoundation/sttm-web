@@ -11,6 +11,7 @@ export const LOCAL_STORAGE_KEY_FOR_LARIVAAR = 'larivaar';
 export const LOCAL_STORAGE_KEY_FOR_UNICODE = 'unicode';
 export const LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW = 'splitView';
 export const LOCAL_STORAGE_KEY_FOR_FONT_SIZE = 'fontSize';
+export const LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES = "steekLanguages";
 export const LOCAL_STORAGE_KEY_FOR_TRANSLATION_FONT_SIZE = 'translationFontSize';
 export const LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE = 'transliterationFontSize';
 export const LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT = 'lineHeight';

@@ -1,5 +1,5 @@
 import store from './features/store'
-import { toggleItemInArray } from './util'
+import { selectItemInArray } from './util'
 
 const ViewerShortcuts = {
   toggleLarivar: {
@@ -84,29 +84,29 @@ const ViewerShortcutHanders = {
   toggleEngTranslation: (e) => {
     e.preventDefault();
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('english', state.translationLanguages) })
+    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: selectItemInArray('english', state.translationLanguages) })
   },
   togglePunjabiTranslation: (e) => {
     e.preventDefault();
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('punjabi', state.translationLanguages) })
+    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: selectItemInArray('punjabi', state.translationLanguages) })
   },
   toggleSpanishTranslation: (e) => {
     e.preventDefault();
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: toggleItemInArray('spanish', state.translationLanguages) })
+    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: selectItemInArray('spanish', state.translationLanguages) })
   },
   toggleEngTranslit: () => {
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('english', state.transliterationLanguages) })
+    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: selectItemInArray('english', state.transliterationLanguages) })
   },
   toggleShahTranslit: () => {
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('shahmukhi', state.transliterationLanguages) })
+    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: selectItemInArray('shahmukhi', state.transliterationLanguages) })
   },
   toggleHinTranslit: () => {
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: toggleItemInArray('hindi', state.transliterationLanguages) })
+    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: selectItemInArray('hindi', state.transliterationLanguages) })
   }
 }
 

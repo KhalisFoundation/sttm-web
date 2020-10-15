@@ -132,15 +132,17 @@
   font-weight: 400;
   left: 0;
   margin: 0 auto;
-  padding: 0.8rem 1.8rem;
+  padding: 0.8rem 4.8rem 0.8rem 1.8rem;
   position: fixed;
   right: 0;
   text-align: center;
-  width: 30vw;
+  width: 80vw;
   z-index: 6;
 
   .toast-notification-close-button {
-    margin: 0.6em;
+    float: right;
+    font-size: 44px;
+    margin: 0.1em 0.6em;
     position: absolute;
     right: 0;
     top: 0;
@@ -156,10 +158,11 @@
 
   @media screen and (max-width: 45.999999em) {
     border-radius: 0;
-    bottom: 0;
     box-shadow: none;
     font-size: 0.8rem;
+    height: 30vh;
     text-align: left;
+    top: 0;
     width: 100vw;
   }
 

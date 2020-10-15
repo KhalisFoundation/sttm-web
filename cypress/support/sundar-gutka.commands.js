@@ -1,5 +1,5 @@
-Cypress.Commands.add('checkSgCard', ({ childNo, english, gurmukhi }) => {
-  const sttmBlue = 'rgb(1, 102, 155)';
+Cypress.Commands.add('checkSgCard', function checkGranthIndices({ childNo, english, gurmukhi }) {
+  const { sttmBlue } = Cypress.env().colors;
   const em = 18; //no of pixel
 
   // sundar gutka card

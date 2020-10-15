@@ -88,6 +88,7 @@ class Shabad extends React.PureComponent {
     splitView: PropTypes.bool.isRequired,
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
+    steekLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
@@ -107,36 +108,27 @@ class Shabad extends React.PureComponent {
   render() {
     const {
       props: {
-        history,
+        random,
         isMultiPage,
         isLoadingContent,
-        gurbani,
+        paragraphMode,
         location,
         nav,
-        info,
+        history,
         pages,
-        type,
-        random,
-        splitView,
-        translationLanguages,
-        transliterationLanguages,
-        larivaarAssist,
-        larivaar,
-        highlight,
-        unicode,
-        fontSize,
-        lineHeight,
-        translationFontSize,
-        transliterationFontSize,
-        fontFamily,
-        centerAlignGurbani,
-        showFullScreen,
-        paragraphMode
+        ...baniProps
       },
       handleEmbed,
       handleCopyAll,
     } = this;
 
+    const {
+      info,
+      type,
+      translationLanguages,
+      transliterationLanguages,
+      unicode,
+    } = baniProps;
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
@@ -147,12 +139,9 @@ class Shabad extends React.PureComponent {
     const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
     const isShowMetaData = this.props.hideMeta === false;
     const isShowControls = this.props.hideControls === false;
-
     return (
-      <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root >
-
+      <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root>
         <React.Fragment >
-
           {isShowControls && (
             <Controls
               media={
@@ -178,50 +167,20 @@ class Shabad extends React.PureComponent {
               transliterationLanguages={transliterationLanguages}
             />
           )}
-          <div id="shabad" className={`shabad display display-${type}`} ang>
+          <div id="shabad" className={`shabad display display-${type}`}>
             <div className="shabad-container">
               {isMultiPage ?
                 <>
                   <MultiPageBaani
+                    {...baniProps}
                     pages={pages}
-                    history={history}
-                    type={type}
-                    gurbani={gurbani}
-                    splitView={splitView}
-                    unicode={unicode}
-                    highlight={highlight}
-                    larivaar={larivaar}
-                    fontSize={fontSize}
-                    translationFontSize={translationFontSize}
-                    transliterationFontSize={transliterationFontSize}
-                    lineHeight={lineHeight}
-                    fontFamily={fontFamily}
-                    larivaarAssist={larivaarAssist}
-                    translationLanguages={translationLanguages}
-                    transliterationLanguages={transliterationLanguages}
-                    centerAlignGurbani={centerAlignGurbani}
-                    showFullScreen={showFullScreen}
+                    isParagraphMode={isParagraphMode}
                   />
                   {this.getContinueButton()}
                 </>
                 :
                 <Baani
-                  type={type}
-                  gurbani={gurbani}
-                  splitView={splitView}
-                  unicode={unicode}
-                  highlight={highlight}
-                  larivaar={larivaar}
-                  fontSize={fontSize}
-                  translationFontSize={translationFontSize}
-                  transliterationFontSize={transliterationFontSize}
-                  lineHeight={lineHeight}
-                  fontFamily={fontFamily}
-                  larivaarAssist={larivaarAssist}
-                  translationLanguages={translationLanguages}
-                  transliterationLanguages={transliterationLanguages}
-                  centerAlignGurbani={centerAlignGurbani}
-                  showFullScreen={showFullScreen}
+                  {...baniProps}
                   isParagraphMode={isParagraphMode}
                 />}
               {isLoadingContent && <div className="spinner" />}
@@ -235,7 +194,7 @@ class Shabad extends React.PureComponent {
                 <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
-          <ProgressBar percent={this.state.progress} />
+          <ProgressBar />
         </React.Fragment>
       </GlobalHotKeys>
     );
@@ -275,26 +234,6 @@ class Shabad extends React.PureComponent {
         </div>
       )
     }
-  }
-
-  scrollListener = () => {
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      const maxY =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const progress = parseFloat((y / maxY).toPrecision(2));
-      this.setState({ progress });
-    });
-  };
-
-  componentDidMount() {
-    addEventListener('scroll', this.scrollListener, { passive: true });
-    this.scrollListener();
-  }
-
-  componentWillUnmount() {
-    removeEventListener('scroll', this.scrollListener);
   }
 
   handleCopyAll = () =>

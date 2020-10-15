@@ -6,7 +6,7 @@ describe('Navigation', () => {
   const sundarGutkaBaanis = 104;
   const searchString = 'jaa';
 
-  context('Sundar-Gutka page', () => {
+  describe('Sundar-Gutka page', () => {
     beforeEach(() => {
       cy.visit('/');
 

@@ -18,6 +18,10 @@ blockquote {
   margin: 0 auto;
 }
 
+.gurlipi {
+  display: inline-block;
+}
+
 #metadata {
   align-items: center;
   background-color: #e9e9e9;
@@ -71,6 +75,12 @@ blockquote {
 
 .meta {
   flex-grow: 1;
+}
+
+.mixed-view-baani-transliteration-shahmukhi {
+  clear: both;
+  display: flex;
+  float: right;
 }
 
 .pagination {
@@ -244,6 +254,19 @@ blockquote {
       }
     }
 
+    &-steek {
+      font-family: gurmukhi_normal, sans-serif;
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        & .steek {
+          margin-right: 4px;
+        }
+      }
+    }
+
     &-wrapper {
       &.paragraph-mode {
         margin-bottom: 16px;
@@ -280,6 +303,19 @@ blockquote {
     }
 
     &-transliteration {
+      margin-bottom: 4px;
+
+      &.paragraph-mode * {
+        display: inline;
+
+        & .transliteration {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &-steek {
+      font-family: gurmukhi_normal, sans-serif;
       margin-bottom: 4px;
 
       &.paragraph-mode * {

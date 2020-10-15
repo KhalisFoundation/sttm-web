@@ -16,17 +16,16 @@ export interface ILarivaarWordProps {
   visraamClass: string;
 }
 
-const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
-  const {
-    highlightIndex,
-    word,
-    unicode,
-    larivaarAssist,
-    larivaarAssistColor,
-    index,
-    highlight,
-    visraamClass,
-  } = props;
+const LarivaarWord: React.FC<ILarivaarWordProps> = ({
+  highlightIndex,
+  word,
+  unicode,
+  larivaarAssist,
+  larivaarAssistColor,
+  index,
+  highlight,
+  visraamClass,
+}) => {
 
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
@@ -59,10 +58,11 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
 
         // If this is a search result
         if (highlightIndex !== undefined) {
-          if (highlight || (highlightIndex.includes(index))) {
+          if (highlight || highlightIndex.includes(index)) {
             akharClass += ' search-highlight-word';
           }
         }
+
 
         // handle space break for this special character
         if (item.includes('´')) {
@@ -70,8 +70,8 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
           // so need to use this hack of reference
           return (
             <span
-              ref={assignAkharColor}
               key={key}
+              ref={assignAkharColor}
               className={akharClass}
               style={{ display: 'inline-block' }}
             >
@@ -94,7 +94,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = (props) => {
           </span>
         );
       })}
-    </span>
+    </span >
   );
 }
 

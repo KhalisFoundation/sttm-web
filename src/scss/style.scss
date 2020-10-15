@@ -24,8 +24,10 @@
   "baani-link",
   "granth-index",
   "vishraam",
+  "mahankosh",
   "ui-controls";
 @import 'node_modules/react-smartbanner/dist/main';
+@import 'node_modules/react-toastify/dist/ReactToastify.min';
 
 html,
 body {
@@ -42,6 +44,11 @@ body {
   &.dark-mode {
     background-color: $sttm-light-black;
     color: $sttm-white;
+
+    .translation,
+    .steek {
+      color: $sttm-orange;
+    }
   }
 
   @include vishraamStyles($sttm-vishraam-red, $sttm-vishraam-yellow);

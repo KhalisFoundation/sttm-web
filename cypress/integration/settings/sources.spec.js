@@ -65,7 +65,7 @@ describe('Settings', () => {
         cy.get('[data-cy=Display]')
           .click()
           .find('ul')
-          .last()
+          .eq(1)
           .as('translations');
       })
 
@@ -89,7 +89,7 @@ describe('Settings', () => {
           .find(`${controlPrefix}-punjabi`)
           .click({ force: true })
 
-        cy.get(`${shabadClassNamePrefix}-punjabi`).should('be.visible');
+        cy.get('.mixed-view-baani-steek-bani db').should('be.visible');
       })
 
       it('should show spanish translations, on selecting spanish translation option', () => {

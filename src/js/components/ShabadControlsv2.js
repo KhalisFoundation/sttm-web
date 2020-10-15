@@ -30,6 +30,7 @@ class ShabadControls extends React.PureComponent {
     changeFont: PropTypes.func,
     toggleAdvancedOptions: PropTypes.func,
     setLarivaarAssistStrength: PropTypes.func,
+    setSteekLanguages: PropTypes.func,
 
     translationLanguages: PropTypes.array,
     transliterationLanguages: PropTypes.array,
@@ -183,7 +184,7 @@ class ShabadControls extends React.PureComponent {
           if (element.type) {
             return (
               <div data-cy={element.label} key={`settings-${i}`}
-                className={`qs-option controller-option ${element.type}`}>
+                className={`qs-option controller-option controller-multiselect ${element.type}`}>
                 {this.bakeSettings(element)}
               </div>
             )

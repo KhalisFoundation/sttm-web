@@ -3,10 +3,11 @@ import {
   TRANSLITERATION_LANGUAGES,
   FONT_OPTIONS,
   VISRAAM,
+  STEEK_LANGUAGES,
 } from '@/constants';
 
 import {
-  toggleItemInArray,
+  selectItemInArray,
   toFixedFloat,
   isShowParagraphModeRoute,
   isShowAutoScrollRoute,
@@ -37,6 +38,7 @@ export interface SETTING_ACTIONS {
   toggleLarivaarAssistOption: Function,
   setFontSize: Function,
   setTranslationFontSize: Function,
+  setSteekLanguages: Function,
   setTransliterationFontSize: Function,
   setLineHeight: Function,
   toggleCenterAlignOption: Function,
@@ -55,6 +57,7 @@ export interface SETTING_ACTIONS {
   },
   larivaarAssistStrength: number,
   translationLanguages: string[],
+  steekLanguages: string[],
   transliterationLanguages: string[],
   visraams: boolean,
   visraamSource: string,
@@ -89,6 +92,7 @@ export const QUICK_SETTINGS = ({
   toggleAdvancedOptions,
   toggleParagraphMode,
   toggleDarkMode,
+  setSteekLanguages,
   translationLanguages,
   transliterationLanguages,
   visraams,
@@ -101,6 +105,7 @@ export const QUICK_SETTINGS = ({
   showAdvancedOptions,
   darkMode,
   location,
+  steekLanguages,
 }: SETTING_ACTIONS) => {
 
   const isParagraphMode = isShowParagraphModeRoute(location.pathname);
@@ -115,20 +120,30 @@ export const QUICK_SETTINGS = ({
         checked: transliterationLanguages,
         action: (lang: string) => {
           setTransliterationLanguages(
-            toggleItemInArray(lang, transliterationLanguages)
+            selectItemInArray(lang, transliterationLanguages)
           )
         }
-      }, {
+      },
+      {
         label: 'Translation',
         options: TRANSLATION_LANGUAGES,
         checked: translationLanguages,
         action: (lang: string) => {
           setTranslationLanguages(
-            toggleItemInArray(lang, translationLanguages)
+            selectItemInArray(lang, translationLanguages)
           )
         }
-      }
-      ],
+      },
+      {
+        label: 'Steek',
+        options: STEEK_LANGUAGES,
+        checked: steekLanguages,
+        action: (lang: string) => {
+          setSteekLanguages(
+            selectItemInArray(lang, steekLanguages)
+          )
+        }
+      }],
     },
     {
       type: 'icon-toggle',
@@ -248,7 +263,7 @@ export const QUICK_SETTINGS = ({
       value: showAdvancedOptions,
       action: toggleAdvancedOptions,
     },
-  ]
+  ];
 }
 
 export const ADVANCED_SETTINGS = ({
