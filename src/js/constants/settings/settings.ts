@@ -4,6 +4,7 @@ import {
   FONT_OPTIONS,
   VISRAAM,
   STEEK_LANGUAGES,
+  SG_BAANIS
 } from '@/constants';
 
 import {
@@ -51,6 +52,7 @@ export interface SETTING_ACTIONS {
   changeFont: Function,
   toggleAdvancedOptions: Function,
   setLarivaarAssistStrength: Function,
+  setSgBaani: Function,
 
   location: {
     pathname: string,
@@ -74,6 +76,7 @@ export interface SETTING_ACTIONS {
   centerAlignGurbani: boolean,
   splitView: boolean,
   darkMode: boolean,
+  sgBaani: string,
   fontFamily: string,
   showAdvancedOptions: boolean,
 }
@@ -391,6 +394,16 @@ export const ADVANCED_SETTINGS = ({
         },
       ],
     } : {},
+    {
+      type: 'dropdown',
+      label: 'Sundar Gutka Baanis Length',
+      value: SG_BAANIS.find(({ length }) => sgBaani == length).value,
+      action: (selectedSgBaaniValue: string) => {
+        const { length } = SG_BAANIS.find(({value}) => value == selectedSgBaaniValue)
+        setSgBaani(length);
+      },
+      options: SG_BAANIS.map(({name}) => name),
+    },
     {
       type: 'dropdown',
       label: 'Visraam Source',

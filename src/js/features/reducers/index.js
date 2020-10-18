@@ -35,7 +35,7 @@ import {
   SET_FULLSCREEN_MODE,
   SET_LOADING_ANG,
   SET_PREFETCH_ANG,
-  SET_SG_BAANI,
+  SET_SG_BAANI_LENGTH,
   SET_ERROR,
   CHANGE_FONT,
 } from '../actions';
@@ -61,8 +61,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
-  LOCAL_STORAGE_KEY_FOR_SG_BAANIS,
-  PUNJABI_LANGUAGE
+  LOCAL_STORAGE_KEY_FOR_SG_BAANI,
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -363,15 +362,15 @@ export default function reducer(state, action) {
       };
     }
 
-    case SET_SG_BAANI: {
+    case SET_SG_BAANI_LENGTH: {
       const sgBaani = action.payload;
-      console.log('SET_SG_BAANI', sgBaani, "...")
+
       clickEvent({
-        action: SET_SG_BAANI,
+        action: SET_SG_BAANI_LENGTH,
         label: JSON.stringify(sgBaani),
       });
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANIS, sgBaani)
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI, sgBaani)
 
       return {
         ...state,

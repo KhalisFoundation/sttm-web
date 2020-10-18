@@ -168,7 +168,6 @@ class ShabadControls extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props, 'THIS.PROPS')
     const { isBaniController, updateSettings, desktopSettings } = this.props;
     let settings = [];
     let advanced = [];
