@@ -6,7 +6,7 @@ import throttle from 'lodash.throttle';
 import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
-  setSgBaani,
+  setSgBaaniLength,
   setFontSize,
   setTranslationFontSize,
   setTransliterationFontSize,
@@ -179,7 +179,7 @@ const mapDispatchToProps = {
   setTransliterationLanguages,
   setSteekLanguages,
   setLarivaarAssistStrength,
-  setSgBaani,
+  setSgBaaniLength,
   resetDisplayOptions,
   resetFontOptions,
   toggleAdvancedOptions,

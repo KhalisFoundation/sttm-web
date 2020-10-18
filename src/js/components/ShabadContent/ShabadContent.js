@@ -100,7 +100,7 @@ class Shabad extends React.PureComponent {
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
     paragraphMode: PropTypes.bool,
-    sgBaani: PropTypes.string,
+    sgBaaniLength: PropTypes.string,
   };
 
   constructor(props) {
@@ -117,7 +117,7 @@ class Shabad extends React.PureComponent {
         nav,
         history,
         pages,
-        sgBaani,
+        sgBaaniLength,
         ...baniProps
       },
       handleEmbed,
@@ -183,7 +183,7 @@ class Shabad extends React.PureComponent {
                 :
                 <Baani
                   {...baniProps}
-                  sgBaani={sgBaani}
+                  sgBaaniLength={sgBaaniLength}
                   isSundarGutkaRoute={isSundarGutkaRoute}
                   isParagraphMode={isParagraphMode}
                 />}

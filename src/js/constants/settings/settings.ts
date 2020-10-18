@@ -4,7 +4,7 @@ import {
   FONT_OPTIONS,
   VISRAAM,
   STEEK_LANGUAGES,
-  SG_BAANIS
+  SG_BAANIS,
 } from '@/constants';
 
 import {
@@ -52,7 +52,7 @@ export interface SETTING_ACTIONS {
   changeFont: Function,
   toggleAdvancedOptions: Function,
   setLarivaarAssistStrength: Function,
-  setSgBaani: Function,
+  setSgBaaniLength: Function,
 
   location: {
     pathname: string,
@@ -76,7 +76,7 @@ export interface SETTING_ACTIONS {
   centerAlignGurbani: boolean,
   splitView: boolean,
   darkMode: boolean,
-  sgBaani: string,
+  sgBaaniLength: string,
   fontFamily: string,
   showAdvancedOptions: boolean,
 }
@@ -279,7 +279,7 @@ export const ADVANCED_SETTINGS = ({
   sehajPaathMode,
   toggleSehajPaathMode,
   larivaarAssist,
-  setSgBaani,
+  setSgBaaniLength,
 
   setLarivaarAssistStrength,
   toggleAutoScrollMode,
@@ -292,7 +292,7 @@ export const ADVANCED_SETTINGS = ({
   translationFontSize,
   transliterationFontSize,
   location,
-  sgBaani
+  sgBaaniLength
 }: SETTING_ACTIONS) => {
   const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
   const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
@@ -397,10 +397,10 @@ export const ADVANCED_SETTINGS = ({
     {
       type: 'dropdown',
       label: 'Sundar Gutka Baanis Length',
-      value: SG_BAANIS.find(({ length }) => sgBaani == length).value,
+      value: SG_BAANIS.find(({ length }) => sgBaaniLength == length).value,
       action: (selectedSgBaaniValue: string) => {
         const { length } = SG_BAANIS.find(({value}) => value == selectedSgBaaniValue)
-        setSgBaani(length);
+        setSgBaaniLength(length);
       },
       options: SG_BAANIS.map(({name}) => name),
     },

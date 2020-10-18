@@ -363,18 +363,18 @@ export default function reducer(state, action) {
     }
 
     case SET_SG_BAANI_LENGTH: {
-      const sgBaani = action.payload;
+      const sgBaaniLength = action.payload;
 
       clickEvent({
         action: SET_SG_BAANI_LENGTH,
-        label: JSON.stringify(sgBaani),
+        label: JSON.stringify(sgBaaniLength),
       });
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI, sgBaani)
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI, sgBaaniLength)
 
       return {
         ...state,
-        sgBaani
+        sgBaaniLength
       }
     }
 

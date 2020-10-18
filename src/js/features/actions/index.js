@@ -19,6 +19,7 @@ import {
   DEFAULT_CENTER_ALIGN_GURBANI,
   DEFAULT_SPLIT_VIEW,
   DEFAULT_SEHAJ_PAATH_MODE,
+  DEFAULT_SG_BAANI_LENGTH
 } from '../../constants';
 
 export const createAction = (type, meta) => payload => ({
@@ -133,7 +134,7 @@ export const SET_SPLIT_VIEW = 'SET_SPLIT_VIEW';
 export const setSplitView = createAction(SET_SPLIT_VIEW);
 
 export const SET_SG_BAANI_LENGTH = 'SET_SG_BAANI_LENGTH';
-export const setSgBaani = createAction(SET_SG_BAANI_LENGTH);
+export const setSgBaaniLength = createAction(SET_SG_BAANI_LENGTH);
 
 export const SET_PREFETCH_ANG = 'SET_PREFETCH_ANG';
 export const SET_LOADING_ANG = 'SET_LOADING_ANG';
@@ -157,6 +158,7 @@ export const resetDisplayOptions = () => dispatch => {
   dispatch(setLarivaarAssistStrength(DEFAULT_LARIVAAR_ASSIST_STRENGTH));
   dispatch(setSplitView(DEFAULT_SPLIT_VIEW));
   dispatch(setSehajPaathMode(DEFAULT_SEHAJ_PAATH_MODE));
+  dispatch(setSgBaaniLength(DEFAULT_SG_BAANI_LENGTH));
 };
 
 export const CHANGE_FONT = 'CHANGE_FONT';

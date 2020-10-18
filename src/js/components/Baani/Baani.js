@@ -6,7 +6,13 @@ import Translation from '../Translation';
 import Transliteration from '../Transliteration';
 import Steek from './Steek';
 import BaaniLine from '../BaaniLine';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME, PUNJABI_LANGUAGE, STEEK_LANGUAGES } from '@/constants';
+import {
+  TEXTS,
+  SHABAD_CONTENT_CLASSNAME,
+  PUNJABI_LANGUAGE,
+  STEEK_LANGUAGES,
+  SG_BAANIS_LENGTH_TO_EXISTS_MAP
+} from '@/constants';
 import { MahankoshTooltip } from '@/components/MahankoshTooltip';
 
 import {
@@ -18,7 +24,7 @@ import {
   copyToClipboard,
   showToast,
   shortenURL,
-  steekMap
+  steekMap,
 } from '@/util';
 import { MahankoshContext } from '@/context';
 import { changeAng, prefetchAng } from './utils';
@@ -55,8 +61,10 @@ export default class Baani extends React.PureComponent {
     fontFamily: PropTypes.string.isRequired,
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
+    isSundarGutkaRoute: PropTypes.bool.isRequired,
     isParagraphMode: PropTypes.bool.isRequired,
     onBaaniLineClick: PropTypes.func,
+    sgBaaniLength: PropTypes.string,
   };
 
   constructor(props) {
@@ -341,8 +349,7 @@ export default class Baani extends React.PureComponent {
       </div>
     )
   }
-  createVersedGurbani = () => {
-    const { gurbani } = this.props;
+  createVersedGurbani = (gurbani) => {
     const versedGurbani = {};
     gurbani.forEach((shabad, idx) => {
       versedGurbani[idx] = [];
@@ -352,13 +359,24 @@ export default class Baani extends React.PureComponent {
     return versedGurbani;
   }
 
+  filterGurbaniOnSgBaaniLength = (gurbani) => {
+    const { sgBaaniLength } = this.props;
+    const sgBaaniLengthExistsKey = SG_BAANIS_LENGTH_TO_EXISTS_MAP[sgBaaniLength];
+    console.log(sgBaaniLengthExistsKey, SG_BAANIS_LENGTH_TO_EXISTS_MAP, 'SG BAANI TYPE')
+    const filteredGurbani = gurbani.filter(content => !!content[sgBaaniLengthExistsKey])
+    return filteredGurbani;
+  }
+
   normalizeGurbani = () => {
-    const { isParagraphMode } = this.props;
+    const { isParagraphMode, isSundarGutkaRoute } = this.props;
+    const { gurbani } = this.props;
+    const gurbaniFiltered = isSundarGutkaRoute ? this.filterGurbaniOnSgBaaniLength(gurbani) : gurbani;
+    console.log(gurbaniFiltered, "GURBAANI FILTERED")
     if (isParagraphMode) {
-      return this.createParagraphedGurbani();
+      return this.createParagraphedGurbani(gurbaniFiltered);
     }
 
-    return this.createVersedGurbani();
+    return this.createVersedGurbani(gurbaniFiltered);
   }
 
   getTranslationLanguages = () => {

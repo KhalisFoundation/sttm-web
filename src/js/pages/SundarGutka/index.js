@@ -9,8 +9,8 @@ import ReactTooltip from 'react-tooltip';
 import { RenderShabads } from '@/components/RenderShabads';
 import { pageView } from '@/util/analytics';
 import BreadCrumb from '@/components/Breadcrumb';
-import { TEXTS, SG_BAANIS } from '@/constants';
-import { setSgBaani } from '@/features/actions';
+import { TEXTS, SG_BAANIS_LENGTH } from '@/constants';
+import { setSgBaaniLength } from '@/features/actions';
 import { sanitizeBaani, baaniNameToIdMapper } from './utils';
 class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -40,8 +40,8 @@ class SundarGutka extends React.PureComponent {
         location: { pathname },
         match: { isExact: isSundarGutkaHome },
         transliterationLanguages,
-        sgBaani: sgBaaniLength,
-        setSgBaani,
+        sgBaaniLength,
+        setSgBaaniLength,
       },
       state: { baanies, q },
     } = this;
@@ -71,12 +71,12 @@ class SundarGutka extends React.PureComponent {
                     <span>Different version of Sundar Gutka Baanis</span>
                   </ReactTooltip>
                   <div className="sgBaanisButtons">
-                    {SG_BAANIS.map(({ name, length }) =>
+                    {SG_BAANIS_LENGTH.map(({ name, length }) =>
                       <div className="sgBaanisButton" key={length}>
                         <button
                           key={length}
-                          onClick={() => setSgBaani(length)}
-                          className={`btn btn-ghost ${sgBaaniType === length ? 'btn-ghost--activated' : ''}`}>
+                          onClick={() => setSgBaaniLength(length)}
+                          className={`btn btn-ghost ${sgBaaniLength === length ? 'btn-ghost--activated' : ''}`}>
                           {name}
                         </button>
                       </div>
@@ -177,7 +177,7 @@ const mapStateToProps = ({ transliterationLanguages, sgBaani }) => ({
 })
 
 const mapDispatchToProps = {
-  setSgBaani
+  setSgBaaniLength
 }
 
 export default connect(

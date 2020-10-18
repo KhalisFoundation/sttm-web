@@ -18,3 +18,9 @@ export const SG_BAANIS = [
     name: 'Extra Long', length: SG_BAANI_BUDHADAL, value: 3
   }
 ]
+export const SG_BAANIS_LENGTH_TO_EXISTS_MAP = {
+  [SG_BAANI_SGPC]: 'existsSGPC',
+  [SG_BAANI_MEDIUM]: 'existsMedium',
+  [SG_BAANI_TAKSAL]: 'existsTaksal',
+  [SG_BAANI_BUDHADAL]: 'existsBuddhaDal'
+}
