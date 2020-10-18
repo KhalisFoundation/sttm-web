@@ -129,6 +129,41 @@
   text-transform: capitalize;
 }
 
+.sgBaanis {
+  display: flex;
+  flex-direction: column;
+
+  &Buttons{
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+
+  &Button{
+    margin-right: 8px;
+  }
+
+  &InfoIcon {
+    background: $sttm-blue;
+    border-radius: 50%;
+    height: 24px;
+    margin-bottom: 16px;
+    position: relative;
+    width: 24px;
+
+    &:after {
+      color: $sttm-white;
+      content: 'i';
+      font-size: 1rem;
+      left: 50%;
+      font-weight: 700;
+      position: absolute;
+      transform: translateX(-50%);
+    }
+  }
+}
+
 /* Screen larger than 600px? 2 column */
 @media (min-width: 600px) {
   .sgCards { grid-template-columns: repeat(2, 1fr); }

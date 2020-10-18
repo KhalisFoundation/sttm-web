@@ -17,15 +17,15 @@ export const SHORT_DOMAIN = 'sttm.co';
 export const MAHANKOSH_TOOLTIP_SOURCE = 'Source: Mahaan Kosh (Encyclopedia)';
 export const SG_BAANI_TYPES = [
   {
-    name: 'Short', type: 'S'
+    name: 'Short', type: 's'
   },
   {
-    name: 'Medium', type: 'M'
+    name: 'Medium', type: 'm'
   },
   {
-    name: 'Long', type: 'L'
+    name: 'Long', type: 'l'
   },
   {
-    name: 'Extra Long', type: 'XL'
+    name: 'Extra Long', type: 'xl'
   }
 ]

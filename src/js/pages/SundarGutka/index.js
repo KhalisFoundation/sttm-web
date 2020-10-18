@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SmartBanner from 'react-smartbanner';
+import ReactTooltip from 'react-tooltip';
 
 import { RenderShabads } from '@/components/RenderShabads';
 import { pageView } from '@/util/analytics';
 import BreadCrumb from '@/components/Breadcrumb';
 import { TEXTS, SG_BAANI_TYPES } from '@/constants';
+import { setSgBaani } from '@/features/actions';
 import { sanitizeBaani, baaniNameToIdMapper } from './utils';
 class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -38,7 +40,8 @@ class SundarGutka extends React.PureComponent {
         location: { pathname },
         match: { isExact: isSundarGutkaHome },
         transliterationLanguages,
-        sgBaani: sgBaaniType
+        sgBaani: sgBaaniType,
+        setSgBaani,
       },
       state: { baanies, q },
     } = this;
@@ -60,16 +63,27 @@ class SundarGutka extends React.PureComponent {
             <div className="spinner" />
           ) : isSundarGutkaHome ? (
             <div className="wrapper" style={{ width: '100%', }}>
-              <h2>{TEXTS.SUNDAR_GUTKA_HEADER}
+              <div className="sundarGutkaHeader">
+                <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
                 <div className="sgBaanis">
-                  {SG_BAANI_TYPES.map(({ name, type }) =>
-                    <button
-                      key={type}
-                      className={`btn-ghost ${sgBaaniType === type ? 'btn-ghost--activated' : ''}`}>
-                      {name}
-                    </button>)}
+                  <span className="sgBaanisInfoIcon" data-tip data-for="sgBaanisInfo" />
+                  <ReactTooltip place="top" id="sgBaanisInfo">
+                    <span>Different version of Sundar Gutka Baanis</span>
+                  </ReactTooltip>
+                  <div className="sgBaanisButtons">
+                    {SG_BAANI_TYPES.map(({ name, type }) =>
+                      <div className="sgBaanisButton" key={type}>
+                        <button
+                          key={type}
+                          onClick={() => setSgBaani(type)}
+                          className={`btn btn-ghost ${sgBaaniType === type ? 'btn-ghost--activated' : ''}`}>
+                          {name}
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </h2>
+              </div>
               <input
                 type="search"
                 name="baani-query"
@@ -157,8 +171,16 @@ class SundarGutka extends React.PureComponent {
   }
 }
 
+const mapStateToProps = ({ transliterationLanguages, sgBaani }) => ({
+  transliterationLanguages,
+  sgBaani
+})
+
+const mapDispatchToProps = {
+  setSgBaani
+}
+
 export default connect(
-  ({ transliterationLanguages, sgBaani }) => ({
-    transliterationLanguages,
-    sgBaani
-  }))(SundarGutka);
+  mapStateToProps,
+  mapDispatchToProps
+)(SundarGutka);

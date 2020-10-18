@@ -276,6 +276,7 @@ export const ADVANCED_SETTINGS = ({
   sehajPaathMode,
   toggleSehajPaathMode,
   larivaarAssist,
+  setSgBaani,
 
   setLarivaarAssistStrength,
   toggleAutoScrollMode,
@@ -287,7 +288,8 @@ export const ADVANCED_SETTINGS = ({
   setTransliterationFontSize,
   translationFontSize,
   transliterationFontSize,
-  location
+  location,
+  sgBaani
 }: SETTING_ACTIONS) => {
   const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
   const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);

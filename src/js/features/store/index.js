@@ -147,7 +147,7 @@ const initialState = {
     LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
     DEFAULT_STEEK_LANGUAGES
   ),
-  sgBaanis: getStringFromLocalStorage(
+  sgBaani: getStringFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_SG_BAANIS,
     DEFAULT_SG_BAANI
   ),

@@ -18,8 +18,9 @@
     border: 1px solid $sttm-blue;
     background-color: $sttm-white;
     color: $sttm-blue;
+    font-size: 1rem;
 
-    &-ghost--activated {
+    &--activated {
       background-color: $sttm-blue;
       color: $sttm-white;
     }

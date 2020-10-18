@@ -365,13 +365,13 @@ export default function reducer(state, action) {
 
     case SET_SG_BAANI: {
       const sgBaani = action.payload;
-
+      console.log('SET_SG_BAANI', sgBaani, "...")
       clickEvent({
         action: SET_SG_BAANI,
         label: JSON.stringify(sgBaani),
       });
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANIS, action.payload)
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANIS, sgBaani)
 
       return {
         ...state,
