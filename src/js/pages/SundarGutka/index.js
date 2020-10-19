@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SmartBanner from 'react-smartbanner';
-import ReactTooltip from 'react-tooltip';
 
 import { RenderShabads } from '@/components/RenderShabads';
-import { pageView } from '@/util/analytics';
 import BreadCrumb from '@/components/Breadcrumb';
-import { TEXTS, SG_BAANIS_LENGTH } from '@/constants';
+import { SundarGutkaHeader } from './SundarGutkaHeader';
+import { TEXTS } from '@/constants';
 import { setSgBaaniLength } from '@/features/actions';
+import { pageView } from '@/util/analytics';
 import { sanitizeBaani, baaniNameToIdMapper } from './utils';
 class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -53,7 +53,6 @@ class SundarGutka extends React.PureComponent {
     //eg /sundar-gutka/japji-sahib, picked up japji-sahib from this
     const baaniIdOrName = pathname.split('/')[2];
     const baaniId = baanies ? baaniNameToIdMapper(baanies, baaniIdOrName) : baaniIdOrName;
-
     return (
       <div className="row" id="content-root">
         <SmartBanner key="sundarGutka" title={'Sundar Gutka'} />
@@ -62,27 +61,12 @@ class SundarGutka extends React.PureComponent {
           {baanies === null ? (
             <div className="spinner" />
           ) : isSundarGutkaHome ? (
-            <div className="wrapper" style={{ width: '100%', }}>
-              <div className="sundarGutkaHeader">
-                <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
-                <div className="sgBaanis">
-                  <span className="sgBaanisInfoIcon" data-tip data-for="sgBaanisInfo" />
-                  <ReactTooltip place="top" id="sgBaanisInfo">
-                    <span>Different version of Sundar Gutka Baanis</span>
-                  </ReactTooltip>
-                  <div className="sgBaanisButtons">
-                    {SG_BAANIS_LENGTH.map(({ name, length }) =>
-                      <div className="sgBaanisButton" key={length}>
-                        <button
-                          key={length}
-                          onClick={() => setSgBaaniLength(length)}
-                          className={`btn btn-ghost ${sgBaaniLength === length ? 'btn-ghost--activated' : ''}`}>
-                          {name}
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+            <>
+              <div className="wrapper" style={{ width: '100%' }}>
+                <SundarGutkaHeader
+                  sgBaaniLength={sgBaaniLength}
+                  setSgBaaniLength={setSgBaaniLength}
+                />
               </div>
               <input
                 type="search"
@@ -121,7 +105,7 @@ class SundarGutka extends React.PureComponent {
                     </Link>
                   ))}
               </div>
-            </div>
+            </>
           ) : (
                 <Route
                   path={this.props.match.url + '/:baaniIdOrName'}
@@ -129,7 +113,7 @@ class SundarGutka extends React.PureComponent {
                 />
               )}
         </div>
-      </div>
+      </div >
     );
   }
 
@@ -171,9 +155,9 @@ class SundarGutka extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ transliterationLanguages, sgBaani }) => ({
+const mapStateToProps = ({ transliterationLanguages, sgBaaniLength }) => ({
   transliterationLanguages,
-  sgBaani
+  sgBaaniLength
 })
 
 const mapDispatchToProps = {

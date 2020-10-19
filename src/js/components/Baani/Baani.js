@@ -362,7 +362,6 @@ export default class Baani extends React.PureComponent {
   filterGurbaniOnSgBaaniLength = (gurbani) => {
     const { sgBaaniLength } = this.props;
     const sgBaaniLengthExistsKey = SG_BAANIS_LENGTH_TO_EXISTS_MAP[sgBaaniLength];
-    console.log(sgBaaniLengthExistsKey, SG_BAANIS_LENGTH_TO_EXISTS_MAP, 'SG BAANI TYPE')
     const filteredGurbani = gurbani.filter(content => !!content[sgBaaniLengthExistsKey])
     return filteredGurbani;
   }
@@ -371,7 +370,7 @@ export default class Baani extends React.PureComponent {
     const { isParagraphMode, isSundarGutkaRoute } = this.props;
     const { gurbani } = this.props;
     const gurbaniFiltered = isSundarGutkaRoute ? this.filterGurbaniOnSgBaaniLength(gurbani) : gurbani;
-    console.log(gurbaniFiltered, "GURBAANI FILTERED")
+
     if (isParagraphMode) {
       return this.createParagraphedGurbani(gurbaniFiltered);
     }

@@ -61,7 +61,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
-  LOCAL_STORAGE_KEY_FOR_SG_BAANI,
+  LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -370,7 +370,7 @@ export default function reducer(state, action) {
         label: JSON.stringify(sgBaaniLength),
       });
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI, sgBaaniLength)
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH, sgBaaniLength)
 
       return {
         ...state,
