@@ -369,13 +369,13 @@ export default class Baani extends React.PureComponent {
   normalizeGurbani = () => {
     const { isParagraphMode, isSundarGutkaRoute } = this.props;
     const { gurbani } = this.props;
-    const gurbaniFiltered = isSundarGutkaRoute ? this.filterGurbaniOnSgBaaniLength(gurbani) : gurbani;
+    const filteredGurbani = isSundarGutkaRoute ? this.filterGurbaniOnSgBaaniLength(gurbani) : gurbani;
 
     if (isParagraphMode) {
-      return this.createParagraphedGurbani(gurbaniFiltered);
+      return this.createParagraphedGurbani(filteredGurbani);
     }
 
-    return this.createVersedGurbani(gurbaniFiltered);
+    return this.createVersedGurbani(filteredGurbani);
   }
 
   getTranslationLanguages = () => {

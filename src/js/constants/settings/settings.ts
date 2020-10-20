@@ -5,12 +5,12 @@ import {
   VISRAAM,
   STEEK_LANGUAGES,
   SG_BAANIS,
+  DEFAULT_SG_BAANI_LENGTH
 } from '@/constants';
 
 import {
   selectItemInArray,
   toFixedFloat,
-  isShowParagraphModeRoute,
   isShowAutoScrollRoute,
   isShowSehajPaathModeRoute,
 } from '@/util';
@@ -111,8 +111,7 @@ export const QUICK_SETTINGS = ({
   steekLanguages,
 }: SETTING_ACTIONS) => {
 
-  const isParagraphMode = isShowParagraphModeRoute(location.pathname);
-
+  const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
   return [
     {
       type: 'multiselect_checkbox',
@@ -204,7 +203,7 @@ export const QUICK_SETTINGS = ({
         },
       ],
     },
-    isParagraphMode ? {
+    isSundarGutkaRoute ? {
       type: 'icon-toggle',
       label: "Paragraph",
       controlsList: [
@@ -295,6 +294,7 @@ export const ADVANCED_SETTINGS = ({
   sgBaaniLength
 }: SETTING_ACTIONS) => {
   const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
+  const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
   const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
 
   return [
@@ -394,16 +394,16 @@ export const ADVANCED_SETTINGS = ({
         },
       ],
     } : {},
-    {
+    isSundarGutkaRoute ? {
       type: 'dropdown',
       label: 'Sundar Gutka Baanis Length',
       value: SG_BAANIS.find(({ length }) => sgBaaniLength == length).value,
       action: (selectedSgBaaniValue: string) => {
-        const { length } = SG_BAANIS.find(({value}) => value == selectedSgBaaniValue)
-        setSgBaaniLength(length);
+        const { length } = SG_BAANIS.find(({ value }) => value == selectedSgBaaniValue)
+        setSgBaaniLength(length ? length : DEFAULT_SG_BAANI_LENGTH);
       },
-      options: SG_BAANIS.map(({name}) => name),
-    },
+      options: SG_BAANIS.map(({ name }) => name),
+    } : {},
     {
       type: 'dropdown',
       label: 'Visraam Source',
