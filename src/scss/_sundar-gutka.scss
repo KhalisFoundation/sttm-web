@@ -135,14 +135,14 @@ $rhythm: 8px;
   align-items: center;
   display: flex;
 
-  &Buttons{
+  &Buttons {
     display: flex;
     flex-wrap: wrap;
-    line-height: 1;
     font-size: 1.5rem;
+    line-height: 1;
   }
 
-  &Button{
+  &Button {
     margin-right: $rhythm;
 
     @media screen and (max-width: 600px) {
@@ -163,12 +163,12 @@ $rhythm: 8px;
     position: relative;
     width: 24px;
 
-    &:after {
+    &::after {
       color: $sttm-white;
       content: 'i';
       font-size: 1rem;
-      left: 50%;
       font-weight: 700;
+      left: 50%;
       position: absolute;
       transform: translateX(-50%);
     }
