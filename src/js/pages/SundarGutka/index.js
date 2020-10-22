@@ -8,7 +8,7 @@ import SmartBanner from 'react-smartbanner';
 import { RenderShabads } from '@/components/RenderShabads';
 import BreadCrumb from '@/components/Breadcrumb';
 import { SundarGutkaHeader } from './SundarGutkaHeader';
-import { TEXTS } from '@/constants';
+import { TEXTS, SG_BAANIS, SG_MULTIPLE_VERSION_BAANIS } from '@/constants';
 import { setSgBaaniLength } from '@/features/actions';
 import { pageView } from '@/util/analytics';
 import { sanitizeBaani, baaniNameToIdMapper } from './utils';
@@ -53,6 +53,7 @@ class SundarGutka extends React.PureComponent {
     //eg /sundar-gutka/japji-sahib, picked up japji-sahib from this
     const baaniIdOrName = pathname.split('/')[2];
     const baaniId = baanies ? baaniNameToIdMapper(baanies, baaniIdOrName) : baaniIdOrName;
+
     return (
       <div className="row" id="content-root">
         <SmartBanner key="sundarGutka" title={'Sundar Gutka'} />
@@ -81,29 +82,36 @@ class SundarGutka extends React.PureComponent {
               <div className="sgCards">
                 {baanies
                   .filter(SundarGutka.filter(q))
-                  .map(({ ID, transliteration, gurmukhiUni }, i) => (
-                    <Link
-                      to={`/sundar-gutka/${sanitizeBaani(transliteration).split(' ').join('-')}`}
-                      key={ID}
-                    >
-                      <div
-                        className="sgCard"
-                        style={{
-                          animationDelay: i < 15 ? `${20 * i}ms` : 0,
-                        }}
+                  .map(({ ID, transliteration, gurmukhiUni }, i) => {
+                    const isMultipleVersionExists = SG_MULTIPLE_VERSION_BAANIS.some(bId => bId == ID)
+                    return (
+                      <Link
+                        to={`/sundar-gutka/${sanitizeBaani(transliteration).split(' ').join('-')}`}
+                        key={ID}
                       >
                         <div
-                          className="sgCardGurmukhi"
-                        >{gurmukhiUni}{' '}</div>
+                          className="sgCard"
+                          style={{
+                            animationDelay: i < 15 ? `${20 * i}ms` : 0,
+                          }}
+                        >
+                          <p
+                            className="sgCardGurmukhi"
+                          >{gurmukhiUni}{' '}</p>
 
-                        <div
-                          className="sgCardEnglish"
-                        >{transliterationLanguages.includes('english') &&
-                          `${sanitizeBaani(transliteration)}`}
+                          <div
+                            className="sgCardEnglish"
+                          >
+                            {isMultipleVersionExists && <div className="sgBaanisVersions">
+                              {SG_BAANIS.map(({ length }) => <div key={length} className={`sgBaanisVersion ${length == sgBaaniLength ? 'sgBaanisVersionSelected' : ''}`}>{length}</div>)}
+                            </div>}
+                            {transliterationLanguages.includes('english') &&
+                              `${sanitizeBaani(transliteration)}`}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
+                      </Link>
+                    )
+                  })}
               </div>
             </>
           ) : (

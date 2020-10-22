@@ -125,6 +125,8 @@ $rhythm: 8px;
 }
 
 .sgCardEnglish {
+  display: flex;
+  justify-content: space-between;
   font-size: smaller;
   margin-top: 1em;
   text-align: right;
@@ -173,6 +175,31 @@ $rhythm: 8px;
       transform: translateX(-50%);
     }
   }
+
+  &Version {
+    align-items: center;
+    border: 1px solid $sttm-white;
+    border-radius: 50%;
+    display: flex;
+    height: 24px;
+    font-size: 0.7rem;
+    justify-content: center;
+    margin-right: $rhythm;
+    padding: $rhythm/2;
+    text-transform: uppercase;
+    width: 24px;
+
+    &Selected {
+      font-weight: 600;
+      border-width: 2px;
+    }
+  }
+
+  &Versions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
 }
 
 .sundarGutkaHeader {
