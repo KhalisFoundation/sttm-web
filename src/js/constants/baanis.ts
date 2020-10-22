@@ -1,6 +1,6 @@
 export const NITNEM_BANIS = [2, 4, 6, 9, 10, 20, 21, 23];
 export const POPULAR_BANIS = [90, 30, 31, 22];
-export const SG_MULTIPLE_VERSION_BAANIS = [21, 22]
+export const SG_MULTIPLE_VERSION_BAANIS = [9, 21, 22, 23]
 export const SG_BAANI_SGPC = 's';
 export const SG_BAANI_MEDIUM = 'm';
 export const SG_BAANI_TAKSAL = 'l';
