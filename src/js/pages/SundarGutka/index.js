@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import SmartBanner from 'react-smartbanner';
 
 import { RenderShabads } from '@/components/RenderShabads';
-import { pageView } from '@/util/analytics';
 import BreadCrumb from '@/components/Breadcrumb';
-import { TEXTS } from '@/constants';
+import { SundarGutkaHeader } from './SundarGutkaHeader';
+import { TEXTS, SG_BAANIS, SG_MULTIPLE_VERSION_BAANIS } from '@/constants';
+import { setSgBaaniLength } from '@/features/actions';
+import { pageView } from '@/util/analytics';
 import { sanitizeBaani, baaniNameToIdMapper } from './utils';
 class SundarGutka extends React.PureComponent {
   static propTypes = {
@@ -27,8 +29,6 @@ class SundarGutka extends React.PureComponent {
     { title: TEXTS.URIS.SUNDAR_GUTKA_BAANI },
   ];
 
-  $details = React.createRef();
-
   state = {
     baanies: null,
     q: '',
@@ -40,6 +40,8 @@ class SundarGutka extends React.PureComponent {
         location: { pathname },
         match: { isExact: isSundarGutkaHome },
         transliterationLanguages,
+        sgBaaniLength,
+        setSgBaaniLength,
       },
       state: { baanies, q },
     } = this;
@@ -60,8 +62,13 @@ class SundarGutka extends React.PureComponent {
           {baanies === null ? (
             <div className="spinner" />
           ) : isSundarGutkaHome ? (
-            <div className="wrapper" style={{ width: '100%', }}>
-              <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
+            <>
+              <div className="wrapper" style={{ width: '100%' }}>
+                <SundarGutkaHeader
+                  sgBaaniLength={sgBaaniLength}
+                  setSgBaaniLength={setSgBaaniLength}
+                />
+              </div>
               <input
                 type="search"
                 name="baani-query"
@@ -75,31 +82,43 @@ class SundarGutka extends React.PureComponent {
               <div className="sgCards">
                 {baanies
                   .filter(SundarGutka.filter(q))
-                  .map(({ ID, transliteration, gurmukhiUni }, i) => (
-                    <Link
-                      to={`/sundar-gutka/${sanitizeBaani(transliteration).split(' ').join('-')}`}
-                      key={ID}
-                    >
-                      <div
-                        className="sgCard"
-                        style={{
-                          animationDelay: i < 15 ? `${20 * i}ms` : 0,
-                        }}
+                  .map(({ ID, transliteration, gurmukhiUni }, i) => {
+                    const isMultipleVersionExists = SG_MULTIPLE_VERSION_BAANIS.some(bId => bId == ID)
+                    return (
+                      <Link
+                        to={`/sundar-gutka/${sanitizeBaani(transliteration).split(' ').join('-')}`}
+                        key={ID}
                       >
                         <div
-                          className="sgCardGurmukhi"
-                        >{gurmukhiUni}{' '}</div>
+                          className="sgCard"
+                          style={{
+                            animationDelay: i < 15 ? `${20 * i}ms` : 0,
+                          }}
+                        >
+                          <p
+                            className="sgCardGurmukhi"
+                          >{gurmukhiUni}{' '}</p>
 
-                        <div
-                          className="sgCardEnglish"
-                        >{transliterationLanguages.includes('english') &&
-                          `${sanitizeBaani(transliteration)}`}
+                          <div
+                            className="sgCardEnglish"
+                          >
+                            {isMultipleVersionExists &&
+                              <div className="sgBaanisVersions">
+                                {SG_BAANIS.map(({ length }) => {
+                                  if (length == sgBaaniLength)
+                                    return <div key={length} className='sgBaanisVersion sgBaanisVersionSelected'>{length}</div>
+                                  return null;
+                                })}
+                              </div>}
+                            {transliterationLanguages.includes('english') &&
+                              `${sanitizeBaani(transliteration)}`}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
+                      </Link>
+                    )
+                  })}
               </div>
-            </div>
+            </>
           ) : (
                 <Route
                   path={this.props.match.url + '/:baaniIdOrName'}
@@ -107,7 +126,7 @@ class SundarGutka extends React.PureComponent {
                 />
               )}
         </div>
-      </div>
+      </div >
     );
   }
 
@@ -149,6 +168,16 @@ class SundarGutka extends React.PureComponent {
   }
 }
 
-export default connect(({ transliterationLanguages }) => ({
+const mapStateToProps = ({ transliterationLanguages, sgBaaniLength }) => ({
   transliterationLanguages,
-}))(SundarGutka);
+  sgBaaniLength
+})
+
+const mapDispatchToProps = {
+  setSgBaaniLength
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SundarGutka);

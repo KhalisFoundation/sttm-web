@@ -1,5 +1,5 @@
-import { Shabad } from './shabad';
+import { IShabad } from './shabad';
 
 export type Gurbani = {
-  shabad: Shabad;
+  shabad: IShabad;
 };

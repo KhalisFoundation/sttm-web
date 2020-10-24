@@ -1,8 +1,10 @@
+$rhythm: 8px;
+
 .search {
   border: none;
   border-radius: 2px;
   box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
-  margin: 10px 0;
+  margin: $rhythm 0;
 
   &:hover,
   &:focus,
@@ -46,10 +48,10 @@
   &--item {
     animation: slide-right 0.25s ease-in-out forwards;
     border: 1px solid $sttm-light-grey;
-    border-radius: 5px;
+    border-radius: $rhythm/2;
     list-style: none;
-    margin: 10px 5px;
-    padding: 10px;
+    margin: $rhythm $rhythm/2;
+    padding: $rhythm;
     text-transform: capitalize;
     transform: translateX(-50%);
 
@@ -86,8 +88,8 @@
 
   &--link {
     border: 1px solid grey;
-    border-radius: 10px;
-    padding: 5px;
+    border-radius: $rhythm;
+    padding: $rhythm/2;
     white-space: pre;
   }
 }
@@ -101,7 +103,7 @@
 
 .sgCard {
   background-color: $sttm-blue;
-  border-radius: 10px;
+  border-radius: $rhythm;
   color: white;
   display: flex;
   flex-direction: column;
@@ -123,10 +125,92 @@
 }
 
 .sgCardEnglish {
+  display: flex;
   font-size: smaller;
+  justify-content: space-between;
   margin-top: 1em;
   text-align: right;
   text-transform: capitalize;
+}
+
+.sgBaanis {
+  align-items: center;
+  display: flex;
+
+  &Buttons {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  &Button {
+    margin-right: $rhythm;
+
+    @media screen and (max-width: 600px) {
+      margin-bottom: $rhythm;
+    }
+  }
+
+  &Info {
+    background-color: $sttm-blue;
+  }
+
+  &InfoIcon {
+    background: $sttm-blue;
+    border-radius: 50%;
+    flex-shrink: 0;
+    height: 16px;
+    margin-right: $rhythm;
+    position: relative;
+    width: 16px;
+
+    &::after {
+      color: $sttm-white;
+      content: 'i';
+      font-size: 0.8rem;
+      font-weight: 700;
+      left: 50%;
+      position: absolute;
+      transform: translateX(-50%);
+    }
+  }
+
+  &Title {
+    font-size: 1.5rem;
+    margin-right: $rhythm;
+  }
+
+  &Version {
+    align-items: center;
+    border: 1px solid $sttm-white;
+    border-radius: 50%;
+    display: flex;
+    font-size: 0.7rem;
+    height: 24px;
+    justify-content: center;
+    margin-right: $rhythm;
+    padding: $rhythm/2;
+    text-transform: uppercase;
+    width: 24px;
+
+    &Selected {
+      border-width: 2px;
+      font-weight: 600;
+    }
+  }
+
+  &Versions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.sundarGutkaHeader {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 /* Screen larger than 600px? 2 column */

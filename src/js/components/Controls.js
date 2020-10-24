@@ -5,8 +5,8 @@ import throttle from 'lodash.throttle';
 
 import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
-
 import {
+  setSgBaaniLength,
   setFontSize,
   setTranslationFontSize,
   setTransliterationFontSize,
@@ -32,7 +32,8 @@ import {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
-} from '../features/actions';
+} from '@/features/actions';
+
 
 export const supportedMedia = _s;
 
@@ -168,9 +169,9 @@ class Controls extends React.Component {
 }
 
 // TODO: Take exactly what we need.
-const stateToProps = state => state;
+const mapStateToProps = state => state;
 
-const dispatchToProps = {
+const mapDispatchToProps = {
   setFontSize,
   setTranslationFontSize,
   setTransliterationFontSize,
@@ -178,6 +179,7 @@ const dispatchToProps = {
   setTransliterationLanguages,
   setSteekLanguages,
   setLarivaarAssistStrength,
+  setSgBaaniLength,
   resetDisplayOptions,
   resetFontOptions,
   toggleAdvancedOptions,
@@ -200,6 +202,6 @@ const dispatchToProps = {
 
 // TODO: Connect individual components instead of all controls.
 export default connect(
-  stateToProps,
-  dispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Controls);

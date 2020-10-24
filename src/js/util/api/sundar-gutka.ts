@@ -1,4 +1,7 @@
-import { NITNEM_BANIS, POPULAR_BANIS } from '@/constants';
+import {
+  NITNEM_BANIS,
+  POPULAR_BANIS,
+} from '@/constants';
 
 export const getBaniCategories = (baniList) => [
   {

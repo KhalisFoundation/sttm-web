@@ -1,4 +1,4 @@
-export type Shabad = {
+export type IShabad = {
   shabadid: string;
   id: string;
   gurbani: {

@@ -35,6 +35,7 @@ import {
   SET_FULLSCREEN_MODE,
   SET_LOADING_ANG,
   SET_PREFETCH_ANG,
+  SET_SG_BAANI_LENGTH,
   SET_ERROR,
   CHANGE_FONT,
 } from '../actions';
@@ -60,7 +61,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
-  PUNJABI_LANGUAGE
+  LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -360,6 +361,23 @@ export default function reducer(state, action) {
         lineHeight,
       };
     }
+
+    case SET_SG_BAANI_LENGTH: {
+      const sgBaaniLength = action.payload;
+
+      clickEvent({
+        action: SET_SG_BAANI_LENGTH,
+        label: JSON.stringify(sgBaaniLength),
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH, sgBaaniLength)
+
+      return {
+        ...state,
+        sgBaaniLength
+      }
+    }
+
     case CHANGE_FONT: {
       const fontFamily = action.payload;
       const unicode = fontFamily === 'unicode_font';
