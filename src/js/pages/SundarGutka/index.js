@@ -102,9 +102,14 @@ class SundarGutka extends React.PureComponent {
                           <div
                             className="sgCardEnglish"
                           >
-                            {isMultipleVersionExists && <div className="sgBaanisVersions">
-                              {SG_BAANIS.map(({ length }) => <div key={length} className={`sgBaanisVersion ${length == sgBaaniLength ? 'sgBaanisVersionSelected' : ''}`}>{length}</div>)}
-                            </div>}
+                            {isMultipleVersionExists &&
+                              <div className="sgBaanisVersions">
+                                {SG_BAANIS.map(({ length }) => {
+                                  if (length == sgBaaniLength)
+                                    return <div key={length} className='sgBaanisVersion sgBaanisVersionSelected'>{length}</div>
+                                  return null;
+                                })}
+                              </div>}
                             {transliterationLanguages.includes('english') &&
                               `${sanitizeBaani(transliteration)}`}
                           </div>

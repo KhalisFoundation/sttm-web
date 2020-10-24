@@ -16,12 +16,13 @@ export const SundarGutkaHeader: React.FC<ISundarGutkaHeaderProps> = ({
       <div className="sgBaanis">
         <span className="sgBaanisInfoIcon" data-tip data-for="sgBaanisInfo">
           <ReactTooltip backgroundColor={STTM_BLUE} place="top" id="sgBaanisInfo">
-          <span>Different version of Sundar Gutka Baanis</span>
+          <span>Different length of Sundar Gutka baanis</span>
           </ReactTooltip>
         </span>
+        <span className="sgBaanisTitle">Baani Lengths: {' '}</span>
         <div className="sgBaanisButtons">
           {SG_BAANIS.map(({ name, length }) =>
-            <div className="sgBaanisButton" key={length}>
+            <div key={length} className="sgBaanisButton">
               <button
                 key={length}
                 onClick={() => setSgBaaniLength(length)}

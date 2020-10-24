@@ -160,20 +160,25 @@ $rhythm: 8px;
     background: $sttm-blue;
     border-radius: 50%;
     flex-shrink: 0;
-    height: 24px;
+    height: 16px;
     margin-right: $rhythm;
     position: relative;
-    width: 24px;
+    width: 16px;
 
     &::after {
       color: $sttm-white;
       content: 'i';
-      font-size: 1rem;
+      font-size: 0.8rem;
       font-weight: 700;
       left: 50%;
       position: absolute;
       transform: translateX(-50%);
     }
+  }
+
+  &Title {
+    font-size: 1.5rem;
+    margin-right: $rhythm;
   }
 
   &Version {
