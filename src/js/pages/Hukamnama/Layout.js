@@ -43,20 +43,20 @@ export default class Layout extends React.PureComponent {
         image={BalpreetSingh}
       />
     ) : (
-      <div className="row" id="content-root">
-        <BreadCrumb
-          links={[{ title: TEXTS.HUKAMNAMA + ' | ' + shabad.expandedDate }]}
-        />
-        <ShabadContent
-          gurbani={shabad.verses}
-          info={shabad.shabadInfo}
-          nav={shabad.nav}
-          random={false}
-          type={'hukamnama'}
-          source={shabad.shabadInfo.source}
-        />
-      </div>
-    );
+        <div className="row" id="content-root">
+          <BreadCrumb
+            links={[{ title: TEXTS.HUKAMNAMA + ' | ' + shabad.expandedDate }]}
+          />
+          <ShabadContent
+            gurbani={shabad.verses}
+            info={shabad.shabadInfo}
+            nav={shabad.nav}
+            random={false}
+            type='hukamnama'
+            source={shabad.shabadInfo.source}
+          />
+        </div>
+      );
   }
   componentDidMount() {
     pageView('/hukamnama');

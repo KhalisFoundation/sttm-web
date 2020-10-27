@@ -1,0 +1,15 @@
+.react-calendar {
+  padding: 8px;
+}
+
+.react-date-picker {
+  &__inputGroup {
+    display: none;
+  }
+  &__wrapper {
+    border-width: 0 !important;
+  }
+  &--enabled {
+    border-width: 0 !important;
+  }
+}

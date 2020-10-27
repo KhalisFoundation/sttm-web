@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import DatePicker from 'react-date-picker';
 import { TEXTS } from '../constants';
 import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
+import CalendarIcon from './Icons/CalendarIcon';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
-import { withRouter } from 'react-router-dom';
 import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
 
 import { PAGE_NAME } from '../constants';
@@ -165,7 +167,6 @@ class Meta extends React.PureComponent {
     const shouldShowEnglishInHeader =
       translationLanguages.includes('english') ||
       transliterationLanguages.includes('english');
-
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
 
@@ -177,6 +178,12 @@ class Meta extends React.PureComponent {
         <div className="meta">
           {isHukamnama && (
             <h4>
+              <DatePicker
+                clearIcon={null}
+                onChange={this.goToParticularHukamnama}
+                value={new Date()}
+                calendarIcon={<CalendarIcon width={16} />}
+              />
               <Link to={`/shabad?id=${info.shabadId}`}>
                 {TEXTS.GO_TO_SHABAD}
               </Link>
@@ -242,6 +249,15 @@ class Meta extends React.PureComponent {
    * Handle SaveAng
    * @memberof Meta
    */
+
+  goToParticularHukamnama = (date) => {
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const day = date.getDay();
+    const hukamnamaDate = `${year}/${month}/${day}`;
+    const link = toNavURL(this.props)
+    this.props.history.push(link + hukamnamaDate);
+  }
   goToNextAng = () => {
     const link = toNavURL(this.props);
     this.props.history.push(link + this.props.nav.next);
