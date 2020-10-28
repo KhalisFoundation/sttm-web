@@ -9,6 +9,7 @@
     "start": "npm run server",
     "dev": "npm run watch",
     "cypress:open": "cypress open",
+    "cypress:record": "cypress run --record",
     "watch": "run-p watch:*",
     "watch:webpack": "webpack --watch && npm run generate-service-worker",
     "watch:css": "nodemon --watch src -e scss -x \"node-sass --output-style nested --source-map true --include-path src/scss src/scss/style.scss public/assets/css/bundle.css\"",
