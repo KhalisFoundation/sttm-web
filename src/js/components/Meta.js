@@ -9,7 +9,7 @@ import Hour24 from './Icons/Hour24';
 import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
 
 import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
-import { TEXTS, PAGE_NAME } from '../constants';
+import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE } from '@/constants';
 
 /**
  *
@@ -183,6 +183,7 @@ class Meta extends React.PureComponent {
                 onChange={this.goToParticularHukamnama}
                 value={new Date(nav.current)}
                 maxDate={new Date()}
+                minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                 calendarIcon={<CalendarIcon width={20} />}
               />
               <Link to={`/shabad?id=${info.shabadId}`}>
