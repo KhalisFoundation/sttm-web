@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-date-picker';
-import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
 import CalendarIcon from './Icons/CalendarIcon';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
 import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
 
-import { PAGE_NAME } from '../constants';
+import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
+import { TEXTS, PAGE_NAME } from '../constants';
 
 /**
  *
@@ -253,7 +252,8 @@ class Meta extends React.PureComponent {
   goToParticularHukamnama = (date) => {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    const day = date.getDay();
+    const day = date.getDate();
+
     const hukamnamaDate = `${year}/${month}/${day}`;
     const link = toNavURL(this.props)
     this.props.history.push(link + hukamnamaDate);

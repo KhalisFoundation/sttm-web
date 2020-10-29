@@ -7,10 +7,12 @@ import {
   screen,
 } from '@testing-library/react';
 import { toHaveClass } from '@testing-library/jest-dom/matchers'
-expect.extend({ toHaveClass });
 
 import { shabad, mockStore } from '../__mocks__/';
 import Meta from '../Meta';
+expect.extend({ toHaveClass });
+
+jest.mock('react-date-picker', () => () => <div>react calendar</div>)
 
 //NOTE: MemoryRouter - https://testing-library.com/docs/example-react-router#reducing-boilerplate
 

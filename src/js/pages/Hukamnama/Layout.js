@@ -15,7 +15,7 @@ export default class Layout extends React.PureComponent {
   };
 
   static contextTypes = {
-    router: PropTypes.object,
+    history: PropTypes.object,
   }
 
   state = {
@@ -23,7 +23,8 @@ export default class Layout extends React.PureComponent {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, history } = this.props;
+
     let shabad;
     if (!this.state.error) {
       shabad = getHukamnama(data);
@@ -35,7 +36,7 @@ export default class Layout extends React.PureComponent {
         description={
           <React.Fragment>
             {TEXTS.HUKAMNAMA_NOT_FOUND_DESCRIPTION}{' '}
-            <button id="error-link" onClick={this.context.router.history.goBack}>
+            <button id="error-link" onClick={history.goBack}>
               Click here to go back to previous hukamnama
             </button>
           </React.Fragment>

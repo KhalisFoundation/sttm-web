@@ -16,10 +16,10 @@ export default class Hukamnama extends React.PureComponent {
   };
   render() {
     const url = buildApiUrl({ hukam: this.props.date, API_URL });
-
+    console.log(this.props, "HUKAMNAMA")
     return (
       <PageLoader url={url}>
-        {({ loading, data }) => (loading ? <Stub /> : <Layout data={data} />)}
+        {({ loading, data }) => (loading ? <Stub /> : <Layout history={this.props.history} data={data} />)}
       </PageLoader>
     );
   }

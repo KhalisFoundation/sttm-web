@@ -118,6 +118,9 @@ exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
       class="meta"
     >
       <h4>
+        <div>
+          react calendar
+        </div>
         <a
           href="/shabad?id=4299"
         >
