@@ -44,6 +44,7 @@ class Meta extends React.PureComponent {
     transliterationLanguages: PropTypes.array.isRequired,
     isUnicode: PropTypes.bool.isRequired,
     nav: PropTypes.shape({
+      current: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
@@ -150,11 +151,11 @@ class Meta extends React.PureComponent {
     const {
       type,
       info,
+      nav,
       isUnicode,
       translationLanguages,
       transliterationLanguages,
     } = this.props;
-
     const Item = ({ children, last = false }) =>
       children ? (
         <React.Fragment>
@@ -180,8 +181,9 @@ class Meta extends React.PureComponent {
               <DatePicker
                 clearIcon={null}
                 onChange={this.goToParticularHukamnama}
-                value={new Date()}
-                calendarIcon={<CalendarIcon width={16} />}
+                value={new Date(nav.current)}
+                maxDate={new Date()}
+                calendarIcon={<CalendarIcon width={20} />}
               />
               <Link to={`/shabad?id=${info.shabadId}`}>
                 {TEXTS.GO_TO_SHABAD}

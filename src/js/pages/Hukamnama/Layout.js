@@ -24,7 +24,7 @@ export default class Layout extends React.PureComponent {
 
   render() {
     const { data, history } = this.props;
-
+    console.log(this.props, "SHABAD CONTENT pROPS...")
     let shabad;
     if (!this.state.error) {
       shabad = getHukamnama(data);
@@ -51,7 +51,7 @@ export default class Layout extends React.PureComponent {
           <ShabadContent
             gurbani={shabad.verses}
             info={shabad.shabadInfo}
-            nav={shabad.nav}
+            nav={{ ...shabad.nav, current: shabad.expandedDate }}
             random={false}
             type='hukamnama'
             source={shabad.shabadInfo.source}
