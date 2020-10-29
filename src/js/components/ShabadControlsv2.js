@@ -31,6 +31,7 @@ class ShabadControls extends React.PureComponent {
     toggleAdvancedOptions: PropTypes.func,
     setLarivaarAssistStrength: PropTypes.func,
     setSteekLanguages: PropTypes.func,
+    setSgBaaniLength: PropTypes.func,
 
     translationLanguages: PropTypes.array,
     transliterationLanguages: PropTypes.array,
@@ -59,6 +60,7 @@ class ShabadControls extends React.PureComponent {
     isBaniController: PropTypes.bool,
     updateSettings: PropTypes.func,
     desktopSettings: PropTypes.object,
+    sgBaani: PropTypes.string,
   };
 
   bakeSettings = settingsObj => {

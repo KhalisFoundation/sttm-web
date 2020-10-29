@@ -26,3 +26,4 @@ export const DEFAULT_VISRAAMS = false;
 export const DEFAULT_VISRAAM_SOURCE = 'sttm';
 export const DEFAULT_VISRAAM_STYLE = 'colored-words';
 export const DEFAULT_SEHAJ_PAATH_MODE = false;
+export const DEFAULT_SG_BAANI_LENGTH = 's'

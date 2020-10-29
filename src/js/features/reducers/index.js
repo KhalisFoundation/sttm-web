@@ -35,6 +35,7 @@ import {
   SET_FULLSCREEN_MODE,
   SET_LOADING_ANG,
   SET_PREFETCH_ANG,
+  SET_SG_BAANI_LENGTH,
   SET_ERROR,
   CHANGE_FONT,
 } from '../actions';
@@ -60,7 +61,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
-  PUNJABI_LANGUAGE
+  LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -360,6 +361,23 @@ export default function reducer(state, action) {
         lineHeight,
       };
     }
+
+    case SET_SG_BAANI_LENGTH: {
+      const sgBaaniLength = action.payload;
+
+      clickEvent({
+        action: SET_SG_BAANI_LENGTH,
+        label: JSON.stringify(sgBaaniLength),
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH, sgBaaniLength)
+
+      return {
+        ...state,
+        sgBaaniLength
+      }
+    }
+
     case CHANGE_FONT: {
       const fontFamily = action.payload;
       const unicode = fontFamily === 'unicode_font';
@@ -372,16 +390,16 @@ export default function reducer(state, action) {
       };
     }
     case SET_TRANSLATION_LANGUAGES: {
-      const isPunjabiIncluded = action.payload.includes('punjabi');
+      const isPunjabiLanguageSelected = action.payload.includes('punjabi');
       const translationLanguages = action.payload || [];
       const isSteekLanguageSelected = state.steekLanguages.length > 0;
       let steekLanguages = [];
-      if (isPunjabiIncluded) {
+      if (isPunjabiLanguageSelected) {
         if (isSteekLanguageSelected)
           steekLanguages = state.steekLanguages;
         else {
-          const storedSteekLanguages = getArrayFromLocalStorage(LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES);
-          steekLanguages = storedSteekLanguages.length > 0 ? storedSteekLanguages : ['bani db'];
+          // const storedSteekLanguages = getArrayFromLocalStorage(LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES);
+          steekLanguages = ['bani db'];
         }
       }
 
@@ -410,29 +428,33 @@ export default function reducer(state, action) {
 
     case SET_STEEK_LANGUAGES: {
       const steekLanguages = action.payload || [];
+
+      let translationLanguages = []
+      if (steekLanguages.length > 0) {
+        const isPunjabiLanguageSelected = state.translationLanguages.includes(t => t === 'punjabi');
+        translationLanguages = isPunjabiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, 'punjabi'];
+      } else {
+        translationLanguages = state.translationLanguages.filter(t => t !== 'punjabi');
+      }
+
       clickEvent({
         action: SET_STEEK_LANGUAGES,
         label: JSON.stringify(steekLanguages),
       });
 
-      if (steekLanguages.length > 0) {
-        saveToLocalStorage(
-          LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
-          JSON.stringify(steekLanguages)
-        );
-        const isPunjabiTranslationIncluded = state.translationLanguages.includes(t => t === 'punjabi');
-        const translationLanguages = isPunjabiTranslationIncluded ? state.translationLanguages : [...state.translationLanguages, 'punjabi'];
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
+        JSON.stringify(translationLanguages)
+      );
 
-        return {
-          ...state,
-          steekLanguages,
-          translationLanguages
-        };
-      }
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES,
+        JSON.stringify(steekLanguages)
+      );
 
       return {
         ...state,
-        translationLanguages: state.translationLanguages.filter(t => t !== 'punjabi'),
+        translationLanguages,
         steekLanguages
       }
 
