@@ -24,7 +24,6 @@ export default class Layout extends React.PureComponent {
 
   render() {
     const { data, history } = this.props;
-    console.log(this.props, "SHABAD CONTENT pROPS...")
     let shabad;
     if (!this.state.error) {
       shabad = getHukamnama(data);
