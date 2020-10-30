@@ -11,3 +11,9 @@
 @mixin filled_checkbox($bg_color) {
   background-color: $bg_color;
 }
+
+@mixin flex_center() {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

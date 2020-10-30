@@ -98,10 +98,5 @@ describe('<Meta />', () => {
       const { container } = renderedComponent;
       expect(container).toMatchSnapshot();
     })
-
-    it('shows hours navigation buttons', () => {
-      const { queryAllByTestId } = renderedComponent;
-      expect(screen.queryAllByTestId('hour24')).toHaveLength(2);
-    });
   });
 });

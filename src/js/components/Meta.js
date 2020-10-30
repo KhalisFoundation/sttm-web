@@ -10,6 +10,7 @@ import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
 
 import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
 import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE } from '@/constants';
+import ForwardIcon from './Icons/ForwardIcon';
 
 /**
  *
@@ -173,23 +174,32 @@ class Meta extends React.PureComponent {
     // const isShabad = type === 'shabad';
     return (
       <div id="metadata" className={`metadata-${type}`}>
-        {this.renderLeftArrow()}
+        {!isHukamnama && this.renderLeftArrow()}
 
         <div className="meta">
           {isHukamnama && (
-            <h4>
-              <DatePicker
-                clearIcon={null}
-                onChange={this.goToParticularHukamnama}
-                value={new Date(nav.current)}
-                maxDate={new Date()}
-                minDate={new Date(FIRST_HUKAMNAMA_DATE)}
-                calendarIcon={<CalendarIcon width={20} />}
-              />
-              <Link to={`/shabad?id=${info.shabadId}`}>
-                {TEXTS.GO_TO_SHABAD}
-              </Link>
-            </h4>
+            <div className="meta-hukamnama">
+              <div className="meta-hukamnama-left">
+                <DatePicker
+                  clearIcon={null}
+                  onChange={this.goToParticularHukamnama}
+                  value={new Date(nav.current)}
+                  maxDate={new Date()}
+                  minDate={new Date(FIRST_HUKAMNAMA_DATE)}
+                  calendarIcon={<CalendarIcon width={20} />}
+                />
+                <span>Past Hukamnamas</span>
+              </div>
+              <h4>
+                {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
+              </h4>
+              <div className="meta-hukamnama-right">
+                <ForwardIcon />
+                <Link to={`/shabad?id=${info.shabadId}`}>
+                  {TEXTS.GO_TO_SHABAD}
+                </Link>
+              </div>
+            </div>
           )}
           <h4 className="gurbani-font">
             <Item>
@@ -242,7 +252,7 @@ class Meta extends React.PureComponent {
           )}
         </div>
 
-        {this.renderRightArrow()}
+        {!isHukamnama && this.renderRightArrow()}
       </div>
     );
   }
