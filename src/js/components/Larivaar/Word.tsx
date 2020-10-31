@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, {  memo } from 'react';
 
 import {
   fixLarivaarUnicode,
@@ -12,8 +12,8 @@ export interface ILarivaarWordProps {
   larivaarAssistColor: string;
   index: number;
   highlightIndex?: Array<number>;
-  highlight?: boolean;
   visraamClass: string;
+  highlight?: boolean;
 }
 
 const LarivaarWord: React.FC<ILarivaarWordProps> = ({
@@ -44,7 +44,9 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
   }
 
   return (
-    <span className={visraamClass}>
+    <span
+      className={visraamClass}
+    >
       {segments.map((item, i) => {
         const key = `${index}.${i}`;
         let akharClass = '';
