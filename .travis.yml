@@ -34,4 +34,4 @@ before_install:
   - npm i -g npm@latest
   - bash scripts/decrypt.sh
 before_script:
-  - chmod 600 scripts/deploy && mv scripts/deploy ~/.ssh/id_rsa
+  - bash scripts/set-up.sh
