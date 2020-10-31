@@ -84,6 +84,7 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
     const meta = (
       <React.Fragment key="meta-key">
         <button
+          type="button"
           data-action="bksp"
           title="Backspace"
           key="backspace-key"
