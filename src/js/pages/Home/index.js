@@ -155,7 +155,9 @@ export default class Home extends React.PureComponent {
                         value={query}
                         searchType={type}
                         active={displayGurmukhiKeyboard}
-                        onKeyClick={newValue => setQueryAs(newValue)()}
+                        onKeyClick={newValue => {
+                          setQueryAs(newValue)()
+                        }}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
                       />}
                     </div>
