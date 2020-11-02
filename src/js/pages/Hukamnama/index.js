@@ -19,7 +19,7 @@ export default class Hukamnama extends React.PureComponent {
 
     return (
       <PageLoader url={url}>
-        {({ loading, data }) => (loading ? <Stub /> : <Layout data={data} />)}
+        {({ loading, data }) => (loading ? <Stub /> : <Layout history={this.props.history} data={data} />)}
       </PageLoader>
     );
   }

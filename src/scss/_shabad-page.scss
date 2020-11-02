@@ -1,3 +1,5 @@
+/* stylelint-disable at-rule-no-unknown */
+
 div[tabindex='-1']:focus {
   // remove focus outline from the HotKeys containder div
   outline: 0;
@@ -75,6 +77,25 @@ blockquote {
 
 .meta {
   flex-grow: 1;
+
+  &-hukamnama {
+    display: flex;
+    font-size: 1rem;
+    justify-content: space-between;
+
+    h4 {
+      font-size: 1.2rem;
+
+      span {
+        color: $sttm-orange;
+      }
+    }
+
+    &-left,
+    &-right {
+      @include flex-center();
+    }
+  }
 }
 
 .mixed-view-baani-transliteration-shahmukhi {
