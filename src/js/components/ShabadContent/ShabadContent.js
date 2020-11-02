@@ -198,7 +198,7 @@ class Shabad extends React.PureComponent {
                 <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
-          <ProgressBar />
+          {!isMultiPage && <ProgressBar />}
         </React.Fragment>
       </GlobalHotKeys>
     );
