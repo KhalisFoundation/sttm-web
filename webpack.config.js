@@ -11,7 +11,7 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
 
 const commonPlugins = [new ManifestPlugin()];
 
-const plugins = PRODUCTION
+const plugins = !PRODUCTION
   ? commonPlugins.concat([
     new webpack.DefinePlugin({
       'process.env': {
