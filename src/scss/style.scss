@@ -48,7 +48,7 @@ body {
 
     .translation,
     .steek {
-      color: $sttm-orange;
+      color: $sttm-grey;
     }
   }
 
@@ -300,4 +300,18 @@ select {
 
 .smartbanner-show {
   margin-top: 80px;
+}
+
+.mahankoshTooltipWrapper {
+  background-color: $sttm-dark-blue !important;
+}
+
+.mahankoshTooltipGurbaniWord {
+  color: $sttm-orange;
+  font-size: 2em;
+}
+
+.mahankoshTooltipSource {
+  font-size: 0.6em;
+  font-style: italic;
 }
