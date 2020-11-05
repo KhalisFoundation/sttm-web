@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 import { getVisraamClass } from '../../util';
-import { useSelector } from 'react-redux';
 
 interface IHighlightedSearchResultProps {
   children: React.ReactChildren;
