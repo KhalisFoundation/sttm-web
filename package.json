@@ -124,7 +124,6 @@
     "postcss-root-to-json": "0.0.0",
     "react": "^16.13.1",
     "react-date-picker": "^8.0.3",
-    "react-device-detect": "^1.13.1",
     "react-dom": "^16.13.1",
     "react-hotkeys": "^2.0.0",
     "react-intersection-observer": "^8.27.1",
