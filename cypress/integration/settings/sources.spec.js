@@ -89,7 +89,7 @@ describe('Settings', () => {
           .find(`${controlPrefix}-punjabi`)
           .click({ force: true })
 
-        cy.get('.mixed-view-baani-steek-bani db').should('be.visible');
+        cy.get('.mixed-view-baani-steek').should('be.visible');
       })
 
       it('should show spanish translations, on selecting spanish translation option', () => {
