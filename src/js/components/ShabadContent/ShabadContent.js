@@ -141,6 +141,8 @@ class Shabad extends React.PureComponent {
     const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
     const isShowMetaData = this.props.hideMeta === false;
     const isShowControls = this.props.hideControls === false;
+    const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute
+
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root>
         <React.Fragment >
@@ -193,9 +195,7 @@ class Shabad extends React.PureComponent {
                 <FootNav info={info} type={type} nav={nav} />
               )}
 
-              {!isAmritKeertanRoute
-                &&
-                <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
+              {isShowRelatedShabads && <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
           {!isMultiPage && <ProgressBar />}
