@@ -15,3 +15,4 @@ export const TYPES = _TYPES.filter((value, index) =>
 
 export const SHORT_DOMAIN = 'sttm.co';
 export const MAHANKOSH_TOOLTIP_SOURCE = 'Source: Mahaan Kosh (Encyclopedia)';
+export const HUKAMNAMA_AUDIO_URL='http://old.sgpc.net/hukumnama/jpeg%20hukamnama/hukamnama.mp3'

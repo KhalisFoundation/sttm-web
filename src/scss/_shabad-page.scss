@@ -375,6 +375,19 @@ blockquote {
   }
 }
 
+@media screen and (max-width: 450px) {
+  .meta {
+    &-hukamnama {
+      display: initial;
+      font-size: 0.9rem;
+    }
+
+    h4 {
+      font-size: 1.1rem;
+    }
+  }
+}
+
 @media screen and (min-width: 350px) {
   .pagination .shabad-nav a {
     span {

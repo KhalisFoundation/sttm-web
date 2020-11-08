@@ -19,7 +19,7 @@ import {
   getWriter,
   getRaag
 } from '@/util';
-import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE } from '@/constants';
+import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL } from '@/constants';
 
 /**
  *
@@ -212,9 +212,9 @@ class Meta extends React.PureComponent {
               </div>
               <div className="react-audio-player">
                 <AudioPlayer
-                  src="http://old.sgpc.net/hukumnama/jpeg%20hukamnama/hukamnama.mp3"
-                  customAdditionalControls={null}
-                  customVolumeControls={null}
+                  src={HUKAMNAMA_AUDIO_URL}
+                  customAdditionalControls={[]}
+                  customVolumeControls={[]}
                 />
               </div>
             </>
