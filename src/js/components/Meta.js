@@ -3,14 +3,23 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-date-picker';
+import AudioPlayer from 'react-h5-audio-player';
+
 import CalendarIcon from './Icons/CalendarIcon';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
-import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
-
-import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
-import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE } from '@/constants';
 import ForwardIcon from './Icons/ForwardIcon';
+
+import {
+  isFalsy,
+  toAngURL,
+  toNavURL,
+  dateMath,
+  getSourceId,
+  getWriter,
+  getRaag
+} from '@/util';
+import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE } from '@/constants';
 
 /**
  *
@@ -178,28 +187,37 @@ class Meta extends React.PureComponent {
 
         <div className="meta">
           {isHukamnama && (
-            <div className="meta-hukamnama">
-              <div className="meta-hukamnama-left">
-                <DatePicker
-                  clearIcon={null}
-                  onChange={this.goToParticularHukamnama}
-                  value={new Date(nav.current)}
-                  maxDate={new Date()}
-                  minDate={new Date(FIRST_HUKAMNAMA_DATE)}
-                  calendarIcon={<CalendarIcon width={20} />}
+            <>
+              <div className="meta-hukamnama">
+                <div className="meta-hukamnama-left">
+                  <DatePicker
+                    clearIcon={null}
+                    onChange={this.goToParticularHukamnama}
+                    value={new Date(nav.current)}
+                    maxDate={new Date()}
+                    minDate={new Date(FIRST_HUKAMNAMA_DATE)}
+                    calendarIcon={<CalendarIcon width={20} />}
+                  />
+                  <span>Past Hukamnamas</span>
+                </div>
+                <h4>
+                  {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
+                </h4>
+                <div className="meta-hukamnama-right">
+                  <ForwardIcon />
+                  <Link to={`/shabad?id=${info.shabadId}`}>
+                    {TEXTS.GO_TO_SHABAD}
+                  </Link>
+                </div>
+              </div>
+              <div className="react-audio-player">
+                <AudioPlayer
+                  src="http://old.sgpc.net/hukumnama/jpeg%20hukamnama/hukamnama.mp3"
+                  customAdditionalControls={null}
+                  customVolumeControls={null}
                 />
-                <span>Past Hukamnamas</span>
               </div>
-              <h4>
-                {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
-              </h4>
-              <div className="meta-hukamnama-right">
-                <ForwardIcon />
-                <Link to={`/shabad?id=${info.shabadId}`}>
-                  {TEXTS.GO_TO_SHABAD}
-                </Link>
-              </div>
-            </div>
+            </>
           )}
           <h4 className="gurbani-font">
             <Item>
