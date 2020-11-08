@@ -26,11 +26,11 @@
   "vishraam",
   "mahankosh",
   "ui-controls";
-  @import 'node_modules/react-smartbanner/dist/main';
-  @import 'node_modules/react-toastify/dist/ReactToastify.min';
-  @import 'node_modules/react-h5-audio-player/src/styles.scss';
-  @import 'overrides/react-date-picker';
-  @import 'overrides/react-h5-audio-player';
+@import 'node_modules/react-smartbanner/dist/main';
+@import 'node_modules/react-toastify/dist/ReactToastify.min';
+@import 'node_modules/react-h5-audio-player/src/styles.scss';
+@import 'overrides/react-date-picker';
+@import 'overrides/react-h5-audio-player';
 
 html,
 body {
