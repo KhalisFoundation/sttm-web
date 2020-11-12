@@ -29,6 +29,13 @@ import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL } from '@/c
  * @augments {React.PureComponent<MetaProps>}
  */
 class Meta extends React.PureComponent {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      calendarState: 'open'
+    }
+  }
   static defaultProps = {
     nav: {},
   };
@@ -179,8 +186,10 @@ class Meta extends React.PureComponent {
       transliterationLanguages.includes('english');
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
-
-    // const isShabad = type === 'shabad';
+    const todayDate = new Date(new Date().toDateString());
+    const hukamnamaDate = new Date(nav.current);
+    const isShowAudioPlayer =
+      hukamnamaDate.getTime() == todayDate.getTime();
     return (
       <div id="metadata" className={`metadata-${type}`}>
         {!isHukamnama && this.renderLeftArrow()}
@@ -191,14 +200,22 @@ class Meta extends React.PureComponent {
               <div className="meta-hukamnama">
                 <div className="meta-hukamnama-left">
                   <DatePicker
+                    isOpen={this.state.isCalendarOpen}
                     clearIcon={null}
+                    onCalendarClose={() => {
+                      this.setState(() => ({ isCalendarOpen: false }))
+                    }}
                     onChange={this.goToParticularHukamnama}
                     value={new Date(nav.current)}
                     maxDate={new Date()}
                     minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                     calendarIcon={<CalendarIcon width={20} />}
                   />
-                  <span>Past Hukamnamas</span>
+                  {!this.state.isCalendarOpen && <span onClick={(e) => {
+                    return this.setState(() => ({ isCalendarOpen: true }))
+                  }}>
+                    Past Hukamnamas
+                  </span>}
                 </div>
                 <h4>
                   {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
@@ -210,13 +227,13 @@ class Meta extends React.PureComponent {
                   </Link>
                 </div>
               </div>
-              <div className="react-audio-player">
+              {isShowAudioPlayer && (<div className="react-audio-player">
                 <AudioPlayer
                   src={HUKAMNAMA_AUDIO_URL}
                   customAdditionalControls={[]}
                   customVolumeControls={[]}
                 />
-              </div>
+              </div>)}
             </>
           )}
           <h4 className="gurbani-font">
@@ -271,7 +288,7 @@ class Meta extends React.PureComponent {
         </div>
 
         {!isHukamnama && this.renderRightArrow()}
-      </div>
+      </div >
     );
   }
 
