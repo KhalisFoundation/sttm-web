@@ -205,17 +205,22 @@ class Meta extends React.PureComponent {
                     onCalendarClose={() => {
                       this.setState(() => ({ isCalendarOpen: false }))
                     }}
+                    onCalendarOpen={() => {
+                      this.setState(() => ({ isCalendarOpen: true }))
+                    }}
                     onChange={this.goToParticularHukamnama}
                     value={new Date(nav.current)}
                     maxDate={new Date()}
                     minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                     calendarIcon={<CalendarIcon width={20} />}
                   />
-                  {!this.state.isCalendarOpen && <span onClick={(e) => {
+                  <span onClick={this.state.isCalendarOpen ? undefined : (e) => {
+                    e.preventDefault();
+                    console.log(this.state.isCalendarOpen, 'CALENDAR OPEN....')
                     return this.setState(() => ({ isCalendarOpen: true }))
                   }}>
                     Past Hukamnamas
-                  </span>}
+                  </span>
                 </div>
                 <h4>
                   {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
