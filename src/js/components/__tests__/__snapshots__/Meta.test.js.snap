@@ -98,9 +98,11 @@ exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
           <div>
             react calendar
           </div>
-          <span>
+          <a
+            class="hukam-text-link"
+          >
             Past Hukamnamas
-          </span>
+          </a>
         </div>
         <h4>
           Daily Hukamnama Sri Harmandir Sahib, Amritsar
@@ -120,6 +122,7 @@ exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
             />
           </svg>
           <a
+            class="hukamnama-right-link"
             href="/shabad?id=4299"
           >
             Go to shabad
