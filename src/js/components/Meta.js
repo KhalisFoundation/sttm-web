@@ -214,31 +214,25 @@ class Meta extends React.PureComponent {
                     minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                     calendarIcon={<CalendarIcon width={20} />}
                   />
-                  <span onClick={this.state.isCalendarOpen ? undefined : (e) => {
+                  <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
                     e.preventDefault();
                     console.log(this.state.isCalendarOpen, 'CALENDAR OPEN....')
                     return this.setState(() => ({ isCalendarOpen: true }))
                   }}>
                     Past Hukamnamas
-                  </span>
+                  </a>
                 </div>
                 <h4>
                   {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
                 </h4>
                 <div className="meta-hukamnama-right">
                   <ForwardIcon />
-                  <Link to={`/shabad?id=${info.shabadId}`}>
+                  <Link className="hukamnama-right-link" to={`/shabad?id=${info.shabadId}`}>
                     {TEXTS.GO_TO_SHABAD}
                   </Link>
                 </div>
               </div>
-              {isShowAudioPlayer && (<div className="react-audio-player">
-                <AudioPlayer
-                  src={HUKAMNAMA_AUDIO_URL}
-                  customAdditionalControls={[]}
-                  customVolumeControls={[]}
-                />
-              </div>)}
+
             </>
           )}
           <h4 className="gurbani-font">
@@ -290,6 +284,14 @@ class Meta extends React.PureComponent {
               )}
             </h4>
           )}
+
+          {isShowAudioPlayer && (<div className="react-audio-player">
+            <AudioPlayer
+              src={HUKAMNAMA_AUDIO_URL}
+              customAdditionalControls={[]}
+              customVolumeControls={[]}
+            />
+          </div>)}
         </div>
 
         {!isHukamnama && this.renderRightArrow()}
