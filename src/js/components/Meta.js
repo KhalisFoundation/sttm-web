@@ -214,13 +214,13 @@ class Meta extends React.PureComponent {
                     minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                     calendarIcon={<CalendarIcon width={20} />}
                   />
-                  <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
+                  <span className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
                     e.preventDefault();
                     console.log(this.state.isCalendarOpen, 'CALENDAR OPEN....')
                     return this.setState(() => ({ isCalendarOpen: true }))
                   }}>
                     Past Hukamnamas
-                  </a>
+                  </span>
                 </div>
                 <h4>
                   {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
