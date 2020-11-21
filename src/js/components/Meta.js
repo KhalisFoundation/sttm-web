@@ -187,7 +187,7 @@ class Meta extends React.PureComponent {
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
-    const hukamnamaDate = new Date(nav.current);
+    const hukamnamaDate = new Date(nav.current || todayDate);
     const isShowAudioPlayer =
       hukamnamaDate.getTime() == todayDate.getTime();
     return (
