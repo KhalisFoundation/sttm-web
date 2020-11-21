@@ -15,7 +15,7 @@ export default class Layout extends React.PureComponent {
   };
 
   static contextTypes = {
-    router: PropTypes.object,
+    history: PropTypes.object,
   }
 
   state = {
@@ -23,7 +23,7 @@ export default class Layout extends React.PureComponent {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, history } = this.props;
     let shabad;
     if (!this.state.error) {
       shabad = getHukamnama(data);
@@ -35,7 +35,7 @@ export default class Layout extends React.PureComponent {
         description={
           <React.Fragment>
             {TEXTS.HUKAMNAMA_NOT_FOUND_DESCRIPTION}{' '}
-            <button id="error-link" onClick={this.context.router.history.goBack}>
+            <button id="error-link" onClick={history.goBack}>
               Click here to go back to previous hukamnama
             </button>
           </React.Fragment>
@@ -43,20 +43,20 @@ export default class Layout extends React.PureComponent {
         image={BalpreetSingh}
       />
     ) : (
-      <div className="row" id="content-root">
-        <BreadCrumb
-          links={[{ title: TEXTS.HUKAMNAMA + ' | ' + shabad.expandedDate }]}
-        />
-        <ShabadContent
-          gurbani={shabad.verses}
-          info={shabad.shabadInfo}
-          nav={shabad.nav}
-          random={false}
-          type={'hukamnama'}
-          source={shabad.shabadInfo.source}
-        />
-      </div>
-    );
+        <div className="row" id="content-root">
+          <BreadCrumb
+            links={[{ title: TEXTS.HUKAMNAMA + ' | ' + shabad.expandedDate }]}
+          />
+          <ShabadContent
+            gurbani={shabad.verses}
+            info={shabad.shabadInfo}
+            nav={{ ...shabad.nav, current: shabad.expandedDate }}
+            random={false}
+            type='hukamnama'
+            source={shabad.shabadInfo.source}
+          />
+        </div>
+      );
   }
   componentDidMount() {
     pageView('/hukamnama');

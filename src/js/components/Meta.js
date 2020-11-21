@@ -1,14 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { TEXTS } from '../constants';
-import { isFalsy, toAngURL, toNavURL, dateMath } from '../util';
+import { withRouter } from 'react-router-dom';
+import DatePicker from 'react-date-picker';
+import AudioPlayer from 'react-h5-audio-player';
+
+import CalendarIcon from './Icons/CalendarIcon';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
-import { withRouter } from 'react-router-dom';
-import { getSourceId, getWriter, getRaag } from '@/util/api/shabad';
+import ForwardIcon from './Icons/ForwardIcon';
 
-import { PAGE_NAME } from '../constants';
+import {
+  isFalsy,
+  toAngURL,
+  toNavURL,
+  dateMath,
+  getSourceId,
+  getWriter,
+  getRaag
+} from '@/util';
+import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL } from '@/constants';
 
 /**
  *
@@ -18,6 +29,13 @@ import { PAGE_NAME } from '../constants';
  * @augments {React.PureComponent<MetaProps>}
  */
 class Meta extends React.PureComponent {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      calendarState: 'open'
+    }
+  }
   static defaultProps = {
     nav: {},
   };
@@ -43,6 +61,7 @@ class Meta extends React.PureComponent {
     transliterationLanguages: PropTypes.array.isRequired,
     isUnicode: PropTypes.bool.isRequired,
     nav: PropTypes.shape({
+      current: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
@@ -149,11 +168,11 @@ class Meta extends React.PureComponent {
     const {
       type,
       info,
+      nav,
       isUnicode,
       translationLanguages,
       transliterationLanguages,
     } = this.props;
-
     const Item = ({ children, last = false }) =>
       children ? (
         <React.Fragment>
@@ -165,22 +184,56 @@ class Meta extends React.PureComponent {
     const shouldShowEnglishInHeader =
       translationLanguages.includes('english') ||
       transliterationLanguages.includes('english');
-
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
-
-    // const isShabad = type === 'shabad';
+    const todayDate = new Date(new Date().toDateString());
+    const hukamnamaDate = new Date(nav.current);
+    const isShowAudioPlayer =
+      hukamnamaDate.getTime() == todayDate.getTime();
     return (
       <div id="metadata" className={`metadata-${type}`}>
-        {this.renderLeftArrow()}
+        {!isHukamnama && this.renderLeftArrow()}
 
         <div className="meta">
           {isHukamnama && (
-            <h4>
-              <Link to={`/shabad?id=${info.shabadId}`}>
-                {TEXTS.GO_TO_SHABAD}
-              </Link>
-            </h4>
+            <>
+              <div className="meta-hukamnama">
+                <div className="meta-hukamnama-left">
+                  <DatePicker
+                    isOpen={this.state.isCalendarOpen}
+                    clearIcon={null}
+                    onCalendarClose={() => {
+                      this.setState(() => ({ isCalendarOpen: false }))
+                    }}
+                    onCalendarOpen={() => {
+                      this.setState(() => ({ isCalendarOpen: true }))
+                    }}
+                    onChange={this.goToParticularHukamnama}
+                    value={new Date(nav.current)}
+                    maxDate={new Date()}
+                    minDate={new Date(FIRST_HUKAMNAMA_DATE)}
+                    calendarIcon={<CalendarIcon width={20} />}
+                  />
+                  <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
+                    e.preventDefault();
+                    console.log(this.state.isCalendarOpen, 'CALENDAR OPEN....')
+                    return this.setState(() => ({ isCalendarOpen: true }))
+                  }}>
+                    Past Hukamnamas
+                  </a>
+                </div>
+                <h4>
+                  {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
+                </h4>
+                <div className="meta-hukamnama-right">
+                  <ForwardIcon />
+                  <Link className="hukamnama-right-link" to={`/shabad?id=${info.shabadId}`}>
+                    {TEXTS.GO_TO_SHABAD}
+                  </Link>
+                </div>
+              </div>
+
+            </>
           )}
           <h4 className="gurbani-font">
             <Item>
@@ -231,10 +284,18 @@ class Meta extends React.PureComponent {
               )}
             </h4>
           )}
+
+          {isShowAudioPlayer && (<div className="react-audio-player">
+            <AudioPlayer
+              src={HUKAMNAMA_AUDIO_URL}
+              customAdditionalControls={[]}
+              customVolumeControls={[]}
+            />
+          </div>)}
         </div>
 
-        {this.renderRightArrow()}
-      </div>
+        {!isHukamnama && this.renderRightArrow()}
+      </div >
     );
   }
 
@@ -242,6 +303,16 @@ class Meta extends React.PureComponent {
    * Handle SaveAng
    * @memberof Meta
    */
+
+  goToParticularHukamnama = (date) => {
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const day = date.getDate();
+
+    const hukamnamaDate = `${year}/${month}/${day}`;
+    const link = toNavURL(this.props)
+    this.props.history.push(link + hukamnamaDate);
+  }
   goToNextAng = () => {
     const link = toNavURL(this.props);
     this.props.history.push(link + this.props.nav.next);

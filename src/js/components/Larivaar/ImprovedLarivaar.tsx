@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useContext } from 'react';
+import React, { memo, useContext, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 
@@ -9,7 +9,7 @@ import { getVisraamClass } from '../../util';
 import { getLarivaarAssistColor } from '@/features/selectors';
 import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
 import { MahankoshContext } from '@/context';
-
+import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 export interface ILarivaarProps {
   larivaarAssist?: boolean;
   highlightIndex?: number[];
@@ -42,7 +42,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
   const isMahankoshTooltipExplaination = useSelector(state => state.isMahankoshTooltipExplaination);
 
-  const handleMouseOver = (currentLine: number) => {
+  const handleMahankoshMouseOver = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
       ReactTooltip.rebuild();
       setMahankoshInformation({
@@ -63,34 +63,31 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
     dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
   }
 
+  const mahankoshTooltipAttributes = useMemo(() => {
+    if (isShowMahankoshTooltip) {
+      return getMahankoshTooltipAttributes(true, 'mahankoshTooltipHighlightSearchResult')
+    }
+    return {}
+  }, [true, isShowMahankoshTooltip])
+
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
-  let handleMouseOverHighlightResult = undefined;
+  let handleMouseOver = undefined;
   if (isShowMahankoshTooltip) {
-    handleMouseOverHighlightResult = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMouseOver(currentLine)
+    handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
   }
 
   if (!enable) {
     return (
-      <>
         <HighlightedSearchResult
           isShowMahankoshTooltip={isShowMahankoshTooltip}
           mahankoshIndex={mahankoshIndex}
           highlightIndex={highlightIndex}
           query={query}
           visraams={visraam}
-          onMouseOver={handleMouseOverHighlightResult}
+          onMouseOver={handleMouseOver}
         >
           {children}
         </HighlightedSearchResult>
-        {/* {!isMahankoshTooltipActive &&
-          <MahankoshTooltip
-            tooltipRef={reactTooltipRef}
-            tooltipId="mahankoshTooltipHighlightSearchResult"
-            gurbaniWord={selectedWord}
-            isFetchingMahankoshExplaination={isFetchingMahankoshExplaination}
-            mahankoshExplaination={mahankoshExplaination as IMahankoshExplaination[]}
-          />} */}
-      </>
     );
   }
 
@@ -101,18 +98,32 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
           return `${word} `;
         }
         const visraamClass = getVisraamClass(children, index, visraam);
+        let akharClass = '';
+        const isMahankoshLookupAvailable = (index === mahankoshIndex);
+        if (isMahankoshLookupAvailable) {
+          akharClass += ' mahankoshSelectedGurbaniWord';
+        }
 
         return (
-          <LarivaarWord
-            highlightIndex={highlightIndex}
+          <span
             key={index}
-            word={word}
-            unicode={unicode}
-            larivaarAssist={larivaarAssist}
-            larivaarAssistColor={larivaarAssistColor}
-            index={index}
-            visraamClass={visraamClass}
-          />
+            {...mahankoshTooltipAttributes}
+            onMouseOver={() => {
+              handleMouseOver(word, index)
+            }}
+            className={akharClass}
+          >
+            <LarivaarWord
+              highlightIndex={highlightIndex}
+              key={index}
+              word={word}
+              unicode={unicode}
+              larivaarAssist={larivaarAssist}
+              larivaarAssistColor={larivaarAssistColor}
+              index={index}
+              visraamClass={visraamClass}
+            />
+          </span>
         );
       })}
     </>

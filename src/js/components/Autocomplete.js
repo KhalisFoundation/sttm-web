@@ -64,9 +64,26 @@ class Autocomplete extends Component {
     }
   };
 
+  // Closing suggestions on mouse down
+  onMouseDown = e => {
+    e.stopPropagation();
+    if (this.state.showSuggestions) {
+      if (!(e.path[2].id === 'suggestions') && !(e.path[3].id === 'suggestions')) {
+        this.setState({
+          showSuggestions: false,
+        });
+      }
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.onMouseDown);
+  }
+
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDown);
     clearTimeout(this.state.suggestionTimeout);
+    document.removeEventListener('mousedown', this.onMouseDown);
   }
 
   componentDidUpdate(prevProps) {

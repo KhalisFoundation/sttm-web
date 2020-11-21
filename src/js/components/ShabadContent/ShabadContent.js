@@ -100,6 +100,7 @@ class Shabad extends React.PureComponent {
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
     paragraphMode: PropTypes.bool,
+    sgBaaniLength: PropTypes.string,
   };
 
   constructor(props) {
@@ -116,6 +117,7 @@ class Shabad extends React.PureComponent {
         nav,
         history,
         pages,
+        sgBaaniLength,
         ...baniProps
       },
       handleEmbed,
@@ -139,6 +141,8 @@ class Shabad extends React.PureComponent {
     const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
     const isShowMetaData = this.props.hideMeta === false;
     const isShowControls = this.props.hideControls === false;
+    const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute
+
     return (
       <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root>
         <React.Fragment >
@@ -181,6 +185,8 @@ class Shabad extends React.PureComponent {
                 :
                 <Baani
                   {...baniProps}
+                  sgBaaniLength={sgBaaniLength}
+                  isSundarGutkaRoute={isSundarGutkaRoute}
                   isParagraphMode={isParagraphMode}
                 />}
               {isLoadingContent && <div className="spinner" />}
@@ -189,12 +195,10 @@ class Shabad extends React.PureComponent {
                 <FootNav info={info} type={type} nav={nav} />
               )}
 
-              {!isAmritKeertanRoute
-                &&
-                <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
+              {isShowRelatedShabads && <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
             </div>
           </div>
-          <ProgressBar />
+          {!isMultiPage && <ProgressBar />}
         </React.Fragment>
       </GlobalHotKeys>
     );

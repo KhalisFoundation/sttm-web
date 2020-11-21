@@ -39,7 +39,6 @@ export const steekMap: any = {
   'manmohan singh': shabad => shabad.translation.pu.ms,
 };
 
-
 export const getRaag = (shabad) => ({
   english: shabad.raag ? shabad.raag.english : '',
   gurmukhi: shabad.raag ? shabad.raag.gurmukhi : '',
