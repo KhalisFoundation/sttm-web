@@ -216,7 +216,6 @@ class Meta extends React.PureComponent {
                   />
                   <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
                     e.preventDefault();
-                    console.log(this.state.isCalendarOpen, 'CALENDAR OPEN....')
                     return this.setState(() => ({ isCalendarOpen: true }))
                   }}>
                     Past Hukamnamas
