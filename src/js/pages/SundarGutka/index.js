@@ -50,7 +50,7 @@ class SundarGutka extends React.PureComponent {
       ? SundarGutka.HOME_LINKS
       : SundarGutka.BAANI_LINKS;
 
-    //eg /sundar-gutka/japji-sahib, picked up japji-sahib from this
+    //eg /sundar-gutka/japji-sahib, get japji-sahib from this
     const baaniIdOrName = pathname.split('/')[2];
     const baaniId = baanies ? baaniNameToIdMapper(baanies, baaniIdOrName) : baaniIdOrName;
 
@@ -157,7 +157,7 @@ class SundarGutka extends React.PureComponent {
       pageView('/sundar-gutka');
     }
 
-    fetch(BANIS_API_URL)
+    fetch(B ANIS_API_URL)
       .then(r => r.json())
       .then(baanies =>
         this.setState({
