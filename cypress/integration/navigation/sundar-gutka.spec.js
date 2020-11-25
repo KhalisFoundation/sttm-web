@@ -52,7 +52,7 @@ describe('Navigation', () => {
         });
     })
 
-    it.only('should generate user friendly url', () => {
+    it('should generate user friendly url', () => {
       cy.server();
 
       cy.route({

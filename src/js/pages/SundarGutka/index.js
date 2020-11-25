@@ -157,7 +157,7 @@ class SundarGutka extends React.PureComponent {
       pageView('/sundar-gutka');
     }
 
-    fetch(B ANIS_API_URL)
+    fetch(BANIS_API_URL)
       .then(r => r.json())
       .then(baanies =>
         this.setState({
