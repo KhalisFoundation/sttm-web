@@ -285,11 +285,8 @@ export default class Baani extends React.PureComponent {
       transliterationFontSize,
     } = this.props;
 
-    console.log("-----", shabad, language, "transliterationMap...")
     const isTransliterationExists = !!transliterationMap[language](shabad);
     if (!isTransliterationExists) return null;
-
-    console.log("-------", transliterationMap, transliterationMap[language](shabad), "-------", "transliterationsMap...")
     return (
       <Transliteration
         fontSize={transliterationFontSize}
