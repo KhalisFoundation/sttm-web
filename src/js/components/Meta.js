@@ -187,7 +187,7 @@ class Meta extends React.PureComponent {
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
-    const hukamnamaDate = new Date(nav.current);
+    const hukamnamaDate = new Date(nav.current || todayDate);
     const isShowAudioPlayer =
       hukamnamaDate.getTime() == todayDate.getTime();
     return (
@@ -216,7 +216,6 @@ class Meta extends React.PureComponent {
                   />
                   <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
                     e.preventDefault();
-                    console.log(this.state.isCalendarOpen, 'CALENDAR OPEN....')
                     return this.setState(() => ({ isCalendarOpen: true }))
                   }}>
                     Past Hukamnamas

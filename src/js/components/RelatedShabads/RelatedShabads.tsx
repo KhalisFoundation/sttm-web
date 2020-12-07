@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import Fetch from '../Fetch';
 import { TEXTS } from '@/constants';
 import { IStore } from '@/features/types';
@@ -241,4 +241,4 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
   }
 }
 
-export default memo(RelatedShabads);
+export default RelatedShabads;
