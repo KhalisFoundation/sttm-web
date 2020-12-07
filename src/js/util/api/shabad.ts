@@ -29,7 +29,7 @@ export const transliterationMap = {
   english: shabad => shabad.transliteration.en,
   hindi: shabad => shabad.transliteration.hi,
   shahmukhi: shabad => shabad.transliteration.ur,
-  IPA: shabad => shabad.transliteration.ipa,
+  ipa: shabad => shabad.transliteration.ipa,
 };
 
 export const steekMap: any = {

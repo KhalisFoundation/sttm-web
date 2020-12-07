@@ -1,5 +1,5 @@
-import { InView } from 'react-intersection-observer'
 import React from 'react';
+import { InView } from 'react-intersection-observer'
 import PropTypes from 'prop-types';
 import Actions from '../BaaniLineActions';
 import Translation from '../Translation';
@@ -285,9 +285,11 @@ export default class Baani extends React.PureComponent {
       transliterationFontSize,
     } = this.props;
 
+    console.log("-----", shabad, language, "transliterationMap...")
     const isTransliterationExists = !!transliterationMap[language](shabad);
     if (!isTransliterationExists) return null;
 
+    console.log("-------", transliterationMap, transliterationMap[language](shabad), "-------", "transliterationsMap...")
     return (
       <Transliteration
         fontSize={transliterationFontSize}
@@ -545,21 +547,21 @@ export default class Baani extends React.PureComponent {
           {Object.entries(normalizedGurbani).map(([idx, shabads]) =>
             <div className={`${splitViewBaaniClass}-paragraph ${paragraphModeClass}`} key={idx}>
               {shabads.map(shabad =>
-                (
-                  <div
-                    id={`line${getVerseId(shabad)}-line`}
-                    key={getVerseId(shabad)}
-                    className="line"
-                    ref={node =>
-                      highlight === parseInt(getVerseId(shabad), 10)
-                        ? (this.$highlightedBaaniLine = node)
-                        : null
-                    }
-                  >
-                    {this.getBaniLine(shabad)}
-                    {this.getActions(shabad)}
-                  </div>
-                ))}
+              (
+                <div
+                  id={`line${getVerseId(shabad)}-line`}
+                  key={getVerseId(shabad)}
+                  className="line"
+                  ref={node =>
+                    highlight === parseInt(getVerseId(shabad), 10)
+                      ? (this.$highlightedBaaniLine = node)
+                      : null
+                  }
+                >
+                  {this.getBaniLine(shabad)}
+                  {this.getActions(shabad)}
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -658,8 +660,7 @@ export default class Baani extends React.PureComponent {
     const { selectedWord } = this.state;
     return (
       <div
-        className={`${SHABAD_CONTENT_CLASSNAME} ${
-          centerAlignGurbani || showFullScreen ? ' center-align' : ''
+        className={`${SHABAD_CONTENT_CLASSNAME} ${centerAlignGurbani || showFullScreen ? ' center-align' : ''
           }`}
       >
         {this.getMarkup()}

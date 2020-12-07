@@ -98,12 +98,6 @@ blockquote {
   }
 }
 
-.mixed-view-baani-transliteration-shahmukhi {
-  clear: both;
-  display: flex;
-  float: right;
-}
-
 .pagination {
   align-items: center;
   display: flex;
@@ -332,6 +326,12 @@ blockquote {
         & .transliteration {
           margin-right: 4px;
         }
+      }
+
+      &-shahmukhi {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
       }
     }
 
