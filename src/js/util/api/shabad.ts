@@ -29,13 +29,13 @@ export const transliterationMap = {
   english: shabad => shabad.transliteration.en,
   hindi: shabad => shabad.transliteration.hi,
   shahmukhi: shabad => shabad.transliteration.ur,
-  ipa: shabad => shabad.transliteration.ipa,
+  IPA: shabad => shabad.transliteration.ipa,
 };
 
 export const steekMap: any = {
   "sahib singh": shabad => shabad.translation.pu.ss,
   fareedkot: shabad => shabad.translation.pu.ft,
-  'bani db': shabad => shabad.translation.pu.bdb,
+  'BaniDB': shabad => shabad.translation.pu.bdb,
   'manmohan singh': shabad => shabad.translation.pu.ms,
 };
 
