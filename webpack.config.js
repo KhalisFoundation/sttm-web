@@ -7,7 +7,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const path = require('path');
 const API_URLS = require('./common/api-urls-constants.js');
 
-const PRODUCTION = process.env.NODE_ENV !== 'production';
+const PRODUCTION = process.env.NODE_ENV === 'production';
 
 const commonPlugins = [new ManifestPlugin()];
 
