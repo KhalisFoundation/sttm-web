@@ -188,7 +188,7 @@ class Meta extends React.PureComponent {
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
     const hukamnamaDate = new Date(nav.current || todayDate);
-    const isShowAudioPlayer =
+    const isShowAudioPlayer = isHukamnama &&
       hukamnamaDate.getTime() == todayDate.getTime();
     return (
       <div id="metadata" className={`metadata-${type}`}>
@@ -209,8 +209,8 @@ class Meta extends React.PureComponent {
                       this.setState(() => ({ isCalendarOpen: true }))
                     }}
                     onChange={this.goToParticularHukamnama}
-                    value={new Date(nav.current)}
-                    maxDate={new Date()}
+                    value={hukamnamaDate}
+                    maxDate={todayDate}
                     minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                     calendarIcon={<CalendarIcon width={20} />}
                   />
