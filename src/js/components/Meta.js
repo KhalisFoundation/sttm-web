@@ -210,7 +210,7 @@ class Meta extends React.PureComponent {
                     }}
                     onChange={this.goToParticularHukamnama}
                     value={hukamnamaDate}
-                    maxDate={todayDate}
+                    maxDate={hukamnamaDate}
                     minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                     calendarIcon={<CalendarIcon width={20} />}
                   />
