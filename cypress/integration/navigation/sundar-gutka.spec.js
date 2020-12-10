@@ -5,7 +5,9 @@ describe('Navigation', () => {
   const sttmLarivaarAssistColor = 'rgb(243, 156, 29)';
   const sundarGutkaBaanis = 104;
   const searchString = 'jaa';
-  const banisURL = Cypress.env().BANIS_URL;
+  const resourcePath = Cypress.env().BANIS_URL;
+  const protocol = Cypress.env().PROTOCOL;
+  const banisURL = protocol + ":" + resourcePath;
 
   describe('Sundar-Gutka page', () => {
     beforeEach(() => {
@@ -53,7 +55,9 @@ describe('Navigation', () => {
     it('should generate user friendly url', () => {
       cy.server();
 
-      cy.route({ method: "GET", url: banisURL })
+      cy.route({
+        method: "GET", url: banisURL
+      })
         .as('sgBaanis')
 
       cy.wait('@sgBaanis').then(baanis => {
@@ -72,7 +76,6 @@ describe('Navigation', () => {
           }
         });
       });
-
     })
 
     it('should work correctly when using different controls in settings panel', () => {
