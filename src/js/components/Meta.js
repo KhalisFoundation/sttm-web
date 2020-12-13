@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -9,6 +9,7 @@ import CalendarIcon from './Icons/CalendarIcon';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
 import ForwardIcon from './Icons/ForwardIcon';
+import HeadphonesIcon from './Icons/HeadphonesIcon'
 
 import {
   isFalsy,
@@ -33,8 +34,10 @@ class Meta extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      calendarState: 'open'
+      audioPlayer: null,
+      isHukamnamaAudioPlayerVisible: false,
     }
+    this.audioPlayer = createRef();
   }
   static defaultProps = {
     nav: {},
@@ -164,6 +167,21 @@ class Meta extends React.PureComponent {
     return '';
   }
 
+  setHukamnamaAudioPlayerVisibility = () => {
+    const audioPlayer = this.audioPlayer.current.audio.current;
+
+    this.setState(previousState => {
+      const isAudioPlayerState = !previousState.isHukamnamaAudioPlayerVisible;
+
+      !isAudioPlayerState && audioPlayer.pause();
+
+      return ({
+        ...previousState,
+        isHukamnamaAudioPlayerVisible: !previousState.isHukamnamaAudioPlayerVisible
+      })
+    })
+  }
+
   render() {
     const {
       type,
@@ -188,8 +206,10 @@ class Meta extends React.PureComponent {
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
     const hukamnamaDate = new Date(nav.current || todayDate);
-    const isShowAudioPlayer = isHukamnama &&
-      hukamnamaDate.getTime() == todayDate.getTime();
+    const hasAudioPlayer = isHukamnama
+    console.log(this.state.isHukamnamaAudioPlayerVisible, 'THIS.state.isisHukamnamaAudioPlayerVisible')
+    // hukamnamaDate.getTime() == todayDate.getTime();
+
     return (
       <div id="metadata" className={`metadata-${type}`}>
         {!isHukamnama && this.renderLeftArrow()}
@@ -199,39 +219,44 @@ class Meta extends React.PureComponent {
             <>
               <div className="meta-hukamnama">
                 <div className="meta-hukamnama-left">
-                  <DatePicker
-                    isOpen={this.state.isCalendarOpen}
-                    clearIcon={null}
-                    onCalendarClose={() => {
-                      this.setState(() => ({ isCalendarOpen: false }))
-                    }}
-                    onCalendarOpen={() => {
-                      this.setState(() => ({ isCalendarOpen: true }))
-                    }}
-                    onChange={this.goToParticularHukamnama}
-                    value={hukamnamaDate}
-                    maxDate={hukamnamaDate}
-                    minDate={new Date(FIRST_HUKAMNAMA_DATE)}
-                    calendarIcon={<CalendarIcon width={20} />}
-                  />
-                  <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
-                    e.preventDefault();
-                    return this.setState(() => ({ isCalendarOpen: true }))
-                  }}>
-                    Past Hukamnamas
-                  </a>
+                  <div>
+                    <DatePicker
+                      isOpen={this.state.isCalendarOpen}
+                      clearIcon={null}
+                      onCalendarClose={() => {
+                        this.setState(() => ({ isCalendarOpen: false }))
+                      }}
+                      onCalendarOpen={() => {
+                        this.setState(() => ({ isCalendarOpen: true }))
+                      }}
+                      onChange={this.goToParticularHukamnama}
+                      value={hukamnamaDate}
+                      maxDate={hukamnamaDate}
+                      minDate={new Date(FIRST_HUKAMNAMA_DATE)}
+                      calendarIcon={<CalendarIcon width={20} />}
+                    />
+                    <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
+                      e.preventDefault();
+                      return this.setState(() => ({ isCalendarOpen: true }))
+                    }}>
+                      Past Hukamnamas
+                    </a>
+                  </div>
+                  <div className="meta-hukamnama-left-gotoshabad">
+                    <ForwardIcon />
+                    <Link className="hukamnama-right-link" to={`/shabad?id=${info.shabadId}`}>
+                      {TEXTS.GO_TO_SHABAD}
+                    </Link>
+                  </div>
                 </div>
                 <h4>
                   {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
                 </h4>
-                <div className="meta-hukamnama-right">
-                  <ForwardIcon />
-                  <Link className="hukamnama-right-link" to={`/shabad?id=${info.shabadId}`}>
-                    {TEXTS.GO_TO_SHABAD}
-                  </Link>
+                <div role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
+                  <HeadphonesIcon />
+                  <p>Listen today hukamnama</p>
                 </div>
               </div>
-
             </>
           )}
           <h4 className="gurbani-font">
@@ -283,15 +308,18 @@ class Meta extends React.PureComponent {
               )}
             </h4>
           )}
+        </div>
 
-          {isShowAudioPlayer && (<div className="react-audio-player">
+        {hasAudioPlayer && (
+          <div className={`hukamnama-audio ${this.state.isHukamnamaAudioPlayerVisible ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'}`}>
             <AudioPlayer
+              ref={this.audioPlayer}
               src={HUKAMNAMA_AUDIO_URL}
               customAdditionalControls={[]}
               customVolumeControls={[]}
             />
           </div>)}
-        </div>
+
 
         {!isHukamnama && this.renderRightArrow()}
       </div >
