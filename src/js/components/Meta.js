@@ -37,7 +37,9 @@ class Meta extends React.PureComponent {
       audioPlayer: null,
       isHukamnamaAudioPlayerVisible: false,
     }
-    this.audioPlayer = createRef();
+    this.audioPlayerRef = createRef();
+    this.audioPlayerIconRef = createRef();
+    this.wrapperRef = createRef();
   }
   static defaultProps = {
     nav: {},
@@ -167,10 +169,12 @@ class Meta extends React.PureComponent {
     return '';
   }
 
-  setHukamnamaAudioPlayerVisibility = () => {
-    const audioPlayer = this.audioPlayer.current.audio.current;
+  setHukamnamaAudioPlayerVisibility = (e) => {
+    e.preventDefault();
+    const audioPlayer = this.audioPlayerRef.current.audio.current;
 
     this.setState(previousState => {
+      // console.log('set state 2 times got hit')
       const isAudioPlayerState = !previousState.isHukamnamaAudioPlayerVisible;
 
       !isAudioPlayerState && audioPlayer.pause();
@@ -180,6 +184,28 @@ class Meta extends React.PureComponent {
         isHukamnamaAudioPlayerVisible: !previousState.isHukamnamaAudioPlayerVisible
       })
     })
+  }
+
+  removeAudioPlayer = (e) => {
+
+    e.preventDefault();
+    if (this.audioPlayerIconRef.current.contains(e.target)) {
+      return this.setHukamnamaAudioPlayerVisibility(e);
+    }
+    if (this.wrapperRef && !this.wrapperRef.current.contains(e.target)) {
+      if (this.state.isHukamnamaAudioPlayerVisible) {
+        return this.setHukamnamaAudioPlayerVisibility(e);
+      }
+    }
+    return;
+  }
+
+  componentDidUpdate = () => {
+    if (this.state.isHukamnamaAudioPlayerVisible) {
+      document.addEventListener('mousedown', this.removeAudioPlayer);
+    } else {
+      document.removeEventListener('mousedown', this.removeAudioPlayer);
+    }
   }
 
   render() {
@@ -207,11 +233,10 @@ class Meta extends React.PureComponent {
     const todayDate = new Date(new Date().toDateString());
     const hukamnamaDate = new Date(nav.current || todayDate);
     const hasAudioPlayer = isHukamnama
-    console.log(this.state.isHukamnamaAudioPlayerVisible, 'THIS.state.isisHukamnamaAudioPlayerVisible')
     // hukamnamaDate.getTime() == todayDate.getTime();
 
     return (
-      <div id="metadata" className={`metadata-${type}`}>
+      <div ref={this.wrapperRef} id="metadata" className={`metadata-${type}`}>
         {!isHukamnama && this.renderLeftArrow()}
 
         <div className="meta">
@@ -252,7 +277,7 @@ class Meta extends React.PureComponent {
                 <h4>
                   {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
                 </h4>
-                <div role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
+                <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
                   <HeadphonesIcon />
                   <p>Listen today hukamnama</p>
                 </div>
@@ -313,14 +338,12 @@ class Meta extends React.PureComponent {
         {hasAudioPlayer && (
           <div className={`hukamnama-audio ${this.state.isHukamnamaAudioPlayerVisible ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'}`}>
             <AudioPlayer
-              ref={this.audioPlayer}
+              ref={this.audioPlayerRef}
               src={HUKAMNAMA_AUDIO_URL}
               customAdditionalControls={[]}
               customVolumeControls={[]}
             />
           </div>)}
-
-
         {!isHukamnama && this.renderRightArrow()}
       </div >
     );

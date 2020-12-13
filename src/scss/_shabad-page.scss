@@ -43,23 +43,22 @@ blockquote {
   }
 
   & .hukamnama-audio {
-    background-color: white;
     bottom: 50px;
-    left: 10px;
-    position: fixed;
+    left: 50%;
     max-width: 800px;
-    transition: 0.2s ease-in all;
+    position: fixed;
     transform: translateX(-50%) scaleY(0);
+    transition: 0.2s ease-in all;
     width: 100%;
     z-index: 1;
   }
 
   & .hukamnama-audio--hidden {
-    transform: scaleY(0);
+    transform: translateX(-50%) scaleY(0);
   }
 
   & .hukamnama-audio--shown {
-    transform: scaleY(1);
+    transform: translateX(-50%) scaleY(1);
   }
 }
 
@@ -112,16 +111,14 @@ blockquote {
       }
     }
 
-
     &-left,
     &-right {
       @include flex-center();
     }
 
     &-left {
-      flex-direction: column;
       align-items: flex-start;
-
+      flex-direction: column;
       &-gotoshabad {
         display: flex;
         padding-left: 8px;
