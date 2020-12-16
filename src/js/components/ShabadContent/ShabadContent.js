@@ -21,7 +21,7 @@ import {
   toAngURL,
   clickEvent,
   ACTIONS,
-  errorEvent
+  errorEvent,
 } from '@/util';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME, MAX_ANGS } from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
@@ -115,7 +115,6 @@ class Shabad extends React.PureComponent {
         paragraphMode,
         location,
         nav,
-        history,
         pages,
         sgBaaniLength,
         ...baniProps
@@ -141,19 +140,23 @@ class Shabad extends React.PureComponent {
     const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
     const isShowMetaData = this.props.hideMeta === false;
     const isShowControls = this.props.hideControls === false;
-    const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute
+    const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute;
 
     return (
-      <GlobalHotKeys keyMap={ViewerShortcuts} handlers={ViewerShortcutHanders} root>
-        <React.Fragment >
+      <GlobalHotKeys
+        keyMap={ViewerShortcuts}
+        handlers={ViewerShortcutHanders}
+        root
+      >
+        <React.Fragment>
           {isShowControls && (
             <Controls
               media={
                 ['shabad', 'hukamnama', 'ang'].includes(type)
                   ? supportedMedia
                   : supportedMedia.filter(
-                    m => ['embed', 'copyAll', 'copy'].includes(m) === false
-                  )
+                      (m) => ['embed', 'copyAll', 'copy'].includes(m) === false
+                    )
               }
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
@@ -173,7 +176,7 @@ class Shabad extends React.PureComponent {
           )}
           <div id="shabad" className={`shabad display display-${type}`}>
             <div className="shabad-container">
-              {isMultiPage ?
+              {isMultiPage ? (
                 <>
                   <MultiPageBaani
                     {...baniProps}
@@ -182,20 +185,21 @@ class Shabad extends React.PureComponent {
                   />
                   {this.getContinueButton()}
                 </>
-                :
+              ) : (
                 <Baani
                   {...baniProps}
                   sgBaaniLength={sgBaaniLength}
                   isSundarGutkaRoute={isSundarGutkaRoute}
                   isParagraphMode={isParagraphMode}
-                />}
+                />
+              )}
               {isLoadingContent && <div className="spinner" />}
 
-              {isShowFooterNav && (
-                <FootNav info={info} type={type} nav={nav} />
-              )}
+              {isShowFooterNav && <FootNav info={info} type={type} nav={nav} />}
 
-              {isShowRelatedShabads && <RelatedShabads forShabadID={getShabadId(this.props.info)} />}
+              {isShowRelatedShabads && (
+                <RelatedShabads forShabadID={getShabadId(this.props.info)} />
+              )}
             </div>
           </div>
           {!isMultiPage && <ProgressBar />}
@@ -220,25 +224,24 @@ class Shabad extends React.PureComponent {
       const newUrl = toAngURL({
         ang: lastAng + 1,
         source,
-        highlight: undefined
+        highlight: undefined,
       });
 
       const loadNextAng = (e) => {
         e.preventDefault();
         e.stopPropagation();
         history.push(newUrl);
-      }
+      };
 
       return (
         <div className="continue">
-          <button className="btn btn-primary"
-            onClick={loadNextAng}>
+          <button className="btn btn-primary" onClick={loadNextAng}>
             Load next ang
           </button>
         </div>
-      )
+      );
     }
-  }
+  };
 
   handleCopyAll = () =>
     Promise.resolve(
@@ -260,19 +263,19 @@ class Shabad extends React.PureComponent {
       `data-sttm-height="500"`,
       `data-sttm-width="500"`,
       type === 'ang'
-        ? `data-sttm-ang="${getAng(info.source)}" data-sttm-source="${
-        getSourceId(info)
-        }"`
+        ? `data-sttm-ang="${getAng(
+            info.source
+          )}" data-sttm-source="${getSourceId(info)}"`
         : `data-sttm-id="${getShabadId(info)}"`,
     ].join(' ');
 
     Promise.resolve(
       `<div ${attrs}><a href="https://sttm.co/${
-      type === 'ang'
-        ? 'ang?ang=' + getAng(info.source) + '&source=' + getSourceId(info)
-        : 'shabad?id=' + getShabadId(info)
+        type === 'ang'
+          ? 'ang?ang=' + getAng(info.source) + '&source=' + getSourceId(info)
+          : 'shabad?id=' + getShabadId(info)
       }">SikhiToTheMax</a></div><script async src="${
-      window.location.origin
+        window.location.origin
       }/embed.js"></script>`
     )
       .then(copyToClipboard)
@@ -281,5 +284,5 @@ class Shabad extends React.PureComponent {
   };
 }
 
-const stateToProps = state => state;
+const stateToProps = (state) => state;
 export default connect(stateToProps)(withRouter(Shabad));

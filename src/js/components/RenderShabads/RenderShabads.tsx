@@ -1,28 +1,29 @@
 import React, { useEffect } from 'react';
-import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { Location } from 'history';
 
 import ShabadContent from '../ShabadContent';
 import Fetch from '../Fetch';
 import { pageView } from '../../util/analytics';
-import {
-  getBaaniUrl,
-  getRouteValue,
-  getPageView,
-  getGurbani
-} from './utils';
+import { getBaaniUrl, getRouteValue, getPageView, getGurbani } from './utils';
 
 interface MatchParams {
   shabadId?: string;
 }
 
 interface IRenderShabadsProps extends RouteComponentProps<MatchParams> {
-  location: Location
-  sundarGutkaBaaniId?: number
+  location: Location;
+  sundarGutkaBaaniId?: number;
 }
 
-export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location, sundarGutkaBaaniId }) => {
-  const { url, params: { shabadId } } = match;
+export const RenderShabads: React.FC<IRenderShabadsProps> = ({
+  match,
+  location,
+  sundarGutkaBaaniId,
+}) => {
+  const {
+    params: { shabadId },
+  } = match;
   const { pathname } = location;
   const id = shabadId || sundarGutkaBaaniId;
   const routeValue = getRouteValue(pathname);
@@ -33,15 +34,14 @@ export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location, 
     pageView(`${pageViewUrl}`);
     // Just making sure that we are always on top of page
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [pageViewUrl])
+  }, [pageViewUrl]);
 
   return (
     <div className="baani">
       <Fetch url={`${baaniUrl}`}>
         {({ data, error, loading }) => {
-
           if (loading) {
-            return <div className="spinner" />
+            return <div className="spinner" />;
           }
 
           return (
@@ -55,9 +55,9 @@ export const RenderShabads: React.FC<IRenderShabadsProps> = ({ match, location, 
                 disableSplitView: true,
               }}
             />
-          )
+          );
         }}
       </Fetch>
     </div>
   );
-}
+};
