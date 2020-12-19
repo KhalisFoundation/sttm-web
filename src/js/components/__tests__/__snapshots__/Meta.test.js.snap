@@ -183,7 +183,7 @@ exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
       </h4>
     </div>
     <div
-      class="hukamnama-audio hukamnama-audio--hidden"
+      class="hukamnama-audio hukamnama-audio--shown"
     >
       <div
         aria-label="Audio Player"
