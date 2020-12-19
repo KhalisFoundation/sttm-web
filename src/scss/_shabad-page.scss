@@ -127,6 +127,7 @@ blockquote {
     }
 
     &-right {
+      cursor: pointer;
       flex-direction: column;
     }
   }

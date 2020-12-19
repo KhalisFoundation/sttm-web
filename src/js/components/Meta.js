@@ -35,7 +35,7 @@ class Meta extends React.PureComponent {
     super(props)
     this.state = {
       audioPlayer: null,
-      isHukamnamaAudioPlayerVisible: false,
+      isHukamnamaAudioPlayerVisible: true,
     }
     this.audioPlayerRef = createRef();
     this.audioPlayerIconRef = createRef();
