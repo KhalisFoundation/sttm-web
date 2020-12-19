@@ -363,7 +363,7 @@ export default class SearchForm extends React.PureComponent {
           );
           localStorage.setItem(
             LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
-            source
+            newSourceType
           );
           requestAnimationFrame(this.beginPlaceholderAnimation);
         }
