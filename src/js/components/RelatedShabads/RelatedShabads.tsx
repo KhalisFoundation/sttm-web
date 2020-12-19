@@ -116,7 +116,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
             return null;
           }
 
-          const shabads = (data.rows as IRelatedShabadData[]).slice(0, count);
+          const shabads: IRelatedShabadData[] = data.rows.slice(0, count);
           const totalShabads = shabads.length;
 
           if (totalShabads === 0) {
@@ -213,7 +213,7 @@ class RelatedShabads extends React.PureComponent<IRelatedShabadsProps, IRelatedS
                             {englishTranslation && (
                               <span className="relatedShabadSource englishSource">
                                 {' '}
-                                {` |  ${s.SourceEnglish} ${s.PageNo}`}
+                                {` |  ${s.SourceEnglish} ${s.PageNo ? s.PageNo : ''}`}
                               </span>
                             )}
                           </p>
