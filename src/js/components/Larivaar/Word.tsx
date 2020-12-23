@@ -51,11 +51,11 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
     <span
       className={visraamClass + '' + 'gurbani-word'}
     >
-      {isBothLarivaarAndVisraam && isOddIdx &&
+      {/* {isBothLarivaarAndVisraam && isOddIdx &&
         <span style={{backgroundColor: STTM_ORANGE}} className="vishraam-icon-wrapper">
           <Pause className="vishraam-icon" />
         </span>
-        }
+        } */}
       {segments.map((item, i) => {
         const key = `${index}.${i}`;
         let akharClass = '';

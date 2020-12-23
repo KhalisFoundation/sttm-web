@@ -324,8 +324,21 @@ select {
 
 .hukamnama-player {
   &-close-icon {
+    align-items: center;
+    background: $sttm-white;
+    border-radius: 50%;
     cursor: pointer;
+    display: flex;
     float: right;
+    justify-content: center;
+    height: 27px;
+    width: 27px;
+
+
+    svg {
+      fill: $sttm-blue;
+      font-size: 14px;
+    }
   }
 
   &-title {

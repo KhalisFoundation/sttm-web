@@ -336,7 +336,9 @@ class Meta extends React.PureComponent {
               header={(
                 <div>
                   <h3 className="hukamnama-player-title">{`Listen to Today's Hukamnama`}</h3>
-                  <TimesIcon className="hukamnama-player-close-icon" onClick={this.removeAudioPlayer} />
+                  <span className="hukamnama-player-close-icon">
+                    <TimesIcon onClick={this.removeAudioPlayer} />
+                  </span>
                 </div>
               )}
             />
