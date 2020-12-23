@@ -17,7 +17,7 @@ export interface ILarivaarProps {
   unicode: boolean;
   children: string;
   query: string;
-  visraam: object;
+  visraam: boolean;
   isShowMahankoshTooltip?: boolean;
 }
 
@@ -68,7 +68,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
       return getMahankoshTooltipAttributes(true, 'mahankoshTooltipHighlightSearchResult')
     }
     return {}
-  }, [true, isShowMahankoshTooltip])
+  }, [isShowMahankoshTooltip])
 
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
   let handleMouseOver = undefined;
@@ -122,6 +122,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
               larivaarAssistColor={larivaarAssistColor}
               index={index}
               visraamClass={visraamClass}
+              visraam={visraam}
             />
           </span>
         );

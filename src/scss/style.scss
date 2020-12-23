@@ -321,3 +321,27 @@ select {
 .hukamnama-right-link {
   margin-left: 5px;
 }
+
+.hukamnama-player {
+  &-close-icon {
+    align-items: center;
+    background: $sttm-white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    float: right;
+    height: 27px;
+    justify-content: center;
+    width: 27px;
+  }
+
+  &-close-icon-svg {
+    fill: $sttm-blue;
+    font-size: 14px;
+  }
+
+  &-title {
+    display: inline-block;
+    font-size: 1rem;
+  }
+}
