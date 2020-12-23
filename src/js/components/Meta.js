@@ -10,6 +10,7 @@ import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
 import ForwardIcon from './Icons/ForwardIcon';
 import HeadphonesIcon from './Icons/HeadphonesIcon'
+import TimesIcon from './Icons/Times';
 
 import {
   isFalsy,
@@ -187,17 +188,7 @@ class Meta extends React.PureComponent {
   }
 
   removeAudioPlayer = (e) => {
-
-    e.preventDefault();
-    if (this.audioPlayerIconRef.current.contains(e.target)) {
-      return this.setHukamnamaAudioPlayerVisibility(e);
-    }
-    if (this.wrapperRef && !this.wrapperRef.current.contains(e.target)) {
-      if (this.state.isHukamnamaAudioPlayerVisible) {
-        return this.setHukamnamaAudioPlayerVisibility(e);
-      }
-    }
-    return;
+    return this.setHukamnamaAudioPlayerVisibility(e);
   }
 
   componentDidUpdate = () => {
@@ -279,7 +270,7 @@ class Meta extends React.PureComponent {
                 </h4>
                 <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
                   <HeadphonesIcon />
-                  <p>Listen today hukamnama</p>
+                  <p>{`Listen to today's hukamnama`}</p>
                 </div>
               </div>
             </>
@@ -342,6 +333,12 @@ class Meta extends React.PureComponent {
               src={HUKAMNAMA_AUDIO_URL}
               customAdditionalControls={[]}
               customVolumeControls={[]}
+              header={(
+                <div>
+                  <h3 className="hukamnama-player-title">{`Listen to Today's Hukamnama`}</h3>
+                  <TimesIcon className="hukamnama-player-close-icon" onClick={this.removeAudioPlayer} />
+                </div>
+              )}
             />
           </div>)}
         {!isHukamnama && this.renderRightArrow()}

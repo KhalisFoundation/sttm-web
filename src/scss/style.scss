@@ -321,3 +321,15 @@ select {
 .hukamnama-right-link {
   margin-left: 5px;
 }
+
+.hukamnama-player {
+  &-close-icon {
+    cursor: pointer;
+    float: right;
+  }
+
+  &-title {
+    display: inline-block;
+    font-size: 1rem;
+  }
+}

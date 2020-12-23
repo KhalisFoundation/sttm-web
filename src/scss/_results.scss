@@ -1,3 +1,23 @@
+.gurbani-word {
+  position: relative;
+
+  & .vishraam-icon {
+    fill: $sttm-white;
+    width: 8px;
+
+    &-wrapper {
+      align-items: center;
+      bottom: 90%;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      left: -8px;
+      padding: 4px;
+      position: absolute;
+    }
+  }
+}
+
 .larivaar-assist-word,
 .larivaar-assist-word span {
   color: #f39c1d !important;

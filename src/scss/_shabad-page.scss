@@ -51,6 +51,11 @@ blockquote {
     transition: 0.2s ease-in all;
     width: 100%;
     z-index: 1;
+
+    &-player-title {
+      margin-bottom: 16px;
+      text-align: center;
+    }
   }
 
   & .hukamnama-audio--hidden {

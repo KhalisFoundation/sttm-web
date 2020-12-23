@@ -1,5 +1,7 @@
 import React, {  memo } from 'react';
+import { Pause } from '../Icons/controls/';
 
+import { STTM_ORANGE } from '@/constants';
 import {
   fixLarivaarUnicode,
   fixLarivaarGurmukhiFont
@@ -12,6 +14,7 @@ export interface ILarivaarWordProps {
   larivaarAssistColor: string;
   index: number;
   highlightIndex?: Array<number>;
+  visraam: boolean;
   visraamClass: string;
   highlight?: boolean;
 }
@@ -24,9 +27,10 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
   larivaarAssistColor,
   index,
   highlight,
+  visraam,
   visraamClass,
 }) => {
-
+  const isBothLarivaarAndVisraam = visraam && larivaarAssist
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
   const segments = unicode
@@ -45,8 +49,13 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
 
   return (
     <span
-      className={visraamClass}
+      className={visraamClass + '' + 'gurbani-word'}
     >
+      {isBothLarivaarAndVisraam && isOddIdx &&
+        <span style={{backgroundColor: STTM_ORANGE}} className="vishraam-icon-wrapper">
+          <Pause className="vishraam-icon" />
+        </span>
+        }
       {segments.map((item, i) => {
         const key = `${index}.${i}`;
         let akharClass = '';
