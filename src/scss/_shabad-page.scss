@@ -48,6 +48,7 @@ blockquote {
     max-width: 800px;
     position: fixed;
     transform: translateX(-50%) scaleY(0);
+    transform-origin: bottom bottom;
     transition: 0.2s ease-in all;
     width: 100%;
     z-index: 1;

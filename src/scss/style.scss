@@ -330,15 +330,14 @@ select {
     cursor: pointer;
     display: flex;
     float: right;
-    justify-content: center;
     height: 27px;
+    justify-content: center;
     width: 27px;
+  }
 
-
-    svg {
-      fill: $sttm-blue;
-      font-size: 14px;
-    }
+  &-close-icon-svg {
+    fill: $sttm-blue;
+    font-size: 14px;
   }
 
   &-title {
