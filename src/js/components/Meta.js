@@ -191,13 +191,6 @@ class Meta extends React.PureComponent {
     return this.setHukamnamaAudioPlayerVisibility(e);
   }
 
-  componentDidUpdate = () => {
-    if (this.state.isHukamnamaAudioPlayerVisible) {
-      document.addEventListener('mousedown', this.removeAudioPlayer);
-    } else {
-      document.removeEventListener('mousedown', this.removeAudioPlayer);
-    }
-  }
 
   render() {
     const {
