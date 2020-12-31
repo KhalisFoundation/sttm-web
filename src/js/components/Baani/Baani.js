@@ -494,7 +494,12 @@ export default class Baani extends React.PureComponent {
           )
         })
         }
-      </div >
+        {isSehajPaathMode ? (
+          <h4 className="separator">
+            {source === 'G' ? 'Ang' : 'Pannaa'} {ang + 1}
+          </h4>
+        ) : null}
+      </div>
     )
   }
   createFullScreenMarkup = () => {

@@ -615,3 +615,34 @@ blockquote {
     width: 100%;
   }
 }
+
+.separator {
+  align-items: center;
+  display: flex;
+  text-align: center;
+
+  &::after,
+  &::before {
+    border-bottom: 1px solid #000;
+    content: '';
+    flex: 1;
+    opacity: 0.5;
+  }
+
+  &::after {
+    margin-left: 0.25em;
+  }
+
+  &::before {
+    margin-right: 0.25em;
+  }
+
+  .dark-mode & {
+    &::after,
+    &::before {
+      border-bottom: 1px solid #fff;
+    }
+
+    color: $sttm-bright-blue;
+  }
+}
