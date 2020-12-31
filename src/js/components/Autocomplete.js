@@ -92,7 +92,17 @@ class Autocomplete extends Component {
     if (this.props.value !== prevInput) {
       const { isShowFullResults, getSuggestions, searchOptions, value: userInput } = this.props;
       const isSearchTypeAng = searchOptions.type === 5;
-      const isQueryValid = userInput.length >= 2 && !isSearchTypeAng;
+      const isSearchTypeRomanized = searchOptions.type === 4;
+      let isQueryValid = false;
+      if (userInput.trim().split(' ').length >= 4 && isSearchTypeRomanized) {
+        isQueryValid = true;
+      } else if (
+        userInput.length >= 2 &&
+        !isSearchTypeAng &&
+        !isSearchTypeRomanized
+      ) {
+        isQueryValid = true;
+      }
       clearTimeout(this.state.suggestionTimeout);
 
       if (isQueryValid) {
