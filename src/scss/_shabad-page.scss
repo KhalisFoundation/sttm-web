@@ -41,6 +41,31 @@ blockquote {
   .dark-mode & {
     background-color: #111;
   }
+
+  & .hukamnama-audio {
+    bottom: 50px;
+    left: 50%;
+    max-width: 800px;
+    position: fixed;
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: bottom bottom;
+    transition: 0.2s ease-in all;
+    width: 100%;
+    z-index: 1;
+
+    &-player-title {
+      margin-bottom: 16px;
+      text-align: center;
+    }
+  }
+
+  & .hukamnama-audio--hidden {
+    transform: translateX(-50%) scaleY(0);
+  }
+
+  & .hukamnama-audio--shown {
+    transform: translateX(-50%) scaleY(1);
+  }
 }
 
 .shabad-nav {
@@ -79,6 +104,7 @@ blockquote {
   flex-grow: 1;
 
   &-hukamnama {
+    align-items: center;
     display: flex;
     font-size: 1rem;
     justify-content: space-between;
@@ -94,6 +120,21 @@ blockquote {
     &-left,
     &-right {
       @include flex-center();
+    }
+
+    &-left {
+      align-items: flex-start;
+      flex-direction: column;
+
+      &-gotoshabad {
+        display: flex;
+        padding-left: 8px;
+      }
+    }
+
+    &-right {
+      cursor: pointer;
+      flex-direction: column;
     }
   }
 }

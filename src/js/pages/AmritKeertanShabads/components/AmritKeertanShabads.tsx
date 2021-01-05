@@ -22,7 +22,7 @@ export const AmritKeertanShabads: React.FC<IAmritKeertanShabadsProps> = (props) 
     }
   ]
   return (
-    <div className="amritKeertanShabads">
+    <div className="amritKeertanShabads row">
       <BreadCrumb links={links} />
       <RenderShabads {...props} />
     </div>

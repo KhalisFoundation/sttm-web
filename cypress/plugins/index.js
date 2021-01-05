@@ -26,6 +26,7 @@ module.exports = (on, config) => {
   });
 
   const isProduction = process.env.NODE_ENV === 'production';
+  config.env.PROTOCOL = isProduction ? 'https' : 'http'
   config.env.BANIS_URL = common.BANIS
   config.env.API_URL = isProduction ? common.PRODUCTION : common.DEVELOPMENT;
   config.env.AMRIT_KEERTAN_API_URL = common.AMRIT_KEERTAN;

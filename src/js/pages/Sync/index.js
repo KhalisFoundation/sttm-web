@@ -2,7 +2,6 @@
 import React from 'react';
 import { TEXTS, LOCAL_STORAGE_KEY_FOR_SYNC_CODE } from '../../constants';
 import Viewer from './Viewer';
-import { showToast } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
 import { saveToLocalStorage, getStringFromLocalStorage } from '@/util'
 

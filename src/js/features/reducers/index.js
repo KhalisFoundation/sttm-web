@@ -399,7 +399,7 @@ export default function reducer(state, action) {
           steekLanguages = state.steekLanguages;
         else {
           // const storedSteekLanguages = getArrayFromLocalStorage(LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES);
-          steekLanguages = ['bani db'];
+          steekLanguages = ['BaniDB'];
         }
       }
 
