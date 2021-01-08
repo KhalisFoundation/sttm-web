@@ -424,15 +424,15 @@ export default class Baani extends React.PureComponent {
           const isFirstParagraph = idx == totalParagraphs;
           const middleParagraphAttributes = isFirstParagraph
             ? {
-                'data-middle-paragraph': true,
-                'data-ang': ang,
-              }
+              'data-middle-paragraph': true,
+              'data-ang': ang,
+            }
             : {};
           const firstParagraphAttributes = isMiddleParagraph
             ? {
-                'data-first-paragraph': true,
-                'data-ang': ang,
-              }
+              'data-first-paragraph': true,
+              'data-ang': ang,
+            }
             : {};
           // This is used for sehaj-paath mode, where we don't have paragraph mode
           // so we can safely tell it to highlight first pankti as first pankti is equal to first paragraph
@@ -546,11 +546,17 @@ export default class Baani extends React.PureComponent {
                 </div>
               </Wrapper>
             </MahankoshContext.Provider>
-          );
-        })}
+          )
+        })
+        }
+        {isSehajPaathMode ? (
+          <h4 className="separator">
+            {source === 'G' ? 'Ang' : 'Pannaa'} {ang + 1}
+          </h4>
+        ) : null}
       </div>
-    );
-  };
+    )
+  }
   createFullScreenMarkup = () => {
     const { gurbani, highlight } = this.props;
 
@@ -571,8 +577,8 @@ export default class Baani extends React.PureComponent {
               {this.getActions(shabad)}
             </div>
           ) : (
-            ''
-          )
+              ''
+            )
         )}
       </div>
     );
@@ -711,9 +717,8 @@ export default class Baani extends React.PureComponent {
     const { selectedWord } = this.state;
     return (
       <div
-        className={`${SHABAD_CONTENT_CLASSNAME} ${
-          centerAlignGurbani || showFullScreen ? ' center-align' : ''
-        }`}
+        className={`${SHABAD_CONTENT_CLASSNAME} ${centerAlignGurbani || showFullScreen ? ' center-align' : ''
+          }`}
       >
         {this.getMarkup()}
         <MahankoshTooltip
