@@ -34,7 +34,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   static minScrollingSpeed = 1;
   // static lowerSpeedThreshHold = 0.4;
   // static higherSpeedThreshHold = 1.2;
-  static threshold = 2;
+  static thresHold = 2;
   _maxScrollPossible!: number;
   _nextScrollPosition!: number;
   _sliding!: boolean;
