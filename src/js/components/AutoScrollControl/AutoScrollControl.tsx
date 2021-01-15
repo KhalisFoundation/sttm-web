@@ -151,7 +151,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
       // Only allow the scrolling if we have surpassed previous scrolls or if it's firefox browser.
       if (this._isFirefoxAgent || scrollY >= Math.floor(this._nextScrollPosition)) {
         this._nextScrollPosition += movement;
-        window.scrollTo({ left: 0, top: this._nextScrollPosition, behavior: 'smooth' });
+        window.scrollTo({ left: 0, top: Math.round(this._nextScrollPosition), behavior: 'smooth' });
       }
 
       this._interval = requestAnimationFrame(this.handleAutoScroll);
