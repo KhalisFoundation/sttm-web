@@ -10,6 +10,7 @@ describe('Search', () => {
   const searchString3 = 'Apwr';
   const showFullResults = 'Show full results';
   const { sttmBlue } = Cypress.env().colors;
+  const protocol = Cypress.env().protocol;
 
   describe('Full Word(G)', () => {
     beforeEach(() => {
@@ -63,18 +64,12 @@ describe('Search', () => {
     });
 
     it(`should open highlighted shabad on clicking or pressing enter for string: ${searchString3}`, () => {
-      cy.server();
 
       cy.get('#search')
-        .type(searchString3);
+        .type(searchString3)
 
-      const url = 'http:' + buildApiUrl({ offset: 1, source: 'all', q: searchString3, type: searchType, API_URL, livesearch: true });
-      cy.route({ url }).as('result')
-
-      cy.wait('@result')
-
-      cy.get('#search')
-        .click()
+      cy.get('#suggestions li').should('have.length.gte', 1)
+        .get('#search')
         .trigger('keydown', { keyCode: 40 }) //DownArrow
         .trigger('keydown', { keyCode: 13 }) //Enter
 
