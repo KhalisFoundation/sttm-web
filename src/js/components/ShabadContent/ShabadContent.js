@@ -155,8 +155,13 @@ class Shabad extends React.PureComponent {
                 ['shabad', 'hukamnama', 'ang'].includes(type)
                   ? supportedMedia
                   : supportedMedia.filter(
-                      (m) => ['embed', 'copyAll', 'copy'].includes(m) === false
-                    )
+                    (m) => [
+                      'embed',
+                      'copyAll',
+                      'copy',
+                      'whatsapp',
+                      'print',].includes(m) === false
+                  )
               }
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
@@ -186,13 +191,13 @@ class Shabad extends React.PureComponent {
                   {this.getContinueButton()}
                 </>
               ) : (
-                <Baani
-                  {...baniProps}
-                  sgBaaniLength={sgBaaniLength}
-                  isSundarGutkaRoute={isSundarGutkaRoute}
-                  isParagraphMode={isParagraphMode}
-                />
-              )}
+                  <Baani
+                    {...baniProps}
+                    sgBaaniLength={sgBaaniLength}
+                    isSundarGutkaRoute={isSundarGutkaRoute}
+                    isParagraphMode={isParagraphMode}
+                  />
+                )}
               {isLoadingContent && <div className="spinner" />}
 
               {isShowFooterNav && <FootNav info={info} type={type} nav={nav} />}
@@ -264,18 +269,16 @@ class Shabad extends React.PureComponent {
       `data-sttm-width="500"`,
       type === 'ang'
         ? `data-sttm-ang="${getAng(
-            info.source
-          )}" data-sttm-source="${getSourceId(info)}"`
+          info.source
+        )}" data-sttm-source="${getSourceId(info)}"`
         : `data-sttm-id="${getShabadId(info)}"`,
     ].join(' ');
 
     Promise.resolve(
-      `<div ${attrs}><a href="https://sttm.co/${
-        type === 'ang'
-          ? 'ang?ang=' + getAng(info.source) + '&source=' + getSourceId(info)
-          : 'shabad?id=' + getShabadId(info)
-      }">SikhiToTheMax</a></div><script async src="${
-        window.location.origin
+      `<div ${attrs}><a href="https://sttm.co/${type === 'ang'
+        ? 'ang?ang=' + getAng(info.source) + '&source=' + getSourceId(info)
+        : 'shabad?id=' + getShabadId(info)
+      }">SikhiToTheMax</a></div><script async src="${window.location.origin
       }/embed.js"></script>`
     )
       .then(copyToClipboard)
