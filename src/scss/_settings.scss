@@ -1,0 +1,56 @@
+.settings {
+  &-panel {
+    background: $sttm-pure-white;
+    box-shadow: -5px 5px 12px -9px $sttm-black;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 20vw;
+    z-index: 100;
+  }
+
+  &-header {
+    border-bottom: 1px solid $sttm-light-grey;
+    display: flex;
+    height: 25px;
+    justify-content: space-between;
+    padding: 0 12px;
+    width: inherit;
+
+    &-text {
+      color: $sttm-dark-grey;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  &-close {
+    align-items: center;
+    display: flex;
+    fill: $sttm-dark-grey;
+    font-size: 16px;
+  }
+
+  &-items {
+    color: $sttm-grey;
+    display: flex;
+    fill: $sttm-grey;
+    flex-direction: column;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 20px 12px;
+  }
+
+  &-action-icon {
+    margin-right: 5px;
+  }
+
+  &-item {
+    align-items: center;
+    display: flex;
+    margin: 10px 0;
+  }
+}
