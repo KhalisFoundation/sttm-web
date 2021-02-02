@@ -143,6 +143,14 @@ export const DownArrowIcon = () => (
   </span>
 )
 
+export const SolidArrowRight = () => (
+  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="12px" width="12px"
+    viewBox="0 0 386.258 386.258" style={{ 'enable-background': 'new 0 0 386.258 386.258' }}>
+    <polygon points="96.879,0 96.879,386.258 289.379,193.129 " />
+  </svg>
+)
+
+
 export const IconLabel = props => (
   <span>{props.value}</span>
 )
