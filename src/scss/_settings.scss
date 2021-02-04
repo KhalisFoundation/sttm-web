@@ -1,57 +1,105 @@
 .settings {
   &-panel {
     background: $sttm-pure-white;
-    box-shadow: -5px 5px 12px -9px $sttm-black;
+    box-shadow: 0 0 12px -4px $sttm-black;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    overflow-x: hidden;
     position: fixed;
     right: 0;
     top: 0;
     width: 20vw;
     z-index: 100;
+
+    .dark-mode & {
+      background-color: $sttm-lighter-black;
+      border-color: $sttm-light-black;
+      color: $sttm-white;
+    }
   }
 
   &-header {
-    border-bottom: 1px solid $sttm-light-grey;
+    border-bottom: 1px solid $sttm-lighter-grey;
     display: flex;
     height: 25px;
     justify-content: space-between;
     padding: 0 12px;
     width: inherit;
+  }
 
-    &-text {
-      color: $sttm-dark-grey;
-      font-size: 16px;
-      font-weight: bold;
+  &-heading {
+    color: $sttm-darker-grey;
+    font-size: 16px;
+    font-weight: bold;
+
+    .dark-mode & {
+      color: $sttm-white;
     }
   }
 
-  &-close {
+  &-times {
     align-items: center;
     display: flex;
-    fill: $sttm-dark-grey;
+    fill: $sttm-grey;
     font-size: 16px;
+
+    .dark-mode & {
+      fill: $sttm-white;
+    }
   }
 
-  &-items {
+  &-items,
+  &-advance {
     color: $sttm-grey;
     display: flex;
     fill: $sttm-grey;
     flex-direction: column;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
-    padding: 20px 12px;
+    padding: 15px 12px;
+  }
+
+  &-border {
+    border-bottom: 1px solid $sttm-lighter-grey;
   }
 
   &-action-icon {
-    margin-right: 5px;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    width: 25px;
   }
 
   &-item {
     align-items: center;
     display: flex;
-    margin: 10px 0;
+    margin: 8px auto;
+    width: 100%;
+  }
+
+  &-active-item {
+    color: $sttm-black;
+    fill: $sttm-black;
+  }
+
+  &-reset-button {
+    background-color: #01669b;
+    border: none;
+    border-radius: 5px;
+    color: #fafafa;
+    font-weight: 900;
+    height: 40px;
+    transition: 0.2s;
+    width: -webkit-fill-available;
+  }
+
+  &-reset-button:hover {
+    background-color: $sttm-orange;
+  }
+
+  &-text {
+    margin-left: 6px;
   }
 }
 
@@ -64,6 +112,7 @@
 
   &-family-dropdown {
     border: none;
+    color: $sttm-grey;
     margin: 0;
     width: 60%;
   }
@@ -73,16 +122,6 @@
 .plus-icon {
   color: $sttm-bright-blue;
   font-size: 26px !important;
-}
-
-.dark-mode {
-  background-color: $sttm-lighter-black;
-  border-color: $sttm-light-black;
-  color: $sttm-white;
-}
-
-.Collapsible__trigger {
-  display: flex;
 }
 
 .flex-spacer {
@@ -104,4 +143,31 @@
 
 .small-font {
   font-size: 13px;
+}
+
+// Styles for Checkboxes component
+
+.checkbox {
+  &-container {
+    list-style: none;
+  }
+
+  &-item {
+    align-items: center;
+    display: flex;
+    height: 30px;
+
+    &-label {
+      margin-left: 10px;
+      text-transform: capitalize;
+
+      .dark-mode & {
+        color: $sttm-white;
+      }
+    }
+  }
+
+  &-input {
+    margin: 0;
+  }
 }

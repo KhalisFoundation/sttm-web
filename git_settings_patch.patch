@@ -1,0 +1,1075 @@
+diff --git a/src/js/components/Checkboxes.js b/src/js/components/Checkboxes.js
+new file mode 100644
+index 0000000..1a49a32
+--- /dev/null
++++ b/src/js/components/Checkboxes.js
+@@ -0,0 +1,51 @@
++import React from 'react';
++import PropTypes from 'prop-types';
++
++const Checkboxes = (props) => {
++  const { collections } = props;
++
++  const toggleCheckBox = (op, action) => () => {
++    action(op);
++  }
++
++  const collectionsMarkup = collections.map((c) => {
++    const { options, action, label, checked } = c;
++
++    return (
++      <ul key={label} className="checkbox-container">
++        {options.map(option => (
++          <li key={option} className="checkbox-item">
++            <input
++              id={`checkbox-${label}-${option}`}
++              type="checkbox"
++              value={option}
++              onChange={() => action(option)}
++              checked={checked.includes(option)}
++              className="checkbox-input" />
++            <span
++              className={`fake-checkbox check-${option}`}
++              onClick={toggleCheckBox(option, action)} >
++            </span>
++            <label
++              htmlFor={`checkbox-${label}-${option}`}
++              className="checkbox-item-label">
++              {option}
++            </label>
++          </li>
++        ))}
++      </ul>
++    )
++  });
++
++  return (
++    <>
++      {collectionsMarkup}
++    </>
++  )
++}
++
++Checkboxes.propTypes = {
++  collections: PropTypes.array.isRequired,
++}
++
++export default Checkboxes;
+\ No newline at end of file
+diff --git a/src/js/components/Controls.js b/src/js/components/Controls.js
+index 0966cab..6f9d3dc 100644
+--- a/src/js/components/Controls.js
++++ b/src/js/components/Controls.js
+@@ -2,6 +2,7 @@ import React from 'react';
+ import { connect } from 'react-redux';
+ import cx from 'classnames';
+ import throttle from 'lodash.throttle';
++import ControlsSettings from "../components/ControlsSettings/ControlsSettings";
+ 
+ import ShabadControls from './ShabadControlsv2';
+ import ShareButtons, { supportedMedia as _s } from './ShareButtons';
+@@ -162,6 +163,7 @@ class Controls extends React.Component {
+           ref={this.setRef}
+         >
+           <ShabadControls {...this.props} />
++          <ControlsSettings {...this.props} />
+         </div>
+       </>
+     );
+diff --git a/src/js/components/ControlsSettings/ControlSettingsV2.ts b/src/js/components/ControlsSettings/ControlSettingsV2.ts
+new file mode 100644
+index 0000000..35d2125
+--- /dev/null
++++ b/src/js/components/ControlsSettings/ControlSettingsV2.ts
+@@ -0,0 +1,301 @@
++import {
++  TRANSLATION_LANGUAGES,
++  TRANSLITERATION_LANGUAGES,
++  // FONT_OPTIONS,
++  // VISRAAM,
++  TEXTS,
++  STEEK_LANGUAGES,
++  // SG_BAANIS,
++  // DEFAULT_SG_BAANI_LENGTH
++} from '@/constants';
++
++import {
++  selectItemInArray,
++  toFixedFloat,
++  // isShowAutoScrollRoute,
++  // isShowSehajPaathModeRoute,
++} from '@/util';
++
++import {
++  // LarivaarIcon,
++  // LarivaarAssistIcon,
++  PlusIcon,
++  MinusIcon,
++  SizeControl,
++  // AlignCenterIcon,
++  // AlignLeftIcon,
++  // SplitViewIcon,
++  // ParagraphIcon,
++  // GearsIcon,
++} from '@/components/Icons/CustomIcons';
++
++export interface SETTING_ACTIONS {
++  setTranslationLanguages: Function,
++  setTransliterationLanguages: Function,
++  resetDisplayOptions: Function,
++  resetFontOptions: Function,
++  toggleVisraams: Function,
++  toggleAutoScrollMode: Function,
++  toggleLarivaarOption: Function,
++  toggleLarivaarAssistOption: Function,
++  setFontSize: Function,
++  setTranslationFontSize: Function,
++  setSteekLanguages: Function,
++  setTransliterationFontSize: Function,
++  setLineHeight: Function,
++  toggleCenterAlignOption: Function,
++  toggleSplitViewOption: Function,
++  toggleDarkMode: Function,
++  toggleParagraphMode: Function,
++  toggleSehajPaathMode: Function,
++  setVisraamSource: Function,
++  setVisraamStyle: Function,
++  changeFont: Function,
++  toggleAdvancedOptions: Function,
++  setLarivaarAssistStrength: Function,
++  setSgBaaniLength: Function,
++
++  location: {
++    pathname: string,
++  },
++  larivaarAssistStrength: number,
++  translationLanguages: string[],
++  steekLanguages: string[],
++  transliterationLanguages: string[],
++  visraams: boolean,
++  visraamSource: string,
++  visraamStyle: string,
++  larivaarAssist: boolean,
++  larivaar: boolean,
++  fontSize: number,
++  translationFontSize: number,
++  transliterationFontSize: number,
++  paragraphMode: boolean,
++  sehajPaathMode: boolean,
++  autoScrollMode: boolean,
++  lineHeight: number,
++  centerAlignGurbani: boolean,
++  splitView: boolean,
++  darkMode: boolean,
++  sgBaaniLength: string,
++  fontFamily: string,
++  showAdvancedOptions: boolean,
++}
++
++export const QUICK_SETTINGS = ({
++  setTranslationLanguages,
++  setTransliterationLanguages,
++  // resetDisplayOptions,
++  // resetFontOptions,
++  toggleVisraams,
++  // toggleLarivaarOption,
++  // toggleLarivaarAssistOption,
++  // setFontSize,
++  // toggleCenterAlignOption,
++  toggleSplitViewOption,
++  // toggleAdvancedOptions,
++  // toggleParagraphMode,
++  toggleDarkMode,
++  setSteekLanguages,
++  translationLanguages,
++  transliterationLanguages,
++  visraams,
++  // larivaarAssist,
++  // larivaar,
++  // fontSize,
++  // paragraphMode,
++  // centerAlignGurbani,
++  // splitView,
++  // showAdvancedOptions,
++  darkMode,
++  // location,
++  steekLanguages,
++}: SETTING_ACTIONS) => {
++
++  // const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
++  return [
++    {
++      type: 'toggle-option',
++      label: 'Dark Mode',
++      checked: darkMode,
++      action: toggleDarkMode,
++    },
++    {
++      type: 'toggle-option',
++      label: 'Vishraams',
++      checked: visraams,
++      action: toggleVisraams,
++    },
++    {
++      type: 'toggle-option',
++      label: 'Split',
++      action: toggleSplitViewOption,
++    },
++    {
++      type: 'collapsible_item',
++      label: TEXTS.TRANSLITERATION,
++      collections: [
++        {
++          label: TEXTS.TRANSLITERATION,
++          options: TRANSLITERATION_LANGUAGES,
++          checked: transliterationLanguages,
++          action: (lang: string) => {
++            setTransliterationLanguages(
++              selectItemInArray(lang, transliterationLanguages)
++            )
++          }
++        },
++      ]
++    },
++    {
++      type: 'collapsible_item',
++      label: TEXTS.TRANSLATION,
++      collections: [
++        {
++          label: TEXTS.TRANSLATION,
++          options: TRANSLATION_LANGUAGES,
++          checked: translationLanguages,
++          action: (lang: string) => {
++            setTranslationLanguages(
++              selectItemInArray(lang, translationLanguages)
++            )
++          }
++        },
++      ]
++    },
++    {
++      type: 'collapsible_item',
++      label: 'Steek',
++      collections: [
++        {
++          label: 'Steek',
++          options: STEEK_LANGUAGES,
++          checked: steekLanguages,
++          action: (lang: string) => {
++            setSteekLanguages(
++              selectItemInArray(lang, steekLanguages)
++            )
++          }
++        }
++      ],
++    },
++  ];
++}
++
++export const ADVANCED_SETTINGS = ({
++  setVisraamSource,
++  setVisraamStyle,
++  setLineHeight,
++  larivaarAssistStrength,
++  lineHeight,
++  changeFont,
++  sehajPaathMode,
++  toggleSehajPaathMode,
++  larivaarAssist,
++  setSgBaaniLength,
++  setFontSize,
++  fontSize,
++  // setLarivaarAssistStrength,
++  // toggleAutoScrollMode,
++  // autoScrollMode,
++  // visraamSource,
++  // visraamStyle,
++  // fontFamily,
++  setTranslationFontSize,
++  setTransliterationFontSize,
++  translationFontSize,
++  transliterationFontSize,
++  // location,
++  // sgBaaniLength
++}: SETTING_ACTIONS) => {
++
++  return [
++    {
++      type: 'font-update',
++      label: TEXTS.FONT_SIZE,
++      controlsList: [
++        {
++          icon: MinusIcon,
++          action: () => {
++            fontSize >= 1.6 && setFontSize(toFixedFloat(fontSize - 0.4));
++          },
++        },
++        {
++          control: SizeControl,
++          actionType: 'change',
++          action: (size: any) => { setFontSize(toFixedFloat((size / 10))); },
++          value: Math.floor(fontSize * 10),
++        },
++        {
++          icon: PlusIcon,
++          action: () => {
++            fontSize < 3.2 && setFontSize(toFixedFloat(fontSize + 0.4));
++          },
++        },
++      ],
++    },
++    {
++      type: 'icon-toggle',
++      label: 'Line Height',
++      controlsList: [
++        {
++          icon: MinusIcon,
++          action: () => setLineHeight(Math.max(toFixedFloat(lineHeight - 0.2), 1.2)),
++        },
++        {
++          control: SizeControl,
++          controlOptions: [1.2, 1.4, 1.6, 1.8, 2],
++          actionType: 'change',
++          action: (val: number) => setLineHeight(toFixedFloat(val)),
++          value: lineHeight
++        },
++        {
++          icon: PlusIcon,
++          action: () => setLineHeight(Math.min(toFixedFloat(lineHeight + 0.2), 2)),
++        },
++      ],
++    },
++    {
++      type: 'icon-toggle',
++      label: TEXTS.TRANSLATION,
++      controlsList: [
++        {
++          icon: MinusIcon,
++          action: () => setTranslationFontSize(Math.max(toFixedFloat(translationFontSize - 0.4), 1.2))
++        },
++        {
++          control: SizeControl,
++          controlOptions: [12, 16, 20, 24],
++          actionType: 'change',
++          action: (size: number) => setTranslationFontSize(toFixedFloat((size / 10))),
++          value: Math.floor(translationFontSize * 10),
++        },
++        {
++          icon: PlusIcon,
++          action: () => setTranslationFontSize(Math.min(toFixedFloat(translationFontSize + 0.4), 2.4))
++        },
++      ],
++    },
++    {
++      type: 'icon-toggle',
++      label: TEXTS.TRANSLITERATION,
++      controlsList: [
++        {
++          icon: MinusIcon,
++          action: () => setTransliterationFontSize(Math.max(toFixedFloat(transliterationFontSize - 0.4), 1.2))
++        },
++        {
++          control: SizeControl,
++          actionType: 'change',
++          action: (size: number) => setTransliterationFontSize(toFixedFloat((size / 10))),
++          value: Math.floor(transliterationFontSize * 10),
++        },
++        {
++          icon: PlusIcon,
++          action: () => setTransliterationFontSize(Math.min(toFixedFloat(transliterationFontSize + 0.4), 3.2))
++        },
++      ],
++    },
++
++  ]
++}
+diff --git a/src/js/components/ControlsSettings/ControlsSettings.tsx b/src/js/components/ControlsSettings/ControlsSettings.tsx
+index f44f4aa..1ae5209 100644
+--- a/src/js/components/ControlsSettings/ControlsSettings.tsx
++++ b/src/js/components/ControlsSettings/ControlsSettings.tsx
+@@ -1,6 +1,8 @@
+ import React from 'react';
+ import Collapsible from 'react-collapsible';
++import Checkboxes from "@/components/Checkboxes";
+ import Times from '../Icons/Times';
++import { ADVANCED_SETTINGS, QUICK_SETTINGS } from './ControlSettingsV2';
+ import { MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, MicrophoneIcon, SolidArrowRight } from "../Icons/CustomIcons";
+ import {
+   TEXTS,
+@@ -10,162 +12,162 @@ import {
+   // VISRAAM,
+ } from '../../constants';
+ 
+-const ControlsSettings = (props) => {
++const ControlsSettings = (props: any) => {
+ 
+   const handleListItemClick = () => {
+     console.log('list item clicked');
+   }
+ 
+-    const {
+-      // centerAlignGurbani,
+-      // disableSplitView,
+-      // showDisplayOptions,
+-      // showFontOptions,
+-      // translationLanguages,
+-      // transliterationLanguages,
+-      larivaarAssist,
+-      larivaar,
+-      darkMode,
+-      visraams,
+-      fontFamily,
+-      splitView,
+-      resetDisplayOptions,
+-      toggleDarkMode,
+-      toggleLarivaarAssistOption,
+-      toggleLarivaarOption,
+-      toggleSplitViewOption,
+-      toggleVisraams,
+-      changeFont,
+-    } = props;
++  const quickSettings = QUICK_SETTINGS(props);
++  const advancedSettings = ADVANCED_SETTINGS(props);
++  const {
++    // centerAlignGurbani,
++    // disableSplitView,
++    // showDisplayOptions,
++    // showFontOptions,
++    // translationLanguages,
++    // transliterationLanguages,
++    // larivaar,
++    // darkMode,
++    // visraams,
++    fontFamily,
++    // splitView,
++    resetDisplayOptions,
++    // toggleDarkMode,
++    // toggleLarivaarAssistOption,
++    // toggleLarivaarOption,
++    // toggleSplitViewOption,
++    // toggleVisraams,
++    changeFont,
++  } = props;
+ 
+-
+-   return (
+-     <>
+-        <div className="settings-panel">
+-          <div className="settings-header">
+-            <p className="settings-heading">Settings</p>
+-            <a className="settings-times"><Times /></a>
+-          </div>
+-          <div className="settings-items settings-border">
+-            <div className={`settings-item ${darkMode ? 'settings-active-item' : ''}`} onClick={toggleDarkMode}>
+-              <span className="settings-action-icon"><Times /></span>
+-              <span className="settings-text">{TEXTS.DARK_MODE}</span>
+-            </div>
+-            <div className={`settings-item ${visraams ? 'settings-active-item' : ''}`} onClick={toggleVisraams}>
+-              <span className="settings-action-icon"><Times /></span>
+-              <span className="settings-text">{TEXTS.VISRAAMS}</span>
+-            </div>
+-            <div className={`settings-item ${splitView ? 'settings-active-item' : ''}`} onClick={toggleSplitViewOption}>
+-              <span className="settings-action-icon"><SplitViewIcon className="settings-action-icon" /></span>
+-              <span className="settings-text">{TEXTS.SPLIT_VIEW}</span>
+-            </div>
+-            <div className="settings-item" onClick={toggleLarivaarOption}>
+-              <span className="settings-action-icon small-font">ੳਅ</span>
+-              <span className="settings-text">{TEXTS.LARIVAAR}</span>
+-              {/* {larivaar && (
+-                <a
+-                  className={`shabad-controller-toggle ${larivaarAssist ? 'active' : ''
+-                    }`}
+-                  onClick={toggleLarivaarAssistOption}
+-                >
+-                  <span className="custom-fa custom-fa-assist">ੳ</span>
+-                  <span className='display-options-label'>{TEXTS.ASSIST}</span>
+-                </a>
+-              )} */}
++  const renderIcon = (itemName: any) => {
++    switch (itemName) {
++      case 'Steek':
++        return (
++          <GlobeIcon />
++        )
++      case 'Transliteration':
++        return (
++          <MicrophoneIcon />
++        )
++      case 'Translation':
++        return (
++          <GlobeIcon />
++        )
++      case 'Dark Mode':
++        return (
++          <Times />
++        )
++      case 'Vishraams':
++        return (
++          <Times />
++        )
++      case 'Split':
++        return (
++          <SplitViewIcon className="settings-action-icon" />
++        )
++    }
++  }
++  const bakeSettings = (settingsObj: any) => {
++    switch (settingsObj.type) {
++      case 'collapsible_item':
++        return (
++          <Collapsible trigger={(
++            <div className="settings-item" onClick={handleListItemClick}>
++              <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
++              <span className="settings-text">{settingsObj.label}</span>
++              <div className="flex-spacer" />
++              <span className="settings-chevron-icon">
++                <SolidArrowRight />
++              </span>
+             </div>
+-
+-            <Collapsible trigger={(
+-              <div className="settings-item" onClick={listItem}>
+-                <span className="settings-action-icon"><Times /></span>
+-                <span className="settings-text">{TEXTS.VISRAAMS}</span>
+-                <div className="flex-spacer" />
+-                <span className="settings-chevron-icon">
+-                  <SolidArrowRight />
+-                </span>
+-              </div>
+-            )}>
+-              {/* <MultiSelect
+-                collections={this.props.collections}
+-                dropdownLabel={this.props.label}
+-              /> */}
+-              <p>This</p>
+-            </Collapsible>
+-            <Collapsible trigger={(
+-              <div className="settings-item" onClick={listItem}>
+-                <span className="settings-action-icon"><GlobeIcon /></span>
+-                <span className="settings-text">{TEXTS.TRANSLATION}</span>
+-                <div className="flex-spacer" />
+-                <span className="settings-chevron-icon">
+-                  <SolidArrowRight />
+-                </span>
+-              </div>
+-            )}>
+-              {/* <MultiSelect
+-                collections={this.props.collections}
+-                dropdownLabel={this.props.label}
+-              /> */}
+-              <p>This</p>
+-            </Collapsible>
+-            <Collapsible trigger={(
+-              <div className="settings-item" onClick={listItem}>
+-                <span className="settings-action-icon"><MicrophoneIcon /></span>
+-                <span className="settings-text">{TEXTS.TRANSLITERATION}</span>
+-                <div className="flex-spacer" />
+-                <span className="settings-chevron-icon">
+-                  <SolidArrowRight />
+-                </span>
+-              </div>
+-            )}>
+-              {/* <MultiSelect
+-                collections={this.props.collections}
+-                dropdownLabel={this.props.label}
+-              /> */}
+-              <p>This</p>
+-            </Collapsible>
++          )}>
++            <Checkboxes collections={settingsObj.collections} />
++          </Collapsible>
++        )
++      case 'icon-toggle':
++        return (
++          <>
++            <button className="font-size-control" onClick={settingsObj.controlsList[0].action}><MinusIcon className="minus-icon" /></button>
++            <span>{settingsObj.label}</span>
++            <button className="font-size-control" onClick={settingsObj.controlsList[2].action}><PlusIcon className="plus-icon" /></button>
++          </>
++        )
++      case 'font-update':
++        return (
++          <>
++            <button className="font-size-control" onClick={settingsObj.controlsList[0].action}><MinusIcon className="minus-icon" /></button>
++            <select
++              className="font-family-dropdown"
++              value={fontFamily}
++              onChange={e => changeFont(e.currentTarget.value)}
++            >
++              {Object.keys(FONT_OPTIONS).map(key => (
++                <option key={key} value={key}>
++                  {FONT_OPTIONS[key]}
++                </option>
++              ))}
++            </select>
++            <button className="font-size-control" onClick={settingsObj.controlsList[2].action}><PlusIcon className="plus-icon" /></button>
++          </>
++        )
++      case 'toggle-option':
++        return (
++          <div className={`settings-item`} onClick={settingsObj.action}>
++            <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
++            <span className="settings-text">{settingsObj.label}</span>
+           </div>
+-          <div className="settings-advance">
+-            <div className="settings-item" onClick={listItem}>
+-              <span className="settings-heading">Fonts & Sizes</span>
+-            </div>
+-            <div className="settings-items pt-0">
+-              <div className="settings-item font-item">
+-                <button className="font-size-control" onClick={listItem}><MinusIcon className="minus-icon" /></button>
+-                <select
+-                  className="font-family-dropdown"
+-                  value={fontFamily}
+-                  onChange={e => changeFont(e.currentTarget.value)}
+-                >
+-                  {Object.keys(FONT_OPTIONS).map(key => (
+-                    <option key={key} value={key}>
+-                      {FONT_OPTIONS[key]}
+-                    </option>
+-                  ))}
+-                </select>
+-                <button className="font-size-control" onClick={listItem}><PlusIcon className="plus-icon" /></button>
+-              </div>
+-              <div className="settings-item font-item">
+-                <button className="font-size-control" onClick={listItem}><MinusIcon className="minus-icon" /></button>
+-                <span>{TEXTS.TRANSLITERATION}</span>
+-                <button className="font-size-control" onClick={listItem}><PlusIcon className="plus-icon" /></button>
+-              </div>
+-              <div className="settings-item font-item">
+-                <button className="font-size-control" onClick={listItem}><MinusIcon className="minus-icon" /></button>
+-                <span>{TEXTS.TRANSLATION}</span>
+-                <button className="font-size-control" onClick={listItem}><PlusIcon className="plus-icon" /></button>
+-              </div>
+-              <div className="settings-item font-item">
+-                <button className="font-size-control" onClick={listItem}><MinusIcon className="minus-icon" /></button>
+-                <span>Line Height</span>
+-                <button className="font-size-control" onClick={listItem}><PlusIcon className="plus-icon" /></button>
+-              </div>
+-              <div className="settings-item font-item">
+-                <button className="settings-reset-button" onClick={resetDisplayOptions}>{TEXTS.RESET}</button>
++        )
++    }
++  }
++
++  return (
++    <div className="settings-panel">
++      <div className="settings-header">
++        <p className="settings-heading">Settings</p>
++        <a className="settings-times"><Times /></a>
++      </div>
++      <div className="settings-items settings-border">
++        {quickSettings.map((element: any, i: any) => {
++          if (element.type) {
++            return (
++              <div
++                data-cy={element.label}
++                key={`settings-${i}`}
++                className={`${element.type}`}>
++                {bakeSettings(element)}
+               </div>
+-            </div>
++            )
++          }
++          return null;
++        })}
++      </div>
++      <div className="settings-advance">
++        <div className="settings-item" onClick={handleListItemClick}>
++          <span className="settings-heading">Fonts & Sizes</span>
++        </div>
++        <div className="settings-items pt-0">
++          {advancedSettings.map((element: any, i: any) => {
++            if (element.type) {
++              return (
++                <div
++                  data-cy={element.label}
++                  key={`settings-${i}`}
++                  className={`settings-item font-item ${element.type}`}>
++                  {bakeSettings(element)}
++                </div>
++              )
++            }
++            return null;
++          })}
++          <div className="settings-item font-item">
++            <button className="settings-reset-button" onClick={resetDisplayOptions}>{TEXTS.RESET}</button>
+           </div>
+         </div>
+-      </>
+-    );
++      </div>
++    </div>
++  );
+ }
+ 
+ export default ControlsSettings;
+\ No newline at end of file
+diff --git a/src/js/components/Header.js b/src/js/components/Header.js
+index 4fa86cc..468c5a0 100644
+--- a/src/js/components/Header.js
++++ b/src/js/components/Header.js
+@@ -11,7 +11,9 @@ import CrossIcon from './Icons/Times';
+ import Menu from './HeaderMenu';
+ import KeyboardIcon from './Icons/Keyboard';
+ import SearchIcon from './Icons/Search';
++import Hamburger from './Icons/HamburgerIcon';
+ import Autocomplete from '@/components/Autocomplete';
++// import ControlsSettings from '../components/ControlsSettings/ControlsSettings';
+ 
+ import {
+   toSearchURL,
+@@ -67,6 +69,11 @@ export default class Header extends React.PureComponent {
+   handleFormSubmit = data => {
+     this.props.history.push(toSearchURL(data));
+   }
++
++  openSettingsPanel = () => {
++    console.log('clicked settings hamburger')
++  }
++
+   render() {
+     const {
+       props: { defaultQuery, isHome, isAng, isController },
+@@ -103,20 +110,23 @@ export default class Header extends React.PureComponent {
+ 
+     return (
+       <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
++        {/* <ControlsSettings {...this.props} /> */}
+         <div className="top-bar-wrapper row">
+           {!isHome && (
+-            <div className="top-bar-title">
+-              {showDoodle ?
+-                (<>
+-                  <Link to="/" title={doodleData['Description']} className="doodle-link icon"
+-                    style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
+-                  <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
+-                    style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
+-                </>) :
+-                (<Link to="/" />)
+-              }
+-            </div>
+-          )}
++            <>
++              <a className="top-bar-hamburger" onClick={() => this.openSettingsPanel()}><Hamburger /></a>
++              <div className="top-bar-title">
++                {showDoodle ?
++                  (<>
++                    <Link to="/" title={doodleData['Description']} className="doodle-link icon"
++                      style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
++                    <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
++                      style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
++                  </>) :
++                  (<Link to="/" />)
++                }
++              </div>
++            </>)}
+           <SearchForm
+             key={key}
+             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
+diff --git a/src/js/components/Icons/CustomIcons.js b/src/js/components/Icons/CustomIcons.js
+index 0547fe8..c1d43ec 100644
+--- a/src/js/components/Icons/CustomIcons.js
++++ b/src/js/components/Icons/CustomIcons.js
+@@ -86,9 +86,9 @@ export const LarivaarAssistIcon = props => (
+ LarivaarAssistIcon.propTypes = iconPropTypes;
+ 
+ export const SplitViewIcon = props => (
+-  <span onClick={props.onClick} className={`custom-fa ${props.value ? 'enabled' : ''}`}>
++  <span onClick={props.onClick} className={props.className}>
+     <svg version="1.1" id="Capa_1"
+-      viewBox="0 0 512 512" enableBackground="new 0 0 512 512;" width="25" height="25"
++      viewBox="0 0 512 512" enableBackground="new 0 0 512 512;" width="20" height="20"
+       style={{ 'transform': 'rotate(90deg)', 'padding': '2px' }}>
+       <g><g>
+         <path d="M506.24,243.712l-96-80c-4.768-3.968-11.424-4.8-17.024-2.176C387.584,164.128,384,169.792,384,176v64h-64V16
+@@ -145,7 +145,7 @@ export const DownArrowIcon = () => (
+ 
+ export const SolidArrowRight = () => (
+   <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="12px" width="12px"
+-    viewBox="0 0 386.258 386.258" style={{ 'enable-background': 'new 0 0 386.258 386.258' }}>
++    viewBox="0 0 386.258 386.258">
+     <polygon points="96.879,0 96.879,386.258 289.379,193.129 " />
+   </svg>
+ )
+@@ -156,4 +156,47 @@ export const IconLabel = props => (
+ )
+ IconLabel.propTypes = {
+   value: PropTypes.number
+-};
+\ No newline at end of file
++};
++
++export const GlobeIcon = () => (
++  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 31.416 31.416">
++    <g>
++      <path d="M28.755,6.968l-0.47,0.149L25.782,7.34l-0.707,1.129l-0.513-0.163L22.57,6.51l-0.289-0.934L21.894,4.58l-1.252-1.123
++			l-1.477-0.289l-0.034,0.676l1.447,1.412l0.708,0.834L20.49,6.506l-0.648-0.191L18.871,5.91l0.033-0.783l-1.274-0.524l-0.423,1.841
++			l-1.284,0.291l0.127,1.027l1.673,0.322l0.289-1.641l1.381,0.204l0.642,0.376h1.03l0.705,1.412l1.869,1.896l-0.137,0.737
++			l-1.507-0.192l-2.604,1.315l-1.875,2.249l-0.244,0.996h-0.673l-1.254-0.578l-1.218,0.578l0.303,1.285l0.53-0.611l0.932-0.029
++			l-0.065,1.154l0.772,0.226l0.771,0.866l1.259-0.354l1.438,0.227l1.67,0.449l0.834,0.098l1.414,1.605l2.729,1.605l-1.765,3.372
++			l-1.863,0.866l-0.707,1.927l-2.696,1.8l-0.287,1.038c6.892-1.66,12.019-7.851,12.019-15.253
++			C31.413,12.474,30.433,9.465,28.755,6.968z"/>
++      <path d="M17.515,23.917l-1.144-2.121l1.05-2.188l-1.05-0.314l-1.179-1.184l-2.612-0.586l-0.867-1.814v1.077h-0.382l-2.251-3.052
++			v-2.507L7.43,8.545L4.81,9.012H3.045L2.157,8.43L3.29,7.532L2.16,7.793c-1.362,2.326-2.156,5.025-2.156,7.916
++			c0,8.673,7.031,15.707,15.705,15.707c0.668,0,1.323-0.059,1.971-0.137l-0.164-1.903c0,0,0.721-2.826,0.721-2.922
++			C18.236,26.357,17.515,23.917,17.515,23.917z"/>
++      <path d="M5.84,5.065l2.79-0.389l1.286-0.705l1.447,0.417l2.312-0.128l0.792-1.245l1.155,0.19l2.805-0.263L19.2,2.09l1.09-0.728
++			l1.542,0.232l0.562-0.085C20.363,0.553,18.103,0,15.708,0C10.833,0,6.474,2.222,3.596,5.711h0.008L5.84,5.065z M16.372,1.562
++			l1.604-0.883l1.03,0.595l-1.491,1.135l-1.424,0.143l-0.641-0.416L16.372,1.562z M11.621,1.691l0.708,0.295l0.927-0.295
++			l0.505,0.875l-2.14,0.562l-1.029-0.602C10.591,2.526,11.598,1.878,11.621,1.691z"/>
++    </g>
++  </svg>
++)
++
++export const MicrophoneIcon = () => (
++  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 475.085 475.085" >
++    <g>
++      <path d="M237.541,328.897c25.128,0,46.632-8.946,64.523-26.83c17.888-17.884,26.833-39.399,26.833-64.525V91.365
++			c0-25.126-8.938-46.632-26.833-64.525C284.173,8.951,262.669,0,237.541,0c-25.125,0-46.632,8.951-64.524,26.84
++			c-17.893,17.89-26.838,39.399-26.838,64.525v146.177c0,25.125,8.949,46.641,26.838,64.525
++			C190.906,319.951,212.416,328.897,237.541,328.897z"/>
++      <path d="M396.563,188.15c-3.606-3.617-7.898-5.426-12.847-5.426c-4.944,0-9.226,1.809-12.847,5.426
++			c-3.613,3.616-5.421,7.898-5.421,12.845v36.547c0,35.214-12.518,65.333-37.548,90.362c-25.022,25.03-55.145,37.545-90.36,37.545
++			c-35.214,0-65.334-12.515-90.365-37.545c-25.028-25.022-37.541-55.147-37.541-90.362v-36.547c0-4.947-1.809-9.229-5.424-12.845
++			c-3.617-3.617-7.895-5.426-12.847-5.426c-4.952,0-9.235,1.809-12.85,5.426c-3.618,3.616-5.426,7.898-5.426,12.845v36.547
++			c0,42.065,14.04,78.659,42.112,109.776c28.073,31.118,62.762,48.961,104.068,53.526v37.691h-73.089
++			c-4.949,0-9.231,1.811-12.847,5.428c-3.617,3.614-5.426,7.898-5.426,12.847c0,4.941,1.809,9.233,5.426,12.847
++			c3.616,3.614,7.898,5.428,12.847,5.428h182.719c4.948,0,9.236-1.813,12.847-5.428c3.621-3.613,5.431-7.905,5.431-12.847
++			c0-4.948-1.81-9.232-5.431-12.847c-3.61-3.617-7.898-5.428-12.847-5.428h-73.08v-37.691
++			c41.299-4.565,75.985-22.408,104.061-53.526c28.076-31.117,42.12-67.711,42.12-109.776v-36.547
++			C401.998,196.049,400.185,191.77,396.563,188.15z"/>
++    </g>
++  </svg>
++)
+diff --git a/src/js/components/Icons/HamburgerIcon.js b/src/js/components/Icons/HamburgerIcon.js
+new file mode 100644
+index 0000000..88ee717
+--- /dev/null
++++ b/src/js/components/Icons/HamburgerIcon.js
+@@ -0,0 +1,9 @@
++import React from "react";
++
++const Hamburger = props => (
++  <svg width="1em" height="1em" viewBox="0 0 512 512" {...props}>
++    <path d="m464.883 64.267h-417.766c-25.98 0-47.117 21.136-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.013-21.137-47.149-47.117-47.149z" /><path d="m464.883 208.867h-417.766c-25.98 0-47.117 21.136-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.013-21.137-47.149-47.117-47.149z" /><path d="m464.883 353.467h-417.766c-25.98 0-47.117 21.137-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.012-21.137-47.149-47.117-47.149z" />
++  </svg>
++);
++
++export default Hamburger;
+diff --git a/src/scss/_header.scss b/src/scss/_header.scss
+index 24ba86a..6953de6 100644
+--- a/src/scss/_header.scss
++++ b/src/scss/_header.scss
+@@ -7,7 +7,7 @@
+ 
+   &-wrapper {
+     display: flex;
+-    flex-wrap: wrap;
++    // flex-wrap: wrap;
+     max-width: 78rem;
+   }
+ 
+@@ -40,6 +40,11 @@
+   .dark-mode & {
+     border-color: $sttm-dark-grey;
+   }
++
++  &-hamburger {
++    fill: $sttm-grey;
++    font-size: 38px;
++  }
+ }
+ 
+ .top-bar-title a {
+diff --git a/src/scss/_settings.scss b/src/scss/_settings.scss
+index 1456a4b..7344e03 100644
+--- a/src/scss/_settings.scss
++++ b/src/scss/_settings.scss
+@@ -1,57 +1,105 @@
+ .settings {
+   &-panel {
+     background: $sttm-pure-white;
+-    box-shadow: -5px 5px 12px -9px $sttm-black;
++    box-shadow: 0 0 12px -4px $sttm-black;
+     display: flex;
+     flex-direction: column;
+     height: 100vh;
++    overflow-x: hidden;
+     position: fixed;
+     right: 0;
+     top: 0;
+     width: 20vw;
+     z-index: 100;
++
++    .dark-mode & {
++      background-color: $sttm-lighter-black;
++      border-color: $sttm-light-black;
++      color: $sttm-white;
++    }
+   }
+ 
+   &-header {
+-    border-bottom: 1px solid $sttm-light-grey;
++    border-bottom: 1px solid $sttm-lighter-grey;
+     display: flex;
+     height: 25px;
+     justify-content: space-between;
+     padding: 0 12px;
+     width: inherit;
++  }
++
++  &-heading {
++    color: $sttm-darker-grey;
++    font-size: 16px;
++    font-weight: bold;
+ 
+-    &-text {
+-      color: $sttm-dark-grey;
+-      font-size: 16px;
+-      font-weight: bold;
++    .dark-mode & {
++      color: $sttm-white;
+     }
+   }
+ 
+-  &-close {
++  &-times {
+     align-items: center;
+     display: flex;
+-    fill: $sttm-dark-grey;
++    fill: $sttm-grey;
+     font-size: 16px;
++
++    .dark-mode & {
++      fill: $sttm-white;
++    }
+   }
+ 
+-  &-items {
++  &-items,
++  &-advance {
+     color: $sttm-grey;
+     display: flex;
+     fill: $sttm-grey;
+     flex-direction: column;
+-    font-size: 15px;
++    font-size: 14px;
+     font-weight: bold;
+-    padding: 20px 12px;
++    padding: 15px 12px;
++  }
++
++  &-border {
++    border-bottom: 1px solid $sttm-lighter-grey;
+   }
+ 
+   &-action-icon {
+-    margin-right: 5px;
++    display: flex;
++    font-size: 16px;
++    justify-content: center;
++    width: 25px;
+   }
+ 
+   &-item {
+     align-items: center;
+     display: flex;
+-    margin: 10px 0;
++    margin: 8px auto;
++    width: 100%;
++  }
++
++  &-active-item {
++    color: $sttm-black;
++    fill: $sttm-black;
++  }
++
++  &-reset-button {
++    background-color: #01669b;
++    border: none;
++    border-radius: 5px;
++    color: #fafafa;
++    font-weight: 900;
++    height: 40px;
++    transition: 0.2s;
++    width: -webkit-fill-available;
++  }
++
++  &-reset-button:hover {
++    background-color: $sttm-orange;
++  }
++
++  &-text {
++    margin-left: 6px;
+   }
+ }
+ 
+@@ -64,6 +112,7 @@
+ 
+   &-family-dropdown {
+     border: none;
++    color: $sttm-grey;
+     margin: 0;
+     width: 60%;
+   }
+@@ -75,16 +124,6 @@
+   font-size: 26px !important;
+ }
+ 
+-.dark-mode {
+-  background-color: $sttm-lighter-black;
+-  border-color: $sttm-light-black;
+-  color: $sttm-white;
+-}
+-
+-.Collapsible__trigger {
+-  display: flex;
+-}
+-
+ .flex-spacer {
+   display: flex;
+   flex: 1;
+@@ -105,3 +144,30 @@
+ .small-font {
+   font-size: 13px;
+ }
++
++// Styles for Checkboxes component
++
++.checkbox {
++  &-container {
++    list-style: none;
++  }
++
++  &-item {
++    align-items: center;
++    display: flex;
++    height: 30px;
++
++    &-label {
++      margin-left: 10px;
++      text-transform: capitalize;
++
++      .dark-mode & {
++        color: $sttm-white;
++      }
++    }
++  }
++
++  &-input {
++    margin: 0;
++  }
++}
+diff --git a/src/scss/style.scss b/src/scss/style.scss
+index be5f922..e31b2f9 100644
+--- a/src/scss/style.scss
++++ b/src/scss/style.scss
+@@ -13,6 +13,7 @@
+   "printer",
+   "results",
+   "search-page",
++  "settings",
+   "shabad-page",
+   "sharing",
+   "sync",
