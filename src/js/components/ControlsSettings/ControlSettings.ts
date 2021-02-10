@@ -1,19 +1,32 @@
 import {
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
+  // FONT_OPTIONS,
+  // VISRAAM,
   TEXTS,
   STEEK_LANGUAGES,
+  // SG_BAANIS,
+  // DEFAULT_SG_BAANI_LENGTH
 } from '@/constants';
 
 import {
   selectItemInArray,
   toFixedFloat,
+  // isShowAutoScrollRoute,
+  // isShowSehajPaathModeRoute,
 } from '@/util';
 
 import {
+  // LarivaarIcon,
+  // LarivaarAssistIcon,
   PlusIcon,
   MinusIcon,
   SizeControl,
+  // AlignCenterIcon,
+  // AlignLeftIcon,
+  // SplitViewIcon,
+  // ParagraphIcon,
+  // GearsIcon,
 } from '@/components/Icons/CustomIcons';
 
 export interface SETTING_ACTIONS {
@@ -35,6 +48,7 @@ export interface SETTING_ACTIONS {
   toggleDarkMode: Function,
   toggleParagraphMode: Function,
   toggleSehajPaathMode: Function,
+  toggleSettingsPanel: Function,
   setVisraamSource: Function,
   setVisraamStyle: Function,
   changeFont: Function,
@@ -49,6 +63,7 @@ export interface SETTING_ACTIONS {
   translationLanguages: string[],
   steekLanguages: string[],
   transliterationLanguages: string[],
+  showSettingsPanel: string,
   visraams: boolean,
   visraamSource: string,
   visraamStyle: string,
@@ -69,20 +84,54 @@ export interface SETTING_ACTIONS {
   showAdvancedOptions: boolean,
 }
 
+export const HEADER_SETTINGS = ({
+  toggleSettingsPanel,
+  showSettingsPanel,
+}: SETTING_ACTIONS) => {
+  return [
+    {
+      type: 'header',
+      label: 'Settings',
+      value: showSettingsPanel,
+      action: toggleSettingsPanel,
+    },
+  ]
+}
+
 export const QUICK_SETTINGS = ({
   setTranslationLanguages,
   setTransliterationLanguages,
+  // resetDisplayOptions,
+  // resetFontOptions,
   toggleVisraams,
+  toggleLarivaarOption,
+  toggleLarivaarAssistOption,
+  // setFontSize,
+  toggleCenterAlignOption,
   toggleSplitViewOption,
+  // toggleAdvancedOptions,
+  // toggleParagraphMode,
   toggleDarkMode,
+  sehajPaathMode,
+  toggleSehajPaathMode,
   setSteekLanguages,
   translationLanguages,
   transliterationLanguages,
   visraams,
+  larivaarAssist,
+  larivaar,
+  // fontSize,
+  // paragraphMode,
+  centerAlignGurbani,
+  splitView,
+  // showAdvancedOptions,
   darkMode,
+  // location,
   steekLanguages,
 }: SETTING_ACTIONS) => {
+  // const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
 
+  // const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
   return [
     {
       type: 'toggle-option',
@@ -98,8 +147,60 @@ export const QUICK_SETTINGS = ({
     },
     {
       type: 'toggle-option',
+      label: 'Reading [Akhand Paath]',
+      checked: sehajPaathMode,
+      stage: 'beta',
+      action: toggleSehajPaathMode,
+    },
+    {
+      type: 'toggle-option',
       label: 'Split',
+      checked: splitView,
       action: toggleSplitViewOption,
+    },
+    {
+      type: 'collapsible_formatting_item',
+      label: 'Larivaar',
+      controlsList: [
+        {
+          // icon: LarivaarIcon,
+          label: 'larivaar',
+          action: () => {
+            toggleLarivaarOption();
+          },
+          value: larivaar,
+        },
+        {
+          // icon: LarivaarAssistIcon,
+          label: 'larivaar Assist',
+          action: () => {
+            toggleLarivaarAssistOption();
+          },
+          value: larivaarAssist
+        }
+      ],
+    },
+    {
+      type: 'collapsible_formatting_item',
+      label: 'Text Align',
+      controlsList: [
+        {
+          // icon: AlignLeftIcon,
+          label: 'align left',
+          action: () => {
+            centerAlignGurbani && toggleCenterAlignOption();
+          },
+          value: !centerAlignGurbani,
+        },
+        {
+          // icon: AlignCenterIcon,
+          label: 'align center',
+          action: () => {
+            !centerAlignGurbani && toggleCenterAlignOption();
+          },
+          value: centerAlignGurbani,
+        },
+      ],
     },
     {
       type: 'collapsible_item',
@@ -153,22 +254,28 @@ export const QUICK_SETTINGS = ({
 }
 
 export const ADVANCED_SETTINGS = ({
-  setVisraamSource,
-  setVisraamStyle,
+  // setVisraamSource,
+  // setVisraamStyle,
   setLineHeight,
-  larivaarAssistStrength,
+  // larivaarAssistStrength,
   lineHeight,
-  changeFont,
-  sehajPaathMode,
-  toggleSehajPaathMode,
-  larivaarAssist,
-  setSgBaaniLength,
+  // changeFont,
+  // larivaarAssist,
+  // setSgBaaniLength,
   setFontSize,
   fontSize,
+  // setLarivaarAssistStrength,
+  // toggleAutoScrollMode,
+  // autoScrollMode,
+  // visraamSource,
+  // visraamStyle,
+  // fontFamily,
   setTranslationFontSize,
   setTransliterationFontSize,
   translationFontSize,
   transliterationFontSize,
+  // location,
+  // sgBaaniLength
 }: SETTING_ACTIONS) => {
 
   return [

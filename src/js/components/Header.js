@@ -1,9 +1,8 @@
-/* globals DOODLE_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
@@ -11,7 +10,10 @@ import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
+import Hamburger from './Icons/HamburgerIcon';
 import Autocomplete from '@/components/Autocomplete';
+import { toggleSettingsPanel } from '@/features/actions';
+// import ControlsSettings from '../components/ControlsSettings/ControlsSettings';
 
 import {
   toSearchURL,
@@ -19,7 +21,7 @@ import {
   getShabadList,
   reformatSearchTypes
 } from '@/util';
-export default class Header extends React.PureComponent {
+class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
 
   static propTypes = {
@@ -31,6 +33,7 @@ export default class Header extends React.PureComponent {
       search: PropTypes.string,
     }),
     history: PropTypes.shape({ push: PropTypes.func }),
+    toggleSettingsPanel: PropTypes.function,
   };
 
   state = {
@@ -67,9 +70,17 @@ export default class Header extends React.PureComponent {
   handleFormSubmit = data => {
     this.props.history.push(toSearchURL(data));
   }
+
+  openSettingsPanel = () => {
+    console.log('clicked', this.props.toggleSettingsPanel)
+    // dispatchEvent({ type: 'TOGGLE_SETTINGS_PANEL' })
+    // toggleSettingsPanel('TOGGLE_SETTINGS_PANEL', this.showSettingsPanel);
+    // toggle
+  }
+
   render() {
     const {
-      props: { defaultQuery, isHome, isAng, isController },
+      props: { defaultQuery, isHome, isAng, isController, toggleSettingsPanel },
       state: { showDoodle, doodleData },
       onFormSubmit,
       handleFormSubmit,
@@ -103,20 +114,23 @@ export default class Header extends React.PureComponent {
 
     return (
       <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
+        {/* <ControlsSettings {...this.props} /> */}
         <div className="top-bar-wrapper row">
           {!isHome && (
-            <div className="top-bar-title">
-              {showDoodle ?
-                (<>
-                  <Link to="/" title={doodleData['Description']} className="doodle-link icon"
-                    style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
-                  <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
-                    style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
-                </>) :
-                (<Link to="/" />)
-              }
-            </div>
-          )}
+            <>
+              <Hamburger onClick={this.props.toggleSettingsPanel} />
+              <div className="top-bar-title">
+                {showDoodle ?
+                  (<>
+                    <Link to="/" title={doodleData['Description']} className="doodle-link icon"
+                      style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
+                    <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
+                      style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
+                  </>) :
+                  (<Link to="/" />)
+                }
+              </div>
+            </>)}
           <SearchForm
             key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
@@ -217,8 +231,7 @@ export default class Header extends React.PureComponent {
                                   {isShowKeyboard && (
                                     <button
                                       type="button"
-                                      className={`gurmukhi-keyboard-toggle ${
-                                        displayGurmukhiKeyboard ? 'active' : ''
+                                      className={`gurmukhi-keyboard-toggle ${displayGurmukhiKeyboard ? 'active' : ''
                                         }`}
                                       onClick={setGurmukhiKeyboardVisibilityAs(
                                         !displayGurmukhiKeyboard
@@ -279,17 +292,17 @@ export default class Header extends React.PureComponent {
                                 ))}
                               </select>
                             ) : (
-                                <select
-                                  name="source"
-                                  value={source}
-                                  onChange={handleSearchSourceChange}
-                                >
-                                  {Object.entries(SOURCES).map(([value, children]) => (
-                                    <option key={value} value={value}>
-                                      {children}
-                                    </option>
-                                  ))}
-                                </select>)}
+                              <select
+                                name="source"
+                                value={source}
+                                onChange={handleSearchSourceChange}
+                              >
+                                {Object.entries(SOURCES).map(([value, children]) => (
+                                  <option key={value} value={value}>
+                                    {children}
+                                  </option>
+                                ))}
+                              </select>)}
                           </div>
                         </>
                       )}
@@ -307,3 +320,14 @@ export default class Header extends React.PureComponent {
     );
   }
 }
+
+const mapStateToProps = () => ({})
+
+const mapDispatchToProps = {
+  toggleSettingsPanel,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

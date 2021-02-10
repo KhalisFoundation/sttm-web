@@ -1,9 +1,10 @@
 import React from 'react';
 import Collapsible from 'react-collapsible';
-import Checkboxes from "@/components/Checkboxes";
+import Checkboxes from '@/components/Checkboxes';
+import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
-import { ADVANCED_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
-import { MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, MicrophoneIcon, SolidArrowRight } from "../Icons/CustomIcons";
+import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight } from "../Icons/CustomIcons";
 import {
   TEXTS,
   // TRANSLATION_LANGUAGES,
@@ -12,13 +13,13 @@ import {
   // VISRAAM,
 } from '../../constants';
 
-
 const ControlsSettings = (props: any) => {
 
   const handleListItemClick = () => {
-    console.log('list item clicked');
+    console.log('list item clicked', props);
   }
 
+  const headerSettings = HEADER_SETTINGS(props);
   const quickSettings = QUICK_SETTINGS(props);
   const advancedSettings = ADVANCED_SETTINGS(props);
   const {
@@ -34,6 +35,7 @@ const ControlsSettings = (props: any) => {
     fontFamily,
     // splitView,
     resetDisplayOptions,
+    // toggleSettingsPanel,
     // toggleDarkMode,
     // toggleLarivaarAssistOption,
     // toggleLarivaarOption,
@@ -68,14 +70,33 @@ const ControlsSettings = (props: any) => {
         return (
           <SplitViewIcon className="settings-action-icon" />
         )
+      case 'Larivaar':
+        return (
+          <LarivaarIcon className="tiny-font" />
+        )
+      case 'Text Align':
+        return (
+          <AlignLeftIcon className="settings-action-icon" />
+        )
+      default:
+        return (
+          <Times />
+        )
     }
   }
   const bakeSettings = (settingsObj: any) => {
     switch (settingsObj.type) {
+      case 'header':
+        return (
+          <>
+            <p className="settings-heading">{settingsObj.label}</p>
+            <a className="settings-times" onClick={settingsObj.action}><Times /></a>
+          </>
+        )
       case 'collapsible_item':
         return (
           <Collapsible trigger={(
-            <div className="settings-item" onClick={handleListItemClick}>
+            <div className="settings-item active-setting" onClick={handleListItemClick}>
               <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
               <span className="settings-text">{settingsObj.label}</span>
               <div className="flex-spacer" />
@@ -115,20 +136,44 @@ const ControlsSettings = (props: any) => {
         )
       case 'toggle-option':
         return (
-          <div className={`settings-item`} onClick={settingsObj.action}>
+          <div className={`settings-item ${settingsObj.checked ? 'active-setting' : ''}`} onClick={settingsObj.action}>
             <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
             <span className="settings-text">{settingsObj.label}</span>
           </div>
+        )
+      case 'collapsible_formatting_item':
+        return (
+          <Collapsible trigger={(
+            <div className="settings-item active-setting" onClick={handleListItemClick}>
+              <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
+              <span className="settings-text">{settingsObj.label}</span>
+              <div className="flex-spacer" />
+              <span className="settings-chevron-icon">
+                <SolidArrowRight />
+              </span>
+            </div>
+          )}>
+            <ClickableListItem controlsList={settingsObj} />
+          </Collapsible>
         )
     }
   }
 
   return (
-    <div className="settings-panel">
-      <div className="settings-header">
-        <p className="settings-heading">Settings</p>
-        <a className="settings-times"><Times /></a>
-      </div>
+    <div>
+      {headerSettings.map((element: any, i: any) => {
+        if (element.type) {
+          return (
+            <div
+              data-cy={element.label}
+              key={`settings-${i}`}
+              className={`settings-header ${element.type}`}>
+              {bakeSettings(element)}
+            </div>
+          )
+        }
+        return null;
+      })}
       <div className="settings-items settings-border">
         {quickSettings.map((element: any, i: any) => {
           if (element.type) {
@@ -170,6 +215,5 @@ const ControlsSettings = (props: any) => {
     </div>
   );
 }
-
 
 export default ControlsSettings;
