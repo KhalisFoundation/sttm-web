@@ -34,6 +34,9 @@ export const setOnlineMode = createAction(SET_ONLINE_MODE);
 export const TOGGLE_ADVANCED_OPTIONS = 'TOGGLE_ADVANCED_OPTIONS';
 export const toggleAdvancedOptions = createAction(TOGGLE_ADVANCED_OPTIONS);
 
+export const TOGGLE_SETTINGS_PANEL = 'TOGGLE_SETTINGS_PANEL';
+export const toggleSettingsPanel = createAction(TOGGLE_SETTINGS_PANEL);
+
 export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE';
 export const toggleDarkMode = createAction(TOGGLE_DARK_MODE);
 

@@ -13,7 +13,6 @@ import SearchIcon from './Icons/Search';
 import Hamburger from './Icons/HamburgerIcon';
 import Autocomplete from '@/components/Autocomplete';
 import { toggleSettingsPanel } from '@/features/actions';
-// import ControlsSettings from '../components/ControlsSettings/ControlsSettings';
 
 import {
   toSearchURL,
@@ -71,16 +70,9 @@ class Header extends React.PureComponent {
     this.props.history.push(toSearchURL(data));
   }
 
-  openSettingsPanel = () => {
-    console.log('clicked', this.props.toggleSettingsPanel)
-    // dispatchEvent({ type: 'TOGGLE_SETTINGS_PANEL' })
-    // toggleSettingsPanel('TOGGLE_SETTINGS_PANEL', this.showSettingsPanel);
-    // toggle
-  }
-
   render() {
     const {
-      props: { defaultQuery, isHome, isAng, isController, toggleSettingsPanel },
+      props: { defaultQuery, isHome, isAng, isController },
       state: { showDoodle, doodleData },
       onFormSubmit,
       handleFormSubmit,

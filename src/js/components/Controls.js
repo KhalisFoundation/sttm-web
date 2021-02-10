@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import throttle from 'lodash.throttle';
+import ControlsSettings from "../components/ControlsSettings/ControlsSettings";
 
-import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
   setSgBaaniLength,
@@ -22,6 +23,7 @@ import {
   toggleLarivaarOption,
   toggleTranslationOptions,
   toggleTransliterationOptions,
+  toggleSettingsPanel,
   toggleSplitViewOption,
   toggleDarkMode,
   toggleSehajPaathMode,
@@ -42,6 +44,10 @@ class Controls extends React.Component {
     showBorder: false,
     lastScrollPos: 0,
     showControls: true
+  };
+
+  static propTypes = {
+    showSettingsPanel: PropTypes.bool,
   };
 
   componentDidMount() {
@@ -161,7 +167,9 @@ class Controls extends React.Component {
           className={classNames}
           ref={this.setRef}
         >
-          <ShabadControls {...this.props} />
+          <div className={`settings-panel ${this.props.showSettingsPanel ? 'settings-show' : 'settings-hide'}`}>
+            <ControlsSettings {...this.props} />
+          </div>
         </div>
       </>
     );
@@ -187,6 +195,7 @@ const mapDispatchToProps = {
   toggleLarivaarOption,
   toggleTranslationOptions,
   toggleTransliterationOptions,
+  toggleSettingsPanel,
   toggleSplitViewOption,
   toggleParagraphMode,
   toggleSehajPaathMode,

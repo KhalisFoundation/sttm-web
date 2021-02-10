@@ -1,6 +1,6 @@
 import React from 'react';
 import Collapsible from 'react-collapsible';
-import Checkboxes from '@/components/Checkboxes';
+import Checkboxes from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';

@@ -9,6 +9,8 @@
     position: fixed;
     right: 0;
     top: 0;
+    transform-origin: top right;
+    transition: 0.3s all ease-in-out;
     width: 20vw;
     z-index: 100;
 
@@ -17,6 +19,14 @@
       border-color: $sttm-light-black;
       color: $sttm-white;
     }
+  }
+
+  &-show {
+    transform: scaleX(1);
+  }
+
+  &-hide {
+    transform: scaleX(0);
   }
 
   &-header {
@@ -141,8 +151,22 @@
   padding-top: 0;
 }
 
+.active-setting {
+  color: $sttm-black;
+  fill: $sttm-black;
+
+  .dark-mode & {
+    color: $sttm-white;
+    fill: $sttm-white;
+  }
+}
+
 .small-font {
   font-size: 13px;
+}
+
+.tiny-font {
+  font-size: 12px;
 }
 
 // Styles for Checkboxes component
@@ -169,5 +193,20 @@
 
   &-input {
     margin: 0;
+  }
+}
+
+// styles for ClickableLI component
+
+.clickable-li {
+  &-container {
+    align-items: center;
+    display: flex;
+    margin: 8px auto;
+    width: 80%;
+  }
+
+  &-label {
+    text-transform: capitalize;
   }
 }

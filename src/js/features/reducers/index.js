@@ -10,6 +10,7 @@ import {
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
   TOGGLE_SEHAJ_PAATH_MODE,
+  TOGGLE_SETTINGS_PANEL,
   SET_MAHANKOSH_TOOLTIP_EXPLAINATION,
   SET_MAHANKOSH_TOOLTIP_ACTIVE,
   SET_VISRAAM_SOURCE,
@@ -143,6 +144,17 @@ export default function reducer(state, action) {
       return {
         ...state,
         showAdvancedOptions,
+      };
+    }
+    case TOGGLE_SETTINGS_PANEL: {
+      const showSettingsPanel = !state.showSettingsPanel;
+      clickEvent({
+        action: TOGGLE_SETTINGS_PANEL,
+        label: showSettingsPanel ? 1 : 0,
+      });
+      return {
+        ...state,
+        showSettingsPanel,
       };
     }
     case TOGGLE_DARK_MODE: {

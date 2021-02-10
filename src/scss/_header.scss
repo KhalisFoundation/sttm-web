@@ -7,7 +7,7 @@
 
   &-wrapper {
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     max-width: 78rem;
   }
 
@@ -39,6 +39,11 @@
 
   .dark-mode & {
     border-color: $sttm-dark-grey;
+  }
+
+  &-hamburger {
+    fill: $sttm-grey;
+    font-size: 38px;
   }
 }
 

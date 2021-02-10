@@ -1,28 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-interface Collection {
-  options: any,
-  action: () => {},
-  label: string,
-  checked: any
-}
-interface CheckboxesProps {
-  collections: Collection[]
-}
-
-const Checkboxes = (props: CheckboxesProps) => {
+const Checkboxes = (props: any) => {
   const { collections } = props;
 
   const toggleCheckBox = (op: any, action: any) => () => {
     action(op);
   }
 
-  const collectionsMarkup = collections.map((c) => {
+  const collectionsMarkup = collections.map((c: any) => {
     const { options, action, label, checked } = c;
 
     return (
       <ul key={label} className="checkbox-container">
-        {options.map((option: string) => (
+        {options.map((option: any) => (
           <li key={option} className="checkbox-item">
             <input
               id={`checkbox-${label}-${option}`}
@@ -53,5 +44,8 @@ const Checkboxes = (props: CheckboxesProps) => {
   )
 }
 
+Checkboxes.propTypes = {
+  collections: PropTypes.array.isRequired,
+}
 
 export default Checkboxes;
