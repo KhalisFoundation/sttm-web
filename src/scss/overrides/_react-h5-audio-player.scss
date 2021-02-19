@@ -1,0 +1,41 @@
+$theme-color: $sttm-blue;
+
+.rhap {
+  &_volume-indicator {
+    background: $theme-color;
+  }
+
+  &_progress-indicator {
+    background: $theme-color;
+  }
+
+  &_main-controls-button {
+    color: $theme-color;
+  }
+
+  &_volume-button {
+    color: $theme-color;
+  }
+
+  &_container {
+    background-color: #e9e9e9;
+    border-radius: 2px;
+    box-shadow: none;
+    margin: 5px 0 10px 0;
+
+    .dark-mode & {
+      background: $sttm-lighter-black;
+    }
+  }
+
+  &_play-pause-button {
+    background: $sttm-white;
+    border-radius: 50%;
+  }
+
+  &_time {
+    .dark-mode & {
+      color: $sttm-white;
+    }
+  }
+}

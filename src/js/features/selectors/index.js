@@ -1,0 +1,1 @@
+export * from './get-larivaar-assist-color';

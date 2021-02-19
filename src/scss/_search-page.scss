@@ -2,6 +2,21 @@
   display: flex;
   justify-content: center;
   padding-top: 10vh;
+
+  .search-form {
+    max-width: 625px;
+  }
+
+  &.doodle-logo-page {
+    padding-top: 6vh;
+  }
+}
+
+.doodle-credit {
+  color: $sttm-dark-grey;
+  font-size: 14px;
+  margin-top: 16px;
+  text-align: center;
 }
 
 /*
@@ -42,7 +57,9 @@
   }
 
   &Button {
+    border: none;
     cursor: pointer;
+    outline: none;
     padding: 10px;
   }
 

@@ -2,7 +2,6 @@
 import React from 'react';
 import { TEXTS, LOCAL_STORAGE_KEY_FOR_SYNC_CODE } from '../../constants';
 import Viewer from './Viewer';
-import { showToast } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
 import { saveToLocalStorage, getStringFromLocalStorage } from '@/util'
 
@@ -125,6 +124,7 @@ export default class Sync extends React.PureComponent {
    */
   static Form = ({ onSubmit, error, getCode }) => (
     <React.Fragment>
+      <h1>{TEXTS.SYNC_TITLE}</h1>
       <p>{TEXTS.SYNC_DESCRIPTION}</p>
       {error && <h5 className="sync-form-error">{TEXTS.SYNC_ERROR}</h5>}
       <form

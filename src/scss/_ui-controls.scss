@@ -1,0 +1,39 @@
+.btn {
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+  transition: 0.2s ease-in;
+
+  &-primary {
+    background-color: $sttm-blue;
+    color: $sttm-white;
+
+    &:hover {
+      background-color: $sttm-bright-blue;
+    }
+  }
+
+  &-ghost {
+    background-color: $sttm-white;
+    border: 1px solid $sttm-blue;
+    color: $sttm-blue;
+    font-size: 1rem;
+    padding: 8px;
+
+    &:hover {
+      border: 1px solid $sttm-bright-orange;
+      color: $sttm-bright-orange;
+    }
+
+    &--activated {
+      background-color: $sttm-blue;
+      color: $sttm-white;
+
+      &:hover {
+        border: 1px solid $sttm-blue;
+        color: $sttm-white;
+      }
+    }
+  }
+}

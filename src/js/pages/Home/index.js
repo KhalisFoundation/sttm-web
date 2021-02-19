@@ -1,17 +1,21 @@
+/* globals DOODLE_URL */
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG } from '../../constants';
-import { toSearchURL } from '../../util';
-import { pageView } from '../../util/analytics';
-import EnhancedGurmukhiKeyboard from '../../components/GurmukhiKeyboardv2';
-// import GurmukhiKeyboard from '../../components/GurmukhiKeyboard';
-import SehajPaathLink from '../../components/SehajPaathLink';
-import SearchForm from '../../components/SearchForm';
-import Logo from '../../components/Icons/Logo';
-import CrossIcon from '../../components/Icons/Times';
-import KeyboardIcon from '../../components/Icons/Keyboard';
-import SearchIcon from '../../components/Icons/Search';
 
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../../constants';
+import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
+import { pageView } from '../../util/analytics';
+
+import { EnhancedGurmukhiKeyboard } from '@/components/EnhancedGurmukhiKeyboard';
+import SehajPaathLink from '@/components/SehajPaathLink';
+import { BaaniLinks } from '@/components/BaaniLinks/';
+import SearchForm from '@/components/SearchForm';
+import Logo from '@/components/Icons/Logo';
+import CrossIcon from '@/components/Icons/Times';
+import KeyboardIcon from '@/components/Icons/Keyboard';
+import SearchIcon from '@/components/Icons/Search';
+import Autocomplete from '@/components/Autocomplete';
 /**
  *
  *
@@ -24,6 +28,25 @@ export default class Home extends React.PureComponent {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
 
+  state = {
+    showDoodle: false,
+    doodleData: null
+  }
+
+  fetchDoodle = () => {
+    fetch(`${DOODLE_URL}`)
+      .then(r => r.json())
+      .then((data) => {
+        if (data.rows.length) {
+          this.setState({ showDoodle: true, doodleData: data.rows[0] });
+        }
+      }, (error) => {
+        console.log(error);
+        this.setState({ showDoodle: false, doodleData: null });
+      }
+      );
+  }
+
   onSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
     handleSubmit();
@@ -34,6 +57,8 @@ export default class Home extends React.PureComponent {
    * Functional component
    */
   render() {
+    const { showDoodle, doodleData } = this.state;
+
     return (
       <SearchForm>
         {({
@@ -48,8 +73,10 @@ export default class Home extends React.PureComponent {
           action,
           name,
           placeholder,
+          isShowKeyboard,
           setGurmukhiKeyboardVisibilityAs,
           setQueryAs,
+          handleKeyDown,
           handleSearchChange,
           handleSearchSourceChange,
           handleSubmit,
@@ -57,7 +84,8 @@ export default class Home extends React.PureComponent {
         }) => (
             <React.Fragment>
               <div className="row" id="content-root">
-                <div className="search-page">
+                <div className={showDoodle ?
+                  "search-page doodle-logo-page" : "search-page"}>
                   <form
                     className="search-form"
                     action={action}
@@ -70,11 +98,15 @@ export default class Home extends React.PureComponent {
                   >
                     <div className="flex justify-center align-center">
                       <div>
-                        <Logo className="logo-long" />
+                        {showDoodle ? (
+                          <Logo className="logo-long" doodle={doodleData} />)
+                          : (
+                            <Logo className="logo-long" />
+                          )}
                       </div>
                     </div>
 
-                    <div id="search-container">
+                    <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
                       <input
                         autoFocus={true}
                         name={name}
@@ -83,14 +115,17 @@ export default class Home extends React.PureComponent {
                         autoCapitalize="none"
                         autoComplete="off"
                         autoCorrect="off"
-                        spellCheck="false"
+                        spellCheck={false}
                         required="required"
                         value={query}
+                        onKeyDown={handleKeyDown}
                         onChange={handleSearchChange}
                         className={className}
                         placeholder={placeholder}
                         title={title}
                         pattern={pattern}
+                        min={name === 'ang' ? 1 : undefined}
+                        max={name === 'ang' ? MAX_ANGS[source] : undefined}
                       />
                       <button
                         type="button"
@@ -99,7 +134,7 @@ export default class Home extends React.PureComponent {
                       >
                         <CrossIcon />
                       </button>
-                      {type > 2 ? '' : (
+                      {isShowKeyboard && (
                         <button
                           type="button"
                           className={`gurmukhi-keyboard-toggle ${
@@ -116,15 +151,22 @@ export default class Home extends React.PureComponent {
                         <SearchIcon />
                       </button>
 
-                      <EnhancedGurmukhiKeyboard
+                      {isShowKeyboard && <EnhancedGurmukhiKeyboard
                         value={query}
                         searchType={type}
                         active={displayGurmukhiKeyboard}
-                        onKeyClick={newValue => setQueryAs(newValue)()}
+                        onKeyClick={newValue => {
+                          setQueryAs(newValue)()
+                        }}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                      />
-
+                      />}
                     </div>
+                    <Autocomplete
+                      isShowFullResults
+                      getSuggestions={getShabadList}
+                      searchOptions={{ type, source }}
+                      value={query}
+                    />
                     <div className="search-options">
                       <div className="search-option">
                         <select
@@ -133,9 +175,9 @@ export default class Home extends React.PureComponent {
                           value={type}
                           onChange={handleSearchTypeChange}
                         >
-                          {TYPES.map((children, value) => (
+                          {reformatSearchTypes(TYPES).map(({ type, value }) => (
                             <option key={value} value={value}>
-                              {children}
+                              {type}
                             </option>
                           ))}
                         </select>
@@ -170,9 +212,15 @@ export default class Home extends React.PureComponent {
                       </div>
                     </div>
                     <SehajPaathLink />
+                    <BaaniLinks />
                   </form>
                 </div>
               </div>
+              {showDoodle && (
+                <a href={doodleData['SourceLink']} target="_blank">
+                  <p className="doodle-credit">Special thanks to {doodleData['SourceText']}</p>
+                </a>
+              )}
             </React.Fragment>
           )}
       </SearchForm>
@@ -181,5 +229,6 @@ export default class Home extends React.PureComponent {
 
   componentDidMount() {
     pageView('/');
+    this.fetchDoodle();
   }
 }

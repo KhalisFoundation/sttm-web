@@ -29,7 +29,7 @@ const content = {
         padchedd and spelling. In case you find any discrepancy, feel free to
         share your{' '}
         <a
-          href="https://form.jotform.com/80266126732151"
+          href="http://support.khalisfoundation.org/support/tickets/new"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -205,7 +205,7 @@ const content = {
               /sg{' '}
             </a>{' '}
           </li>
-        <li>
+          <li>
             In case of going to the Index, the short URL is{' '}
             <a href={`http://${SHORT_DOMAIN}/i`}>
               {' '}
@@ -214,7 +214,7 @@ const content = {
               /i{' '}
             </a>{' '}
           </li>
-      </ul>
+        </ul>
       </React.Fragment>,
     ],
   ],
@@ -239,7 +239,7 @@ const content = {
       'How do I install the desktop application?',
       <React.Fragment>
         You can install SikhiToTheMax (STTM) by visiting{' '}
-        <a href="https://khalisfoundation.org/portfolio/sikhitothemax-everywhere/">
+        <a href="https://khalisfoundation.org/portfolio/sikhitothemax/">
           this website
         </a>{' '}
         and choosing the Windows or macOS download link. After that, open the

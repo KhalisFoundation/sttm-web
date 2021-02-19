@@ -1,5 +1,6 @@
 .display {
   .gurbani-display div {
+    font-size: 0.9em;
     margin-bottom: -0.25rem;
 
     &.larivaar {
@@ -8,13 +9,19 @@
   }
 
   .highlight {
+    background-image: linear-gradient(to right, $sttm-lighter-grey, #fff0);
     border-left: 5px solid $sttm-blue;
     margin: 5px 0;
-    padding-left: 10px;
+    padding: 10px 15px;
 
     .dark-mode & {
+      background-image: linear-gradient(to right, $sttm-lighter-black, #151515);
       border-color: $sttm-orange;
       color: inherit;
+    }
+
+    .controller-row & {
+      background-image: none;
     }
   }
 

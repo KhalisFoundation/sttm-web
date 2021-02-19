@@ -1,23 +1,39 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { GlobalHotKeys, configure } from 'react-hotkeys';
+import { Notifier } from '@/components/Notifier';
 import routes, { NotFound } from './routes';
+import { LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, TEXTS } from './constants';
+import { GlobalHandlers, GlobalShortcuts } from './Shortcuts';
 import {
   getBooleanFromLocalStorage,
   showToast,
   saveToLocalStorage,
 } from './util';
-import { LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, TEXTS } from './constants';
-
 export default class Root extends React.PureComponent {
+  constructor() {
+    super();
+
+    configure({
+      // logLevel: 'debug', use this when hotkeys break
+      defaultKeyEvent: 'keydown',
+      defaultComponent: 'div',
+      ignoreTags: ['input'],
+      defaultTabIndex: -1
+    })
+  }
   render() {
     return (
       <Router>
-        <Switch>
-          {routes.map((props, key) => (
-            <Route key={key} {...props} />
-          ))}
-          <Route render={() => <NotFound />} />
-        </Switch>
+        <GlobalHotKeys keyMap={GlobalShortcuts} handlers={GlobalHandlers}>
+          <Switch>
+            {routes.map((props, key) => (
+              <Route key={key} {...props} />
+            ))}
+            <Route render={() => <NotFound />} />
+          </Switch>
+          <Notifier />
+        </GlobalHotKeys>
       </Router>
     );
   }
@@ -27,7 +43,7 @@ export default class Root extends React.PureComponent {
     if ($a) {
       $a.innerHTML = `v${process.env.npm_package_version}`;
     }
-    
+
     const hasNotAcknolwedged =
       getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_GDPR_NOTICE, false) ===
       false;

@@ -1,5 +1,6 @@
 @media print {
   * {
+    color-adjust: exact !important;
     -webkit-print-color-adjust: exact !important;
   }
 
@@ -22,13 +23,14 @@
   #responsive-menu,
   #search-options,
   #controls-wrapper,
+  #share-menu,
   footer,
   .breadcrumb,
   .shabad-nav,
   .pagniation,
   .relatedShabadWrapper,
   .toast-notification,
-  .scroll-to-top,
+  .fab,
   .shabad .line:hover .share,
   .sync-controls {
     display: none !important;
@@ -61,6 +63,10 @@
     &::after {
       content: '';
     }
+  }
+
+  #freshworks-container {
+    display: none;
   }
 
   @page {

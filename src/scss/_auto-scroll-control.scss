@@ -1,0 +1,111 @@
+.autoScrollControl {
+  align-items: center;
+  background-color: $sttm-blue;
+  border-radius: 40px;
+  bottom: 0;
+  color: $sttm-white;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  padding: 8px;
+  width: auto;
+
+  &IncreaseSpeed,
+  &DecreaseSpeed {
+    border: none;
+    font-size: 36px;
+    margin: 0 8px;
+    outline: 0;
+    transition: 0.2s all ease-in-out;
+
+    &:hover {
+      color: $sttm-orange;
+    }
+  }
+
+  &Group {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 12px;
+    position: relative;
+    transition: all 0.2s ease-in;
+
+    &.visible {
+      margin: 0 12px;
+      max-width: 250px;
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    &.hidden {
+      display: flex;
+      margin: 0;
+      max-width: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    & > label {
+      color: $sttm-white;
+      font-size: 12px;
+      line-height: 1.2;
+      position: absolute;
+      top: -12px;
+    }
+  }
+
+  &PlayBtn {
+    align-items: center;
+    background-color: $sttm-orange;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    height: 65px;
+    justify-content: center;
+    outline: 0;
+    width: 65px;
+
+    > svg {
+      fill: $sttm-white;
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  &Speed {
+    align-items: center;
+    display: flex;
+    font-size: 16px;
+  }
+
+  &Slider {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    max-height: 20px;
+
+    &Thumb {
+      background-color: $sttm-orange;
+      border: none;
+      border-radius: 50%;
+      height: 15px;
+      outline: 0;
+      width: 15px;
+    }
+
+    &Track {
+      background-color: $sttm-white;
+      border-radius: 4px;
+      height: 6px;
+      margin: 0 8px;
+      margin-top: 3px;
+      width: 150px;
+    }
+  }
+}
+
+.backgroundTransparent {
+  background-color: transparent;
+}

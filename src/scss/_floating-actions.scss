@@ -1,0 +1,39 @@
+.floatingActions {
+  align-items: center;
+  background-color: $sttm-blue;
+  border-radius: 40px;
+  bottom: 30px;
+  box-shadow: 0 4px 8px 0 $sttm-grey;
+  display: flex;
+  height: 50px;
+  max-width: 450px;
+  opacity: 0.5;
+  padding: 8px 16px;
+  position: fixed;
+  right: 24px;
+  transition: all 0.2s ease-in;
+  width: auto;
+  z-index: 99;
+
+  @media screen and (max-width: 600px) {
+    opacity: 1;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .dark-mode & {
+    box-shadow: 0 2px 4px 0 $sttm-grey;
+  }
+
+  &Control {
+    margin: 0 12px;
+  }
+
+  &Icons {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}

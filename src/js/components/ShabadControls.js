@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { toggleItemInArray } from '../util';
+import { toggleItemInArray, clearVisraamClass } from '../util';
 import {
   TEXTS,
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
   FONT_OPTIONS,
+  VISRAAM,
 } from '../constants';
 import TelevisionIcon from './Icons/Television';
 import SlidersIcon from './Icons/Sliders';
@@ -23,6 +24,10 @@ export default class ShabadControls extends React.PureComponent {
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    autoScrollMode: PropTypes.bool.isRequired,
+    visraams: PropTypes.bool.isRequired,
+    visraamSource: PropTypes.string.isRequired,
+    visraamStyle: PropTypes.string.isRequired,
     hideAlignOption: PropTypes.bool,
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
@@ -43,7 +48,30 @@ export default class ShabadControls extends React.PureComponent {
     toggleSplitViewOption: PropTypes.func.isRequired,
     changeFont: PropTypes.func.isRequired,
     toggleCenterAlignOption: PropTypes.func.isRequired,
+    toggleVisraams: PropTypes.func.isRequired,
+    setVisraamSource: PropTypes.func.isRequired,
+    setVisraamStyle: PropTypes.func.isRequired,
   };
+
+  componentDidUpdate() {
+    clearVisraamClass();
+    document.body.classList[this.props.visraams ? 'add' : 'remove'](
+      VISRAAM.CLASS_NAME,
+      VISRAAM.SOURCE_CLASS(this.props.visraamSource),
+      VISRAAM.TYPE_CLASS(this.props.visraamStyle)
+    );
+  }
+
+  createSelectFromObj = (obj, defaultValue, changeFun) => {
+    const options = Object.keys(obj).map(key =>
+      <option key={key} value={key}>{obj[key]}</option>
+    )
+    return (
+      <select value={defaultValue} onChange={(e) => {
+        changeFun(e.currentTarget.value);
+      }}> {options} </select>
+    )
+  }
 
   render() {
     const {
@@ -56,6 +84,10 @@ export default class ShabadControls extends React.PureComponent {
       larivaarAssist,
       larivaar,
       darkMode,
+      autoScrollMode,
+      visraams,
+      visraamSource,
+      visraamStyle,
       fontSize,
       fontFamily,
       splitView,
@@ -71,6 +103,9 @@ export default class ShabadControls extends React.PureComponent {
       toggleLarivaarAssistOption,
       toggleLarivaarOption,
       toggleSplitViewOption,
+      toggleVisraams,
+      setVisraamSource,
+      setVisraamStyle,
       changeFont,
       hideAlignOption,
     } = this.props;
@@ -80,7 +115,7 @@ export default class ShabadControls extends React.PureComponent {
           <a
             className={`display-options-toggle shabad-controller-toggle ${
               showDisplayOptions ? 'active' : ''
-            }`}
+              }`}
             onClick={toggleDisplayOptions}
           >
             <TelevisionIcon />
@@ -89,7 +124,7 @@ export default class ShabadControls extends React.PureComponent {
           <a
             className={`font-options-toggle shabad-controller-toggle ${
               showFontOptions ? 'active' : ''
-            }`}
+              }`}
             onClick={toggleFontOptions}
           >
             <SlidersIcon />
@@ -106,7 +141,7 @@ export default class ShabadControls extends React.PureComponent {
             <a
               className={`shabad-controller-toggle ${
                 larivaarAssist ? 'active' : ''
-              }`}
+                }`}
               onClick={toggleLarivaarAssistOption}
             >
               <span className="custom-fa custom-fa-assist">ੳ</span>
@@ -126,7 +161,7 @@ export default class ShabadControls extends React.PureComponent {
                     key={lang}
                     className={`display-option-toggle ${
                       transliterationLanguages.includes(lang) ? 'active' : ''
-                    }`}
+                      }`}
                     onClick={() =>
                       setTransliterationLanguages(
                         toggleItemInArray(lang, transliterationLanguages)
@@ -146,7 +181,7 @@ export default class ShabadControls extends React.PureComponent {
                     key={lang}
                     className={`display-option-toggle ${
                       translationLanguages.includes(lang) ? 'active' : ''
-                    }`}
+                      }`}
                     onClick={() =>
                       setTranslationLanguages(
                         toggleItemInArray(lang, translationLanguages)
@@ -165,7 +200,7 @@ export default class ShabadControls extends React.PureComponent {
                   <a
                     className={`display-option-toggle ${
                       splitView ? 'active' : ''
-                    }`}
+                      }`}
                     onClick={toggleSplitViewOption}
                   >
                     {splitView ? 'Disable' : 'Enable'}
@@ -179,13 +214,43 @@ export default class ShabadControls extends React.PureComponent {
                 <a
                   className={`display-option-toggle ${
                     darkMode ? 'active' : ''
-                  }`}
+                    }`}
                   onClick={toggleDarkMode}
                 >
                   {darkMode ? 'Disable' : 'Enable'}
                 </a>
               </div>
             </div>
+
+            <div className="display-option-type">
+              <div className="display-option-header">{TEXTS.VISRAAMS}</div>
+              <div className="display-option-content">
+                <a
+                  className={`display-option-toggle ${
+                    visraams ? 'active' : ''
+                    }`}
+                  onClick={toggleVisraams}
+                >
+                  {visraams ? 'Disable' : 'Enable'}
+                </a>
+              </div>
+            </div>
+            {visraams && (
+              <>
+                <div className="display-option-type">
+                  <div className="display-option-header">Vishraam Options</div>
+                  <div className="display-option-content">
+                    {this.createSelectFromObj(VISRAAM.TYPES, visraamStyle, setVisraamStyle)}
+                  </div>
+                </div>
+                <div className="display-option-type">
+                  <div className="display-option-header">Vishraam Source</div>
+                  <div className="display-option-content">
+                    {this.createSelectFromObj(VISRAAM.SOURCES, visraamSource, setVisraamSource)}
+                  </div>
+                </div>
+              </>
+            )}
 
             {!hideAlignOption && (
               <div className="display-option-type">

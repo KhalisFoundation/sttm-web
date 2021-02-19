@@ -53,10 +53,10 @@ export default class GurmukhiKeyboard extends React.PureComponent {
   };
 
   componentDidMount() {
-    addEventListener('click', this.closeOnOutsideClick);
+    addEventListener('click', this.closeOnClickOutside);
   }
 
-  closeOnOutsideClick = e => {
+  closeOnClickOutside = e => {
     const path =
       typeof e.composedPath === 'function' ? e.composedPath() : e.path || [];
 
@@ -79,7 +79,7 @@ export default class GurmukhiKeyboard extends React.PureComponent {
   };
 
   componentWillUnmount() {
-    removeEventListener('click', this.closeOnOutsideClick);
+    removeEventListener('click', this.closeOnClickOutside);
   }
 
   render() {

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import SearchResult from './Result';
+import { SEARCH_TYPES } from '@/constants';
 import { getVerseId } from '@/util/api/shabad';
 
 export default class SearchResults extends React.PureComponent {
@@ -20,15 +22,27 @@ export default class SearchResults extends React.PureComponent {
   };
 
   render() {
-    const { shabads, ...props } = this.props;
+    const { shabads, type, ...props } = this.props;
+
+    const searchResultsClassName = cx({
+      'search-results-display': true,
+      'english-translation-search': type === SEARCH_TYPES.ENGLISH_WORD,
+      'main-letter-search': type === SEARCH_TYPES.MAIN_LETTERS
+    });
 
     return (
-      <ul className="search-results display">
-        {shabads.map(shabad => {
-          return (
-            <SearchResult key={getVerseId(shabad)} shabad={shabad} {...props} />
-          );
-        })}
+      <ul className={searchResultsClassName}>
+        {
+          shabads.map(shabad => {
+            return (
+              <SearchResult
+                key={getVerseId(shabad)}
+                type={type}
+                shabad={shabad}
+                {...props} />
+            );
+          })
+        }
       </ul>
     );
   }

@@ -1,7 +1,10 @@
-@import
+/* stylelint-disable at-rule-no-unknown */
+@import "mixin",
   "colours",
+  "auto-scroll-control",
   "display-controls",
   "error-page",
+  "floating-actions",
   "footer",
   "fonts",
   "header",
@@ -15,7 +18,19 @@
   "sync",
   "spinner",
   "sundar-gutka",
-  "help";
+  "help",
+  "controller",
+  "banner",
+  "baani-link",
+  "granth-index",
+  "vishraam",
+  "mahankosh",
+  "ui-controls";
+@import 'node_modules/react-smartbanner/dist/main';
+@import 'node_modules/react-toastify/dist/ReactToastify.min';
+@import 'node_modules/react-h5-audio-player/src/styles.scss';
+@import 'overrides/react-date-picker';
+@import 'overrides/react-h5-audio-player';
 
 html,
 body {
@@ -28,12 +43,18 @@ body {
   height: auto;
   min-height: 100%;
   padding-bottom: 100px;
-  position: relative;
 
   &.dark-mode {
     background-color: $sttm-light-black;
     color: $sttm-white;
+
+    .translation,
+    .steek {
+      color: $sttm-grey;
+    }
   }
+
+  @include vishraamStyles($sttm-vishraam-red, $sttm-vishraam-yellow);
 }
 
 select {
@@ -53,7 +74,9 @@ select {
 /* youtube responsive */
 .videoWrapper {
   height: 0;
-  padding-bottom: 56.25%; /* 16:9 */
+  padding-bottom: 56.25%;
+
+  /* 16:9 */
   padding-top: 25px;
   position: relative;
 }
@@ -76,6 +99,10 @@ select {
 
   @media screen and (max-width: 730px) {
     margin: 5px 1rem;
+  }
+
+  .fullscreen-view & {
+    display: none;
   }
 }
 
@@ -155,22 +182,32 @@ select {
   }
 }
 
-.scroll-to-top {
-  align-items: center;
+#fullscreen {
+  fill: $sttm-white;
+}
+
+.fullscreen {
+  height: 22px;
+
+  & > svg {
+    transition: all 0.2s ease-in;
+  }
+
+  &:hover #fullscreen {
+    fill: $sttm-orange;
+  }
+}
+
+.fab {
   animation: grow ease-in-out 0.25s;
-  background-color: $sttm-white;
-  border-radius: 50%;
-  bottom: 28px;
-  box-shadow: 0 1px 4px 0 $sttm-dark-grey;
   cursor: pointer;
-  display: flex;
-  height: 50px;
-  justify-content: center;
-  position: fixed;
-  right: 28px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  width: 50px;
-  z-index: 5;
+  height: 18px;
+  transform: translateY(-2px);
+
+  & svg {
+    fill: $sttm-white;
+    transition: all 0.2s ease-in;
+  }
 
   @keyframes grow {
     from {
@@ -180,11 +217,6 @@ select {
     to {
       transform: scale(1);
     }
-  }
-
-  .dark-mode & {
-    background-color: $sttm-darker-grey;
-    box-shadow: none;
   }
 }
 
@@ -200,5 +232,116 @@ select {
     .dark-mode & {
       fill: $sttm-light-grey;
     }
+  }
+}
+
+.scroll-to-top:hover svg {
+  fill: $sttm-orange;
+}
+
+.logo-center {
+  margin-top: 10px;
+
+  a img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+  }
+}
+
+.fullscreen-view #freshworks-container {
+  display: none;
+}
+
+.autoscroll-mode {
+  @media screen and (max-width: 600px) {
+    #freshworks-container {
+      display: none;
+    }
+  }
+}
+
+.hide-mobile {
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
+}
+
+.hide-tablet {
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+}
+
+.hide-desktop {
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.angNo {
+  background-color: $sttm-blue;
+  border-radius: 5px;
+  color: $sttm-white;
+  padding: 5px;
+
+  &:hover {
+    background-color: $sttm-orange;
+    color: $sttm-white;
+    transition: 0.2s;
+  }
+}
+
+.continue {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.smartbanner-show {
+  margin-top: 80px;
+}
+
+.mahankoshTooltipWrapper {
+  background-color: $sttm-dark-blue !important;
+}
+
+.mahankoshTooltipGurbaniWord {
+  color: $sttm-orange;
+  font-size: 2em;
+}
+
+.mahankoshTooltipSource {
+  font-size: 0.6em;
+  font-style: italic;
+}
+
+.hukamnama-right-link {
+  margin-left: 5px;
+}
+
+.hukamnama-player {
+  &-close-icon {
+    align-items: center;
+    background: $sttm-white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    float: right;
+    height: 27px;
+    justify-content: center;
+    width: 27px;
+  }
+
+  &-close-icon-svg {
+    fill: $sttm-blue;
+    font-size: 14px;
+  }
+
+  &-title {
+    display: inline-block;
+    font-size: 1rem;
   }
 }

@@ -19,54 +19,72 @@ class FootNav extends React.PureComponent {
   render() {
     const { nav, type } = this.props;
     const link = toNavURL(this.props);
+    const isHukamnama = type === 'hukamnama';
+    const isSync = type === 'sync';
     return (
-      <div className="pagination">
-        {nav.previous ? (
-          <div className="shabad-nav left">
-            <Link to={link + nav.previous}>
-              {type === 'hukamnama' ? (
-                <Hour24 direction='previous' />
-              ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                )}
-              <span>{type === 'hukamnama' ? dateMath.expand(nav.previous, false) : 'Previous'}</span>
-            </Link>
-          </div>
-        ) : type !== 'sync' ? (
-          <div className="shabad-nav left disabled-nav">
-            <a>
-              {type === 'hukamnama' ? (
-                <Hour24 direction='previous' />
-              ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                )}
-              <span>{type === 'hukamnama' ? '' : 'Previous'}</span>
-            </a>
-          </div>
-        ) : ''}
+      <div className={`pagination pagination-${type}`}>
+
+        {/* Previous navigation */}
+        {nav.previous ?
+          (
+            <div className="shabad-nav left">
+              <Link to={link + nav.previous}>
+                {isHukamnama ?
+                  (
+                    <Hour24 direction='previous' />
+                  ) :
+                  (
+                    <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                  )}
+                <span>{isHukamnama ? dateMath.expand(nav.previous, false) : 'Previous'}</span>
+              </Link>
+            </div>
+          ) :
+          !isSync ? (
+            <div className="shabad-nav left disabled-nav">
+              <a>
+                {isHukamnama ?
+                  (
+                    <Hour24 direction='previous' />
+                  ) :
+                  (
+                    <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                  )}
+                <span>{isHukamnama ? '' : 'Previous'}</span>
+              </a>
+            </div>
+          ) : ''}
+
+        {/* Next navigation */}
         {nav.next ? (
           <div className="shabad-nav right">
-            <a role="button" aria-label="next" onClick={this.handleSaveAng}>
-              <span>{type === 'hukamnama' ? dateMath.expand(nav.next, false) : 'Next'}</span>
-              {type === 'hukamnama' ? (
-                <Hour24 direction='Next' />
-              ) : (
+            <a role="button" aria-label="next" onClick={this.goToNextAng}>
+              <span>{isHukamnama ? dateMath.expand(nav.next, false) : 'Next'}</span>
+              {isHukamnama ?
+                (
+                  <Hour24 direction='Next' />
+                ) :
+                (
                   <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
                 )}
             </a>
           </div>
-        ) : type !== 'sync' ? (
-          <div className="shabad-nav right disabled-nav">
-            <a>
-              <span>{type === 'hukamnama' ? '' : 'Next'}</span>
-              {type === 'hukamnama' ? (
-                <Hour24 direction='next' />
-              ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-                )}
-            </a>
-          </div>
-        ) : ''}
+        ) :
+          !isSync ? (
+            <div className="shabad-nav right disabled-nav">
+              <a>
+                <span>{isHukamnama ? '' : 'Next'}</span>
+                {isHukamnama ?
+                  (
+                    <Hour24 direction='next' />
+                  ) :
+                  (
+                    <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                  )}
+              </a>
+            </div>
+          ) : ''}
+
       </div>
     );
   }
@@ -75,9 +93,8 @@ class FootNav extends React.PureComponent {
    * Handle SaveAng
    * @memberof FootNav
    */
-  handleSaveAng = () => {
+  goToNextAng = () => {
     const link = toNavURL(this.props);
-    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
     this.props.history.push(link + this.props.nav.next);
   };
 }

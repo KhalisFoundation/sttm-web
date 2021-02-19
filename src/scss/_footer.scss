@@ -4,13 +4,21 @@ footer {
   bottom: 0;
   font-family: 'Lato', sans-serif;
   left: 0;
-  min-height: 49px;
-  position: absolute;
+  min-height: 50px;
+  position: fixed;
   width: 100%;
 
   .dark-mode & {
     background-color: $sttm-light-black;
     border-top: 1px solid $sttm-lighter-black;
+  }
+
+  .fullscreen-view & {
+    display: none;
+  }
+
+  @media screen and (max-width: 950px) {
+    position: fixed;
   }
 
   .footer {
@@ -99,11 +107,10 @@ footer {
       align-items: flex-start;
       flex-direction: column;
 
-      .menu {
-        justify-content: center;
+      .version {
+        display: none;
       }
 
-      .version,
       .copyright {
         padding: 5px 0;
         text-align: center;
@@ -115,8 +122,9 @@ footer {
         display: none;
       }
 
-      .menu,
-      .version {
+      .menu {
+        justify-content: center;
+
         li a,
         li span {
           padding: 10px 5px;
@@ -128,7 +136,7 @@ footer {
       align-items: center;
 
       .version {
-        font-size: 0.8rem;
+        display: none;
       }
 
       .copyright {

@@ -1,76 +1,111 @@
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
-import { fixLarivaarUnicode, fixLarivaarGurmukhiFont } from './util';
+import React, {  memo } from 'react';
+import { Pause } from '../Icons/controls/';
+
+import { STTM_ORANGE } from '@/constants';
+import {
+  fixLarivaarUnicode,
+  fixLarivaarGurmukhiFont
+} from './util';
 
 export interface ILarivaarWordProps {
   word: string;
   unicode: boolean;
   larivaarAssist?: boolean;
+  larivaarAssistColor: string;
   index: number;
-  startIndex?: number;
-  endIndex?: number;
+  highlightIndex?: Array<number>;
+  visraam: boolean;
+  visraamClass: string;
   highlight?: boolean;
 }
 
-function LarivaarWord(props: ILarivaarWordProps) {
-  const {
-    startIndex,
-    endIndex,
-    word,
-    unicode,
-    larivaarAssist,
-    index,
-    highlight,
-  } = props;
-
+const LarivaarWord: React.FC<ILarivaarWordProps> = ({
+  highlightIndex,
+  word,
+  unicode,
+  larivaarAssist,
+  larivaarAssistColor,
+  index,
+  highlight,
+  visraam,
+  visraamClass,
+}) => {
+  const isBothLarivaarAndVisraam = visraam && larivaarAssist
+  const isOddIdx = index % 2 === 1;
+  const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
   const segments = unicode
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
 
-  return (
-    <>
-      {segments.map((item, i) => {
-        let akharClass = '';
-        let assistLarivaar;
+  const assignAkharColor = (node: HTMLElement) => {
+    if (node) {
+      if (isColoredLarivaarAssist) {
+        node.style.setProperty('color', larivaarAssistColor, 'important');
+      } else {
+        node.style.setProperty('color', '');
+      }
+    }
+  }
 
-        if (index % 2 === 1) {
+  return (
+    <span
+      className={visraamClass + '' + 'gurbani-word'}
+    >
+      {/* {isBothLarivaarAndVisraam && isOddIdx &&
+        <span style={{backgroundColor: STTM_ORANGE}} className="vishraam-icon-wrapper">
+          <Pause className="vishraam-icon" />
+        </span>
+        } */}
+      {segments.map((item, i) => {
+        const key = `${index}.${i}`;
+        let akharClass = '';
+
+        if (isOddIdx) {
           akharClass += 'larivaar-word';
+          if (isColoredLarivaarAssist) {
+            akharClass += ' larivaar-assist-word';
+          }
         }
 
-        // If this isn't a search result
-        if (!(startIndex !== undefined && endIndex !== undefined)) {
-          assistLarivaar = larivaarAssist && index % 2 === 1;
-        } else {
-          if (highlight || (index >= startIndex && index < endIndex)) {
+        // If this is a search result
+        if (highlightIndex !== undefined) {
+          if (highlight || highlightIndex.includes(index)) {
             akharClass += ' search-highlight-word';
           }
-          assistLarivaar = larivaarAssist && index % 2 === 1;
         }
 
-        akharClass += assistLarivaar ? ' larivaar-assist-word' : '';
 
-        const key = `${index}.${i}`;
-
+        // handle space break for this special character
         if (item.includes('´')) {
-          // handle space break for this special character
+          // currently react don't support assigning important as inline
+          // so need to use this hack of reference
           return (
-            <span key={key} style={{ color, display: 'inline-block' }}>
+            <span
+              key={key}
+              ref={assignAkharColor}
+              className={akharClass}
+              style={{ display: 'inline-block' }}
+            >
               {item}
               <wbr />
             </span>
           );
         }
 
+        // currently react don't support assigning important as inline
+        // so need to use this hack of reference
         return (
-          <span key={key} className={akharClass}>
-            <span>
+          <span
+            key={key}
+            className={akharClass}>
+            <span ref={assignAkharColor}>
               {item}
               <wbr />
             </span>
           </span>
         );
       })}
-    </>
+    </span >
   );
 }
 

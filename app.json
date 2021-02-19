@@ -1,0 +1,13 @@
+{
+  "name": "SikhiToTheMax",
+  "description": ".",
+  "keywords": [
+    "Sikhi",
+    "Sikh apps",
+    "sttm web",
+    "Sikhi to the max"
+  ],
+  "website": "https://www.sikhitothemax.org/",
+  "repository": "https://github.com/khalisfoundation/sttm-web",
+  "logo": "https://www.sikhitothemax.org/assets/images/sttm_icon.png"
+}

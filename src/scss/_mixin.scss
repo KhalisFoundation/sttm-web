@@ -1,0 +1,19 @@
+/* stylelint-disable at-rule-no-unknown */
+
+@mixin load_fonts($name, $fontfile) {
+  @font-face {
+    font-display: block;
+    font-family: $name;
+    src: url('/assets/fonts/'+$fontfile+'?v=1');
+  }
+}
+
+@mixin filled_checkbox($bg_color) {
+  background-color: $bg_color;
+}
+
+@mixin flex_center() {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
