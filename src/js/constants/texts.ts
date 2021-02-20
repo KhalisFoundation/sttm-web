@@ -42,7 +42,7 @@ export const TEXTS = {
   GENERIC_ERROR_DESCRIPTION: `This is really unusual. Try <a href="https://www.thewindowsclub.com/clear-cache-cookies-specific-website" target="_blank" rel="noreferrer nofollow">clearing your cache</a>. If you still face the issue, you may want to hit the Feedback button at the bottom of this page, and report this issue to our team to fix it.`,
   TIMEOUT_ERROR: `ਵਾਹਿਗੁਰੂ! Network connection timed out`,
   TIMEOUT_ERROR_DESCRIPTION: `This usually happens when your internet connection is either down or very slow. Try connecting sometime later?`,
-  GO_TO_SHABAD: 'Go to shabad',
+  GO_TO_SHABAD: 'Go to Shabad',
   HUKAMNAMA: 'Daily Hukamnama Sri Harmandir Sahib, Amritsar',
   ANG_NOT_FOUND: `Sorry, we couldn't find the requested ang (page).`,
   ANG_NOT_FOUND_DESCRIPTION: (ang: string, source: string) =>
