@@ -215,7 +215,8 @@ class Meta extends React.PureComponent {
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
-    const hukamnamaDate = new Date(nav.current || todayDate);
+    const hukamnamaDate = new Date(nav.current);
+    const maximumHukamnamaDate = new Date(todayDate);
     const hasAudioPlayer = isHukamnama
     // hukamnamaDate.getTime() == todayDate.getTime();
 
@@ -240,7 +241,7 @@ class Meta extends React.PureComponent {
                       }}
                       onChange={this.goToParticularHukamnama}
                       value={hukamnamaDate}
-                      maxDate={hukamnamaDate}
+                      maxDate={maximumHukamnamaDate}
                       minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                       calendarIcon={<CalendarIcon width={20} />}
                     />
