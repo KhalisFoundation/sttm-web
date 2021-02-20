@@ -329,6 +329,7 @@ select {
     border-radius: 50%;
     cursor: pointer;
     display: flex;
+    fill: $sttm-blue;
     float: right;
     height: 27px;
     justify-content: center;
@@ -341,6 +342,7 @@ select {
   }
 
   &-title {
+    color: $sttm-white;
     display: inline-block;
     font-size: 1rem;
   }

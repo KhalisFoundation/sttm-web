@@ -263,8 +263,8 @@ class Meta extends React.PureComponent {
                   {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
                 </h4>
                 <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
-                  <HeadphonesIcon />
-                  <p>{`Listen to today's hukamnama`}</p>
+
+                  <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to Today's Hukamnama">{`Today's Hukamnama`}</a></span>
                 </div>
               </div>
             </>

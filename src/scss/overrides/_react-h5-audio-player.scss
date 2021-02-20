@@ -6,11 +6,11 @@ $theme-color: $sttm-blue;
   }
 
   &_progress-indicator {
-    background: $theme-color;
+    background: $sttm-white;
   }
 
   &_main-controls-button {
-    color: $theme-color;
+    color: $sttm-white;
   }
 
   &_volume-button {
@@ -18,7 +18,7 @@ $theme-color: $sttm-blue;
   }
 
   &_container {
-    background-color: #e9e9e9;
+    background-color: $sttm-blue;
     border-radius: 2px;
     box-shadow: none;
     margin: 5px 0 10px 0;
@@ -29,13 +29,11 @@ $theme-color: $sttm-blue;
   }
 
   &_play-pause-button {
-    background: $sttm-white;
+    background: $sttm-blue;
     border-radius: 50%;
   }
 
   &_time {
-    .dark-mode & {
-      color: $sttm-white;
-    }
+    color: $sttm-white;
   }
 }
