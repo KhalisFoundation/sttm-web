@@ -20,6 +20,8 @@ export const TEXTS = {
   SEHAJ_PAATH: (ang: string) => `Continue reading Ang ${ang}`,
   SUNDAR_GUTKA_HEADER: `Sundar Gutka Baaniyaan`,
   SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,
+  SUNDAR_GUTKA_LENGTHS_INFO: `Based on user feedback, we know there are many different variations of certain Baanis out there that people read. To make sure you get the best experience from our website. Please choose a setting which best describes your usage.`,
+  SUNDAR_GUTKA_LENGTHS_TITLE: `Baani Lengths`,
   SYNC: `Remote Sync`,
   CONTROLLER: 'Bani Controller',
   CONTROLLER_TITLE: 'Take Control of SikhiToTheMax',

@@ -7,16 +7,16 @@ export const SG_BAANI_TAKSAL = 'l';
 export const SG_BAANI_BUDHADAL = 'xl';
 export const SG_BAANIS = [
   {
-    name: 'Short', length: SG_BAANI_SGPC, value: 0,
+    name: 'Short', length: SG_BAANI_SGPC, value: 0, tooltip: 'This is the minimum SGPC/Akaal Takht standard.',
   },
   {
-    name: 'Medium', length: SG_BAANI_MEDIUM, value: 1,
+    name: 'Medium', length: SG_BAANI_MEDIUM, value: 1, tooltip: 'Typically read by followers of the Akhand Keertani Jatha and others.',
   },
   {
-    name: 'Long', length: SG_BAANI_TAKSAL, value: 2,
+    name: 'Long', length: SG_BAANI_TAKSAL, value: 2, tooltip: 'Typically read by followers of Damdami Taksaal and others.',
   },
   {
-    name: 'Extra Long', length: SG_BAANI_BUDHADAL, value: 3
+    name: 'Extra Long', length: SG_BAANI_BUDHADAL, value: 3, tooltip: 'Most popular amongst followers of Buddha Dal.',
   }
 ]
 export const SG_BAANIS_LENGTH_TO_EXISTS_MAP = {
