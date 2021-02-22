@@ -3,7 +3,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../../constants';
+import {
+  SOURCES,
+  SEARCH_TYPES,
+  TYPES,
+  SOURCES_WITH_ANG,
+  MAX_ANGS,
+} from '../../constants';
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
 
@@ -30,24 +36,26 @@ export default class Home extends React.PureComponent {
 
   state = {
     showDoodle: false,
-    doodleData: null
-  }
+    doodleData: null,
+  };
 
   fetchDoodle = () => {
     fetch(`${DOODLE_URL}`)
-      .then(r => r.json())
-      .then((data) => {
-        if (data.rows.length) {
-          this.setState({ showDoodle: true, doodleData: data.rows[0] });
+      .then((r) => r.json())
+      .then(
+        (data) => {
+          if (data.rows.length) {
+            this.setState({ showDoodle: true, doodleData: data.rows[0] });
+          }
+        },
+        (error) => {
+          console.log(error);
+          this.setState({ showDoodle: false, doodleData: null });
         }
-      }, (error) => {
-        console.log(error);
-        this.setState({ showDoodle: false, doodleData: null });
-      }
       );
-  }
+  };
 
-  onSubmit = ({ handleSubmit, ...data }) => e => {
+  onSubmit = ({ handleSubmit, ...data }) => (e) => {
     e.preventDefault();
     handleSubmit();
     this.props.history.push(toSearchURL(data));
@@ -63,6 +71,7 @@ export default class Home extends React.PureComponent {
       <SearchForm>
         {({
           pattern,
+          disabled,
           title,
           className,
           displayGurmukhiKeyboard,
@@ -82,147 +91,161 @@ export default class Home extends React.PureComponent {
           handleSubmit,
           handleSearchTypeChange,
         }) => (
-            <React.Fragment>
-              <div className="row" id="content-root">
-                <div className={showDoodle ?
-                  "search-page doodle-logo-page" : "search-page"}>
-                  <form
-                    className="search-form"
-                    action={action}
-                    onSubmit={this.onSubmit({
-                      handleSubmit,
-                      query,
-                      type,
-                      source,
-                    })}
-                  >
-                    <div className="flex justify-center align-center">
-                      <div>
-                        {showDoodle ? (
-                          <Logo className="logo-long" doodle={doodleData} />)
-                          : (
-                            <Logo className="logo-long" />
-                          )}
-                      </div>
+          <React.Fragment>
+            <div className="row" id="content-root">
+              <div
+                className={
+                  showDoodle ? 'search-page doodle-logo-page' : 'search-page'
+                }
+              >
+                <form
+                  className="search-form"
+                  action={action}
+                  onSubmit={this.onSubmit({
+                    handleSubmit,
+                    query,
+                    type,
+                    source,
+                  })}
+                >
+                  <div className="flex justify-center align-center">
+                    <div>
+                      {showDoodle ? (
+                        <Logo className="logo-long" doodle={doodleData} />
+                      ) : (
+                        <Logo className="logo-long" />
+                      )}
                     </div>
+                  </div>
 
-                    <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
-                      <input
-                        autoFocus={true}
-                        name={name}
-                        id="search"
-                        type={inputType}
-                        autoCapitalize="none"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        spellCheck={false}
-                        required="required"
-                        value={query}
-                        onKeyDown={handleKeyDown}
-                        onChange={handleSearchChange}
-                        className={className}
-                        placeholder={placeholder}
-                        title={title}
-                        pattern={pattern}
-                        min={name === 'ang' ? 1 : undefined}
-                        max={name === 'ang' ? MAX_ANGS[source] : undefined}
-                      />
+                  <div
+                    id="search-container"
+                    className={displayGurmukhiKeyboard ? 'kb-active' : ''}
+                  >
+                    <input
+                      autoFocus={true}
+                      name={name}
+                      id="search"
+                      type={inputType}
+                      autoCapitalize="none"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      value={query}
+                      onKeyDown={handleKeyDown}
+                      onChange={handleSearchChange}
+                      className={className}
+                      placeholder={placeholder}
+                      title={title}
+                      pattern={pattern}
+                      min={name === 'ang' ? 1 : undefined}
+                      max={name === 'ang' ? MAX_ANGS[source] : undefined}
+                    />
+                    <button
+                      type="button"
+                      className="clear-search-toggle"
+                      onClick={setQueryAs('')}
+                    >
+                      <CrossIcon />
+                    </button>
+                    {isShowKeyboard && (
                       <button
                         type="button"
-                        className="clear-search-toggle"
-                        onClick={setQueryAs('')}
+                        className={`gurmukhi-keyboard-toggle ${
+                          displayGurmukhiKeyboard ? 'active' : ''
+                        }`}
+                        onClick={setGurmukhiKeyboardVisibilityAs(
+                          !displayGurmukhiKeyboard
+                        )}
                       >
-                        <CrossIcon />
+                        <KeyboardIcon />
                       </button>
-                      {isShowKeyboard && (
-                        <button
-                          type="button"
-                          className={`gurmukhi-keyboard-toggle ${
-                            displayGurmukhiKeyboard ? 'active' : ''
-                            }`}
-                          onClick={setGurmukhiKeyboardVisibilityAs(
-                            !displayGurmukhiKeyboard
-                          )}
-                        >
-                          <KeyboardIcon />
-                        </button>
-                      )}
-                      <button type="submit">
-                        <SearchIcon />
-                      </button>
+                    )}
+                    <button type="submit" disabled={disabled}>
+                      <SearchIcon />
+                    </button>
 
-                      {isShowKeyboard && <EnhancedGurmukhiKeyboard
+                    {isShowKeyboard && (
+                      <EnhancedGurmukhiKeyboard
                         value={query}
                         searchType={type}
                         active={displayGurmukhiKeyboard}
-                        onKeyClick={newValue => {
-                          setQueryAs(newValue)()
+                        onKeyClick={(newValue) => {
+                          setQueryAs(newValue)();
                         }}
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                      />}
+                      />
+                    )}
+                  </div>
+                  <Autocomplete
+                    isShowFullResults
+                    getSuggestions={getShabadList}
+                    searchOptions={{ type, source }}
+                    value={query}
+                  />
+                  <div className="search-options">
+                    <div className="search-option">
+                      <select
+                        name="type"
+                        id="search-type"
+                        value={type}
+                        onChange={handleSearchTypeChange}
+                      >
+                        {reformatSearchTypes(TYPES).map(({ type, value }) => (
+                          <option key={value} value={value}>
+                            {type}
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                    <Autocomplete
-                      isShowFullResults
-                      getSuggestions={getShabadList}
-                      searchOptions={{ type, source }}
-                      value={query}
-                    />
-                    <div className="search-options">
-                      <div className="search-option">
+                    <div className="search-option">
+                      {type === SEARCH_TYPES['ANG'] ? (
                         <select
-                          name="type"
-                          id="search-type"
-                          value={type}
-                          onChange={handleSearchTypeChange}
+                          name="source"
+                          value={
+                            Object.keys(SOURCES_WITH_ANG).includes(source)
+                              ? source
+                              : 'G'
+                          }
+                          onChange={handleSearchSourceChange}
                         >
-                          {reformatSearchTypes(TYPES).map(({ type, value }) => (
-                            <option key={value} value={value}>
-                              {type}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="search-option">
-                        {type === SEARCH_TYPES['ANG'] ? (
-                          <select
-                            name="source"
-                            value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
-                            onChange={handleSearchSourceChange}
-                          >
-                            {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
+                          {Object.entries(SOURCES_WITH_ANG).map(
+                            ([value, children]) => (
                               <option key={value} value={value}>
                                 {children}
                               </option>
-                            ))}
-                          </select>
-                        ) : (
-                            <select
-                              name="source"
-                              value={source}
-                              onChange={handleSearchSourceChange}
-                            >
-                              {Object.entries(SOURCES).map(([value, children]) => (
-                                <option key={value} value={value}>
-                                  {children}
-                                </option>
-                              ))}
-                            </select>
-                          )
-                        }
-                      </div>
+                            )
+                          )}
+                        </select>
+                      ) : (
+                        <select
+                          name="source"
+                          value={source}
+                          onChange={handleSearchSourceChange}
+                        >
+                          {Object.entries(SOURCES).map(([value, children]) => (
+                            <option key={value} value={value}>
+                              {children}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </div>
-                    <SehajPaathLink />
-                    <BaaniLinks />
-                  </form>
-                </div>
+                  </div>
+                  <SehajPaathLink />
+                  <BaaniLinks />
+                </form>
               </div>
-              {showDoodle && (
-                <a href={doodleData['SourceLink']} target="_blank">
-                  <p className="doodle-credit">Special thanks to {doodleData['SourceText']}</p>
-                </a>
-              )}
-            </React.Fragment>
-          )}
+            </div>
+            {showDoodle && (
+              <a href={doodleData['SourceLink']} target="_blank">
+                <p className="doodle-credit">
+                  Special thanks to {doodleData['SourceText']}
+                </p>
+              </a>
+            )}
+          </React.Fragment>
+        )}
       </SearchForm>
     );
   }

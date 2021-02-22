@@ -2,7 +2,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
+import {
+  SOURCES,
+  SEARCH_TYPES,
+  TYPES,
+  SOURCES_WITH_ANG,
+  MAX_ANGS,
+} from '../constants';
 import { Link } from 'react-router-dom';
 
 import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
@@ -17,7 +23,7 @@ import {
   toSearchURL,
   getQueryParams,
   getShabadList,
-  reformatSearchTypes
+  reformatSearchTypes,
 } from '@/util';
 export default class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
@@ -36,37 +42,39 @@ export default class Header extends React.PureComponent {
   state = {
     showDoodle: false,
     doodleData: null,
-  }
+  };
 
   fetchDoodle = () => {
     fetch(`${DOODLE_URL}`)
-      .then(r => r.json())
-      .then((data) => {
-        if (data.error) {
+      .then((r) => r.json())
+      .then(
+        (data) => {
+          if (data.error) {
+            this.setState({ showDoodle: false, doodleData: null });
+          } else if (data.rows.length) {
+            this.setState({ showDoodle: true, doodleData: data.rows[0] });
+          }
+        },
+        (error) => {
+          console.log(error);
           this.setState({ showDoodle: false, doodleData: null });
-        } else if (data.rows.length) {
-          this.setState({ showDoodle: true, doodleData: data.rows[0] });
         }
-      }, (error) => {
-        console.log(error);
-        this.setState({ showDoodle: false, doodleData: null });
-      }
       );
-  }
+  };
   componentDidMount() {
     this.fetchDoodle();
   }
 
-  onFormSubmit = ({ handleSubmit, ...data }) => e => {
+  onFormSubmit = ({ handleSubmit, ...data }) => (e) => {
     e.preventDefault();
     e.stopPropagation();
     handleSubmit();
     this.handleFormSubmit(data);
   };
 
-  handleFormSubmit = data => {
+  handleFormSubmit = (data) => {
     this.props.history.push(toSearchURL(data));
-  }
+  };
   render() {
     const {
       props: { defaultQuery, isHome, isAng, isController },
@@ -88,7 +96,9 @@ export default class Header extends React.PureComponent {
         <div className="top-bar-wrapper row controller-header">
           <div className="top-bar-title">
             <Link id="sync-logo" to="/" />
-            <span className="logo-text"><span className="bolder">Bani</span> Controller</span>
+            <span className="logo-text">
+              <span className="bolder">Bani</span> Controller
+            </span>
           </div>
           <div className="responsive-menu">
             <Menu isHome={true} />
@@ -102,19 +112,33 @@ export default class Header extends React.PureComponent {
     }
 
     return (
-      <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
+      <div
+        id="nav-bar"
+        className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}
+      >
         <div className="top-bar-wrapper row">
           {!isHome && (
             <div className="top-bar-title">
-              {showDoodle ?
-                (<>
-                  <Link to="/" title={doodleData['Description']} className="doodle-link icon"
-                    style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
-                  <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
-                    style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
-                </>) :
-                (<Link to="/" />)
-              }
+              {showDoodle ? (
+                <>
+                  <Link
+                    to="/"
+                    title={doodleData['Description']}
+                    className="doodle-link icon"
+                    style={{
+                      backgroundImage: `url(${doodleData['ImageSquare']}) `,
+                    }}
+                  />
+                  <Link
+                    to="/"
+                    title={doodleData['Description']}
+                    className="doodle-link bigger-image"
+                    style={{ backgroundImage: `url(${doodleData['Image']}) ` }}
+                  />
+                </>
+              ) : (
+                <Link to="/" />
+              )}
             </div>
           )}
           <SearchForm
@@ -127,6 +151,7 @@ export default class Header extends React.PureComponent {
           >
             {({
               pattern,
+              disabled,
               title,
               className,
               inputType,
@@ -146,7 +171,6 @@ export default class Header extends React.PureComponent {
               handleSearchTypeChange,
               handleSubmit,
             }) => {
-
               return (
                 <React.Fragment>
                   <div id="responsive-menu">
@@ -185,7 +209,12 @@ export default class Header extends React.PureComponent {
                                 />
                               </li>
                               <li>
-                                <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
+                                <div
+                                  id="search-container"
+                                  className={
+                                    displayGurmukhiKeyboard ? 'kb-active' : ''
+                                  }
+                                >
                                   <input
                                     type={inputType}
                                     id="search"
@@ -203,7 +232,11 @@ export default class Header extends React.PureComponent {
                                     title={title}
                                     pattern={pattern}
                                     min={name === 'ang' ? 1 : undefined}
-                                    max={name === 'ang' ? MAX_ANGS[source] : undefined}
+                                    max={
+                                      name === 'ang'
+                                        ? MAX_ANGS[source]
+                                        : undefined
+                                    }
                                   />
 
                                   <button
@@ -219,7 +252,7 @@ export default class Header extends React.PureComponent {
                                       type="button"
                                       className={`gurmukhi-keyboard-toggle ${
                                         displayGurmukhiKeyboard ? 'active' : ''
-                                        }`}
+                                      }`}
                                       onClick={setGurmukhiKeyboardVisibilityAs(
                                         !displayGurmukhiKeyboard
                                       )}
@@ -228,8 +261,7 @@ export default class Header extends React.PureComponent {
                                     </button>
                                   )}
 
-                                  <button
-                                    type="submit">
+                                  <button type="submit" disabled={disabled}>
                                     <SearchIcon />
                                   </button>
 
@@ -238,15 +270,26 @@ export default class Header extends React.PureComponent {
                                       value={query}
                                       searchType={parseInt(type)}
                                       active={displayGurmukhiKeyboard}
-                                      onKeyClick={newValue => setQueryAs(newValue)()}
-                                      onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                                      onKeyClick={(newValue) =>
+                                        setQueryAs(newValue)()
+                                      }
+                                      onClose={setGurmukhiKeyboardVisibilityAs(
+                                        false
+                                      )}
                                     />
                                   )}
 
                                   <Autocomplete
-                                    isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
+                                    isShowFullResults={
+                                      !isSearchPageRoute ||
+                                      (isSearchPageRoute &&
+                                        decodeURI(defaultQuery) !== query)
+                                    }
                                     getSuggestions={getShabadList}
-                                    searchOptions={{ type: parseInt(type), source }}
+                                    searchOptions={{
+                                      type: parseInt(type),
+                                      source,
+                                    }}
                                     value={query}
                                   />
                                 </div>
@@ -260,46 +303,55 @@ export default class Header extends React.PureComponent {
                               value={type.toString()}
                               onChange={handleSearchTypeChange}
                             >
-                              {reformatSearchTypes(TYPES).map(({ type, value }) => (
-                                <option key={value} value={value}>
-                                  {type}
-                                </option>
-                              ))}
+                              {reformatSearchTypes(TYPES).map(
+                                ({ type, value }) => (
+                                  <option key={value} value={value}>
+                                    {type}
+                                  </option>
+                                )
+                              )}
                             </select>
                             {parseInt(type) === SEARCH_TYPES['ANG'] ? (
                               <select
                                 name="source"
-                                value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
+                                value={
+                                  Object.keys(SOURCES_WITH_ANG).includes(source)
+                                    ? source
+                                    : 'G'
+                                }
                                 onChange={handleSearchSourceChange}
                               >
-                                {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
-                                  <option key={value} value={value}>
-                                    {children}
-                                  </option>
-                                ))}
-                              </select>
-                            ) : (
-                                <select
-                                  name="source"
-                                  value={source}
-                                  onChange={handleSearchSourceChange}
-                                >
-                                  {Object.entries(SOURCES).map(([value, children]) => (
+                                {Object.entries(SOURCES_WITH_ANG).map(
+                                  ([value, children]) => (
                                     <option key={value} value={value}>
                                       {children}
                                     </option>
-                                  ))}
-                                </select>)}
+                                  )
+                                )}
+                              </select>
+                            ) : (
+                              <select
+                                name="source"
+                                value={source}
+                                onChange={handleSearchSourceChange}
+                              >
+                                {Object.entries(SOURCES).map(
+                                  ([value, children]) => (
+                                    <option key={value} value={value}>
+                                      {children}
+                                    </option>
+                                  )
+                                )}
+                              </select>
+                            )}
                           </div>
                         </>
                       )}
                     </div>
-                    <Menu
-                      isHome={isHome}
-                    />
+                    <Menu isHome={isHome} />
                   </div>
                 </React.Fragment>
-              )
+              );
             }}
           </SearchForm>
         </div>
