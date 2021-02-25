@@ -170,7 +170,7 @@ export default class SearchForm extends React.PureComponent {
       handleKeyDown
     } = this;
 
-    const { type } = this.state;
+    const { type, query } = this.state;
     const typeInt = parseInt(type);
     const [, useEnglish = false] = PLACEHOLDERS[type];
     const className = useEnglish ? '' : 'gurbani-font';
@@ -185,12 +185,14 @@ export default class SearchForm extends React.PureComponent {
     const [action, name, inputType] = SearchForm.getFormDetails(
       typeInt
     );
+    const disabled = !new RegExp(pattern).test(query);
 
 
     return this.props.children({
       ...state,
       isShowKeyboard,
       pattern,
+      disabled,
       title,
       className,
       action,

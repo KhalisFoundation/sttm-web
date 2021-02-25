@@ -63,6 +63,7 @@ export default class Home extends React.PureComponent {
       <SearchForm>
         {({
           pattern,
+          disabled,
           title,
           className,
           displayGurmukhiKeyboard,
@@ -147,7 +148,7 @@ export default class Home extends React.PureComponent {
                           <KeyboardIcon />
                         </button>
                       )}
-                      <button type="submit">
+                      <button type="submit" disabled={disabled}>
                         <SearchIcon />
                       </button>
 

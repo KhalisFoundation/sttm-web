@@ -17,6 +17,8 @@
 }
 
 .react-date-picker {
+  vertical-align: sub;
+
   &__inputGroup {
     display: none;
     outline: 0;
