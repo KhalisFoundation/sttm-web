@@ -9,6 +9,10 @@
     display: flex;
     // flex-wrap: wrap;
     max-width: 78rem;
+
+    @media screen and (max-width: 900px) {
+      flex-wrap: wrap;
+    }
   }
 
   .fullscreen-view & {
@@ -44,6 +48,23 @@
   &-hamburger {
     fill: $sttm-grey;
     font-size: 38px;
+
+    @media screen and (max-width: 900px) {
+      display: none;
+    }
+  }
+
+  &-settings {
+    display: none;
+    fill: $sttm-blue;
+    font-size: 23px;
+    margin-left: 10px;
+    position: relative;
+    top: 4px;
+
+    @media screen and (max-width: 900px) {
+      display: inline-block;
+    }
   }
 }
 
@@ -84,6 +105,10 @@
 
     &:nth-child(1) {
       margin-right: 1rem;
+    }
+
+    @media screen and (max-width: 900px) {
+      width: calc(50% - 1.8rem);
     }
   }
 }
