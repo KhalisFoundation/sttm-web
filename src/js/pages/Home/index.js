@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../../constants';
-import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
+import { toSearchURL, getShabadList, reformatSearchTypes, getWriterList } from '../../util';
 import { pageView } from '../../util/analytics';
 
 import { EnhancedGurmukhiKeyboard } from '@/components/EnhancedGurmukhiKeyboard';
@@ -30,7 +30,8 @@ export default class Home extends React.PureComponent {
 
   state = {
     showDoodle: false,
-    doodleData: null
+    doodleData: null,
+    writersData: null
   }
 
   fetchDoodle = () => {
@@ -45,6 +46,14 @@ export default class Home extends React.PureComponent {
         this.setState({ showDoodle: false, doodleData: null });
       }
       );
+  }
+
+  fetchWriters = () => {
+    getWriterList()
+      .then(writersData => {
+        console.log(writersData)
+        this.setState({writersData})
+      })    
   }
 
   onSubmit = ({ handleSubmit, ...data }) => e => {
@@ -211,6 +220,15 @@ export default class Home extends React.PureComponent {
                           )
                         }
                       </div>
+                      <div className="search-option">                           
+                        <select
+                          name="writer">
+                            <option>All Writers</option>
+                            {
+                              this.state.writersData?.map(writer => <option key={writer.writerID}>{writer.writerEnglish}</option>)
+                            }
+                        </select>
+                      </div>
                     </div>
                     <SehajPaathLink />
                     <BaaniLinks />
@@ -231,5 +249,6 @@ export default class Home extends React.PureComponent {
   componentDidMount() {
     pageView('/');
     this.fetchDoodle();
+    this.fetchWriters();
   }
 }
