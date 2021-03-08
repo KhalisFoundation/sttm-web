@@ -12,8 +12,8 @@ import {
 import {
   selectItemInArray,
   toFixedFloat,
-  // isShowAutoScrollRoute,
-  // isShowSehajPaathModeRoute,
+  isShowAutoScrollRoute,
+  isShowSehajPaathModeRoute,
 } from '@/util';
 
 import {
@@ -117,6 +117,8 @@ export const QUICK_SETTINGS = ({
   setSteekLanguages,
   translationLanguages,
   transliterationLanguages,
+  toggleAutoScrollMode,
+  autoScrollMode,
   visraams,
   larivaarAssist,
   larivaar,
@@ -129,9 +131,9 @@ export const QUICK_SETTINGS = ({
   // location,
   steekLanguages,
 }: SETTING_ACTIONS) => {
-  // const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
+  const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
+  const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
 
-  // const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
   return [
     {
       type: 'toggle-option',
@@ -151,7 +153,13 @@ export const QUICK_SETTINGS = ({
       checked: sehajPaathMode,
       stage: 'beta',
       action: toggleSehajPaathMode,
-    },
+    } : {},
+    isShowAutoScroll ? {
+      type: 'toggle-option',
+      label: 'Auto Scroll',
+      checked: autoScrollMode,
+      action: toggleAutoScrollMode,
+    } : {},
     {
       type: 'toggle-option',
       label: 'Split',
@@ -163,7 +171,6 @@ export const QUICK_SETTINGS = ({
       label: 'Larivaar',
       controlsList: [
         {
-          // icon: LarivaarIcon,
           label: 'larivaar',
           action: () => {
             toggleLarivaarOption();
@@ -171,7 +178,6 @@ export const QUICK_SETTINGS = ({
           value: larivaar,
         },
         {
-          // icon: LarivaarAssistIcon,
           label: 'larivaar Assist',
           action: () => {
             toggleLarivaarAssistOption();
@@ -185,7 +191,6 @@ export const QUICK_SETTINGS = ({
       label: 'Text Align',
       controlsList: [
         {
-          // icon: AlignLeftIcon,
           label: 'align left',
           action: () => {
             centerAlignGurbani && toggleCenterAlignOption();
@@ -193,7 +198,6 @@ export const QUICK_SETTINGS = ({
           value: !centerAlignGurbani,
         },
         {
-          // icon: AlignCenterIcon,
           label: 'align center',
           action: () => {
             !centerAlignGurbani && toggleCenterAlignOption();
@@ -254,28 +258,14 @@ export const QUICK_SETTINGS = ({
 }
 
 export const ADVANCED_SETTINGS = ({
-  // setVisraamSource,
-  // setVisraamStyle,
   setLineHeight,
-  // larivaarAssistStrength,
   lineHeight,
-  // changeFont,
-  // larivaarAssist,
-  // setSgBaaniLength,
   setFontSize,
   fontSize,
-  // setLarivaarAssistStrength,
-  // toggleAutoScrollMode,
-  // autoScrollMode,
-  // visraamSource,
-  // visraamStyle,
-  // fontFamily,
   setTranslationFontSize,
   setTransliterationFontSize,
   translationFontSize,
   transliterationFontSize,
-  // location,
-  // sgBaaniLength
 }: SETTING_ACTIONS) => {
 
   return [

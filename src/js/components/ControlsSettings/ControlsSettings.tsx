@@ -7,10 +7,7 @@ import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSet
 import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight } from "../Icons/CustomIcons";
 import {
   TEXTS,
-  // TRANSLATION_LANGUAGES,
-  // TRANSLITERATION_LANGUAGES,
   FONT_OPTIONS,
-  // VISRAAM,
 } from '../../constants';
 
 const ControlsSettings = (props: any) => {
@@ -23,24 +20,8 @@ const ControlsSettings = (props: any) => {
   const quickSettings = QUICK_SETTINGS(props);
   const advancedSettings = ADVANCED_SETTINGS(props);
   const {
-    // centerAlignGurbani,
-    // disableSplitView,
-    // showDisplayOptions,
-    // showFontOptions,
-    // translationLanguages,
-    // transliterationLanguages,
-    // larivaar,
-    // darkMode,
-    // visraams,
     fontFamily,
-    // splitView,
     resetDisplayOptions,
-    // toggleSettingsPanel,
-    // toggleDarkMode,
-    // toggleLarivaarAssistOption,
-    // toggleLarivaarOption,
-    // toggleSplitViewOption,
-    // toggleVisraams,
     changeFont,
   } = props;
 

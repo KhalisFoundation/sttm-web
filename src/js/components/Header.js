@@ -10,8 +10,6 @@ import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
-import Hamburger from './Icons/HamburgerIcon';
-import SettingsIcon from './Icons/SettingsIcon';
 import Autocomplete from '@/components/Autocomplete';
 import { toggleSettingsPanel } from '@/features/actions';
 
@@ -111,7 +109,6 @@ class Header extends React.PureComponent {
         <div className="top-bar-wrapper row">
           {!isHome && (
             <>
-              <Hamburger onClick={this.props.toggleSettingsPanel} />
               <div className="top-bar-title">
                 {showDoodle ?
                   (<>
@@ -296,7 +293,6 @@ class Header extends React.PureComponent {
                                   </option>
                                 ))}
                               </select>)}
-                            <SettingsIcon onClick={this.props.toggleSettingsPanel} />
                           </div>
                         </>
                       )}

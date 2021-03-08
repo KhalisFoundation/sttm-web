@@ -119,6 +119,12 @@
   &-text {
     margin-left: 6px;
   }
+
+  &-text-desktop {
+    bottom: 11px;
+    color: $sttm-grey;
+    position: relative;
+  }
 }
 
 .font {
