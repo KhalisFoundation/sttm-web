@@ -18,6 +18,7 @@ import { updateSmartAppBannerMetaTags } from '@/util';
 import {
   DEFAULT_SEARCH_SOURCE,
   DEFAULT_SEARCH_TYPE,
+  DEFAULT_SEARCH_WRITER,
   SEARCH_TYPES,
   SOURCES,
   TEXTS,
@@ -336,13 +337,14 @@ export default [
       const {
         location: { search },
       } = props;
-      const params = ['type', 'source', 'q', 'offset'];
+      const params = ['type', 'source', 'q', 'offset', 'writer'];
 
       const [
         type = DEFAULT_SEARCH_TYPE,
         source = DEFAULT_SEARCH_SOURCE,
         q = '',
         offset = 1,
+        writer = DEFAULT_SEARCH_WRITER
       ] = params.map((v) => getParameterByName(v, search));
 
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
@@ -367,6 +369,7 @@ export default [
                   type={parseInt(type, 10)}
                   source={source}
                   offset={parseInt(offset)}
+                  writer={writer}
                   {...props}
                 />
               ) : (

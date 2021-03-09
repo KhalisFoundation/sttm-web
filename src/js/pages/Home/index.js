@@ -51,7 +51,6 @@ export default class Home extends React.PureComponent {
   fetchWriters = () => {
     getWriterList()
       .then(writersData => {
-        console.log(writersData)
         this.setState({writersData})
       })    
   }
@@ -80,6 +79,7 @@ export default class Home extends React.PureComponent {
           type,
           inputType,
           source,
+          writer,
           action,
           name,
           placeholder,
@@ -91,6 +91,7 @@ export default class Home extends React.PureComponent {
           handleSearchSourceChange,
           handleSubmit,
           handleSearchTypeChange,
+          handleSearchWriterChange,
         }) => (
             <React.Fragment>
               <div className="row" id="content-root">
@@ -104,6 +105,7 @@ export default class Home extends React.PureComponent {
                       query,
                       type,
                       source,
+                      writer,
                     })}
                   >
                     <div className="flex justify-center align-center">
@@ -222,10 +224,15 @@ export default class Home extends React.PureComponent {
                       </div>
                       <div className="search-option">                           
                         <select
-                          name="writer">
+                          name="writer"
+                          onChange={handleSearchWriterChange}>
                             <option>All Writers</option>
                             {
-                              this.state.writersData?.map(writer => <option key={writer.writerID}>{writer.writerEnglish}</option>)
+                              this.state.writersData?.map(writer => (
+                                <option key={writer.writerID} value={writer.writerID}>
+                                  {writer.writerEnglish}
+                                </option>
+                              ))
                             }
                         </select>
                       </div>

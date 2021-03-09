@@ -12,6 +12,7 @@ import {
   SEARCH_TYPES,
   SEARCH_TYPES_NOT_ALLOWED_KEYS,
   SOURCES_WITH_ANG,
+  DEFAULT_SEARCH_WRITER,
 } from '@/constants';
 import { getNumberFromLocalStorage, clickEvent, ACTIONS } from '@/util';
 
@@ -41,6 +42,7 @@ export default class SearchForm extends React.PureComponent {
    * @property {function} handleSearchChange
    * @property {function} handleSearchSourceChange
    * @property {function} handleSearchTypeChange
+   * @property {function} handleSearchWriterChange
    * @property {function} handleSubmit
    *
    * @typedef {object} SearchFormProps
@@ -90,6 +92,7 @@ export default class SearchForm extends React.PureComponent {
       DEFAULT_SEARCH_SOURCE,
     placeholder: '',
     isAnimatingPlaceholder: false,
+    writer: DEFAULT_SEARCH_WRITER
   };
 
   animatePlaceholder = () => {
@@ -166,6 +169,7 @@ export default class SearchForm extends React.PureComponent {
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
+      handleSearchWriterChange,
       handleSubmit,
       handleKeyDown
     } = this;
@@ -203,6 +207,7 @@ export default class SearchForm extends React.PureComponent {
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
+      handleSearchWriterChange,
       handleSubmit,
       handleKeyDown,
     });
@@ -371,6 +376,12 @@ export default class SearchForm extends React.PureComponent {
         }
       )
     );
+  }
+
+  handleSearchWriterChange = ({target}) => {
+    this.setState({
+      writer: target.value
+    })
   }
 
   handleSubmit = () => {
