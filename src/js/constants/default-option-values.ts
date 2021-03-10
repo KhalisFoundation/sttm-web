@@ -4,6 +4,7 @@ import { SEARCH_TYPES } from "./search-types";
 export const DEFAULT_SEARCH_TYPE = SEARCH_TYPES.FIRST_LETTERS;
 export const DEFAULT_SEARCH_SOURCE = 'all';
 export const DEFAULT_SEARCH_WRITER = 'all';
+export const DEFAULT_SEARCH_WRITERS = [];
 export const DEFAULT_TRANSLATION_LANGUAGES = ['english'];
 export const DEFAULT_TRANSLITERATION_LANGUAGES = ['english'];
 export const DEFAULT_STEEK_LANGUAGES = [];
