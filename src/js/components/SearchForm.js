@@ -375,7 +375,7 @@ export default class SearchForm extends React.PureComponent {
           shouldSubmit: isSearchTypeToAngSearchType ? false :
             this.props.submitOnChangeOf.includes('type') &&
             this.state.query !== '',
-          displayGurmukhiKeyboard: isShowKeyboard
+          displayGurmukhiKeyboard: isShowKeyboard,
         },
         () => {
           clickEvent({ action: ACTIONS.SEARCH_TYPE, label: newSearchType });

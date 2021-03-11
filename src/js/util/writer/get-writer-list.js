@@ -17,7 +17,11 @@ export const getWriterList = () => {
           })
         }
 
+        // Remove unknown writer
         let newWriterList = writerList.slice(1);
+
+        // add at first position
+        newWriterList.unshift({writerID: 'all', writerEnglish: 'All Writers'})
         
         resolve(newWriterList);
       },

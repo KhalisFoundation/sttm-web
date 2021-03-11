@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../constants';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../constants';
 import { Link } from 'react-router-dom';
 
 import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
@@ -136,6 +136,8 @@ export default class Header extends React.PureComponent {
               query,
               type,
               source,
+              writer,
+              writers,
               action,
               name,
               placeholder,
@@ -145,6 +147,7 @@ export default class Header extends React.PureComponent {
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
+              handleSearchWriterChange,
               handleSubmit,
             }) => {
 
@@ -290,7 +293,64 @@ export default class Header extends React.PureComponent {
                                       {children}
                                     </option>
                                   ))}
-                                </select>)}
+                                </select>)}                                                       
+                                <select
+                                  name="writer"
+                                  value={writer}
+                                  onChange={handleSearchWriterChange}>
+                                    {
+                                      source === 'G' ? (
+                                        writers?.filter(e => !SOURCE_WRITER_FILTER['G'].includes(e.writerID)).map(writer => (
+                                          <option key={writer.writerID} value={writer.writerID}>
+                                            {writer.writerEnglish}
+                                          </option>
+                                        ))
+                                      ) : source === 'D' ? (                                 
+                                        writers?.filter(e => SOURCE_WRITER_FILTER['D'].includes(e.writerID)).map(writer => (
+                                          <option key={writer.writerID} value={writer.writerID}>
+                                            {writer.writerEnglish}
+                                          </option>
+                                        ))                                
+                                      ) : source === 'B' ? (                                 
+                                        writers?.filter(e => SOURCE_WRITER_FILTER['B'].includes(e.writerID)).map(writer => (
+                                          <option key={writer.writerID} value={writer.writerID}>
+                                            {writer.writerEnglish}
+                                          </option>
+                                        ))
+                                      ) : source === 'A' ? (
+                                        writers?.filter(e => !SOURCE_WRITER_FILTER['A'].includes(e.writerID)).map(writer => (
+                                          <option key={writer.writerID} value={writer.writerID}>
+                                            {writer.writerEnglish}
+                                          </option>
+                                        ))                                
+                                      ) : source === 'S' ? (                                 
+                                        writers?.filter(e => SOURCE_WRITER_FILTER['S'].includes(e.writerID)).map(writer => (
+                                          <option key={writer.writerID} value={writer.writerID}>
+                                            {writer.writerEnglish}
+                                          </option>
+                                        ))
+                                      ) : source === 'N' ? (                                 
+                                        writers?.filter(e => SOURCE_WRITER_FILTER['N'].includes(e.writerID)).map(writer => (
+                                          <option key={writer.writerID} value={writer.writerID}>
+                                            {writer.writerEnglish}
+                                          </option>
+                                        ))
+                                      ) : source === 'R' ? (                                 
+                                        writers?.filter(e => SOURCE_WRITER_FILTER['R'].includes(e.writerID)).map(writer => (
+                                          <option key={writer.writerID} value={writer.writerID}>
+                                            {writer.writerEnglish}
+                                          </option>
+                                        ))
+                                      ) : (
+                                        writers?.map(writer => (
+                                          <option key={writer.writerID} value={writer.writerID}>
+                                            {writer.writerEnglish}
+                                          </option>
+                                        ))
+                                      )
+                                    }
+                                </select>
+                      
                           </div>
                         </>
                       )}

@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../../constants';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../../constants';
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
 
@@ -220,16 +220,45 @@ export default class Home extends React.PureComponent {
                           name="writer"
                           value={writer}
                           onChange={handleSearchWriterChange}>
-                            <option value="all">All Writers</option>
                             {
-                              source === 'D' ? (
-                                writers?.filter(e => e.writerID === 47).map(writer => (
+                              source === 'G' ? (
+                                writers?.filter(e => !SOURCE_WRITER_FILTER['G'].includes(e.writerID)).map(writer => (
                                   <option key={writer.writerID} value={writer.writerID}>
                                     {writer.writerEnglish}
                                   </option>
                                 ))
+                              ) : source === 'D' ? (                                 
+                                writers?.filter(e => SOURCE_WRITER_FILTER['D'].includes(e.writerID)).map(writer => (
+                                  <option key={writer.writerID} value={writer.writerID}>
+                                    {writer.writerEnglish}
+                                  </option>
+                                ))                                
                               ) : source === 'B' ? (                                 
-                                writers?.filter(e => e.writerID === 22).map(writer => (
+                                writers?.filter(e => SOURCE_WRITER_FILTER['B'].includes(e.writerID)).map(writer => (
+                                  <option key={writer.writerID} value={writer.writerID}>
+                                    {writer.writerEnglish}
+                                  </option>
+                                ))
+                              ) : source === 'A' ? (
+                                writers?.filter(e => !SOURCE_WRITER_FILTER['A'].includes(e.writerID)).map(writer => (
+                                  <option key={writer.writerID} value={writer.writerID}>
+                                    {writer.writerEnglish}
+                                  </option>
+                                ))                                
+                              ) : source === 'S' ? (                                 
+                                writers?.filter(e => SOURCE_WRITER_FILTER['S'].includes(e.writerID)).map(writer => (
+                                  <option key={writer.writerID} value={writer.writerID}>
+                                    {writer.writerEnglish}
+                                  </option>
+                                ))
+                              ) : source === 'N' ? (                                 
+                                writers?.filter(e => SOURCE_WRITER_FILTER['N'].includes(e.writerID)).map(writer => (
+                                  <option key={writer.writerID} value={writer.writerID}>
+                                    {writer.writerEnglish}
+                                  </option>
+                                ))
+                              ) : source === 'R' ? (                                 
+                                writers?.filter(e => SOURCE_WRITER_FILTER['R'].includes(e.writerID)).map(writer => (
                                   <option key={writer.writerID} value={writer.writerID}>
                                     {writer.writerEnglish}
                                   </option>
