@@ -75,10 +75,11 @@
     cursor: pointer;
     display: inline-block;
     margin: 0;
-    width: calc(50% - 0.5rem);
+    margin-right: 1rem;
+    width: calc(20% - 0.5rem);
 
-    &:nth-child(1) {
-      margin-right: 1rem;
+    &:last-child {
+      margin-right: 0;
     }
   }
 }
@@ -421,6 +422,13 @@
   max-height: 50px;
 }
 
+.top-bar-menu {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  width: calc(100% - 70px);
+}
+
 #responsive-menu {
   width: 100%;
 }
@@ -600,6 +608,6 @@
   }
 
   #search-options {
-    width: 444px;
+    width: 100%;
   }
 }
