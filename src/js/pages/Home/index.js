@@ -221,55 +221,15 @@ export default class Home extends React.PureComponent {
                           value={writer}
                           onChange={handleSearchWriterChange}>
                             {
-                              source === 'G' ? (
-                                writers?.filter(e => !SOURCE_WRITER_FILTER['G'].includes(e.writerID)).map(writer => (
+                              writers?.filter(e => 
+                                  source === 'G' || source === 'A' ? !SOURCE_WRITER_FILTER[source].includes(e.writerID)
+                                  : source !== 'all' ? SOURCE_WRITER_FILTER[source].includes(e.writerID)
+                                  : true
+                                ).map(writer => (
                                   <option key={writer.writerID} value={writer.writerID}>
                                     {writer.writerEnglish}
                                   </option>
                                 ))
-                              ) : source === 'D' ? (                                 
-                                writers?.filter(e => SOURCE_WRITER_FILTER['D'].includes(e.writerID)).map(writer => (
-                                  <option key={writer.writerID} value={writer.writerID}>
-                                    {writer.writerEnglish}
-                                  </option>
-                                ))                                
-                              ) : source === 'B' ? (                                 
-                                writers?.filter(e => SOURCE_WRITER_FILTER['B'].includes(e.writerID)).map(writer => (
-                                  <option key={writer.writerID} value={writer.writerID}>
-                                    {writer.writerEnglish}
-                                  </option>
-                                ))
-                              ) : source === 'A' ? (
-                                writers?.filter(e => !SOURCE_WRITER_FILTER['A'].includes(e.writerID)).map(writer => (
-                                  <option key={writer.writerID} value={writer.writerID}>
-                                    {writer.writerEnglish}
-                                  </option>
-                                ))                                
-                              ) : source === 'S' ? (                                 
-                                writers?.filter(e => SOURCE_WRITER_FILTER['S'].includes(e.writerID)).map(writer => (
-                                  <option key={writer.writerID} value={writer.writerID}>
-                                    {writer.writerEnglish}
-                                  </option>
-                                ))
-                              ) : source === 'N' ? (                                 
-                                writers?.filter(e => SOURCE_WRITER_FILTER['N'].includes(e.writerID)).map(writer => (
-                                  <option key={writer.writerID} value={writer.writerID}>
-                                    {writer.writerEnglish}
-                                  </option>
-                                ))
-                              ) : source === 'R' ? (                                 
-                                writers?.filter(e => SOURCE_WRITER_FILTER['R'].includes(e.writerID)).map(writer => (
-                                  <option key={writer.writerID} value={writer.writerID}>
-                                    {writer.writerEnglish}
-                                  </option>
-                                ))
-                              ) : (
-                                writers?.map(writer => (
-                                  <option key={writer.writerID} value={writer.writerID}>
-                                    {writer.writerEnglish}
-                                  </option>
-                                ))
-                              )
                             }
                         </select>
                       </div>
