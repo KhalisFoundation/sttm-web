@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import { showToast, copyToClipboard, shortenURL } from '../util';
 import { TEXTS } from '../constants';

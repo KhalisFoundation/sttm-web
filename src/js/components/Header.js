@@ -131,6 +131,7 @@ class Header extends React.PureComponent {
           >
             {({
               pattern,
+              disabled,
               title,
               className,
               inputType,
@@ -232,7 +233,7 @@ class Header extends React.PureComponent {
                                   )}
 
                                   <button
-                                    type="submit">
+                                    type="submit" disabled={disabled}>
                                     <SearchIcon />
                                   </button>
 

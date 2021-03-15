@@ -4,7 +4,7 @@ $rhythm: 8px;
   border: none;
   border-radius: 2px;
   box-shadow: 0 2px 2px 0 $sttm-transparent-black, 0 0 0 1px $sttm-transparent-light-black;
-  margin: $rhythm 0;
+  margin: $rhythm 0 25px;
 
   &:hover,
   &:focus,
@@ -107,7 +107,7 @@ $rhythm: 8px;
   color: white;
   display: flex;
   flex-direction: column;
-  height: 8em;
+  height: 7em;
   justify-content: space-between;
   padding: 1rem;
 
@@ -137,6 +137,10 @@ $rhythm: 8px;
   align-items: center;
   display: flex;
 
+  &Popup {
+    width: 405px;
+  }
+
   &Buttons {
     display: flex;
     flex-wrap: wrap;
@@ -159,6 +163,7 @@ $rhythm: 8px;
   &InfoIcon {
     background: $sttm-blue;
     border-radius: 50%;
+    cursor: help;
     flex-shrink: 0;
     height: 16px;
     margin-right: $rhythm;
@@ -179,6 +184,13 @@ $rhythm: 8px;
   &Title {
     font-size: 1.5rem;
     margin-right: $rhythm;
+  }
+
+  @media (max-width: 600px) {
+    &Title {
+      font-size: 1rem;
+      margin-right: $rhythm;
+    }
   }
 
   &Version {
@@ -213,6 +225,10 @@ $rhythm: 8px;
   justify-content: space-between;
 }
 
+@media (max-width: 600px) {
+  .sgCard { border-radius: 0; }
+}
+
 /* Screen larger than 600px? 2 column */
 @media (min-width: 600px) {
   .sgCards { grid-template-columns: repeat(2, 1fr); }
@@ -220,7 +236,7 @@ $rhythm: 8px;
 
 @media (min-width: 700px) {
   .sgCardEnglish {
-    margin-top: 2em;
+    margin-top: 1em;
   }
 }
 
