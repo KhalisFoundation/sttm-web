@@ -438,6 +438,11 @@
 }
 
 @media screen and (max-width: 55.99em) {
+  .top-bar-menu {
+    margin-left: 0;
+    width: 100%;
+  }
+
   .top-bar-title {
     float: none;
     margin: 5px 0 0;
@@ -463,9 +468,14 @@
   }
 
   #search-options {
+    display: flex;
     margin: 0;
     padding: 0.5rem 8px 0;
     width: 100%;
+
+    select {
+      width: 33.33%;
+    }
   }
 
   .top-bar-right ul.menu {
@@ -583,7 +593,6 @@
     display: flex;
     flex-grow: 1;
     justify-content: space-between;
-    margin-left: 8px;
     width: calc(100% - 70px);
 
     > .top-bar-right {
