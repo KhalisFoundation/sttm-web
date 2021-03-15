@@ -122,7 +122,7 @@ export default class Header extends React.PureComponent {
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
             defaultType={Number(defaultType)}
-            submitOnChangeOf={['type', 'source']}
+            submitOnChangeOf={['type', 'source', 'writer']}
             onSubmit={handleFormSubmit}
           >
             {({
@@ -167,6 +167,7 @@ export default class Header extends React.PureComponent {
                                 type,
                                 source,
                                 query,
+                                writer
                               })}
                               className="search-form"
                             >

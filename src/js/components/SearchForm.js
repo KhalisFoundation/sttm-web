@@ -52,7 +52,7 @@ export default class SearchForm extends React.PureComponent {
    * @property {string} defaultQuery to initialize with
    * @property {string} defaultType to initialize with
    * @property {string} defaultSource to initiaize with
-   * @property {Array<'type'|'source'|'query'>} submitOnChangeOf given fields
+   * @property {Array<'type'|'source'|'query'|'writer'>} submitOnChangeOf given fields
    * @property {function} onSubmit event handler
    *
    * @static
@@ -64,7 +64,7 @@ export default class SearchForm extends React.PureComponent {
     defaultType: PropTypes.oneOf(Object.keys(TYPES).map(type => parseInt(type))),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     submitOnChangeOf: PropTypes.arrayOf(
-      PropTypes.oneOf(['type', 'source', 'query'])
+      PropTypes.oneOf(['type', 'source', 'query', 'writer'])
     ),
     onSubmit: props => {
       if (
@@ -229,7 +229,7 @@ export default class SearchForm extends React.PureComponent {
   }
   componentDidUpdate() {
     const {
-      state: { shouldSubmit, source, type, query },
+      state: { shouldSubmit, source, type, query, writer },
       props: { onSubmit },
     } = this;
 
@@ -244,6 +244,7 @@ export default class SearchForm extends React.PureComponent {
             source,
             type,
             query,
+            writer
           });
         }
       );
@@ -395,9 +396,17 @@ export default class SearchForm extends React.PureComponent {
 
   handleSearchWriterChange = ({target}) => {
     const writer = target.value
-    this.setState(
-    {writer},
+    this.setState({
+      writer,
+      shouldSubmit:
+        this.props.submitOnChangeOf.includes('writer') &&
+        this.state.query !== ''
+    },
     () => {
+      clickEvent({
+        action: ACTIONS.SEARCH_WRITER,
+        label: this.state.writer,
+      });
       localStorage.setItem(
         LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
         writer

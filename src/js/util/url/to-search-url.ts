@@ -9,8 +9,8 @@ interface IToSearchURLArguments {
   query: string,
   type: number,
   source: string,
-  offset: string,
   writer: string,
+  offset: string,
 }
 
 export const toSearchURL = ({
