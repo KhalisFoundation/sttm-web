@@ -81,6 +81,11 @@
     &:last-child {
       margin-right: 0;
     }
+
+    &.selected {
+      background-color: lighten($sttm-orange, 30%);
+      color: $sttm-darkest-grey;
+    }
   }
 }
 
@@ -589,7 +594,7 @@
   }
 
   #responsive-menu {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
     flex-grow: 1;
     justify-content: space-between;

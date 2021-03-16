@@ -11,6 +11,7 @@ import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
+import Reset from './Icons/Reset';
 import Autocomplete from '@/components/Autocomplete';
 
 import {
@@ -143,12 +144,14 @@ export default class Header extends React.PureComponent {
               placeholder,
               setGurmukhiKeyboardVisibilityAs,
               setQueryAs,
+              isSourceWriterChanged,
               handleKeyDown,
               handleSearchChange,
               handleSearchSourceChange,
               handleSearchTypeChange,
               handleSearchWriterChange,
               handleSubmit,
+              handleReset
             }) => {
 
               return (
@@ -297,6 +300,7 @@ export default class Header extends React.PureComponent {
                             name="source"
                             value={source}
                             onChange={handleSearchSourceChange}
+                            className={[isSourceWriterChanged ? 'selected' : null]}>
                           >
                             {Object.entries(SOURCES).map(([value, children]) => (
                               <option key={value} value={value}>
@@ -307,7 +311,8 @@ export default class Header extends React.PureComponent {
                           <select
                             name="writer"
                             value={writer}
-                            onChange={handleSearchWriterChange}>
+                            onChange={handleSearchWriterChange}
+                            className={[isSourceWriterChanged ? 'selected' : null]}>
                               {
                                 writers?.filter(e => 
                                   source === 'G' || source === 'A' ? !SOURCE_WRITER_FILTER[source].includes(e.writerID)
@@ -320,6 +325,13 @@ export default class Header extends React.PureComponent {
                                 ))
                               }
                           </select>
+                          <button 
+                            className="reset"
+                            onClick={handleReset}
+                            title="Reset"
+                            aria-label="Reset">
+                            <Reset />
+                          </button>
                         </div>
                     )}
                   </div>
