@@ -147,7 +147,7 @@ export const QUICK_SETTINGS = ({
       checked: visraams,
       action: toggleVisraams,
     },
-    {
+    isShowSehajPaathMode ? {
       type: 'toggle-option',
       label: 'Reading [Akhand Paath]',
       checked: sehajPaathMode,
