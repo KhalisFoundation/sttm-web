@@ -434,6 +434,8 @@ export default class SearchForm extends React.PureComponent {
     this.setState({
       source: DEFAULT_SEARCH_SOURCE,
       writer: DEFAULT_SEARCH_WRITER,
+      isSourceChanged: false,
+      isWriterChanged: false,
       shouldSubmit:
         this.props.submitOnChangeOf.includes('source') &&
         this.props.submitOnChangeOf.includes('writer') &&
