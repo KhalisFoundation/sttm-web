@@ -144,7 +144,8 @@ export default class Header extends React.PureComponent {
               placeholder,
               setGurmukhiKeyboardVisibilityAs,
               setQueryAs,
-              isSourceWriterChanged,
+              isSourceChanged,
+              isWriterChanged,
               handleKeyDown,
               handleSearchChange,
               handleSearchSourceChange,
@@ -288,6 +289,7 @@ export default class Header extends React.PureComponent {
                           name="source"
                           value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
                           onChange={handleSearchSourceChange}
+                          className={[isSourceChanged ? 'selected' : null]}>
                         >
                           {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
                             <option key={value} value={value}>
@@ -300,7 +302,7 @@ export default class Header extends React.PureComponent {
                             name="source"
                             value={source}
                             onChange={handleSearchSourceChange}
-                            className={[isSourceWriterChanged ? 'selected' : null]}>
+                            className={[isSourceChanged ? 'selected' : null]}>
                           >
                             {Object.entries(SOURCES).map(([value, children]) => (
                               <option key={value} value={value}>
@@ -312,7 +314,7 @@ export default class Header extends React.PureComponent {
                             name="writer"
                             value={writer}
                             onChange={handleSearchWriterChange}
-                            className={[isSourceWriterChanged ? 'selected' : null]}>
+                            className={[isWriterChanged ? 'selected' : null]}>
                               {
                                 writers?.filter(e => 
                                   source === 'G' || source === 'A' ? !SOURCE_WRITER_FILTER[source].includes(e.writerID)

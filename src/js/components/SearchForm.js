@@ -98,7 +98,8 @@ export default class SearchForm extends React.PureComponent {
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
       DEFAULT_SEARCH_WRITER,
     writers: DEFAULT_SEARCH_WRITERS,
-    isSourceWriterChanged: false,
+    isSourceChanged: false,
+    isWriterChanged: false,
     placeholder: '',
     isAnimatingPlaceholder: false,
   };
@@ -156,7 +157,8 @@ export default class SearchForm extends React.PureComponent {
 
   selectHighlight = () => {
     this._setState({
-      isSourceWriterChanged: this.state.source !== DEFAULT_SEARCH_SOURCE || this.state.writer !== DEFAULT_SEARCH_WRITER
+      isSourceChanged: this.state.source !== DEFAULT_SEARCH_SOURCE,
+      isWriterChanged: this.state.writer !== DEFAULT_SEARCH_WRITER
     })
   }
 
@@ -348,7 +350,7 @@ export default class SearchForm extends React.PureComponent {
         shouldSubmit:
           this.props.submitOnChangeOf.includes('source') &&
           this.state.query !== '',
-        isSourceWriterChanged: source !== DEFAULT_SEARCH_SOURCE || this.state.writer !== DEFAULT_SEARCH_WRITER
+        isSourceChanged: source !== DEFAULT_SEARCH_SOURCE
       },
       () => {
         clickEvent({
@@ -414,7 +416,7 @@ export default class SearchForm extends React.PureComponent {
       shouldSubmit:
         this.props.submitOnChangeOf.includes('writer') &&
         this.state.query !== '',
-      isSourceWriterChanged: writer !== DEFAULT_SEARCH_WRITER || this.state.source !== DEFAULT_SEARCH_SOURCE
+      isWriterChanged: writer !== DEFAULT_SEARCH_WRITER
     },
     () => {
       clickEvent({
