@@ -430,7 +430,8 @@ export default class SearchForm extends React.PureComponent {
     })
   }
 
-  handleReset = () => {
+  handleReset = (e) => {
+    e.preventDefault();
     this.setState({
       source: DEFAULT_SEARCH_SOURCE,
       writer: DEFAULT_SEARCH_WRITER,

@@ -16,6 +16,7 @@ import CrossIcon from '@/components/Icons/Times';
 import KeyboardIcon from '@/components/Icons/Keyboard';
 import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+import Reset from '@/components/Icons/Reset';
 /**
  *
  *
@@ -87,6 +88,7 @@ export default class Home extends React.PureComponent {
           handleSubmit,
           handleSearchTypeChange,
           handleSearchWriterChange,
+          handleReset,
         }) => (
             <React.Fragment>
               <div className="row" id="content-root">
@@ -238,6 +240,13 @@ export default class Home extends React.PureComponent {
                             }
                         </select>
                       </div>
+                      <button 
+                            className="reset"
+                            onClick={handleReset}
+                            title="Reset"
+                            aria-label="Reset">
+                            <Reset />
+                          </button>
                     </div>
                     <SehajPaathLink />
                     <BaaniLinks />
