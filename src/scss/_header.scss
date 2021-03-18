@@ -40,6 +40,11 @@
   .dark-mode & {
     border-color: $sttm-dark-grey;
   }
+
+  &-hamburger {
+    fill: $sttm-grey;
+    font-size: 38px;
+  }
 }
 
 .top-bar-title a {
