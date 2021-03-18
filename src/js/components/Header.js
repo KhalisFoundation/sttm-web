@@ -289,7 +289,7 @@ export default class Header extends React.PureComponent {
                           name="source"
                           value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
                           onChange={handleSearchSourceChange}
-                          className={[isSourceChanged ? 'selected' : null]}>
+                          className={[isSourceChanged ? 'selected' : null]}
                         >
                           {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
                             <option key={value} value={value}>
@@ -302,7 +302,7 @@ export default class Header extends React.PureComponent {
                             name="source"
                             value={source}
                             onChange={handleSearchSourceChange}
-                            className={[isSourceChanged ? 'selected' : null]}>
+                            className={[isSourceChanged ? 'selected' : null]}
                           >
                             {Object.entries(SOURCES).map(([value, children]) => (
                               <option key={value} value={value}>

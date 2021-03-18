@@ -58,7 +58,7 @@ export default class Home extends React.PureComponent {
    */
   render() {
     const { showDoodle, doodleData } = this.state;
-
+        
     return (
       <SearchForm>
         {({
@@ -79,6 +79,8 @@ export default class Home extends React.PureComponent {
           isShowKeyboard,
           setGurmukhiKeyboardVisibilityAs,
           setQueryAs,
+          isSourceChanged,
+          isWriterChanged,
           handleKeyDown,
           handleSearchChange,
           handleSearchSourceChange,
@@ -192,6 +194,7 @@ export default class Home extends React.PureComponent {
                           <select
                             name="source"
                             value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
+                            className={[isSourceChanged ? 'selected' : null]}
                             onChange={handleSearchSourceChange}
                           >
                             {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
@@ -204,6 +207,7 @@ export default class Home extends React.PureComponent {
                             <select
                               name="source"
                               value={source}
+                              className={[isSourceChanged ? 'selected' : null]}
                               onChange={handleSearchSourceChange}
                             >
                               {Object.entries(SOURCES).map(([value, children]) => (
@@ -219,6 +223,7 @@ export default class Home extends React.PureComponent {
                         <select
                           name="writer"
                           value={writer}
+                          className={[isWriterChanged ? 'selected' : null]}
                           onChange={handleSearchWriterChange}>
                             {
                               writers?.filter(e => 
@@ -251,7 +256,7 @@ export default class Home extends React.PureComponent {
   }
 
   componentDidMount() {
-    pageView('/');
+    pageView('/');    
     this.fetchDoodle();
   }
 }

@@ -1,3 +1,4 @@
+/* stylelint-disable at-rule-no-unknown */
 /* ***** Sharing Buttons *****
   https://simplesharingbuttons.com/#code
 */
@@ -112,6 +113,11 @@
   @media screen and (max-width: 45.999999em) {
     font-size: 2em !important;
   }
+}
+
+#search-options,
+.search-options {
+  @include select_highlight();
 }
 
 @media screen and (max-width: 45.999999em) {

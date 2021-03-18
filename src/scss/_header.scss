@@ -81,11 +81,6 @@
     &:last-child {
       margin-right: 0;
     }
-
-    &.selected {
-      background-color: lighten($sttm-orange, 30%);
-      color: $sttm-darkest-grey;
-    }
   }
 }
 
