@@ -17,7 +17,8 @@ export interface ILarivaarProps {
   unicode: boolean;
   children: string;
   query: string;
-  visraam: boolean;
+  visraam: object;
+  visraams: boolean;
   isShowMahankoshTooltip?: boolean;
 }
 
@@ -29,6 +30,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   unicode,
   query,
   visraam,
+  visraams,
   isShowMahankoshTooltip = false
 }) => {
   const dispatch = useDispatch();
@@ -78,16 +80,16 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
 
   if (!enable) {
     return (
-        <HighlightedSearchResult
-          isShowMahankoshTooltip={isShowMahankoshTooltip}
-          mahankoshIndex={mahankoshIndex}
-          highlightIndex={highlightIndex}
-          query={query}
-          visraams={visraam}
-          onMouseOver={handleMouseOver}
-        >
-          {children}
-        </HighlightedSearchResult>
+      <HighlightedSearchResult
+        isShowMahankoshTooltip={isShowMahankoshTooltip}
+        mahankoshIndex={mahankoshIndex}
+        highlightIndex={highlightIndex}
+        query={query}
+        visraams={visraam}
+        onMouseOver={handleMouseOver}
+      >
+        {children}
+      </HighlightedSearchResult>
     );
   }
 
@@ -123,6 +125,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
               index={index}
               visraamClass={visraamClass}
               visraam={visraam}
+              visraams={visraams}
             />
           </span>
         );
