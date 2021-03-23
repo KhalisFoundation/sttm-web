@@ -6,6 +6,7 @@ export const ACTIONS = {
   COPY_SHORT_URL: 'copy-short-url',
   SEARCH_QUERY: 'search-query',
   SEARCH_SOURCE: 'search-source',
+  SEARCH_WRITER: 'search-writer',
   SEARCH_TYPE: 'search-type',
   NO_RESULTS_FOUND: 'no-results-found',
   ANG_NOT_FOUND: 'ang-not-found',
