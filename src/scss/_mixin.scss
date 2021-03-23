@@ -17,3 +17,12 @@
   display: flex;
   justify-content: center;
 }
+
+@mixin select_highlight() {
+  select {
+    &.selected {
+      background-color: lighten($sttm-orange, 30%);
+      color: $sttm-darkest-grey;
+    }
+  }
+}

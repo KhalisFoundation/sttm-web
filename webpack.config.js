@@ -27,6 +27,7 @@ const plugins = PRODUCTION
       BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
       CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
       DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
+      WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
     }),
   ])
   : commonPlugins.concat([
@@ -43,6 +44,7 @@ const plugins = PRODUCTION
       BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
       CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
       DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
+      WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
     }),
     new CleanWebpackPlugin(),
   ]);

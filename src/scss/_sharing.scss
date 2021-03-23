@@ -1,6 +1,7 @@
 /* ***** Sharing Buttons *****
   https://simplesharingbuttons.com/#code
 */
+/* stylelint-disable at-rule-no-unknown */
 #share-menu {
   border-radius: 2px;
   margin: -27px 2rem 0 auto;
@@ -91,7 +92,8 @@
 }
 
 .chevron,
-.Hour24 {
+.Hour24,
+.reset {
   fill: $sttm-orange;
 }
 
@@ -111,6 +113,11 @@
   @media screen and (max-width: 45.999999em) {
     font-size: 2em !important;
   }
+}
+
+#search-options,
+.search-options {
+  @include select_highlight();
 }
 
 @media screen and (max-width: 45.999999em) {
