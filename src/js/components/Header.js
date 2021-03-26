@@ -222,11 +222,8 @@ class Header extends React.PureComponent {
 
                                     <button
                                       type="button"
-                                      className={`gurmukhi-keyboard-toggle ${displayGurmukhiKeyboard ? 'active' : ''
-                                        }`}
-                                      onClick={setGurmukhiKeyboardVisibilityAs(
-                                        !displayGurmukhiKeyboard
-                                      )}
+                                      className="clear-search-toggle"
+                                      onClick={setQueryAs('')}
                                     >
                                       <CrossIcon />
                                     </button>
