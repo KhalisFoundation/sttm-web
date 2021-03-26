@@ -1,4 +1,4 @@
-import React, {  memo } from 'react';
+import React, { memo } from 'react';
 import { Pause } from '../Icons/controls/';
 
 import { STTM_ORANGE } from '@/constants';
@@ -14,7 +14,8 @@ export interface ILarivaarWordProps {
   larivaarAssistColor: string;
   index: number;
   highlightIndex?: Array<number>;
-  visraam: boolean;
+  visraam: object;
+  visraams: boolean;
   visraamClass: string;
   highlight?: boolean;
 }
@@ -28,9 +29,10 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
   index,
   highlight,
   visraam,
+  visraams,
   visraamClass,
 }) => {
-  const isBothLarivaarAndVisraam = visraam && larivaarAssist
+  const isBothLarivaarAndVisraam = visraams && larivaarAssist
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
   const segments = unicode
@@ -49,7 +51,7 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
 
   return (
     <span
-      className={visraamClass + '' + 'gurbani-word'}
+      className={visraams ? visraamClass : '' + ' gurbani-word'}
     >
       {/* {isBothLarivaarAndVisraam && isOddIdx &&
         <span style={{backgroundColor: STTM_ORANGE}} className="vishraam-icon-wrapper">

@@ -40,6 +40,11 @@
   .dark-mode & {
     border-color: $sttm-dark-grey;
   }
+
+  &-hamburger {
+    fill: $sttm-grey;
+    font-size: 38px;
+  }
 }
 
 .top-bar-title a {
@@ -151,6 +156,7 @@
   display: flex;
   flex-wrap: wrap;
   height: 44px;
+  justify-content: flex-end;
   margin: 0;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -265,14 +271,13 @@
   background: transparent;
   border: none;
   box-shadow: none;
-  display: inline-block;
   flex-grow: 1;
   font-size: 1.2em;
   font-weight: 300;
   height: 44px;
   margin: 0;
   position: relative;
-  width: calc(100% - 110px);
+  width: auto;
 
   &[value=''] + .clear-search-toggle {
     pointer-events: none;
@@ -609,11 +614,11 @@
 
 @media screen and (min-width: 56em) {
   .top-bar #search-container {
-    min-width: 444px;
+    min-width: 532px;
   }
 
   .top-bar #search {
-    max-width: 400px;
+    max-width: 100%;
   }
 
   #search-options {
