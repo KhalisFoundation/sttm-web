@@ -73,10 +73,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   }, [isShowMahankoshTooltip])
 
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
-  let handleMouseOver = undefined;
-  if (isShowMahankoshTooltip) {
-    handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
-  }
+  const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
 
   if (!enable) {
     return (

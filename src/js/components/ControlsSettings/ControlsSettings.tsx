@@ -8,7 +8,9 @@ import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarI
 import {
   TEXTS,
   FONT_OPTIONS,
+  VISRAAM,
 } from '../../constants';
+import { clearVisraamClass } from '@/util';
 
 const ControlsSettings = (props: any) => {
 
@@ -23,7 +25,19 @@ const ControlsSettings = (props: any) => {
     fontFamily,
     resetDisplayOptions,
     changeFont,
+    visraams,
+    visraamSource,
+    visraamStyle
   } = props;
+
+  React.useEffect(() => {
+    clearVisraamClass();
+    document.body.classList[visraams ? 'add' : 'remove'](
+      VISRAAM.CLASS_NAME,
+      VISRAAM.SOURCE_CLASS(visraamSource),
+      VISRAAM.TYPE_CLASS(visraamStyle)
+    );
+  }, [visraams, visraamSource, visraamStyle])
 
   const renderIcon = (itemName: any) => {
     switch (itemName) {

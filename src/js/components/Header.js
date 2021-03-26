@@ -32,7 +32,7 @@ class Header extends React.PureComponent {
       search: PropTypes.string,
     }),
     history: PropTypes.shape({ push: PropTypes.func }),
-    toggleSettingsPanel: PropTypes.function,
+    toggleSettingsPanel: PropTypes.func,
   };
 
   state = {

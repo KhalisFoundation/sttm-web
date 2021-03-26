@@ -42,7 +42,6 @@ export const supportedMedia = _s;
 class Controls extends React.Component {
   state = {
     showBorder: false,
-    lastScrollPos: 0,
     showControls: true
   };
 
@@ -51,27 +50,16 @@ class Controls extends React.Component {
   };
 
   componentDidMount() {
-    this.lastScroll = 0;
     this.isChangeInControls = false;
-
-    window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
       this.isChangeInControls = true;
-      this.lastScroll = this.$wrapper.offsetTop;
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.scrollListener, {
-      passive: true,
-    });
-  }
-
   resetControlStyles = () => {
-    this.lastScroll = 0;
     this.$wrapper.style.transform = '';
     this.$wrapper.style.position = '';
     this.$wrapper.style.opacity = '';
@@ -85,61 +73,8 @@ class Controls extends React.Component {
       this.$wrapper.style.opacity = 0;
     }
 
-    const oldOffsetTop = this.$wrapper.offsetTop;
     this.$wrapper.style.position = 'sticky';
-
-    // since we are doing position sticky so top offset gonna change.
-    this.lastScroll = oldOffsetTop;
   }
-
-  scrollListener = throttle(() => {
-    const { fullScreenMode } = this.props;
-    if (!fullScreenMode) {
-      const controlsOffsetTop = this.$wrapper.offsetTop;
-      const controlsHeight = this.$wrapper.offsetHeight;
-      const controlsBottom = controlsOffsetTop + controlsHeight;
-      const controlsOffset = this.$wrapper.style.position === 'sticky' ? controlsOffsetTop : controlsBottom;
-
-      if (window.scrollY >= controlsOffset) {
-        this.$wrapper.style.opacity = 0;
-
-        if (this.isChangeInControls) {
-          this.isChangeInControls = false;
-          this.$wrapper.style.opacity = 1;
-          return;
-        }
-
-        return this.setState(prevState => {
-          // We are moving in up direction
-          if (this.lastScroll >= controlsOffsetTop) {
-            this.applyControlStyles(true);
-
-            return {
-              ...prevState,
-              showBorder: true,
-              showControls: true
-            };
-          }
-
-          // We are moving in downward direction
-          this.applyControlStyles(false);
-          return {
-            ...prevState,
-            showBorder: false,
-            showControls: false
-          };
-        });
-      }
-    }
-    // Reset state.
-    this.resetControlStyles();
-    return this.setState(prevState => ({
-      ...prevState,
-      showBorder: false,
-      showControls: true
-    }))
-
-  }, 100);
 
   setRef = node => (this.$wrapper = node);
 
