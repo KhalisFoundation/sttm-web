@@ -271,13 +271,12 @@
   background: transparent;
   border: none;
   box-shadow: none;
-  flex-grow: 1;
+  flex: 1 1 100px;
   font-size: 1.2em;
   font-weight: 300;
   height: 44px;
   margin: 0;
   position: relative;
-  width: auto;
 
   &[value=''] + .clear-search-toggle {
     pointer-events: none;
