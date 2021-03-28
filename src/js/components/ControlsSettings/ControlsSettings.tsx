@@ -4,13 +4,14 @@ import Checkboxes from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
-import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, } from "../Icons/CustomIcons";
 import {
   TEXTS,
   FONT_OPTIONS,
   VISRAAM,
 } from '../../constants';
 import { clearVisraamClass } from '@/util';
+import Steek from '../Baani/Steek';
 
 const ControlsSettings = (props: any) => {
 
@@ -43,7 +44,15 @@ const ControlsSettings = (props: any) => {
     switch (itemName) {
       case 'Steek':
         return (
-          <GlobeIcon />
+          <SteekIcon />
+        )
+      case 'Reading [Akhand Paath]':
+        return (
+          <AkhandPaathIcon />
+        )
+      case 'Auto Scroll':
+        return (
+          <AutoPlayIcon />
         )
       case 'Transliteration':
         return (
@@ -55,11 +64,11 @@ const ControlsSettings = (props: any) => {
         )
       case 'Dark Mode':
         return (
-          <Times />
+          <DarkModeIcon />
         )
       case 'Vishraams':
         return (
-          <Times />
+          <VishraamIcon />
         )
       case 'Split':
         return (

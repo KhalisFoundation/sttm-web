@@ -69,7 +69,7 @@ export const TEXTS = {
     'Please enter your query in the search bar above to give us a chance to serve you.',
   REDIRECTING: 'Redirecting you to',
   REDIRECTING_DESCRIPTION: 'If your browser does not redirect, you may visit',
-  RESET: 'Reset',
+  RESET: 'Reset to Default',
   SPLIT_VIEW: 'Split View',
   UNICODE: 'Unicode',
   ASSIST: 'Assist',

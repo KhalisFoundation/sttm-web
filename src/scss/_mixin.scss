@@ -21,8 +21,13 @@
 @mixin select_highlight() {
   select {
     &.selected {
-      background-color: lighten($sttm-orange, 30%);
+      background-color: lighten($sttm-light-blue, 25%);
       color: $sttm-darkest-grey;
+
+      .dark-mode & {
+        background-color: lighten($sttm-darkest-grey, 20%);
+        color: $sttm-white;
+      }
     }
   }
 }
