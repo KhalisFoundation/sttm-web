@@ -94,7 +94,11 @@
 .chevron,
 .Hour24,
 .reset {
-  fill: $sttm-orange;
+  fill: $sttm-blue;
+
+  &:hover {
+    fill: $sttm-orange;
+  }
 }
 
 .hukamnama-nav-icon {
@@ -112,6 +116,10 @@
 
   @media screen and (max-width: 45.999999em) {
     font-size: 2em !important;
+  }
+
+  &:hover {
+    fill: $sttm-orange;
   }
 }
 

@@ -26,6 +26,11 @@ import {
   SplitViewIcon,
   ParagraphIcon,
   GearsIcon,
+  DarkModeIcon,
+  VishraamIcon,
+  SteekIcon,
+  AkhandPaathIcon,
+  AutoPlayIcon,
 } from '@/components/Icons/CustomIcons';
 
 export interface SETTING_ACTIONS {
@@ -237,12 +242,14 @@ export const QUICK_SETTINGS = ({
     { type: 'separator' },
     {
       type: 'toggle-option',
+      icon: DarkModeIcon,
       label: 'Dark Mode',
       checked: darkMode,
       action: toggleDarkMode,
     },
     {
       type: 'toggle-option',
+      icon: VishraamIcon,
       label: 'Vishraams',
       checked: visraams,
       action: toggleVisraams,
@@ -305,7 +312,8 @@ export const ADVANCED_SETTINGS = ({
       action: toggleAutoScrollMode,
     } : {},
     isShowSehajPaathMode ? {
-      type: 'toggle-option',
+      type: 'icon-toggle',
+      icon: AkhandPaathIcon,
       label: 'Sehaj Paath Mode',
       checked: sehajPaathMode,
       stage: 'beta',

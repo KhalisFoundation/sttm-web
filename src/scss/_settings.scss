@@ -38,18 +38,20 @@
   }
 
   &-header {
+    background-color: $sttm-blue;
     border-bottom: 1px solid $sttm-lighter-grey;
     display: flex;
-    height: 25px;
+    height: auto;
     justify-content: space-between;
-    padding: 0 12px;
+    padding: 10px 12px;
     width: inherit;
   }
 
   &-heading {
-    color: $sttm-darker-grey;
+    color: white;
     font-size: 16px;
     font-weight: bold;
+    margin: 0;
 
     .dark-mode & {
       color: $sttm-white;
@@ -59,11 +61,15 @@
   &-times {
     align-items: center;
     display: flex;
-    fill: $sttm-grey;
+    fill: $sttm-white;
     font-size: 16px;
 
     .dark-mode & {
       fill: $sttm-white;
+    }
+
+    &:hover {
+      fill: $sttm-orange;
     }
   }
 
@@ -94,6 +100,11 @@
     display: flex;
     margin: 8px auto;
     width: 100%;
+
+    &:hover {
+      color: $sttm-orange;
+      fill: $sttm-orange;
+    }
   }
 
   &-active-item {
@@ -117,12 +128,24 @@
   }
 
   &-text {
+    cursor: pointer;
     margin-left: 6px;
+
+    &:hover {
+      color: $sttm-orange;
+    }
+
+    .dark-mode & {
+      &:hover {
+        color: $sttm-orange;
+      }
+    }
   }
 
   &-text-desktop {
     bottom: 11px;
     color: $sttm-grey;
+    font-weight: bold;
     position: relative;
   }
 }
@@ -135,10 +158,15 @@
   }
 
   &-family-dropdown {
+    background-color: $sttm-lighter-grey;
     border: none;
     color: $sttm-grey;
     margin: 0;
     width: 60%;
+
+    .dark-mode & {
+      background-color: $sttm-dark-grey;
+    }
   }
 }
 
@@ -167,11 +195,17 @@
 
 .active-setting {
   color: $sttm-black;
+  cursor: pointer;
   fill: $sttm-black;
 
   .dark-mode & {
     color: $sttm-white;
     fill: $sttm-white;
+
+    &:hover {
+      color: $sttm-orange;
+      fill: $sttm-orange;
+    }
   }
 }
 
@@ -199,8 +233,16 @@
       margin-left: 10px;
       text-transform: capitalize;
 
+      &:hover {
+        color: $sttm-orange;
+      }
+
       .dark-mode & {
         color: $sttm-white;
+
+        &:hover {
+          color: $sttm-orange;
+        }
       }
     }
   }
@@ -215,9 +257,15 @@
 .clickable-li {
   &-container {
     align-items: center;
+    cursor: pointer;
     display: flex;
     margin: 8px auto;
     width: 80%;
+
+    &:hover {
+      color: $sttm-orange;
+      fill: $sttm-orange;
+    }
   }
 
   &-label {

@@ -27,6 +27,8 @@ import {
   // SplitViewIcon,
   // ParagraphIcon,
   // GearsIcon,
+  // DarkModeIcon,
+  // VishraamIcon,
 } from '@/components/Icons/CustomIcons';
 
 export interface SETTING_ACTIONS {
