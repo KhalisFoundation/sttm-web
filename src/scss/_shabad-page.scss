@@ -216,6 +216,10 @@ blockquote {
   background-position: top;
   background-repeat: no-repeat;
 
+  .dark-mode & {
+    background-image: none;
+  }
+
   .shabad-nav {
     .fullscreen-view & {
       display: none;
