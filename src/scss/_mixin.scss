@@ -26,3 +26,13 @@
     }
   }
 }
+
+@mixin share_buttons_svg() {
+  fill: $sttm-darker-grey;
+  font-size: 2em;
+  padding: 5px;
+
+  @media screen and (max-width: 45.999999em) {
+    font-size: 2em !important;
+  }
+}

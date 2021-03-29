@@ -28,6 +28,24 @@
   }
 }
 
+.share-buttons svg,
+.share svg {
+  fill: $sttm-darker-grey;
+  font-size: 2em;
+  padding: 5px;
+
+  @media screen and (max-width: 45.999999em) {
+    font-size: 2em !important;
+  }
+}
+
+.hukamnama-nav-icon {
+  > span {
+    display: block;
+    font-size: 0.35em;
+  }
+}
+
 .share-buttons {
   list-style: none;
   margin: 0;
@@ -39,6 +57,16 @@
 
     &:first-of-type {
       margin-left: 0;
+    }
+
+    &:hover {
+      a span {
+        color: $sttm-orange;
+      }
+
+      svg {
+        fill: $sttm-orange;
+      }
     }
   }
 
@@ -95,24 +123,6 @@
 .Hour24,
 .reset {
   fill: $sttm-orange;
-}
-
-.hukamnama-nav-icon {
-  > span {
-    display: block;
-    font-size: 0.35em;
-  }
-}
-
-.share-buttons svg,
-.share svg {
-  fill: $sttm-darker-grey;
-  font-size: 2em;
-  padding: 5px;
-
-  @media screen and (max-width: 45.999999em) {
-    font-size: 2em !important;
-  }
 }
 
 #search-options,

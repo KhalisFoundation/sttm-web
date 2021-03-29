@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cx from 'classnames';
-import throttle from 'lodash.throttle';
 import ControlsSettings from "../components/ControlsSettings/ControlsSettings";
 
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
@@ -34,6 +33,7 @@ import {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
+  setSettingsPanel,
 } from '@/features/actions';
 
 
@@ -56,27 +56,8 @@ class Controls extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
       this.isChangeInControls = true;
-    }
+    }    
   }
-
-  resetControlStyles = () => {
-    this.$wrapper.style.transform = '';
-    this.$wrapper.style.position = '';
-    this.$wrapper.style.opacity = '';
-  }
-
-  applyControlStyles = (isShowWrapper) => {
-
-    if (isShowWrapper) {
-      this.$wrapper.style.opacity = 1;
-    } else {
-      this.$wrapper.style.opacity = 0;
-    }
-
-    this.$wrapper.style.position = 'sticky';
-  }
-
-  setRef = node => (this.$wrapper = node);
 
   render() {
     const { showBorder, showControls } = this.state;
@@ -85,13 +66,7 @@ class Controls extends React.Component {
       'with-border': showBorder,
     });
 
-    const controlStyles = showControls ?
-      {
-        transform: '',
-      } :
-      {
-        transform: 'rotateX(90deg) perspective(500px)'
-      }
+    const controlStyles = showControls ? { transform: '' } : { transform: 'rotateX(90deg) perspective(500px)' }
 
     return (
       <>
@@ -100,7 +75,6 @@ class Controls extends React.Component {
           style={controlStyles}
           id="controls-wrapper"
           className={classNames}
-          ref={this.setRef}
         >
           <div className={`settings-panel ${this.props.showSettingsPanel ? 'settings-show' : 'settings-hide'}`}>
             <ControlsSettings {...this.props} />
@@ -142,6 +116,7 @@ const mapDispatchToProps = {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
+  setSettingsPanel
 };
 
 // TODO: Connect individual components instead of all controls.

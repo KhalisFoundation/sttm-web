@@ -4,7 +4,7 @@ import Checkboxes from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
-import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, LarivaarAssistIcon, MicrophoneIcon, SolidArrowRight, AlignCenterIcon } from "../Icons/CustomIcons";
 import {
   TEXTS,
   FONT_OPTIONS,
@@ -13,11 +13,7 @@ import {
 import { clearVisraamClass } from '@/util';
 
 const ControlsSettings = (props: any) => {
-
-  const handleListItemClick = () => {
-    console.log('list item clicked', props);
-  }
-
+  const wrapperRef = React.useRef(null);
   const headerSettings = HEADER_SETTINGS(props);
   const quickSettings = QUICK_SETTINGS(props);
   const advancedSettings = ADVANCED_SETTINGS(props);
@@ -29,6 +25,7 @@ const ControlsSettings = (props: any) => {
     visraamSource,
     visraamStyle
   } = props;
+
 
   React.useEffect(() => {
     clearVisraamClass();
@@ -69,9 +66,17 @@ const ControlsSettings = (props: any) => {
         return (
           <LarivaarIcon className="tiny-font" />
         )
-      case 'Text Align':
+      case 'Larivaar Assist':
+        return (
+          <LarivaarAssistIcon className="tiny-font" />
+        )
+      case 'Text Align Left':
         return (
           <AlignLeftIcon className="settings-action-icon" />
+        )
+      case 'Text Align Center':
+        return (
+          <AlignCenterIcon className="settings-action-icon" />
         )
       default:
         return (
@@ -91,7 +96,7 @@ const ControlsSettings = (props: any) => {
       case 'collapsible_item':
         return (
           <Collapsible trigger={(
-            <div className="settings-item active-setting" onClick={handleListItemClick}>
+            <div className="settings-item active-setting">
               <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
               <span className="settings-text">{settingsObj.label}</span>
               <div className="flex-spacer" />
@@ -122,7 +127,9 @@ const ControlsSettings = (props: any) => {
             >
               {Object.keys(FONT_OPTIONS).map(key => (
                 <option key={key} value={key}>
-                  {FONT_OPTIONS[key]}
+                  {
+                    FONT_OPTIONS[key]
+                  }
                 </option>
               ))}
             </select>
@@ -139,7 +146,7 @@ const ControlsSettings = (props: any) => {
       case 'collapsible_formatting_item':
         return (
           <Collapsible trigger={(
-            <div className="settings-item active-setting" onClick={handleListItemClick}>
+            <div className="settings-item active-setting">
               <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
               <span className="settings-text">{settingsObj.label}</span>
               <div className="flex-spacer" />
@@ -155,7 +162,7 @@ const ControlsSettings = (props: any) => {
   }
 
   return (
-    <div>
+    <div ref={wrapperRef}>
       {headerSettings.map((element: any, i: any) => {
         if (element.type) {
           return (
@@ -185,7 +192,7 @@ const ControlsSettings = (props: any) => {
         })}
       </div>
       <div className="settings-advance">
-        <div className="settings-item" onClick={handleListItemClick}>
+        <div className="settings-item">
           <span className="settings-heading">Fonts & Sizes</span>
         </div>
         <div className="settings-items pt-0">

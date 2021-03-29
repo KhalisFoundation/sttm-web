@@ -165,46 +165,30 @@ export const QUICK_SETTINGS = ({
       label: 'Split',
       checked: splitView,
       action: toggleSplitViewOption,
-    },
+    },    
     {
-      type: 'collapsible_formatting_item',
+      type: 'toggle-option',
       label: 'Larivaar',
-      controlsList: [
-        {
-          label: 'larivaar',
-          action: () => {
-            toggleLarivaarOption();
-          },
-          value: larivaar,
-        },
-        {
-          label: 'larivaar Assist',
-          action: () => {
-            toggleLarivaarAssistOption();
-          },
-          value: larivaarAssist
-        }
-      ],
+      checked: larivaar,
+      action: toggleLarivaarOption
+    },    
+    {
+      type: 'toggle-option',
+      label: 'Larivaar Assist',
+      checked: larivaarAssist,
+      action: toggleLarivaarAssistOption
     },
     {
-      type: 'collapsible_formatting_item',
-      label: 'Text Align',
-      controlsList: [
-        {
-          label: 'align left',
-          action: () => {
-            centerAlignGurbani && toggleCenterAlignOption();
-          },
-          value: !centerAlignGurbani,
-        },
-        {
-          label: 'align center',
-          action: () => {
-            !centerAlignGurbani && toggleCenterAlignOption();
-          },
-          value: centerAlignGurbani,
-        },
-      ],
+      type: 'toggle-option',
+      label: 'Text Align Left',
+      checked: !centerAlignGurbani,
+      action: toggleCenterAlignOption
+    },
+    {
+      type: 'toggle-option',
+      label: 'Text Align Center',
+      checked: centerAlignGurbani,
+      action: toggleCenterAlignOption
     },
     {
       type: 'collapsible_item',
