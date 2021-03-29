@@ -23,12 +23,15 @@
     display: none;
     outline: 0;
   }
+
   &__wrapper {
     border-width: 0 !important;
+
     &:focus {
       outline: 0 !important;
     }
   }
+
   &--enabled {
     border-width: 0 !important;
   }
