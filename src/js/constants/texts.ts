@@ -45,7 +45,8 @@ export const TEXTS = {
   TIMEOUT_ERROR: `ਵਾਹਿਗੁਰੂ! Network connection timed out`,
   TIMEOUT_ERROR_DESCRIPTION: `This usually happens when your internet connection is either down or very slow. Try connecting sometime later?`,
   GO_TO_SHABAD: 'Go to Shabad',
-  HUKAMNAMA: 'Daily Hukamnama Sri Harmandir Sahib, Amritsar',
+  HUKAMNAMA: 'Daily Hukamnama',
+  HUKAMNAMA_HEADING: 'Daily Hukamnama Sri Harmandir Sahib, Amritsar',
   ANG_NOT_FOUND: `Sorry, we couldn't find the requested ang (page).`,
   ANG_NOT_FOUND_DESCRIPTION: (ang: string, source: string) =>
     `Ang (page) "${ang}" was not found in "${source}". Make sure ang (page) ${ang} is actually present in the selected source. If you still cannot find your shabad, head over to `,

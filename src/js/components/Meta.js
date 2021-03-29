@@ -229,7 +229,7 @@ class Meta extends React.PureComponent {
             <>
               <div className="meta-hukamnama">
                 <div className="meta-hukamnama-left">
-                  <div>
+                  <div className="meta-hukamnama-left-row">
                     <DatePicker
                       isOpen={this.state.isCalendarOpen}
                       clearIcon={null}
@@ -249,18 +249,18 @@ class Meta extends React.PureComponent {
                       e.preventDefault();
                       return this.setState(() => ({ isCalendarOpen: true }))
                     }}>
-                      Past Hukamnamas
+                      <span title="Past Hukamnamas">Archive</span>
                     </a>
                   </div>
                   <div className="meta-hukamnama-left-gotoshabad">
-                    <ForwardIcon />
+
                     <Link className="hukamnama-right-link" to={`/shabad?id=${info.shabadId}`}>
-                      {TEXTS.GO_TO_SHABAD}
+                      <ForwardIcon />{TEXTS.GO_TO_SHABAD}
                     </Link>
                   </div>
                 </div>
                 <h4>
-                  {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
+                  {TEXTS.HUKAMNAMA_HEADING}, <span>{nav.current}</span>
                 </h4>
                 <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
 
