@@ -49,6 +49,10 @@ export default class Fetch extends React.PureComponent<
 
   public componentWillUnmount() {
     this.mounted = false;
+    this.setState = (state, callback) => {
+      return;
+    };
+
   }
 
   public componentDidUpdate(prevProps: IFetchProps) {

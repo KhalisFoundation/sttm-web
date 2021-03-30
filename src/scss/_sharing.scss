@@ -19,11 +19,12 @@
     }
   }
 
-  @media screen and (max-width: 730px) {
+  @media screen and (max-width: 790px) {
     margin: 0 1rem 0 1rem;
 
     .share-buttons {
-      text-align: left;
+      margin-top: 10px;
+      text-align: center;
     }
   }
 }
@@ -98,6 +99,10 @@
 
   &:hover {
     fill: $sttm-orange;
+  }
+
+  svg {
+    margin-right: 5px;
   }
 }
 
