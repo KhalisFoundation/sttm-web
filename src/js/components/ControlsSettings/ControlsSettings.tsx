@@ -23,8 +23,22 @@ const ControlsSettings = (props: any) => {
     changeFont,
     visraams,
     visraamSource,
-    visraamStyle
+    visraamStyle,
+    closeSettingsPanel,
+    settingsRef
   } = props;
+
+  React.useEffect(() => {
+    const handleClickOutside = (e: any) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target) && !settingsRef.current.contains(e.target)) {
+        closeSettingsPanel();
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
 
 
   React.useEffect(() => {

@@ -186,3 +186,7 @@ export const toggleCenterAlignOption = () => (dispatch, getState) => {
   const state = getState();
   dispatch(setCenterAlignOption(!state.centerAlignGurbani));
 };
+
+export const closeSettingsPanel = () => dispatch => {
+  dispatch(setSettingsPanel(false))
+}

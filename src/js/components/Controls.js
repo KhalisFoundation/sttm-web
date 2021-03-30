@@ -33,24 +33,41 @@ import {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
-  setSettingsPanel,
+  closeSettingsPanel,
 } from '@/features/actions';
 
 
 export const supportedMedia = _s;
 
 class Controls extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.setRef = this.setRef.bind(this);
+    this.settingsRef = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
   state = {
     showBorder: false,
     showControls: true
-  };
+  };  
 
   static propTypes = {
     showSettingsPanel: PropTypes.bool,
   };
 
   componentDidMount() {
-    this.isChangeInControls = false;
+    this.isChangeInControls = false;  
+    //window.addEventListener('click', this.handleClickOutside)  
+  }
+
+  handleClickOutside(e) {    
+      console.log(this.wrapperRef, e.target, !this.wrapperRef.contains(e.target))
+    if ( this.wrapperRef && !this.wrapperRef.contains(e.target)) {
+      console.log('Clicked Outside')
+      console.log(closeSettingsPanel)
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -58,6 +75,8 @@ class Controls extends React.Component {
       this.isChangeInControls = true;
     }    
   }
+
+  setRef = node => (this.wrapperRef = node);
 
   render() {
     const { showBorder, showControls } = this.state;
@@ -70,14 +89,14 @@ class Controls extends React.Component {
 
     return (
       <>
-        <ShareButtons {...this.props} />
+        <ShareButtons settingIdRef={this.settingsRef} {...this.props} />
         <div
           style={controlStyles}
           id="controls-wrapper"
-          className={classNames}
+          className={classNames}          
         >
           <div className={`settings-panel ${this.props.showSettingsPanel ? 'settings-show' : 'settings-hide'}`}>
-            <ControlsSettings {...this.props} />
+            <ControlsSettings settingsRef={this.settingsRef} {...this.props} />
           </div>
         </div>
       </>
@@ -86,7 +105,7 @@ class Controls extends React.Component {
 }
 
 // TODO: Take exactly what we need.
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => state
 
 const mapDispatchToProps = {
   setFontSize,
@@ -116,7 +135,7 @@ const mapDispatchToProps = {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
-  setSettingsPanel
+  closeSettingsPanel
 };
 
 // TODO: Connect individual components instead of all controls.
