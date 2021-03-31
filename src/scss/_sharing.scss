@@ -19,12 +19,27 @@
     }
   }
 
-  @media screen and (max-width: 730px) {
+  @media screen and (max-width: 790px) {
     margin: 0 1rem 0 1rem;
 
     .share-buttons {
-      text-align: left;
+      margin-top: 10px;
+      text-align: center;
     }
+  }
+}
+
+.chevron,
+.Hour24,
+.reset {
+  fill: $sttm-blue;
+
+  &:hover {
+    fill: $sttm-orange;
+  }
+
+  svg {
+    margin-right: 5px;
   }
 }
 
@@ -36,6 +51,10 @@
 
   @media screen and (max-width: 45.999999em) {
     font-size: 2em !important;
+  }
+
+  &:hover {
+    fill: $sttm-orange;
   }
 }
 
@@ -117,12 +136,6 @@
       }
     }
   }
-}
-
-.chevron,
-.Hour24,
-.reset {
-  fill: $sttm-orange;
 }
 
 #search-options,
