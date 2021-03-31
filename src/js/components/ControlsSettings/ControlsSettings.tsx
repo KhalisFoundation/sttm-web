@@ -4,7 +4,7 @@ import Checkboxes, { Collection as CollectionProps } from '@/components/Checkbox
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
-import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, } from "../Icons/CustomIcons";
 import {
   TEXTS,
   FONT_OPTIONS,
@@ -87,17 +87,9 @@ const ControlsSettings = (props: any) => {
         return (
           <LarivaarIcon className="tiny-font" />
         )
-      case 'Larivaar Assist':
-        return (
-          <LarivaarAssistIcon className="tiny-font" />
-        )
       case 'Text Align Left':
         return (
           <AlignLeftIcon className="settings-action-icon" />
-        )
-      case 'Text Align Center':
-        return (
-          <AlignCenterIcon className="settings-action-icon" />
         )
       default:
         return (
