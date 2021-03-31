@@ -4,7 +4,7 @@ import Checkboxes, { Collection as CollectionProps } from '@/components/Checkbox
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
-import { AlignLeftIcon, AlignCenterIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, LarivaarAssistIcon, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, } from "../Icons/CustomIcons";
 import {
   TEXTS,
   FONT_OPTIONS,
@@ -53,7 +53,15 @@ const ControlsSettings = (props: any) => {
     switch (itemName) {
       case 'Steek':
         return (
-          <GlobeIcon />
+          <SteekIcon />
+        )
+      case 'Reading [Akhand Paath]':
+        return (
+          <AkhandPaathIcon />
+        )
+      case 'Auto Scroll':
+        return (
+          <AutoPlayIcon />
         )
       case 'Transliteration':
         return (
@@ -65,11 +73,11 @@ const ControlsSettings = (props: any) => {
         )
       case 'Dark Mode':
         return (
-          <Times />
+          <DarkModeIcon />
         )
       case 'Vishraams':
         return (
-          <Times />
+          <VishraamIcon />
         )
       case 'Split':
         return (
@@ -140,9 +148,7 @@ const ControlsSettings = (props: any) => {
             >
               {Object.keys(FONT_OPTIONS).map(key => (
                 <option key={key} value={key}>
-                  {
-                    FONT_OPTIONS[key]
-                  }
+                  {FONT_OPTIONS[key]}
                 </option>
               ))}
             </select>
