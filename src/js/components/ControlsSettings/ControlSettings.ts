@@ -136,6 +136,40 @@ export const QUICK_SETTINGS = ({
 
   return [
     {
+      type: 'label-options',
+      label: 'Text Align',
+      collections: [
+        {
+          label: 'Text Align Left',
+          options: "",
+          checked: !centerAlignGurbani,
+          action: toggleCenterAlignOption
+        },
+        {
+          label: 'Text Align Center',
+          options: "",
+          checked: centerAlignGurbani,
+          action: toggleCenterAlignOption
+        },
+      ]
+    },  
+    {
+      type: 'two-columns',
+      label: '',
+      collections: [
+        {
+          label: 'Larivaar',
+          checked: larivaar,
+          action: toggleLarivaarOption
+        },
+        {
+          label: 'Larivaar Assist',
+          checked: larivaarAssist,
+          action: toggleLarivaarAssistOption
+        },
+      ]
+    },     
+    {
       type: 'toggle-option',
       label: 'Dark Mode',
       checked: darkMode,
@@ -165,31 +199,7 @@ export const QUICK_SETTINGS = ({
       label: 'Split',
       checked: splitView,
       action: toggleSplitViewOption,
-    },    
-    {
-      type: 'toggle-option',
-      label: 'Larivaar',
-      checked: larivaar,
-      action: toggleLarivaarOption
-    },    
-    {
-      type: 'toggle-option',
-      label: 'Larivaar Assist',
-      checked: larivaarAssist,
-      action: toggleLarivaarAssistOption
-    },
-    {
-      type: 'toggle-option',
-      label: 'Text Align Left',
-      checked: !centerAlignGurbani,
-      action: toggleCenterAlignOption
-    },
-    {
-      type: 'toggle-option',
-      label: 'Text Align Center',
-      checked: centerAlignGurbani,
-      action: toggleCenterAlignOption
-    },
+    },          
     {
       type: 'collapsible_item',
       label: TEXTS.TRANSLITERATION,

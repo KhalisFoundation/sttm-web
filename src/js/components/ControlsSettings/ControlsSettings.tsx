@@ -1,6 +1,6 @@
 import React from 'react';
 import Collapsible from 'react-collapsible';
-import Checkboxes from '@/components/Checkboxes/Checkboxes';
+import Checkboxes, { Collection as CollectionProps } from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
@@ -39,7 +39,6 @@ const ControlsSettings = (props: any) => {
       document.removeEventListener('click', handleClickOutside)
     }
   }, [])
-
 
   React.useEffect(() => {
     clearVisraamClass();
@@ -172,24 +171,56 @@ const ControlsSettings = (props: any) => {
             <ClickableListItem controlsList={settingsObj} />
           </Collapsible>
         )
+      case 'label-options':
+        return (
+          <div className="settings-item">
+            <span className="settings-text active-setting">{settingsObj.label}</span>
+            <div className="flex-spacer"></div>
+            <div className="settings-options">
+              {
+                settingsObj.collections?.map((collection: CollectionProps, index: number) => (
+                  <span key={index} className={`settings-action-icon ${collection.checked ? 'active-setting' : ''}`} onClick={collection.action}>
+                    {renderIcon(collection.label)}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
+        )
+      case 'two-columns':
+        return (
+          <div className="settings-2cols">
+            {
+              settingsObj.collections?.map((collection: CollectionProps, index: number) => (
+                <div key={index} className={`settings-item ${collection.checked ? 'active-setting' : ''}`} onClick={collection.action}>
+                  <span className="settings-text">{collection.label}</span>
+                  <div className="flex-spacer"></div>
+                  <span className="settings-action-icon">{renderIcon(collection.label)}</span>
+                </div>
+              ))
+            }
+          </div>
+        )
     }
   }
 
   return (
     <div ref={wrapperRef}>
-      {headerSettings.map((element: any, i: any) => {
-        if (element.type) {
-          return (
-            <div
-              data-cy={element.label}
-              key={`settings-${i}`}
-              className={`settings-header ${element.type}`}>
-              {bakeSettings(element)}
-            </div>
-          )
-        }
-        return null;
-      })}
+      <>
+        {headerSettings.map((element: any, i: any) => {
+          if (element.type) {
+            return (
+              <div
+                data-cy={element.label}
+                key={`settings-${i}`}
+                className={`settings-header ${element.type}`}>
+                {bakeSettings(element)}
+              </div>
+            )
+          }
+          return null;
+        })}
+      </>
       <div className="settings-items settings-border">
         {quickSettings.map((element: any, i: any) => {
           if (element.type) {
@@ -210,19 +241,21 @@ const ControlsSettings = (props: any) => {
           <span className="settings-heading">Fonts & Sizes</span>
         </div>
         <div className="settings-items pt-0">
-          {advancedSettings.map((element: any, i: any) => {
-            if (element.type) {
-              return (
-                <div
-                  data-cy={element.label}
-                  key={`settings-${i}`}
-                  className={`settings-item font-item ${element.type}`}>
-                  {bakeSettings(element)}
-                </div>
-              )
-            }
-            return null;
-          })}
+          <>
+            {advancedSettings.map((element: any, i: any) => {
+              if (element.type) {
+                return (
+                  <div
+                    data-cy={element.label}
+                    key={`settings-${i}`}
+                    className={`settings-item font-item ${element.type}`}>
+                    {bakeSettings(element)}
+                  </div>
+                )
+              }
+              return null;
+            })}
+          </>
           <div className="settings-item font-item">
             <button className="settings-reset-button" onClick={resetDisplayOptions}>{TEXTS.RESET}</button>
           </div>
