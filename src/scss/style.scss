@@ -98,8 +98,8 @@ select {
     font-weight: 500;
   }
 
-  @media screen and (max-width: 730px) {
-    margin: 5px 1rem;
+  @media screen and (max-width: 790px) {
+    display: none;
   }
 
   .fullscreen-view & {
@@ -317,10 +317,6 @@ select {
 .mahankoshTooltipSource {
   font-size: 0.6em;
   font-style: italic;
-}
-
-.hukamnama-right-link {
-  margin-left: 5px;
 }
 
 .hukamnama-player {

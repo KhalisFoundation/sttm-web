@@ -29,10 +29,9 @@ blockquote {
   background-color: #e9e9e9;
   border-radius: 2px;
   display: flex;
-  margin: 1rem;
   padding: 1rem 1rem 0.5rem;
   text-align: center;
-  width: calc(100% - 2rem);
+  width: 100%;
 
   &:empty {
     display: none;
@@ -96,16 +95,23 @@ blockquote {
     &-left,
     &-right {
       @include flex-center();
+
+      text-align: left;
+
+      a {
+        @media screen and (max-width: 790px) {
+          display: none;
+        }
+      }
+
+      &-row {
+        padding: 5px 0;
+      }
     }
 
     &-left {
       align-items: flex-start;
       flex-direction: column;
-
-      &-gotoshabad {
-        display: flex;
-        padding-left: 8px;
-      }
     }
 
     &-right {
@@ -116,6 +122,18 @@ blockquote {
     &-right a {
       padding-left: 5px;
       vertical-align: text-bottom;
+    }
+  }
+}
+
+.hukamnama-right {
+  &-headphonesIcon {
+    text-align: right;
+  }
+
+  &-link {
+    svg {
+      padding-right: 5px;
     }
   }
 }
@@ -193,6 +211,15 @@ blockquote {
 
 .metadata-hukamnama,
 .pagination-hukamnama {
+  background-attachment: fixed;
+  background-image: url('/assets/images/amritsar.jpg');
+  background-position: top;
+  background-repeat: no-repeat;
+
+  .dark-mode & {
+    background-image: none;
+  }
+
   .shabad-nav {
     .fullscreen-view & {
       display: none;
@@ -699,4 +726,8 @@ blockquote {
 
     color: $sttm-bright-blue;
   }
+}
+
+.react-date-picker__button {
+  padding: 4px 6px 4px 0 !important;
 }

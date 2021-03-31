@@ -11,6 +11,7 @@ import {
   VISRAAM,
 } from '../../constants';
 import { clearVisraamClass } from '@/util';
+import Steek from '../Baani/Steek';
 
 const ControlsSettings = (props: any) => {
   const wrapperRef = React.useRef(null);
