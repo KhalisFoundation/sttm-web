@@ -2,96 +2,6 @@
   https://simplesharingbuttons.com/#code
 */
 /* stylelint-disable at-rule-no-unknown */
-#share-menu {
-  border-radius: 2px;
-  margin: -27px 2rem 0 auto;
-
-  .fullscreen-view & {
-    display: none;
-  }
-
-  a {
-    background-color: transparent !important;
-    color: $sttm-blue;
-
-    .dark-mode & {
-      color: $sttm-light-blue;
-    }
-  }
-
-  @media screen and (max-width: 790px) {
-    margin: 0 1rem 0 1rem;
-
-    .share-buttons {
-      margin-top: 10px;
-      text-align: center;
-    }
-  }
-}
-
-.share-buttons {
-  list-style: none;
-  margin: 0;
-  text-align: right;
-
-  li {
-    display: inline;
-    margin-left: 5px;
-
-    &:first-of-type {
-      margin-left: 0;
-    }
-  }
-
-  .sr-only {
-    border: 0;
-    clip: rect(1px 1px 1px 1px);
-    clip: rect(1px, 1px, 1px, 1px);
-    height: 1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-
-  #copy-short-url {
-    position: relative;
-
-    .short-url {
-      &-input {
-        background-color: $sttm-white;
-        display: inline-block;
-        font-size: 11px;
-        height: auto;
-        margin: 0;
-        position: relative;
-        top: -12px;
-        width: 175px;
-
-        .dark-mode & {
-          background-color: $sttm-lighter-black;
-          border-color: $sttm-black;
-          color: $sttm-white;
-        }
-      }
-
-      &-icon {
-        box-shadow: -5px 0 7px -6px $sttm-grey;
-        cursor: copy;
-        height: 0.8em;
-        position: absolute;
-        right: 0;
-        top: -14px;
-        width: 0.8em;
-
-        .dark-mode & {
-          box-shadow: -5px 0 7px -6px $sttm-light-black;
-        }
-      }
-    }
-  }
-}
-
 .chevron,
 .Hour24,
 .reset {
@@ -122,9 +32,107 @@
   @media screen and (max-width: 45.999999em) {
     font-size: 2em !important;
   }
+}
 
-  &:hover {
-    fill: $sttm-orange;
+#share-menu {
+  border-radius: 2px;
+  margin: -27px 2rem 0 auto;
+
+  .fullscreen-view & {
+    display: none;
+  }
+
+  a {
+    background-color: transparent !important;
+    color: $sttm-blue;
+
+    .dark-mode & {
+      color: $sttm-light-blue;
+    }
+  }
+
+  @media screen and (max-width: 790px) {
+    margin: 0 1rem 0 1rem;
+
+    .share-buttons {
+      margin-top: 10px;
+      text-align: center;
+    }
+  }
+
+  .share-buttons {
+    list-style: none;
+    margin: 0;
+    text-align: right;
+
+    li {
+      display: inline;
+      margin-left: 5px;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      a {
+        &:hover {
+          span {
+            color: $sttm-orange;
+          }
+
+          svg {
+            fill: $sttm-orange;
+          }
+        }
+      }
+    }
+
+    .sr-only {
+      border: 0;
+      clip: rect(1px 1px 1px 1px);
+      clip: rect(1px, 1px, 1px, 1px);
+      height: 1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    #copy-short-url {
+      position: relative;
+
+      .short-url {
+        &-input {
+          background-color: $sttm-white;
+          display: inline-block;
+          font-size: 11px;
+          height: auto;
+          margin: 0;
+          position: relative;
+          top: -12px;
+          width: 175px;
+
+          .dark-mode & {
+            background-color: $sttm-lighter-black;
+            border-color: $sttm-black;
+            color: $sttm-white;
+          }
+        }
+
+        &-icon {
+          box-shadow: -5px 0 7px -6px $sttm-grey;
+          cursor: copy;
+          height: 0.8em;
+          position: absolute;
+          right: 0;
+          top: -14px;
+          width: 0.8em;
+
+          .dark-mode & {
+            box-shadow: -5px 0 7px -6px $sttm-light-black;
+          }
+        }
+      }
+    }
   }
 }
 

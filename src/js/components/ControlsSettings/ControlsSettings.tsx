@@ -4,7 +4,7 @@ import Checkboxes, { Collection as CollectionProps } from '@/components/Checkbox
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
-import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, } from "../Icons/CustomIcons";
 import {
   TEXTS,
   FONT_OPTIONS,
@@ -99,6 +99,26 @@ const ControlsSettings = (props: any) => {
         return (
           <AlignCenterIcon className="settings-action-icon" />
         )
+      case 'Paragraph':
+        return (
+          <ParagraphIcon className="settings-action-icon" />
+        )
+      case 'Short':
+        return (
+          <>S</>
+        )
+      case 'Medium':
+        return (
+          <>M</>
+        )
+      case 'Long':
+        return (
+          <>L</>
+        )
+      case 'Extra Long':
+        return (
+          <>XL</>
+        )
       default:
         return (
           <Times />
@@ -185,13 +205,39 @@ const ControlsSettings = (props: any) => {
             <div className="settings-options">
               {
                 settingsObj.collections?.map((collection: CollectionProps, index: number) => (
-                  <span key={index} className={`settings-action-icon ${collection.checked ? 'active-setting' : ''}`} onClick={collection.action}>
+                  <span
+                    key={index}
+                    className={`settings-action-icon ${collection.checked ? 'active-setting' : ''}`}
+                    onClick={collection.action}>
                     {renderIcon(collection.label)}
                   </span>
                 ))
               }
             </div>
           </div>
+        )
+      case 'label-options-custom':
+        return (
+          <div className="settings-item">
+            <span className="settings-text active-setting">{settingsObj.label}</span>
+            <div className="flex-spacer"></div>
+            <div className="settings-options">
+              {
+                settingsObj.collections?.map((collection: CollectionProps, index: number) => (
+                  <span
+                    key={index}
+                    data-options={collection.options}
+                    className={`settings-action-icon ${collection.checked ? 'active-setting' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      collection.action(e.currentTarget.getAttribute("data-options"));
+                    }}>
+                    {renderIcon(collection.label)}
+                  </span>
+                ))
+              }
+            </div>
+          </div >
         )
       case 'two-columns':
         return (
