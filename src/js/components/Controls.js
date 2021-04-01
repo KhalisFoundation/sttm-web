@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cx from 'classnames';
-import throttle from 'lodash.throttle';
 import ControlsSettings from "../components/ControlsSettings/ControlsSettings";
 
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
@@ -34,49 +33,50 @@ import {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
+  closeSettingsPanel,
 } from '@/features/actions';
 
 
 export const supportedMedia = _s;
 
 class Controls extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.setRef = this.setRef.bind(this);
+    this.settingsRef = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
   state = {
     showBorder: false,
     showControls: true
-  };
+  };  
 
   static propTypes = {
     showSettingsPanel: PropTypes.bool,
   };
 
   componentDidMount() {
-    this.isChangeInControls = false;
+    this.isChangeInControls = false;  
+    //window.addEventListener('click', this.handleClickOutside)  
+  }
+
+  handleClickOutside(e) {    
+      console.log(this.wrapperRef, e.target, !this.wrapperRef.contains(e.target))
+    if ( this.wrapperRef && !this.wrapperRef.contains(e.target)) {
+      console.log('Clicked Outside')
+      console.log(closeSettingsPanel)
+    }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
       this.isChangeInControls = true;
-    }
+    }    
   }
 
-  resetControlStyles = () => {
-    this.$wrapper.style.transform = '';
-    this.$wrapper.style.position = '';
-    this.$wrapper.style.opacity = '';
-  }
-
-  applyControlStyles = (isShowWrapper) => {
-
-    if (isShowWrapper) {
-      this.$wrapper.style.opacity = 1;
-    } else {
-      this.$wrapper.style.opacity = 0;
-    }
-
-    this.$wrapper.style.position = 'sticky';
-  }
-
-  setRef = node => (this.$wrapper = node);
+  setRef = node => (this.wrapperRef = node);
 
   render() {
     const { showBorder, showControls } = this.state;
@@ -85,25 +85,18 @@ class Controls extends React.Component {
       'with-border': showBorder,
     });
 
-    const controlStyles = showControls ?
-      {
-        transform: '',
-      } :
-      {
-        transform: 'rotateX(90deg) perspective(500px)'
-      }
+    const controlStyles = showControls ? { transform: '' } : { transform: 'rotateX(90deg) perspective(500px)' }
 
     return (
       <>
-        <ShareButtons {...this.props} />
+        <ShareButtons settingIdRef={this.settingsRef} {...this.props} />
         <div
           style={controlStyles}
           id="controls-wrapper"
-          className={classNames}
-          ref={this.setRef}
+          className={classNames}          
         >
           <div className={`settings-panel ${this.props.showSettingsPanel ? 'settings-show' : 'settings-hide'}`}>
-            <ControlsSettings {...this.props} />
+            <ControlsSettings settingsRef={this.settingsRef} {...this.props} />
           </div>
         </div>
       </>
@@ -112,7 +105,7 @@ class Controls extends React.Component {
 }
 
 // TODO: Take exactly what we need.
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => state
 
 const mapDispatchToProps = {
   setFontSize,
@@ -142,6 +135,7 @@ const mapDispatchToProps = {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
+  closeSettingsPanel
 };
 
 // TODO: Connect individual components instead of all controls.

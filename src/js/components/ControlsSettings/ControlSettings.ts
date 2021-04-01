@@ -138,6 +138,40 @@ export const QUICK_SETTINGS = ({
 
   return [
     {
+      type: 'label-options',
+      label: 'Text Align',
+      collections: [
+        {
+          label: 'Text Align Left',
+          options: "",
+          checked: !centerAlignGurbani,
+          action: toggleCenterAlignOption
+        },
+        {
+          label: 'Text Align Center',
+          options: "",
+          checked: centerAlignGurbani,
+          action: toggleCenterAlignOption
+        },
+      ]
+    },  
+    {
+      type: 'two-columns',
+      label: '',
+      collections: [
+        {
+          label: 'Larivaar',
+          checked: larivaar,
+          action: toggleLarivaarOption
+        },
+        {
+          label: 'Larivaar Assist',
+          checked: larivaarAssist,
+          action: toggleLarivaarAssistOption
+        },
+      ]
+    },     
+    {
       type: 'toggle-option',
       label: 'Dark Mode',
       checked: darkMode,
@@ -167,47 +201,7 @@ export const QUICK_SETTINGS = ({
       label: 'Split',
       checked: splitView,
       action: toggleSplitViewOption,
-    },
-    {
-      type: 'collapsible_formatting_item',
-      label: 'Larivaar',
-      controlsList: [
-        {
-          label: 'larivaar',
-          action: () => {
-            toggleLarivaarOption();
-          },
-          value: larivaar,
-        },
-        {
-          label: 'larivaar Assist',
-          action: () => {
-            toggleLarivaarAssistOption();
-          },
-          value: larivaarAssist
-        }
-      ],
-    },
-    {
-      type: 'collapsible_formatting_item',
-      label: 'Text Align',
-      controlsList: [
-        {
-          label: 'align left',
-          action: () => {
-            centerAlignGurbani && toggleCenterAlignOption();
-          },
-          value: !centerAlignGurbani,
-        },
-        {
-          label: 'align center',
-          action: () => {
-            !centerAlignGurbani && toggleCenterAlignOption();
-          },
-          value: centerAlignGurbani,
-        },
-      ],
-    },
+    },          
     {
       type: 'collapsible_item',
       label: TEXTS.TRANSLITERATION,

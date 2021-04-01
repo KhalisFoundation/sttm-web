@@ -107,6 +107,29 @@
     }
   }
 
+  &-options {
+    display: flex;
+  }
+
+  &-2cols {
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+      flex-basis: 48%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    @media screen and (max-width: 1024px) {
+      flex-direction: column;
+
+      > div {
+        flex-basis: 100%;
+      }
+    }
+  }
+
   &-active-item {
     color: $sttm-black;
     fill: $sttm-black;

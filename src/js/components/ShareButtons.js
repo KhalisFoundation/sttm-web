@@ -45,6 +45,8 @@ class ShareButtons extends React.PureComponent {
     media: PropTypes.arrayOf(PropTypes.oneOf(supportedMedia)),
     onEmbedClick: PropTypes.func,
     onCopyAllClick: PropTypes.func,
+    toggleSettingsPanel: PropTypes.func,
+    settingIdRef: PropTypes.object
   };
 
   static handleShare = () => {
@@ -60,8 +62,7 @@ class ShareButtons extends React.PureComponent {
   };
 
   render() {
-
-    const { media, onEmbedClick, onCopyAllClick, toggleSettingsPanel } = this.props;
+    const { media, onEmbedClick, onCopyAllClick, toggleSettingsPanel, settingIdRef } = this.props;
 
     if (media.length === 0) {
       return null;
@@ -117,7 +118,7 @@ class ShareButtons extends React.PureComponent {
       ),
       settings: (
         <li key={5}>
-          <a id="settings-icon" onClick={toggleSettingsPanel}>
+          <a id="settings-icon" ref={settingIdRef} onClick={toggleSettingsPanel}>
             <GearsIcon />
             <span className="show-on-desktop settings-text-desktop">Settings</span>
           </a>

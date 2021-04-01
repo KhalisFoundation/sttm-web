@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface Collection {
+export interface Collection {
   options: any,
   action: () => {},
   label: string,
