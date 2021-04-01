@@ -1,4 +1,7 @@
-export const FONT_OPTIONS = {
+interface IFontOptionsTypes {
+  [key: string]: string
+}
+export const FONT_OPTIONS: IFontOptionsTypes = {
   anmol_lipi: 'Anmol Lipi',
   anmol_bold: 'Anmol Lipi Bold',
   notosans: 'Noto Sans',

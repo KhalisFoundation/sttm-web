@@ -16,6 +16,7 @@ export default class BaaniLine extends React.PureComponent {
     fontFamily: PropTypes.string.isRequired,
     lineHeight: PropTypes.number,
     visraam: PropTypes.object,
+    visraams: PropTypes.bool,
   };
 
   render() {
@@ -29,6 +30,7 @@ export default class BaaniLine extends React.PureComponent {
       unicode,
       text,
       visraam,
+      visraams
     } = this.props;
 
     return (
@@ -50,6 +52,7 @@ export default class BaaniLine extends React.PureComponent {
             enable={larivaar}
             unicode={unicode}
             visraam={visraam}
+            visraams={visraams}
           >
             {unicode ? text.unicode : text.gurmukhi}
           </Larivaar>

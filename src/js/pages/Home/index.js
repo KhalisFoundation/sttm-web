@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS } from '../../constants';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../../constants';
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
 
@@ -16,6 +16,7 @@ import CrossIcon from '@/components/Icons/Times';
 import KeyboardIcon from '@/components/Icons/Keyboard';
 import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+import Reset from '@/components/Icons/Reset';
 /**
  *
  *
@@ -58,7 +59,7 @@ export default class Home extends React.PureComponent {
    */
   render() {
     const { showDoodle, doodleData } = this.state;
-
+        
     return (
       <SearchForm>
         {({
@@ -71,17 +72,23 @@ export default class Home extends React.PureComponent {
           type,
           inputType,
           source,
+          writer,
+          writers,
           action,
           name,
           placeholder,
           isShowKeyboard,
           setGurmukhiKeyboardVisibilityAs,
           setQueryAs,
+          isSourceChanged,
+          isWriterChanged,
           handleKeyDown,
           handleSearchChange,
           handleSearchSourceChange,
           handleSubmit,
           handleSearchTypeChange,
+          handleSearchWriterChange,
+          handleReset,
         }) => (
             <React.Fragment>
               <div className="row" id="content-root">
@@ -95,6 +102,7 @@ export default class Home extends React.PureComponent {
                       query,
                       type,
                       source,
+                      writer,
                     })}
                   >
                     <div className="flex justify-center align-center">
@@ -165,7 +173,7 @@ export default class Home extends React.PureComponent {
                     <Autocomplete
                       isShowFullResults
                       getSuggestions={getShabadList}
-                      searchOptions={{ type, source }}
+                      searchOptions={{ type, source, writer }}
                       value={query}
                     />
                     <div className="search-options">
@@ -188,6 +196,7 @@ export default class Home extends React.PureComponent {
                           <select
                             name="source"
                             value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
+                            className={[isSourceChanged ? 'selected' : null]}
                             onChange={handleSearchSourceChange}
                           >
                             {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
@@ -200,6 +209,7 @@ export default class Home extends React.PureComponent {
                             <select
                               name="source"
                               value={source}
+                              className={[isSourceChanged ? 'selected' : null]}
                               onChange={handleSearchSourceChange}
                             >
                               {Object.entries(SOURCES).map(([value, children]) => (
@@ -211,6 +221,32 @@ export default class Home extends React.PureComponent {
                           )
                         }
                       </div>
+                      <div className="search-option">                           
+                        <select
+                          name="writer"
+                          value={writer}
+                          className={[isWriterChanged ? 'selected' : null]}
+                          onChange={handleSearchWriterChange}>
+                            {
+                              writers?.filter(e => 
+                                  source === 'G' || source === 'A' ? !SOURCE_WRITER_FILTER[source].includes(e.writerID)
+                                  : source !== 'all' ? SOURCE_WRITER_FILTER[source].includes(e.writerID)
+                                  : true
+                                ).map(writer => (
+                                  <option key={writer.writerID} value={writer.writerID}>
+                                    {writer.writerEnglish}
+                                  </option>
+                                ))
+                            }
+                        </select>
+                      </div>
+                      <button 
+                            className="reset"
+                            onClick={handleReset}
+                            title="Reset"
+                            aria-label="Reset">
+                            <Reset />
+                          </button>
                     </div>
                     <SehajPaathLink />
                     <BaaniLinks />
@@ -229,7 +265,7 @@ export default class Home extends React.PureComponent {
   }
 
   componentDidMount() {
-    pageView('/');
+    pageView('/');    
     this.fetchDoodle();
   }
 }

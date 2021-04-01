@@ -17,7 +17,8 @@ export interface ILarivaarProps {
   unicode: boolean;
   children: string;
   query: string;
-  visraam: boolean;
+  visraam: object;
+  visraams: boolean;
   isShowMahankoshTooltip?: boolean;
 }
 
@@ -29,6 +30,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   unicode,
   query,
   visraam,
+  visraams,
   isShowMahankoshTooltip = false
 }) => {
   const dispatch = useDispatch();
@@ -71,23 +73,20 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   }, [isShowMahankoshTooltip])
 
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
-  let handleMouseOver = undefined;
-  if (isShowMahankoshTooltip) {
-    handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
-  }
+  const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
 
   if (!enable) {
     return (
-        <HighlightedSearchResult
-          isShowMahankoshTooltip={isShowMahankoshTooltip}
-          mahankoshIndex={mahankoshIndex}
-          highlightIndex={highlightIndex}
-          query={query}
-          visraams={visraam}
-          onMouseOver={handleMouseOver}
-        >
-          {children}
-        </HighlightedSearchResult>
+      <HighlightedSearchResult
+        isShowMahankoshTooltip={isShowMahankoshTooltip}
+        mahankoshIndex={mahankoshIndex}
+        highlightIndex={highlightIndex}
+        query={query}
+        visraams={visraam}
+        onMouseOver={handleMouseOver}
+      >
+        {children}
+      </HighlightedSearchResult>
     );
   }
 
@@ -123,6 +122,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
               index={index}
               visraamClass={visraamClass}
               visraam={visraam}
+              visraams={visraams}
             />
           </span>
         );

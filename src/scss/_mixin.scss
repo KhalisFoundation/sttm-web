@@ -17,3 +17,27 @@
   display: flex;
   justify-content: center;
 }
+
+@mixin select_highlight() {
+  select {
+    &.selected {
+      background-color: lighten($sttm-light-blue, 25%);
+      color: $sttm-darkest-grey;
+
+      .dark-mode & {
+        background-color: lighten($sttm-darkest-grey, 20%);
+        color: $sttm-white;
+      }
+    }
+  }
+}
+
+@mixin share_buttons_svg() {
+  fill: $sttm-darker-grey;
+  font-size: 2em;
+  padding: 5px;
+
+  @media screen and (max-width: 45.999999em) {
+    font-size: 2em !important;
+  }
+}

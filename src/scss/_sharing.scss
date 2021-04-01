@@ -1,6 +1,7 @@
 /* ***** Sharing Buttons *****
   https://simplesharingbuttons.com/#code
 */
+/* stylelint-disable at-rule-no-unknown */
 #share-menu {
   border-radius: 2px;
   margin: -27px 2rem 0 auto;
@@ -18,11 +19,12 @@
     }
   }
 
-  @media screen and (max-width: 730px) {
+  @media screen and (max-width: 790px) {
     margin: 0 1rem 0 1rem;
 
     .share-buttons {
-      text-align: left;
+      margin-top: 10px;
+      text-align: center;
     }
   }
 }
@@ -91,8 +93,17 @@
 }
 
 .chevron,
-.Hour24 {
-  fill: $sttm-orange;
+.Hour24,
+.reset {
+  fill: $sttm-blue;
+
+  &:hover {
+    fill: $sttm-orange;
+  }
+
+  svg {
+    margin-right: 5px;
+  }
 }
 
 .hukamnama-nav-icon {
@@ -111,6 +122,15 @@
   @media screen and (max-width: 45.999999em) {
     font-size: 2em !important;
   }
+
+  &:hover {
+    fill: $sttm-orange;
+  }
+}
+
+#search-options,
+.search-options {
+  @include select_highlight();
 }
 
 @media screen and (max-width: 45.999999em) {

@@ -4,11 +4,11 @@ import { toShabadURL } from '../url';
 import { translationMap, transliterationMap, getGurmukhiVerse } from '../api/shabad';
 import { getHighlightIndices } from '../gurbani';
 
-export const getShabadList = (q, { type, source }) => {
+export const getShabadList = (q, { type, source, writer }) => {
   const offset = 1;
   const isSearchTypeRomanizedFirstLetters = type === SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE;
   const livesearch = !isSearchTypeRomanizedFirstLetters;
-  const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL, livesearch }));
+  const url = encodeURI(buildApiUrl({ q, type, source, writer, offset, API_URL, livesearch }));
 
   return new Promise((resolve, reject) => {
     const json = fetch(url).then((response) => response.json());

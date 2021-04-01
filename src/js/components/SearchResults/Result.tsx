@@ -93,19 +93,19 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               </Larivaar>
             </div>
           ) : (
-              <div className={`gurlipi ${larivaar ? 'larivaar' : ''}`}>
-                <Larivaar
-                  type={type}
-                  larivaarAssist={larivaarAssist}
-                  enable={larivaar}
-                  highlightIndex={isSearchTypeEnglishWord ? [] : highlightIndex}
-                  query={q}
-                  visraam={shabad.visraam}
-                >
-                  {getGurmukhiVerse(shabad)}
-                </Larivaar>
-              </div>
-            )}
+            <div className={`gurlipi ${larivaar ? 'larivaar' : ''}`}>
+              <Larivaar
+                type={type}
+                larivaarAssist={larivaarAssist}
+                enable={larivaar}
+                highlightIndex={isSearchTypeEnglishWord ? [] : highlightIndex}
+                query={q}
+                visraam={shabad.visraam}
+              >
+                {getGurmukhiVerse(shabad)}
+              </Larivaar>
+            </div>
+          )}
         </Link>
 
         <div className="clear" />
@@ -141,10 +141,10 @@ const SearchResult: React.FC<IShabadResultProps> = ({
                 {translationMap['punjabi'](shabad).unicode}
               </div>
             ) : (
-                <div className="gurlipi">
-                  {translationMap['punjabi'](shabad).gurmukhi}
-                </div>
-              )}
+              <div className="gurlipi">
+                {translationMap['punjabi'](shabad).gurmukhi}
+              </div>
+            )}
           </blockquote>
         )}
 
@@ -173,6 +173,12 @@ const SearchResult: React.FC<IShabadResultProps> = ({
           </blockquote>
         )}
 
+        {translationLanguages.includes('hindi') && (
+          <blockquote className="translation hindi">
+            {translationMap['hindi'](shabad)}
+          </blockquote>
+        )}
+
         <div className="meta flex wrap">
           {presentationalSource && <a href="#">{presentationalSource}</a>}
 
@@ -180,10 +186,10 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 
           {getRaag(shabad)['english'] === 'No Raag' ||
             getRaag(shabad)['english'] === null ? (
-              ''
-            ) : (
-              <a href="#">{getRaag(shabad)['english']}</a>
-            )}
+            ''
+          ) : (
+            <a href="#">{getRaag(shabad)['english']}</a>
+          )}
         </div>
       </li>
     </React.Fragment>

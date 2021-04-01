@@ -154,7 +154,8 @@ const initialState = {
   isLoadingAng: false,
   isMahankoshTooltipActive: false,
   isMahankoshTooltipExplaination: false,
-  prefetchAng: undefined
+  prefetchAng: undefined,
+  showSettingsPanel: false,
 };
 
 
