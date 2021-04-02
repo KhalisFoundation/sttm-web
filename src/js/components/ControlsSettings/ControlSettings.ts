@@ -29,9 +29,9 @@ export interface ISettingActions {
   toggleAutoScrollMode: () => {},
   toggleLarivaarOption: () => {},
   toggleLarivaarAssistOption: () => {},
-  setFontSize: () => {},
-  setTranslationFontSize: () => {},
-  setSteekLanguages: () => {},
+  setFontSize: (attr: any) => {},
+  setTranslationFontSize: (attr: any) => {},
+  setSteekLanguages: (attr: string[]) => {},
   setTransliterationFontSize: () => {},
   setLineHeight: () => {},
   toggleCenterAlignOption: () => {},
@@ -44,8 +44,8 @@ export interface ISettingActions {
   setVisraamStyle: () => {},
   changeFont: () => {},
   toggleAdvancedOptions: () => {},
-  setLarivaarAssistStrength: () => {},
-  setSgBaaniLength: () => {},
+  setLarivaarAssistStrength: (attr: any) => {},
+  setSgBaaniLength: (attr: any) => {},
   location: {
     pathname: string,
   },
@@ -154,14 +154,8 @@ export const QUICK_SETTINGS = ({
           action: toggleLarivaarAssistOption
         },
       ]
-    },  
-    isSundarGutkaRoute ? {
-      type: 'toggle-option',
-      label: "Paragraph",
-      checked: paragraphMode,
-      action: toggleParagraphMode
-    } : {},
-    isSundarGutkaRoute ? {
+    },
+     isSundarGutkaRoute ? {
       type: 'label-options-custom',
       label: 'Baanis Length',
       collections:         
@@ -171,12 +165,18 @@ export const QUICK_SETTINGS = ({
             options: lengthValue,
             checked: length === sgBaaniLength,
             action: (selectedSgBaaniValue: string) => {              
-              const {length} = SG_BAANIS.find(({ value }) => value === parseInt(selectedSgBaaniValue))
-              setSgBaaniLength(length ? length : DEFAULT_SG_BAANI_LENGTH);
+              const {length: selectedLength} = SG_BAANIS.find(({ value }) => value === parseInt(selectedSgBaaniValue))
+              setSgBaaniLength(selectedLength ? selectedLength : DEFAULT_SG_BAANI_LENGTH);
             },
           }
         ))
     } : {},
+    isSundarGutkaRoute ? {
+      type: 'toggle-option',
+      label: "Paragraph",
+      checked: paragraphMode,
+      action: toggleParagraphMode
+    } : {},   
     {
       type: 'toggle-option',
       label: 'Dark Mode',

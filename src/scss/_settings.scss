@@ -1,3 +1,7 @@
+$panel-width: 20vw;
+$panel-width-900: 35vw;
+$panel-width-500: 65vw;
+
 .settings {
   &-panel {
     background: $sttm-pure-white;
@@ -11,7 +15,7 @@
     top: 0;
     transform-origin: top right;
     transition: 0.3s all ease-in-out;
-    width: 20vw;
+    width: $panel-width;
     z-index: 100;
 
     .dark-mode & {
@@ -21,20 +25,32 @@
     }
 
     @media screen and (max-width: 900px) {
-      width: 35vw;
+      width: $panel-width-900;
     }
 
     @media screen and (max-width: 560px) {
-      width: 65vw;
+      width: $panel-width-500;
     }
   }
 
   &-show {
-    transform: scaleX(1);
+    opacity: 1;
+    transform: translateX(0);
   }
 
   &-hide {
-    transform: scaleX(0);
+    $transform-width: $panel-width;
+
+    @media screen and (max-width: 900px) {
+      $transform-width: $panel-width-900;
+    }
+
+    @media screen and (max-width: 560px) {
+      $transform-width: $panel-width-560;
+    }
+
+    opacity: 0;
+    transform: translateX($transform-width);
   }
 
   &-header {
