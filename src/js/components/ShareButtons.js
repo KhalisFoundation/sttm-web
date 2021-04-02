@@ -110,18 +110,18 @@ class ShareButtons extends React.PureComponent {
       ),
       print: (
         <li key={4}>
-          <a id="print-shabad" onClick={window.print}>
+          <button id="print-shabad" onClick={window.print}>
             <PrinterIcon />
             <span className="sr-only">Print Shabad</span>
-          </a>
+          </button>
         </li>
       ),
       settings: (
         <li key={5}>
-          <a id="settings-icon" ref={settingIdRef} onClick={toggleSettingsPanel}>
+          <button id="settings-icon" ref={settingIdRef} onClick={toggleSettingsPanel}>
             <GearsIcon />
             <span className="show-on-desktop settings-text-desktop">Settings</span>
-          </a>
+          </button>
         </li>
       ),
     };
