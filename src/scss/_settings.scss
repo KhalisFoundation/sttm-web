@@ -1,6 +1,6 @@
 $panel-width: 20vw;
 $panel-width-900: 35vw;
-$panel-width-500: 65vw;
+$panel-width-560: 65vw;
 
 .settings {
   &-panel {
@@ -29,7 +29,7 @@ $panel-width-500: 65vw;
     }
 
     @media screen and (max-width: 560px) {
-      width: $panel-width-500;
+      width: $panel-width-560;
     }
   }
 
