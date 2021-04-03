@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface Collection {
   options: any,
-  action: () => {},
+  action: (attr: any) => {},
   label: string,
   checked: any
 }
