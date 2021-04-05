@@ -25,7 +25,8 @@
   "granth-index",
   "vishraam",
   "mahankosh",
-  "ui-controls";
+  "ui-controls",
+  "settings";
 @import 'node_modules/react-smartbanner/dist/main';
 @import 'node_modules/react-toastify/dist/ReactToastify.min';
 @import 'node_modules/react-h5-audio-player/src/styles.scss';
@@ -97,8 +98,8 @@ select {
     font-weight: 500;
   }
 
-  @media screen and (max-width: 730px) {
-    margin: 5px 1rem;
+  @media screen and (max-width: 790px) {
+    display: none;
   }
 
   .fullscreen-view & {
@@ -316,10 +317,6 @@ select {
 .mahankoshTooltipSource {
   font-size: 0.6em;
   font-style: italic;
-}
-
-.hukamnama-right-link {
-  margin-left: 5px;
 }
 
 .hukamnama-player {

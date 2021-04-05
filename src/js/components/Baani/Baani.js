@@ -65,6 +65,7 @@ export default class Baani extends React.PureComponent {
     isParagraphMode: PropTypes.bool.isRequired,
     onBaaniLineClick: PropTypes.func,
     sgBaaniLength: PropTypes.string,
+    visraams: PropTypes.bool
   };
 
   constructor(props) {
@@ -231,6 +232,7 @@ export default class Baani extends React.PureComponent {
       fontFamily,
       highlight,
       showFullScreen,
+      visraams,
     } = this.props;
 
     return (
@@ -247,6 +249,7 @@ export default class Baani extends React.PureComponent {
         fontSize={fontSize}
         lineHeight={lineHeight}
         fontFamily={fontFamily}
+        visraams={visraams}
         visraam={shabad.visraam}
       />
     );

@@ -3,7 +3,7 @@ export interface IStore {
   showAdvancedOptions: boolean;
   showTransliterationOptions: boolean;
   showTranslationOptions: boolean;
-  translationLanguages: ['english', 'punjabi', 'spanish'];
+  translationLanguages: ['english', 'punjabi', 'spanish', 'hindi'];
   transliterationLanguages: ['english'];
   larivaarAssist: boolean;
   larivaarAssistStrength: number;

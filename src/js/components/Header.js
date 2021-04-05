@@ -1,9 +1,8 @@
-/* globals DOODLE_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../constants';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
@@ -13,6 +12,7 @@ import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 import Reset from './Icons/Reset';
 import Autocomplete from '@/components/Autocomplete';
+import { toggleSettingsPanel } from '@/features/actions';
 
 import {
   toSearchURL,
@@ -20,7 +20,7 @@ import {
   getShabadList,
   reformatSearchTypes
 } from '@/util';
-export default class Header extends React.PureComponent {
+class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
 
   static propTypes = {
@@ -32,6 +32,7 @@ export default class Header extends React.PureComponent {
       search: PropTypes.string,
     }),
     history: PropTypes.shape({ push: PropTypes.func }),
+    toggleSettingsPanel: PropTypes.func,
   };
 
   state = {
@@ -68,6 +69,7 @@ export default class Header extends React.PureComponent {
   handleFormSubmit = data => {
     this.props.history.push(toSearchURL(data));
   }
+
   render() {
     const {
       props: { defaultQuery, isHome, isAng, isController },
@@ -104,20 +106,22 @@ export default class Header extends React.PureComponent {
 
     return (
       <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
+        {/* <ControlsSettings {...this.props} /> */}
         <div className="top-bar-wrapper row">
           {!isHome && (
-            <div className="top-bar-title">
-              {showDoodle ?
-                (<>
-                  <Link to="/" title={doodleData['Description']} className="doodle-link icon"
-                    style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
-                  <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
-                    style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
-                </>) :
-                (<Link to="/" />)
-              }
-            </div>
-          )}
+            <>
+              <div className="top-bar-title">
+                {showDoodle ?
+                  (<>
+                    <Link to="/" title={doodleData['Description']} className="doodle-link icon"
+                      style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }} />
+                    <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
+                      style={{ backgroundImage: `url(${doodleData['Image']}) ` }} />
+                  </>) :
+                  (<Link to="/" />)
+                }
+              </div>
+            </>)}
           <SearchForm
             key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
@@ -346,3 +350,14 @@ export default class Header extends React.PureComponent {
     );
   }
 }
+
+const mapStateToProps = () => ({})
+
+const mapDispatchToProps = {
+  toggleSettingsPanel,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);
