@@ -432,8 +432,9 @@ export default class SearchForm extends React.PureComponent {
 
   handleReset = (e) => {
     e.preventDefault();
+    const { type } = this.state;
     this.setState({
-      source: DEFAULT_SEARCH_SOURCE,
+      source: type === 5 ? 'G' : DEFAULT_SEARCH_SOURCE, // For Ang type: default to G
       writer: DEFAULT_SEARCH_WRITER,
       isSourceChanged: false,
       isWriterChanged: false,
