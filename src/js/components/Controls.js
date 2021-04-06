@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cx from 'classnames';
-import throttle from 'lodash.throttle';
+import ControlsSettings from "../components/ControlsSettings/ControlsSettings";
 
-import ShabadControls from './ShabadControlsv2';
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
   setSgBaaniLength,
@@ -22,6 +22,7 @@ import {
   toggleLarivaarOption,
   toggleTranslationOptions,
   toggleTransliterationOptions,
+  toggleSettingsPanel,
   toggleSplitViewOption,
   toggleDarkMode,
   toggleSehajPaathMode,
@@ -32,110 +33,40 @@ import {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
+  closeSettingsPanel,
 } from '@/features/actions';
 
 
 export const supportedMedia = _s;
 
 class Controls extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.setRef = this.setRef.bind(this);
+    this.settingsRef = React.createRef();
+  }
+
   state = {
     showBorder: false,
-    lastScrollPos: 0,
     showControls: true
+  };  
+
+  static propTypes = {
+    showSettingsPanel: PropTypes.bool,
   };
 
   componentDidMount() {
-    this.lastScroll = 0;
-    this.isChangeInControls = false;
-
-    window.addEventListener('scroll', this.scrollListener, { passive: true });
+    this.isChangeInControls = false;  
   }
-
+  
   componentDidUpdate(prevProps) {
     if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
       this.isChangeInControls = true;
-      this.lastScroll = this.$wrapper.offsetTop;
-    }
+    }    
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.scrollListener, {
-      passive: true,
-    });
-  }
-
-  resetControlStyles = () => {
-    this.lastScroll = 0;
-    this.$wrapper.style.transform = '';
-    this.$wrapper.style.position = '';
-    this.$wrapper.style.opacity = '';
-  }
-
-  applyControlStyles = (isShowWrapper) => {
-
-    if (isShowWrapper) {
-      this.$wrapper.style.opacity = 1;
-    } else {
-      this.$wrapper.style.opacity = 0;
-    }
-
-    const oldOffsetTop = this.$wrapper.offsetTop;
-    this.$wrapper.style.position = 'sticky';
-
-    // since we are doing position sticky so top offset gonna change.
-    this.lastScroll = oldOffsetTop;
-  }
-
-  scrollListener = throttle(() => {
-    const { fullScreenMode } = this.props;
-    if (!fullScreenMode) {
-      const controlsOffsetTop = this.$wrapper.offsetTop;
-      const controlsHeight = this.$wrapper.offsetHeight;
-      const controlsBottom = controlsOffsetTop + controlsHeight;
-      const controlsOffset = this.$wrapper.style.position === 'sticky' ? controlsOffsetTop : controlsBottom;
-
-      if (window.scrollY >= controlsOffset) {
-        this.$wrapper.style.opacity = 0;
-
-        if (this.isChangeInControls) {
-          this.isChangeInControls = false;
-          this.$wrapper.style.opacity = 1;
-          return;
-        }
-
-        return this.setState(prevState => {
-          // We are moving in up direction
-          if (this.lastScroll >= controlsOffsetTop) {
-            this.applyControlStyles(true);
-
-            return {
-              ...prevState,
-              showBorder: true,
-              showControls: true
-            };
-          }
-
-          // We are moving in downward direction
-          this.applyControlStyles(false);
-          return {
-            ...prevState,
-            showBorder: false,
-            showControls: false
-          };
-        });
-      }
-    }
-    // Reset state.
-    this.resetControlStyles();
-    return this.setState(prevState => ({
-      ...prevState,
-      showBorder: false,
-      showControls: true
-    }))
-
-  }, 100);
-
-  setRef = node => (this.$wrapper = node);
+  setRef = node => (this.wrapperRef = node);
 
   render() {
     const { showBorder, showControls } = this.state;
@@ -144,24 +75,19 @@ class Controls extends React.Component {
       'with-border': showBorder,
     });
 
-    const controlStyles = showControls ?
-      {
-        transform: '',
-      } :
-      {
-        transform: 'rotateX(90deg) perspective(500px)'
-      }
+    const controlStyles = showControls ? { transform: '' } : { transform: 'rotateX(90deg) perspective(500px)' }
 
     return (
       <>
-        <ShareButtons {...this.props} />
+        <ShareButtons settingIdRef={this.settingsRef} {...this.props} />
         <div
           style={controlStyles}
           id="controls-wrapper"
-          className={classNames}
-          ref={this.setRef}
+          className={classNames}          
         >
-          <ShabadControls {...this.props} />
+          <div className={`settings-panel ${this.props.showSettingsPanel ? 'settings-show' : 'settings-hide'}`}>
+            <ControlsSettings settingsRef={this.settingsRef} {...this.props} />
+          </div>
         </div>
       </>
     );
@@ -169,7 +95,7 @@ class Controls extends React.Component {
 }
 
 // TODO: Take exactly what we need.
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => state
 
 const mapDispatchToProps = {
   setFontSize,
@@ -187,6 +113,7 @@ const mapDispatchToProps = {
   toggleLarivaarOption,
   toggleTranslationOptions,
   toggleTransliterationOptions,
+  toggleSettingsPanel,
   toggleSplitViewOption,
   toggleParagraphMode,
   toggleSehajPaathMode,
@@ -198,6 +125,7 @@ const mapDispatchToProps = {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
+  closeSettingsPanel
 };
 
 // TODO: Connect individual components instead of all controls.

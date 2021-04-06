@@ -1,0 +1,360 @@
+$panel-width: 20vw;
+$panel-width-900: 35vw;
+$panel-width-560: 65vw;
+
+.settings {
+  &-panel {
+    background: $sttm-pure-white;
+    box-shadow: 0 0 12px -4px $sttm-black;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-x: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transform-origin: top right;
+    transition: 0.3s all ease-in-out;
+    width: $panel-width;
+    z-index: 100;
+
+    .dark-mode & {
+      background-color: $sttm-lighter-black;
+      border-color: $sttm-light-black;
+      color: $sttm-white;
+    }
+
+    @media screen and (max-width: 900px) {
+      width: $panel-width-900;
+    }
+
+    @media screen and (max-width: 560px) {
+      width: $panel-width-560;
+    }
+  }
+
+  &-show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  &-hide {
+    $transform-width: $panel-width;
+
+    @media screen and (max-width: 900px) {
+      $transform-width: $panel-width-900;
+    }
+
+    @media screen and (max-width: 560px) {
+      $transform-width: $panel-width-560;
+    }
+
+    opacity: 0;
+    transform: translateX($transform-width);
+  }
+
+  &-header {
+    background-color: $sttm-blue;
+    border-bottom: 1px solid $sttm-lighter-grey;
+    display: flex;
+    height: auto;
+    justify-content: space-between;
+    padding: 10px 12px;
+    width: inherit;
+  }
+
+  &-heading {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+
+    .dark-mode & {
+      color: $sttm-white;
+    }
+  }
+
+  &-times {
+    align-items: center;
+    display: flex;
+    fill: $sttm-white;
+    font-size: 16px;
+
+    .dark-mode & {
+      fill: $sttm-white;
+    }
+
+    &:hover {
+      fill: $sttm-orange;
+    }
+  }
+
+  &-items,
+  &-advance {
+    color: $sttm-grey;
+    display: flex;
+    fill: $sttm-grey;
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 15px 12px;
+  }
+
+  &-border {
+    border-bottom: 1px solid $sttm-lighter-grey;
+  }
+
+  &-action-icon {
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    width: 25px;
+  }
+
+  &-item {
+    align-items: center;
+    display: flex;
+    margin: 8px auto;
+    width: 100%;
+
+    &:hover {
+      color: $sttm-orange;
+      fill: $sttm-orange;
+    }
+  }
+
+  &-options {
+    display: flex;
+
+    > span {
+      margin-right: 0.5rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &-2cols {
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+      flex-basis: 48%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    @media screen and (max-width: 1024px) {
+      flex-direction: column;
+
+      > div {
+        flex-basis: 100%;
+      }
+    }
+  }
+
+  &-active-item {
+    color: $sttm-black;
+    fill: $sttm-black;
+  }
+
+  &-reset-button {
+    background-color: #01669b;
+    border: none;
+    border-radius: 5px;
+    color: #fafafa;
+    font-weight: 900;
+    height: 40px;
+    transition: 0.2s;
+    width: -webkit-fill-available;
+  }
+
+  &-reset-button:hover {
+    background-color: $sttm-orange;
+  }
+
+  &-text {
+    cursor: pointer;
+    margin-left: 6px;
+
+    &:hover {
+      color: $sttm-orange;
+    }
+
+    .dark-mode & {
+      &:hover {
+        color: $sttm-orange;
+      }
+    }
+  }
+
+  &-text-desktop {
+    bottom: 11px;
+    color: $sttm-grey;
+    font-weight: bold;
+    position: relative;
+  }
+}
+
+.button-style {
+  border: 1px solid $sttm-lighter-grey;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  padding: 0.2rem;
+
+  &.colored {
+    background: $sttm-pure-white;
+    color: $sttm-orange;
+  }
+
+  &.gradient {
+    background:
+      linear-gradient(
+        to right,
+        rgba(229, 229, 229, 0) 20%,
+        rgba($sttm-vishraam-red, 0.7) 100%
+      );
+    color: $sttm-darkest-grey;
+  }
+
+  .dark-mode & {
+    background-color: inherit;
+    border: 1px solid $sttm-grey;
+
+    &.gradient {
+      color: $sttm-pure-white;
+    }
+  }
+
+  .active-setting & {
+    border-color: $sttm-black;
+
+    .dark-mode & {
+      border-color: $sttm-pure-white;
+    }
+  }
+}
+
+.font {
+  &-item {
+    font-size: 14px;
+    justify-content: space-between;
+    width: 85%;
+  }
+
+  &-family-dropdown {
+    background-color: $sttm-lighter-grey;
+    border: none;
+    color: $sttm-grey;
+    margin: 0;
+    width: 60%;
+
+    .dark-mode & {
+      background-color: $sttm-dark-grey;
+    }
+  }
+}
+
+.minus-icon,
+.plus-icon {
+  color: $sttm-bright-blue;
+  font-size: 26px !important;
+}
+
+.flex-spacer {
+  display: flex;
+  flex: 1;
+}
+
+.settings-chevron-icon svg {
+  transition: transform 200ms ease;
+}
+
+.is-open > .settings-item > .settings-chevron-icon svg {
+  transform: rotate(0.25turn);
+}
+
+.pt-0 {
+  padding-top: 0;
+}
+
+.active-setting {
+  color: $sttm-black;
+  cursor: pointer;
+  fill: $sttm-black;
+
+  .dark-mode & {
+    color: $sttm-white;
+    fill: $sttm-white;
+
+    &:hover {
+      color: $sttm-orange;
+      fill: $sttm-orange;
+    }
+  }
+}
+
+.small-font {
+  font-size: 13px;
+}
+
+.tiny-font {
+  font-size: 12px;
+}
+
+// Styles for Checkboxes component
+
+.checkbox {
+  &-container {
+    list-style: none;
+  }
+
+  &-item {
+    align-items: center;
+    display: flex;
+    height: 30px;
+
+    &-label {
+      margin-left: 10px;
+      text-transform: capitalize;
+
+      &:hover {
+        color: $sttm-orange;
+      }
+
+      .dark-mode & {
+        color: $sttm-white;
+
+        &:hover {
+          color: $sttm-orange;
+        }
+      }
+    }
+  }
+
+  &-input {
+    margin: 0;
+  }
+}
+
+// styles for ClickableLI component
+
+.clickable-li {
+  &-container {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    margin: 8px auto;
+    width: 80%;
+
+    &:hover {
+      color: $sttm-orange;
+      fill: $sttm-orange;
+    }
+  }
+
+  &-label {
+    text-transform: capitalize;
+  }
+}

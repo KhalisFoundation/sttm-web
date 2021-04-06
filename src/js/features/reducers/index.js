@@ -10,6 +10,8 @@ import {
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
   TOGGLE_SEHAJ_PAATH_MODE,
+  TOGGLE_SETTINGS_PANEL,
+  SET_SETTINGS_PANEL,
   SET_MAHANKOSH_TOOLTIP_EXPLAINATION,
   SET_MAHANKOSH_TOOLTIP_ACTIVE,
   SET_VISRAAM_SOURCE,
@@ -145,6 +147,23 @@ export default function reducer(state, action) {
         showAdvancedOptions,
       };
     }
+    case TOGGLE_SETTINGS_PANEL: {
+      const showSettingsPanel = !state.showSettingsPanel;
+      clickEvent({
+        action: TOGGLE_SETTINGS_PANEL,
+        label: showSettingsPanel ? 1 : 0,
+      });
+      return {
+        ...state,
+        showSettingsPanel,
+      };
+    }
+    case SET_SETTINGS_PANEL: {
+      return {
+        ...state,
+        showSettingsPanel: action.payload
+      }
+    }
     case TOGGLE_DARK_MODE: {
       const darkMode = !state.darkMode;
       clickEvent({
@@ -265,16 +284,18 @@ export default function reducer(state, action) {
       };
     }
     case TOGGLE_LARIVAAR_OPTION: {
-      if (state.larivaarAssist) return { ...state, larivaarAssist: !state.larivaarAssist }
+      const larivaarAssist = state.larivaarAssist && false;
       const larivaar = !state.larivaar;
       clickEvent({
         action: TOGGLE_LARIVAAR_OPTION,
         label: larivaar ? 1 : 0,
       });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST, larivaarAssist);
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR, larivaar);
       return {
         ...state,
         larivaar,
+        larivaarAssist
       };
     }
     case TOGGLE_LARIVAAR_ASSIST_OPTION: {

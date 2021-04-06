@@ -23,6 +23,7 @@ export const translationMap = {
     ...shabad.translation.pu.bdb,
     toString: () => shabad.translation.pu.bdb.unicode,
   }),
+  hindi: shabad => shabad.translation.hi.ss,
 };
 
 export const transliterationMap = {

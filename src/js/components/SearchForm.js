@@ -6,14 +6,17 @@ import {
   SOURCES,
   LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+  LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
   PLACEHOLDERS,
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
   SEARCH_TYPES,
   SEARCH_TYPES_NOT_ALLOWED_KEYS,
   SOURCES_WITH_ANG,
+  DEFAULT_SEARCH_WRITER,
+  DEFAULT_SEARCH_WRITERS,
 } from '@/constants';
-import { getNumberFromLocalStorage, clickEvent, ACTIONS } from '@/util';
+import { getNumberFromLocalStorage, clickEvent, ACTIONS, getWriterList } from '@/util';
 
 /**
  *
@@ -41,6 +44,8 @@ export default class SearchForm extends React.PureComponent {
    * @property {function} handleSearchChange
    * @property {function} handleSearchSourceChange
    * @property {function} handleSearchTypeChange
+   * @property {function} handleSearchWriterChange
+   * @property {function} handleReset
    * @property {function} handleSubmit
    *
    * @typedef {object} SearchFormProps
@@ -48,7 +53,7 @@ export default class SearchForm extends React.PureComponent {
    * @property {string} defaultQuery to initialize with
    * @property {string} defaultType to initialize with
    * @property {string} defaultSource to initiaize with
-   * @property {Array<'type'|'source'|'query'>} submitOnChangeOf given fields
+   * @property {Array<'type'|'source'|'query'|'writer'>} submitOnChangeOf given fields
    * @property {function} onSubmit event handler
    *
    * @static
@@ -60,7 +65,7 @@ export default class SearchForm extends React.PureComponent {
     defaultType: PropTypes.oneOf(Object.keys(TYPES).map(type => parseInt(type))),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     submitOnChangeOf: PropTypes.arrayOf(
-      PropTypes.oneOf(['type', 'source', 'query'])
+      PropTypes.oneOf(['type', 'source', 'query', 'writer'])
     ),
     onSubmit: props => {
       if (
@@ -73,6 +78,7 @@ export default class SearchForm extends React.PureComponent {
       }
     },
   };
+
 
   state = {
     displayGurmukhiKeyboard: false,
@@ -88,6 +94,12 @@ export default class SearchForm extends React.PureComponent {
       this.props.defaultSource ||
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
       DEFAULT_SEARCH_SOURCE,
+    writer: 
+      localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
+      DEFAULT_SEARCH_WRITER,
+    writers: DEFAULT_SEARCH_WRITERS,
+    isSourceChanged: false,
+    isWriterChanged: false,
     placeholder: '',
     isAnimatingPlaceholder: false,
   };
@@ -136,11 +148,27 @@ export default class SearchForm extends React.PureComponent {
       })
     );
 
+  fetchWriters = () => {
+    getWriterList()
+      .then(writersData => {
+        this._setState({ writers: writersData })
+      })    
+  }
+
+  selectHighlight = () => {
+    this._setState({
+      isSourceChanged: this.state.source !== DEFAULT_SEARCH_SOURCE,
+      isWriterChanged: this.state.writer !== DEFAULT_SEARCH_WRITER
+    })
+  }
+
   _setState = (...args) => (this._mounted ? this.setState(...args) : null);
 
   componentDidMount() {
     this._mounted = true;
     this.beginPlaceholderAnimation();
+    this.fetchWriters();
+    this.selectHighlight();
   }
 
   componentWillUnmount() {
@@ -166,11 +194,13 @@ export default class SearchForm extends React.PureComponent {
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
+      handleSearchWriterChange,
       handleSubmit,
-      handleKeyDown
+      handleKeyDown,
+      handleReset
     } = this;
 
-    const { type } = this.state;
+    const { type, query } = this.state;
     const typeInt = parseInt(type);
     const [, useEnglish = false] = PLACEHOLDERS[type];
     const className = useEnglish ? '' : 'gurbani-font';
@@ -185,12 +215,14 @@ export default class SearchForm extends React.PureComponent {
     const [action, name, inputType] = SearchForm.getFormDetails(
       typeInt
     );
+    const disabled = !new RegExp(pattern).test(query);
 
 
     return this.props.children({
       ...state,
       isShowKeyboard,
       pattern,
+      disabled,
       title,
       className,
       action,
@@ -201,14 +233,16 @@ export default class SearchForm extends React.PureComponent {
       handleSearchChange,
       handleSearchSourceChange,
       handleSearchTypeChange,
+      handleSearchWriterChange,
       handleSubmit,
       handleKeyDown,
+      handleReset
     });
 
   }
   componentDidUpdate() {
     const {
-      state: { shouldSubmit, source, type, query },
+      state: { shouldSubmit, source, type, query, writer },
       props: { onSubmit },
     } = this;
 
@@ -223,6 +257,7 @@ export default class SearchForm extends React.PureComponent {
             source,
             type,
             query,
+            writer
           });
         }
       );
@@ -307,13 +342,15 @@ export default class SearchForm extends React.PureComponent {
     }
   };
 
-  handleSearchSourceChange = e =>
+  handleSearchSourceChange = ({target}) => {
+    const source = target.value
     this.setState(
       {
-        source: e.target.value,
+        source,
         shouldSubmit:
           this.props.submitOnChangeOf.includes('source') &&
           this.state.query !== '',
+        isSourceChanged: source !== DEFAULT_SEARCH_SOURCE
       },
       () => {
         clickEvent({
@@ -323,9 +360,10 @@ export default class SearchForm extends React.PureComponent {
         localStorage.setItem(
           LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
           this.state.source
-        );
+        );        
       }
     );
+  }
 
   handleSearchTypeChange = ({ currentTarget: { value } }) => {
     const { type: currentSearchType, query, source, displayGurmukhiKeyboard } = this.state;
@@ -353,7 +391,7 @@ export default class SearchForm extends React.PureComponent {
           shouldSubmit: isSearchTypeToAngSearchType ? false :
             this.props.submitOnChangeOf.includes('type') &&
             this.state.query !== '',
-          displayGurmukhiKeyboard: isShowKeyboard
+          displayGurmukhiKeyboard: isShowKeyboard,
         },
         () => {
           clickEvent({ action: ACTIONS.SEARCH_TYPE, label: newSearchType });
@@ -369,6 +407,46 @@ export default class SearchForm extends React.PureComponent {
         }
       )
     );
+  }
+
+  handleSearchWriterChange = ({target}) => {
+    const writer = target.value
+    this.setState({
+      writer,
+      shouldSubmit:
+        this.props.submitOnChangeOf.includes('writer') &&
+        this.state.query !== '',
+      isWriterChanged: writer !== DEFAULT_SEARCH_WRITER
+    },
+    () => {
+      clickEvent({
+        action: ACTIONS.SEARCH_WRITER,
+        label: this.state.writer,
+      });
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
+        this.state.writer
+      );
+    })
+  }
+
+  handleReset = (e) => {
+    e.preventDefault();
+    const { type } = this.state;
+    this.setState({
+      source: type === SEARCH_TYPES.ANG ? 'G' : DEFAULT_SEARCH_SOURCE, // For Ang type: default to G
+      writer: DEFAULT_SEARCH_WRITER,
+      isSourceChanged: false,
+      isWriterChanged: false,
+      shouldSubmit:
+        this.props.submitOnChangeOf.includes('source') &&
+        this.props.submitOnChangeOf.includes('writer') &&
+        this.state.query !== ''
+    },
+    () => {
+      localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE, this.state.source);
+      localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER);
+    })
   }
 
   handleSubmit = () => {

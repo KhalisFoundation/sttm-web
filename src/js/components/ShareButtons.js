@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
 import { showToast, copyToClipboard, shortenURL } from '../util';
 import { TEXTS } from '../constants';
@@ -11,6 +10,7 @@ import CopyAllIcon from './Icons/CopyAll';
 import WhatsAppIcon from './Icons/WhatsApp';
 import ClipboardIcon from './Icons/Clipboard';
 import PrinterIcon from './Icons/Printer';
+import { GearsIcon } from './Icons/CustomIcons';
 
 const handleWhatsapp = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
@@ -33,7 +33,7 @@ const copyShortUrl = () =>
     )
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-export const supportedMedia = ['print', 'copyAll', 'embed', 'whatsapp', 'copy'];
+export const supportedMedia = ['settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 class ShareButtons extends React.PureComponent {
   static defaultProps = {
@@ -45,6 +45,8 @@ class ShareButtons extends React.PureComponent {
     media: PropTypes.arrayOf(PropTypes.oneOf(supportedMedia)),
     onEmbedClick: PropTypes.func,
     onCopyAllClick: PropTypes.func,
+    toggleSettingsPanel: PropTypes.func,
+    settingIdRef: PropTypes.object
   };
 
   static handleShare = () => {
@@ -60,7 +62,7 @@ class ShareButtons extends React.PureComponent {
   };
 
   render() {
-    const { media, onEmbedClick, onCopyAllClick } = this.props;
+    const { media, onEmbedClick, onCopyAllClick, toggleSettingsPanel, settingIdRef } = this.props;
 
     if (media.length === 0) {
       return null;
@@ -108,10 +110,18 @@ class ShareButtons extends React.PureComponent {
       ),
       print: (
         <li key={4}>
-          <a id="print-shabad" onClick={window.print}>
+          <button id="print-shabad" onClick={window.print}>
             <PrinterIcon />
             <span className="sr-only">Print Shabad</span>
-          </a>
+          </button>
+        </li>
+      ),
+      settings: (
+        <li key={5}>
+          <button id="settings-icon" ref={settingIdRef} onClick={toggleSettingsPanel}>
+            <GearsIcon />
+            <span className="show-on-desktop settings-text-desktop">Settings</span>
+          </button>
         </li>
       ),
     };

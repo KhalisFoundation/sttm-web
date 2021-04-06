@@ -215,7 +215,8 @@ class Meta extends React.PureComponent {
     const contentType = isUnicode ? 'unicode' : 'gurmukhi'
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
-    const hukamnamaDate = new Date(nav.current || todayDate);
+    const hukamnamaDate = new Date(nav.current);
+    const maximumHukamnamaDate = new Date(todayDate);
     const hasAudioPlayer = isHukamnama
     // hukamnamaDate.getTime() == todayDate.getTime();
 
@@ -228,7 +229,7 @@ class Meta extends React.PureComponent {
             <>
               <div className="meta-hukamnama">
                 <div className="meta-hukamnama-left">
-                  <div>
+                  <div className="meta-hukamnama-left-row">
                     <DatePicker
                       isOpen={this.state.isCalendarOpen}
                       clearIcon={null}
@@ -240,7 +241,7 @@ class Meta extends React.PureComponent {
                       }}
                       onChange={this.goToParticularHukamnama}
                       value={hukamnamaDate}
-                      maxDate={hukamnamaDate}
+                      maxDate={maximumHukamnamaDate}
                       minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                       calendarIcon={<CalendarIcon width={20} />}
                     />
@@ -248,22 +249,22 @@ class Meta extends React.PureComponent {
                       e.preventDefault();
                       return this.setState(() => ({ isCalendarOpen: true }))
                     }}>
-                      Past Hukamnamas
+                      <span title="Past Hukamnamas">Archive</span>
                     </a>
                   </div>
                   <div className="meta-hukamnama-left-gotoshabad">
-                    <ForwardIcon />
+
                     <Link className="hukamnama-right-link" to={`/shabad?id=${info.shabadId}`}>
-                      {TEXTS.GO_TO_SHABAD}
+                      <ForwardIcon />{TEXTS.GO_TO_SHABAD}
                     </Link>
                   </div>
                 </div>
                 <h4>
-                  {TEXTS.HUKAMNAMA}, <span>{nav.current}</span>
+                  {TEXTS.HUKAMNAMA_HEADING}, <span>{nav.current}</span>
                 </h4>
                 <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
-                  <HeadphonesIcon />
-                  <p>{`Listen to today's hukamnama`}</p>
+
+                  <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to Today's Hukamnama">{`Today's Hukamnama`}</a></span>
                 </div>
               </div>
             </>
