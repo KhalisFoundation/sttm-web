@@ -434,7 +434,7 @@ export default class SearchForm extends React.PureComponent {
     e.preventDefault();
     const { type } = this.state;
     this.setState({
-      source: type === 5 ? 'G' : DEFAULT_SEARCH_SOURCE, // For Ang type: default to G
+      source: type === SEARCH_TYPES.ANG ? 'G' : DEFAULT_SEARCH_SOURCE, // For Ang type: default to G
       writer: DEFAULT_SEARCH_WRITER,
       isSourceChanged: false,
       isWriterChanged: false,
@@ -444,8 +444,8 @@ export default class SearchForm extends React.PureComponent {
         this.state.query !== ''
     },
     () => {
+      localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE, this.state.source);
       localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER);
-      localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE);
     })
   }
 
