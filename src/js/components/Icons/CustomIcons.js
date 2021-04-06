@@ -287,3 +287,22 @@ export const MicrophoneIcon = () => (
     </g>
   </svg>
 )
+
+export const VishraamStyleIcon = ({
+  className = '',
+  children,
+  ...props
+}) => (
+   <span
+    role="button"
+    className={`button-style ${className}`}
+    {...props}
+   >
+     {children}
+   </span>
+  );
+
+VishraamStyleIcon.propTypes = {  
+  className: PropTypes.string,
+  children: PropTypes.node
+};

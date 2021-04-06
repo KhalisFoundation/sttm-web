@@ -4,7 +4,7 @@ import Checkboxes, { Collection as CollectionProps } from '@/components/Checkbox
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
-import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, } from "../Icons/CustomIcons";
 import {
   TEXTS,
   FONT_OPTIONS,
@@ -119,6 +119,14 @@ const ControlsSettings = (props: any) => {
         return (
           <>XL</>
         )
+      case 'Vishraams - Colored':
+        return (
+          <VishraamStyleIcon className="colored">Colored</VishraamStyleIcon>
+        )
+      case 'Vishraams - Gradient':
+        return (
+          <VishraamStyleIcon className="gradient">Gradient</VishraamStyleIcon>
+        )
       default:
         return (
           <Times />
@@ -227,7 +235,7 @@ const ControlsSettings = (props: any) => {
                   <span
                     key={index}
                     data-options={collection.options}
-                    className={`settings-action-icon ${collection.checked ? 'active-setting' : ''}`}
+                    className={`${collection.checked ? 'active-setting' : ''}`}
                     onClick={(e) => {
                       e.preventDefault();
                       collection.action(e.currentTarget.getAttribute("data-options"));

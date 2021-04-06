@@ -125,6 +125,14 @@ $panel-width-560: 65vw;
 
   &-options {
     display: flex;
+
+    > span {
+      margin-right: 0.5rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
   &-2cols {
@@ -186,6 +194,45 @@ $panel-width-560: 65vw;
     color: $sttm-grey;
     font-weight: bold;
     position: relative;
+  }
+}
+
+.button-style {
+  border: 1px solid $sttm-lighter-grey;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  padding: 0.2rem;
+
+  &.colored {
+    background: $sttm-pure-white;
+    color: $sttm-orange;
+  }
+
+  &.gradient {
+    background:
+      linear-gradient(
+        to right,
+        rgba(229, 229, 229, 0) 20%,
+        rgba($sttm-vishraam-red, 0.7) 100%
+      );
+    color: $sttm-darkest-grey;
+  }
+
+  .dark-mode & {
+    background-color: inherit;
+    border: 1px solid $sttm-grey;
+
+    &.gradient {
+      color: $sttm-pure-white;
+    }
+  }
+
+  .active-setting & {
+    border-color: $sttm-black;
+
+    .dark-mode & {
+      border-color: $sttm-pure-white;
+    }
   }
 }
 
