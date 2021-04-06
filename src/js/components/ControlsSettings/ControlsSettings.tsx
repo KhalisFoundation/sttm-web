@@ -227,7 +227,7 @@ const ControlsSettings = (props: any) => {
       case 'label-options-custom':
         return (
           <div className="settings-item">
-            <span className="settings-text active-setting">{settingsObj.label}</span>
+            <span className={`settings-text ${settingsObj.checked ? 'active-setting' : ''}`}>{settingsObj.label}</span>
             <div className="flex-spacer"></div>
             <div className="settings-options">
               {
