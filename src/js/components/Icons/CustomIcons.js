@@ -198,11 +198,10 @@ AkhandPaathIcon.propTypes = iconPropTypes;
 export const ParagraphIcon = props => (
   <span
     onClick={props.onClick}
-    className={`custom-fa ${props.value ? 'enabled' : ''}`}>
+    className={props.className}>
     <svg
-      transform="scale(1.4)"
-      width="25px"
-      height="25px"
+      width="20"
+      height="20"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 96 96">
       <path d="M75.5 20.5H35c-8 0-14.5 6.5-14.5 14.5S27 49.6 35 49.6h11v25.9h3.7V24.2h7.4v51.3h3.7V24.2h14.6v-3.7zM46.1 45.9H35c-6 0-10.9-4.9-10.9-10.9S29 24.1 35 24.1h11v21.8z" />
@@ -288,3 +287,22 @@ export const MicrophoneIcon = () => (
     </g>
   </svg>
 )
+
+export const VishraamStyleIcon = ({
+  className = '',
+  children,
+  ...props
+}) => (
+   <span
+    role="button"
+    className={`button-style ${className}`}
+    {...props}
+   >
+     {children}
+   </span>
+  );
+
+VishraamStyleIcon.propTypes = {  
+  className: PropTypes.string,
+  children: PropTypes.node
+};

@@ -45,7 +45,6 @@ class Controls extends React.Component {
 
     this.setRef = this.setRef.bind(this);
     this.settingsRef = React.createRef();
-    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   state = {
@@ -59,17 +58,8 @@ class Controls extends React.Component {
 
   componentDidMount() {
     this.isChangeInControls = false;  
-    //window.addEventListener('click', this.handleClickOutside)  
   }
-
-  handleClickOutside(e) {    
-      console.log(this.wrapperRef, e.target, !this.wrapperRef.contains(e.target))
-    if ( this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-      console.log('Clicked Outside')
-      console.log(closeSettingsPanel)
-    }
-  }
-
+  
   componentDidUpdate(prevProps) {
     if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
       this.isChangeInControls = true;

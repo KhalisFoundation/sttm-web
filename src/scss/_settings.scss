@@ -1,3 +1,7 @@
+$panel-width: 20vw;
+$panel-width-900: 35vw;
+$panel-width-560: 65vw;
+
 .settings {
   &-panel {
     background: $sttm-pure-white;
@@ -11,7 +15,7 @@
     top: 0;
     transform-origin: top right;
     transition: 0.3s all ease-in-out;
-    width: 20vw;
+    width: $panel-width;
     z-index: 100;
 
     .dark-mode & {
@@ -21,20 +25,32 @@
     }
 
     @media screen and (max-width: 900px) {
-      width: 35vw;
+      width: $panel-width-900;
     }
 
     @media screen and (max-width: 560px) {
-      width: 65vw;
+      width: $panel-width-560;
     }
   }
 
   &-show {
-    transform: scaleX(1);
+    opacity: 1;
+    transform: translateX(0);
   }
 
   &-hide {
-    transform: scaleX(0);
+    $transform-width: $panel-width;
+
+    @media screen and (max-width: 900px) {
+      $transform-width: $panel-width-900;
+    }
+
+    @media screen and (max-width: 560px) {
+      $transform-width: $panel-width-560;
+    }
+
+    opacity: 0;
+    transform: translateX($transform-width);
   }
 
   &-header {
@@ -109,6 +125,14 @@
 
   &-options {
     display: flex;
+
+    > span {
+      margin-right: 0.5rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
   &-2cols {
@@ -170,6 +194,45 @@
     color: $sttm-grey;
     font-weight: bold;
     position: relative;
+  }
+}
+
+.button-style {
+  border: 1px solid $sttm-lighter-grey;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  padding: 0.2rem;
+
+  &.colored {
+    background: $sttm-pure-white;
+    color: $sttm-orange;
+  }
+
+  &.gradient {
+    background:
+      linear-gradient(
+        to right,
+        rgba(229, 229, 229, 0) 20%,
+        rgba($sttm-vishraam-red, 0.7) 100%
+      );
+    color: $sttm-darkest-grey;
+  }
+
+  .dark-mode & {
+    background-color: inherit;
+    border: 1px solid $sttm-grey;
+
+    &.gradient {
+      color: $sttm-pure-white;
+    }
+  }
+
+  .active-setting & {
+    border-color: $sttm-black;
+
+    .dark-mode & {
+      border-color: $sttm-pure-white;
+    }
   }
 }
 

@@ -1,12 +1,11 @@
 import {
   TRANSLATION_LANGUAGES,
   TRANSLITERATION_LANGUAGES,
-  // FONT_OPTIONS,
-  // VISRAAM,
   TEXTS,
   STEEK_LANGUAGES,
-  // SG_BAANIS,
-  // DEFAULT_SG_BAANI_LENGTH
+  SG_BAANIS,
+  DEFAULT_SG_BAANI_LENGTH,
+  DEFAULT_VISRAAM_STYLE,
 } from '@/constants';
 
 import {
@@ -16,48 +15,38 @@ import {
   isShowSehajPaathModeRoute,
 } from '@/util';
 
-import {
-  // LarivaarIcon,
-  // LarivaarAssistIcon,
+import {  
   PlusIcon,
   MinusIcon,
-  SizeControl,
-  // AlignCenterIcon,
-  // AlignLeftIcon,
-  // SplitViewIcon,
-  // ParagraphIcon,
-  // GearsIcon,
-  // DarkModeIcon,
-  // VishraamIcon,
+  SizeControl,  
 } from '@/components/Icons/CustomIcons';
 
-export interface SETTING_ACTIONS {
-  setTranslationLanguages: Function,
-  setTransliterationLanguages: Function,
-  resetDisplayOptions: Function,
-  resetFontOptions: Function,
-  toggleVisraams: Function,
-  toggleAutoScrollMode: Function,
-  toggleLarivaarOption: Function,
-  toggleLarivaarAssistOption: Function,
-  setFontSize: Function,
-  setTranslationFontSize: Function,
-  setSteekLanguages: Function,
-  setTransliterationFontSize: Function,
-  setLineHeight: Function,
-  toggleCenterAlignOption: Function,
-  toggleSplitViewOption: Function,
-  toggleDarkMode: Function,
-  toggleParagraphMode: Function,
-  toggleSehajPaathMode: Function,
-  toggleSettingsPanel: Function,
-  setVisraamSource: Function,
-  setVisraamStyle: Function,
-  changeFont: Function,
-  toggleAdvancedOptions: Function,
-  setLarivaarAssistStrength: Function,
-  setSgBaaniLength: Function,
-
+export interface ISettingActions {
+  setTranslationLanguages: () => {},
+  setTransliterationLanguages: () => {},
+  resetDisplayOptions: () => {},
+  resetFontOptions: () => {},
+  toggleVisraams: () => {},
+  toggleAutoScrollMode: () => {},
+  toggleLarivaarOption: () => {},
+  toggleLarivaarAssistOption: () => {},
+  setFontSize: (attr: any) => {},
+  setTranslationFontSize: (attr: any) => {},
+  setSteekLanguages: (attr: string[]) => {},
+  setTransliterationFontSize: () => {},
+  setLineHeight: () => {},
+  toggleCenterAlignOption: () => {},
+  toggleSplitViewOption: () => {},
+  toggleDarkMode: () => {},
+  toggleParagraphMode: () => {},
+  toggleSehajPaathMode: () => {},
+  toggleSettingsPanel: () => {},
+  setVisraamSource: () => {},
+  setVisraamStyle: () => {},
+  changeFont: () => {},
+  toggleAdvancedOptions: () => {},
+  setLarivaarAssistStrength: (attr: any) => {},
+  setSgBaaniLength: (attr: any) => {},
   location: {
     pathname: string,
   },
@@ -89,7 +78,7 @@ export interface SETTING_ACTIONS {
 export const HEADER_SETTINGS = ({
   toggleSettingsPanel,
   showSettingsPanel,
-}: SETTING_ACTIONS) => {
+}: ISettingActions) => {
   return [
     {
       type: 'header',
@@ -103,38 +92,36 @@ export const HEADER_SETTINGS = ({
 export const QUICK_SETTINGS = ({
   setTranslationLanguages,
   setTransliterationLanguages,
-  // resetDisplayOptions,
-  // resetFontOptions,
   toggleVisraams,
   toggleLarivaarOption,
   toggleLarivaarAssistOption,
-  // setFontSize,
   toggleCenterAlignOption,
   toggleSplitViewOption,
-  // toggleAdvancedOptions,
-  // toggleParagraphMode,
   toggleDarkMode,
-  sehajPaathMode,
+  toggleParagraphMode,
   toggleSehajPaathMode,
+  toggleAutoScrollMode,
   setSteekLanguages,
+  setSgBaaniLength,
+  setVisraamStyle,
   translationLanguages,
   transliterationLanguages,
-  toggleAutoScrollMode,
+  sehajPaathMode,
   autoScrollMode,
   visraams,
+  visraamStyle,
   larivaarAssist,
   larivaar,
-  // fontSize,
-  // paragraphMode,
   centerAlignGurbani,
   splitView,
-  // showAdvancedOptions,
   darkMode,
-  // location,
+  paragraphMode,
   steekLanguages,
-}: SETTING_ACTIONS) => {
+  sgBaaniLength,
+}: ISettingActions) => {
   const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
   const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
+  const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
 
   return [
     {
@@ -170,7 +157,53 @@ export const QUICK_SETTINGS = ({
           action: toggleLarivaarAssistOption
         },
       ]
-    },     
+    },
+    {
+      type: 'label-options-custom',
+      label: 'Vishraam Style',
+      checked: visraams,
+      collections: [
+        {
+          label: 'Vishraams - Colored',
+          options: 'colored-words',
+          checked: visraamStyle === 'colored-words' && visraams,
+          action: (selectedVisraamStyleValue: string) => {
+            setVisraamStyle(selectedVisraamStyleValue ? selectedVisraamStyleValue : DEFAULT_VISRAAM_STYLE)
+          }
+        },
+        {
+          label: 'Vishraams - Gradient',
+          options: 'gradient-bg',
+          checked: visraamStyle === 'gradient-bg' && visraams,
+          action: (selectedVisraamStyleValue: string) => {
+            setVisraamStyle(selectedVisraamStyleValue ? selectedVisraamStyleValue : DEFAULT_VISRAAM_STYLE)
+          }
+        },
+      ]
+    },  
+     isSundarGutkaRoute ? {
+      type: 'label-options-custom',
+      label: 'Baanis Length',
+      checked: true,
+      collections:         
+        SG_BAANIS.map(({name: lengthName, length, value: lengthValue}) => (
+          {
+            label: lengthName,
+            options: lengthValue,
+            checked: length === sgBaaniLength,
+            action: (selectedSgBaaniValue: string) => {              
+              const {length: selectedLength} = SG_BAANIS.find(({ value }) => value === parseInt(selectedSgBaaniValue))
+              setSgBaaniLength(selectedLength ? selectedLength : DEFAULT_SG_BAANI_LENGTH);
+            },
+          }
+        ))
+    } : {},
+    isSundarGutkaRoute ? {
+      type: 'toggle-option',
+      label: "Paragraph",
+      checked: paragraphMode,
+      action: toggleParagraphMode
+    } : {},   
     {
       type: 'toggle-option',
       label: 'Dark Mode',
@@ -262,7 +295,7 @@ export const ADVANCED_SETTINGS = ({
   setTransliterationFontSize,
   translationFontSize,
   transliterationFontSize,
-}: SETTING_ACTIONS) => {
+}: ISettingActions) => {
 
   return [
     {
