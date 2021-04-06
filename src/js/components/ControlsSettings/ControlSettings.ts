@@ -5,6 +5,7 @@ import {
   STEEK_LANGUAGES,
   SG_BAANIS,
   DEFAULT_SG_BAANI_LENGTH,
+  DEFAULT_VISRAAM_STYLE,
 } from '@/constants';
 
 import {
@@ -102,11 +103,13 @@ export const QUICK_SETTINGS = ({
   toggleAutoScrollMode,
   setSteekLanguages,
   setSgBaaniLength,
+  setVisraamStyle,
   translationLanguages,
   transliterationLanguages,
   sehajPaathMode,
   autoScrollMode,
   visraams,
+  visraamStyle,
   larivaarAssist,
   larivaar,
   centerAlignGurbani,
@@ -155,9 +158,33 @@ export const QUICK_SETTINGS = ({
         },
       ]
     },
+    {
+      type: 'label-options-custom',
+      label: 'Vishraam Style',
+      checked: visraams,
+      collections: [
+        {
+          label: 'Vishraams - Colored',
+          options: 'colored-words',
+          checked: visraamStyle === 'colored-words' && visraams,
+          action: (selectedVisraamStyleValue: string) => {
+            setVisraamStyle(selectedVisraamStyleValue ? selectedVisraamStyleValue : DEFAULT_VISRAAM_STYLE)
+          }
+        },
+        {
+          label: 'Vishraams - Gradient',
+          options: 'gradient-bg',
+          checked: visraamStyle === 'gradient-bg' && visraams,
+          action: (selectedVisraamStyleValue: string) => {
+            setVisraamStyle(selectedVisraamStyleValue ? selectedVisraamStyleValue : DEFAULT_VISRAAM_STYLE)
+          }
+        },
+      ]
+    },  
      isSundarGutkaRoute ? {
       type: 'label-options-custom',
       label: 'Baanis Length',
+      checked: true,
       collections:         
         SG_BAANIS.map(({name: lengthName, length, value: lengthValue}) => (
           {
