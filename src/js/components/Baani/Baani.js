@@ -148,9 +148,8 @@ export default class Baani extends React.PureComponent {
     );
   };
 
-  createParagraphedGurbani = () => {
-    const paragraphedGurbani = {};
-    const { gurbani } = this.props;
+  createParagraphedGurbani = (gurbani) => {
+    const paragraphedGurbani = {};    
     gurbani.forEach((shabad) => {
       if (!paragraphedGurbani[shabad.paragraph]) {
         paragraphedGurbani[shabad.paragraph] = [];
