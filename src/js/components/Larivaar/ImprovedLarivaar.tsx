@@ -31,7 +31,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   query,
   visraam,
   visraams,
-  isShowMahankoshTooltip = false
+  isShowMahankoshTooltip = false,
 }) => {
   const dispatch = useDispatch();
   const {
@@ -44,6 +44,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
   const isMahankoshTooltipExplaination = useSelector(state => state.isMahankoshTooltipExplaination);
 
+  // closure implementation
   const handleMahankoshMouseOver = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
       ReactTooltip.rebuild();
@@ -75,6 +76,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
   const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
 
+  // If larivaar is disabled
   if (!enable) {
     return (
       <HighlightedSearchResult
