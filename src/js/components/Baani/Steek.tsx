@@ -13,13 +13,16 @@ const Steek: React.FC<ISteekProps> = ({
 	type,
 	shabad,
 	unicode,
+	fontSize: _fontSize,
 }) => {
+	const defaultFontSize = '18px';
 	const text = steekMap[type](shabad);
+	const fontSize = _fontSize ? _fontSize + 'em' : defaultFontSize;
 	if (!text)
 		return null;
 
 	return (
-		<blockquote className={`steek ${type}`}>
+		<blockquote style={{fontSize}} className={`steek ${type}`}>
 			{unicode
 				? (text.unicode && <div className="unicode">{text.unicode}</div>)
 				: (text.gurmukhi && <div className="gurlipi">{text.gurmukhi}</div>)}
