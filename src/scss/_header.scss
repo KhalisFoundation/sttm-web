@@ -255,10 +255,18 @@
   }
 
   > li {
+    display: flex;
+
     > a {
       display: block;
       padding: 10px;
       width: 100%;
+    }
+
+    > button {
+      background: $sttm-orange;
+      border-radius: 50%;
+      flex-basis: 50px;
     }
   }
 

@@ -112,7 +112,7 @@ class Autocomplete extends Component {
             .then(suggestions => {
 
               // if any suggestion exists, only then add this as final result item
-              if (isShowFullResults && suggestions.length > 0) {
+              if (isShowFullResults && suggestions.length) {
                 suggestions.push({
                   name: 'Show full results',
                   url: toSearchURL({
@@ -197,19 +197,23 @@ class Autocomplete extends Component {
                       {suggestion.name}
                     </Link>
                     :
-                    <a href={suggestion.url}>
-                      <Larivaar
-                        larivaarAssist={false}
-                        enable={false}
-                        unicode={false}
-                        highlightIndex={suggestion.highlightIndex}
-                        query={suggestion.query}
-                        type={searchOptions.type}
-                      >
-                        {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
-                      </Larivaar>
-                      {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                    </a>}
+                    <>
+                      <a href={suggestion.url}>
+                        <Larivaar
+                          larivaarAssist={false}
+                          enable={false}
+                          unicode={false}
+                          highlightIndex={suggestion.highlightIndex}
+                          query={suggestion.query}
+                          type={searchOptions.type}
+                        >
+                          {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
+                        </Larivaar>
+                        {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
+                      </a>
+                      <button>+</button>
+                    </>
+                    }
                 </li>
               );
             })}
