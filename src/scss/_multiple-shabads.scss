@@ -1,0 +1,15 @@
+.multiple-shabads-display {
+  background: $sttm-dark-grey;
+  box-shadow: 0 0 12px -4px $sttm-black;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  left: 0;
+  overflow-x: hidden;
+  padding: 0.2em;
+  position: fixed;
+  top: 0;
+  transform-origin: top left;
+  transition: 0.3s all ease-in-out;
+  width: 25vw;
+}
