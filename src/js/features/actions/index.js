@@ -142,6 +142,9 @@ export const setSplitView = createAction(SET_SPLIT_VIEW);
 export const SET_SG_BAANI_LENGTH = 'SET_SG_BAANI_LENGTH';
 export const setSgBaaniLength = createAction(SET_SG_BAANI_LENGTH);
 
+export const SET_MULTIPLE_SHABADS = 'SET_MULTIPLE_SHABADS';
+export const setMultipleShabads = createAction(SET_MULTIPLE_SHABADS);
+
 export const SET_PREFETCH_ANG = 'SET_PREFETCH_ANG';
 export const SET_LOADING_ANG = 'SET_LOADING_ANG';
 export const SET_MAHANKOSH_TOOLTIP_ACTIVE = 'SET_MAHANKOSH_TOOLTIP_ACTIVE';

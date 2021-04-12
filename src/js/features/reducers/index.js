@@ -40,6 +40,7 @@ import {
   SET_SG_BAANI_LENGTH,
   SET_ERROR,
   CHANGE_FONT,
+  SET_MULTIPLE_SHABADS,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -64,6 +65,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
   LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
+  LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -581,6 +583,19 @@ export default function reducer(state, action) {
       return {
         ...state,
         centerAlignGurbani,
+      };
+    }
+
+    case SET_MULTIPLE_SHABADS: {
+      const multipleShabads = action.payload;
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+        multipleShabads
+      );
+      return {
+        ...state,
+        multipleShabads,
       };
     }
 

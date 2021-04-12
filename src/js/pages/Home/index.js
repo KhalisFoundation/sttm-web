@@ -89,6 +89,7 @@ export default class Home extends React.PureComponent {
           handleSearchTypeChange,
           handleSearchWriterChange,
           handleReset,
+          handleMultipleShabads,
         }) => (
             <React.Fragment>
               <div className="row" id="content-root">
@@ -175,6 +176,7 @@ export default class Home extends React.PureComponent {
                       getSuggestions={getShabadList}
                       searchOptions={{ type, source, writer }}
                       value={query}
+                      handleMultipleShabads
                     />
                     <div className="search-options">
                       <div className="search-option">

@@ -197,7 +197,8 @@ export default class SearchForm extends React.PureComponent {
       handleSearchWriterChange,
       handleSubmit,
       handleKeyDown,
-      handleReset
+      handleReset,
+      handleMultipleShabads,
     } = this;
 
     const { type, query } = this.state;
@@ -236,7 +237,8 @@ export default class SearchForm extends React.PureComponent {
       handleSearchWriterChange,
       handleSubmit,
       handleKeyDown,
-      handleReset
+      handleReset,
+      handleMultipleShabads,
     });
 
   }
@@ -446,6 +448,14 @@ export default class SearchForm extends React.PureComponent {
     () => {
       localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE, this.state.source);
       localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER);
+    })
+  }
+
+  handleMultipleShabads= (e) => {
+    e.preventDefault();
+    this.setState({
+      ...this.state,
+      multipleShabads: [{}]
     })
   }
 

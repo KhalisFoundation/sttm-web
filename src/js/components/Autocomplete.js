@@ -10,6 +10,7 @@ class Autocomplete extends Component {
     getSuggestions: PropTypes.func.isRequired,
     searchOptions: PropTypes.object.isRequired,
     value: PropTypes.string.isRequired,
+    handleMultipleShabads: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -157,6 +158,7 @@ class Autocomplete extends Component {
         isShowFullResults = false,
         value,
         searchOptions,
+        handleMultipleShabads,
       }
     } = this;
 
@@ -211,7 +213,7 @@ class Autocomplete extends Component {
                         </Larivaar>
                         {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
                       </a>
-                      <button>+</button>
+                      <button onClick={handleMultipleShabads}>+</button>
                     </>
                     }
                 </li>

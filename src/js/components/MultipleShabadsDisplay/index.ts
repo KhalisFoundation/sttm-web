@@ -1,1 +1,1 @@
-export * from './MultipleShabadsDisplay'
+export {default} from './MultipleShabadsDisplay'
