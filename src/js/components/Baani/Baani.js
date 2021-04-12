@@ -148,9 +148,8 @@ export default class Baani extends React.PureComponent {
     );
   };
 
-  createParagraphedGurbani = () => {
-    const paragraphedGurbani = {};
-    const { gurbani } = this.props;
+  createParagraphedGurbani = (gurbani) => {
+    const paragraphedGurbani = {};    
     gurbani.forEach((shabad) => {
       if (!paragraphedGurbani[shabad.paragraph]) {
         paragraphedGurbani[shabad.paragraph] = [];
@@ -419,10 +418,11 @@ export default class Baani extends React.PureComponent {
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
     const translationLanguages = this.getTranslationLanguages();
     const { selectedWord, selectedWordIndex, selectedLine } = this.state;
-
+    let lineIndex = 0;
+    
     return (
       <div className={`${mixedViewBaaniClass} ${paragraphModeClass}`}>
-        {Object.entries(normalizedGurbani).map(([idx, shabads]) => {
+        {Object.entries(normalizedGurbani).map(([idx, shabads]) => {          
           const isMiddleParagraph = idx == Math.ceil(totalParagraphs / 2);
           const isFirstParagraph = idx == totalParagraphs;
           const middleParagraphAttributes = isFirstParagraph
@@ -450,18 +450,9 @@ export default class Baani extends React.PureComponent {
               ? prefetchAng
               : changeAng({ history, source, ang });
           }
-          return (
-            <MahankoshContext.Provider
-              key={idx}
-              value={{
-                currentLine: idx,
-                selectedLine,
-                selectedWord,
-                selectedWordIndex,
-                setMahankoshInformation: this.setMahankoshInformation,
-              }}
-            >
+          return (           
               <Wrapper
+                key={idx}
                 {...firstParagraphAttributes}
                 {...middleParagraphAttributes}
                 onChange={handleChange}
@@ -474,18 +465,34 @@ export default class Baani extends React.PureComponent {
                   isParagraphMode ? undefined : this.showSelectionOptions
                 } // In paragraph mode, we are currently not showing social Share
                 onMouseDown={isParagraphMode ? undefined : this.removeSelection}
-                className={`${mixedViewBaaniClass}-wrapper${paragraphModeClass}`}
+                className={`${mixedViewBaaniClass}-wrapper ${paragraphModeClass}`}
               >
                 <div
                   className={`${mixedViewBaaniClass}-paragraph ${paragraphModeClass}`}
                 >
-                  {shabads.map((shabad) =>
-                    this.createShabadLine(
-                      shabad,
-                      this.getBaniLine(shabad),
-                      true
-                    )
-                  )}
+                  {
+                    shabads.map((shabad) => {
+                      lineIndex++;
+                       return (<MahankoshContext.Provider
+                          key={lineIndex}
+                          value={{
+                            currentLine: lineIndex,
+                            selectedLine,
+                            selectedWord,
+                            selectedWordIndex,
+                            setMahankoshInformation: this.setMahankoshInformation,
+                          }}
+                        >
+                        {
+                          this.createShabadLine(
+                            shabad,
+                            this.getBaniLine(shabad),
+                            true
+                          )    
+                        }
+                      </MahankoshContext.Provider>)
+                    })
+                  }
                 </div>
                 <div
                   className={`${mixedViewBaaniClass}-transliteration ${paragraphModeClass}`}
@@ -547,8 +554,7 @@ export default class Baani extends React.PureComponent {
                     </div>
                   ))}
                 </div>
-              </Wrapper>
-            </MahankoshContext.Provider>
+              </Wrapper>            
           )
         })
         }

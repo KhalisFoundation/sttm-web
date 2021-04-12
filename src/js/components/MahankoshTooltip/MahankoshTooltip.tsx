@@ -11,12 +11,12 @@ import {
 } from '@/features/actions';
 
 interface IMahankoshTooltipProps {
-  tooltipRef: React.Ref<any>,
-  tooltipId: string
-  gurbaniWord: string
-  mahankoshExplaination: IMahankoshExplaination[]
-  clearMahankoshInformation: () => {}
-  isFetchingMahankoshExplaination: boolean
+  tooltipRef: React.Ref<any>;
+  tooltipId: string;
+  gurbaniWord: string;
+  mahankoshExplaination: IMahankoshExplaination[];
+  clearMahankoshInformation: () => {};
+  isFetchingMahankoshExplaination: boolean;
 }
 
 export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
