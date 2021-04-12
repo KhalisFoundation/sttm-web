@@ -298,7 +298,7 @@ const ControlsSettings = (props: any) => {
       </div>
       <div className="settings-advance">
         <div className="settings-item">
-          <span className="settings-heading">Fonts & Sizes</span>
+          <span className="settings-heading">Fonts &amp; Sizes</span>
         </div>
         <div className="settings-items pt-0">
           <>
