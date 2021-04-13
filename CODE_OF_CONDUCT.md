@@ -35,6 +35,7 @@ Examples of unacceptable behavior include:
   address, without their explicit permission
 * Other conduct which could reasonably be considered inappropriate in a
   professional setting
+* No inflammatory or derogatory remarks towards Sikhism, or any other faith or religion.
 
 ## Enforcement Responsibilities
 
