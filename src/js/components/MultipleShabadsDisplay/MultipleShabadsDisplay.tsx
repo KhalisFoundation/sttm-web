@@ -2,14 +2,26 @@
 import React from 'react'
 
 interface IShabadProps {
+  id: number,
   shabadId: number;
   verseId: number;
   verse: string;
 }
 interface IMultipleShabadsDisplayProps {
-  shabads: IShabadProps[]
+  shabads: IShabadProps[];
+  isMultipleShabadsRender: boolean;
+  handleClearShabads: () => {};
+  removeMultipleShabads: (id: number) => {};
 }
-const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({ shabads }) => {
+const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({ shabads, handleClearShabads, removeMultipleShabads }) => {
+
+  const handleRemoveShabad = (e: React.MouseEvent<HTMLElement>) => {
+    const { id } = e.currentTarget.dataset;
+    removeMultipleShabads(parseInt(id));
+  }
+
+  const handleDisplayShabads = () => { }
+
   return (
     <>
       <div className="multiple-shabads-display">
@@ -17,22 +29,20 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({ shabad
 
         <ul>
           {
-            shabads?.map(({ verse }, index) => {
+            shabads.map(({ verse, verseId }) => {
               return (
-                <li key={index}>
-                  <span>D</span>
+                <li key={verseId}>
                   {verse}
-                  <button>-</button>
+                  <button data-id={verseId} onClick={handleRemoveShabad}>-</button>
                 </li>
               )
             })
           }
-          <li></li>
         </ul>
 
         <div className="multiple-shabads-display--footer">
-          <button>Clear</button>
-          <button>Display</button>
+          <button onClick={handleClearShabads}>Clear</button>
+          <button onClick={handleDisplayShabads}>Display</button>
         </div>
       </div>
     </>

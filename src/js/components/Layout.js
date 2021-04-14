@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from './Header';
 import Banner from './Banner';
-import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
@@ -13,7 +12,7 @@ import {
   OFFLINE_COLOR,
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
-import { setOnlineMode, setMultipleShabads } from '../features/actions';
+import { setOnlineMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 
 import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute } from '../util';
@@ -21,8 +20,7 @@ import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute } from '.
 class Layout extends React.PureComponent {
   static defaultProps = {
     isHome: false,
-    title: DEFAULT_PAGE_TITLE,
-    multipleShabads: []
+    title: DEFAULT_PAGE_TITLE
   };
 
   static propTypes = {
@@ -39,7 +37,6 @@ class Layout extends React.PureComponent {
     isAng: PropTypes.bool,
     multipleShabads: PropTypes.array,
     setOnlineMode: PropTypes.func.isRequired,
-    setMultipleShabads: PropTypes.func.isRequired,
   };
 
   state = {
@@ -83,7 +80,6 @@ class Layout extends React.PureComponent {
       isHome = false,
       isController = false,
       autoScrollMode,
-      multipleShabads,
       location: { pathname = '/' } = {},
       ...props
     } = this.props;
@@ -102,8 +98,6 @@ class Layout extends React.PureComponent {
       }
     }
 
-    ///const multipleShabads = [{verseId: 875, shabadId: 72, verse: "ਸਾਧੂ ਸਤਗੁਰੁ ਜੇ ਮਿਲੈ ਤਾ ਪਾਈਐ ਗੁਣੀ ਨਿਧਾਨੁ ॥੧॥"}, {verseId: 1806, shabadId: 130, verse: "ਮਿਹਰ ਕਰੇ ਜਿਸੁ ਮਿਹਰਵਾਨੁ ਤਾਂ ਕਾਰਜੁ ਆਵੈ ਰਾਸਿ ॥੩॥"}]
-
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner />
@@ -120,8 +114,6 @@ class Layout extends React.PureComponent {
         ) : (
             children
           )}
-
-        <MultipleShabadsDisplay shabads={multipleShabads} />
 
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
@@ -193,9 +185,8 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode, autoScrollMode, }) => ({ online, darkMode, autoScrollMode }),
+  ({ online, darkMode, autoScrollMode }) => ({ online, darkMode, autoScrollMode }),
   {
-    setOnlineMode,
-    setMultipleShabads,
+    setOnlineMode
   }
 )(Layout);

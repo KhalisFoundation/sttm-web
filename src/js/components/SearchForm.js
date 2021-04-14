@@ -17,6 +17,7 @@ import {
   DEFAULT_SEARCH_WRITERS,
 } from '@/constants';
 import { getNumberFromLocalStorage, clickEvent, ACTIONS, getWriterList } from '@/util';
+import { addMultipleShabads } from '@/features/actions';
 
 /**
  *
@@ -47,6 +48,7 @@ export default class SearchForm extends React.PureComponent {
    * @property {function} handleSearchWriterChange
    * @property {function} handleReset
    * @property {function} handleSubmit
+   * @property {function} handleMultipleShabads
    *
    * @typedef {object} SearchFormProps
    * @property {SearchFormRenderProps => React.Element} children as a function
@@ -448,14 +450,6 @@ export default class SearchForm extends React.PureComponent {
     () => {
       localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE, this.state.source);
       localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER);
-    })
-  }
-
-  handleMultipleShabads= (e) => {
-    e.preventDefault();
-    this.setState({
-      ...this.state,
-      multipleShabads: [{}]
     })
   }
 

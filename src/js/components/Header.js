@@ -33,6 +33,7 @@ class Header extends React.PureComponent {
     }),
     history: PropTypes.shape({ push: PropTypes.func }),
     toggleSettingsPanel: PropTypes.func,
+    setMultipleShabads: PropTypes.func,
   };
 
   state = {
@@ -156,7 +157,7 @@ class Header extends React.PureComponent {
               handleSearchTypeChange,
               handleSearchWriterChange,
               handleSubmit,
-              handleReset
+              handleReset,
             }) => {
 
               return (
@@ -351,7 +352,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({}) => ({})
 
 const mapDispatchToProps = {
   toggleSettingsPanel,

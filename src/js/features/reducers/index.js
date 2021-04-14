@@ -41,6 +41,8 @@ import {
   SET_ERROR,
   CHANGE_FONT,
   SET_MULTIPLE_SHABADS,
+  CLEAR_MULTIPLE_SHABADS,
+  REMOVE_MULTIPLE_SHABADS,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -587,7 +589,36 @@ export default function reducer(state, action) {
     }
 
     case SET_MULTIPLE_SHABADS: {
-      const multipleShabads = action.payload;
+      const newShabad = action.payload;      
+      const multipleShabads = state.multipleShabads.findIndex(e=>e.verseId === newShabad.verseId) === -1 ? [...state.multipleShabads, newShabad] : [...state.multipleShabads]
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+        JSON.stringify(multipleShabads)
+      );
+      return {
+        ...state,
+        multipleShabads,
+      };
+    }
+    
+    case REMOVE_MULTIPLE_SHABADS: {
+      const id = parseInt(action.payload);
+      const multipleShabads = state.multipleShabads.filter(shabad => shabad.id !== id)
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+        JSON.stringify(multipleShabads)
+      );
+
+      return {
+        ...state,
+        multipleShabads,
+      };
+    }
+
+    case CLEAR_MULTIPLE_SHABADS: {
+      const multipleShabads = [];            
 
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,

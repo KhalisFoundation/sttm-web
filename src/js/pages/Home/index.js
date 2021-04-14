@@ -2,10 +2,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../../constants';
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
+
 
 import { EnhancedGurmukhiKeyboard } from '@/components/EnhancedGurmukhiKeyboard';
 import SehajPaathLink from '@/components/SehajPaathLink';
@@ -16,7 +18,10 @@ import CrossIcon from '@/components/Icons/Times';
 import KeyboardIcon from '@/components/Icons/Keyboard';
 import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+import MultipleShabadsDisplay from '@/components/MultipleShabadsDisplay';
 import Reset from '@/components/Icons/Reset';
+
+import { setMultipleShabads, clearMultipleShabads, removeMultipleShabads } from '../../features/actions';
 /**
  *
  *
@@ -24,7 +29,7 @@ import Reset from '@/components/Icons/Reset';
  * @class Home
  * @extends {React.PureComponent}
  */
-export default class Home extends React.PureComponent {
+class Home extends React.PureComponent {
   static propTypes = {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
@@ -58,6 +63,7 @@ export default class Home extends React.PureComponent {
    * Functional component
    */
   render() {
+    const { multipleShabads, setMultipleShabads, clearMultipleShabads, removeMultipleShabads } = this.props;
     const { showDoodle, doodleData } = this.state;
         
     return (
@@ -89,7 +95,6 @@ export default class Home extends React.PureComponent {
           handleSearchTypeChange,
           handleSearchWriterChange,
           handleReset,
-          handleMultipleShabads,
         }) => (
             <React.Fragment>
               <div className="row" id="content-root">
@@ -176,7 +181,7 @@ export default class Home extends React.PureComponent {
                       getSuggestions={getShabadList}
                       searchOptions={{ type, source, writer }}
                       value={query}
-                      handleMultipleShabads
+                      handleMultipleShabads={setMultipleShabads}
                     />
                     <div className="search-options">
                       <div className="search-option">
@@ -260,6 +265,11 @@ export default class Home extends React.PureComponent {
                   <p className="doodle-credit">Special thanks to {doodleData['SourceText']}</p>
                 </a>
               )}
+              <MultipleShabadsDisplay 
+                shabads={multipleShabads}
+                handleClearShabads={clearMultipleShabads}
+                removeMultipleShabads={removeMultipleShabads}
+              />     
             </React.Fragment>
           )}
       </SearchForm>
@@ -271,3 +281,12 @@ export default class Home extends React.PureComponent {
     this.fetchDoodle();
   }
 }
+
+export default connect(
+  ({ multipleShabads }) => ({ multipleShabads }),
+  {
+    setMultipleShabads,
+    clearMultipleShabads,
+    removeMultipleShabads,
+  }
+)(Home);
