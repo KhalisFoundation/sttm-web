@@ -181,7 +181,7 @@ class Home extends React.PureComponent {
                       getSuggestions={getShabadList}
                       searchOptions={{ type, source, writer }}
                       value={query}
-                      handleMultipleShabads={setMultipleShabads}
+                      setMultipleShabads={setMultipleShabads}
                     />
                     <div className="search-options">
                       <div className="search-option">
@@ -269,6 +269,7 @@ class Home extends React.PureComponent {
                 shabads={multipleShabads}
                 handleClearShabads={clearMultipleShabads}
                 removeMultipleShabads={removeMultipleShabads}
+                setMultipleShabads={setMultipleShabads}
               />     
             </React.Fragment>
           )}

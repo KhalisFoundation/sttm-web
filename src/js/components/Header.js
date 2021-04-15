@@ -33,7 +33,6 @@ class Header extends React.PureComponent {
     }),
     history: PropTypes.shape({ push: PropTypes.func }),
     toggleSettingsPanel: PropTypes.func,
-    setMultipleShabads: PropTypes.func,
   };
 
   state = {

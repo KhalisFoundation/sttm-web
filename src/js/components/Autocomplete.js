@@ -10,7 +10,7 @@ class Autocomplete extends Component {
     getSuggestions: PropTypes.func.isRequired,
     searchOptions: PropTypes.object.isRequired,
     value: PropTypes.string.isRequired,
-    handleMultipleShabads: PropTypes.func,
+    setMultipleShabads: PropTypes.func,
   };
 
   constructor(props) {
@@ -151,8 +151,9 @@ class Autocomplete extends Component {
 
   handleAddShabads(e) {
     e.preventDefault();
-    const {verseid: verseId, shabadid: shabadId, verse} = e.target.dataset    
-    this.props.handleMultipleShabads({verseId, shabadId, verse})
+    const {id, shabadid, verse} = e.currentTarget.dataset    
+    console.log({id, shabadid, verse})
+    this.props.setMultipleShabads({id: parseInt(id), shabadId: parseInt(shabadid), verse})
   }
 
   render() {
@@ -221,7 +222,7 @@ class Autocomplete extends Component {
                         {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
                       </a>
                       <button 
-                        data-verseid={suggestion.verseId}
+                        data-id={suggestion.verseId}
                         data-shabadid={suggestion.shabadId}
                         data-verse={suggestion.verse}
                       onClick={this.handleAddShabads}>+</button>

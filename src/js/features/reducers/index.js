@@ -590,7 +590,8 @@ export default function reducer(state, action) {
 
     case SET_MULTIPLE_SHABADS: {
       const newShabad = action.payload;      
-      const multipleShabads = state.multipleShabads.findIndex(e=>e.verseId === newShabad.verseId) === -1 ? [...state.multipleShabads, newShabad] : [...state.multipleShabads]
+      console.log(newShabad)
+      const multipleShabads = state.multipleShabads.findIndex(e => e.id === newShabad.id) === -1 ? [...state.multipleShabads, newShabad] : [...state.multipleShabads]
 
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
@@ -603,7 +604,7 @@ export default function reducer(state, action) {
     }
     
     case REMOVE_MULTIPLE_SHABADS: {
-      const id = parseInt(action.payload);
+      const id = action.payload;
       const multipleShabads = state.multipleShabads.filter(shabad => shabad.id !== id)
 
       saveToLocalStorage(
