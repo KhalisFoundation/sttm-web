@@ -152,7 +152,6 @@ class Autocomplete extends Component {
   handleAddShabads(e) {
     e.preventDefault();
     const {id, shabadid, verse} = e.currentTarget.dataset    
-    console.log({id, shabadid, verse})
     this.props.setMultipleShabads({id: parseInt(id), shabadId: parseInt(shabadid), verse})
   }
 
@@ -167,6 +166,7 @@ class Autocomplete extends Component {
         isShowFullResults = false,
         value,
         searchOptions,
+        isHome,
       }
     } = this;
 
@@ -220,12 +220,12 @@ class Autocomplete extends Component {
                           {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                         </Larivaar>
                         {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                      </a>
+                      </a>                      
                       <button 
                         data-id={suggestion.verseId}
                         data-shabadid={suggestion.shabadId}
                         data-verse={suggestion.verse}
-                      onClick={this.handleAddShabads}>+</button>
+                        onClick={this.handleAddShabads}><span>+</span></button> 
                     </>
                     }
                 </li>

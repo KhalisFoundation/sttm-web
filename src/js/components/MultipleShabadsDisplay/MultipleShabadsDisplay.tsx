@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs'
 import { toMultipleShabadsURL } from '@/util/url/to-multiple-shabad-url';
+import BarsIcon from '../Icons/Bars';
+import { MinusIcon } from '../Icons/CustomIcons';
 
 interface IShabadProps {
   id: number;
@@ -23,7 +25,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   removeMultipleShabads,
 }) => {
 
-  const [sortableState, setSortableState] = React.useState<IShabadProps[]>(shabads);
+  const [sortableState, setSortableState] = useState<IShabadProps[]>(shabads);
   const history = useHistory();
 
   const onRemove = (e: React.MouseEvent<HTMLElement>) => {
@@ -33,12 +35,12 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   }
 
   const handleDisplayShabads = () => {
-    const shabadIds = sortableState.map(state => state.id)
-    history.push(toMultipleShabadsURL({ shabadIds }));
+    const shabadIds = sortableState.map(state => state.shabadId)
+    shabadIds.length && history.push(toMultipleShabadsURL({ shabadIds }));
   }
 
   // Update Local State {sortableState} after shabads get Updated
-  React.useEffect(() => {
+  useEffect(() => {
     setSortableState(shabads)
   }, [shabads])
 
@@ -49,15 +51,19 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
       <ReactSortable tag="ul" list={sortableState} setList={setSortableState}>
         {sortableState?.map(({ verse, id }) => (
           <li key={id}>
-            {verse}
-            <button data-id={id} onClick={onRemove}>-</button>
+            <BarsIcon fill="#fff" />
+            <div>{verse}</div>
+            <button
+              title="Remove"
+              data-id={id}
+              onClick={onRemove}>-</button>
           </li>
         ))}
       </ReactSortable>
 
       <div className="multiple-shabads-display--footer">
-        <button onClick={handleClearShabads}>Clear</button>
-        <button onClick={handleDisplayShabads}>Display</button>
+        <button className="btn btn-secondary" onClick={handleClearShabads}>Clear</button>
+        <button className="btn btn-primary" onClick={handleDisplayShabads}>Display</button>
       </div>
     </div>
   )

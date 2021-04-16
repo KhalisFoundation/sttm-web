@@ -18,7 +18,8 @@ import {
   toSearchURL,
   getQueryParams,
   getShabadList,
-  reformatSearchTypes
+  reformatSearchTypes,
+  isShowSehajPaathModeRoute
 } from '@/util';
 class Header extends React.PureComponent {
   static defaultProps = { isHome: false, location: { search: '' } };
