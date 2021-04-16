@@ -1,29 +1,41 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs'
+import { toMultipleShabadsURL } from '@/util/url/to-multiple-shabad-url';
 
 interface IShabadProps {
   id: number;
   shabadId: number;
   verse: string;
 }
+
 interface IMultipleShabadsDisplayProps {
   shabads: IShabadProps[];
   handleClearShabads: () => {};
-  removeMultipleShabads: (id: string | undefined) => {};
+  removeMultipleShabads: (id: number) => {};
   setMultipleShabads: () => {}
 }
 
-const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({ shabads, handleClearShabads, removeMultipleShabads, setMultipleShabads }) => {
+const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
+  shabads,
+  handleClearShabads,
+  removeMultipleShabads,
+}) => {
 
   const [sortableState, setSortableState] = React.useState<IShabadProps[]>(shabads);
+  const history = useHistory();
 
   const onRemove = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
     const { id } = e.currentTarget.dataset;
-    removeMultipleShabads(id);
+    removeMultipleShabads(parseInt(id));
   }
 
-  const handleDisplayShabads = () => { }
+  const handleDisplayShabads = () => {
+    const shabadIds = sortableState.map(state => state.id)
+    history.push(toMultipleShabadsURL({ shabadIds }));
+  }
 
   // Update Local State {sortableState} after shabads get Updated
   React.useEffect(() => {

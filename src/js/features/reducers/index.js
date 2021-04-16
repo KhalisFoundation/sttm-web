@@ -590,13 +590,13 @@ export default function reducer(state, action) {
 
     case SET_MULTIPLE_SHABADS: {
       const newShabad = action.payload;      
-      console.log(newShabad)
       const multipleShabads = state.multipleShabads.findIndex(e => e.id === newShabad.id) === -1 ? [...state.multipleShabads, newShabad] : [...state.multipleShabads]
 
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
         JSON.stringify(multipleShabads)
       );
+      
       return {
         ...state,
         multipleShabads,
