@@ -13,6 +13,16 @@
   transition: 0.3s all ease-in-out;
   width: 25vw;
 
+  &--footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+
+    button {
+      margin-left: 0.5em;
+    }
+  }
+
   h3 {
     color: $sttm-white;
     padding-bottom: 30px;
@@ -50,16 +60,6 @@
         height: 1.5em;
         width: 1.5em;
       }
-    }
-  }
-
-  &--footer {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 10px;
-
-    button {
-      margin-left: 0.5em;
     }
   }
 }
