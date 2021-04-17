@@ -65,8 +65,16 @@ const GlobalHandlers = {
   }
 }
 const ViewerShortcutHanders = {
-  toggleLarivar: () => {
-    store.dispatch({ type: "TOGGLE_LARIVAAR_OPTION" })
+  toggleLarivar: (event) => {
+    /*
+      NOTE:
+      added exception to handle Ctrl/command(mac)+l key combination.
+      it shouldn't toggle Larivaar with Ctrl/command(mac)+l combination.
+    */
+    const isMeta = event?.metaKey;
+    if (!isMeta) {
+      store.dispatch({ type: "TOGGLE_LARIVAAR_OPTION" })
+    }
   },
   toggleLarivarAssist: () => {
     store.dispatch({ type: 'TOGGLE_LARIVAAR_ASSIST_OPTION', })
