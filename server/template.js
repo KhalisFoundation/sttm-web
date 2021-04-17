@@ -21,8 +21,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
 <head>
   <title>${title}</title>
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-  <link type="application/opensearchdescription+xml" rel="search"
-       href="/osdd.xml"/>
+  <link type="application/opensearchdescription+xml" rel="search" href="/osdd.xml"/>
   <link rel="manifest" href="/manifest.json" />
   ${preconnectHTML}
   ${preloadFontsHTML}
