@@ -387,3 +387,23 @@ export const ADVANCED_SETTINGS = ({
 
   ]
 }
+
+export const RESET_SETTING = ({
+  larivaarAssist,
+  larivaar,
+  resetDisplayOptions,
+  resetFontOptions,
+  toggleLarivaarAssistOption,
+  toggleLarivaarOption,
+}: ISettingActions) => (
+  {
+    type: 'reset-button',
+    label: TEXTS.RESET,
+    action: () => {
+      resetDisplayOptions();
+      resetFontOptions();
+      larivaarAssist && toggleLarivaarAssistOption();
+      larivaar && toggleLarivaarOption();
+    },
+  }
+)

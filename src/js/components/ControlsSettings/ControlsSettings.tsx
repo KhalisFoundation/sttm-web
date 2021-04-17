@@ -3,7 +3,7 @@ import Collapsible from 'react-collapsible';
 import Checkboxes, { Collection as CollectionProps } from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
-import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS } from './ControlSettings';
+import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS, RESET_SETTING } from './ControlSettings';
 import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, } from "../Icons/CustomIcons";
 import {
   TEXTS,
@@ -17,6 +17,7 @@ const ControlsSettings = (props: any) => {
   const headerSettings = HEADER_SETTINGS(props);
   const quickSettings = QUICK_SETTINGS(props);
   const advancedSettings = ADVANCED_SETTINGS(props);
+  const resetSetting = RESET_SETTING(props);
   const {
     fontFamily,
     resetDisplayOptions,
@@ -317,7 +318,7 @@ const ControlsSettings = (props: any) => {
             })}
           </>
           <div className="settings-item font-item">
-            <button className="settings-reset-button" onClick={resetDisplayOptions}>{TEXTS.RESET}</button>
+            <button className="settings-reset-button" onClick={resetSetting.action}>{resetSetting.label}</button>
           </div>
         </div>
       </div>
