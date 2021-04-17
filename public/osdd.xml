@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
- <ShortName>Search for shabads</ShortName>
- <Description>Search for shabads</Description>
+ <ShortName>STTM</ShortName>
+ <Description>Search for shabads on SikhiToTheMax</Description>
  <Url 
     type="text/html" 
-    method="get" 
-    template="https://www.sikhitothemax.org/search?q={searchTerms}&type=7&source=all&writer=all"
+    template="https://www.sikhitothemax.org/search?q={searchTerms}&amp;type=7&amp;source=all&amp;writer=all"
   />
 </OpenSearchDescription>
