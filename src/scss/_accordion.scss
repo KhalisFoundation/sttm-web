@@ -1,0 +1,7 @@
+.accordion-item {
+  &.is-active {
+    .accordion-content {
+      display: block;
+    }
+  }
+}
