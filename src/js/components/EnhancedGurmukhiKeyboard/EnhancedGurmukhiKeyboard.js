@@ -95,7 +95,7 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
 
 
   render() {
-    const { searchType } = this.props;
+    const { searchType, active } = this.props;
     const spaceKey = (
       <button
         key="space-key"
@@ -130,13 +130,12 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
       </React.Fragment>
     );
 
-
     return (
       <div
-        className={`gurmukhi-keyboard gurbani-font ${this.props.active ? 'active' : ''}`}
+        className={`gurmukhi-keyboard gurbani-font ${active ? 'active' : ''}`}
         onClick={this.click}
       >
-        {
+        {active &&
           keyboardGrid.map(
             (rows, index) => {
               return (
