@@ -30,12 +30,14 @@ const Maryada = () => {
             <BreadCrumb links={[{ title: TEXTS.URIS.MARYADA }]} />
             <div className="wrapper maryada">
               <div className="maryada__header">
-                <div></div>
+                <div>
+                  <img src="/assets/images/rehat-maryada.png" />
+                </div>
                 <div>
                   <h1>Sikh Rehat Maryadha</h1>
                   <div>
                     Available Languages
-                    <ul>
+                    <ul className="languages">
                       <li><Link to="/maryada/en">English</Link></li>
                       <li><Link to="/maryada/pb">Punjabi</Link></li>
                     </ul>

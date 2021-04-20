@@ -13,9 +13,9 @@ const Accordion = ({title, content, defaultState = false}) => {
   },[defaultState])
 
   return (
-    <li className={`accordion-item ${active ? 'is-active' : ''}`}>
-      <button className="accordion-title" onClick={toggleAccordion}>{title}</button>
-      <div className="accordion-content" dangerouslySetInnerHTML={{ __html: content }} />
+    <li className={`accordion__item ${active ? 'is-active' : ''}`}>
+      <button className="title" onClick={toggleAccordion}><h3>{title}</h3></button>
+      <div className="content" dangerouslySetInnerHTML={{ __html: content }} />
     </li>
   )
 }

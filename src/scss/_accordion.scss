@@ -1,7 +1,31 @@
-.accordion-item {
-  &.is-active {
-    .accordion-content {
-      display: block;
+.accordion {
+  background: none;
+
+  &__item {
+    background-color: $sttm-white;
+    border-radius: 15px;
+    margin-bottom: 0.5em;
+    padding: 0.2em 1em;
+    width: 100%;
+
+    .title {
+      width: 100%;
+
+      h3 {
+        margin: 0;
+        text-align: left;
+      }
+    }
+
+    .content {
+      display: none;
+      padding-top: 1em;
+    }
+
+    &.is-active {
+      .content {
+        display: block;
+      }
     }
   }
 }
