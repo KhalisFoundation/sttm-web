@@ -1,0 +1,13 @@
+.maryada {
+  &__header {
+    display: flex;
+  }
+
+  ul.languages {
+    display: inline;
+
+    li {
+      display: inline-block;
+    }
+  }
+}
