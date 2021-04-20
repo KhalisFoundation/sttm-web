@@ -86,4 +86,5 @@ export const TEXTS = {
   CENTERALIGN: 'Center-Align',
   HUKAMNAMA_NOT_FOUND_DESCRIPTION:
     "We couldn't find the hukamnama for this date in our database.",
+  MULTIPLE_SHABADS_HEADING: 'Multiple Shabads Display',
 };

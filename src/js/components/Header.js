@@ -263,6 +263,7 @@ class Header extends React.PureComponent {
                                       getSuggestions={getShabadList}
                                       searchOptions={{ type: parseInt(type), source, writer }}
                                       value={query}
+                                      isHome={isHome}
                                     />
                                   </div>
                                 </li>

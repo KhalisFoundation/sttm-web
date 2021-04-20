@@ -17,16 +17,7 @@ import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
  * @class Shabad
  * @augments {React.PureComponent<ShabadProps, ShabadState>}
  */
-class Shabad extends React.PureComponent {
-  /**
-   * @typedef {object} ShabadState
-   * @property {number} progress of vertical scroll
-   *
-   * @memberof Shabad
-   */
-  state = {
-    progress: 0,
-  };
+class ListOfShabads extends React.PureComponent {   
 
   static defaultProps = {
     hideControls: false,
@@ -160,7 +151,7 @@ class Shabad extends React.PureComponent {
               )
             })
           }
-          {<ProgressBar />}
+          <ProgressBar />
         </React.Fragment>
       </GlobalHotKeys>
     );
@@ -168,4 +159,4 @@ class Shabad extends React.PureComponent {
 }
 
 const stateToProps = (state) => state;
-export default connect(stateToProps)(withRouter(Shabad));
+export default connect(stateToProps)(withRouter(ListOfShabads));

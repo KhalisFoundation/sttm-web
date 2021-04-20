@@ -1,6 +1,5 @@
 import { createShabadTitle, createShabadDescription } from './shabads';
 import { getAng, getSource } from './angs';
-import { isListOfShabads } from './shabads';
 
 /**
  * @param {object} req - The request obj
@@ -10,7 +9,7 @@ export const createMetadataFromResponse = (req, apiResponse) => {
   const { path } = req;
   switch (path) {
     case '/shabad': {
-      const { shabadInfo, verses } = isListOfShabads(apiResponse.data) ? apiResponse.data.shabads[0] : apiResponse.data;     
+      const { shabadInfo, verses } = isKeyExists(apiResponse.data, 'shabadIds') ? apiResponse.data.shabads[0] : apiResponse.data;     
 
       const { shabadName } = shabadInfo;
 
@@ -38,4 +37,8 @@ export const createMetadataFromResponse = (req, apiResponse) => {
 
     default: return { title: '', description: '' }
   }
+}
+
+export const isKeyExists = (object, key) => {
+  return object.hasOwnProperty(key)
 }

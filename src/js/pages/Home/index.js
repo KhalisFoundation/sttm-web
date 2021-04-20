@@ -63,7 +63,7 @@ class Home extends React.PureComponent {
    * Functional component
    */
   render() {
-    const { multipleShabads, setMultipleShabads, clearMultipleShabads, removeMultipleShabads, isHome } = this.props;
+    const { multipleShabads, setMultipleShabads, clearMultipleShabads, removeMultipleShabads } = this.props;
     const { showDoodle, doodleData } = this.state;
         
     return (

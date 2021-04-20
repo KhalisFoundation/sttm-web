@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs'
 import { toMultipleShabadsURL } from '@/util/url/to-multiple-shabad-url';
 import BarsIcon from '../Icons/Bars';
-import { MinusIcon } from '../Icons/CustomIcons';
+import { TEXTS } from '@/constants';
 
 interface IShabadProps {
   id: number;
@@ -16,7 +16,6 @@ interface IMultipleShabadsDisplayProps {
   shabads: IShabadProps[];
   handleClearShabads: () => {};
   removeMultipleShabads: (id: number) => {};
-  setMultipleShabads: () => {}
 }
 
 const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
@@ -46,7 +45,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
 
   return (
     <div className="multiple-shabads-display">
-      <h3>Multiple Shabads Display</h3>
+      <h3>{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
 
       <ReactSortable tag="ul" list={sortableState} setList={setSortableState}>
         {sortableState?.map(({ verse, id }) => (

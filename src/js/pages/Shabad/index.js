@@ -6,7 +6,7 @@ import PageLoader from '../PageLoader';
 import { pageView } from '../../util/analytics';
 import ShabadContent from '../../components/ShabadContent';
 import ListOfShabads from '../../components/ShabadContent/ListOfShabads';
-import { toShabadURL, isListOfShabads } from '../../util';
+import { toShabadURL, isKeyExists } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
 import { TEXTS } from '../../constants';
 const Stub = () => <div className="spinner" />;
@@ -34,7 +34,7 @@ export default class Shabad extends React.PureComponent {
               <div className="row" id="content-root">
                 <BreadCrumb links={[{ title: TEXTS.URIS.SHABAD }]} />
                 {
-                  isListOfShabads(data)
+                  isKeyExists(data, 'shabadIds')
                   ? <ListOfShabads 
                       type="shabad"
                       shabads={data.shabads}
