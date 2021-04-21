@@ -9,12 +9,20 @@
     width: 100%;
 
     .title {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
       width: 100%;
 
       h3 {
         font-size: clamp(1.5rem, 2rem);
         margin: 0;
         text-align: left;
+      }
+
+      span {
+        color: $sttm-blue;
+        font-weight: 700;
       }
     }
 

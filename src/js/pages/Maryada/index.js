@@ -14,15 +14,15 @@ import { TEXTS } from '@/constants';
 const Stub = () => <div className="spinner" />;
 
 const Maryada = ({location: {pathname}}) => {  
-
+  const getRehatId = () => getTrailingParameter() === 'pb' ? 2 : 1;
   const [state, setState] = useState(false)
-  const [rehatId, setRehatId] = useState(getTrailingParameter() === 'pb' ? 2 : 1);
+  const [rehatId, setRehatId] = useState(getRehatId());
 
   let url = API_URL + '/rehats/' + rehatId + '/chapters';
   
   useEffect(() => {     
     pageView('/maryada');
-    setRehatId(getTrailingParameter() === 'pb' ? 2 : 1)
+    setRehatId(getRehatId())
   }, [pathname])   
 
   return (
