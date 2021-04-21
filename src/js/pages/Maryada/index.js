@@ -1,24 +1,30 @@
+/* eslint-disable react/prop-types */
 /* globals API_URL */
 import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom'
 import PageLoader from '../PageLoader';
 import { pageView } from '../../util/analytics';
+import { getTrailingParameter } from '../../util/url';
 import BreadCrumb from '../../components/Breadcrumb';
 import { TEXTS } from '../../constants';
 import Accordion from '../../components/Accordion';
 
 const Stub = () => <div className="spinner" />;
 
-const Maryada = () => {
+const Maryada = ({location: {pathname}}) => {  
 
   const [state, setState] = useState(false)
+  const [rehatId, setRehatId] = useState(getTrailingParameter() === 'pb' ? 2 : 1);
 
-  const url = API_URL + '/rehats/1/chapters';
-  
+  let url = API_URL + '/rehats/' + rehatId + '/chapters';
   
   useEffect(() => {
-    pageView('/maryada');    
+    pageView('/maryada');
   }, [])   
+  
+  useEffect(() => {     
+    setRehatId(getTrailingParameter() === 'pb' ? 2 : 1)
+  }, [pathname])   
 
   return (
     <PageLoader url={url}>
@@ -31,15 +37,15 @@ const Maryada = () => {
             <div className="wrapper maryada">
               <div className="maryada__header">
                 <div>
-                  <img src="/assets/images/rehat-maryada.png" />
+                  <img src="/assets/images/rehat-maryada.png" width="200" height="200" />
                 </div>
                 <div>
                   <h1>Sikh Rehat Maryadha</h1>
                   <div>
-                    Available Languages
+                    Available Languages:
                     <ul className="languages">
-                      <li><Link to="/maryada/en">English</Link></li>
-                      <li><Link to="/maryada/pb">Punjabi</Link></li>
+                      <li><Link to="/maryada/en" className={rehatId === 1 ? 'active' : ''}>English</Link></li>
+                      <li><Link to="/maryada/pb" className={rehatId === 2 ? 'active' : ''}>Punjabi</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -49,7 +55,7 @@ const Maryada = () => {
                 <p></p>
               </div>        
               <div className="maryada__body">
-                <div>
+                <div className="chapters">
                   <h2>Chapters</h2>
                   <div>
                     <button onClick={() => {setState(true)}}>Expand all</button> | <button onClick={() => {setState(false)}}>Collapse all</button>
@@ -62,7 +68,7 @@ const Maryada = () => {
                         key={chapter.chapterID}
                         title={chapter.chapterName}
                         content={chapter.chapterContent}
-                        defaultState={state}
+                        defaultState={chapter.chapterID === data.chapters[0].chapterID || state}
                       />
                     ))
                   }

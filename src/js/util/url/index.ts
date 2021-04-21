@@ -1,4 +1,5 @@
 export * from './get-parameter-by-name';
+export * from './get-trailing-parameter';
 export * from './get-query-params';
 export * from './shorten-url-source';
 export * from './to-search-url';

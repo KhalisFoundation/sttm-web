@@ -5,13 +5,14 @@
     background-color: $sttm-white;
     border-radius: 15px;
     margin-bottom: 0.5em;
-    padding: 0.2em 1em;
+    padding: 0.2em 1em 0.2em 1.5em;
     width: 100%;
 
     .title {
       width: 100%;
 
       h3 {
+        font-size: 2rem;
         margin: 0;
         text-align: left;
       }

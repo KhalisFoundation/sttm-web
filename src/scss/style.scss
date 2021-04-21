@@ -110,7 +110,11 @@ select {
 }
 
 .wrapper {
-  padding: 0 1rem;
+  margin: 0 3rem;
+
+  @media screen and (max-width: 790px) {
+    margin: 0 1rem;
+  }
 }
 
 .error-message {
