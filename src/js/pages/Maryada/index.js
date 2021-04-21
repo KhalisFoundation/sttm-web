@@ -2,12 +2,14 @@
 /* globals API_URL */
 import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom'
+
 import PageLoader from '../PageLoader';
-import { pageView } from '../../util/analytics';
-import { getTrailingParameter } from '../../util/url';
-import BreadCrumb from '../../components/Breadcrumb';
-import { TEXTS } from '../../constants';
-import Accordion from '../../components/Accordion';
+import BreadCrumb from '@/components/Breadcrumb';
+import Accordion from '@/components/Accordion';
+
+import { pageView } from '@/util/analytics';
+import { getTrailingParameter } from '@/util/url';
+import { TEXTS } from '@/constants';
 
 const Stub = () => <div className="spinner" />;
 
@@ -18,11 +20,8 @@ const Maryada = ({location: {pathname}}) => {
 
   let url = API_URL + '/rehats/' + rehatId + '/chapters';
   
-  useEffect(() => {
-    pageView('/maryada');
-  }, [])   
-  
   useEffect(() => {     
+    pageView('/maryada');
     setRehatId(getTrailingParameter() === 'pb' ? 2 : 1)
   }, [pathname])   
 
@@ -52,8 +51,8 @@ const Maryada = ({location: {pathname}}) => {
               </div>
               <div className="maryada__intro">
                 <h2>Introduction</h2>
-                <p></p>
-              </div>        
+                <p>The Sikh Rehat Maryada is a code of conduct for Sikhs. This document was preceded by the Gurdwaras Act of 1925, which laid down the definition of a Sikh. In 1915 and later in 1931, attempts were made to create a modern standard rehat (&quot;code&quot;). In 1950 the current Sikh Rehat Maryada was produced basd upon the work of Sikh scholars, seeking to better standardise Sikh practices throughout the international community.</p>
+              </div>
               <div className="maryada__body">
                 <div className="chapters">
                   <h2>Chapters</h2>
@@ -68,7 +67,7 @@ const Maryada = ({location: {pathname}}) => {
                         key={chapter.chapterID}
                         title={chapter.chapterName}
                         content={chapter.chapterContent}
-                        defaultState={chapter.chapterID === data.chapters[0].chapterID || state}
+                        defaultState={state}
                       />
                     ))
                   }

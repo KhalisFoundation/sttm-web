@@ -1,11 +1,11 @@
 .maryada {
   h1 {
-    font-size: 3.5rem;
+    font-size: clamp(2.5rem, 2.5vw, 3.5rem);
     font-weight: 700;
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: clamp(1.8rem, 2.5vw, 2rem);
   }
 
   &__header {
@@ -16,6 +16,10 @@
     > div {
       &:last-child {
         padding-left: 30px;
+
+        @media screen and (max-width: 46em) {
+          padding-left: 15px;
+        }
       }
     }
   }
@@ -40,6 +44,11 @@
     margin: 0;
     padding-left: 10px;
 
+    @media screen and (max-width: 46em) {
+      display: block;
+      padding-left: 0;
+    }
+
     li {
       display: inline-block;
       padding: 0 0.5em;
@@ -49,6 +58,10 @@
         content: '|';
         position: absolute;
         right: -1px;
+      }
+
+      &:first-child {
+        padding-left: 0;
       }
 
       &:last-child {
