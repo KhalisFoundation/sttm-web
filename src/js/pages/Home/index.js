@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../../constants';
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
@@ -20,8 +19,6 @@ import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
 import MultipleShabadsDisplay from '@/components/MultipleShabadsDisplay';
 import Reset from '@/components/Icons/Reset';
-
-import { setMultipleShabads, clearMultipleShabads, removeMultipleShabads } from '../../features/actions';
 /**
  *
  *
@@ -63,7 +60,6 @@ class Home extends React.PureComponent {
    * Functional component
    */
   render() {
-    const { multipleShabads, setMultipleShabads, clearMultipleShabads, removeMultipleShabads } = this.props;
     const { showDoodle, doodleData } = this.state;
         
     return (
@@ -181,7 +177,6 @@ class Home extends React.PureComponent {
                       getSuggestions={getShabadList}
                       searchOptions={{ type, source, writer }}
                       value={query}
-                      setMultipleShabads={setMultipleShabads}
                     />
                     <div className="search-options">
                       <div className="search-option">
@@ -265,12 +260,7 @@ class Home extends React.PureComponent {
                   <p className="doodle-credit">Special thanks to {doodleData['SourceText']}</p>
                 </a>
               )}
-              <MultipleShabadsDisplay 
-                shabads={multipleShabads}
-                handleClearShabads={clearMultipleShabads}
-                removeMultipleShabads={removeMultipleShabads}
-                setMultipleShabads={setMultipleShabads}
-              />     
+              <MultipleShabadsDisplay />     
             </React.Fragment>
           )}
       </SearchForm>
@@ -283,11 +273,4 @@ class Home extends React.PureComponent {
   }
 }
 
-export default connect(
-  ({ multipleShabads }) => ({ multipleShabads }),
-  {
-    setMultipleShabads,
-    clearMultipleShabads,
-    removeMultipleShabads,
-  }
-)(Home);
+export default Home;

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
+import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { Link } from 'react-router-dom';
+import { setMultipleShabads } from '@/features/actions';
 
 import Larivaar from '../components/Larivaar';
 import { toSearchURL } from '@/util';
@@ -226,7 +228,8 @@ class Autocomplete extends Component {
                       </a>  
                       {
                         !isHome ||
-                        (<button 
+                        (<button
+                          aria-label="Add Shabad"
                           data-id={suggestion.verseId}
                           data-shabadid={suggestion.shabadId}
                           data-verse={suggestion.verse}
@@ -256,4 +259,13 @@ class Autocomplete extends Component {
   }
 }
 
-export default Autocomplete;
+const mapStateToProps = ({ }) => ({})
+
+const mapDispatchToProps = {
+  setMultipleShabads
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Autocomplete);

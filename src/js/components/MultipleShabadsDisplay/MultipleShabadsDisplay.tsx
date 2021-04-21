@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs'
 import { toMultipleShabadsURL } from '@/util/url/to-multiple-shabad-url';
 import BarsIcon from '../Icons/Bars';
 import { TEXTS } from '@/constants';
+
+import { clearMultipleShabads, removeMultipleShabads } from '@/features/actions';
 
 interface IShabadProps {
   id: number;
@@ -13,18 +16,17 @@ interface IShabadProps {
 }
 
 interface IMultipleShabadsDisplayProps {
-  shabads: IShabadProps[];
-  handleClearShabads: () => {};
+  multipleShabads: IShabadProps[];
+  clearMultipleShabads: () => {};
   removeMultipleShabads: (id: number) => {};
 }
 
 const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
-  shabads,
-  handleClearShabads,
+  multipleShabads,
+  clearMultipleShabads,
   removeMultipleShabads,
 }) => {
-
-  const [sortableState, setSortableState] = useState<IShabadProps[]>(shabads);
+  const [sortableState, setSortableState] = useState<IShabadProps[]>(multipleShabads);
   const history = useHistory();
 
   const onRemove = (e: React.MouseEvent<HTMLElement>) => {
@@ -40,8 +42,8 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
 
   // Update Local State {sortableState} after shabads get Updated
   useEffect(() => {
-    setSortableState(shabads)
-  }, [shabads])
+    setSortableState(multipleShabads)
+  }, [multipleShabads])
 
   return (
     <div className="multiple-shabads-display">
@@ -61,11 +63,21 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
       </ReactSortable>
 
       <div className="multiple-shabads-display--footer">
-        <button className="btn btn-secondary" onClick={handleClearShabads}>Clear</button>
+        <button className="btn btn-secondary" onClick={clearMultipleShabads}>Clear</button>
         <button className="btn btn-primary" onClick={handleDisplayShabads}>Display</button>
       </div>
     </div>
   )
 }
 
-export default MultipleShabadsDisplay;
+const mapStateToProps = ({ multipleShabads }: any) => ({ multipleShabads })
+
+const mapDispatchToProps = {
+  removeMultipleShabads,
+  clearMultipleShabads,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MultipleShabadsDisplay);
