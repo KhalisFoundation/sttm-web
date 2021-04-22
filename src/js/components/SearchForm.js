@@ -48,7 +48,6 @@ export default class SearchForm extends React.PureComponent {
    * @property {function} handleSearchWriterChange
    * @property {function} handleReset
    * @property {function} handleSubmit
-   * @property {function} handleMultipleShabads
    *
    * @typedef {object} SearchFormProps
    * @property {SearchFormRenderProps => React.Element} children as a function
@@ -200,7 +199,6 @@ export default class SearchForm extends React.PureComponent {
       handleSubmit,
       handleKeyDown,
       handleReset,
-      handleMultipleShabads,
     } = this;
 
     const { type, query } = this.state;
@@ -240,7 +238,6 @@ export default class SearchForm extends React.PureComponent {
       handleSubmit,
       handleKeyDown,
       handleReset,
-      handleMultipleShabads,
     });
 
   }

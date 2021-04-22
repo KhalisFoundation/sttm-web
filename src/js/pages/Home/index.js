@@ -17,8 +17,8 @@ import CrossIcon from '@/components/Icons/Times';
 import KeyboardIcon from '@/components/Icons/Keyboard';
 import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
-import MultipleShabadsDisplay from '@/components/MultipleShabadsDisplay';
 import Reset from '@/components/Icons/Reset';
+import MultiViewButton from '@/components/MultiViewButton';
 /**
  *
  *
@@ -33,7 +33,7 @@ class Home extends React.PureComponent {
 
   state = {
     showDoodle: false,
-    doodleData: null
+    doodleData: null,
   }
 
   fetchDoodle = () => {
@@ -55,6 +55,15 @@ class Home extends React.PureComponent {
     handleSubmit();
     this.props.history.push(toSearchURL(data));
   };
+
+  handleMultiViewClick = (e) => {
+    e.peventDefault();
+    e.stopPropogation();
+    
+    this.setState({
+      showMultiViewPanel: !this.state.showMultiViewPanel
+    })
+  }
 
   /**
    * Functional component
@@ -243,24 +252,26 @@ class Home extends React.PureComponent {
                         </select>
                       </div>
                       <button 
-                            className="reset"
-                            onClick={handleReset}
-                            title="Reset"
-                            aria-label="Reset">
-                            <Reset />
-                          </button>
+                        className="reset"
+                        onClick={handleReset}
+                        title="Reset"
+                        aria-label="Reset">
+                        <Reset />
+                      </button>
                     </div>
                     <SehajPaathLink />
                     <BaaniLinks />
+                    <div className="flex justify-center">
+                      <MultiViewButton />
+                    </div>
                   </form>
                 </div>
               </div>
               {showDoodle && (
-                <a href={doodleData['SourceLink']} target="_blank">
+                <a href={doodleData['SourceLink']} target="_blank" rel="noreferrer">
                   <p className="doodle-credit">Special thanks to {doodleData['SourceText']}</p>
                 </a>
-              )}
-              <MultipleShabadsDisplay />     
+              )}                   
             </React.Fragment>
           )}
       </SearchForm>

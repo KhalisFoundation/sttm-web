@@ -7,11 +7,26 @@
   left: 0;
   overflow-x: hidden;
   padding: 0 1em;
-  position: fixed;
+  position: absolute;
   top: 0;
+  transform: translate3d(-100%, 0, 0);
   transform-origin: top left;
-  transition: 0.3s all ease-in-out;
+  transition: 0.5s all ease-in-out;
+  visibility: hidden;
   width: 25vw;
+
+  &.enable {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  button {
+    &.close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+  }
 
   &--footer {
     display: flex;

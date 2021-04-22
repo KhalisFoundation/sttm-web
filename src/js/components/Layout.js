@@ -14,6 +14,7 @@ import {
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
+import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
 import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute } from '../util';
 
@@ -80,6 +81,7 @@ class Layout extends React.PureComponent {
       isHome = false,
       isController = false,
       autoScrollMode,
+      showMultiViewPanel,
       location: { pathname = '/' } = {},
       ...props
     } = this.props;
@@ -101,19 +103,23 @@ class Layout extends React.PureComponent {
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner />
-        <Header
-          defaultQuery={this.props.defaultQuery}
-          isHome={isHome}
-          isAng={isAng}
-          isController={isController}
-          {...props}
-        />
+        <div className={`pusher ${showMultiViewPanel && 'enable'}`}>
+          <Header
+            defaultQuery={this.props.defaultQuery}
+            isHome={isHome}
+            isAng={isAng}
+            isController={isController}
+            {...props}
+          />
 
-        {this.state.error ? (
-          <GenericError {...this.state.errorProps} />
-        ) : (
-            children
+          {this.state.error ? (
+            <GenericError {...this.state.errorProps} />
+          ) : (
+              children
           )}
+        </div>
+
+        <MultipleShabadsDisplay />  
 
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
@@ -185,8 +191,8 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode, autoScrollMode }) => ({ online, darkMode, autoScrollMode }),
+  ({ online, darkMode, autoScrollMode, showMultiViewPanel }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel }),
   {
-    setOnlineMode
+    setOnlineMode,
   }
 )(Layout);

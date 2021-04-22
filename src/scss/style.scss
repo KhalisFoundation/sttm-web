@@ -345,3 +345,19 @@ select {
     font-size: 1rem;
   }
 }
+
+#app-root {
+  overflow: hidden;
+}
+
+.pusher {
+  left: 0;
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.5s;
+  z-index: 99;
+
+  &.enable {
+    transform: translate3d(25vw, 0, 0);
+  }
+}

@@ -43,6 +43,7 @@ import {
   SET_MULTIPLE_SHABADS,
   CLEAR_MULTIPLE_SHABADS,
   REMOVE_MULTIPLE_SHABADS,
+  SET_MULTI_VIEW_PANEL,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -629,6 +630,14 @@ export default function reducer(state, action) {
         ...state,
         multipleShabads,
       };
+    }
+
+    case SET_MULTI_VIEW_PANEL: {
+      const showMultiViewPanel = action.payload;
+      return {
+        ...state,
+        showMultiViewPanel
+      }
     }
 
     case SET_ERROR: {

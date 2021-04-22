@@ -161,7 +161,7 @@ const initialState = {
     LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
     []
   ),
-  isMultipleShabadsRender: false,
+  showMultiViewPanel: false,
 };
 
 

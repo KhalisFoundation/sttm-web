@@ -7,7 +7,7 @@ import { toMultipleShabadsURL } from '@/util/url/to-multiple-shabad-url';
 import BarsIcon from '../Icons/Bars';
 import { TEXTS } from '@/constants';
 
-import { clearMultipleShabads, removeMultipleShabads } from '@/features/actions';
+import { clearMultipleShabads, removeMultipleShabads, setMultiViewPanel } from '@/features/actions';
 
 interface IShabadProps {
   id: number;
@@ -17,14 +17,18 @@ interface IShabadProps {
 
 interface IMultipleShabadsDisplayProps {
   multipleShabads: IShabadProps[];
+  showMultiViewPanel: boolean;
   clearMultipleShabads: () => {};
   removeMultipleShabads: (id: number) => {};
+  setMultiViewPanel: () => {}
 }
 
 const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   multipleShabads,
+  showMultiViewPanel,
   clearMultipleShabads,
   removeMultipleShabads,
+  setMultiViewPanel,
 }) => {
   const [sortableState, setSortableState] = useState<IShabadProps[]>(multipleShabads);
   const history = useHistory();
@@ -46,7 +50,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   }, [multipleShabads])
 
   return (
-    <div className="multiple-shabads-display">
+    <div className={`multiple-shabads-display ${showMultiViewPanel && 'enable'}`}>
       <h3>{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
 
       <ReactSortable tag="ul" list={sortableState} setList={setSortableState}>
@@ -66,15 +70,18 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
         <button className="btn btn-secondary" onClick={clearMultipleShabads}>Clear</button>
         <button className="btn btn-primary" onClick={handleDisplayShabads}>Display</button>
       </div>
+
+      <button className="close" onClick={() => { setMultiViewPanel(false) }}>Close</button>
     </div>
   )
 }
 
-const mapStateToProps = ({ multipleShabads }: any) => ({ multipleShabads })
+const mapStateToProps = ({ multipleShabads, showMultiViewPanel }: any) => ({ multipleShabads, showMultiViewPanel })
 
 const mapDispatchToProps = {
   removeMultipleShabads,
   clearMultipleShabads,
+  setMultiViewPanel,
 }
 
 export default connect(

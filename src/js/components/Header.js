@@ -106,7 +106,7 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
+      <div id="nav-bar" className={`top-bar no-select pusher ${isHome ? 'top-bar-naked' : ''}`}>
         {/* <ControlsSettings {...this.props} /> */}
         <div className="top-bar-wrapper row">
           {!isHome && (
