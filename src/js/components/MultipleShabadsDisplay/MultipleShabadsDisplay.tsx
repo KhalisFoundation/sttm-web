@@ -20,7 +20,7 @@ interface IMultipleShabadsDisplayProps {
   showMultiViewPanel: boolean;
   clearMultipleShabads: () => {};
   removeMultipleShabads: (id: number) => {};
-  setMultiViewPanel: () => {}
+  setMultiViewPanel: (bool: boolean) => {}
 }
 
 const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
@@ -50,7 +50,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   }, [multipleShabads])
 
   return (
-    <div className={`multiple-shabads-display ${showMultiViewPanel && 'enable'}`}>
+    <div className={`multiple-shabads-display ${showMultiViewPanel ? 'enable' : ''}`}>
       <h3>{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
 
       <ReactSortable tag="ul" list={sortableState} setList={setSortableState}>
@@ -71,7 +71,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
         <button className="btn btn-primary" onClick={handleDisplayShabads}>Display</button>
       </div>
 
-      <button className="close" onClick={() => { setMultiViewPanel(false) }}>Close</button>
+      <button title="Close" className="close toast-notification-close-button" onClick={() => { setMultiViewPanel(false) }}>X</button>
     </div>
   )
 }

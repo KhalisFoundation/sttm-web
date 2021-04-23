@@ -268,14 +268,19 @@ $panel-width-560: 65vw;
 
 .multi-view {
   align-items: center;
-  color: $sttm-dark-grey;
-  display: flex;
+  color: $sttm-grey;
+  display: inline-flex;
   flex-wrap: nowrap;
   justify-content: center;
 
-  svg {
-    margin-right: 0.5em;
+  span {
+    font-weight: 700;
   }
+
+  svg {
+    margin-right: 0;
+  }
+
 }
 
 .flex-spacer {

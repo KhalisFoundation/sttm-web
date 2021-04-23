@@ -352,12 +352,14 @@ select {
 
 .pusher {
   left: 0;
-  position: relative;
   transform: translate3d(0, 0, 0);
   transition: transform 0.5s;
-  z-index: 99;
+
+  // .menu-open & {
+  //   transform: none;
+  // }
 
   &.enable {
-    transform: translate3d(25vw, 0, 0);
+    transform: translate3d(10%, 0, 0);
   }
 }

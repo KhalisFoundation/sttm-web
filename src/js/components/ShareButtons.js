@@ -10,7 +10,10 @@ import CopyAllIcon from './Icons/CopyAll';
 import WhatsAppIcon from './Icons/WhatsApp';
 import ClipboardIcon from './Icons/Clipboard';
 import PrinterIcon from './Icons/Printer';
+// import MergeIcon from './Icons/MergeIcon';
 import { GearsIcon } from './Icons/CustomIcons';
+// import { setMultiViewPanel } from '@/features/actions';
+import MultiViewButton from '@/components/MultiViewButton';
 
 const handleWhatsapp = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
@@ -33,7 +36,7 @@ const copyShortUrl = () =>
     )
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-export const supportedMedia = ['settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
+export const supportedMedia = ['multiView', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 class ShareButtons extends React.PureComponent {
   static defaultProps = {
@@ -68,9 +71,7 @@ class ShareButtons extends React.PureComponent {
       return null;
     }
 
-
     // TODO: Use array to generate this DOM
-
     const mediaMap = {
       embed: (
         <li key={0} className="show-on-desktop">
@@ -122,6 +123,11 @@ class ShareButtons extends React.PureComponent {
             <GearsIcon />
             <span className="show-on-desktop settings-text-desktop">Settings</span>
           </button>
+        </li>
+      ),
+      multiView: (
+        <li key={6}>
+          <MultiViewButton width="1.0em" />
         </li>
       ),
     };

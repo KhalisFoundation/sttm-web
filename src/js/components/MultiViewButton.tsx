@@ -1,28 +1,23 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import MergeIcon from '@/components/Icons/MergeIcon';
 import { setMultiViewPanel } from "@/features/actions";
 
 
-const MultiViewButton = ({ setMultiViewPanel }: any) => {
+const MultiViewButton = (props: any) => {
+  const dispatch = useDispatch()
 
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setMultiViewPanel(true)
+    dispatch(setMultiViewPanel(true))
   }
 
   return (
     <button className="multi-view" onClick={onClick}>
-      <MergeIcon width="2em" fill="" height="" />
-      Multi View
+      <MergeIcon width="2em" fill="" height="" {...props} />
+      <span>Multi View</span>
     </button>
   )
 }
 
-const mapStateToProps = ({ }) => ({})
-
-const mapDispatchToProps = ({
-  setMultiViewPanel
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(MultiViewButton)
+export default MultiViewButton

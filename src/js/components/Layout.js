@@ -103,7 +103,7 @@ class Layout extends React.PureComponent {
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner />
-        <div className={`pusher ${showMultiViewPanel && 'enable'}`}>
+        <div className={`pusher ${showMultiViewPanel ? 'enable' : ''}`}>
           <Header
             defaultQuery={this.props.defaultQuery}
             isHome={isHome}
