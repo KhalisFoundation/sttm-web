@@ -271,16 +271,8 @@ $panel-width-560: 65vw;
   color: $sttm-grey;
   display: inline-flex;
   flex-wrap: nowrap;
+  font-weight: 700;
   justify-content: center;
-
-  span {
-    font-weight: 700;
-  }
-
-  svg {
-    margin-right: 0;
-  }
-
 }
 
 .flex-spacer {
