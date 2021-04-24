@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 
 import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
-import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
 import SearchIcon from './Icons/Search';
 import Reset from './Icons/Reset';
 import Autocomplete from '@/components/Autocomplete';
+import ClearSearchButton from '@/components/ClearSearchButton';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
 import { toggleSettingsPanel } from '@/features/actions';
 
@@ -186,6 +186,7 @@ class Header extends React.PureComponent {
                                     className="hidden"
                                     defaultValue={type}
                                     id="search-type-value"
+                                    type="hidden"
                                     hidden
                                   />
                                 </li>
@@ -194,6 +195,7 @@ class Header extends React.PureComponent {
                                     name="source"
                                     defaultValue={source}
                                     className="hidden"
+                                    type="hidden"
                                     id="search-source-value"
                                     hidden
                                   />
@@ -219,19 +221,14 @@ class Header extends React.PureComponent {
                                       min={name === 'ang' ? 1 : undefined}
                                       max={name === 'ang' ? MAX_ANGS[source] : undefined}
                                     />
-
-                                    <button
-                                      type="button"
-                                      className="clear-search-toggle"
-                                      onClick={setQueryAs('')}
-                                    >
-                                      <CrossIcon />
-                                    </button>
-
+                                    <ClearSearchButton clickHandler={setQueryAs} />
                                     {isShowKeyboard && <GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />}
 
                                     <button
-                                      type="submit" disabled={disabled}>
+                                      type="submit"
+                                      disabled={disabled}
+                                      aria-label="search"
+                                    >
                                       <SearchIcon />
                                     </button>
 
