@@ -344,3 +344,7 @@ select {
     font-size: 1rem;
   }
 }
+
+body:not(.dark-mode) a {
+  color: #1374b4;
+}
