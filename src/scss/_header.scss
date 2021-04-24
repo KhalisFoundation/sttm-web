@@ -219,8 +219,9 @@
       fill: $sttm-orange;
     }
 
-    &:active svg,
-    &:hover svg {
+    &:hover svg,
+    &:focus svg,
+    &:active svg {
       fill: $sttm-orange;
       outline: none;
     }

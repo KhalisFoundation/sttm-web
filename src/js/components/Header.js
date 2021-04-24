@@ -8,10 +8,10 @@ import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
 import CrossIcon from './Icons/Times';
 import Menu from './HeaderMenu';
-import KeyboardIcon from './Icons/Keyboard';
 import SearchIcon from './Icons/Search';
 import Reset from './Icons/Reset';
 import Autocomplete from '@/components/Autocomplete';
+import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
 import { toggleSettingsPanel } from '@/features/actions';
 
 import {
@@ -228,19 +228,7 @@ class Header extends React.PureComponent {
                                       <CrossIcon />
                                     </button>
 
-                                    {isShowKeyboard && (
-                                      <button
-                                        type="button"
-                                        className={`gurmukhi-keyboard-toggle ${
-                                          displayGurmukhiKeyboard ? 'active' : ''
-                                          }`}
-                                        onClick={setGurmukhiKeyboardVisibilityAs(
-                                          !displayGurmukhiKeyboard
-                                        )}
-                                      >
-                                        <KeyboardIcon />
-                                      </button>
-                                    )}
+                                    {isShowKeyboard && <GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />}
 
                                     <button
                                       type="submit" disabled={disabled}>

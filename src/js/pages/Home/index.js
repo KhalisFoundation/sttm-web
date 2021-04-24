@@ -13,10 +13,10 @@ import { BaaniLinks } from '@/components/BaaniLinks/';
 import SearchForm from '@/components/SearchForm';
 import Logo from '@/components/Icons/Logo';
 import CrossIcon from '@/components/Icons/Times';
-import KeyboardIcon from '@/components/Icons/Keyboard';
 import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
 import Reset from '@/components/Icons/Reset';
+import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
 /**
  *
  *
@@ -143,19 +143,7 @@ export default class Home extends React.PureComponent {
                       >
                         <CrossIcon />
                       </button>
-                      {isShowKeyboard && (
-                        <button
-                          type="button"
-                          className={`gurmukhi-keyboard-toggle ${
-                            displayGurmukhiKeyboard ? 'active' : ''
-                            }`}
-                          onClick={setGurmukhiKeyboardVisibilityAs(
-                            !displayGurmukhiKeyboard
-                          )}
-                        >
-                          <KeyboardIcon />
-                        </button>
-                      )}
+                      {isShowKeyboard && <GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />}
                       <button type="submit" disabled={disabled}>
                         <SearchIcon />
                       </button>
