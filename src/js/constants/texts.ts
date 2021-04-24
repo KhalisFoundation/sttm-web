@@ -87,4 +87,5 @@ export const TEXTS = {
   HUKAMNAMA_NOT_FOUND_DESCRIPTION:
     "We couldn't find the hukamnama for this date in our database.",
   TOGGLE_GURMUKHI_KEYBOARD: "toggle gurmukhi keyboard",
+  BACK_TO_HOME: "back to home",
 };
