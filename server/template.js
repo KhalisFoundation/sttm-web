@@ -17,7 +17,7 @@ try {
 
 export default ({ url, bodyClass, title, description }) => marinate`
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>${title}</title>
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
