@@ -19,9 +19,9 @@ try {
 <html lang="en">
 TODO: language attribute is hard coded for now, make it dynamic when actual language support is added.
 */
-export default ({ url, bodyClass, title, description }) => marinate`
+export default ({ url, bodyClass, title, description, language }) => marinate`
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${language}">
 <head>
   <title>${title}</title>
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
