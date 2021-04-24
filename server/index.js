@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../common/seo';
-import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME } from '../common/constants';
+import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 
 const hostname = _hostname().substr(0, 3);
@@ -36,6 +36,8 @@ app
   .get('*', async (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
+    const language = req.cookies[LANGUAGE_COOKIE] || DEFAULT_LANGUAGE;
+
     const { path, url } = req;
 
     const { createTitle, createDescription } = seo[
@@ -65,6 +67,7 @@ app
         bodyClass,
         title,
         description,
+        language,
       });
 
       template(res, { debug: 'off', stringToBufferThreshold: 1000 });
