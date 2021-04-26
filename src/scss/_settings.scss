@@ -273,6 +273,12 @@ $panel-width-560: 65vw;
   flex-wrap: nowrap;
   font-weight: 700;
   justify-content: center;
+
+  .search-form & {
+    span {
+      padding-left: 0.2em;
+    }
+  }
 }
 
 .flex-spacer {

@@ -86,5 +86,9 @@ export const TEXTS = {
   CENTERALIGN: 'Center-Align',
   HUKAMNAMA_NOT_FOUND_DESCRIPTION:
     "We couldn't find the hukamnama for this date in our database.",
-  MULTIPLE_SHABADS_HEADING: 'Multiple Shabads Display',
+  MULTIPLE_SHABADS_HEADING: 'Multi View',
+  MULTIPLE_SHABADS_INTRO: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+  MULTIPLE_SHABADS_NOTIFICATION: 'Please search for shabads and press + button next to the results to add an entry',
+  SHABAD_ADDED_MESSAGE: 'Shabad has been added to your selection.',
+  SHABAD_REMOVED_MESSAGE: 'Shabad removed.',
 };

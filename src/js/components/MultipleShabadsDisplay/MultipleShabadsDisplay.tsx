@@ -6,6 +6,7 @@ import { ReactSortable } from 'react-sortablejs'
 import { toMultipleShabadsURL } from '@/util/url/to-multiple-shabad-url';
 import BarsIcon from '../Icons/Bars';
 import { TEXTS } from '@/constants';
+import { showToast } from '@/util'
 
 import { clearMultipleShabads, removeMultipleShabads, setMultiViewPanel } from '@/features/actions';
 
@@ -34,14 +35,15 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   const history = useHistory();
 
   const onRemove = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    const { id } = e.currentTarget.dataset;
-    removeMultipleShabads(parseInt(id));
+    e.preventDefault()
+    const { id } = e.currentTarget.dataset
+    removeMultipleShabads(parseInt(id))
+    showToast(TEXTS.SHABAD_REMOVED_MESSAGE)
   }
 
   const handleDisplayShabads = () => {
     const shabadIds = sortableState.map(state => state.shabadId)
-    shabadIds.length && history.push(toMultipleShabadsURL({ shabadIds }));
+    history.push(toMultipleShabadsURL({ shabadIds }));
   }
 
   // Update Local State {sortableState} after shabads get Updated
@@ -50,8 +52,18 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   }, [multipleShabads])
 
   return (
-    <div className={`multiple-shabads-display ${showMultiViewPanel ? 'enable' : ''}`}>
-      <h3>{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
+    <aside className={`multiple-shabads-display ${showMultiViewPanel ? 'enable' : ''}`}>
+      <div className="multiple-shabads-display--header">
+        <h3>{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
+        <p>{TEXTS.MULTIPLE_SHABADS_INTRO}</p>
+      </div>
+
+      {
+        !multipleShabads.length
+        && <div className="notification">
+          {TEXTS.MULTIPLE_SHABADS_NOTIFICATION}
+        </div>
+      }
 
       <ReactSortable tag="ul" list={sortableState} setList={setSortableState}>
         {sortableState?.map(({ verse, id }) => (
@@ -60,6 +72,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
             <div>{verse}</div>
             <button
               title="Remove"
+              className="remove"
               data-id={id}
               onClick={onRemove}>-</button>
           </li>
@@ -68,11 +81,11 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
 
       <div className="multiple-shabads-display--footer">
         <button className="btn btn-secondary" onClick={clearMultipleShabads}>Clear</button>
-        <button className="btn btn-primary" onClick={handleDisplayShabads}>Display</button>
+        <button className="btn btn-primary" disabled={sortableState.length === 0} onClick={handleDisplayShabads}>Display</button>
       </div>
 
       <button title="Close" className="close toast-notification-close-button" onClick={() => { setMultiViewPanel(false) }}>X</button>
-    </div>
+    </aside>
   )
 }
 

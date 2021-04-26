@@ -2,15 +2,17 @@ import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { Link } from 'react-router-dom';
-import { setMultipleShabads } from '@/features/actions';
+import { setMultipleShabads, setMultiViewPanel } from '@/features/actions';
+import { TEXTS } from '@/constants';
 
 import Larivaar from '../components/Larivaar';
-import { toSearchURL } from '@/util';
+import { toSearchURL, showToast } from '@/util';
 class Autocomplete extends Component {
   static propTypes = {
     isShowFullResults: PropTypes.bool,
     getSuggestions: PropTypes.func.isRequired,
     searchOptions: PropTypes.object.isRequired,
+    multipleShabads: PropTypes.array,
     value: PropTypes.string.isRequired,
     setMultipleShabads: PropTypes.func,
     isHome: PropTypes.bool
@@ -156,8 +158,18 @@ class Autocomplete extends Component {
     e.preventDefault();
     e.stopPropagation();
 
-    const {id, shabadid, verse} = e.currentTarget.dataset    
-    this.props.setMultipleShabads({id: parseInt(id), shabadId: parseInt(shabadid), verse})
+    const { multipleShabads, showMultiViewPanel, setMultipleShabads, setMultiViewPanel }  = this.props;
+    const {id, shabadid, verse} = e.currentTarget.dataset
+
+    // If Shabad already added then dont add again.
+    if ( multipleShabads.findIndex(e => e.id === parseInt(id)) === -1 ) {
+      setMultipleShabads({id: parseInt(id), shabadId: parseInt(shabadid), verse})
+
+      !showMultiViewPanel && setMultiViewPanel(true)
+      showToast(TEXTS.SHABAD_ADDED_MESSAGE)      
+    }
+
+    
   }
 
   render() {
@@ -259,10 +271,11 @@ class Autocomplete extends Component {
   }
 }
 
-const mapStateToProps = ({ }) => ({})
+const mapStateToProps = ({ multipleShabads, showMultiViewPanel }) => ({ multipleShabads, showMultiViewPanel })
 
 const mapDispatchToProps = {
-  setMultipleShabads
+  setMultipleShabads,
+  setMultiViewPanel,
 }
 
 export default connect(
