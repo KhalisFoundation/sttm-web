@@ -352,14 +352,9 @@ select {
 
 .pusher {
   left: 0;
-  transform: translate3d(0, 0, 0);
   transition: transform 0.5s;
 
-  // .menu-open & {
-  //   transform: none;
-  // }
-
   &.enable {
-    transform: translate3d(10%, 0, 0);
+    transform: translateX(10%);
   }
 }
