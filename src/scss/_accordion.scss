@@ -8,6 +8,14 @@
     padding: 0.2em 1em 0.2em 1.5em;
     width: 100%;
 
+    .dark-mode & {
+      background-color: $sttm-lighter-black;
+
+      h3 {
+        color: $sttm-white;
+      }
+    }
+
     .title {
       align-items: center;
       display: flex;

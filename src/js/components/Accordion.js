@@ -15,7 +15,7 @@ const Accordion = ({title, content, defaultState = false}) => {
 
   return (
     <li className={`accordion__item ${active ? 'is-active' : ''}`}>
-      <button className="title" onClick={toggleAccordion}>
+      <button className="title" onClick={toggleAccordion} aria-label={title}>
         <h3>{title}</h3>
         {
           active
