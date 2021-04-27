@@ -8,7 +8,7 @@ import BarsIcon from '../Icons/Bars';
 import { TEXTS } from '@/constants';
 import { showToast } from '@/util'
 
-import { clearMultipleShabads, removeMultipleShabads, setMultiViewPanel } from '@/features/actions';
+import { clearMultipleShabads, removeMultipleShabads, setMultiViewPanel, setMultipleShabads } from '@/features/actions';
 
 interface IShabadProps {
   id: number;
@@ -21,34 +21,57 @@ interface IMultipleShabadsDisplayProps {
   showMultiViewPanel: boolean;
   clearMultipleShabads: () => {};
   removeMultipleShabads: (id: number) => {};
-  setMultiViewPanel: (bool: boolean) => {}
+  setMultiViewPanel: (bool: boolean) => {};
+  setMultipleShabads: (shabad: IShabadProps) => {}
 }
 
 const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   multipleShabads,
   showMultiViewPanel,
+  setMultipleShabads,
   clearMultipleShabads,
   removeMultipleShabads,
   setMultiViewPanel,
 }) => {
   const [sortableState, setSortableState] = useState<IShabadProps[]>(multipleShabads);
-  const history = useHistory();
+  const [history, setHistory] = useState<IShabadProps[]>(multipleShabads);
+  const urlHistory = useHistory();
+
+  const undoMultipleShabads = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    
+    const setA = new Set(multipleShabads);
+    const difference = new Set(history.filter(x => !setA.has(x)));
+    setMultipleShabads(difference.size ? difference.values().next().value : null)
+  }
 
   const onRemove = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
+
     const { id } = e.currentTarget.dataset
     removeMultipleShabads(parseInt(id))
     showToast(TEXTS.SHABAD_REMOVED_MESSAGE)
   }
 
+  const onClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    clearMultipleShabads()
+    setHistory([])
+  }
+
   const handleDisplayShabads = () => {
     const shabadIds = sortableState.map(state => state.shabadId)
-    history.push(toMultipleShabadsURL({ shabadIds }));
+    urlHistory.push(toMultipleShabadsURL({ shabadIds }));
   }
 
   // Update Local State {sortableState} after shabads get Updated
   useEffect(() => {
     setSortableState(multipleShabads)
+    // Don't update history on delete
+    if (multipleShabads.length > history.length) {
+      setHistory(multipleShabads)
+    }
   }, [multipleShabads])
 
   return (
@@ -80,7 +103,11 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
       </ReactSortable>
 
       <div className="multiple-shabads-display--footer">
-        <button className="btn btn-secondary" onClick={clearMultipleShabads}>Clear</button>
+        {
+          history.length > multipleShabads.length
+          && (<button className="btn btn-primary" onClick={undoMultipleShabads}>Undo</button>)
+        }
+        <button className="btn btn-secondary" onClick={onClear}>Clear</button>
         <button className="btn btn-primary" disabled={sortableState.length === 0} onClick={handleDisplayShabads}>Display</button>
       </div>
 
@@ -94,6 +121,7 @@ const mapStateToProps = ({ multipleShabads, showMultiViewPanel }: any) => ({ mul
 const mapDispatchToProps = {
   removeMultipleShabads,
   clearMultipleShabads,
+  setMultipleShabads,
   setMultiViewPanel,
 }
 
