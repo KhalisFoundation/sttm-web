@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { showToast, copyToClipboard, shortenURL } from '../util';
+import { showToast, copyToClipboard, shortenURL, getVerseId, getShabadId, getUnicodeVerse } from '../util';
 import { TEXTS } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import ShareIcon from './Icons/Share';
@@ -10,10 +10,9 @@ import CopyAllIcon from './Icons/CopyAll';
 import WhatsAppIcon from './Icons/WhatsApp';
 import ClipboardIcon from './Icons/Clipboard';
 import PrinterIcon from './Icons/Printer';
-// import MergeIcon from './Icons/MergeIcon';
 import { GearsIcon } from './Icons/CustomIcons';
-// import { setMultiViewPanel } from '@/features/actions';
 import MultiViewButton from '@/components/MultiViewButton';
+import { AddShabadButton } from './AddShabadButton';
 
 const handleWhatsapp = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
@@ -36,7 +35,7 @@ const copyShortUrl = () =>
     )
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-export const supportedMedia = ['multiView', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
+export const supportedMedia = ['addShabad', 'multiView', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 class ShareButtons extends React.PureComponent {
   static defaultProps = {
@@ -49,7 +48,9 @@ class ShareButtons extends React.PureComponent {
     onEmbedClick: PropTypes.func,
     onCopyAllClick: PropTypes.func,
     toggleSettingsPanel: PropTypes.func,
-    settingIdRef: PropTypes.object
+    settingIdRef: PropTypes.object,
+    highlight: PropTypes.number,
+    gurbani: PropTypes.array,
   };
 
   static handleShare = () => {
@@ -63,6 +64,20 @@ class ShareButtons extends React.PureComponent {
       url: shortenURL(),
     });
   };
+
+  getShabad() {
+    const { highlight, gurbani } = this.props;
+    let formattedShabad;
+    if (gurbani) {
+      const selectedShabad = highlight ? gurbani?.find(({verseId}) => verseId === highlight) : gurbani?.length ? gurbani[0] : null
+      formattedShabad = {
+        verseId: getVerseId(selectedShabad),
+        shabadId: getShabadId(selectedShabad),
+        verse: getUnicodeVerse(selectedShabad)
+      }
+    }
+    return formattedShabad;
+  }
 
   render() {
     const { media, onEmbedClick, onCopyAllClick, toggleSettingsPanel, settingIdRef } = this.props;
@@ -130,6 +145,11 @@ class ShareButtons extends React.PureComponent {
           <MultiViewButton width="1.0em" />
         </li>
       ),
+      addShabad: (
+        <li key={7}>
+          <AddShabadButton shabad={this.getShabad()} />
+        </li>
+      )
     };
 
     if (window !== undefined && 'share' in window.navigator) {

@@ -37,6 +37,7 @@ class Layout extends React.PureComponent {
     isController: PropTypes.bool,
     isAng: PropTypes.bool,
     multipleShabads: PropTypes.array,
+    showMultiViewPanel: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
   };
 

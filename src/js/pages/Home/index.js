@@ -56,15 +56,6 @@ class Home extends React.PureComponent {
     this.props.history.push(toSearchURL(data));
   };
 
-  handleMultiViewClick = (e) => {
-    e.peventDefault();
-    e.stopPropogation();
-    
-    this.setState({
-      showMultiViewPanel: !this.state.showMultiViewPanel
-    })
-  }
-
   /**
    * Functional component
    */

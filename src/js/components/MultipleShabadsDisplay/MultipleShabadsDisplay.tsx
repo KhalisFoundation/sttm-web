@@ -9,20 +9,15 @@ import { TEXTS } from '@/constants';
 import { showToast } from '@/util'
 
 import { clearMultipleShabads, removeMultipleShabads, setMultiViewPanel, setMultipleShabads } from '@/features/actions';
-
-interface IShabadProps {
-  id: number;
-  shabadId: number;
-  verse: string;
-}
+import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 
 interface IMultipleShabadsDisplayProps {
-  multipleShabads: IShabadProps[];
+  multipleShabads: IMultipleShabadsProps[];
   showMultiViewPanel: boolean;
   clearMultipleShabads: () => {};
   removeMultipleShabads: (id: number) => {};
   setMultiViewPanel: (bool: boolean) => {};
-  setMultipleShabads: (shabad: IShabadProps) => {}
+  setMultipleShabads: (shabad: IMultipleShabadsProps) => {}
 }
 
 const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
@@ -33,13 +28,13 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   removeMultipleShabads,
   setMultiViewPanel,
 }) => {
-  const [sortableState, setSortableState] = useState<IShabadProps[]>(multipleShabads);
-  const [history, setHistory] = useState<IShabadProps[]>(multipleShabads);
+  const [sortableState, setSortableState] = useState<IMultipleShabadsProps[]>(multipleShabads);
+  const [history, setHistory] = useState<IMultipleShabadsProps[]>(multipleShabads);
   const urlHistory = useHistory();
 
   const undoMultipleShabads = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    
+
     const setA = new Set(multipleShabads);
     const difference = new Set(history.filter(x => !setA.has(x)));
     setMultipleShabads(difference.size ? difference.values().next().value : null)
@@ -111,7 +106,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
         <button className="btn btn-primary" disabled={sortableState.length === 0} onClick={handleDisplayShabads}>Display</button>
       </div>
 
-      <button title="Close" className="close toast-notification-close-button" onClick={() => { setMultiViewPanel(false) }}>X</button>
+      <button title="Close" className="close toast-notification-close-button" onClick={() => { setMultiViewPanel(false) }}>×</button>
     </aside>
   )
 }

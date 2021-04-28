@@ -3,25 +3,26 @@ import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { Link } from 'react-router-dom';
 import { setMultipleShabads, setMultiViewPanel } from '@/features/actions';
-import { TEXTS } from '@/constants';
 
+import { AddShabadButton } from "./AddShabadButton";
 import Larivaar from '../components/Larivaar';
-import { toSearchURL, showToast } from '@/util';
+import { toSearchURL } from '@/util';
+
 class Autocomplete extends Component {
   static propTypes = {
     isShowFullResults: PropTypes.bool,
     getSuggestions: PropTypes.func.isRequired,
     searchOptions: PropTypes.object.isRequired,
-    multipleShabads: PropTypes.array,
+    multipleShabads: PropTypes.array.isRequired,
+    showMultiViewPanel: PropTypes.bool.isRequired,
     value: PropTypes.string.isRequired,
-    setMultipleShabads: PropTypes.func,
+    setMultipleShabads: PropTypes.func.isRequired,
+    setMultiViewPanel: PropTypes.func.isRequired,
     isHome: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
-
-    this.handleAddShabads = this.handleAddShabads.bind(this);
 
     this.state = {
       activeSuggestion: -1,
@@ -154,24 +155,6 @@ class Autocomplete extends Component {
     }
   }
 
-  handleAddShabads(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const { multipleShabads, showMultiViewPanel, setMultipleShabads, setMultiViewPanel }  = this.props;
-    const {id, shabadid, verse} = e.currentTarget.dataset
-
-    // If Shabad already added then dont add again.
-    if ( multipleShabads.findIndex(e => e.id === parseInt(id)) === -1 ) {
-      setMultipleShabads({id: parseInt(id), shabadId: parseInt(shabadid), verse})
-
-      !showMultiViewPanel && setMultiViewPanel(true)
-      showToast(TEXTS.SHABAD_ADDED_MESSAGE)      
-    }
-
-    
-  }
-
   render() {
     const {
       state: {
@@ -240,12 +223,7 @@ class Autocomplete extends Component {
                       </a>  
                       {
                         !isHome ||
-                        (<button
-                          aria-label="Add Shabad"
-                          data-id={suggestion.verseId}
-                          data-shabadid={suggestion.shabadId}
-                          data-verse={suggestion.verse}
-                          onClick={this.handleAddShabads}><span>+</span></button>)
+                        (<AddShabadButton shabad={suggestion} />)
                       }                    
                     </>
                     }

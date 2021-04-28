@@ -101,18 +101,7 @@ class ListOfShabads extends React.PureComponent {
         <React.Fragment>
           {isShowControls && (
             <Controls
-              media={
-                ['shabad', 'hukamnama', 'ang'].includes(type)
-                  ? supportedMedia
-                  : supportedMedia.filter(
-                    (m) => [
-                      'embed',
-                      'copyAll',
-                      'copy',
-                      'whatsapp',
-                      'print',].includes(m) === false
-                  )
-              }
+              media={supportedMedia.filter(m => m !== 'addShabad')}
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
               {...this.props.controlProps}

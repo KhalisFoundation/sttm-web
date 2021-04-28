@@ -7,7 +7,7 @@
   left: 0;
   overflow-x: hidden;
   padding: 0 1em;
-  position: absolute;
+  position: fixed;
   top: 0;
   transform: translateX(-100%);
   transform-origin: top left;
@@ -104,5 +104,23 @@
         color: $sttm-dark-grey;
       }
     }
+  }
+}
+
+button.add-shabad {
+  align-items: center;
+  display: inline-flex;
+  flex-basis: 50px;
+  justify-content: center;
+
+  span {
+    align-items: center;
+    background: $sttm-orange;
+    border-radius: 50%;
+    color: $sttm-white;
+    display: flex;
+    height: 1.5em;
+    justify-content: center;
+    width: 1.5em;
   }
 }

@@ -262,24 +262,6 @@
       padding: 10px;
       width: 100%;
     }
-
-    > button {
-      align-items: center;
-      display: flex;
-      flex-basis: 50px;
-      justify-content: center;
-
-      span {
-        align-items: center;
-        background: $sttm-orange;
-        border-radius: 50%;
-        color: $sttm-white;
-        display: flex;
-        height: 1.5em;
-        justify-content: center;
-        width: 1.5em;
-      }
-    }
   }
 
   > .suggestion-active {
