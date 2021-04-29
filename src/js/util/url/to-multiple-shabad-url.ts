@@ -1,8 +1,16 @@
 interface IToMultipleShabadsUrlArguments {
-  shabadIds: number[]
+  shabadData: (number | undefined)[][]
 }
 
 export const toMultipleShabadsURL = ({
-  shabadIds,  
-}: IToMultipleShabadsUrlArguments) =>
-  `/shabad?id=${shabadIds.join(',')}`;
+  shabadData,  
+}: IToMultipleShabadsUrlArguments) => {
+  const shabadIds = [];
+  const verseIds = [];
+  for(const shabad of shabadData) {
+    const [shabadId, verseId] = shabad;
+    shabadIds.push(shabadId)
+    verseIds.push(verseId)
+  }
+  return `/shabad?id=${shabadIds.join(',')}&highlight=${verseIds.join(',')}`;
+}

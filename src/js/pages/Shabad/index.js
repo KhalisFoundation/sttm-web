@@ -24,6 +24,8 @@ export default class Shabad extends React.PureComponent {
       random ? { random, API_URL } : { random, id, API_URL }
     );
 
+    console.log(id, highlight)
+
     return (
 
       <PageLoader url={url}>

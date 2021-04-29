@@ -104,6 +104,7 @@ class ListOfShabads extends React.PureComponent {
               media={supportedMedia.filter(m => m !== 'addShabad')}
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
+              pageType="list"
               {...this.props.controlProps}
             />
           )}

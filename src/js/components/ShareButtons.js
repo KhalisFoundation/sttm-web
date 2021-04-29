@@ -38,6 +38,10 @@ const copyShortUrl = () =>
 export const supportedMedia = ['addShabad', 'multiView', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 class ShareButtons extends React.PureComponent {
+  constructor() {
+    super()
+    this.formattedShabad = {};
+  }
   static defaultProps = {
     media: ['whatsapp', 'copy'],
   };
@@ -65,22 +69,25 @@ class ShareButtons extends React.PureComponent {
     });
   };
 
-  getShabad() {
+  componentDidMount() {
     const { highlight, gurbani } = this.props;
-    let formattedShabad;
-    if (gurbani) {
-      const selectedShabad = highlight ? gurbani?.find(({verseId}) => verseId === highlight) : gurbani?.length ? gurbani[0] : null
-      formattedShabad = {
+    
+    if (gurbani !== undefined) {
+      const selectedShabad = highlight ? gurbani?.find(({verseId}) => verseId === highlight) : gurbani[0]
+      this.formattedShabad = {
         verseId: getVerseId(selectedShabad),
         shabadId: getShabadId(selectedShabad),
         verse: getUnicodeVerse(selectedShabad)
       }
     }
-    return formattedShabad;
+  }
+
+  componentWillUnmount() {
+    this.formattedShabad = {}
   }
 
   render() {
-    const { media, onEmbedClick, onCopyAllClick, toggleSettingsPanel, settingIdRef } = this.props;
+    const { media, onEmbedClick, onCopyAllClick, toggleSettingsPanel, settingIdRef, pageType } = this.props;
 
     if (media.length === 0) {
       return null;
@@ -147,7 +154,10 @@ class ShareButtons extends React.PureComponent {
       ),
       addShabad: (
         <li key={7}>
-          <AddShabadButton shabad={this.getShabad()} />
+          {
+            pageType !== 'list'
+            && <AddShabadButton shabad={this.formattedShabad} />
+          }          
         </li>
       )
     };

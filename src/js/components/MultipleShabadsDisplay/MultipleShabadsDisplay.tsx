@@ -56,8 +56,8 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   }
 
   const handleDisplayShabads = () => {
-    const shabadIds = sortableState.map(state => state.shabadId)
-    urlHistory.push(toMultipleShabadsURL({ shabadIds }));
+    const shabadData = sortableState.map(state => [state.shabadId, state.id])
+    urlHistory.push(toMultipleShabadsURL({ shabadData }));
   }
 
   // Update Local State {sortableState} after shabads get Updated
