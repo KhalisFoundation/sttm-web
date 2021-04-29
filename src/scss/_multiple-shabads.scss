@@ -107,20 +107,35 @@
   }
 }
 
-button.add-shabad {
+.add-shabad-wrapper {
   align-items: center;
   display: inline-flex;
   flex-basis: 50px;
   justify-content: center;
+}
 
-  span {
-    align-items: center;
-    background: $sttm-orange;
-    border-radius: 50%;
+button.add-shabad {
+  align-items: center;
+  background-color: $sttm-darker-grey;
+  border-radius: 50%;
+  color: $sttm-white;
+  display: inline-flex;
+  font-size: 20px;
+  height: 1.5em;
+  justify-content: center;
+  width: 1.5em;
+
+  &:hover {
+    background-color: $sttm-orange;
     color: $sttm-white;
-    display: flex;
-    height: 1.5em;
-    justify-content: center;
-    width: 1.5em;
+  }
+
+  .search-form & {
+    background-color: $sttm-orange;
+    padding-top: 3px;
+
+    &:hover {
+      background-color: $sttm-blue;
+    }
   }
 }

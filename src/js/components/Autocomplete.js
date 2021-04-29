@@ -223,7 +223,7 @@ class Autocomplete extends Component {
                       </a>  
                       {
                         !isHome ||
-                        (<AddShabadButton shabad={suggestion} />)
+                        (<div className="add-shabad-wrapper"><AddShabadButton shabad={suggestion} /></div>)
                       }                    
                     </>
                     }

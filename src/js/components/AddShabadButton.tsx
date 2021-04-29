@@ -42,7 +42,8 @@ export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId
       data-id={verseId}
       data-shabadid={shabadId}
       data-verse={verse}
-      onClick={onClick}><span>+</span>
+      onClick={onClick}>
+      +
     </button>
   )
 }
