@@ -7,8 +7,11 @@ export default props => {
     return (
       <a href={doodle['Link']} target="_blank">
         <img
+          src={doodle['Image']}
           title={doodle['Description']}
-          style={{ paddingBottom: '10px', maxWidth: '100%' }} src={doodle['Image']} />
+          alt={doodle['Description']}
+          style={{ paddingBottom: '10px', maxWidth: '100%' }}
+        />
       </a>
     );
   }

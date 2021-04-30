@@ -13,10 +13,9 @@ import SehajPaathLink from '@/components/SehajPaathLink';
 import { BaaniLinks } from '@/components/BaaniLinks/';
 import SearchForm from '@/components/SearchForm';
 import Logo from '@/components/Icons/Logo';
-import CrossIcon from '@/components/Icons/Times';
-import KeyboardIcon from '@/components/Icons/Keyboard';
 import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
+import ClearSearchButton from '@/components/ClearSearchButton';
 import Reset from '@/components/Icons/Reset';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
 import MultiViewButton from '@/components/MultiViewButton';
@@ -139,26 +138,8 @@ class Home extends React.PureComponent {
                         min={name === 'ang' ? 1 : undefined}
                         max={name === 'ang' ? MAX_ANGS[source] : undefined}
                       />
-                      <button
-                        type="button"
-                        className="clear-search-toggle"
-                        onClick={setQueryAs('')}
-                      >
-                        <CrossIcon />
-                      </button>
-                      {isShowKeyboard && (
-                        <button
-                          type="button"
-                          className={`gurmukhi-keyboard-toggle ${
-                            displayGurmukhiKeyboard ? 'active' : ''
-                            }`}
-                          onClick={setGurmukhiKeyboardVisibilityAs(
-                            !displayGurmukhiKeyboard
-                          )}
-                        >
-                          <KeyboardIcon />
-                        </button>
-                      )}
+                      <ClearSearchButton clickHandler={setQueryAs} />
+                      {isShowKeyboard && <GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />}
                       <button type="submit" disabled={disabled}>
                         <SearchIcon />
                       </button>
