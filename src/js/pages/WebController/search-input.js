@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CrossIcon from '../../components/Icons/Times';
-import KeyboardIcon from '../../components/Icons/Keyboard';
 import SearchIcon from '../../components/Icons/Search';
 import { EnhancedGurmukhiKeyboard } from '../../components/EnhancedGurmukhiKeyboard';
+import GurmukhiKeyboardToggleButton from '../../components/GurmukhiKeyboardToggleButton';
 import SearchForm from '../../components/SearchForm';
+import ClearSearchButton from '../../components/ClearSearchButton';
 
 import {
   SOURCES,
@@ -100,26 +100,9 @@ export default class SearchInput extends React.PureComponent {
                         title={title}
                         pattern={pattern}
                       />
-                      <button
-                        type="button"
-                        className="clear-search-toggle"
-                        onClick={setQueryAs('')}
-                      >
-                        <CrossIcon />
-                      </button>
-                      {type > 2 ? '' : (
-                        <button
-                          type="button"
-                          className={`gurmukhi-keyboard-toggle ${
-                            displayGurmukhiKeyboard ? 'active' : ''
-                            }`}
-                          onClick={setGurmukhiKeyboardVisibilityAs(
-                            !displayGurmukhiKeyboard
-                          )}
-                        >
-                          <KeyboardIcon />
-                        </button>
-                      )}
+                      <ClearSearchButton clickHandler={setQueryAs} />
+                      {type > 2 ? '' : (<GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />)}
+                      
                       <button type="submit">
                         <SearchIcon />
                       </button>

@@ -74,14 +74,14 @@ class ShareButtons extends React.PureComponent {
     const mediaMap = {
       embed: (
         <li key={0} className="show-on-desktop">
-          <button onClick={onEmbedClick}>
+          <button onClick={onEmbedClick} aria-label="copy embedding code">
             <EmbedIcon />
           </button>
         </li>
       ),
       copyAll: (
         <li key={1}>
-          <button onClick={onCopyAllClick}>
+          <button onClick={onCopyAllClick} aria-label="copy all gurbani">
             <CopyAllIcon />
           </button>
         </li>
@@ -96,8 +96,9 @@ class ShareButtons extends React.PureComponent {
       ),
       copy: (
         <li key={3}>
-          <a id="copy-short-url" className="copy" onClick={copyShortUrl}>
+          <label for="copy-short-url-text" id="copy-short-url" className="copy" onClick={copyShortUrl}>
             <input
+              id="copy-short-url-text"
               className="short-url-input"
               type="text"
               value={shortenURL()}
@@ -105,7 +106,7 @@ class ShareButtons extends React.PureComponent {
             />
             <ClipboardIcon className="short-url-icon" />
             <span className="sr-only">Copy URL</span>
-          </a>
+          </label>
         </li>
       ),
       print: (

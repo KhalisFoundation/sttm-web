@@ -9,6 +9,7 @@
   "fonts",
   "header",
   "helpers",
+  "maryada",
   "panktee",
   "printer",
   "results",
@@ -26,6 +27,7 @@
   "vishraam",
   "mahankosh",
   "ui-controls",
+  "accordion",
   "settings";
 @import 'node_modules/react-smartbanner/dist/main';
 @import 'node_modules/react-toastify/dist/ReactToastify.min';
@@ -108,7 +110,11 @@ select {
 }
 
 .wrapper {
-  padding: 0 1rem;
+  margin: 0 3rem;
+
+  @media screen and (max-width: 790px) {
+    margin: 0 1rem;
+  }
 }
 
 .error-message {
@@ -343,4 +349,12 @@ select {
     display: inline-block;
     font-size: 1rem;
   }
+}
+
+body:not(.dark-mode) a {
+  color: #1374b4;
+}
+
+.transparent-color {
+  color: transparent !important;
 }

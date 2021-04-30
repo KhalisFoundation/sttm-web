@@ -11,7 +11,7 @@ const content = {
       `How do I use a QWERTY keyboard to type Gurmukhi?`,
       <React.Fragment>
         Please reference the following keyboard map:
-        <img src="/assets/images/help/web-desktop-keyboard-map.png" />
+        <img src="/assets/images/help/web-desktop-keyboard-map.png" alt="How do I use a QWERTY keyboard to type Gurmukhi?" />
       </React.Fragment>,
     ],
     [
@@ -140,7 +140,7 @@ const content = {
         Split view separates the gurmukhi, transliteration, and translations
         into individual sections on the page. To access this option, open
         display settings, and choose “Split View”
-        <img src="/assets/images/help/web-split-view.png" />
+        <img src="/assets/images/help/web-split-view.png" alt="What is Split View?" />
       </React.Fragment>,
     ],
     [
@@ -151,7 +151,7 @@ const content = {
         shareable. You can do this by clicking any of the social media icons in
         the shabad view, or pressing the last icon to copy the link to your
         clipboard
-        <img src="/assets/images/help/web-share-link-shortener.png" />
+        <img src="/assets/images/help/web-share-link-shortener.png" alt="How do I share a shabad and use the link shortener?" />
         Additionally, for more advanced ways of using the link shortener, you
         have the following options:
         <ul>
@@ -244,7 +244,7 @@ const content = {
         </a>{' '}
         and choosing the Windows or macOS download link. After that, open the
         installer and follow the steps that are displayed.
-        <img src="/assets/images/help/desktop-download.png" />
+        <img src="/assets/images/help/desktop-download.png" alt="How do I install the desktop application?" />
       </React.Fragment>,
     ],
     [
@@ -253,10 +253,10 @@ const content = {
         After launching STTM, by default you can search for a shabad by entering
         the first letter of each word. For example, if the shabad is ਗੁਰੁ ਮੇਰੈ
         ਸੰਗਿ ਸਦਾ ਹੈ ਨਾਲੇ , you would enter <code>gmsshn</code>.
-        <img src="/assets/images/help/desktop-search-ex.png" />
+        <img src="/assets/images/help/desktop-search-ex.png" alt="desktop search example" />
         Alternatively, you can click on the gurmukhi keyboard icon and type in
         the letters manually.
-        <img src="/assets/images/help/desktop-keyboard.png" />
+        <img src="/assets/images/help/desktop-keyboard.png" alt="desktop search keyboard" />
       </React.Fragment>,
     ],
     [
@@ -329,8 +329,8 @@ const content = {
         your computer's display settings and change it to "Extended Desktop"
         (NOT mirroring). After that, launch STTM and turn on "Presenter View" in
         the settings!
-        <img src="/assets/images/help/desktop-extend-pc.png" />
-        <img src="/assets/images/help/desktop-extend-mac.png" />
+        <img src="/assets/images/help/desktop-extend-pc.png" alt="connect STTM to a projector on PC" />
+        <img src="/assets/images/help/desktop-extend-mac.png" alt="connect STTM to a projector on Mac" />
       </React.Fragment>,
     ],
     [
@@ -338,7 +338,7 @@ const content = {
       <React.Fragment>
         After launching STTM, click the icon for settings, and choose your
         theme.
-        <img src="/assets/images/help/desktop-theme.png" />
+        <img src="/assets/images/help/desktop-theme.png" alt="Theme options" />
       </React.Fragment>,
     ],
     [
@@ -346,7 +346,7 @@ const content = {
       <React.Fragment>
         Yes! After launching STTM, click the icon for settings, and choose the
         Larivaar option.
-        <img src="/assets/images/help/desktop-larivaar.png" />
+        <img src="/assets/images/help/desktop-larivaar.png" alt="Gurbani in Larivaar" />
       </React.Fragment>,
     ],
     [
@@ -354,7 +354,7 @@ const content = {
       <React.Fragment>
         After launching STTM, click the icon for settings, and scroll down for
         options to adjust the font size.
-        <img src="/assets/images/help/desktop-font-size.png" />
+        <img src="/assets/images/help/desktop-font-size.png" alt="How can I make the fonts on the screen smaller?" />
       </React.Fragment>,
     ],
     [
@@ -363,7 +363,7 @@ const content = {
         When using STTM in “Presenter View”, your history will appear in the
         bottom right quadrant. You can click any of the shabads in the list to
         bring them back up as your primary one.
-        <img src="/assets/images/help/desktop-history.png" />
+        <img src="/assets/images/help/desktop-history.png" alt="Where can I see my previous shabads?" />
       </React.Fragment>,
     ],
     [
@@ -375,8 +375,8 @@ const content = {
         Shabad you started with. Additionally, you can press the arrows in the
         menu bar to quickly go to the next/previous Shabad without having to
         scroll at all.
-        <img src="/assets/images/help/desktop-akhand-paatth-view-toggle.png" />
-        <img src="/assets/images/help/desktop-akhand-paatth-view.png" />
+        <img src="/assets/images/help/desktop-akhand-paatth-view-toggle.png" alt="Akhand Paatth view toggle button" />
+        <img src="/assets/images/help/desktop-akhand-paatth-view.png" alt="Akhand Paatth view" />
       </React.Fragment>,
     ],
     [
@@ -400,8 +400,8 @@ const content = {
             for Gurmukhi if you'd like to use that instead.
           </li>
         </ul>
-        <img src="/assets/images/help/desktop-custom-slide-button.png" />
-        <img src="/assets/images/help/desktop-custom-slide-controller.png" />
+        <img src="/assets/images/help/desktop-custom-slide-button.png" alt="Custom slide button" />
+        <img src="/assets/images/help/desktop-custom-slide-controller.png" alt="Custom slide controller" />
         To get to the "Custom Slides" feature, click on slides icon on the top
         right when viewing a Shabad.
       </React.Fragment>,
