@@ -102,6 +102,7 @@
 
     #copy-short-url {
       display: inline-block;
+      position: relative;
 
       .short-url {
         &-input {
