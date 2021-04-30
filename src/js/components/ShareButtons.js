@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { showToast, copyToClipboard, shortenURL, getVerseId, getShabadId, getUnicodeVerse } from '../util';
+import { showToast, copyToClipboard, shortenURL, getVerseId, getShabadId, getUnicodeVerse, isKeyExists } from '../util';
 import { TEXTS } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import ShareIcon from './Icons/Share';
@@ -38,9 +38,18 @@ const copyShortUrl = () =>
 export const supportedMedia = ['addShabad', 'multiView', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 class ShareButtons extends React.PureComponent {
-  constructor() {
+  constructor(props) {
     super()
-    this.formattedShabad = {};
+    this.formattedShabad = {}
+    const { highlight, gurbani } = props;    
+    if (gurbani !== undefined) {
+      const selectedShabad = highlight ? gurbani?.find(({verseId}) => verseId === highlight) : gurbani[0]
+      this.formattedShabad = {
+        verseId: getVerseId(selectedShabad),
+        shabadId: getShabadId(selectedShabad),
+        verse: getUnicodeVerse(selectedShabad)
+      }
+    }    
   }
   static defaultProps = {
     media: ['whatsapp', 'copy'],
@@ -68,19 +77,6 @@ class ShareButtons extends React.PureComponent {
       url: shortenURL(),
     });
   };
-
-  componentDidMount() {
-    const { highlight, gurbani } = this.props;
-    
-    if (gurbani !== undefined) {
-      const selectedShabad = highlight ? gurbani?.find(({verseId}) => verseId === highlight) : gurbani[0]
-      this.formattedShabad = {
-        verseId: getVerseId(selectedShabad),
-        shabadId: getShabadId(selectedShabad),
-        verse: getUnicodeVerse(selectedShabad)
-      }
-    }
-  }
 
   componentWillUnmount() {
     this.formattedShabad = {}
@@ -153,9 +149,9 @@ class ShareButtons extends React.PureComponent {
         </li>
       ),
       addShabad: (
-        <li key={7}>
+        <li key={7}>  
           {
-            pageType !== 'list'
+            isKeyExists(this.formattedShabad, 'shabadId')
             && <AddShabadButton shabad={this.formattedShabad} />
           }          
         </li>

@@ -409,7 +409,7 @@ export default [
         type,
         random: random !== undefined && random === '' ? true : false,
         highlight:
-          highlight === undefined ? undefined : parseInt(highlight, 10),
+          highlight === undefined ? undefined : highlight.includes(',') ? highlight : parseInt(highlight, 10)
       };
 
       return (

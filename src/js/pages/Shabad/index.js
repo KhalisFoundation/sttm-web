@@ -14,7 +14,7 @@ const Stub = () => <div className="spinner" />;
 export default class Shabad extends React.PureComponent {
   static propTypes = {
     random: PropTypes.bool,
-    highlight: PropTypes.number,
+    highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     id: PropTypes.string,
   };
 
@@ -40,6 +40,7 @@ export default class Shabad extends React.PureComponent {
                   ? <ListOfShabads 
                       type="shabad"
                       shabads={data.shabads}
+                      highlights={highlight}
                     />
                   : <ShabadContent
                       random={random}

@@ -65,7 +65,8 @@ export default class Baani extends React.PureComponent {
     isParagraphMode: PropTypes.bool.isRequired,
     onBaaniLineClick: PropTypes.func,
     sgBaaniLength: PropTypes.string,
-    visraams: PropTypes.bool
+    visraams: PropTypes.bool,
+    shabadIndex: PropTypes.number,
   };
 
   constructor(props) {
@@ -179,12 +180,13 @@ export default class Baani extends React.PureComponent {
     );
   };*/
 
-  _scrollToHiglight = () => {
-    if (this.$highlightedBaaniLine) {
+  _scrollToHighlight = () => {    
+    const {shabadIndex = 0} = this.props;
+    if (this.$highlightedBaaniLine && shabadIndex === 0) {
       const { top } = this.$highlightedBaaniLine.getBoundingClientRect();
       const newTopPosition = window.scrollY + top;
       requestAnimationFrame(() => window.scrollTo(0, newTopPosition));
-    }
+    }    
   };
 
   showSelectionOptions = (e) => {
@@ -208,7 +210,7 @@ export default class Baani extends React.PureComponent {
   };
 
   componentDidMount() {
-    this._scrollToHiglight();
+    this._scrollToHighlight();
     document.addEventListener('click', this.clearMahankoshInformation);
   }
 
@@ -217,7 +219,7 @@ export default class Baani extends React.PureComponent {
   }
   componentDidUpdate(prevProps) {
     if (this.props.highlight !== prevProps.highlight) {
-      this._scrollToHiglight();
+      this._scrollToHighlight();
     }
   }
 

@@ -84,6 +84,7 @@ class ListOfShabads extends React.PureComponent {
     const {
       type,
       shabads,
+      highlights,
       translationLanguages,
       transliterationLanguages,
       unicode,
@@ -91,6 +92,7 @@ class ListOfShabads extends React.PureComponent {
     
     const isShowMetaData = this.props.hideMeta === false;
     const isShowControls = this.props.hideControls === false;
+    const highlightsArray = highlights.split(',')
 
     return (
       <GlobalHotKeys
@@ -104,13 +106,13 @@ class ListOfShabads extends React.PureComponent {
               media={supportedMedia.filter(m => m !== 'addShabad')}
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
-              pageType="list"
               {...this.props.controlProps}
             />
           )}
 
           {
             shabads.map(({shabadInfo: info, navigation: nav, verses: gurbani}, index) => {
+              const highlight = parseInt(highlightsArray[index], 10)
               return (
                 <React.Fragment key={index}>
                   {isShowMetaData && (
@@ -129,7 +131,9 @@ class ListOfShabads extends React.PureComponent {
                       {
                         <Baani
                           {...baniProps}
+                          shabadIndex={index}
                           gurbani={gurbani}
+                          highlight={highlight}
                           sgBaaniLength={sgBaaniLength}
                           isSundarGutkaRoute={false}
                           isParagraphMode={false}
