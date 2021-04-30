@@ -101,7 +101,9 @@
     }
 
     #copy-short-url {
-      display: inline-block;
+      align-items: center;
+      display: flex;
+      justify-content: center;
       position: relative;
 
       .short-url {
@@ -127,7 +129,6 @@
           height: 1.2em;
           position: absolute;
           right: 0;
-          top: -14px;
           width: 0.8em;
 
           .dark-mode & {
