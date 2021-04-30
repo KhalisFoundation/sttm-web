@@ -89,9 +89,4 @@ export const TEXTS = {
     "We couldn't find the hukamnama for this date in our database.",
   TOGGLE_GURMUKHI_KEYBOARD: "toggle gurmukhi keyboard",
   BACK_TO_HOME: "back to home",
-  MULTIPLE_SHABADS_HEADING: 'Multi View',
-  MULTIPLE_SHABADS_INTRO: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
-  MULTIPLE_SHABADS_NOTIFICATION: 'Please search for shabads and press + button next to the results to add an entry',
-  SHABAD_ADDED_MESSAGE: 'Shabad has been added to your selection.',
-  SHABAD_REMOVED_MESSAGE: 'Shabad removed.',
 };

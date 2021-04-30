@@ -19,7 +19,6 @@ import SearchIcon from '@/components/Icons/Search';
 import Autocomplete from '@/components/Autocomplete';
 import Reset from '@/components/Icons/Reset';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
-import MultiViewButton from '@/components/MultiViewButton';
 /**
  *
  *

@@ -348,6 +348,14 @@ select {
   }
 }
 
+body:not(.dark-mode) a {
+  color: #1374b4;
+}
+
+.transparent-color {
+  color: transparent !important;
+}
+
 #app-root {
   overflow: hidden;
 }

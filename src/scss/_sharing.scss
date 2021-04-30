@@ -101,10 +101,7 @@
     }
 
     #copy-short-url {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-      position: relative;
+      display: inline-block;
 
       .short-url {
         &-input {
@@ -129,6 +126,7 @@
           height: 1.2em;
           position: absolute;
           right: 0;
+          top: -14px;
           width: 0.8em;
 
           .dark-mode & {
