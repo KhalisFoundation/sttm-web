@@ -10,7 +10,8 @@ export const TEXTS = {
     TOS: 'Terms of Service',
     SUNDAR_GUTKA: 'Sundar Gutka',
     SUNDAR_GUTKA_BAANI: 'Baani',
-    AMRIT_KEERTAN: 'Amrit Keertan'
+    AMRIT_KEERTAN: 'Amrit Keertan',
+    MARYADA: 'Rehat Maryadha - Sikh Code of Conduct',
   },
   GDPR_NOTICE: `
     Our service uses cookies to remember your preferences to give a great experience. If you do not agree to SikhiToTheMax's use of cookies, please use your browser's private/incognito mode. Otherwise, by continuing the use of the service, you consent to the use of cookies. Read more <a href="/help#Web-why-does-sikhitothemax-website-use-cookies-and-loc">here</a>.
@@ -86,6 +87,8 @@ export const TEXTS = {
   CENTERALIGN: 'Center-Align',
   HUKAMNAMA_NOT_FOUND_DESCRIPTION:
     "We couldn't find the hukamnama for this date in our database.",
+  TOGGLE_GURMUKHI_KEYBOARD: "toggle gurmukhi keyboard",
+  BACK_TO_HOME: "back to home",
   MULTIPLE_SHABADS_HEADING: 'Multi View',
   MULTIPLE_SHABADS_INTRO: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
   MULTIPLE_SHABADS_NOTIFICATION: 'Please search for shabads and press + button next to the results to add an entry',
