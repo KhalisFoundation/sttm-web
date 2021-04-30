@@ -279,9 +279,10 @@ export default class Baani extends React.PureComponent {
     );
   };
   getSteekForLanguage = (shabad, language) => {
-    const { unicode } = this.props;
+    const { unicode, translationFontSize } = this.props;
     return (
       <Steek
+        fontSize={translationFontSize}
         key={getVerseId(shabad) + language}
         type={language}
         shabad={shabad}
@@ -390,7 +391,7 @@ export default class Baani extends React.PureComponent {
 
   getTranslationLanguages = () => {
     const { steekLanguages, translationLanguages } = this.props;
-    const isSteekSelected = steekLanguages.length > 0;
+    const isSteekSelected = steekLanguages.length;
     return isSteekSelected
       ? translationLanguages.filter((l) => l !== PUNJABI_LANGUAGE)
       : translationLanguages;

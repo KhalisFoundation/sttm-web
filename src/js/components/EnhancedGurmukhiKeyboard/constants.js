@@ -2,7 +2,7 @@ export const withoutMatra = [
   ['a', 'A', 'e', 's', 'h', 'k', 'K', 'g', 'G', '|'],
   ['c', 'C', 'j', 'J', '\\', 't', 'T', 'f', 'F', 'x'],
   ['q', 'Q', 'd', 'D', 'n', 'p', 'P', 'b', 'B', 'm'],
-  ['X', 'r', 'l', 'v', 'V', 'space', 'meta'],
+  ['X', 'r', 'l', 'v', 'V', '^', 'space', 'meta'],
 ];
 
 export const withMatra = [
