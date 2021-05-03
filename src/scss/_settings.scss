@@ -84,7 +84,8 @@ $panel-width-560: 65vw;
       fill: $sttm-white;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       fill: $sttm-orange;
     }
   }
@@ -109,6 +110,11 @@ $panel-width-560: 65vw;
     font-size: 16px;
     justify-content: center;
     width: 25px;
+
+    &:hover {
+      color: $sttm-orange;
+      fill: $sttm-orange;
+    }
   }
 
   &-item {
@@ -116,11 +122,6 @@ $panel-width-560: 65vw;
     display: flex;
     margin: 8px auto;
     width: 100%;
-
-    &:hover {
-      color: $sttm-orange;
-      fill: $sttm-orange;
-    }
   }
 
   &-options {
@@ -166,6 +167,8 @@ $panel-width-560: 65vw;
     color: #fafafa;
     font-weight: 900;
     height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
     transition: 0.2s;
     width: -webkit-fill-available;
   }

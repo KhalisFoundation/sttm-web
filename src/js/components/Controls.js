@@ -50,26 +50,28 @@ class Controls extends React.Component {
   state = {
     showBorder: false,
     showControls: true
-  };  
+  };
 
   static propTypes = {
     showSettingsPanel: PropTypes.bool,
   };
 
   componentDidMount() {
-    this.isChangeInControls = false;  
+    this.isChangeInControls = false;
   }
-  
+
   componentDidUpdate(prevProps) {
     if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
       this.isChangeInControls = true;
-    }    
+    }
   }
 
   setRef = node => (this.wrapperRef = node);
 
   render() {
     const { showBorder, showControls } = this.state;
+    const { showSettingsPanel } = this.props;
+
     const classNames = cx({
       'no-select': true,
       'with-border': showBorder,
@@ -83,10 +85,10 @@ class Controls extends React.Component {
         <div
           style={controlStyles}
           id="controls-wrapper"
-          className={classNames}          
+          className={classNames}
         >
-          <div className={`settings-panel ${this.props.showSettingsPanel ? 'settings-show' : 'settings-hide'}`}>
-            <ControlsSettings settingsRef={this.settingsRef} {...this.props} />
+          <div className={`settings-panel ${showSettingsPanel ? 'settings-show' : 'settings-hide'}`}>
+            {showSettingsPanel && <ControlsSettings settingsRef={this.settingsRef} {...this.props} />}
           </div>
         </div>
       </>
