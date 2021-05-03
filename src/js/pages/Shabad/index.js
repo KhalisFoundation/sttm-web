@@ -31,7 +31,25 @@ export default class Shabad extends React.PureComponent {
           loading ? (
             <Stub />
           ) : (
-              <Stub />
+              <div className="row" id="content-root">
+                <BreadCrumb links={[{ title: TEXTS.URIS.SHABAD }]} />
+                {
+                  isKeyExists(data, 'shabadIds')
+                  ? <ListOfShabads 
+                      type="shabad"
+                      shabads={data.shabads}
+                      highlights={highlight}
+                    />
+                  : <ShabadContent
+                      random={random}
+                      type="shabad"
+                      highlight={highlight}
+                      info={data.shabadInfo}
+                      gurbani={data.verses}
+                      nav={data.navigation}
+                    />
+                }
+              </div>
             )
         }
       </PageLoader>

@@ -12,7 +12,7 @@ const MultiViewButton = (props: any) => {
   const typedUseSelector: TypedUseSelectorHook<IMultiViewButton> = useSelector;
   const showMultiViewPanel = typedUseSelector(state => state.showMultiViewPanel)
 
-  const onClick = (e: React.MouseEvent) => {
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setMultiViewPanel(!showMultiViewPanel))
   }
