@@ -362,6 +362,7 @@ body:not(.dark-mode) a {
 
 .pusher {
   left: 0;
+  padding-bottom: 100px;
   transition: transform 0.5s;
 
   &.enable {
