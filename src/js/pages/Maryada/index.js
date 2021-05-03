@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* globals API_URL */
 import React, { useEffect, useState } from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import PageLoader from '../PageLoader';
 import BreadCrumb from '@/components/Breadcrumb';
@@ -13,17 +13,17 @@ import { TEXTS } from '@/constants';
 
 const Stub = () => <div className="spinner" />;
 
-const Maryada = ({location: {pathname}}) => {  
+const Maryada = ({ location: { pathname } }) => {
   const getRehatId = () => getTrailingParameter() === 'pb' ? 2 : 1;
   const [state, setState] = useState(false)
   const [rehatId, setRehatId] = useState(getRehatId());
 
   let url = API_URL + '/rehats/' + rehatId + '/chapters';
-  
-  useEffect(() => {     
+
+  useEffect(() => {
     pageView('/maryada');
     setRehatId(getRehatId())
-  }, [pathname])   
+  }, [pathname])
 
   return (
     <PageLoader url={url}>
@@ -31,7 +31,7 @@ const Maryada = ({location: {pathname}}) => {
         loading ? (
           <Stub />
         ) : (
-            <div className="row" id="content-root">
+          <div className="row" id="content-root">
             <BreadCrumb links={[{ title: TEXTS.URIS.MARYADA }]} />
             <div className="wrapper maryada">
               <div className="maryada__header">
@@ -57,18 +57,21 @@ const Maryada = ({location: {pathname}}) => {
                 <div className="chapters">
                   <h2>Chapters</h2>
                   <div>
-                    <button onClick={() => {setState(true)}}>Expand all</button> | <button onClick={() => {setState(false)}}>Collapse all</button>
+                    <button onClick={() => { setState(true) }}>Expand all</button> | <button onClick={() => { setState(false) }}>Collapse all</button>
                   </div>
                 </div>
                 <ul className="accordion">
                   {
                     data.chapters.map(chapter => (
-                      <Accordion 
-                        key={chapter.chapterID}
-                        title={chapter.chapterName}
-                        content={chapter.chapterContent}
-                        defaultState={state}
-                      />
+                      <li>
+                        <Accordion
+                          index={chapter.chapterID}
+                          key={chapter.chapterID}
+                          title={chapter.chapterName}
+                          content={chapter.chapterContent}
+                          defaultState={state}
+                        />
+                      </li>
                     ))
                   }
                 </ul>
@@ -77,7 +80,7 @@ const Maryada = ({location: {pathname}}) => {
           </div>
         )
       }
-    </PageLoader>    
+    </PageLoader>
   );
 }
 

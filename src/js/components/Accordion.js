@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { PlusIcon, MinusIcon } from '@/components/Icons/CustomIcons'
 
-const Accordion = ({title, content, defaultState = false}) => {
+const Accordion = ({ title, index, content, defaultState = false }) => {
   const [active, setActive] = useState(defaultState);
 
   function toggleAccordion() {
@@ -11,27 +11,31 @@ const Accordion = ({title, content, defaultState = false}) => {
 
   useEffect(() => {
     setActive(defaultState)
-  },[defaultState])
+  }, [defaultState])
 
   return (
-    <li className={`accordion__item ${active ? 'is-active' : ''}`}>
-      <button className="title" onClick={toggleAccordion} aria-label={title}>
-        <h3>{title}</h3>
-        {
-          active
-          ?  <MinusIcon />
-          : <PlusIcon />
-        }
-      </button>
-      <div className="content" dangerouslySetInnerHTML={{ __html: content }} />
-    </li>
+    <div className="accordion__item">
+      <h3>
+        <button
+          className="title"
+          aria-expanded={active}
+          aria-controls={`accordion-panel-${index}`}
+          id={`accordion-header-${index}`}
+          onClick={toggleAccordion}
+          aria-label={title}>
+          {title}{active ? <MinusIcon /> : <PlusIcon />}
+        </button>
+      </h3>
+      <section id={`accordion-panel-${index}`} aria-labelledby={`accordion-header-${index}`} className={`content ${active ? 'is-active' : ''}`} dangerouslySetInnerHTML={{ __html: content }} />
+    </div >
   )
 }
 
 Accordion.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  defaultState: PropTypes.bool
+  defaultState: PropTypes.bool,
+  index: PropTypes.number.isRequired,
 }
 
 export default Accordion;
