@@ -265,6 +265,25 @@ $panel-width-560: 65vw;
   font-size: 26px !important;
 }
 
+.merge-icon {
+  fill: $sttm-dark-grey;
+}
+
+.multi-view {
+  align-items: center;
+  color: $sttm-grey;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  font-weight: 700;
+  justify-content: center;
+
+  .search-form & {
+    span {
+      padding-left: 0.2em;
+    }
+  }
+}
+
 .flex-spacer {
   display: flex;
   flex: 1;

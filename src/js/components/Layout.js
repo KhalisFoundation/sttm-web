@@ -14,13 +14,14 @@ import {
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
+import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
 import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute } from '../util';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
     isHome: false,
-    title: DEFAULT_PAGE_TITLE,
+    title: DEFAULT_PAGE_TITLE
   };
 
   static propTypes = {
@@ -35,6 +36,8 @@ class Layout extends React.PureComponent {
     isHome: PropTypes.bool,
     isController: PropTypes.bool,
     isAng: PropTypes.bool,
+    multipleShabads: PropTypes.array,
+    showMultiViewPanel: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
   };
 
@@ -79,6 +82,7 @@ class Layout extends React.PureComponent {
       isHome = false,
       isController = false,
       autoScrollMode,
+      showMultiViewPanel,
       location: { pathname = '/' } = {},
       ...props
     } = this.props;
@@ -100,18 +104,23 @@ class Layout extends React.PureComponent {
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner />
-        <Header
-          defaultQuery={this.props.defaultQuery}
-          isHome={isHome}
-          isAng={isAng}
-          isController={isController}
-          {...props}
-        />
-        {this.state.error ? (
-          <GenericError {...this.state.errorProps} />
-        ) : (
-            children
+        <div className={`pusher ${showMultiViewPanel ? 'enable' : ''}`}>
+          <Header
+            defaultQuery={this.props.defaultQuery}
+            isHome={isHome}
+            isAng={isAng}
+            isController={isController}
+            {...props}
+          />
+
+          {this.state.error ? (
+            <GenericError {...this.state.errorProps} />
+          ) : (
+              children
           )}
+        </div>
+
+        <MultipleShabadsDisplay />  
 
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
@@ -183,7 +192,7 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode, autoScrollMode }) => ({ online, darkMode, autoScrollMode }),
+  ({ online, darkMode, autoScrollMode, showMultiViewPanel }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel }),
   {
     setOnlineMode,
   }

@@ -7,6 +7,7 @@ import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
 
+
 import { EnhancedGurmukhiKeyboard } from '@/components/EnhancedGurmukhiKeyboard';
 import SehajPaathLink from '@/components/SehajPaathLink';
 import { BaaniLinks } from '@/components/BaaniLinks/';
@@ -17,6 +18,7 @@ import Autocomplete from '@/components/Autocomplete';
 import ClearSearchButton from '@/components/ClearSearchButton';
 import Reset from '@/components/Icons/Reset';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
+import MultiViewButton from '@/components/MultiViewButton';
 /**
  *
  *
@@ -24,14 +26,14 @@ import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleBut
  * @class Home
  * @extends {React.PureComponent}
  */
-export default class Home extends React.PureComponent {
+class Home extends React.PureComponent {
   static propTypes = {
     history: PropTypes.shape({ push: PropTypes.func }),
   };
 
   state = {
     showDoodle: false,
-    doodleData: null
+    doodleData: null,
   }
 
   fetchDoodle = () => {
@@ -223,23 +225,26 @@ export default class Home extends React.PureComponent {
                         </select>
                       </div>
                       <button 
-                            className="reset"
-                            onClick={handleReset}
-                            title="Reset"
-                            aria-label="Reset">
-                            <Reset />
-                          </button>
+                        className="reset"
+                        onClick={handleReset}
+                        title="Reset"
+                        aria-label="Reset">
+                        <Reset />
+                      </button>
                     </div>
                     <SehajPaathLink />
                     <BaaniLinks />
+                    <div className="flex justify-center">
+                      <MultiViewButton />
+                    </div>
                   </form>
                 </div>
               </div>
               {showDoodle && (
-                <a href={doodleData['SourceLink']} target="_blank">
+                <a href={doodleData['SourceLink']} target="_blank" rel="noreferrer">
                   <p className="doodle-credit">Special thanks to {doodleData['SourceText']}</p>
                 </a>
-              )}
+              )}                   
             </React.Fragment>
           )}
       </SearchForm>
@@ -251,3 +256,5 @@ export default class Home extends React.PureComponent {
     this.fetchDoodle();
   }
 }
+
+export default Home;

@@ -125,6 +125,8 @@ class Shabad extends React.PureComponent {
 
     const {
       info,
+      highlight,
+      gurbani,
       type,
       translationLanguages,
       transliterationLanguages,
@@ -165,6 +167,9 @@ class Shabad extends React.PureComponent {
               }
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
+              shabad={info}
+              highlight={highlight}
+              gurbani={gurbani}
               {...this.props.controlProps}
             />
           )}

@@ -9,6 +9,7 @@ export * from './hukamnama';
 export * from './localstorage';
 export * from './misc';
 export * from './numbers';
+export * from './object';
 export * from './routes';
 export * from './shabad';
 export * from './url';

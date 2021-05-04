@@ -1,0 +1,142 @@
+.multiple-shabads-display {
+  background: $sttm-dark-grey;
+  box-shadow: 0 0 12px -4px $sttm-black;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  left: 0;
+  overflow-x: hidden;
+  padding: 0 1em;
+  position: fixed;
+  top: 0;
+  transform: translateX(-100%);
+  transform-origin: top left;
+  transition: 0.5s all ease-in-out;
+  visibility: hidden;
+  width: 25vw;
+  z-index: 1;
+
+  @media screen and (max-width: 55.99em) {
+    width: 100vw;
+  }
+
+  &.enable {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .close {
+    color: $sttm-white;
+    font-size: 2em;
+    position: absolute;
+    right: 20px;
+    top: 0;
+
+    &:hover {
+      color: $sttm-orange;
+    }
+  }
+
+  .notification {
+    background-color: $sttm-orange;
+    border-left: 5px solid darken($sttm-orange, 20%);
+    margin-bottom: 1em;
+    padding: 0.5em 0.5em 0.5em 1em;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      align-items: center;
+      display: flex;
+      margin-bottom: 0.5em;
+
+      svg {
+        cursor: move;
+      }
+
+      div {
+        background-color: $sttm-white;
+        border-radius: 15px;
+        color: $sttm-blue;
+        flex: 1;
+        margin: 0 0.8em;
+        padding: 0 0.8em;
+      }
+
+      .remove {
+        background-color: $sttm-red;
+        border-radius: 50%;
+        color: $sttm-white;
+        height: 1.5em;
+        width: 1.5em;
+      }
+    }
+  }
+
+  &--header {
+    padding: 0.5em 0;
+
+    h3 {
+      color: $sttm-white;
+      font-weight: 700;
+      margin-bottom: 0;
+      padding-bottom: 0.2em;
+    }
+
+    p {
+      color: $sttm-white;
+    }
+  }
+
+  &--footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+
+    button {
+      margin-left: 0.5em;
+
+      &:disabled {
+        background-color: $sttm-light-grey;
+        color: $sttm-dark-grey;
+      }
+    }
+  }
+}
+
+.add-shabad-wrapper {
+  align-items: center;
+  display: inline-flex;
+  flex-basis: 50px;
+  justify-content: center;
+}
+
+button.add-shabad {
+  align-items: center;
+  background-color: $sttm-darker-grey;
+  border-radius: 50%;
+  color: $sttm-white;
+  display: inline-flex;
+  font-size: 20px;
+  height: 1.5em;
+  justify-content: center;
+  width: 1.5em;
+
+  &:hover {
+    background-color: $sttm-orange;
+    color: $sttm-white;
+  }
+
+  .search-form & {
+    background-color: $sttm-orange;
+    padding-top: 3px;
+
+    &:hover {
+      background-color: $sttm-blue;
+    }
+  }
+}
