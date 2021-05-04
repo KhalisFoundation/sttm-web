@@ -51,7 +51,10 @@ export default class Baani extends React.PureComponent {
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
-    highlight: PropTypes.number,
+    highlight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
@@ -66,7 +69,7 @@ export default class Baani extends React.PureComponent {
     onBaaniLineClick: PropTypes.func,
     sgBaaniLength: PropTypes.string,
     visraams: PropTypes.bool,
-    shabadIndex: PropTypes.number,
+    isScroll: PropTypes.bool,
   };
 
   constructor(props) {
@@ -181,8 +184,7 @@ export default class Baani extends React.PureComponent {
   };*/
 
   _scrollToHighlight = () => {    
-    const {shabadIndex = 0} = this.props;
-    if (this.$highlightedBaaniLine && shabadIndex === 0) {
+    if (this.$highlightedBaaniLine) {
       const { top } = this.$highlightedBaaniLine.getBoundingClientRect();
       const newTopPosition = window.scrollY + top;
       requestAnimationFrame(() => window.scrollTo(0, newTopPosition));
@@ -210,15 +212,18 @@ export default class Baani extends React.PureComponent {
   };
 
   componentDidMount() {
-    this._scrollToHighlight();
+    const {isScroll = true} = this.props
+    isScroll && this._scrollToHighlight();
     document.addEventListener('click', this.clearMahankoshInformation);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.clearMahankoshInformation);
+    this._scrollToHighlight();
   }
   componentDidUpdate(prevProps) {
-    if (this.props.highlight !== prevProps.highlight) {
+    const {isScroll = true} = this.props
+    if (this.props.highlight !== prevProps.highlight && isScroll) {
       this._scrollToHighlight();
     }
   }

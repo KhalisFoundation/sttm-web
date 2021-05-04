@@ -28,10 +28,15 @@
 }
 
 /* stylelint-disable no-descending-specificity */
-.search-result {
+li.search-result {
   border-bottom: 1px solid $sttm-lighter-grey;
+  display: flex;
   list-style: none;
   padding: 0.5rem 1rem;
+
+  .shabad-detail {
+    flex-basis: 100%;
+  }
 
   a {
     color: $sttm-light-blue;
@@ -97,6 +102,10 @@
     color: green;
     display: block;
     word-wrap: break-word;
+  }
+
+  .add-shabad-wrap {
+    flex-basis: 40px;
   }
 }
 

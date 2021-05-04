@@ -94,4 +94,5 @@ export const TEXTS = {
   MULTIPLE_SHABADS_NOTIFICATION: 'Please search for shabads and press + button next to the results to add an entry',
   SHABAD_ADDED_MESSAGE: 'Shabad has been added to your selection.',
   SHABAD_REMOVED_MESSAGE: 'Shabad removed.',
+  SHABAD_ALREADY_ADDED_MESSAGE: 'Shabad has already been added to multiview list.',
 };

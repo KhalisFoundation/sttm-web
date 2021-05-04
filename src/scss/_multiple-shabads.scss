@@ -117,26 +117,40 @@
 
 button.add-shabad {
   align-items: center;
-  background-color: $sttm-darker-grey;
-  border-radius: 50%;
   color: $sttm-white;
-  display: inline-flex;
-  font-size: 20px;
-  height: 1.5em;
-  justify-content: center;
-  width: 1.5em;
+  display: flex;
 
   &:hover {
-    background-color: $sttm-orange;
-    color: $sttm-white;
+    color: $sttm-orange !important;
   }
 
+  .share-buttons & {
+    color: $sttm-grey;
+    font-weight: bold;
+  }
+
+  .search-result &,
   .search-form & {
-    background-color: $sttm-orange;
-    padding-top: 3px;
+    display: block;
+    height: 36px;
+    position: relative;
+    text-indent: -999999px;
+    width: 36px;
+    z-index: 0;
+
+    svg {
+      fill: $sttm-orange;
+      font-size: 2em;
+      left: 0;
+      position: absolute;
+      top: 0;
+      z-index: -1;
+    }
 
     &:hover {
-      background-color: $sttm-blue;
+      svg {
+        fill: $sttm-blue;
+      }
     }
   }
 }

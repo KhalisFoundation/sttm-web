@@ -131,7 +131,7 @@ class ListOfShabads extends React.PureComponent {
                       {
                         <Baani
                           {...baniProps}
-                          shabadIndex={index}
+                          isScroll={false}
                           gurbani={gurbani}
                           highlight={highlight}
                           sgBaaniLength={sgBaaniLength}
