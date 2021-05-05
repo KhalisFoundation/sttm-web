@@ -362,6 +362,7 @@ body:not(.dark-mode) a {
 .apps-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   margin-top: 25px;
 }
 
