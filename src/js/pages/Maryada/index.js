@@ -63,10 +63,9 @@ const Maryada = ({ location: { pathname } }) => {
                 <ul className="accordion">
                   {
                     data.chapters.map(chapter => (
-                      <li>
+                      <li key={chapter.chapterID}>
                         <Accordion
                           index={chapter.chapterID}
-                          key={chapter.chapterID}
                           title={chapter.chapterName}
                           content={chapter.chapterContent}
                           defaultState={state}
