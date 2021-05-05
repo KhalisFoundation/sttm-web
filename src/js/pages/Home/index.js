@@ -23,8 +23,7 @@ import { SyncIcon } from '@/components/Icons/SyncIcon';
 import { Rehat } from '@/components/Icons/Rehat';
 import { Sundar } from '@/components/Icons/Sundar';
 import { RandomIcon } from '@/components/Icons/RandomIcon';
-import { Multiview } from '@/components/Icons/Multiview';
-import MultiViewButton from '@/components/MultiViewButton';
+import MultiViewHomeButton from '@/components/MultiViewHomeButton';
 
 /**
  *
@@ -246,57 +245,59 @@ class Home extends React.PureComponent {
               <div className="apps-container">
                 <SehajPaathLink />
                 <BaaniLinks />
-
-
-
-                <div className="apps-item"><div className="apps-title">Show Multiple</div>
-                  <button onClick={event => window.location.href = '/hukamnama'}>
-                    <div className="apps-icon-container">
-
-                      <Multiview />
-                    </div>Multiview</button></div>
-                <div className="apps-item"><div className="apps-title">Sri Harimandir Sahib</div>
-
-                  <button onClick={event => window.location.href = '/hukamnama'}
+                <div className="apps-item">
+                  <div className="apps-title">Show Multiple</div>
+                  <MultiViewHomeButton />
+                </div>
+                <div className="apps-item">
+                  <div className="apps-title">Sri Harimandir Sahib</div>
+                  <button onClick={() => window.location.href = '/hukamnama'}
                     title="Today's Hukamnama"
-                    aria-label="Today's Hukamnama"><div className="apps-icon-container">
+                    aria-label="Today's Hukamnama">
+                    <div className="apps-icon-container">
                       <Temple />
-                    </div>Today's Hukamnama</button>
+                    </div>
+                    Today&apos;s Hukamnama
+                  </button>
                 </div>
-
-
-                <div className="apps-item"><div className="apps-title">Random Shabad</div>
-
-                  <button onClick={event => window.location.href = '/random'}
+                <div className="apps-item">
+                  <div className="apps-title">Random Shabad</div>
+                  <button onClick={() => window.location.href = '/random'}
                     title="Random Shabad"
-                    aria-label="Random Shabad"><div className="apps-icon-container">
+                    aria-label="Random Shabad">
+                    <div className="apps-icon-container">
                       <RandomIcon />
-                    </div>Generate</button>
+                    </div>
+                    Generate
+                  </button>
                 </div>
-
-
-                <div className="apps-item"><div className="apps-title">Read</div>
-                  <button onClick={event => window.location.href = '/rehat-maryadha'}>
+                <div className="apps-item">
+                  <div className="apps-title">Read</div>
+                  <button onClick={() => window.location.href = '/rehat-maryadha'}>
                     <div className="apps-icon-container">
                       <Rehat />
                     </div>
-                        Rehat Maryadha
-                      </button>
+                    Rehat Maryadha
+                  </button>
                 </div>
-
-                <div className="apps-item"><div className="apps-title">Compiled Baanis</div>
-                  <button onClick={event => window.location.href = '/sundar-gutka'}>
+                <div className="apps-item">
+                  <div className="apps-title">Compiled Baanis</div>
+                  <button onClick={() => window.location.href = '/sundar-gutka'}>
                     <div className="apps-icon-container">
-
                       <Sundar />
-                    </div>Sundar Gutka</button></div>
-
-                <div className="apps-item"><div className="apps-title">Follow Along</div>
-                  <button onClick={event => window.location.href = '/sync'}>
+                    </div>
+                    Sundar Gutka
+                  </button>
+                </div>
+                <div className="apps-item">
+                  <div className="apps-title">Follow Along</div>
+                  <button onClick={() => window.location.href = '/sync'}>
                     <div className="apps-icon-container">
-
                       <SyncIcon />
-                    </div>Sangat Sync</button></div>
+                    </div>
+                    Sangat Sync
+                  </button>
+                </div>
               </div>
 
               {showDoodle && (
