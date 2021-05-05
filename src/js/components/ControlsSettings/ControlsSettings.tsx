@@ -135,7 +135,7 @@ const ControlsSettings = (props: any) => {
         )
     }
   }
-  const bakeSettings = (settingsObj: any, elementIndex: any) => {
+  const bakeSettings = (settingsObj: any, elementIndex: number) => {
     switch (settingsObj.type) {
       case 'header':
         return (
