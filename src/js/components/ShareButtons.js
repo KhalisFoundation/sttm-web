@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { showToast, copyToClipboard, shortenURL } from '../util';
+import { showToast, copyToClipboard, shortenURL, isKeyExists, multiviewFormattedShabad } from '../util';
 import { TEXTS } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import ShareIcon from './Icons/Share';
@@ -11,6 +11,8 @@ import WhatsAppIcon from './Icons/WhatsApp';
 import ClipboardIcon from './Icons/Clipboard';
 import PrinterIcon from './Icons/Printer';
 import { GearsIcon } from './Icons/CustomIcons';
+import MultiViewButton from '@/components/MultiViewButton';
+import { AddShabadButton } from './AddShabadButton';
 
 const handleWhatsapp = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
@@ -33,9 +35,18 @@ const copyShortUrl = () =>
     )
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-export const supportedMedia = ['settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
+export const supportedMedia = ['addShabad', 'multiView', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 class ShareButtons extends React.PureComponent {
+  constructor(props) {
+    super()
+    this.formattedShabad = {}
+    const { highlight, gurbani } = props;    
+    if (gurbani !== undefined) {
+      const selectedShabad = highlight ? gurbani?.find(({verseId}) => verseId === highlight) : gurbani[0]
+      this.formattedShabad = multiviewFormattedShabad(selectedShabad)
+    }    
+  }
   static defaultProps = {
     media: ['whatsapp', 'copy'],
   };
@@ -46,7 +57,12 @@ class ShareButtons extends React.PureComponent {
     onEmbedClick: PropTypes.func,
     onCopyAllClick: PropTypes.func,
     toggleSettingsPanel: PropTypes.func,
-    settingIdRef: PropTypes.object
+    settingIdRef: PropTypes.object,
+    highlight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    gurbani: PropTypes.array,
   };
 
   static handleShare = () => {
@@ -61,27 +77,29 @@ class ShareButtons extends React.PureComponent {
     });
   };
 
+  componentWillUnmount() {
+    this.formattedShabad = {}
+  }
+
   render() {
-    const { media, onEmbedClick, onCopyAllClick, toggleSettingsPanel, settingIdRef } = this.props;
+    const { media, onEmbedClick, onCopyAllClick, toggleSettingsPanel, settingIdRef, pageType } = this.props;
 
     if (media.length === 0) {
       return null;
     }
 
-
     // TODO: Use array to generate this DOM
-
     const mediaMap = {
       embed: (
         <li key={0} className="show-on-desktop">
-          <button onClick={onEmbedClick}>
+          <button onClick={onEmbedClick} aria-label="copy embedding code">
             <EmbedIcon />
           </button>
         </li>
       ),
       copyAll: (
         <li key={1}>
-          <button onClick={onCopyAllClick}>
+          <button onClick={onCopyAllClick} aria-label="copy all gurbani">
             <CopyAllIcon />
           </button>
         </li>
@@ -96,8 +114,9 @@ class ShareButtons extends React.PureComponent {
       ),
       copy: (
         <li key={3}>
-          <a id="copy-short-url" className="copy" onClick={copyShortUrl}>
+          <label htmlFor="copy-short-url-text" id="copy-short-url" className="copy" onClick={copyShortUrl}>
             <input
+              id="copy-short-url-text"
               className="short-url-input"
               type="text"
               value={shortenURL()}
@@ -105,7 +124,7 @@ class ShareButtons extends React.PureComponent {
             />
             <ClipboardIcon className="short-url-icon" />
             <span className="sr-only">Copy URL</span>
-          </a>
+          </label>
         </li>
       ),
       print: (
@@ -124,6 +143,19 @@ class ShareButtons extends React.PureComponent {
           </button>
         </li>
       ),
+      multiView: (
+        <li key={6}>
+          <MultiViewButton width="1.0em" />
+        </li>
+      ),
+      addShabad: (
+        <li key={7}>  
+          {
+            isKeyExists(this.formattedShabad, 'shabadId')
+            && (<AddShabadButton shabad={this.formattedShabad} />)
+          }          
+        </li>
+      )
     };
 
     if (window !== undefined && 'share' in window.navigator) {

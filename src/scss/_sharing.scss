@@ -61,12 +61,15 @@
   }
 
   .share-buttons {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
     list-style: none;
     margin: 0;
     text-align: right;
 
     li {
-      display: inline;
+      display: flex;
       margin-left: 5px;
 
       &:first-of-type {
@@ -98,6 +101,9 @@
     }
 
     #copy-short-url {
+      align-items: center;
+      display: flex;
+      justify-content: center;
       position: relative;
 
       .short-url {
@@ -108,7 +114,6 @@
           height: auto;
           margin: 0;
           position: relative;
-          top: -12px;
           width: 175px;
 
           .dark-mode & {
@@ -121,10 +126,9 @@
         &-icon {
           box-shadow: -5px 0 7px -6px $sttm-grey;
           cursor: copy;
-          height: 0.8em;
+          height: 1.2em;
           position: absolute;
           right: 0;
-          top: -14px;
           width: 0.8em;
 
           .dark-mode & {

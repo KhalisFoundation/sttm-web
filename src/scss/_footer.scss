@@ -7,6 +7,7 @@ footer {
   min-height: 50px;
   position: fixed;
   width: 100%;
+  z-index: 2;
 
   .dark-mode & {
     background-color: $sttm-light-black;
@@ -68,7 +69,7 @@ footer {
     }
 
     .footer-seperator {
-      color: $sttm-lighter-grey;
+      color: $sttm-darkest-grey;
       display: block;
       font-size: 0.9em;
       line-height: 1;

@@ -68,7 +68,10 @@ class Shabad extends React.PureComponent {
    */
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
-    highlight: PropTypes.number,
+    highlight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
@@ -125,6 +128,8 @@ class Shabad extends React.PureComponent {
 
     const {
       info,
+      highlight,
+      gurbani,
       type,
       translationLanguages,
       transliterationLanguages,
@@ -165,6 +170,9 @@ class Shabad extends React.PureComponent {
               }
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
+              shabad={info}
+              highlight={highlight}
+              gurbani={gurbani}
               {...this.props.controlProps}
             />
           )}

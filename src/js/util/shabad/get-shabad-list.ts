@@ -1,7 +1,7 @@
 import { buildApiUrl } from '@sttm/banidb';
 import { SEARCH_TYPES } from '@/constants';
 import { toShabadURL } from '../url';
-import { translationMap, transliterationMap, getGurmukhiVerse } from '../api/shabad';
+import { translationMap, transliterationMap, getGurmukhiVerse, getVerseId, getShabadId, getUnicodeVerse } from '../api/shabad';
 import { getHighlightIndices } from '../gurbani';
 
 export const getShabadList = (q, { type, source, writer }) => {
@@ -38,6 +38,9 @@ export const getShabadList = (q, { type, source, writer }) => {
             query: q,
             url: toShabadURL({ shabad, q, type, source }),
             highlightIndex,
+            verseId: getVerseId(shabad),
+            shabadId: getShabadId(shabad),
+            verse: getUnicodeVerse(shabad)
           })
         }
         resolve(panktiList);

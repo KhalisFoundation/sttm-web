@@ -97,8 +97,8 @@ class Meta extends React.PureComponent {
                   <span>{dateMath.expand(nav.previous, false)}</span>
                 </div>
               ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                )}
+                <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              )}
             </Link>
           </div>
         )
@@ -110,8 +110,8 @@ class Meta extends React.PureComponent {
               {isHukamnama ? (
                 <Hour24 direction='previous' />
               ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                )}
+                <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              )}
             </a>
           </div>
         )
@@ -145,8 +145,8 @@ class Meta extends React.PureComponent {
                   <span>{dateMath.expand(nav.next, false)}</span>
                 </div>
               ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-                )}
+                <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              )}
             </a>
           </div>
         )
@@ -159,8 +159,8 @@ class Meta extends React.PureComponent {
               {isHukamnama ? (
                 <Hour24 direction='next' />
               ) : (
-                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-                )}
+                <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              )}
             </a>
           </div>
         )
@@ -244,6 +244,7 @@ class Meta extends React.PureComponent {
                       maxDate={maximumHukamnamaDate}
                       minDate={new Date(FIRST_HUKAMNAMA_DATE)}
                       calendarIcon={<CalendarIcon width={20} />}
+                      calendarAriaLabel="date picker"
                     />
                     <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
                       e.preventDefault();

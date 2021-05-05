@@ -28,7 +28,8 @@
   "mahankosh",
   "ui-controls",
   "accordion",
-  "settings";
+  "settings",
+  "multiple-shabads";
 @import 'node_modules/react-smartbanner/dist/main';
 @import 'node_modules/react-toastify/dist/ReactToastify.min';
 @import 'node_modules/react-h5-audio-player/src/styles.scss';
@@ -110,11 +111,7 @@ select {
 }
 
 .wrapper {
-  margin: 0 3rem;
-
-  @media screen and (max-width: 790px) {
-    margin: 0 1rem;
-  }
+  padding: 0 1rem;
 }
 
 .error-message {
@@ -348,5 +345,27 @@ select {
     color: $sttm-white;
     display: inline-block;
     font-size: 1rem;
+  }
+}
+
+body:not(.dark-mode) a {
+  color: #1374b4;
+}
+
+.transparent-color {
+  color: transparent !important;
+}
+
+#app-root {
+  overflow: hidden;
+}
+
+.pusher {
+  left: 0;
+  padding-bottom: 100px;
+  transition: transform 0.5s;
+
+  &.enable {
+    transform: translateX(10%);
   }
 }
