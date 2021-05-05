@@ -37,7 +37,7 @@ exports[`Multiple Shabads Display should render successfully 1`] = `
       </button>
     </div>
     <button
-      class="close toast-notification-close-button"
+      class="close"
       title="Close"
     >
       ×

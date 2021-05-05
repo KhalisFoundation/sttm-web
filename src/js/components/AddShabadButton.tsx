@@ -42,6 +42,7 @@ export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId
     <button
       className="add-shabad"
       aria-label="Add Shabad"
+      data-cy="add-shabad"
       data-id={verseId}
       data-shabadid={shabadId}
       data-verse={verse}
