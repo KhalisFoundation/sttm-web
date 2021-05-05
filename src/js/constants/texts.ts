@@ -17,7 +17,7 @@ export const TEXTS = {
   `,
   ANDROID: 'Android',
   IOS: 'iOS',
-  SEHAJ_PAATH: (ang: string) => `Continue reading Ang ${ang}`,
+  SEHAJ_PAATH: (ang: string) => `Ang ${ang}`,
   SUNDAR_GUTKA_HEADER: `Sundar Gutka Baaniyaan`,
   SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,
   SUNDAR_GUTKA_LENGTHS_INFO: `There are many different variations of certain Baanis out there that people read. To make sure you get the best experience from our website, please choose a setting which best matches your preference.`,
