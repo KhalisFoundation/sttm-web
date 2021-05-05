@@ -228,10 +228,13 @@ select {
   align-items: center;
   display: flex;
   justify-content: flex-start;
+  margin: auto;
 
   svg {
-    fill: $sttm-light-black;
+    fill: $sttm-white;
+    height: 80px;
     margin-right: 0.5rem;
+    width: 100%;
 
     .dark-mode & {
       fill: $sttm-light-grey;
@@ -354,6 +357,67 @@ body:not(.dark-mode) a {
 
 .transparent-color {
   color: transparent !important;
+}
+
+.apps-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+.apps-item {
+  background-color: $sttm-blue;
+  border-radius: 4px;
+  color: white;
+  flex-basis: 150px;
+  flex-grow: 1;
+  margin: 5px;
+  max-height: 150px;
+  max-width: 190px;
+  min-height: 150px;
+  min-width: 190px;
+  padding: 0 0 10px;
+  text-align: center;
+  width: 150px;
+
+  &:hover {
+    background-color: $sttm-dark-blue;
+    transition: 0.3s;
+  }
+}
+
+.sehaj-paath {
+  background-color: $sttm-dark-orange;
+}
+
+.apps-title {
+  background-color: $sttm-dark-blue;
+  border-color: white;
+  border-radius: 4px 4px 0 0;
+  border-style: dotted;
+  border-width: 0 0 1px 0;
+  color: white;
+  font-size: 0.8em;
+  line-height: normal;
+  margin: 0 0 10px 0;
+  padding: 5px 10px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.apps-text {
+  color: $sttm-white !important;
+  margin: auto;
+}
+
+.apps-icon {
+  fill: $sttm-white;
+  min-height: 80px;
+}
+
+.apps-icon-container {
+  margin: auto;
+  width: 80px;
 }
 
 #app-root {

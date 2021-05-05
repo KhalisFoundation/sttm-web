@@ -8,7 +8,7 @@
   &-wrapper {
     display: flex;
     flex-wrap: wrap;
-    max-width: 78rem;
+    max-width: 100%;
   }
 
   .fullscreen-view & {
@@ -431,7 +431,7 @@
   display: flex;
   flex-direction: column;
   margin-left: 8px;
-  width: calc(100% - 70px);
+  width: 90%;
 }
 
 #responsive-menu {

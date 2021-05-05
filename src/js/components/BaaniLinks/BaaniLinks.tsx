@@ -30,23 +30,24 @@ class _BaaniLinks extends React.PureComponent<IBaaniLinkProps> {
 
   render() {
     return (
-      <ul className="baaniLink">
-        {TIMED_BAANI_LINKS.map(baani => {
-          const timeRange = timeMath.parseTime(baani.startTimeInMinutes, baani.endTimeInMinutes);
-          if (!timeMath.isInRange(timeRange[0], timeRange[1])) {
-            return null;
-          }
+      <div>
+        {
+          TIMED_BAANI_LINKS.map(baani => {
+            const timeRange = timeMath.parseTime(baani.startTimeInMinutes, baani.endTimeInMinutes);
+            if (!timeMath.isInRange(timeRange[0], timeRange[1])) {
+              return null;
+            }
 
-          return (
-            <li className="baaniLinkListItem" key={baani.name}>
-              <Clock />
-              <a role="button" aria-label="open" onClick={this.handleBaaniLinkClick(baani)}>
-                Time for {baani.name}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
+            return (
+              <div className="apps-item"><div className="apps-title">Time for Nitnem</div>
+
+                <button className="apps-text" role="button" aria-label="open" onClick={event => window.location.href = '/hukamnama'}>
+                  <Clock />{baani.name}
+                </button></div>
+            )
+          })
+        }
+      </div>
     )
   }
 };
