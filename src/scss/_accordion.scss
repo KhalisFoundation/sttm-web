@@ -37,10 +37,8 @@
     .content {
       display: none;
       padding-top: 1em;
-    }
 
-    &.is-active {
-      .content {
+      &.is-active {
         display: block;
       }
     }

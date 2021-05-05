@@ -18,7 +18,8 @@ import {
   toSearchURL,
   getQueryParams,
   getShabadList,
-  reformatSearchTypes
+  reformatSearchTypes,
+  isShowSehajPaathModeRoute
 } from '@/util';
 
 const { BACK_TO_HOME } = TEXTS;
@@ -163,7 +164,7 @@ class Header extends React.PureComponent {
               handleSearchTypeChange,
               handleSearchWriterChange,
               handleSubmit,
-              handleReset
+              handleReset,
             }) => {
 
               return (
@@ -254,6 +255,7 @@ class Header extends React.PureComponent {
                                       getSuggestions={getShabadList}
                                       searchOptions={{ type: parseInt(type), source, writer }}
                                       value={query}
+                                      isHome={isHome}
                                     />
                                   </div>
                                 </li>
@@ -343,7 +345,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({}) => ({})
 
 const mapDispatchToProps = {
   toggleSettingsPanel,
