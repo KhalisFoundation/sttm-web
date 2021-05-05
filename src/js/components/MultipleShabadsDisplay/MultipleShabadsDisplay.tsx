@@ -92,6 +92,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
               title="Remove"
               className="remove"
               data-id={id}
+              data-cy="delete-shabad"
               onClick={onRemove}>-</button>
           </li>
         ))}
@@ -106,7 +107,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
         <button className="btn btn-primary" disabled={sortableState.length === 0} onClick={handleDisplayShabads}>Display</button>
       </div>
 
-      <button title="Close" className="close toast-notification-close-button" onClick={() => { setMultiViewPanel(false) }}>×</button>
+      <button title="Close" className="close" onClick={() => { setMultiViewPanel(false) }}>×</button>
     </aside>
   )
 }
