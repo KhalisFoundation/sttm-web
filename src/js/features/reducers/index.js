@@ -40,6 +40,10 @@ import {
   SET_SG_BAANI_LENGTH,
   SET_ERROR,
   CHANGE_FONT,
+  SET_MULTIPLE_SHABADS,
+  CLEAR_MULTIPLE_SHABADS,
+  REMOVE_MULTIPLE_SHABADS,
+  SET_MULTI_VIEW_PANEL,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -64,6 +68,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
   LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
+  LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -582,6 +587,57 @@ export default function reducer(state, action) {
         ...state,
         centerAlignGurbani,
       };
+    }
+
+    case SET_MULTIPLE_SHABADS: {
+      const newShabad = action.payload;      
+      const multipleShabads = state.multipleShabads.findIndex(e => e.id === newShabad.id) === -1 ? [...state.multipleShabads, newShabad] : [...state.multipleShabads]
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+        JSON.stringify(multipleShabads)
+      );
+      
+      return {
+        ...state,
+        multipleShabads,
+      };
+    }
+    
+    case REMOVE_MULTIPLE_SHABADS: {
+      const id = action.payload;
+      const multipleShabads = state.multipleShabads.filter(shabad => shabad.id !== id)
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+        JSON.stringify(multipleShabads)
+      );
+
+      return {
+        ...state,
+        multipleShabads,
+      };
+    }
+
+    case CLEAR_MULTIPLE_SHABADS: {
+      const multipleShabads = [];            
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+        multipleShabads
+      );
+      return {
+        ...state,
+        multipleShabads,
+      };
+    }
+
+    case SET_MULTI_VIEW_PANEL: {
+      const showMultiViewPanel = action.payload;
+      return {
+        ...state,
+        showMultiViewPanel
+      }
     }
 
     case SET_ERROR: {

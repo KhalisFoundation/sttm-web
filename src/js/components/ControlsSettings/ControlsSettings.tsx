@@ -48,6 +48,7 @@ const ControlsSettings = (props: any) => {
       VISRAAM.SOURCE_CLASS(visraamSource),
       VISRAAM.TYPE_CLASS(visraamStyle)
     );
+    wrapperRef.current.focus();
   }, [visraams, visraamSource, visraamStyle])
 
   const renderIcon = (itemName: any) => {
@@ -140,21 +141,22 @@ const ControlsSettings = (props: any) => {
         return (
           <>
             <p className="settings-heading">{settingsObj.label}</p>
-            <a className="settings-times" onClick={settingsObj.action}><Times /></a>
+            <button className="settings-times" onClick={settingsObj.action}><Times /></button>
           </>
         )
       case 'collapsible_item':
         return (
-          <Collapsible trigger={(
-            <div className="settings-item active-setting">
-              <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
-              <span className="settings-text">{settingsObj.label}</span>
-              <div className="flex-spacer" />
-              <span className="settings-chevron-icon">
-                <SolidArrowRight />
-              </span>
-            </div>
-          )}>
+          <Collapsible
+            trigger={(
+              <button className="settings-item active-setting">
+                <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
+                <span className="settings-text">{settingsObj.label}</span>
+                <div className="flex-spacer" />
+                <span className="settings-chevron-icon">
+                  <SolidArrowRight />
+                </span>
+              </button>
+            )}>
             <Checkboxes collections={settingsObj.collections} />
           </Collapsible>
         )
@@ -186,23 +188,24 @@ const ControlsSettings = (props: any) => {
         )
       case 'toggle-option':
         return (
-          <div className={`settings-item ${settingsObj.checked ? 'active-setting' : ''}`} onClick={settingsObj.action}>
+          <button className={`settings-item ${settingsObj.checked ? 'active-setting' : ''}`} onClick={settingsObj.action}>
             <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
             <span className="settings-text">{settingsObj.label}</span>
-          </div>
+          </button>
         )
       case 'collapsible_formatting_item':
         return (
-          <Collapsible trigger={(
-            <div className="settings-item active-setting">
-              <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
-              <span className="settings-text">{settingsObj.label}</span>
-              <div className="flex-spacer" />
-              <span className="settings-chevron-icon">
-                <SolidArrowRight />
-              </span>
-            </div>
-          )}>
+          <Collapsible
+            trigger={(
+              <div className="settings-item active-setting">
+                <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
+                <span className="settings-text">{settingsObj.label}</span>
+                <div className="flex-spacer" />
+                <span className="settings-chevron-icon">
+                  <SolidArrowRight />
+                </span>
+              </div>
+            )}>
             <ClickableListItem controlsList={settingsObj} />
           </Collapsible>
         )
@@ -214,12 +217,11 @@ const ControlsSettings = (props: any) => {
             <div className="settings-options">
               {
                 settingsObj.collections?.map((collection: CollectionProps, index: number) => (
-                  <span
+                  <button
                     key={index}
                     className={`settings-action-icon ${collection.checked ? 'active-setting' : ''}`}
-                    onClick={collection.action}>
-                    {renderIcon(collection.label)}
-                  </span>
+                    onClick={collection.action}
+                  >{renderIcon(collection.label)}</button>
                 ))
               }
             </div>
@@ -266,7 +268,7 @@ const ControlsSettings = (props: any) => {
   }
 
   return (
-    <div ref={wrapperRef}>
+    <div ref={wrapperRef} tabIndex="-1" role="dialog">
       <>
         {headerSettings.map((element: any, i: any) => {
           if (element.type) {

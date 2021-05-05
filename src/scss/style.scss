@@ -416,3 +416,17 @@ body:not(.dark-mode) a {
   margin: auto;
   width: 80px;
 }
+
+#app-root {
+  overflow: hidden;
+}
+
+.pusher {
+  left: 0;
+  padding-bottom: 100px;
+  transition: transform 0.5s;
+
+  &.enable {
+    transform: translateX(10%);
+  }
+}

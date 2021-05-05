@@ -118,6 +118,31 @@ export default [
     },
   },
   {
+    path: '/maryada',
+    render(props) {
+      return (
+        <Layout title="Sikh Rehat Maryadha - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(/* webpackChunkName: "Maryada" */ './pages/Maryada')
+            }
+          >
+            {({ pending, resolved: { default: Maryada } = {}, rejected }) =>
+              pending ? null : Maryada ? (
+                <Maryada {...props} />
+              ) : (
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
+                )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
     path: '/ang',
     render(props) {
       const [ang, source, highlight] = ['ang', 'source', 'highlight'].map((v) =>
@@ -409,7 +434,7 @@ export default [
         type,
         random: random !== undefined && random === '' ? true : false,
         highlight:
-          highlight === undefined ? undefined : parseInt(highlight, 10),
+          highlight === undefined ? undefined : highlight.includes(',') ? highlight : parseInt(highlight, 10)
       };
 
       return (

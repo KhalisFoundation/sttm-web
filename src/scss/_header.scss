@@ -254,6 +254,8 @@
   }
 
   > li {
+    display: flex;
+
     > a {
       display: block;
       padding: 10px;

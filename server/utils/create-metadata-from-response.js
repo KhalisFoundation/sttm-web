@@ -9,7 +9,8 @@ export const createMetadataFromResponse = (req, apiResponse) => {
   const { path } = req;
   switch (path) {
     case '/shabad': {
-      const { shabadInfo, verses } = apiResponse.data;
+      const { shabadInfo, verses } = isKeyExists(apiResponse.data, 'shabadIds') ? apiResponse.data.shabads[0] : apiResponse.data;     
+
       const { shabadName } = shabadInfo;
 
       // getting shabad object from verses
@@ -36,4 +37,8 @@ export const createMetadataFromResponse = (req, apiResponse) => {
 
     default: return { title: '', description: '' }
   }
+}
+
+export const isKeyExists = (object, key) => {
+  return object.hasOwnProperty(key)
 }

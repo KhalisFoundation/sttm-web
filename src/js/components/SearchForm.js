@@ -17,6 +17,7 @@ import {
   DEFAULT_SEARCH_WRITERS,
 } from '@/constants';
 import { getNumberFromLocalStorage, clickEvent, ACTIONS, getWriterList } from '@/util';
+import { addMultipleShabads } from '@/features/actions';
 
 /**
  *
@@ -197,7 +198,7 @@ export default class SearchForm extends React.PureComponent {
       handleSearchWriterChange,
       handleSubmit,
       handleKeyDown,
-      handleReset
+      handleReset,
     } = this;
 
     const { type, query } = this.state;
@@ -236,7 +237,7 @@ export default class SearchForm extends React.PureComponent {
       handleSearchWriterChange,
       handleSubmit,
       handleKeyDown,
-      handleReset
+      handleReset,
     });
 
   }
