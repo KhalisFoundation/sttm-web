@@ -3,6 +3,7 @@
 exports[`<MultiViewToggleButton /> should render with given state from Redux store 1`] = `
 <button
   className="multi-view"
+  data-cy="multi-view-button"
   onClick={[Function]}
 >
   <svg
