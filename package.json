@@ -127,7 +127,6 @@
     "marinate": "^0.1.5",
     "postcss-root-to-json": "0.0.0",
     "react": "^16.13.1",
-    "react-collapsible": "^2.8.3",
     "react-date-picker": "^8.0.3",
     "react-dom": "^16.13.1",
     "react-h5-audio-player": "^3.4.1",

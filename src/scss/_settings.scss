@@ -179,6 +179,8 @@ $panel-width-560: 65vw;
 
   &-text {
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 900;
     margin-left: 6px;
 
     &:hover {
@@ -291,10 +293,6 @@ $panel-width-560: 65vw;
 
 .settings-chevron-icon svg {
   transition: transform 200ms ease;
-}
-
-.is-open > .settings-item > .settings-chevron-icon svg {
-  transform: rotate(0.25turn);
 }
 
 .pt-0 {
