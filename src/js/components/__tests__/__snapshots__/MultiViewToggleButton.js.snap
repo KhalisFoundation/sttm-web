@@ -7,8 +7,6 @@ exports[`<MultiViewToggleButton /> should render with given state from Redux sto
 >
   <svg
     className="merge-icon"
-    fill=""
-    height=""
     viewBox="0 0 17 17"
     width="2em"
     xmlns="http://www.w3.org/2000/svg"

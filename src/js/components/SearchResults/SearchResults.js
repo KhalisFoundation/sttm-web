@@ -40,7 +40,7 @@ export default class SearchResults extends React.PureComponent {
                 type={type}
                 shabad={shabad}
                 {...props} />
-            );
+            );  
           })
         }
       </ul>

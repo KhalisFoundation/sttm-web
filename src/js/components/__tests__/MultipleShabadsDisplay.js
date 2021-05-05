@@ -1,16 +1,21 @@
 /* global describe, it, expect, jest */ 
 import React from 'react';
 import { Provider } from 'react-redux';
-import {render, screen} from '@testing-library/react'
+import {render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom';
-import { mockStore } from '../__mocks__/';
-//import { clearMultipleShabads, removeMultipleShabads, setMultiViewPanel, setMultipleShabads } from '@/features/actions';
+import { shabad, mockStore } from '../__mocks__/';
+import { setMultipleShabads } from '@/features/actions';
 
 import MultipleShabadsDisplay from "../MultipleShabadsDisplay";
 
 describe('Multiple Shabads Display', () => {
   let store;
   let renderedComponent;
+  const mockShabad = {
+    id: shabad.verses[0].verseId, 
+    shabadId: shabad.verses[0].shabadId, 
+    verse: shabad.verses[0].verse.unicode
+  }
  
   beforeEach(() => {
     store = mockStore({
@@ -27,12 +32,17 @@ describe('Multiple Shabads Display', () => {
     );
   });
 
-  it('should render with given state from Redux store', () => {
+  it('should render successfully', () => {
     const { container } = renderedComponent;
     expect(container).toMatchSnapshot();
   });
   
-  it('should render with given state from Redux store', () => {
+  it('should be visible with given state from Redux store', () => {
     expect(screen.getByRole('complementary')).toBeVisible();
+  });
+  
+  it('should be render shabads after redux dispatch', () => {
+    store.dispatch(setMultipleShabads(mockShabad))
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
   });
 })

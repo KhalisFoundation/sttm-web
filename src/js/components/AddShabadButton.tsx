@@ -5,6 +5,7 @@ import { setMultipleShabads, setMultiViewPanel } from "@/features/actions";
 import { TEXTS } from '@/constants';
 import { showToast } from '@/util';
 import { IMultipleShabadsProps } from '@/types/multiple-shabads';
+import AddIcon from './Icons/AddIcon';
 
 interface IAddShabadButton {
   multipleShabads: IMultipleShabadsProps[],
@@ -32,6 +33,8 @@ export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId
       dispatch(setMultipleShabads({ id: parseInt(id), shabadId: parseInt(shabadid), verse }))
       !showMultiViewPanel && dispatch(setMultiViewPanel(true))
       showToast(TEXTS.SHABAD_ADDED_MESSAGE)
+    } else {
+      showToast(TEXTS.SHABAD_ALREADY_ADDED_MESSAGE)
     }
   }
 
@@ -43,7 +46,8 @@ export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId
       data-shabadid={shabadId}
       data-verse={verse}
       onClick={onClick}>
-      +
+      <AddIcon />
+      Add
     </button>
   )
 }
