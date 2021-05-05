@@ -95,9 +95,9 @@ class SundarGutka extends React.PureComponent {
                             animationDelay: i < 15 ? `${20 * i}ms` : 0,
                           }}
                         >
-                          <p
+                          <h2
                             className="sgCardGurmukhi"
-                          >{gurmukhiUni}{' '}</p>
+                          >{gurmukhiUni}{' '}</h2>
 
                           <div
                             className="sgCardEnglish"
@@ -120,11 +120,11 @@ class SundarGutka extends React.PureComponent {
               </div>
             </>
           ) : (
-                <Route
-                  path={this.props.match.url + '/:baaniIdOrName'}
-                  render={routeProps => <RenderShabads sundarGutkaBaaniId={baaniId} {...routeProps} />}
-                />
-              )}
+            <Route
+              path={this.props.match.url + '/:baaniIdOrName'}
+              render={routeProps => <RenderShabads sundarGutkaBaaniId={baaniId} {...routeProps} />}
+            />
+          )}
         </div>
       </div >
     );
