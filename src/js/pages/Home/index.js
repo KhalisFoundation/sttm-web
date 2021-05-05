@@ -303,9 +303,10 @@ class Home extends React.PureComponent {
                 <a href={doodleData['SourceLink']} target="_blank" rel="noreferrer">
                   <p className="doodle-credit">Special thanks to {doodleData['SourceText']}</p>
                 </a>
-              )}                   
-            </React.Fragment>
-          )}
+              )}
+            </div>
+          </React.Fragment>
+        )}
       </SearchForm>
     );
   }
