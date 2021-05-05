@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { showToast, copyToClipboard, shortenURL, getVerseId, getShabadId, getUnicodeVerse, isKeyExists } from '../util';
+import { showToast, copyToClipboard, shortenURL, isKeyExists, multiviewFormattedShabad } from '../util';
 import { TEXTS } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
 import ShareIcon from './Icons/Share';
@@ -44,11 +44,7 @@ class ShareButtons extends React.PureComponent {
     const { highlight, gurbani } = props;    
     if (gurbani !== undefined) {
       const selectedShabad = highlight ? gurbani?.find(({verseId}) => verseId === highlight) : gurbani[0]
-      this.formattedShabad = {
-        verseId: getVerseId(selectedShabad),
-        shabadId: getShabadId(selectedShabad),
-        verse: getUnicodeVerse(selectedShabad)
-      }
+      this.formattedShabad = multiviewFormattedShabad(selectedShabad)
     }    
   }
   static defaultProps = {
@@ -62,7 +58,10 @@ class ShareButtons extends React.PureComponent {
     onCopyAllClick: PropTypes.func,
     toggleSettingsPanel: PropTypes.func,
     settingIdRef: PropTypes.object,
-    highlight: PropTypes.number,
+    highlight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     gurbani: PropTypes.array,
   };
 
@@ -115,7 +114,7 @@ class ShareButtons extends React.PureComponent {
       ),
       copy: (
         <li key={3}>
-          <label for="copy-short-url-text" id="copy-short-url" className="copy" onClick={copyShortUrl}>
+          <label htmlFor="copy-short-url-text" id="copy-short-url" className="copy" onClick={copyShortUrl}>
             <input
               id="copy-short-url-text"
               className="short-url-input"
@@ -153,7 +152,7 @@ class ShareButtons extends React.PureComponent {
         <li key={7}>  
           {
             isKeyExists(this.formattedShabad, 'shabadId')
-            && <AddShabadButton shabad={this.formattedShabad} />
+            && (<AddShabadButton shabad={this.formattedShabad} />)
           }          
         </li>
       )

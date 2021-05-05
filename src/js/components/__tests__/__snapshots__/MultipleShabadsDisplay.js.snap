@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Multiple Shabads Display should render with given state from Redux store 1`] = `
+exports[`Multiple Shabads Display should render successfully 1`] = `
 <div>
   <aside
     class="multiple-shabads-display enable"
