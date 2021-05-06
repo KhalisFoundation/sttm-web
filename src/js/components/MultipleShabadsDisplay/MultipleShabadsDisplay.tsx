@@ -76,7 +76,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   }, [multipleShabads])
 
   return (
-    <div className="multiple-shabads-display" ref={wrapperRef} tabIndex="-1" role="dialog">
+    <div className="multiple-shabads-display" ref={wrapperRef} tabIndex="-1" role="dialog" data-testid="multi-view">
       <div className={`multiple-shabads-display--wrapper ${showMultiViewPanel ? 'enable' : ''}`}>
         <button title="Close" className="close toast-notification-close-button" onClick={() => { setMultiViewPanel(false) }}>×</button>
 
