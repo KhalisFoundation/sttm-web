@@ -351,6 +351,19 @@ select {
   }
 }
 
+.donate-button {
+  background-color: $sttm-dark-orange;
+
+  &-text {
+    color: white !important;
+    font-weight: bold;
+
+    &:hover {
+      color: $sttm-darker-grey !important;
+    }
+  }
+}
+
 body:not(.dark-mode) a {
   color: #1374b4;
 }
@@ -402,7 +415,7 @@ body:not(.dark-mode) a {
   line-height: normal;
   margin: 0 0 10px 0;
   padding: 5px 10px;
-  text-align: left;
+  text-align: center;
   text-transform: uppercase;
 }
 
@@ -427,7 +440,6 @@ body:not(.dark-mode) a {
 
 .pusher {
   left: 0;
-  padding-bottom: 100px;
   transition: transform 0.5s;
 
   &.enable {

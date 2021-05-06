@@ -1,10 +1,12 @@
 .multiple-shabads-display {
-  background: $sttm-dark-grey;
+  background: $sttm-light-black;
+  border-right: 1px solid $sttm-dark-orange;
   box-shadow: 0 0 12px -4px $sttm-black;
   display: flex;
   flex-direction: column;
   height: 100vh;
   left: 0;
+  opacity: 0.9;
   overflow-x: hidden;
   padding: 0 1em;
   position: fixed;
@@ -38,8 +40,11 @@
   }
 
   .notification {
-    background-color: $sttm-orange;
-    border-left: 5px solid darken($sttm-orange, 20%);
+    background-color: $sttm-darkest-grey;
+    border-left: 5px solid $sttm-dark-orange;
+    border-radius: 4px;
+    border-right: 5px solid $sttm-dark-orange;
+    color: $sttm-white;
     margin-bottom: 1em;
     padding: 0.5em 0.5em 0.5em 1em;
   }

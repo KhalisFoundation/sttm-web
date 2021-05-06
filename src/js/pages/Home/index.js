@@ -23,7 +23,9 @@ import { SyncIcon } from '@/components/Icons/SyncIcon';
 import { Rehat } from '@/components/Icons/Rehat';
 import { Sundar } from '@/components/Icons/Sundar';
 import { RandomIcon } from '@/components/Icons/RandomIcon';
+import { IndexIcon } from '@/components/Icons/IndexIcon';
 import MultiViewHomeButton from '@/components/MultiViewHomeButton';
+import { DesktopSync } from '@/components/Icons/DesktopSync';
 
 /**
  *
@@ -272,7 +274,7 @@ class Home extends React.PureComponent {
                   </button>
                 </div>
                 <div className="apps-item">
-                  <div className="apps-title">Read</div>
+                  <div className="apps-title">Code of Conduct</div>
                   <button onClick={() => window.location.href = '/rehat-maryadha'}>
                     <div className="apps-icon-container">
                       <Rehat />
@@ -290,12 +292,30 @@ class Home extends React.PureComponent {
                   </button>
                 </div>
                 <div className="apps-item">
+                  <div className="apps-title">Index</div>
+                  <button onClick={() => window.location.href = '/index'}>
+                    <div className="apps-icon-container">
+                      <IndexIcon />
+                    </div>
+                    View Index
+                  </button>
+                </div>
+                <div className="apps-item">
                   <div className="apps-title">Follow Along</div>
                   <button onClick={() => window.location.href = '/sync'}>
                     <div className="apps-icon-container">
                       <SyncIcon />
                     </div>
                     Sangat Sync
+                  </button>
+                </div>
+                <div className="apps-item">
+                  <div className="apps-title">Control Desktop</div>
+                  <button onClick={() => window.location.href = '/control'}>
+                    <div className="apps-icon-container">
+                      <DesktopSync />
+                    </div>
+                    Bani Controller
                   </button>
                 </div>
               </div>

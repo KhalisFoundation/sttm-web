@@ -48,7 +48,8 @@ export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId
       data-verse={verse}
       onClick={onClick}>
       <AddIcon />
-      Add
+      <div className="show-on-desktop">
+        Add</div>
     </button>
   )
 }

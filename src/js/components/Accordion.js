@@ -23,8 +23,8 @@ const Accordion = ({ title, index, content, defaultState, customStyles }) => {
   }, [defaultState])
 
   return (
-    <div className={`accordion__item ${customStyles ? "custom" : ""}`}>
-      <h3>
+    <div className="accordion__item">
+      <h4>
         <button
           className="title"
           aria-expanded={active}
@@ -34,8 +34,9 @@ const Accordion = ({ title, index, content, defaultState, customStyles }) => {
           aria-label={title}>
           {title}{active ? <MinusIcon /> : <PlusIcon />}
         </button>
-      </h3>
-      {createContent()}
+      </h4>
+      <section id={`accordion-panel-${index}`} aria-labelledby={`accordion-header-${index}`} className={`content ${active ? 'is-active' : ''}`} dangerouslySetInnerHTML={{ __html: content }} />
+
     </div >
   )
 }

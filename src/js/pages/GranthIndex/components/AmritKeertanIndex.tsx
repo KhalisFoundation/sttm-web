@@ -15,7 +15,7 @@ export const AmritKeertanIndex: React.FC<IAmritKeertanProps> = ({ data }) => {
       <h3 id='amritKeertan'> Amrit Keertan</h3>
       <table>
         <thead>
-          <tr>
+          <tr className="GranthRows-Heading">
             <th> Chapter name </th>
           </tr>
         </thead>

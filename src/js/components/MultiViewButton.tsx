@@ -20,7 +20,7 @@ const MultiViewButton = (props: any) => {
   return (
     <button data-cy="multi-view-button" className="multi-view" onClick={onClick}>
       <MergeIcon width="2em" {...props} />
-      <span>Multi View</span>
+      <span className="show-on-desktop">Multi View</span>
     </button>
   )
 }

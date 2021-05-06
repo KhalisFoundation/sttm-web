@@ -106,6 +106,7 @@
 }
 
 .top-bar-right .menu > li {
+  border-radius: 4px;
   display: inline-block;
   font-weight: 400;
 
@@ -442,7 +443,7 @@
   display: list-item;
 }
 
-@media screen and (max-width: 55.99em) {
+@media screen and (max-width: 69.99em) {
   .top-bar-menu {
     margin-left: 0;
     width: 100%;
@@ -547,7 +548,7 @@
 }
 
 // Not Mobile
-@media screen and (min-width: 56em) {
+@media screen and (min-width: 70em) {
   .top-bar-title a {
     background-image: url(/assets/images/sttm_icon.png);
     background-position: bottom;
@@ -569,6 +570,7 @@
 
   .top-bar .top-bar-left,
   .top-bar .top-bar-right {
+    margin-left: 1rem;
     width: auto;
   }
 
@@ -580,10 +582,10 @@
     .submenu > .submenu-items {
       background-color: $sttm-white;
       border: 1px solid $sttm-lighter-grey;
+      left: 0;
       position: absolute;
-      right: 0;
       top: 44px;
-      width: 150px;
+      width: max-content;
 
       .dark-mode & {
         background-color: $sttm-light-black;
@@ -596,11 +598,12 @@
     align-items: flex-start;
     display: flex;
     flex-grow: 1;
-    justify-content: space-between;
-    width: calc(100% - 70px);
+    width: calc(100% - 10px);
 
     > .top-bar-right {
       // min-width: 470px;
+      flex: auto;
+      float: right;
       text-align: right;
     }
   }

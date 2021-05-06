@@ -78,7 +78,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
                       <h3 id={granthName}> {granthName}</h3>
                       <table>
                         <thead>
-                          <tr>
+                          <tr className="GranthRows-Heading">
                             <th> Raag Name </th>
                             <th> Ang Range </th>
                           </tr>
@@ -87,7 +87,7 @@ export const GranthIndex: React.FC<IGranthIndexProps> = ({ location }) => {
                           {indices.map(({ name, pages: [from, to], highlight }) => (
                             <tr id={`${sanitizeHash(granthName, name)}`} key={name}>
                               <td>{name}</td>
-                              <td>
+                              <td className="GranthRows" >
                                 <Link
                                   to={toAngURL({ ang: from, source, highlight })}
                                 >
