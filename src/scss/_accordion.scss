@@ -2,7 +2,7 @@
   background: none;
 
   &__item {
-    background-color: $sttm-white;
+    background-color: white;
     border-radius: 15px;
     margin-bottom: 0.5em;
     padding: 0.2em 1em 0.2em 1.5em;
@@ -22,6 +22,10 @@
       justify-content: space-between;
       width: 100%;
 
+      &:hover {
+        color: $sttm-orange;
+      }
+
       h3 {
         font-size: clamp(1.5rem, 2vw, 2rem);
         margin: 0;
@@ -36,11 +40,51 @@
 
     .content {
       display: none;
-      padding-top: 1em;
+      font-size: 0.9em;
+      padding: 1em;
 
       &.is-active {
         display: block;
       }
     }
+
+    &:not(.custom) {
+      background-color: $sttm-white;
+      border-radius: 15px;
+      margin-bottom: 0.5em;
+      padding: 0.2em 1em 0.2em 1.5em;
+      width: 100%;
+
+      .dark-mode & {
+        background-color: $sttm-lighter-black;
+
+        h3 {
+          color: $sttm-white;
+        }
+      }
+
+      .title {
+        h3 {
+          font-size: clamp(1.5rem, 2vw, 2rem);
+          margin: 0;
+          text-align: left;
+        }
+
+        span {
+          color: $sttm-blue;
+          font-weight: 700;
+        }
+      }
+
+      .content {
+        padding-top: 1em;
+      }
+    }
+  }
+}
+
+.expand {
+  &:hover {
+    color: $sttm-orange;
   }
 }

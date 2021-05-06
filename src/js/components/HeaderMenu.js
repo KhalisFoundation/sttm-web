@@ -5,10 +5,16 @@ import BarsIcon from './Icons/Bars';
 import BackIcon from './Icons/Back';
 
 const Menu = ({ isHome }) => {
-  const displayAreaRef = useRef(null)
-  const dropTogglerRef = useRef(null)
+  const displayAreaRefInfo = useRef(null)
+  const dropTogglerRefInfo = useRef(null)
+  const displayAreaRefIndex = useRef(null)
+  const dropTogglerRefIndex = useRef(null)
+  const displayAreaRefSync = useRef(null)
+  const dropTogglerRefSync = useRef(null)
 
-  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [toggleDropdownInfo, setToggleDropdownInfo] = useState(false);
+  const [toggleDropdownSync, setToggleDropdownSync] = useState(false);
+  const [toggleDropdownIndex, setToggleDropdownIndex] = useState(false);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -21,10 +27,24 @@ const Menu = ({ isHome }) => {
     const path = event.path || (event.composedPath && event.composedPath());
 
     if (
-      !path.includes(displayAreaRef.current) &&
-      !path.includes(dropTogglerRef.current)
+      !path.includes(displayAreaRefInfo.current) &&
+      !path.includes(dropTogglerRefInfo.current)
     ) {
-      setToggleDropdown(false);
+      setToggleDropdownInfo(false);
+    }
+
+    if (
+      !path.includes(displayAreaRefIndex.current) &&
+      !path.includes(dropTogglerRefIndex.current)
+    ) {
+      setToggleDropdownIndex(false);
+    }
+
+    if (
+      !path.includes(displayAreaRefSync.current) &&
+      !path.includes(dropTogglerRefSync.current)
+    ) {
+      setToggleDropdownSync(false);
     }
   }
 
@@ -42,8 +62,16 @@ const Menu = ({ isHome }) => {
     window.history.back();
   }
 
-  function toggleDropdownHandler() {
-    setToggleDropdown(!toggleDropdown)
+  function toggleDropdownHandlerInfo() {
+    setToggleDropdownInfo(!toggleDropdownInfo)
+  }
+
+  function toggleDropdownHandlerSync() {
+    setToggleDropdownSync(!toggleDropdownSync)
+  }
+
+  function toggleDropdownHandlerIndex() {
+    setToggleDropdownIndex(!toggleDropdownIndex)
   }
 
   return (
@@ -77,29 +105,56 @@ const Menu = ({ isHome }) => {
               Hukamnama
               </Link>
           </li>
-          <li data-cy="random-shabad">
-            <Link to="/shabad?random" onClick={toggleMenu}>
-              Random Shabad
-              </Link>
+
+          <li data-cy="index" className={`${toggleDropdownIndex ? 'opened' : ''} submenu`}>
+            <button name="index-btn" onClick={toggleDropdownHandlerIndex} ref={dropTogglerRefIndex}>
+              <span>
+                Index
+                <BackIcon />
+              </span>
+            </button>
+            <div className="submenu-items" ref={displayAreaRefIndex}>
+              <Link to="/sundar-gutka" onClick={toggleMenu}>
+                Sundar Gutka
+                </Link>
+              <Link to="/index#Sri Guru Granth Sahib Jee" onClick={toggleMenu}>
+                Sri Guru Granth Sahib Jee
+                </Link>
+              <Link to="/index#Sri Dasam Granth Sahib" onClick={toggleMenu}>
+                Sri Dasam Granth
+                </Link>
+              <Link to="/index#amritKeertan" onClick={toggleMenu}>
+                Amrit Keertan
+                </Link>
+            </div>
           </li>
-          <li data-cy="sundar-gutka-page">
-            <Link to="/sundar-gutka" onClick={toggleMenu}>
-              Sundar Gutka
-              </Link>
+
+          <li data-cy="info" className={`${toggleDropdownInfo ? 'opened' : ''} submenu`}>
+            <button name="info-btn" onClick={toggleDropdownHandlerInfo} ref={dropTogglerRefInfo}>
+              <span>
+                Information
+                <BackIcon />
+              </span>
+            </button>
+            <div className="submenu-items" ref={displayAreaRefInfo}>
+              <Link to="/rehat-maryadha" onClick={toggleMenu}>
+                Rehat Maryadha
+                </Link>
+            </div>
           </li>
-          <li data-cy="index">
-            <Link to="/index" onClick={toggleMenu}>
-              Index
-              </Link>
-          </li>
-          <li data-cy="sync" className={`${toggleDropdown ? 'opened' : ''} submenu`}>
-            <button name="sync-btn" onClick={toggleDropdownHandler} ref={dropTogglerRef}>
+
+
+
+
+
+          <li data-cy="sync" className={`${toggleDropdownSync ? 'opened' : ''} submenu`}>
+            <button name="sync-btn" onClick={toggleDropdownHandlerSync} ref={dropTogglerRefSync}>
               <span>
                 Sync
                 <BackIcon />
               </span>
             </button>
-            <div className="submenu-items" ref={displayAreaRef}>
+            <div className="submenu-items" ref={displayAreaRefSync}>
               <Link to="/sync" onClick={toggleMenu}>
                 Sangat Sync
                 </Link>
@@ -112,6 +167,12 @@ const Menu = ({ isHome }) => {
             <span role="button" aria-label="Close menu" onClick={closeMenu}>
               Close
               </span>
+          </li>
+          <li className="donate-button">
+            <Link className="donate-button-text" to={{ pathname: "https://khalisfoundation.org/donate/" }} target="_blank" onClick={toggleMenu}>
+
+              Donate
+              </Link>
           </li>
         </ul>
       </div>
