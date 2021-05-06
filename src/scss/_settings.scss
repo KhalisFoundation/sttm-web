@@ -3,16 +3,28 @@ $panel-width-900: 35vw;
 $panel-width-560: 65vw;
 
 .settings {
+  $transform-width: $panel-width;
+
+  @media screen and (max-width: 900px) {
+    $transform-width: $panel-width-900;
+  }
+
+  @media screen and (max-width: 560px) {
+    $transform-width: $panel-width-560;
+  }
+
   &-panel {
     background: $sttm-pure-white;
     box-shadow: 0 0 12px -4px $sttm-black;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    opacity: 0;
     overflow-x: hidden;
     position: fixed;
     right: 0;
     top: 0;
+    transform: translateX(100%);
     transform-origin: top right;
     transition: 0.3s all ease-in-out;
     width: $panel-width;
@@ -38,20 +50,20 @@ $panel-width-560: 65vw;
     transform: translateX(0);
   }
 
-  &-hide {
-    $transform-width: $panel-width;
+  // &-hide {
+  //   $transform-width: $panel-width;
 
-    @media screen and (max-width: 900px) {
-      $transform-width: $panel-width-900;
-    }
+  //   @media screen and (max-width: 900px) {
+  //     $transform-width: $panel-width-900;
+  //   }
 
-    @media screen and (max-width: 560px) {
-      $transform-width: $panel-width-560;
-    }
+  //   @media screen and (max-width: 560px) {
+  //     $transform-width: $panel-width-560;
+  //   }
 
-    opacity: 0;
-    transform: translateX($transform-width);
-  }
+  //   opacity: 0;
+  //   transform: translateX($transform-width);
+  // }
 
   &-header {
     background-color: $sttm-blue;

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import cx from 'classnames';
 import ControlsSettings from "../components/ControlsSettings/ControlsSettings";
 
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
@@ -34,6 +33,7 @@ import {
   changeFont,
   toggleCenterAlignOption,
   closeSettingsPanel,
+  closeMultiViewPanel,
 } from '@/features/actions';
 
 
@@ -56,40 +56,16 @@ class Controls extends React.Component {
     showSettingsPanel: PropTypes.bool,
   };
 
-  componentDidMount() {
-    this.isChangeInControls = false;
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.showAdvancedOptions !== this.props.showAdvancedOptions) {
-      this.isChangeInControls = true;
-    }
-  }
-
   setRef = node => (this.wrapperRef = node);
 
   render() {
-    const { showBorder, showControls } = this.state;
     const { showSettingsPanel } = this.props;
-
-    const classNames = cx({
-      'no-select': true,
-      'with-border': showBorder,
-    });
-
-    const controlStyles = showControls ? { transform: '' } : { transform: 'rotateX(90deg) perspective(500px)' }
 
     return (
       <>
-        <ShareButtons settingIdRef={this.settingsRef} {...this.props} />
-        <div
-          style={controlStyles}
-          id="controls-wrapper"
-          className={classNames}
-        >
-          <div className={`settings-panel ${showSettingsPanel ? 'settings-show' : 'settings-hide'}`}>
-            {showSettingsPanel && <ControlsSettings settingsRef={this.settingsRef} {...this.props} />}
-          </div>
+        <ShareButtons settingIdRef={this.settingsRef} {...this.props} />        
+        <div className={`settings-panel ${showSettingsPanel ? 'settings-show' : ''}`}>
+          {showSettingsPanel && <ControlsSettings settingsRef={this.settingsRef} {...this.props} />}
         </div>
       </>
     );
@@ -127,7 +103,8 @@ const mapDispatchToProps = {
   setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
-  closeSettingsPanel
+  closeSettingsPanel,
+  closeMultiViewPanel,
 };
 
 // TODO: Connect individual components instead of all controls.

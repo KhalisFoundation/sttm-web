@@ -202,3 +202,7 @@ export const toggleCenterAlignOption = () => (dispatch, getState) => {
 export const closeSettingsPanel = () => dispatch => {
   dispatch(setSettingsPanel(false))
 }
+
+export const closeMultiViewPanel = () => dispatch => {
+  dispatch(setMultiViewPanel(false))
+}

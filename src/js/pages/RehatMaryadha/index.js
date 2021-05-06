@@ -43,8 +43,8 @@ const RehatMaryadha = ({ location: { pathname } }) => {
                   <div>
                     Available Languages:
                     <ul className="languages">
-                      <li><Link to="/maryada/en" className={rehatId === 1 ? 'active' : ''}>English</Link></li>
-                      <li><Link to="/maryada/pb" className={rehatId === 2 ? 'active' : ''}>Punjabi</Link></li>
+                      <li><Link to="/rehat-maryadha/en" className={rehatId === 1 ? 'active' : ''}>English</Link></li>
+                      <li><Link to="/rehat-maryadha/pb" className={rehatId === 2 ? 'active' : ''}>Punjabi</Link></li>
                     </ul>
                   </div>
                 </div>
