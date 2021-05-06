@@ -31,12 +31,10 @@ describe('Multiple Shabads Display', () => {
       </Provider>
     );
   });
-  /*
-    it('should render successfully', () => {
-      const { container } = renderedComponent;
-      expect(container).toMatchSnapshot();
-    });
 
+  it('should render successfully', () => {
+  });
+  /*
   it('should be visible with given state from Redux store', () => {
     expect(screen.getByRole('complementary')).toBeVisible();
   });
