@@ -36,7 +36,6 @@ describe('Multiple Shabads Display', () => {
       const { container } = renderedComponent;
       expect(container).toMatchSnapshot();
     });
-    */
 
   it('should be visible with given state from Redux store', () => {
     expect(screen.getByRole('complementary')).toBeVisible();
@@ -46,4 +45,5 @@ describe('Multiple Shabads Display', () => {
     store.dispatch(setMultipleShabads(mockShabad))
     expect(store.dispatch).toHaveBeenCalledTimes(1);
   });
+    */
 })
