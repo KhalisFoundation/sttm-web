@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { PlusIcon, MinusIcon } from '@/components/Icons/CustomIcons'
 
-const Accordion = ({ title, index, content, defaultState = false }) => {
+const Accordion = ({ title, index, content, defaultState, customStyles }) => {
   const [active, setActive] = useState(defaultState);
 
   function toggleAccordion() {
     setActive(!active);
+  }
+
+  function createContent() {
+    if (typeof content === "object") {
+      return <section id={`accordion-panel-${index}`} aria-labelledby={`accordion-header-${index}`} className={`content ${active ? 'is-active' : ''}`}>
+        {content}
+      </section>
+    }
+    return <section id={`accordion-panel-${index}`} aria-labelledby={`accordion-header-${index}`} className={`content ${active ? 'is-active' : ''}`} dangerouslySetInnerHTML={{ __html: content }} />
   }
 
   useEffect(() => {
@@ -14,7 +23,7 @@ const Accordion = ({ title, index, content, defaultState = false }) => {
   }, [defaultState])
 
   return (
-    <div className="accordion__item">
+    <div className={`accordion__item ${customStyles ? "custom" : ""}`}>
       <h3>
         <button
           className="title"
@@ -26,16 +35,22 @@ const Accordion = ({ title, index, content, defaultState = false }) => {
           {title}{active ? <MinusIcon /> : <PlusIcon />}
         </button>
       </h3>
-      <section id={`accordion-panel-${index}`} aria-labelledby={`accordion-header-${index}`} className={`content ${active ? 'is-active' : ''}`} dangerouslySetInnerHTML={{ __html: content }} />
+      {createContent()}
     </div >
   )
 }
 
 Accordion.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  title: PropTypes.any.isRequired,
+  content: PropTypes.any.isRequired,
   defaultState: PropTypes.bool,
   index: PropTypes.number.isRequired,
+  customStyles: PropTypes.bool,
+}
+
+Accordion.default = {
+  defaultState: false,
+  customStyles: false,
 }
 
 export default Accordion;
