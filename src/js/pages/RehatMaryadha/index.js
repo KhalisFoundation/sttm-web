@@ -13,7 +13,7 @@ import { TEXTS } from '@/constants';
 
 const Stub = () => <div className="spinner" />;
 
-const Maryada = ({ location: { pathname } }) => {
+const RehatMaryadha = ({ location: { pathname } }) => {
   const getRehatId = () => getTrailingParameter() === 'pb' ? 2 : 1;
   const [state, setState] = useState(false)
   const [rehatId, setRehatId] = useState(getRehatId());
@@ -21,7 +21,7 @@ const Maryada = ({ location: { pathname } }) => {
   let url = API_URL + '/rehats/' + rehatId + '/chapters';
 
   useEffect(() => {
-    pageView('/maryada');
+    pageView('/rehat-maryadha');
     setRehatId(getRehatId())
   }, [pathname])
 
@@ -43,8 +43,8 @@ const Maryada = ({ location: { pathname } }) => {
                   <div>
                     Available Languages:
                     <ul className="languages">
-                      <li><Link to="/maryada/en" className={rehatId === 1 ? 'active' : ''}>English</Link></li>
-                      <li><Link to="/maryada/pb" className={rehatId === 2 ? 'active' : ''}>Punjabi</Link></li>
+                      <li><Link to="/rehat-maryadha/en" className={rehatId === 1 ? 'active' : ''}>English</Link></li>
+                      <li><Link to="/rehat-maryadha/pb" className={rehatId === 2 ? 'active' : ''}>Punjabi</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -83,4 +83,4 @@ const Maryada = ({ location: { pathname } }) => {
   );
 }
 
-export default Maryada;
+export default RehatMaryadha;

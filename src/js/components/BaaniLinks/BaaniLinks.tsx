@@ -32,24 +32,25 @@ class _BaaniLinks extends React.PureComponent<IBaaniLinkProps> {
     return (
       <div>
         {
-          TIMED_BAANI_LINKS.map(baani => {
+          TIMED_BAANI_LINKS.map((baani, index) => {
             const timeRange = timeMath.parseTime(baani.startTimeInMinutes, baani.endTimeInMinutes);
             if (!timeMath.isInRange(timeRange[0], timeRange[1])) {
               return null;
             }
 
             return (
-              <div className="apps-item"><div className="apps-title">Time for Nitnem</div>
-
-                <button className="apps-text" role="button" aria-label="open" onClick={event => window.location.href = '/hukamnama'}>
+              <div className="apps-item" key={index}>
+                <div className="apps-title">Time for Nitnem</div>
+                <button className="apps-text" role="button" aria-label="open" onClick={() => window.location.href = '/hukamnama'}>
                   <Clock />{baani.name}
-                </button></div>
+                </button>
+              </div>
             )
           })
         }
       </div>
     )
   }
-};
+}
 
 export const BaaniLinks = withRouter(_BaaniLinks);

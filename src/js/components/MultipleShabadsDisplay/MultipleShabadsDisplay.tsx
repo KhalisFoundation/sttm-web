@@ -31,6 +31,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   const [sortableState, setSortableState] = useState<IMultipleShabadsProps[]>(multipleShabads);
   const [history, setHistory] = useState<IMultipleShabadsProps[]>(multipleShabads);
   const urlHistory = useHistory();
+  const wrapperRef = React.useRef(null);
 
   const undoMultipleShabads = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -60,6 +61,11 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
     urlHistory.push(toMultipleShabadsURL({ shabadData }));
   }
 
+  useEffect(() => {
+    showMultiViewPanel && wrapperRef.current.focus();
+    window.scrollTo(0, 0);
+  }, [wrapperRef, showMultiViewPanel]);
+
   // Update Local State {sortableState} after shabads get Updated
   useEffect(() => {
     setSortableState(multipleShabads)
@@ -70,44 +76,46 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   }, [multipleShabads])
 
   return (
-    <aside className={`multiple-shabads-display ${showMultiViewPanel ? 'enable' : ''}`}>
-      <div className="multiple-shabads-display--header">
-        <h3>{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
-        <p>{TEXTS.MULTIPLE_SHABADS_INTRO}</p>
-      </div>
+    <div className="multiple-shabads-display" ref={wrapperRef} tabIndex="-1" role="dialog" data-testid="multi-view">
+      <div className={`multiple-shabads-display--wrapper ${showMultiViewPanel ? 'enable' : ''}`}>
+        <button title="Close" className="close toast-notification-close-button" onClick={() => { setMultiViewPanel(false) }}>×</button>
 
-      {
-        !multipleShabads.length
-        && <div className="notification">
-          {TEXTS.MULTIPLE_SHABADS_NOTIFICATION}
+        <div className="multiple-shabads-display--header">
+          <h3>{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
+          <p>{TEXTS.MULTIPLE_SHABADS_INTRO}</p>
         </div>
-      }
 
-      <ReactSortable tag="ul" list={sortableState} setList={setSortableState}>
-        {sortableState?.map(({ verse, id }) => (
-          <li key={id}>
-            <BarsIcon fill="#fff" />
-            <div>{verse}</div>
-            <button
-              title="Remove"
-              className="remove"
-              data-id={id}
-              onClick={onRemove}>-</button>
-          </li>
-        ))}
-      </ReactSortable>
-
-      <div className="multiple-shabads-display--footer">
         {
-          history.length > multipleShabads.length
-          && (<button className="btn btn-primary" onClick={undoMultipleShabads}>Undo</button>)
+          !multipleShabads.length
+          && <div className="notification">
+            {TEXTS.MULTIPLE_SHABADS_NOTIFICATION}
+          </div>
         }
-        <button className="btn btn-secondary" onClick={onClear}>Clear</button>
-        <button className="btn btn-primary" disabled={sortableState.length === 0} onClick={handleDisplayShabads}>Display</button>
-      </div>
 
-      <button title="Close" className="close toast-notification-close-button" onClick={() => { setMultiViewPanel(false) }}>×</button>
-    </aside>
+        <ReactSortable tag="ul" list={sortableState} setList={setSortableState}>
+          {sortableState?.map(({ verse, id }) => (
+            <li key={id}>
+              <BarsIcon fill="#fff" />
+              <div>{verse}</div>
+              <button
+                title="Remove"
+                className="remove"
+                data-id={id}
+                onClick={onRemove}>-</button>
+            </li>
+          ))}
+        </ReactSortable>
+
+        <div className="multiple-shabads-display--footer">
+          {
+            history.length > multipleShabads.length
+            && (<button className="btn btn-primary" onClick={undoMultipleShabads}>Undo</button>)
+          }
+          <button className="btn btn-secondary" onClick={onClear}>Clear</button>
+          <button className="btn btn-primary" disabled={sortableState.length === 0} onClick={handleDisplayShabads}>Display</button>
+        </div>
+      </div>
+    </div>
   )
 }
 

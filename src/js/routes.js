@@ -118,13 +118,13 @@ export default [
     },
   },
   {
-    path: '/maryada',
+    path: '/rehat-maryadha',
     render(props) {
       return (
         <Layout title="Sikh Rehat Maryadha - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
-              import(/* webpackChunkName: "Maryada" */ './pages/Maryada')
+              import(/* webpackChunkName: "Maryada" */ './pages/RehatMaryadha')
             }
           >
             {({ pending, resolved: { default: Maryada } = {}, rejected }) =>

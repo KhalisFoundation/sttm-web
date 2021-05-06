@@ -119,7 +119,6 @@ class Layout extends React.PureComponent {
               children
           )}
         </div>
-
         <MultipleShabadsDisplay />  
 
         <FloatingActions

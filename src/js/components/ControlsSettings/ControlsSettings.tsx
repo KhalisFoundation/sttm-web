@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Collapsible from 'react-collapsible';
 import Checkboxes, { Collection as CollectionProps } from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
@@ -6,11 +7,12 @@ import Times from '../Icons/Times';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS, RESET_SETTING } from './ControlSettings';
 import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, } from "../Icons/CustomIcons";
 import {
-  TEXTS,
   FONT_OPTIONS,
   VISRAAM,
 } from '../../constants';
 import { clearVisraamClass } from '@/util';
+import { useOnClickOutside } from "@/hooks";
+
 
 const ControlsSettings = (props: any) => {
   const wrapperRef = React.useRef(null);
@@ -20,7 +22,6 @@ const ControlsSettings = (props: any) => {
   const resetSetting = RESET_SETTING(props);
   const {
     fontFamily,
-    resetDisplayOptions,
     changeFont,
     visraams,
     visraamSource,
@@ -29,17 +30,7 @@ const ControlsSettings = (props: any) => {
     settingsRef
   } = props;
 
-  React.useEffect(() => {
-    const handleClickOutside = (e: any) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target) && !settingsRef.current.contains(e.target)) {
-        closeSettingsPanel();
-      }
-    }
-    document.addEventListener('click', handleClickOutside)
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-  }, [])
+  useOnClickOutside(wrapperRef, settingsRef, () => closeSettingsPanel())
 
   React.useEffect(() => {
     clearVisraamClass();
