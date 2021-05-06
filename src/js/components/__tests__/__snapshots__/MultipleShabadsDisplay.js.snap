@@ -12,13 +12,13 @@ exports[`Multiple Shabads Display should render successfully 1`] = `
         Multi View
       </h3>
       <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+        View multiple Shabads on one page. Search for a Shabad and click the + icon next to the search result or at the top of the page on any Shabad. Once added, simply click the "display" button at the bottom of this panel to show your custom page of Shabads. 
       </p>
     </div>
     <div
       class="notification"
     >
-      Please search for shabads and press + button next to the results to add an entry
+      You have not added any Shabads yet. Add Shabads by using the + button next to the results or on top of pages to add an entry.
     </div>
     <ul />
     <div

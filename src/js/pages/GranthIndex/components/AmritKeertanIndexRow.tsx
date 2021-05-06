@@ -37,7 +37,7 @@ export const AmritKeertanIndexRow: React.FC<IAmritKeertanIndexRowProps> = ({ hea
         <td>
           {name}
         </td>
-        <p className="amritKeertanIndexRow loadingShabads">Loading shabads please wait ...</p>
+        <p className="amritKeertanIndexRow loadingShabads">Loading...</p>
       </tr>
     );
   }

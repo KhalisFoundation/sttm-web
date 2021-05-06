@@ -114,21 +114,7 @@ class Header extends React.PureComponent {
         <div className="top-bar-wrapper row">
           {!isHome && (
             <>
-              <div className="top-bar-title">
-                {showDoodle ?
-                  (<>
-                    <Link to="/" title={doodleData['Description']} className="doodle-link icon"
-                      style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }}>
-                      {BACK_TO_HOME}
-                    </Link>
-                    <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
-                      style={{ backgroundImage: `url(${doodleData['Image']}) ` }}>
-                      {BACK_TO_HOME}
-                    </Link>
-                  </>) :
-                  (<Link to="/" className="transparent-color">{BACK_TO_HOME}</Link>)
-                }
-              </div>
+
             </>)}
           <SearchForm
             key={key}
@@ -169,6 +155,21 @@ class Header extends React.PureComponent {
 
               return (
                 <React.Fragment>
+                  <div className="top-bar-title">
+                    {showDoodle ?
+                      (<>
+                        <Link to="/" title={doodleData['Description']} className="doodle-link icon"
+                          style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }}>
+                          {BACK_TO_HOME}
+                        </Link>
+                        <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
+                          style={{ backgroundImage: `url(${doodleData['Image']}) ` }}>
+                          {BACK_TO_HOME}
+                        </Link>
+                      </>) :
+                      (<Link to="/" className="transparent-color">{BACK_TO_HOME}</Link>)
+                    }
+                  </div>
                   <div className="top-bar-menu">
                     <div id="responsive-menu">
                       <div className="top-bar-left">
@@ -345,7 +346,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({}) => ({})
+const mapStateToProps = ({ }) => ({})
 
 const mapDispatchToProps = {
   toggleSettingsPanel,

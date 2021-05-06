@@ -57,7 +57,7 @@ const RehatMaryadha = ({ location: { pathname } }) => {
                 <div className="chapters">
                   <h2>Chapters</h2>
                   <div>
-                    <button onClick={() => { setState(true) }}>Expand all</button> | <button onClick={() => { setState(false) }}>Collapse all</button>
+                    <button className="expand" onClick={() => { setState(true) }}>Expand all</button> | <button className="expand" onClick={() => { setState(false) }}>Collapse all</button>
                   </div>
                 </div>
                 <ul className="accordion">

@@ -5,7 +5,12 @@
     }
 
     summary {
+      font-size: 1.2em;
       padding: 8px;
+
+      &:hover {
+        color: $sttm-orange;
+      }
     }
 
     &.loading {
@@ -31,6 +36,32 @@
     &Shabad {
       list-style: none;
       padding-left: 24px;
+
+      & a {
+        border-color: $sttm-orange;
+        border-style: solid;
+        border-width: 0 0 0 3px;
+        padding-left: 5px;
+      }
+
+      :hover {
+        color: $sttm-orange;
+      }
     }
+  }
+}
+
+.GranthRows {
+  & a {
+    color: $sttm-dark-orange !important;
+
+    &:hover {
+      color: $sttm-orange !important;
+    }
+  }
+
+  &-Heading {
+    background-color: $sttm-dark-blue;
+    color: $sttm-white;
   }
 }
