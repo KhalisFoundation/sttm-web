@@ -1,16 +1,16 @@
-/* global describe, it, expect */ 
+/* global describe, it, expect */
 import React from 'react';
 import { Provider } from 'react-redux';
-import renderer from 'react-test-renderer'; 
+import renderer from 'react-test-renderer';
 import { mockStore } from '../__mocks__/';
 
 import MultiViewButton from '../MultiViewButton'
-import { setMultiViewPanel } from "@/features/actions"; 
+import { setMultiViewPanel } from "@/features/actions";
 
 describe('<MultiViewToggleButton />', () => {
   let store;
   let component;
- 
+
   beforeEach(() => {
     store = mockStore({
       showMultiViewPanel: false,
@@ -25,12 +25,8 @@ describe('<MultiViewToggleButton />', () => {
     );
   });
 
-  it('should render with given state from Redux store', () => {
-    expect(component.toJSON()).toMatchSnapshot();
-  });
- 
   it('should dispatch an action on button click', () => {
-    const event = { preventDefault: () => {} };
+    const event = { preventDefault: () => { } };
     jest.spyOn(event, 'preventDefault');
 
     renderer.act(() => {
