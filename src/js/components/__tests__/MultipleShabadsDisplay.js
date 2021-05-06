@@ -25,6 +25,8 @@ describe('Multiple Shabads Display', () => {
 
     store.dispatch = jest.fn();
 
+    global.scrollTo = jest.fn()
+
     renderedComponent = render(
       <Provider store={store}>
         <MultipleShabadsDisplay />
@@ -36,7 +38,7 @@ describe('Multiple Shabads Display', () => {
   });
   /*
   it('should be visible with given state from Redux store', () => {
-    expect(screen.getByRole('complementary')).toBeVisible();
+    expect(screen.getByTestId('multi-view')).toBeVisible();
   });
 
   it('should be render shabads after redux dispatch', () => {
