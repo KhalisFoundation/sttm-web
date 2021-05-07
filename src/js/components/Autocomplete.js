@@ -23,6 +23,7 @@ class Autocomplete extends Component {
 
   constructor(props) {
     super(props);
+    this.wrapperRef = React.createRef()
 
     this.state = {
       activeSuggestion: -1,
@@ -76,13 +77,10 @@ class Autocomplete extends Component {
   // Closing suggestions on mouse down
   onMouseDown = e => {
     e.stopPropagation();
-    if (this.state.showSuggestions) {
-      if (!(e.path[2].id === 'suggestions') && !(e.path[3].id === 'suggestions')) {
-        this.setState({
-          showSuggestions: false,
-        });
-      }
-    }
+    (this.state.showSuggestions && !this.wrapperRef.current.contains(e.target)) &&       
+    this.setState({
+      showSuggestions: false,
+    });    
   }
 
   componentDidMount() {
@@ -178,6 +176,7 @@ class Autocomplete extends Component {
           <ul
             className="search-result"
             id="suggestions"
+            ref={this.wrapperRef}
             onKeyDown={this.onKeyDown} >
             {filteredSuggestions.map((suggestion, index) => {
               let className = searchOptions.type !== 3 ? "gurbani-font " : " ";
@@ -222,8 +221,7 @@ class Autocomplete extends Component {
                         {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
                       </a>  
                       {
-                        !isHome ||
-                        (<div className="add-shabad-wrapper"><AddShabadButton shabad={suggestion} /></div>)
+                        <div className="add-shabad-wrapper"><AddShabadButton shabad={suggestion} /></div>
                       }                    
                     </>
                     }

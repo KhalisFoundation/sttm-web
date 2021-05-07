@@ -47,6 +47,7 @@ export default class Shabad extends React.PureComponent {
                       info={data.shabadInfo}
                       gurbani={data.verses}
                       nav={data.navigation}
+                      hideAddButton={false}
                     />
                 }
               </div>

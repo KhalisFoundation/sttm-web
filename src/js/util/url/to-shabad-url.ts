@@ -14,7 +14,7 @@ export const toShabadURL = ({
   q,
   type = undefined,
   source = undefined,
-}: IToShabadUrlArguments) =>
+}: IToShabadUrlArguments): string =>
   `/shabad?${objectToQueryParams({
     id,
     q,

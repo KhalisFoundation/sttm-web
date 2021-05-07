@@ -73,6 +73,7 @@ class Shabad extends React.PureComponent {
       PropTypes.number
     ]),
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
+    hideAddButton: PropTypes.bool,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -134,6 +135,7 @@ class Shabad extends React.PureComponent {
       translationLanguages,
       transliterationLanguages,
       unicode,
+      hideAddButton = true,
     } = baniProps;
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
@@ -157,7 +159,8 @@ class Shabad extends React.PureComponent {
           {isShowControls && (
             <Controls
               media={
-                ['shabad', 'hukamnama', 'ang'].includes(type)
+                hideAddButton ? supportedMedia.filter(m => m !== 'addShabad')
+                : ['shabad', 'hukamnama', 'ang'].includes(type)
                   ? supportedMedia
                   : supportedMedia.filter(
                     (m) => [

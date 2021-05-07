@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices, multiviewFormattedShabad } from '../../util';
-
+import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 import { getHighlightString } from './util/get-highlight-string';
+import { isShabadExistMultiview } from './util/is-shabad-exist-multiview';
 
 import {
   SEARCH_TYPES
@@ -19,8 +20,14 @@ import {
   transliterationMap,
   getRaag,
   getWriter,
+  getVerseId,
 } from '@/util/api/shabad';
 import { AddShabadButton } from '../AddShabadButton';
+import { RemoveShabadButton } from '../RemoveShabadButton';
+
+interface IOptionsProps {
+  multipleShabads: IMultipleShabadsProps[]
+}
 
 interface IShabadResultProps {
   shabad: any
@@ -49,7 +56,11 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   larivaar,
   larivaarAssist,
 }) => {
+  const verseId = getVerseId(shabad);
   const _source = getSource(shabad);
+  const typedUseSelector: TypedUseSelectorHook<IOptionsProps> = useSelector;
+  const multipleShabads = typedUseSelector(state => state.multipleShabads)
+  const [isShabadAdded, setIsShabadAdded] = useState(isShabadExistMultiview(multipleShabads, verseId))
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
   const presentationalSource = _source
     ? `${_source} - ${shabadPageNo}`
@@ -68,6 +79,10 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   );
 
   const formattedShabad = multiviewFormattedShabad(shabad)
+
+  useEffect(() => {
+    setIsShabadAdded(isShabadExistMultiview(multipleShabads, verseId))
+  }, [multipleShabads])
 
   return (
     <React.Fragment key={shabad.id}>
@@ -196,7 +211,11 @@ const SearchResult: React.FC<IShabadResultProps> = ({
         </div>
 
         <div className="add-shabad-wrap">
-          <AddShabadButton shabad={formattedShabad} />
+          {
+            isShabadAdded
+              ? (<RemoveShabadButton id={verseId} />)
+              : (<AddShabadButton shabad={formattedShabad} />)
+          }
         </div>
       </li>
     </React.Fragment>

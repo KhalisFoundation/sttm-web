@@ -6,16 +6,15 @@ import { ReactSortable } from 'react-sortablejs'
 import { toMultipleShabadsURL } from '@/util/url/to-multiple-shabad-url';
 import BarsIcon from '../Icons/Bars';
 import { TEXTS } from '@/constants';
-import { showToast } from '@/util'
 
 import { clearMultipleShabads, removeMultipleShabads, setMultiViewPanel, setMultipleShabads } from '@/features/actions';
 import { IMultipleShabadsProps } from '@/types/multiple-shabads';
+import { RemoveShabadButton } from '../RemoveShabadButton';
 
 interface IMultipleShabadsDisplayProps {
   multipleShabads: IMultipleShabadsProps[];
   showMultiViewPanel: boolean;
   clearMultipleShabads: () => {};
-  removeMultipleShabads: (id: number) => {};
   setMultiViewPanel: (bool: boolean) => {};
   setMultipleShabads: (shabad: IMultipleShabadsProps) => {}
 }
@@ -25,7 +24,6 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   showMultiViewPanel,
   setMultipleShabads,
   clearMultipleShabads,
-  removeMultipleShabads,
   setMultiViewPanel,
 }) => {
   const [sortableState, setSortableState] = useState<IMultipleShabadsProps[]>(multipleShabads);
@@ -38,15 +36,8 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
 
     const setA = new Set(multipleShabads);
     const difference = new Set(history.filter(x => !setA.has(x)));
-    setMultipleShabads(difference.size ? difference.values().next().value : null)
-  }
-
-  const onRemove = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault()
-
-    const { id } = e.currentTarget.dataset
-    removeMultipleShabads(parseInt(id))
-    showToast(TEXTS.SHABAD_REMOVED_MESSAGE)
+    const undoShabad = difference.size ? difference.values().next().value : null;
+    setMultipleShabads(undoShabad)
   }
 
   const onClear = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -91,16 +82,11 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
         }
 
         <ReactSortable tag="ul" list={sortableState} setList={setSortableState}>
-          {sortableState?.map(({ verse, id }) => (
+          {sortableState?.map(({ verse, id, url }) => (
             <li key={id}>
               <BarsIcon fill="#fff" />
-              <div>{verse}</div>
-              <button
-                title="Remove"
-                className="remove"
-                data-id={id}
-                data-cy="delete-shabad"
-                onClick={onRemove}>-</button>
+              <a href={url} title={`Go to shabad: ${verse}`}>{verse}</a>
+              <RemoveShabadButton id={id} />
             </li>
           ))}
         </ReactSortable>
