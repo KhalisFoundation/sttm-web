@@ -1,7 +1,6 @@
 .multiple-shabads-display {
   &--wrapper {
-    background: $sttm-light-black;
-    border-right: 1px solid $sttm-dark-orange;
+    background: $sttm-blue;
     box-shadow: 0 0 12px -4px $sttm-black;
     display: flex;
     flex-direction: column;
@@ -41,7 +40,7 @@
     }
 
     .notification {
-      background-color: $sttm-darkest-grey;
+      background-color: $sttm-dark-blue;
       border-left: 5px solid $sttm-dark-orange;
       border-radius: 4px;
       border-right: 5px solid $sttm-dark-orange;
@@ -74,6 +73,10 @@
         }
       }
     }
+  }
+
+  &--heading {
+    font-size: 1.2rem;
   }
 
   &--header {

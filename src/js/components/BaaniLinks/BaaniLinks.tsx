@@ -39,11 +39,13 @@ class _BaaniLinks extends React.PureComponent<IBaaniLinkProps> {
             }
 
             return (
-              <div className="apps-item" key={index}>
-                <div className="apps-title">Time for Nitnem</div>
-                <button className="apps-text" role="button" aria-label="open" onClick={() => window.location.href = '/hukamnama'}>
-                  <Clock />{baani.name}
+              <div className="" key={index}>
+
+                <button className="fp-buttons apps-item" role="button" aria-label="open" onClick={this.handleBaaniLinkClick(baani)}>
+                  <Clock />
                 </button>
+                <div className="fp-buttons-text">{baani.name}</div>
+
               </div>
             )
           })

@@ -18,12 +18,12 @@ const MultiViewHomeButton = () => {
   }
 
   return (
-    <button onClick={onClick}>
+    <button className="fp-buttons apps-item" onClick={onClick}>
       <div className="apps-icon-container">
         <Multiview />
       </div>
-      Multiview
     </button>
+
   )
 }
 

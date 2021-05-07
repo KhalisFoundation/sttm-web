@@ -225,10 +225,8 @@ select {
 }
 
 .sehaj-paath-link {
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
-  margin: auto;
+  background-color: $sttm-orange !important;
+  text-align: center;
 
   svg {
     fill: $sttm-white;
@@ -376,21 +374,22 @@ body:not(.dark-mode) a {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 25px;
+  margin: auto;
+  max-width: 45em;
 }
 
 .apps-item {
-  background-color: $sttm-blue;
-  border-radius: 4px;
+  background-color: #01669b;
+  border-radius: 45px;
   color: white;
   flex-basis: 150px;
   flex-grow: 1;
-  margin: 5px;
-  max-height: 150px;
-  max-width: 190px;
-  min-height: 150px;
-  min-width: 190px;
-  padding: 0 0 10px;
+  margin: 0 25px 10px;
+  max-height: 90px;
+  max-width: 90px;
+  min-height: 90px;
+  min-width: 90px;
+  padding: 10px;
   text-align: center;
   width: 150px;
 
@@ -400,38 +399,33 @@ body:not(.dark-mode) a {
   }
 }
 
+.fp-buttons {
+  font-size: 0.9rem;
+  line-height: normal;
+  margin-top: 15px;
+
+  &-text {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
+
 .sehaj-paath {
   background-color: $sttm-dark-orange;
 }
 
-.apps-title {
-  background-color: $sttm-dark-blue;
-  border-color: white;
-  border-radius: 4px 4px 0 0;
-  border-style: dotted;
-  border-width: 0 0 1px 0;
-  color: white;
-  font-size: 0.8em;
-  line-height: normal;
-  margin: 0 0 10px 0;
-  padding: 5px 10px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
 .apps-text {
   color: $sttm-white !important;
-  margin: auto;
 }
 
 .apps-icon {
   fill: $sttm-white;
-  min-height: 80px;
+  max-height: 60px;
 }
 
 .apps-icon-container {
   margin: auto;
-  width: 80px;
+  width: 40px;
 }
 
 #app-root {
