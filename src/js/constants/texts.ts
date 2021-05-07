@@ -90,7 +90,7 @@ export const TEXTS = {
   TOGGLE_GURMUKHI_KEYBOARD: "toggle gurmukhi keyboard",
   BACK_TO_HOME: "back to home",
   MULTIPLE_SHABADS_HEADING: 'Multi View',
-  MULTIPLE_SHABADS_INTRO: '        View multiple Shabads on one page. Search for a Shabad and click the + icon next to the search result or at the top of the page on any Shabad. Once added, simply click the "display" button at the bottom of this panel to show your custom page of Shabads.',
+  MULTIPLE_SHABADS_INTRO: 'View multiple Shabads on one page. Search for a Shabad and click the + icon next to the search result or at the top of any Shabad page. Once added, click the "display" button in this panel to show your custom page of Shabads.',
   MULTIPLE_SHABADS_NOTIFICATION: 'You have not added any Shabads yet.',
   SHABAD_ADDED_MESSAGE: 'Shabad has been added to your selection.',
   SHABAD_REMOVED_MESSAGE: 'Shabad removed.',

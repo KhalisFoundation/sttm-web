@@ -73,6 +73,10 @@
         span {
           color: $sttm-blue;
           font-weight: 700;
+
+          .dark-mode & {
+            color: $sttm-white;
+          }
         }
       }
 

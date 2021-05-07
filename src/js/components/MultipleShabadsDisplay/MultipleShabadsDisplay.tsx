@@ -79,7 +79,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
     <div className="multiple-shabads-display" ref={wrapperRef} tabIndex="-1" role="dialog" data-testid="multi-view">
       <div className={`multiple-shabads-display--wrapper ${showMultiViewPanel ? 'enable' : ''}`}>
         <div className="multiple-shabads-display--header">
-          <h3>{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
+          <h3 className="multiple-shabads-display--heading">{TEXTS.MULTIPLE_SHABADS_HEADING}</h3>
           <p>{TEXTS.MULTIPLE_SHABADS_INTRO}</p>
         </div>
 
