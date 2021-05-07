@@ -130,12 +130,12 @@ const ControlsSettings = (props: any) => {
         return (
           <>
             <p className="settings-heading">{settingsObj.label}</p>
-            <button className="settings-times" onClick={settingsObj.action}><Times /></button>
+            <button className="settings-times" aria-label="close" onClick={settingsObj.action}><Times /></button>
           </>
         )
       case 'collapsible_item':
         return <Accordion
-          customStyles
+          ariaLabel={settingsObj.label}
           title={(<span className="settings-item active-setting">
             <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
             <span className="settings-text">{settingsObj.label}</span>
@@ -146,15 +146,15 @@ const ControlsSettings = (props: any) => {
       case 'icon-toggle':
         return (
           <>
-            <button className="font-size-control" onClick={settingsObj.controlsList[0].action}><MinusIcon className="minus-icon" /></button>
+            <button className="font-size-control" onClick={settingsObj.controlsList[0].action} aria-label={`decrease ${settingsObj.label}`}><MinusIcon className="minus-icon" /></button>
             <span>{settingsObj.label}</span>
-            <button className="font-size-control" onClick={settingsObj.controlsList[2].action}><PlusIcon className="plus-icon" /></button>
+            <button className="font-size-control" onClick={settingsObj.controlsList[2].action} aria-label={`increase ${settingsObj.label}`}><PlusIcon className="plus-icon" /></button>
           </>
         )
       case 'font-update':
         return (
           <>
-            <button className="font-size-control" onClick={settingsObj.controlsList[0].action}><MinusIcon className="minus-icon" /></button>
+            <button className="font-size-control" onClick={settingsObj.controlsList[0].action} aria-label="decrease font size"><MinusIcon className="minus-icon" /></button>
             <select
               className="font-family-dropdown"
               value={fontFamily}
@@ -166,19 +166,19 @@ const ControlsSettings = (props: any) => {
                 </option>
               ))}
             </select>
-            <button className="font-size-control" onClick={settingsObj.controlsList[2].action}><PlusIcon className="plus-icon" /></button>
+            <button className="font-size-control" onClick={settingsObj.controlsList[2].action} aria-label="increase font size"><PlusIcon className="plus-icon" /></button>
           </>
         )
       case 'toggle-option':
         return (
-          <button className={`settings-item ${settingsObj.checked ? 'active-setting' : ''}`} onClick={settingsObj.action}>
+          <button className={`settings-item ${settingsObj.checked ? 'active-setting' : ''}`} onClick={settingsObj.action} aria-label={`toggle ${settingsObj.label}`}>
             <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
             <span className="settings-text">{settingsObj.label}</span>
           </button>
         )
       case 'collapsible_formatting_item':
         return <Accordion
-          customStyles
+          ariaLabel={settingsObj.label}
           title={(<div className="settings-item active-setting">
             <span className="settings-action-icon">{renderIcon(settingsObj.label)}</span>
             <span className="settings-text">{settingsObj.label}</span>
@@ -196,6 +196,7 @@ const ControlsSettings = (props: any) => {
                 settingsObj.collections?.map((collection: CollectionProps, index: number) => (
                   <button
                     key={index}
+                    aria-label={collection.label}
                     className={`settings-action-icon ${collection.checked ? 'active-setting' : ''}`}
                     onClick={collection.action}
                   >{renderIcon(collection.label)}</button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { PlusIcon, MinusIcon } from '@/components/Icons/CustomIcons'
 
-const Accordion = ({ title, index, content, defaultState, customStyles }) => {
+const Accordion = ({ title, index, content, defaultState, ariaLabel }) => {
   const [active, setActive] = useState(defaultState);
 
   function toggleAccordion() {
@@ -31,12 +31,11 @@ const Accordion = ({ title, index, content, defaultState, customStyles }) => {
           aria-controls={`accordion-panel-${index}`}
           id={`accordion-header-${index}`}
           onClick={toggleAccordion}
-          aria-label={title}>
+          aria-label={ariaLabel ? ariaLabel : title}>
           {title}{active ? <MinusIcon /> : <PlusIcon />}
         </button>
       </h4>
-      <section id={`accordion-panel-${index}`} aria-labelledby={`accordion-header-${index}`} className={`content ${active ? 'is-active' : ''}`} dangerouslySetInnerHTML={{ __html: content }} />
-
+      {createContent()}
     </div >
   )
 }
@@ -47,6 +46,7 @@ Accordion.propTypes = {
   defaultState: PropTypes.bool,
   index: PropTypes.number.isRequired,
   customStyles: PropTypes.bool,
+  ariaLabel: PropTypes.string,  // Use only to override title
 }
 
 Accordion.default = {

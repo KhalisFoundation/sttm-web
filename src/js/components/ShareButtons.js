@@ -43,11 +43,11 @@ class ShareButtons extends React.PureComponent {
     super()
     this.formattedShabad = {}
     this.onClickSettings = this.onClickSettings.bind(this);
-    const { highlight, gurbani } = props;    
+    const { highlight, gurbani } = props;
     if (gurbani !== undefined) {
-      const selectedShabad = highlight ? (gurbani?.find(({verseId}) => verseId === highlight) ?? gurbani[0]) : gurbani[0]
+      const selectedShabad = highlight ? (gurbani?.find(({ verseId }) => verseId === highlight) ?? gurbani[0]) : gurbani[0]
       this.formattedShabad = multiviewFormattedShabad(selectedShabad)
-    }    
+    }
   }
   static defaultProps = {
     media: ['whatsapp', 'copy'],
@@ -83,11 +83,11 @@ class ShareButtons extends React.PureComponent {
 
   onClickSettings(e) {
     e.preventDefault();
-    const {toggleSettingsPanel, closeMultiViewPanel, showMultiViewPanel} = this.props    
+    const { toggleSettingsPanel, closeMultiViewPanel, showMultiViewPanel } = this.props
     if (showMultiViewPanel) {
       closeMultiViewPanel()
-      delay(600).then(() => toggleSettingsPanel())    
-      return 
+      delay(600).then(() => toggleSettingsPanel())
+      return
     }
     toggleSettingsPanel()
   }
@@ -152,9 +152,9 @@ class ShareButtons extends React.PureComponent {
       ),
       settings: (
         <li key={5}>
-          <button id="settings-icon" ref={settingIdRef} onClick={this.onClickSettings}>
+          <button className="multi-view" id="settings-icon" ref={settingIdRef} onClick={this.onClickSettings}>
             <GearsIcon />
-            <span className="show-on-desktop settings-text-desktop">Settings</span>
+            <span className="show-on-desktop">Display</span>
           </button>
         </li>
       ),
@@ -164,11 +164,11 @@ class ShareButtons extends React.PureComponent {
         </li>
       ),
       addShabad: (
-        <li key={7}>  
+        <li key={7}>
           {
             isKeyExists(this.formattedShabad, 'shabadId')
             && (<AddShabadButton shabad={this.formattedShabad} />)
-          }          
+          }
         </li>
       )
     };

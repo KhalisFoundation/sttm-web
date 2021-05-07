@@ -247,76 +247,78 @@ class Home extends React.PureComponent {
               <div className="apps-container">
                 <SehajPaathLink />
                 <BaaniLinks />
-                <div className="apps-item">
-                  <div className="apps-title">Show Multiple</div>
-                  <MultiViewHomeButton />
+                <div className="">
+                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/sundar-gutka'}>
+                    <div className="apps-icon-container">
+                      <Sundar />
+                    </div>
+                  </button>
+                  <div className="fp-buttons-text">Sundar Gutka</div>
                 </div>
-                <div className="apps-item">
-                  <div className="apps-title">Sri Harimandir Sahib</div>
-                  <button onClick={() => window.location.href = '/hukamnama'}
+                <div className="">
+                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/hukamnama'}
                     title="Today's Hukamnama"
                     aria-label="Today's Hukamnama">
                     <div className="apps-icon-container">
                       <Temple />
                     </div>
-                    Today&apos;s Hukamnama
                   </button>
+                  <div className="fp-buttons-text">Daily Hukamnama</div>
+
                 </div>
-                <div className="apps-item">
-                  <div className="apps-title">Random Shabad</div>
-                  <button onClick={() => window.location.href = '/random'}
+                <div className="">
+                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/random'}
                     title="Random Shabad"
                     aria-label="Random Shabad">
                     <div className="apps-icon-container">
                       <RandomIcon />
                     </div>
-                    Generate
                   </button>
+                  <div className="fp-buttons-text">Random</div>
+
                 </div>
-                <div className="apps-item">
-                  <div className="apps-title">Code of Conduct</div>
-                  <button onClick={() => window.location.href = '/rehat-maryadha'}>
+                <div className="">
+                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/rehat-maryadha'}>
                     <div className="apps-icon-container">
                       <Rehat />
                     </div>
-                    Rehat Maryadha
                   </button>
+                  <div className="fp-buttons-text">Rehat Maryadha</div>
+
                 </div>
-                <div className="apps-item">
-                  <div className="apps-title">Compiled Baanis</div>
-                  <button onClick={() => window.location.href = '/sundar-gutka'}>
-                    <div className="apps-icon-container">
-                      <Sundar />
-                    </div>
-                    Sundar Gutka
-                  </button>
+
+                <div className="">
+                  <MultiViewHomeButton />
+
+                  <div className="fp-buttons-text">Multi-View</div>
                 </div>
-                <div className="apps-item">
-                  <div className="apps-title">Index</div>
-                  <button onClick={() => window.location.href = '/index'}>
+                <div className="">
+                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/index'}>
                     <div className="apps-icon-container">
                       <IndexIcon />
                     </div>
-                    View Index
                   </button>
+                  <div className="fp-buttons-text">Bani Index</div>
+
                 </div>
-                <div className="apps-item">
-                  <div className="apps-title">Follow Along</div>
-                  <button onClick={() => window.location.href = '/sync'}>
+                <div className="">
+                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/sync'}>
                     <div className="apps-icon-container">
                       <SyncIcon />
                     </div>
-                    Sangat Sync
                   </button>
+                  <div className="fp-buttons-text">Sangat Sync</div>
+
                 </div>
-                <div className="apps-item">
-                  <div className="apps-title">Control Desktop</div>
-                  <button onClick={() => window.location.href = '/control'}>
+                <div className="">
+                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/control'}>
                     <div className="apps-icon-container">
                       <DesktopSync />
                     </div>
-                    Bani Controller
+
                   </button>
+                  <div className="fp-buttons-text">Bani Controller</div>
+
                 </div>
               </div>
 
