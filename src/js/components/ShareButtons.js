@@ -13,7 +13,7 @@ import ClipboardIcon from './Icons/Clipboard';
 import PrinterIcon from './Icons/Printer';
 import { GearsIcon } from './Icons/CustomIcons';
 import MultiViewButton from '@/components/MultiViewButton';
-import { AddShabadButton } from './AddShabadButton';
+import { ShabadButtonWrapper } from './ShabadButtonWrapper';
 
 const handleWhatsapp = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
@@ -167,7 +167,7 @@ class ShareButtons extends React.PureComponent {
         <li key={7}>
           {
             isKeyExists(this.formattedShabad, 'shabadId')
-            && (<AddShabadButton shabad={this.formattedShabad} />)
+            && (<ShabadButtonWrapper shabad={this.formattedShabad} />)
           }
         </li>
       )

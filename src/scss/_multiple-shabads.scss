@@ -162,15 +162,25 @@ button.remove-shabad {
   border-radius: 50%;
   color: $sttm-white;
   display: inline-flex;
-  height: 36px;
+  height: 1.2em;
   justify-content: center;
   position: relative;
-  width: 36px;
+  width: 1.2em;
 
   &::before {
     background-color: $sttm-white;
     content: '';
     height: 2px;
     width: 10px;
+  }
+
+  .search-result &,
+  .search-form & {
+    height: 33px;
+    width: 33px;
+  }
+
+  &:hover {
+    background-color: lighten($sttm-red, 2%);
   }
 }

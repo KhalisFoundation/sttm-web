@@ -61,10 +61,9 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
     }
   }, [multipleShabads])
 
-  useEffect(() => {
-    showMultiViewPanel && wrapperRef.current.focus();
-    window.scrollTo(0, 0);
-  }, [wrapperRef, showMultiViewPanel]);
+  // useEffect(() => {
+  //   showMultiViewPanel && wrapperRef.current.focus();
+  // }, [wrapperRef, showMultiViewPanel]);
 
   return (
     <div className="multiple-shabads-display" ref={wrapperRef} tabIndex="-1" role="dialog" data-testid="multi-view">
