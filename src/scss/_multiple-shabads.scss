@@ -63,21 +63,13 @@
           cursor: move;
         }
 
-        div {
+        a {
           background-color: $sttm-white;
           border-radius: 15px;
           color: $sttm-blue;
           flex: 1;
           margin: 0 0.8em;
           padding: 0 0.8em;
-        }
-
-        .remove {
-          background-color: $sttm-red;
-          border-radius: 50%;
-          color: $sttm-white;
-          height: 1.5em;
-          width: 1.5em;
         }
       }
     }
@@ -144,17 +136,16 @@ button.add-shabad {
     display: block;
     height: 36px;
     position: relative;
-    text-indent: -999999px;
     width: 36px;
     z-index: 0;
 
     svg {
       fill: $sttm-orange;
       font-size: 2em;
-      left: 0;
-      position: absolute;
-      top: 0;
-      z-index: -1;
+    }
+
+    span {
+      display: none;
     }
 
     &:hover {
@@ -162,5 +153,34 @@ button.add-shabad {
         fill: $sttm-blue;
       }
     }
+  }
+}
+
+button.remove-shabad {
+  align-items: center;
+  background-color: $sttm-red;
+  border-radius: 50%;
+  color: $sttm-white;
+  display: inline-flex;
+  height: 1.2em;
+  justify-content: center;
+  position: relative;
+  width: 1.2em;
+
+  &::before {
+    background-color: $sttm-white;
+    content: '';
+    height: 2px;
+    width: 10px;
+  }
+
+  .search-result &,
+  .search-form & {
+    height: 33px;
+    width: 33px;
+  }
+
+  &:hover {
+    background-color: lighten($sttm-red, 2%);
   }
 }

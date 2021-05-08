@@ -434,9 +434,12 @@ body:not(.dark-mode) a {
 
 .pusher {
   left: 0;
+  min-height: 85vh;
+  top: 0;
   transition: transform 0.5s;
 
   &.enable {
-    transform: translateX(10%);
+    transform: translate(10%, 0);
+    transform-origin: 0 0;
   }
 }

@@ -79,7 +79,8 @@
       }
 
       button {
-        &:hover {
+        &:hover,
+        &.active {
           span {
             color: $sttm-orange;
           }

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices, multiviewFormattedShabad } from '../../util';
-
+import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 import { getHighlightString } from './util/get-highlight-string';
+import { isShabadExistMultiview } from '../../util/shabad/is-shabad-exist-multiview';
 
 import {
   SEARCH_TYPES
@@ -18,9 +19,9 @@ import {
   translationMap,
   transliterationMap,
   getRaag,
-  getWriter,
+  getWriter
 } from '@/util/api/shabad';
-import { AddShabadButton } from '../AddShabadButton';
+import { ShabadButtonWrapper } from '../ShabadButtonWrapper';
 
 interface IShabadResultProps {
   shabad: any
@@ -196,7 +197,9 @@ const SearchResult: React.FC<IShabadResultProps> = ({
         </div>
 
         <div className="add-shabad-wrap">
-          <AddShabadButton shabad={formattedShabad} />
+          {
+            <ShabadButtonWrapper shabad={formattedShabad} />
+          }
         </div>
       </li>
     </React.Fragment>

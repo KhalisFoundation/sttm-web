@@ -16,21 +16,21 @@ type FCProps = {
   shabad: IMultipleShabadsProps
 }
 
-export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId, verse } }) => {
+export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId, verse, url } }) => {
   const dispatch = useDispatch()
   const typedUseSelector: TypedUseSelectorHook<IAddShabadButton> = useSelector;
   const multipleShabads = typedUseSelector(state => state.multipleShabads)
   const showMultiViewPanel = typedUseSelector(state => state.showMultiViewPanel)
 
-  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const { id, shabadid, verse } = event.currentTarget.dataset
+    const { id, shabadid, verse, url } = event.currentTarget.dataset
 
     // If Shabad already added then dont add again.
     if (multipleShabads.findIndex(e => e.id === parseInt(id)) === -1) {
-      dispatch(setMultipleShabads({ id: parseInt(id), shabadId: parseInt(shabadid), verse }))
+      dispatch(setMultipleShabads({ id: parseInt(id), shabadId: parseInt(shabadid), verse, url }))
       !showMultiViewPanel && dispatch(setMultiViewPanel(true))
       showToast(TEXTS.SHABAD_ADDED_MESSAGE)
     } else {
@@ -46,10 +46,11 @@ export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId
       data-id={verseId}
       data-shabadid={shabadId}
       data-verse={verse}
+      data-url={url}
       onClick={onClick}>
       <AddIcon />
-      <div className="show-on-desktop">
-        Add</div>
+      <span className="show-on-desktop">
+        Add</span>
     </button>
   )
 }

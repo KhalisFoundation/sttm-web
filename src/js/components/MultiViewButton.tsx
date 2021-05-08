@@ -1,5 +1,6 @@
 import React from 'react'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import cx from 'classnames';
 import { Multiview } from '@/components/Icons/Multiview';
 import { setMultiViewPanel } from "@/features/actions";
 
@@ -18,9 +19,12 @@ const MultiViewButton = (props: any) => {
   }
 
   return (
-    <button data-cy="multi-view-button" className="multi-view" onClick={onClick}>
+    <button data-cy="multi-view-button" className={cx({
+      'multi-view': true,
+      'active': showMultiViewPanel
+    })} onClick={onClick}>
       <Multiview width="2em" {...props} />
-      <span className="show-on-desktop">Multi-View</span>
+      <span className="show-on-desktop">Multi View</span>
     </button>
   )
 }
