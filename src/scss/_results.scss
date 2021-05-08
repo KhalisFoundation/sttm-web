@@ -105,8 +105,9 @@ li.search-result {
   }
 
   .add-shabad-wrap {
+    display: inline-flex;
     flex-basis: 40px;
-    text-align: center;
+    justify-content: center;
   }
 }
 
