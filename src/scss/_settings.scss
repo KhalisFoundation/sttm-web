@@ -269,13 +269,6 @@ $panel-width-560: 65vw;
 }
 
 .multi-view {
-  align-items: center;
-  color: $sttm-grey;
-  display: inline-flex;
-  flex-wrap: nowrap;
-  font-weight: 700;
-  justify-content: center;
-
   .search-form & {
     span {
       padding-left: 0.2em;
