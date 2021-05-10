@@ -20,7 +20,6 @@ const MultiViewButton = (props: any) => {
 
   return (
     <button data-cy="multi-view-button" className={cx({
-      'multi-view': true,
       'active': showMultiViewPanel
     })} onClick={onClick}>
       <Multiview width="2em" {...props} />

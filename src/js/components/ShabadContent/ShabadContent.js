@@ -159,7 +159,7 @@ class Shabad extends React.PureComponent {
           {isShowControls && (
             <Controls
               media={
-                hideAddButton ? supportedMedia.filter(m => m !== 'addShabad')
+                hideAddButton ? supportedMedia.filter(m => (m !== 'addShabad' && m !== 'random'))
                 : ['shabad', 'hukamnama', 'ang'].includes(type)
                   ? supportedMedia
                   : supportedMedia.filter(

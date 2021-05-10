@@ -79,6 +79,12 @@
       }
 
       button {
+        align-items: center;
+        color: #999;
+        display: inline-flex;
+        font-weight: 700;
+        justify-content: center;
+
         &:hover,
         &.active {
           span {

@@ -11,6 +11,7 @@ import CopyAllIcon from './Icons/CopyAll';
 import WhatsAppIcon from './Icons/WhatsApp';
 import ClipboardIcon from './Icons/Clipboard';
 import PrinterIcon from './Icons/Printer';
+import { RandomIcon } from './Icons/RandomIcon';
 import { GearsIcon } from './Icons/CustomIcons';
 import MultiViewButton from '@/components/MultiViewButton';
 import { ShabadButtonWrapper } from './ShabadButtonWrapper';
@@ -36,7 +37,7 @@ const copyShortUrl = () =>
     )
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-export const supportedMedia = ['addShabad', 'multiView', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
+export const supportedMedia = ['addShabad', 'multiView', 'random', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 class ShareButtons extends React.PureComponent {
   constructor(props) {
@@ -152,7 +153,7 @@ class ShareButtons extends React.PureComponent {
       ),
       settings: (
         <li key={5}>
-          <button className="multi-view" id="settings-icon" ref={settingIdRef} onClick={this.onClickSettings}>
+          <button id="settings-icon" ref={settingIdRef} onClick={this.onClickSettings}>
             <GearsIcon />
             <span className="show-on-desktop">Display</span>
           </button>
@@ -170,7 +171,15 @@ class ShareButtons extends React.PureComponent {
             && (<ShabadButtonWrapper shabad={this.formattedShabad} />)
           }
         </li>
-      )
+      ),
+      random: (
+        <li key={8}>
+          <button onClick={() => window.location.href = '/random'}>
+            <RandomIcon />
+            <span className="show-on-desktop">Random</span>
+          </button>
+        </li>
+      ),
     };
 
     if (window !== undefined && 'share' in window.navigator) {
