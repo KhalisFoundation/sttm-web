@@ -607,6 +607,8 @@ export default class Baani extends React.PureComponent {
       fontSize,
       highlight,
       transliterationLanguages,
+      translationFontSize,
+      transliterationFontSize,
     } = this.props;
 
     const steekLanguages = this.getSteekLanguages();
@@ -654,7 +656,7 @@ export default class Baani extends React.PureComponent {
                 >
                   {shabads.map((shabad) => (
                     <Transliteration
-                      fontSize={fontSize}
+                      fontSize={transliterationFontSize}
                       key={getVerseId(shabad)}
                     >
                       {transliterationMap[language](shabad)}
@@ -677,7 +679,7 @@ export default class Baani extends React.PureComponent {
               >
                 {shabads.map((shabad) => (
                   <Translation
-                    fontSize={fontSize}
+                    fontSize={translationFontSize}
                     key={getVerseId(shabad)}
                     type={language}
                     {...Translation.getTranslationProps({
