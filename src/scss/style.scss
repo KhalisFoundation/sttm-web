@@ -9,6 +9,7 @@
   "fonts",
   "header",
   "helpers",
+  "maryada",
   "panktee",
   "printer",
   "results",
@@ -26,7 +27,9 @@
   "vishraam",
   "mahankosh",
   "ui-controls",
-  "settings";
+  "accordion",
+  "settings",
+  "multiple-shabads";
 @import 'node_modules/react-smartbanner/dist/main';
 @import 'node_modules/react-toastify/dist/ReactToastify.min';
 @import 'node_modules/react-h5-audio-player/src/styles.scss';
@@ -222,13 +225,14 @@ select {
 }
 
 .sehaj-paath-link {
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
+  background-color: $sttm-orange !important;
+  text-align: center;
 
   svg {
-    fill: $sttm-light-black;
+    fill: $sttm-white;
+    height: 80px;
     margin-right: 0.5rem;
+    width: 100%;
 
     .dark-mode & {
       fill: $sttm-light-grey;
@@ -342,5 +346,100 @@ select {
     color: $sttm-white;
     display: inline-block;
     font-size: 1rem;
+  }
+}
+
+.donate-button {
+  background-color: $sttm-dark-orange;
+
+  &-text {
+    color: white !important;
+    font-weight: bold;
+
+    &:hover {
+      color: $sttm-darker-grey !important;
+    }
+  }
+}
+
+body:not(.dark-mode) a {
+  color: #1374b4;
+}
+
+.transparent-color {
+  color: transparent !important;
+}
+
+.apps-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  max-width: 45em;
+}
+
+.apps-item {
+  background-color: #01669b;
+  border-radius: 45px;
+  color: white;
+  flex-basis: 150px;
+  flex-grow: 1;
+  margin: 0 25px 10px;
+  max-height: 90px;
+  max-width: 90px;
+  min-height: 90px;
+  min-width: 90px;
+  padding: 10px;
+  text-align: center;
+  width: 150px;
+
+  &:hover {
+    background-color: $sttm-dark-blue;
+    transition: 0.3s;
+  }
+}
+
+.fp-buttons {
+  font-size: 0.9rem;
+  line-height: normal;
+  margin-top: 15px;
+
+  &-text {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
+
+.sehaj-paath {
+  background-color: $sttm-dark-orange;
+}
+
+.apps-text {
+  color: $sttm-white !important;
+}
+
+.apps-icon {
+  fill: $sttm-white;
+  max-height: 60px;
+}
+
+.apps-icon-container {
+  margin: auto;
+  width: 40px;
+}
+
+#app-root {
+  overflow: hidden;
+}
+
+.pusher {
+  left: 0;
+  min-height: 85vh;
+  top: 0;
+  transition: transform 0.5s;
+
+  &.enable {
+    transform: translate(10%, 0);
+    transform-origin: 0 0;
   }
 }

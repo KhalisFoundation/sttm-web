@@ -10,14 +10,15 @@ export const TEXTS = {
     TOS: 'Terms of Service',
     SUNDAR_GUTKA: 'Sundar Gutka',
     SUNDAR_GUTKA_BAANI: 'Baani',
-    AMRIT_KEERTAN: 'Amrit Keertan'
+    AMRIT_KEERTAN: 'Amrit Keertan',
+    MARYADA: 'Rehat Maryadha - Sikh Code of Conduct',
   },
   GDPR_NOTICE: `
     Our service uses cookies to remember your preferences to give a great experience. If you do not agree to SikhiToTheMax's use of cookies, please use your browser's private/incognito mode. Otherwise, by continuing the use of the service, you consent to the use of cookies. Read more <a href="/help#Web-why-does-sikhitothemax-website-use-cookies-and-loc">here</a>.
   `,
   ANDROID: 'Android',
   IOS: 'iOS',
-  SEHAJ_PAATH: (ang: string) => `Continue reading Ang ${ang}`,
+  SEHAJ_PAATH: (ang: string) => `Ang ${ang}`,
   SUNDAR_GUTKA_HEADER: `Sundar Gutka Baaniyaan`,
   SUNDAR_GUTKA_APP: `Download Sundar Gutka App for improved experience on`,
   SUNDAR_GUTKA_LENGTHS_INFO: `There are many different variations of certain Baanis out there that people read. To make sure you get the best experience from our website, please choose a setting which best matches your preference.`,
@@ -86,4 +87,12 @@ export const TEXTS = {
   CENTERALIGN: 'Center-Align',
   HUKAMNAMA_NOT_FOUND_DESCRIPTION:
     "We couldn't find the hukamnama for this date in our database.",
+  TOGGLE_GURMUKHI_KEYBOARD: "toggle gurmukhi keyboard",
+  BACK_TO_HOME: "back to home",
+  MULTIPLE_SHABADS_HEADING: 'Multi View',
+  MULTIPLE_SHABADS_INTRO: 'View multiple Shabads on one page. Search for a Shabad and click the + icon next to the search result or at the top of any Shabad page. Once added, click the "display" button in this panel to show your custom page of Shabads.',
+  MULTIPLE_SHABADS_NOTIFICATION: 'You have not added any Shabads yet.',
+  SHABAD_ADDED_MESSAGE: 'Shabad has been added to your selection.',
+  SHABAD_REMOVED_MESSAGE: 'Shabad removed.',
+  SHABAD_ALREADY_ADDED_MESSAGE: 'Shabad has already been added to multiview list.',
 };

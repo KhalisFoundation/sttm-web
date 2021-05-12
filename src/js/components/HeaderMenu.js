@@ -1,91 +1,187 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import BarsIcon from './Icons/Bars';
 import BackIcon from './Icons/Back';
 
-/**
- *
- *
- * @class Menu
- * @extends {React.PureComponent}
- */
-export default class Menu extends React.PureComponent {
-  static propTypes = {
-    isHome: PropTypes.bool
-  };
+const Menu = ({ isHome }) => {
+  const displayAreaRefInfo = useRef(null)
+  const dropTogglerRefInfo = useRef(null)
+  const displayAreaRefIndex = useRef(null)
+  const dropTogglerRefIndex = useRef(null)
+  const displayAreaRefSync = useRef(null)
+  const dropTogglerRefSync = useRef(null)
 
-  toggleMenu = () => document.body.classList.toggle('menu-open');
-  closeMenu = () => document.body.classList.remove('menu-open');
-  goBack = () => window.history.back();
-  render() {
-    const { toggleMenu, closeMenu, goBack } = this;
-    return (
-      <React.Fragment>
-        {!this.props.isHome && (
-          <div className="top-bar-left">
-            <span
-              role="button"
-              aria-label="Open menu"
-              className="button"
-              id="open-mobile-menu"
-              onClick={goBack}
-            >
-              <BackIcon />
-            </span>
-          </div>
-        )}
-        <div className="top-bar-right">
+  const [toggleDropdownInfo, setToggleDropdownInfo] = useState(false);
+  const [toggleDropdownSync, setToggleDropdownSync] = useState(false);
+  const [toggleDropdownIndex, setToggleDropdownIndex] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    }
+  }, [])
+
+  function handleClickOutside(event) {
+    const path = event.path || (event.composedPath && event.composedPath());
+
+    if (
+      !path.includes(displayAreaRefInfo.current) &&
+      !path.includes(dropTogglerRefInfo.current)
+    ) {
+      setToggleDropdownInfo(false);
+    }
+
+    if (
+      !path.includes(displayAreaRefIndex.current) &&
+      !path.includes(dropTogglerRefIndex.current)
+    ) {
+      setToggleDropdownIndex(false);
+    }
+
+    if (
+      !path.includes(displayAreaRefSync.current) &&
+      !path.includes(dropTogglerRefSync.current)
+    ) {
+      setToggleDropdownSync(false);
+    }
+  }
+
+  function toggleMenu() {
+    /* TODO: This should be derived through useRef */
+    document.body.classList.toggle('menu-open');
+  }
+
+  function closeMenu() {
+    /* Same for this, please use useRef hook in order to access menu */
+    document.body.classList.remove('menu-open');
+  }
+
+  function goBack() {
+    window.history.back();
+  }
+
+  function toggleDropdownHandlerInfo() {
+    setToggleDropdownInfo(!toggleDropdownInfo)
+  }
+
+  function toggleDropdownHandlerSync() {
+    setToggleDropdownSync(!toggleDropdownSync)
+  }
+
+  function toggleDropdownHandlerIndex() {
+    setToggleDropdownIndex(!toggleDropdownIndex)
+  }
+
+  return (
+    <React.Fragment>
+      {!isHome && (
+        <div className="top-bar-left">
           <span
             role="button"
             aria-label="Open menu"
             className="button"
             id="open-mobile-menu"
-            onClick={toggleMenu}
+            onClick={goBack}
           >
-            <BarsIcon />
+            <BackIcon />
           </span>
-          <ul className="menu header-menu">
-            <li>
-              <Link to="/hukamnama" onClick={toggleMenu}>
-                Hukamnama
-            </Link>
-            </li>
-            <li data-cy="random-shabad">
-              <Link to="/shabad?random" onClick={toggleMenu}>
-                Random Shabad
+        </div>
+      )}
+      <div className="top-bar-right">
+        <span
+          role="button"
+          aria-label="Open menu"
+          className="button"
+          id="open-mobile-menu"
+          onClick={toggleMenu}
+        >
+          <BarsIcon />
+        </span>
+        <ul className="menu header-menu">
+          <li>
+            <Link to="/hukamnama" onClick={toggleMenu}>
+              Hukamnama
               </Link>
-            </li>
-            <li data-cy="sundar-gutka-page">
+          </li>
+
+          <li data-cy="index" className={`${toggleDropdownIndex ? 'opened' : ''} submenu`}>
+            <button name="index-btn" onClick={toggleDropdownHandlerIndex} ref={dropTogglerRefIndex}>
+              <span>
+                Index
+                <BackIcon />
+              </span>
+            </button>
+            <div className="submenu-items" ref={displayAreaRefIndex}>
               <Link to="/sundar-gutka" onClick={toggleMenu}>
                 Sundar Gutka
-              </Link>
-            </li>
-            <li data-cy="index">
-              <Link to="/index" onClick={toggleMenu}>
-                Index
-              </Link>
-            </li>
-            <li data-cy="sync" className="submenu">
-              <p>Sync
-              <BackIcon /></p>
-              <div className="submenu-items">
-                <Link to="/sync" onClick={toggleMenu}>
-                  Sangat Sync
                 </Link>
-                <Link to="/control" onClick={toggleMenu}>
-                  Bani Controller
+              <Link to="/index#Sri Guru Granth Sahib Jee" onClick={toggleMenu}>
+                Sri Guru Granth Sahib Jee
                 </Link>
-              </div>
-            </li>
-            <li className="close">
-              <span role="button" aria-label="Close menu" onClick={closeMenu}>
-                Close
+              <Link to="/index#Sri Dasam Granth Sahib" onClick={toggleMenu}>
+                Sri Dasam Granth
+                </Link>
+              <Link to="/index#amritKeertan" onClick={toggleMenu}>
+                Amrit Keertan
+                </Link>
+            </div>
+          </li>
+
+          <li data-cy="info" className={`${toggleDropdownInfo ? 'opened' : ''} submenu`}>
+            <button name="info-btn" onClick={toggleDropdownHandlerInfo} ref={dropTogglerRefInfo}>
+              <span>
+                Information
+                <BackIcon />
               </span>
-            </li>
-          </ul>
-        </div>
-      </React.Fragment>
-    );
-  }
+            </button>
+            <div className="submenu-items" ref={displayAreaRefInfo}>
+              <Link to="/rehat-maryadha" onClick={toggleMenu}>
+                Rehat Maryadha
+                </Link>
+            </div>
+          </li>
+
+
+
+
+
+          <li data-cy="sync" className={`${toggleDropdownSync ? 'opened' : ''} submenu`}>
+            <button name="sync-btn" onClick={toggleDropdownHandlerSync} ref={dropTogglerRefSync}>
+              <span>
+                Sync
+                <BackIcon />
+              </span>
+            </button>
+            <div className="submenu-items" ref={displayAreaRefSync}>
+              <Link to="/sync" onClick={toggleMenu}>
+                Sangat Sync
+                </Link>
+              <Link to="/control" onClick={toggleMenu}>
+                Bani Controller
+                </Link>
+            </div>
+          </li>
+          <li className="close">
+            <span role="button" aria-label="Close menu" onClick={closeMenu}>
+              Close
+              </span>
+          </li>
+          <li className="donate-button">
+            <Link className="donate-button-text" to={{ pathname: "https://khalisfoundation.org/donate/" }} target="_blank" onClick={toggleMenu}>
+
+              Donate
+              </Link>
+          </li>
+        </ul>
+      </div>
+    </React.Fragment>
+  );
 }
+
+Menu.propTypes = {
+  isHome: PropTypes.bool
+};
+
+export default Menu;

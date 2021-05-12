@@ -51,7 +51,10 @@ export default class Baani extends React.PureComponent {
     translationLanguages: PropTypes.array.isRequired,
     transliterationLanguages: PropTypes.array.isRequired,
     larivaarAssist: PropTypes.bool.isRequired,
-    highlight: PropTypes.number,
+    highlight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     larivaar: PropTypes.bool.isRequired,
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
@@ -65,7 +68,8 @@ export default class Baani extends React.PureComponent {
     isParagraphMode: PropTypes.bool.isRequired,
     onBaaniLineClick: PropTypes.func,
     sgBaaniLength: PropTypes.string,
-    visraams: PropTypes.bool
+    visraams: PropTypes.bool,
+    isScroll: PropTypes.bool,
   };
 
   constructor(props) {
@@ -179,12 +183,12 @@ export default class Baani extends React.PureComponent {
     );
   };*/
 
-  _scrollToHiglight = () => {
+  _scrollToHighlight = () => {    
     if (this.$highlightedBaaniLine) {
       const { top } = this.$highlightedBaaniLine.getBoundingClientRect();
       const newTopPosition = window.scrollY + top;
       requestAnimationFrame(() => window.scrollTo(0, newTopPosition));
-    }
+    }    
   };
 
   showSelectionOptions = (e) => {
@@ -208,16 +212,19 @@ export default class Baani extends React.PureComponent {
   };
 
   componentDidMount() {
-    this._scrollToHiglight();
+    const {isScroll = true} = this.props
+    isScroll && this._scrollToHighlight();
     document.addEventListener('click', this.clearMahankoshInformation);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.clearMahankoshInformation);
+    this._scrollToHighlight();
   }
   componentDidUpdate(prevProps) {
-    if (this.props.highlight !== prevProps.highlight) {
-      this._scrollToHiglight();
+    const {isScroll = true} = this.props
+    if (this.props.highlight !== prevProps.highlight && isScroll) {
+      this._scrollToHighlight();
     }
   }
 
@@ -600,6 +607,8 @@ export default class Baani extends React.PureComponent {
       fontSize,
       highlight,
       transliterationLanguages,
+      translationFontSize,
+      transliterationFontSize,
     } = this.props;
 
     const steekLanguages = this.getSteekLanguages();
@@ -647,7 +656,7 @@ export default class Baani extends React.PureComponent {
                 >
                   {shabads.map((shabad) => (
                     <Transliteration
-                      fontSize={fontSize}
+                      fontSize={transliterationFontSize}
                       key={getVerseId(shabad)}
                     >
                       {transliterationMap[language](shabad)}
@@ -670,7 +679,7 @@ export default class Baani extends React.PureComponent {
               >
                 {shabads.map((shabad) => (
                   <Translation
-                    fontSize={fontSize}
+                    fontSize={translationFontSize}
                     key={getVerseId(shabad)}
                     type={language}
                     {...Translation.getTranslationProps({
@@ -697,7 +706,7 @@ export default class Baani extends React.PureComponent {
               >
                 {shabads.map((shabad) => (
                   <Steek
-                    fontSize={fontSize}
+                    fontSize={translationFontSize}
                     key={getVerseId(shabad) + language}
                     type={language}
                     shabad={shabad}

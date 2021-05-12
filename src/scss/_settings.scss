@@ -3,16 +3,28 @@ $panel-width-900: 35vw;
 $panel-width-560: 65vw;
 
 .settings {
+  $transform-width: $panel-width;
+
+  @media screen and (max-width: 900px) {
+    $transform-width: $panel-width-900;
+  }
+
+  @media screen and (max-width: 560px) {
+    $transform-width: $panel-width-560;
+  }
+
   &-panel {
     background: $sttm-pure-white;
     box-shadow: 0 0 12px -4px $sttm-black;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    opacity: 0;
     overflow-x: hidden;
     position: fixed;
     right: 0;
     top: 0;
+    transform: translateX(100%);
     transform-origin: top right;
     transition: 0.3s all ease-in-out;
     width: $panel-width;
@@ -36,21 +48,6 @@ $panel-width-560: 65vw;
   &-show {
     opacity: 1;
     transform: translateX(0);
-  }
-
-  &-hide {
-    $transform-width: $panel-width;
-
-    @media screen and (max-width: 900px) {
-      $transform-width: $panel-width-900;
-    }
-
-    @media screen and (max-width: 560px) {
-      $transform-width: $panel-width-560;
-    }
-
-    opacity: 0;
-    transform: translateX($transform-width);
   }
 
   &-header {
@@ -84,7 +81,8 @@ $panel-width-560: 65vw;
       fill: $sttm-white;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       fill: $sttm-orange;
     }
   }
@@ -109,6 +107,11 @@ $panel-width-560: 65vw;
     font-size: 16px;
     justify-content: center;
     width: 25px;
+
+    &:hover {
+      color: $sttm-orange;
+      fill: $sttm-orange;
+    }
   }
 
   &-item {
@@ -116,11 +119,6 @@ $panel-width-560: 65vw;
     display: flex;
     margin: 8px auto;
     width: 100%;
-
-    &:hover {
-      color: $sttm-orange;
-      fill: $sttm-orange;
-    }
   }
 
   &-options {
@@ -163,9 +161,11 @@ $panel-width-560: 65vw;
     background-color: #01669b;
     border: none;
     border-radius: 5px;
-    color: #fafafa;
+    color: $sttm-white;
     font-weight: 900;
     height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
     transition: 0.2s;
     width: -webkit-fill-available;
   }
@@ -176,6 +176,8 @@ $panel-width-560: 65vw;
 
   &-text {
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 900;
     margin-left: 6px;
 
     &:hover {
@@ -262,6 +264,18 @@ $panel-width-560: 65vw;
   font-size: 26px !important;
 }
 
+.merge-icon {
+  fill: $sttm-dark-grey;
+}
+
+.multi-view {
+  .search-form & {
+    span {
+      padding-left: 0.2em;
+    }
+  }
+}
+
 .flex-spacer {
   display: flex;
   flex: 1;
@@ -269,10 +283,6 @@ $panel-width-560: 65vw;
 
 .settings-chevron-icon svg {
   transition: transform 200ms ease;
-}
-
-.is-open > .settings-item > .settings-chevron-icon svg {
-  transform: rotate(0.25turn);
 }
 
 .pt-0 {

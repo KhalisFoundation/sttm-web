@@ -125,7 +125,7 @@ $rhythm: 8px;
 }
 
 .sgCardEnglish {
-  display: flex;
+  float: right;
   font-size: smaller;
   justify-content: space-between;
   margin-top: 1em;
@@ -215,6 +215,7 @@ $rhythm: 8px;
   &Versions {
     display: flex;
     flex-wrap: wrap;
+    float: left;
   }
 }
 

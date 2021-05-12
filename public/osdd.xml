@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+ <ShortName>STTM</ShortName>
+ <Description>Search for shabads on SikhiToTheMax</Description>
+ <InputEncoding>UTF-8</InputEncoding>
+ <Image width="16" height="16" type="image/x-icon">https://www.sikhitothemax.org/favicon.ico</Image>
+ <Url type="text/html" template="https://www.sikhitothemax.org/search?q={searchTerms}&amp;type=7&amp;source=all&amp;writer=all"/>
+</OpenSearchDescription>

@@ -68,8 +68,12 @@ class Shabad extends React.PureComponent {
    */
   static propTypes = {
     gurbani: PropTypes.array.isRequired,
-    highlight: PropTypes.number,
+    highlight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     type: PropTypes.oneOf(['shabad', 'ang', 'hukamnama', 'sync']).isRequired,
+    hideAddButton: PropTypes.bool,
     info: PropTypes.object.isRequired,
     nav: PropTypes.shape({
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -125,10 +129,13 @@ class Shabad extends React.PureComponent {
 
     const {
       info,
+      highlight,
+      gurbani,
       type,
       translationLanguages,
       transliterationLanguages,
       unicode,
+      hideAddButton = true,
     } = baniProps;
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
@@ -152,7 +159,8 @@ class Shabad extends React.PureComponent {
           {isShowControls && (
             <Controls
               media={
-                ['shabad', 'hukamnama', 'ang'].includes(type)
+                hideAddButton ? supportedMedia.filter(m => (m !== 'addShabad' && m !== 'random'))
+                : ['shabad', 'hukamnama', 'ang'].includes(type)
                   ? supportedMedia
                   : supportedMedia.filter(
                     (m) => [
@@ -165,6 +173,9 @@ class Shabad extends React.PureComponent {
               }
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
+              shabad={info}
+              highlight={highlight}
+              gurbani={gurbani}
               {...this.props.controlProps}
             />
           )}

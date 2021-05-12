@@ -26,6 +26,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
   LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
+  LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_STEEK_LANGUAGES,
@@ -156,6 +157,11 @@ const initialState = {
   isMahankoshTooltipExplaination: false,
   prefetchAng: undefined,
   showSettingsPanel: false,
+  multipleShabads: getArrayFromLocalStorage(
+    LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+    []
+  ),
+  showMultiViewPanel: false,
 };
 
 

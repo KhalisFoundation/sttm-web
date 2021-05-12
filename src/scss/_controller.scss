@@ -1,10 +1,12 @@
 #controller-bar {
-  background-color: $sttm-dark-blue;
+  background-color: $sttm-white;
   border: none;
+  margin-bottom: 15px;
 }
 
 .controller-header {
   align-items: center;
+  max-width: 95%;
 
   .top-bar-title {
     align-items: center;
@@ -256,7 +258,7 @@
   }
 
   #search-options {
-    padding: 1rem 0 0;
+    padding: 1rem 1rem 0 1rem;
   }
 
   @media screen and (max-width: 55.99em) {
@@ -400,19 +402,7 @@
       }
 
       li.submenu > .submenu-items {
-        background-color: $sttm-dark-blue;
         border-color: transparent;
-      }
-
-      > li {
-        a,
-        p {
-          color: $sttm-white;
-
-          &:hover {
-            background-color: $sttm-blue;
-          }
-        }
       }
     }
   }

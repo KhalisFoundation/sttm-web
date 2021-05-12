@@ -15,12 +15,17 @@ try {
   // console.error(err, ' mani fest error')
 }
 
-export default ({ url, bodyClass, title, description }) => marinate`
+/*
+<html lang="en">
+TODO: language attribute is hard coded for now, make it dynamic when actual language support is added.
+*/
+export default ({ url, bodyClass, title, description, language }) => marinate`
 <!DOCTYPE html>
-<html>
+<html lang="${language}">
 <head>
   <title>${title}</title>
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link type="application/opensearchdescription+xml" rel="search" href="/osdd.xml"/>
   <link rel="manifest" href="/manifest.json" />
   ${preconnectHTML}
   ${preloadFontsHTML}
@@ -154,7 +159,7 @@ export default ({ url, bodyClass, title, description }) => marinate`
     var d = new Date();
     document.getElementById("year").innerHTML = d.getFullYear();
   </script>
-  
+
 <!-- freshwork widget -->
 <script> window.fwSettings={ 'widget_id':63000000151 }; !function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() </script> <script type='text/javascript' src='https://widget.freshworks.com/widgets/63000000151.js' async></script>
 
