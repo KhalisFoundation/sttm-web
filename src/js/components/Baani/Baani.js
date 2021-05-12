@@ -706,7 +706,7 @@ export default class Baani extends React.PureComponent {
               >
                 {shabads.map((shabad) => (
                   <Steek
-                    fontSize={fontSize}
+                    fontSize={translationFontSize}
                     key={getVerseId(shabad) + language}
                     type={language}
                     shabad={shabad}
