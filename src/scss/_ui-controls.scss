@@ -6,11 +6,11 @@
   transition: 0.2s ease-in;
 
   &-primary {
-    background-color: $sttm-blue;
+    background-color: $sttm-dark-orange;
     color: $sttm-white;
 
     &:hover {
-      background-color: $sttm-bright-blue;
+      background-color: $sttm-orange;
     }
   }
 
