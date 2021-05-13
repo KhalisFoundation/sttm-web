@@ -17,7 +17,7 @@ const authenticationSocialHelper = (
   type,
   callback
 ) => {
-  Passport.authenticate(type, { ...options }, function(err, user, info) {
+  Passport.authenticate(type, { ...options }, function(err, user) {
     if (err) {
       return res.status(400).json({ errors: err });
     }

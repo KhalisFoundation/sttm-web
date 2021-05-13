@@ -28,7 +28,6 @@ const googleSignInCallback = (req, res, next) => {
     {},
     "googleAuth",
     user => {
-      console.log(user)
       return res.send(user)
     }
   );
