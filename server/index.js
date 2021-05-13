@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import compression from 'compression';
+require("dotenv").config();
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
@@ -8,6 +9,10 @@ import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 
+const passport = require("./config/passport-auth");
+
+
+
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
 const ON_HEROKU = 'ON_HEROKU' in process.env;
@@ -15,6 +20,9 @@ const ON_HEROKU = 'ON_HEROKU' in process.env;
 port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
+
+// Define routes here
+require("./config/routes")(app);
 
 app
   // Compress files
@@ -28,6 +36,9 @@ app
     res.setHeader('origin-server', hostname);
     return next();
   })
+
+  // Passport middleware
+  .use(passport.initialize())
 
   // Use client for static files
   .use(express.static(`${__dirname}/../public`))
