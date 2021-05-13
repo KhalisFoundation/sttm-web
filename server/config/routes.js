@@ -1,25 +1,41 @@
 const jwtSign = require('../utils/jwt')
-const Passport = require("passport");
+const authenticationSocialHelper = require('../utils/auth')
 
 const getJwt = (req, res) => {
-  const token = jwtSign('navdeep.er@gmail.com');
-  res.send(token)
+  const email = req.query.email
+  if (email) {
+    const token = jwtSign(email);
+    return res.send(token)
+  }
+  res.status(401).send({message: 'Email is empty'})
 };
 
-const googleSignIn = () => {
-  Passport.authenticate('google', { scope: ['profile', 'email'] });
+const googleSignIn = (req, res, next) => {
+  authenticationSocialHelper(
+    req,
+    res,
+    next,
+    { scope: ["profile", "email"] },
+    "googleAuth"
+  );
 }
 
-const googleSignInCallback = () => {
-  Passport.authenticate('google', { failureRedirect: '/fail' },
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+const googleSignInCallback = (req, res, next) => {
+  authenticationSocialHelper(
+    req,
+    res,
+    next,
+    {},
+    "googleAuth",
+    user => {
+      console.log(user)
+      return res.send(user)
+    }
+  );
 }
 
 module.exports = function(server) {
-  server.get('/auth/jwt', getJwt);
+  server.post('/auth/jwt', getJwt);
   server.get('/auth/google', googleSignIn);
   server.get('/auth/google/callback', googleSignInCallback);
 }
