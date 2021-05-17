@@ -61,9 +61,15 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
     }
   }, [multipleShabads])
 
-  // useEffect(() => {
-  //   showMultiViewPanel && wrapperRef.current.focus();
-  // }, [wrapperRef, showMultiViewPanel]);
+  useEffect(() => {
+    const close = (e: KeyboardEvent) => {
+      if (e.code === 'Escape') {
+        setMultiViewPanel(false)
+      }
+    }
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  }, [])
 
   return (
     <div className="multiple-shabads-display" ref={wrapperRef} tabIndex="-1" role="dialog" data-testid="multi-view">
@@ -99,7 +105,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
           <button className="btn btn-primary" disabled={sortableState.length === 0} onClick={handleDisplayShabads}>Display</button>
         </div>
 
-        <button title="Close" className="close" onClick={() => { setMultiViewPanel(false) }}>×</button>
+        <button title="Close" className="close" onClick={() => setMultiViewPanel(false)}>×</button>
       </div>
     </div>
   )
