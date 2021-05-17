@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Checkboxes, { Collection as CollectionProps } from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
@@ -10,7 +10,8 @@ import {
   VISRAAM,
 } from '../../constants';
 import { clearVisraamClass } from '@/util';
-import { useOnClickOutside } from "@/hooks";
+import { useEscapeKeyEventHandler, useOnClickOutside } from "@/hooks";
+
 
 const ControlsSettings = (props: any) => {
   const wrapperRef = React.useRef(null);
@@ -29,8 +30,9 @@ const ControlsSettings = (props: any) => {
   } = props;
 
   useOnClickOutside(wrapperRef, settingsRef, () => closeSettingsPanel())
+  useEscapeKeyEventHandler(closeSettingsPanel)
 
-  React.useEffect(() => {
+  useEffect(() => {
     clearVisraamClass();
     document.body.classList[visraams ? 'add' : 'remove'](
       VISRAAM.CLASS_NAME,
