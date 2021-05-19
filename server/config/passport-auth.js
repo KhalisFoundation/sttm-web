@@ -1,19 +1,26 @@
 require("dotenv").config();
 const Passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const passportSaml = require('passport-saml');
 
+Passport.serializeUser((user, done) => {
+  done(null, user);
+});
 
-const googleStrategy = new GoogleStrategy(
+Passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+// SAML strategy for passport -- Single IPD
+const strategy = new passportSaml.Strategy(
   {
-    clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-    callbackURL: "/auth/google/callback"
+    entryPoint: process.env.SSO_ENTRYPOINT,
+    issuer: process.env.SSO_ISSUER,
+    callbackUrl: process.env.SSO_CALLBACK_URL,
+    cert: process.env.SSO_CERT,
   },
-  function(accessToken, refreshToken, profile, done) {
-    return done(undefined, profile, undefined);
-  }
+  (profile, done) => done(null, profile),
 );
 
-Passport.use("googleAuth", googleStrategy);
+Passport.use(strategy);
 
 module.exports = Passport;
