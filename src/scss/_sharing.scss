@@ -47,6 +47,7 @@
   a {
     background-color: transparent !important;
     color: $sttm-blue;
+    height: 30px;
 
     .dark-mode & {
       color: $sttm-light-blue;
@@ -130,6 +131,10 @@
             border-color: $sttm-black;
             color: $sttm-white;
           }
+
+          @media screen and (max-width: 790px) {
+            display: none;
+          }
         }
 
         &-icon {
@@ -142,6 +147,11 @@
 
           .dark-mode & {
             box-shadow: -5px 0 7px -6px $sttm-light-black;
+          }
+
+          @media screen and (max-width: 790px) {
+            box-shadow: none;
+            position: relative;
           }
         }
       }
