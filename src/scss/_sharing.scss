@@ -36,6 +36,17 @@
   }
 }
 
+#fullscreen-share-menu {
+  display: none;
+  position: fixed;
+  right: 10px;
+  top: 10px;
+
+  .fullscreen-view & {
+    display: block;
+  }  
+}
+
 #share-menu {
   border-radius: 2px;
   margin: -27px 2rem 0 auto;
@@ -55,94 +66,83 @@
 
   @media screen and (max-width: 790px) {
     margin: 0 1rem 0 1rem;
+  }
+}
 
-    .share-buttons {
-      margin-top: 10px;
-      text-align: center;
+.share-buttons {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin: 0;
+  text-align: right;
+
+  @media screen and (max-width: 790px) {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  li {
+    display: flex;
+    margin-left: 5px;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+
+    button {
+      align-items: center;
+      color: #999;
+      display: inline-flex;
+      font-weight: 700;
+      justify-content: center;
+
+      &:hover,
+      &.active {
+        span {
+          color: $sttm-orange;
+        }
+
+        svg {
+          fill: $sttm-orange;
+        }
+      }
     }
   }
 
-  .share-buttons {
+  #copy-short-url {
     align-items: center;
     display: flex;
-    justify-content: flex-end;
-    list-style: none;
-    margin: 0;
-    text-align: right;
+    justify-content: center;
+    position: relative;
 
-    li {
-      display: flex;
-      margin-left: 5px;
+    .short-url {
+      &-input {
+        background-color: $sttm-white;
+        display: inline-block;
+        font-size: 11px;
+        height: auto;
+        margin: 0;
+        position: relative;
+        width: 175px;
 
-      &:first-of-type {
-        margin-left: 0;
-      }
-
-      button {
-        align-items: center;
-        color: #999;
-        display: inline-flex;
-        font-weight: 700;
-        justify-content: center;
-
-        &:hover,
-        &.active {
-          span {
-            color: $sttm-orange;
-          }
-
-          svg {
-            fill: $sttm-orange;
-          }
+        .dark-mode & {
+          background-color: $sttm-lighter-black;
+          border-color: $sttm-black;
+          color: $sttm-white;
         }
       }
-    }
 
-    .sr-only {
-      border: 0;
-      clip: rect(1px 1px 1px 1px);
-      clip: rect(1px, 1px, 1px, 1px);
-      height: 1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
-    }
+      &-icon {
+        box-shadow: -5px 0 7px -6px $sttm-grey;
+        cursor: copy;
+        height: 1.2em;
+        position: absolute;
+        right: 0;
+        width: 0.8em;
 
-    #copy-short-url {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-      position: relative;
-
-      .short-url {
-        &-input {
-          background-color: $sttm-white;
-          display: inline-block;
-          font-size: 11px;
-          height: auto;
-          margin: 0;
-          position: relative;
-          width: 175px;
-
-          .dark-mode & {
-            background-color: $sttm-lighter-black;
-            border-color: $sttm-black;
-            color: $sttm-white;
-          }
-        }
-
-        &-icon {
-          box-shadow: -5px 0 7px -6px $sttm-grey;
-          cursor: copy;
-          height: 1.2em;
-          position: absolute;
-          right: 0;
-          width: 0.8em;
-
-          .dark-mode & {
-            box-shadow: -5px 0 7px -6px $sttm-light-black;
-          }
+        .dark-mode & {
+          box-shadow: -5px 0 7px -6px $sttm-light-black;
         }
       }
     }

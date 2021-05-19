@@ -199,9 +199,21 @@ class ShareButtons extends React.PureComponent {
     }
 
     return (
-      <div id="share-menu">
-        <ul className="share-buttons">{media.map(item => mediaMap[item])}</ul>
-      </div>
+      <>
+        <div id="share-menu">
+          <ul className="share-buttons">{media.map(item => mediaMap[item])}</ul>
+        </div>
+        <div id="fullscreen-share-menu">
+          <ul className="share-buttons">
+            <li>
+              <button id="settings-icon" ref={settingIdRef} onClick={this.onClickSettings}>
+                <GearsIcon />
+                <span className="sr-only">Display</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </>
     );
   }
 }
