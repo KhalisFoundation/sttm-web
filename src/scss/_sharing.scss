@@ -36,17 +36,6 @@
   }
 }
 
-#fullscreen-share-menu {
-  display: none;
-  position: fixed;
-  right: 10px;
-  top: 10px;
-
-  .fullscreen-view & {
-    display: block;
-  }
-}
-
 #share-menu {
   border-radius: 2px;
   margin: -27px 2rem 0 auto;

@@ -37,3 +37,14 @@
     justify-content: center;
   }
 }
+
+.settingsButton {
+  display: none;
+  position: fixed;
+  right: 10px;
+  top: 10px;
+
+  .fullscreen-view & {
+    display: block;
+  }
+}
