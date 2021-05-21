@@ -1,57 +1,162 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { toggleItemInArray, clearVisraamClass } from '../util';
-import {
-  TEXTS,
-  TRANSLATION_LANGUAGES,
-  TRANSLITERATION_LANGUAGES,
-  FONT_OPTIONS,
-  VISRAAM,
-} from '../constants';
-import TelevisionIcon from './Icons/Television';
-import SlidersIcon from './Icons/Sliders';
+import { withRouter } from 'react-router-dom';
 
-export default class ShabadControls extends React.PureComponent {
-  static defaultProps = {
-    disableSplitView: false,
-  };
-
+import { VISRAAM } from '../constants';
+import { clearVisraamClass } from '../util';
+import { QUICK_SETTINGS, ADVANCED_SETTINGS, CONTROLLER_SETTINGS, CONTROLLER_ADVANCED_SETTINGS } from '../constants/settings';
+import { MultiSelect } from './MultiSelect';
+class ShabadControls extends React.PureComponent {
   static propTypes = {
-    centerAlignGurbani: PropTypes.bool.isRequired,
-    translationLanguages: PropTypes.array.isRequired,
-    transliterationLanguages: PropTypes.array.isRequired,
-    larivaarAssist: PropTypes.bool.isRequired,
-    larivaar: PropTypes.bool.isRequired,
-    unicode: PropTypes.bool.isRequired,
-    darkMode: PropTypes.bool.isRequired,
-    autoScrollMode: PropTypes.bool.isRequired,
-    visraams: PropTypes.bool.isRequired,
-    visraamSource: PropTypes.string.isRequired,
-    visraamStyle: PropTypes.string.isRequired,
-    hideAlignOption: PropTypes.bool,
-    fontSize: PropTypes.number.isRequired,
-    fontFamily: PropTypes.string.isRequired,
-    disableSplitView: PropTypes.bool.isRequired,
-    showDisplayOptions: PropTypes.bool.isRequired,
-    showFontOptions: PropTypes.bool.isRequired,
-    splitView: PropTypes.bool.isRequired,
-    setFontSize: PropTypes.func.isRequired,
-    setTranslationLanguages: PropTypes.func.isRequired,
-    setTransliterationLanguages: PropTypes.func.isRequired,
-    resetDisplayOptions: PropTypes.func.isRequired,
-    resetFontOptions: PropTypes.func.isRequired,
-    toggleDisplayOptions: PropTypes.func.isRequired,
-    toggleFontOptions: PropTypes.func.isRequired,
-    toggleLarivaarAssistOption: PropTypes.func.isRequired,
-    toggleDarkMode: PropTypes.func.isRequired,
-    toggleLarivaarOption: PropTypes.func.isRequired,
-    toggleSplitViewOption: PropTypes.func.isRequired,
-    changeFont: PropTypes.func.isRequired,
-    toggleCenterAlignOption: PropTypes.func.isRequired,
-    toggleVisraams: PropTypes.func.isRequired,
-    setVisraamSource: PropTypes.func.isRequired,
-    setVisraamStyle: PropTypes.func.isRequired,
+    setTranslationLanguages: PropTypes.func,
+    setTransliterationLanguages: PropTypes.func,
+    resetDisplayOptions: PropTypes.func,
+    resetFontOptions: PropTypes.func,
+    toggleVisraams: PropTypes.func,
+    toggleLarivaarOption: PropTypes.func,
+    toggleSehajPaathMode: PropTypes.func,
+    toggleLarivaarAssistOption: PropTypes.func,
+    setFontSize: PropTypes.func,
+    setTranslationFontSize: PropTypes.func,
+    setTransliterationFontSize: PropTypes.func,
+    setLineHeight: PropTypes.func,
+    toggleCenterAlignOption: PropTypes.func,
+    toggleSplitViewOption: PropTypes.func,
+    toggleDarkMode: PropTypes.func,
+    toggleAutoScrollMode: PropTypes.func,
+    toggleParagraphMode: PropTypes.func,
+    setVisraamSource: PropTypes.func,
+    setVisraamStyle: PropTypes.func,
+    changeFont: PropTypes.func,
+    toggleAdvancedOptions: PropTypes.func,
+    setLarivaarAssistStrength: PropTypes.func,
+    setSteekLanguages: PropTypes.func,
+    setSgBaaniLength: PropTypes.func,
+
+    translationLanguages: PropTypes.array,
+    transliterationLanguages: PropTypes.array,
+    history: PropTypes.object,
+    location: PropTypes.object,
+    visraams: PropTypes.bool,
+    visraamSource: PropTypes.string,
+    visraamStyle: PropTypes.string,
+    larivaarAssist: PropTypes.bool,
+    larivaar: PropTypes.bool,
+    fontSize: PropTypes.number,
+    larivaarAssistStrength: PropTypes.number,
+    translationFontSize: PropTypes.number,
+    transliterationFontSize: PropTypes.number,
+    lineHeight: PropTypes.number,
+    centerAlignGurbani: PropTypes.bool,
+    splitView: PropTypes.bool,
+    darkMode: PropTypes.bool,
+    autoScrollMode: PropTypes.bool,
+    paragraphMode: PropTypes.bool,
+    sehajPaathMode: PropTypes.bool,
+    fontFamily: PropTypes.string,
+    showAdvancedOptions: PropTypes.bool,
+
+    desktopSettings: PropTypes.object,
+    isBaniController: PropTypes.bool,
+    updateSettings: PropTypes.func,
+    desktopSettings: PropTypes.object,
+    sgBaani: PropTypes.string,
   };
+
+  bakeSettings = settingsObj => {
+    let controlsMarkup, options, Icon;
+    const isBetaFeature = settingsObj.stage === 'beta';
+    switch (settingsObj.type) {
+      case 'multiselect_checkbox':
+        return (
+          <MultiSelect
+            collections={settingsObj.collections}
+            dropdownLabel={settingsObj.label}
+          />
+        )
+      case 'text-option':
+        return (
+          <span onClick={settingsObj.action}>{settingsObj.label}</span>
+        )
+      case 'toggle-option':
+        return (
+          <>
+            <p className="toggle-text">
+              {settingsObj.label}
+            </p>
+            <span style={{ position: 'relative' }}>
+              <input type='checkbox'
+                id={`${settingsObj.label}-control`}
+                checked={settingsObj.checked}
+                className="toggle-checkbox"
+                onChange={settingsObj.action} />
+              <label
+                className="toggle-label"
+                htmlFor={`${settingsObj.label}-control`} >
+              </label>
+              {isBetaFeature && <span className="feature-stage-text">beta</span>}
+            </span>
+          </>
+        )
+      case 'icon-toggle':
+        controlsMarkup = settingsObj.controlsList.map((c, idx) => {
+          const { icon, control, controlOptions, value, action, actionType } = c;
+          const CustomControl = icon || control;
+          const isOnChange = actionType === 'change';
+          const isOnClick = actionType !== 'change';
+
+          return (
+            <CustomControl
+              options={controlOptions}
+              value={value}
+              key={'icon-toggle' + idx}
+              onClick={isOnClick ? action : undefined}
+              onChange={isOnChange ? action : undefined}
+            />
+          );
+        });
+        return (
+          <>
+            <p className="toggle-text">{settingsObj.label}</p>
+            {controlsMarkup}
+          </>
+        )
+      case 'separator':
+        return (
+          <span className="separator" />
+        )
+      case 'dropdown':
+        options = Object
+          .keys(settingsObj.options)
+          .map(key =>
+            <option key={key} value={key}>{settingsObj.options[key]}</option>
+          )
+        return (
+          <>
+            <p className="toggle-text">{settingsObj.label}</p>
+            <select
+              value={settingsObj.value}
+              onChange={(e) => {
+                settingsObj.action(e.currentTarget.value);
+              }}>
+              {options}
+            </select>
+          </>
+        )
+      case 'icon-text-toggle':
+        Icon = settingsObj.icon;
+        return (
+          <>
+            <Icon value={settingsObj.value} onClick={settingsObj.action} />
+            <span
+              onClick={settingsObj.action}
+              className={`icon-label ${settingsObj.value ? 'enabled' : ''}`}>
+              {settingsObj.label}
+            </span>
+          </>
+        )
+    }
+  }
 
   componentDidUpdate() {
     clearVisraamClass();
@@ -62,270 +167,64 @@ export default class ShabadControls extends React.PureComponent {
     );
   }
 
-  createSelectFromObj = (obj, defaultValue, changeFun) => {
-    const options = Object.keys(obj).map(key =>
-      <option key={key} value={key}>{obj[key]}</option>
-    )
-    return (
-      <select value={defaultValue} onChange={(e) => {
-        changeFun(e.currentTarget.value);
-      }}> {options} </select>
-    )
-  }
-
   render() {
-    const {
-      centerAlignGurbani,
-      disableSplitView,
-      showDisplayOptions,
-      showFontOptions,
-      translationLanguages,
-      transliterationLanguages,
-      larivaarAssist,
-      larivaar,
-      darkMode,
-      autoScrollMode,
-      visraams,
-      visraamSource,
-      visraamStyle,
-      fontSize,
-      fontFamily,
-      splitView,
-      setFontSize,
-      setTranslationLanguages,
-      setTransliterationLanguages,
-      resetDisplayOptions,
-      toggleCenterAlignOption,
-      resetFontOptions,
-      toggleDisplayOptions,
-      toggleFontOptions,
-      toggleDarkMode,
-      toggleLarivaarAssistOption,
-      toggleLarivaarOption,
-      toggleSplitViewOption,
-      toggleVisraams,
-      setVisraamSource,
-      setVisraamStyle,
-      changeFont,
-      hideAlignOption,
-    } = this.props;
+    const { isBaniController, updateSettings, desktopSettings } = this.props;
+    let settings = [];
+    let advanced = [];
+
+    if (isBaniController) {
+      settings = desktopSettings ? CONTROLLER_SETTINGS(updateSettings, desktopSettings) : [];
+      advanced = CONTROLLER_ADVANCED_SETTINGS();
+    } else {
+      settings = QUICK_SETTINGS(this.props);
+      advanced = ADVANCED_SETTINGS(this.props);
+    }
+
+    const quickSettingsPanel = (
+      <>
+        {settings.map((element, i) => {
+          if (element.type) {
+            return (
+              <div data-cy={element.label} key={`settings-${i}`}
+                className={`qs-option controller-option controller-multiselect ${element.type}`}>
+                {this.bakeSettings(element)}
+              </div>
+            )
+          }
+          return null;
+        })}
+      </>
+    );
+
     return (
       <React.Fragment>
-        <div id="shabad-controllers">
-          <a
-            className={`display-options-toggle shabad-controller-toggle ${
-              showDisplayOptions ? 'active' : ''
-              }`}
-            onClick={toggleDisplayOptions}
-          >
-            <TelevisionIcon />
-            <span className='display-options-label'>{TEXTS.DISPLAY}</span>
-          </a>
-          <a
-            className={`font-options-toggle shabad-controller-toggle ${
-              showFontOptions ? 'active' : ''
-              }`}
-            onClick={toggleFontOptions}
-          >
-            <SlidersIcon />
-            <span className='display-options-label'>{TEXTS.FONT}</span>
-          </a>
-          <a
-            className={`shabad-controller-toggle ${larivaar ? 'active' : ''}`}
-            onClick={toggleLarivaarOption}
-          >
-            <span className="custom-fa">ੳਅ</span>
-            <span className='display-options-label'>{TEXTS.LARIVAAR}</span>
-          </a>
-          {larivaar && (
-            <a
-              className={`shabad-controller-toggle ${
-                larivaarAssist ? 'active' : ''
-                }`}
-              onClick={toggleLarivaarAssistOption}
-            >
-              <span className="custom-fa custom-fa-assist">ੳ</span>
-              <span className='display-options-label'>{TEXTS.ASSIST}</span>
-            </a>
+        <div id="shabad-controllers" className={isBaniController ? 'bani-controller-settings' : 'sttm-settings'}>
+          <div className="quick-settings">
+            {quickSettingsPanel}
+          </div>
+          {this.props.showAdvancedOptions && (
+            <div className="advanced-options">
+              <button className="advanced-options--close" onClick={this.props.toggleAdvancedOptions}> X </button>
+              {advanced.map((element, i) => {
+                if (element.type) {
+                  return (
+                    <div
+                      data-cy={element.label}
+                      key={`settings-${i}`}
+                      className={`controller-option ${element.type}`}>
+                      {this.bakeSettings(element)}
+                    </div>
+                  )
+                }
+                return null;
+              })}
+              {quickSettingsPanel}
+            </div>
           )}
         </div>
-        {showDisplayOptions && (
-          <div className="display-options">
-            <div className="display-option-type">
-              <div className="display-option-header">
-                {TEXTS.TRANSLITERATION}
-              </div>
-              <div className="display-option-content">
-                {TRANSLITERATION_LANGUAGES.map(lang => (
-                  <a
-                    key={lang}
-                    className={`display-option-toggle ${
-                      transliterationLanguages.includes(lang) ? 'active' : ''
-                      }`}
-                    onClick={() =>
-                      setTransliterationLanguages(
-                        toggleItemInArray(lang, transliterationLanguages)
-                      )
-                    }
-                  >
-                    {lang}
-                  </a>
-                ))}
-              </div>
-            </div>
-            <div className="display-option-type">
-              <div className="display-option-header">{TEXTS.TRANSLATION}</div>
-              <div className="display-option-content">
-                {TRANSLATION_LANGUAGES.map(lang => (
-                  <a
-                    key={lang}
-                    className={`display-option-toggle ${
-                      translationLanguages.includes(lang) ? 'active' : ''
-                      }`}
-                    onClick={() =>
-                      setTranslationLanguages(
-                        toggleItemInArray(lang, translationLanguages)
-                      )
-                    }
-                  >
-                    {lang}
-                  </a>
-                ))}
-              </div>
-            </div>
-            {disableSplitView ? null : (
-              <div className="display-option-type">
-                <div className="display-option-header">{TEXTS.SPLIT_VIEW}</div>
-                <div className="display-option-content">
-                  <a
-                    className={`display-option-toggle ${
-                      splitView ? 'active' : ''
-                      }`}
-                    onClick={toggleSplitViewOption}
-                  >
-                    {splitView ? 'Disable' : 'Enable'}
-                  </a>
-                </div>
-              </div>
-            )}
-            <div className="display-option-type">
-              <div className="display-option-header">{TEXTS.DARK_MODE}</div>
-              <div className="display-option-content">
-                <a
-                  className={`display-option-toggle ${
-                    darkMode ? 'active' : ''
-                    }`}
-                  onClick={toggleDarkMode}
-                >
-                  {darkMode ? 'Disable' : 'Enable'}
-                </a>
-              </div>
-            </div>
-
-            <div className="display-option-type">
-              <div className="display-option-header">{TEXTS.VISRAAMS}</div>
-              <div className="display-option-content">
-                <a
-                  className={`display-option-toggle ${
-                    visraams ? 'active' : ''
-                    }`}
-                  onClick={toggleVisraams}
-                >
-                  {visraams ? 'Disable' : 'Enable'}
-                </a>
-              </div>
-            </div>
-            {visraams && (
-              <>
-                <div className="display-option-type">
-                  <div className="display-option-header">Vishraam Options</div>
-                  <div className="display-option-content">
-                    {this.createSelectFromObj(VISRAAM.TYPES, visraamStyle, setVisraamStyle)}
-                  </div>
-                </div>
-                <div className="display-option-type">
-                  <div className="display-option-header">Vishraam Source</div>
-                  <div className="display-option-content">
-                    {this.createSelectFromObj(VISRAAM.SOURCES, visraamSource, setVisraamSource)}
-                  </div>
-                </div>
-              </>
-            )}
-
-            {!hideAlignOption && (
-              <div className="display-option-type">
-                <div className="display-option-header">{TEXTS.CENTERALIGN}</div>
-                <div className="display-option-content">
-                  <a
-                    className={`display-option-toggle
-                          ${centerAlignGurbani ? ' active' : ''}`}
-                    onClick={toggleCenterAlignOption}
-                  >
-                    {centerAlignGurbani ? 'Disable' : 'Enable'}
-                  </a>
-                </div>
-              </div>
-            )}
-
-            <div className="display-option-type">
-              <div className="display-option-header">
-                {TEXTS.RESET} {TEXTS.DISPLAY}
-              </div>
-              <div className="display-option-content">
-                <a
-                  className={`display-option-toggle`}
-                  onClick={resetDisplayOptions}
-                >
-                  {TEXTS.RESET}
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
-        {showFontOptions && (
-          <div className="font-options">
-            <div className="font-option-type">
-              <div className="font-option-header">{TEXTS.FONT}</div>
-              <select
-                value={fontFamily}
-                onChange={e => changeFont(e.currentTarget.value)}
-              >
-                {Object.keys(FONT_OPTIONS).map(key => (
-                  <option key={key} value={key}>
-                    {FONT_OPTIONS[key]}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="font-option-type">
-              <div className="font-option-header">{TEXTS.FONT_SIZE}</div>
-              <small className="gurbani-font">A</small>
-              <input
-                type="range"
-                min="5"
-                max="50"
-                value={fontSize * 10}
-                onChange={e => setFontSize(e.currentTarget.value / 10)}
-                onInput={e => setFontSize(e.currentTarget.value / 10)}
-              />
-              <big className="gurbani-font">A</big>
-            </div>
-            <div className="display-option-type">
-              <div className="font-option-header">
-                {TEXTS.RESET} {TEXTS.FONT}
-              </div>
-              <div className="display-option-content">
-                <a
-                  className={`display-option-toggle`}
-                  onClick={resetFontOptions}
-                >
-                  {TEXTS.RESET}
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
       </React.Fragment>
     );
   }
 }
+
+export default withRouter(ShabadControls);

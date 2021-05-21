@@ -110,12 +110,7 @@ class Header extends React.PureComponent {
 
     return (
       <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
-        {/* <ControlsSettings {...this.props} /> */}
-        <div className="top-bar-wrapper row">
-          {!isHome && (
-            <>
-
-            </>)}
+        <div className="top-bar-wrapper row">          
           <SearchForm
             key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}

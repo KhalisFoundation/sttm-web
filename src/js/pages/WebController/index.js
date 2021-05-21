@@ -13,7 +13,7 @@ import ControllerSearch from './search';
 import { Stub } from '../Search/Layout';
 import ControllerShabad from '@/pages/WebController/shabad';
 import { versesToGurbani } from '@/util';
-import ShabadControls from '@/components/ShabadControlsv2';
+import ShabadControls from '@/components/ShabadControls';
 
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
