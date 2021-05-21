@@ -47,6 +47,7 @@
   a {
     background-color: transparent !important;
     color: $sttm-blue;
+    height: 30px;
 
     .dark-mode & {
       color: $sttm-light-blue;
@@ -97,41 +98,50 @@
         }
       }
     }
-  }
 
-  #copy-short-url {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    position: relative;
+    #copy-short-url {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      position: relative;
 
-    .short-url {
-      &-input {
-        background-color: $sttm-white;
-        display: inline-block;
-        font-size: 11px;
-        height: auto;
-        margin: 0;
-        position: relative;
-        width: 175px;
+      .short-url {
+        &-input {
+          background-color: $sttm-white;
+          display: inline-block;
+          font-size: 11px;
+          height: auto;
+          margin: 0;
+          position: relative;
+          width: 175px;
 
-        .dark-mode & {
-          background-color: $sttm-lighter-black;
-          border-color: $sttm-black;
-          color: $sttm-white;
+          .dark-mode & {
+            background-color: $sttm-lighter-black;
+            border-color: $sttm-black;
+            color: $sttm-white;
+          }
+
+          @media screen and (max-width: 790px) {
+            display: none;
+          }
         }
-      }
 
-      &-icon {
-        box-shadow: -5px 0 7px -6px $sttm-grey;
-        cursor: copy;
-        height: 1.2em;
-        position: absolute;
-        right: 0;
-        width: 0.8em;
+        &-icon {
+          box-shadow: -5px 0 7px -6px $sttm-grey;
+          cursor: copy;
+          height: 1.2em;
+          position: absolute;
+          right: 0;
+          width: 0.8em;
 
-        .dark-mode & {
-          box-shadow: -5px 0 7px -6px $sttm-light-black;
+          .dark-mode & {
+            box-shadow: -5px 0 7px -6px $sttm-light-black;
+          }
+
+          @media screen and (max-width: 790px) {
+            box-shadow: none;
+            position: relative;
+          }
         }
       }
     }
