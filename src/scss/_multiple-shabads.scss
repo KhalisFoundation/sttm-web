@@ -174,11 +174,10 @@ button.remove-shabad {
     width: 10px;
   }
 
-  // .search-result &,
-  // .search-form & {
-  //   height: 1.5em;
-  //   width: 1.5em;
-  // }
+  .share-buttons & {
+    height: 1.2em;
+    width: 1.2em;
+  }
 
   &:hover {
     background-color: lighten($sttm-red, 2%);
