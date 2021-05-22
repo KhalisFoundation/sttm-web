@@ -85,6 +85,12 @@
   section {
     margin-bottom: 45px;
   }
+
+  .settings-items {
+    section {
+      margin-bottom: 0;
+    }
+  }
 }
 
 @media screen and (min-width: 46em) {
