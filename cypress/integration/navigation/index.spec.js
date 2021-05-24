@@ -1,4 +1,4 @@
-import { raagIndices } from '../../../src/js/pages/GranthIndex/constants/raag-indices';
+import { raagIndices } from '../../../src/js/pages/BaniIndex/constants/raag-indices';
 
 describe('Navigation', () => {
   describe('Index page', () => {
