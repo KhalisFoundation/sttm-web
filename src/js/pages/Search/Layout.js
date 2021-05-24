@@ -12,9 +12,10 @@ import {
   errorEvent,
   clickEvent,
 } from '../../util/analytics';
-import Controls from '../../components/Controls';
+import Controls, { supportedMedia } from '../../components/Controls';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import SearchResults from '../../components/SearchResults/SearchResults';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export function Stub() {
   return <div className="spinner" />;
@@ -80,7 +81,10 @@ class Layout extends React.PureComponent {
 
     return (
       <div className="row" id="content-root">
-        <Controls media={[]} disableSplitView hideAlignOption />
+        <Breadcrumb links={[{ title: TEXTS.URIS.SEARCH_RESULTS }]} />
+        <Controls media={
+          supportedMedia.filter(m => (m === 'multiView' || m === 'settings' || m === 'random'))
+        } />
         <SearchResults
           q={q}
           type={type}

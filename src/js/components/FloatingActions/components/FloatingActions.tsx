@@ -3,18 +3,21 @@ import React from 'react';
 import AutoScrollControl from '../../AutoScrollControl';
 import ScrollToTop from './ScrollToTop';
 import FullScreen from './FullScreen';
+import DisplaySettingsButton from '@/components/DisplaySettingsButton';
 
 interface IFloatingActionsProps {
-  isShowAutoScroll?: boolean
-  isShowScrollToTop?: boolean
-  isShowFullScreen?: boolean
+  isShowAutoScroll?: boolean;
+  isShowScrollToTop?: boolean;
+  isShowFullScreen?: boolean;
+  isShowSettings: boolean;
 }
 
 export class FloatingActions extends React.PureComponent<IFloatingActionsProps, {}> {
   static defaultProps = {
     isShowAutoScroll: true,
     isShowScrollToTop: true,
-    isShowFullScreen: true
+    isShowFullScreen: true,
+    isShowSettings: false
   }
 
   constructor(props: Readonly<IFloatingActionsProps>) {
@@ -25,7 +28,8 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
     const {
       isShowFullScreen,
       isShowScrollToTop,
-      isShowAutoScroll
+      isShowAutoScroll,
+      isShowSettings
     } = this.props;
     const isShowIcons = isShowScrollToTop || isShowFullScreen;
     const isShowNothing = !isShowFullScreen && !isShowAutoScroll && !isShowScrollToTop
@@ -36,29 +40,33 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
     if (isShowNothing) return null;
 
     return (
-      <div className="floatingActions">
-        {isShowAutoScroll &&
-          <AutoScrollControl
-            hideSliderScreenSize="mobile"
-            isControlsAlwaysVisible={false}
-            isBackgroundTransparent />}
-        {isShowIcons &&
-          <div
-            className="floatingActionsIcons">
-            {isShowScrollToTop &&
-              <div
-                style={lastIconStyles}
-                className="floatingActionsControl">
-                <ScrollToTop />
-              </div>}
-            {isShowFullScreen &&
-              <div
-                style={lastIconStyles}
-                className="floatingActionsControl">
-                <FullScreen />
-              </div>}
-          </div>}
-      </div>
+      <>
+        <div className="floatingActions">
+          {isShowAutoScroll &&
+            <AutoScrollControl
+              hideSliderScreenSize="mobile"
+              isControlsAlwaysVisible={false}
+              isBackgroundTransparent />}
+          {isShowIcons &&
+            <div
+              className="floatingActionsIcons">
+              {isShowScrollToTop &&
+                <div
+                  style={lastIconStyles}
+                  className="floatingActionsControl">
+                  <ScrollToTop />
+                </div>}
+              {isShowFullScreen &&
+                <div
+                  style={lastIconStyles}
+                  className="floatingActionsControl">
+                  <FullScreen />
+                </div>}
+            </div>}
+        </div>
+        <DisplaySettingsButton
+          isShowSettings={isShowSettings} />
+      </>
     )
   }
 }
