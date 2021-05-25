@@ -19,12 +19,14 @@ import {
   clickEvent,
   ACTIONS,
   translationMap,
+  englishTranslationMap,
   transliterationMap,
   getVerseId,
   copyToClipboard,
   showToast,
   shortenURL,
   steekMap,
+  hindiTranslationMap,
 } from '@/util';
 import { MahankoshContext } from '@/context';
 import { changeAng, prefetchAng } from './utils';
@@ -318,6 +320,31 @@ export default class Baani extends React.PureComponent {
       shabad,
       unicode,
     });
+
+    const isTranslationExists =
+      !!translationObj.children || !!translationObj.text;
+    if (!isTranslationExists) return null;
+
+    return (
+      <Translation
+        fontSize={translationFontSize}
+        key={getVerseId(shabad) + language}
+        type={language}
+        {...translationObj}
+      />
+    );
+  };
+ 
+  getTranslationFromLanguageSource = (shabad, language, source) => {
+    const { unicode, translationFontSize } = this.props;
+    const translationMap = language === 'english' ? englishTranslationMap : hindiTranslationMap;
+
+    const translationObj = Translation.getTranslationProps({
+      translationMap,
+      language: source,
+      shabad,
+      unicode,
+    });
     const isTranslationExists =
       !!translationObj.children || !!translationObj.text;
     if (!isTranslationExists) return null;
@@ -401,6 +428,16 @@ export default class Baani extends React.PureComponent {
       ? translationLanguages.filter((l) => l !== PUNJABI_LANGUAGE)
       : translationLanguages;
   };
+  
+  getEngLishTranslationLanguages = () => {
+    const { englishTranslationLanguages } = this.props;
+    return englishTranslationLanguages;
+  };
+  
+  getHindiTranslationLanguages = () => {
+    const { hindiTranslationLanguages } = this.props;
+    return hindiTranslationLanguages;
+  };
 
   getSteekLanguages = () => {
     const { steekLanguages } = this.props;
@@ -425,6 +462,8 @@ export default class Baani extends React.PureComponent {
     const mixedViewBaaniClass = 'mixed-view-baani';
     const totalParagraphs = Object.keys(normalizedGurbani).length - 1;
     const translationLanguages = this.getTranslationLanguages();
+    const englishTranslationLanguages = this.getEngLishTranslationLanguages();
+    const hindiTranslationLanguages = this.getHindiTranslationLanguages();
     const { selectedWord, selectedWordIndex, selectedLine } = this.state;
     let lineIndex = 0;
     
@@ -519,23 +558,64 @@ export default class Baani extends React.PureComponent {
                     </div>
                   ))}
                 </div>
-                <div
+                {/* <div
                   className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}
                 >
                   {translationLanguages.map((language) => (
+                    <>
+                      <div
+                        key={language}
+                        className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`}
+                      >
+                        {shabads.map((shabad) =>
+                          this.createShabadLine(
+                            shabad,
+                            this.getTranslationForLanguage(shabad, language)
+                          )
+                        )}
+                      </div>                      
+                    </>
+                  ))}
+                </div> */}
+                {/* English Translation Languages */}
+                <div
+                  className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}
+                >
+                  {englishTranslationLanguages.map((source) => (
                     <div
-                      key={language}
-                      className={`${mixedViewBaaniClass}-translation-${language} ${paragraphModeClass}`}
+                      key={source}
+                      className={`${mixedViewBaaniClass}-translation-${source} ${paragraphModeClass}`}
                     >
                       {shabads.map((shabad) =>
                         this.createShabadLine(
                           shabad,
-                          this.getTranslationForLanguage(shabad, language)
+                          this.getTranslationFromLanguageSource(shabad, 'english', source)
                         )
                       )}
                     </div>
                   ))}
                 </div>
+                {/* Hindi Translation Languages */}
+                <div
+                  className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}
+                >
+                  {hindiTranslationLanguages.map((source) => (
+                    <div
+                      key={source}
+                      className={`${mixedViewBaaniClass}-translation-${source} ${paragraphModeClass}`}
+                    >
+                      {shabads.map((shabad) =>
+                        this.createShabadLine(
+                          shabad,
+                          this.getTranslationFromLanguageSource(shabad, 'hindi', source)
+                        )
+                      )}
+                    </div>
+                  ))}
+                </div>
+                
+                {/* TODO: Spanish Translation Languages */}
+                
                 {isParagraphMode ? null : (
                   <div
                     className={`${mixedViewBaaniClass}-actions ${paragraphModeClass}`}

@@ -6,6 +6,8 @@ import {
   SG_BAANIS,
   DEFAULT_SG_BAANI_LENGTH,
   DEFAULT_VISRAAM_STYLE,
+  HINDI_TRANSLATION_LANGUAGES,
+  ENGLISH_TRANSLATION_LANGUAGES,
 } from '@/constants';
 
 import {
@@ -263,6 +265,28 @@ export const QUICK_SETTINGS = ({
             setTranslationLanguages(
               selectItemInArray(lang, translationLanguages)
             )
+          },
+          children: {
+            english: {
+              label: 'English Translations',
+              options: ENGLISH_TRANSLATION_LANGUAGES,
+              checked: translationLanguages,
+              action: (lang: string) => {
+                setTranslationLanguages(
+                  selectItemInArray(lang, translationLanguages)
+                )
+              },
+            }, 
+            hindi: {
+              label: 'Hindi Translations',
+              options: HINDI_TRANSLATION_LANGUAGES,
+              checked: translationLanguages,
+              action: (lang: string) => {
+                setTranslationLanguages(
+                  selectItemInArray(lang, translationLanguages)
+                )
+              },
+            }
           }
         },
       ]
