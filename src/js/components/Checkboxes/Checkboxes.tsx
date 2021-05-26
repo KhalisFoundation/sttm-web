@@ -22,11 +22,11 @@ const Checkboxes = (props: CheckboxesProps) => {
   const childrenCollectionsMarkup = (collection: any) => {
     const { options, action, label, checked } = collection;
     return (
-      <ul key={label} className="checkbox-container">
+      <ul key={label} className="checkbox-child-container">
         {
           options.map((option: any, index) => {
             return (
-              <li key={index}>
+              <li className="item" key={`${option}-${index}`}>
                 <input
                   id={`checkbox-${label}-${option}`}
                   type="checkbox"
@@ -34,12 +34,17 @@ const Checkboxes = (props: CheckboxesProps) => {
                   onChange={() => action(option)}
                   checked={checked.includes(option)}
                   className="checkbox-input" />
+                <span
+                  className={`fake-checkbox check-${option}`}
+                  onClick={toggleCheckBox(option, action)} >
+                </span>
                 <label
                   htmlFor={`checkbox-${label}-${option}`}
                   className="checkbox-item-label">
                   {option}
                 </label>
-              </li>)
+              </li>
+            )
           })
         }
       </ul>

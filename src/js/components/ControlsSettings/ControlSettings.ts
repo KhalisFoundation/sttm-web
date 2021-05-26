@@ -23,8 +23,11 @@ import {
   SizeControl,  
 } from '@/components/Icons/CustomIcons';
 
+
 export interface ISettingActions {
   setTranslationLanguages: () => {},
+  setEnglishTranslationLanguages: () => {},
+  setHindiTranslationLanguages: () => {},
   setTransliterationLanguages: () => {},
   resetDisplayOptions: () => {},
   resetFontOptions: () => {},
@@ -94,6 +97,8 @@ export const HEADER_SETTINGS = ({
 export const QUICK_SETTINGS = ({
   setTranslationLanguages,
   setTransliterationLanguages,
+  setEnglishTranslationLanguages, 
+  setHindiTranslationLanguages,
   toggleVisraams,
   toggleLarivaarOption,
   toggleLarivaarAssistOption,
@@ -107,6 +112,8 @@ export const QUICK_SETTINGS = ({
   setSgBaaniLength,
   setVisraamStyle,
   translationLanguages,
+  englishTranslationLanguages,
+  hindiTranslationLanguages,
   transliterationLanguages,
   sehajPaathMode,
   autoScrollMode,
@@ -266,24 +273,25 @@ export const QUICK_SETTINGS = ({
               selectItemInArray(lang, translationLanguages)
             )
           },
+          // children keys must be present in parent options values
           children: {
             english: {
-              label: 'English Translations',
+              label: TEXTS.ENGLISH_TRANSLATION,
               options: ENGLISH_TRANSLATION_LANGUAGES,
-              checked: translationLanguages,
+              checked: englishTranslationLanguages,
               action: (lang: string) => {
-                setTranslationLanguages(
-                  selectItemInArray(lang, translationLanguages)
+                setEnglishTranslationLanguages(
+                  selectItemInArray(lang, englishTranslationLanguages)
                 )
               },
             }, 
             hindi: {
-              label: 'Hindi Translations',
+              label: TEXTS.HINDI_TRANSLATION,
               options: HINDI_TRANSLATION_LANGUAGES,
-              checked: translationLanguages,
+              checked: hindiTranslationLanguages,
               action: (lang: string) => {
-                setTranslationLanguages(
-                  selectItemInArray(lang, translationLanguages)
+                setHindiTranslationLanguages(
+                  selectItemInArray(lang, hindiTranslationLanguages)
                 )
               },
             }

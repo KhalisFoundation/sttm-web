@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TRANSLATION_LANGUAGES, PUNJABI_LANGUAGE } from '@/constants';
+import { TRANSLATION_LANGUAGES, ENGLISH_TRANSLATION_LANGUAGES, HINDI_TRANSLATION_LANGUAGES, PUNJABI_LANGUAGE } from '@/constants';
 
 export default class Translation extends React.PureComponent {
   static defaultProps = { children: '' };
   static defaultFontSize = '18px';
   static propTypes = {
-    type: PropTypes.oneOf(TRANSLATION_LANGUAGES),
+    type: PropTypes.oneOf([...TRANSLATION_LANGUAGES, ...ENGLISH_TRANSLATION_LANGUAGES, ...HINDI_TRANSLATION_LANGUAGES]),
     unicode: (props, propName) => {
       if (
         props.type === PUNJABI_LANGUAGE &&

@@ -80,6 +80,8 @@ export const TEXTS = {
   DISPLAY: 'Display',
   LARIVAAR: 'Larivaar',
   TRANSLATION: 'Translation',
+  ENGLISH_TRANSLATION: 'English-Translation',
+  HINDI_TRANSLATION: 'Hindi-Translation',
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',

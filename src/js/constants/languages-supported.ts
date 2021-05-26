@@ -4,3 +4,6 @@ export const HINDI_TRANSLATION_LANGUAGES = ['sahib singh', 'sts'];
 export const STEEK_LANGUAGES = ['BaniDB', 'sahib singh', 'fareedkot', 'manmohan singh'];
 export const TRANSLITERATION_LANGUAGES = ['english', 'hindi', 'shahmukhi', 'IPA'];
 export const PUNJABI_LANGUAGE = 'punjabi';
+export const ENGLISH_LANGUAGE = 'english';
+export const HINDI_LANGUAGE = 'hindi';
+export const SPANISH_LANGUAGE = 'spanish';
