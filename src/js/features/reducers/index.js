@@ -73,6 +73,9 @@ import {
   LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
   LOCAL_STORAGE_KEY_FOR_ENGLISH_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
+  PUNJABI_LANGUAGE,
+  HINDI_LANGUAGE,
+  ENGLISH_LANGUAGE
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -494,12 +497,12 @@ export default function reducer(state, action) {
     case SET_STEEK_LANGUAGES: {
       const steekLanguages = action.payload || [];
 
-      let translationLanguages = []
+      let translationLanguages = state.translationLanguages
       if (steekLanguages.length > 0) {
-        const isPunjabiLanguageSelected = state.translationLanguages.includes(t => t === 'punjabi');
-        translationLanguages = isPunjabiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, 'punjabi'];
+        const isPunjabiLanguageSelected = state.translationLanguages.includes(PUNJABI_LANGUAGE);
+        translationLanguages = isPunjabiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, PUNJABI_LANGUAGE];
       } else {
-        translationLanguages = state.translationLanguages.filter(t => t !== 'punjabi');
+        translationLanguages = state.translationLanguages.filter(t => t !== PUNJABI_LANGUAGE);
       }
 
       clickEvent({
@@ -530,10 +533,10 @@ export default function reducer(state, action) {
 
       let translationLanguages = []
       if (englishTranslationLanguages.length > 0) {
-        const isEnglishLanguageSelected = state.translationLanguages.includes(t => t === 'english');
-        translationLanguages = isEnglishLanguageSelected ? state.translationLanguages : [...state.translationLanguages, 'english'];
+        const isEnglishLanguageSelected = state.translationLanguages.includes(ENGLISH_LANGUAGE);
+        translationLanguages = isEnglishLanguageSelected ? state.translationLanguages : [...state.translationLanguages, ENGLISH_LANGUAGE];
       } else {
-        translationLanguages = state.translationLanguages.filter(t => t !== 'english');
+        translationLanguages = state.translationLanguages.filter(t => t !== ENGLISH_LANGUAGE);
       }
 
       clickEvent({
@@ -563,10 +566,10 @@ export default function reducer(state, action) {
 
       let translationLanguages = []
       if (hindiTranslationLanguages.length > 0) {
-        const isHindiLanguageSelected = state.translationLanguages.includes(t => t === 'hindi');
-        translationLanguages = isHindiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, 'hindi'];
+        const isHindiLanguageSelected = state.translationLanguages.includes(HINDI_LANGUAGE);
+        translationLanguages = isHindiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, HINDI_LANGUAGE];
       } else {
-        translationLanguages = state.translationLanguages.filter(t => t !== 'hindi');
+        translationLanguages = state.translationLanguages.filter(t => t !== HINDI_LANGUAGE);
       }
 
       clickEvent({

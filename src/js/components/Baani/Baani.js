@@ -427,12 +427,12 @@ export default class Baani extends React.PureComponent {
   
   getEngLishTranslationLanguages = () => {
     const { englishTranslationLanguages } = this.props;
-    return englishTranslationLanguages;
+    return englishTranslationLanguages.sort();
   };
   
   getHindiTranslationLanguages = () => {
     const { hindiTranslationLanguages } = this.props;
-    return hindiTranslationLanguages;
+    return hindiTranslationLanguages.sort();
   };
 
   getSteekLanguages = () => {

@@ -82,6 +82,7 @@ export const TEXTS = {
   TRANSLATION: 'Translation',
   ENGLISH_TRANSLATION: 'English-Translation',
   HINDI_TRANSLATION: 'Hindi-Translation',
+  PUNJABI_TRANSLATION: 'PUnjabi-Translation',
   TRANSLITERATION: 'Transliteration',
   FONT_SIZE: 'Font Size',
   DARK_MODE: 'Dark Mode',

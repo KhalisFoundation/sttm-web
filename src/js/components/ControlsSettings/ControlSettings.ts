@@ -26,8 +26,8 @@ import {
 
 export interface ISettingActions {
   setTranslationLanguages: () => {},
-  setEnglishTranslationLanguages: () => {},
-  setHindiTranslationLanguages: () => {},
+  setEnglishTranslationLanguages: (attr: string[]) => {},
+  setHindiTranslationLanguages: (attr: string[]) => {},
   setTransliterationLanguages: () => {},
   resetDisplayOptions: () => {},
   resetFontOptions: () => {},
@@ -275,6 +275,16 @@ export const QUICK_SETTINGS = ({
           },
           // children keys must be present in parent options values
           children: {
+            punjabi: {
+              label: TEXTS.PUNJABI_TRANSLATION,
+              options: STEEK_LANGUAGES,
+              checked: steekLanguages,
+              action: (lang: string) => {
+                setSteekLanguages(
+                  selectItemInArray(lang, steekLanguages)
+                )
+              }
+            },
             english: {
               label: TEXTS.ENGLISH_TRANSLATION,
               options: ENGLISH_TRANSLATION_LANGUAGES,
@@ -298,22 +308,6 @@ export const QUICK_SETTINGS = ({
           }
         },
       ]
-    },
-    {
-      type: 'collapsible_item',
-      label: 'Steek',
-      collections: [
-        {
-          label: 'Steek',
-          options: STEEK_LANGUAGES,
-          checked: steekLanguages,
-          action: (lang: string) => {
-            setSteekLanguages(
-              selectItemInArray(lang, steekLanguages)
-            )
-          }
-        }
-      ],
     },
   ];
 }
