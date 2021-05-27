@@ -37,6 +37,10 @@ export const BaniIndex: React.FC = () => {
                 </li>
               )
             )}
+            {/* Bhai Nand Lal Ji Index */}
+            <li>
+              <a href="/index/bhai-nand-lal-vaaran">Bhai Nand Lal Ji Vaaran</a>
+            </li>
             {/* Amrit keertan Index */}
             <li>
               <a href="/index/amrit-keertan">Amrit Keertan</a>

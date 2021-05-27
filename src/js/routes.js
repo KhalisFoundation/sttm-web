@@ -250,7 +250,7 @@ export default [
           <RenderPromise
             promise={() =>
               import(
-                /* webpackChunkName: "GranthIndex" */ './pages/GranthIndex'
+                /* webpackChunkName: "GranthIndex" */ './pages/BhaiNandLalVaaranIndex'
               )
             }
           >

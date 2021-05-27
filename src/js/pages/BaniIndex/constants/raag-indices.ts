@@ -7,7 +7,7 @@ interface Index {
 
 export interface IRaagIndex {
   name: string;
-  source: 'G' | 'D' | 'N';
+  source: 'G' | 'D';
   path: string;
   indices: Index[];
 }
@@ -15,7 +15,6 @@ export interface IRaagIndex {
 export interface IRaagIndices {
   SGGS: IRaagIndex;
   DG: IRaagIndex;
-  NLV: IRaagIndex;
 }
 
 export const raagIndices: IRaagIndices = {
@@ -324,17 +323,5 @@ export const raagIndices: IRaagIndices = {
       { name: 'Zafarnamah', pages: [1389, 1389] },
       { name: 'Hikayat', pages: [1394, 1428], highlight: 140380 },
     ],
-  },
-  NLV: {
-    name: 'Bhai Nand Lal Ji Vaaran',
-    source: 'N',
-    path: 'bhai-nand-lal-vaaran',
-    indices: [
-      { name: 'Rubaayee', pages: [1, 10] },
-      { name: 'Zindginama', pages: [11, 38] },
-      { name: 'Ganjnama', pages: [39, 73] },
-      { name: 'Rahit Nama', pages: [74, 100] },
-      { name: 'Tankah Nama', pages: [100, 119], highlight: 78950 },
-    ]      
-  },
+  }
 };
