@@ -117,15 +117,18 @@ const Menu = ({ isHome }) => {
               <Link to="/sundar-gutka" onClick={toggleMenu}>
                 Sundar Gutka
                 </Link>
-              <Link to="/index#Sri Guru Granth Sahib Jee" onClick={toggleMenu}>
+              <Link to="index/sri-guru-granth-sahib" onClick={toggleMenu}>
                 Sri Guru Granth Sahib Jee
                 </Link>
-              <Link to="/index#Sri Dasam Granth Sahib" onClick={toggleMenu}>
+              <Link to="/index/sri-dasam-granth-sahib" onClick={toggleMenu}>
                 Sri Dasam Granth
                 </Link>
-              <Link to="/index#amritKeertan" onClick={toggleMenu}>
+              <Link to="/index/bhai-nand-lal-vaaran" onClick={toggleMenu}>
+                Bhai Nand Lal Ji Vaaran
+              </Link>
+              <Link to="/index/amrit-keertan" onClick={toggleMenu}>
                 Amrit Keertan
-                </Link>
+              </Link>
             </div>
           </li>
 
