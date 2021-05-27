@@ -40,7 +40,7 @@ export const translationMap: ITransProps = {
 
 export const hindiTranslationMap: ITransProps = {
   'sahib singh': shabad => shabad.translation.hi.ss,  
-  'sts': shabad => shabad.translation.hi.sts,
+  'sant singh': shabad => shabad.translation.hi.sts,
 };
 
 export const englishTranslationMap: ITransProps = {
