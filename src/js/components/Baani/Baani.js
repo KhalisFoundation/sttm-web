@@ -594,6 +594,24 @@ export default class Baani extends React.PureComponent {
                     </>
                   )}
                 </div>
+                {/* Punjabi Translation Languages */}
+                <div
+                  className={`${mixedViewBaaniClass}-steek ${paragraphModeClass}`}
+                >
+                  {steekLanguages.map((language) => (
+                    <div
+                      key={language}
+                      className={`${mixedViewBaaniClass}-steek-${language} ${paragraphModeClass}`}
+                    >
+                      {shabads.map((shabad) =>
+                        this.createShabadLine(
+                          shabad,
+                          this.getSteekForLanguage(shabad, language)
+                        )
+                      )}
+                    </div>
+                  ))}
+                </div>
                 {/* Hindi Translation Languages */}
                 <div
                   className={`${mixedViewBaaniClass}-translation ${paragraphModeClass}`}
@@ -622,23 +640,7 @@ export default class Baani extends React.PureComponent {
                     )}
                   </div>
                 )}
-                <div
-                  className={`${mixedViewBaaniClass}-steek ${paragraphModeClass}`}
-                >
-                  {steekLanguages.map((language) => (
-                    <div
-                      key={language}
-                      className={`${mixedViewBaaniClass}-steek-${language} ${paragraphModeClass}`}
-                    >
-                      {shabads.map((shabad) =>
-                        this.createShabadLine(
-                          shabad,
-                          this.getSteekForLanguage(shabad, language)
-                        )
-                      )}
-                    </div>
-                  ))}
-                </div>
+               
               </Wrapper>            
           )
         })
@@ -774,7 +776,36 @@ export default class Baani extends React.PureComponent {
               </div>
             ))}
           </div>
-          ))}          
+          ))}
+          {/* Spanish Translation Languages */}
+         {spanishTranslationLanguage &&
+           (<div
+            key={SPANISH_LANGUAGE}
+            className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}
+          >
+            {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+              <div
+                key={idx}
+                className={`${splitViewBaaniClass}-translation ${paragraphModeClass}`}
+              >
+                {shabads.map((shabad) => (
+                  <Translation
+                    fontSize={translationFontSize}
+                    key={getVerseId(shabad) + SPANISH_LANGUAGE}
+                    type={SPANISH_LANGUAGE}
+                    {...Translation.getTranslationProps({
+                      translationMap,
+                      language: SPANISH_LANGUAGE,
+                      shabad,
+                      unicode,
+                    })}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          )} 
+         {/* Punjabi Translation Languages */}
         {steekLanguages.map((language) => (
           <div
             key={language}
@@ -798,6 +829,34 @@ export default class Baani extends React.PureComponent {
             ))}
           </div>
         ))}
+         {/* Hindi Translation Languages */}
+         {hindiTranslationLanguages.map((source) => (
+           <div
+            key={HINDI_LANGUAGE + source}
+            className={`${splitViewBaaniClass}-wrapper ${paragraphModeClass}`}
+          >
+            {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+              <div
+                key={idx}
+                className={`${splitViewBaaniClass}-translation ${paragraphModeClass}`}
+              >
+                {shabads.map((shabad) => (
+                  <Translation
+                    fontSize={translationFontSize}
+                    key={getVerseId(shabad) + HINDI_LANGUAGE}
+                    type={source}
+                    {...Translation.getTranslationProps({
+                      translationMap: hindiTranslationMap,
+                      language: source,
+                      shabad,
+                      unicode,
+                    })}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          ))} 
       </div>
     );
   };
