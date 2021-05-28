@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { showToast, copyToClipboard, shortenURL, isKeyExists, multiviewFormattedShabad } from '../util';
 import { TEXTS } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
-import { delay } from '../util/misc';
+import { delay, isFalsy } from '../util/misc';
 import ShareIcon from './Icons/Share';
 import EmbedIcon from './Icons/Embed';
 import CopyAllIcon from './Icons/CopyAll';
@@ -45,7 +45,7 @@ class ShareButtons extends React.PureComponent {
     this.formattedShabad = {}
     this.onClickSettings = this.onClickSettings.bind(this);
     const { highlight, gurbani } = props;
-    if (gurbani !== undefined) {
+    if (!isFalsy(gurbani)) {
       const selectedShabad = highlight ? (gurbani?.find(({ verseId }) => verseId === highlight) ?? gurbani[0]) : gurbani[0]
       this.formattedShabad = multiviewFormattedShabad(selectedShabad)
     }
