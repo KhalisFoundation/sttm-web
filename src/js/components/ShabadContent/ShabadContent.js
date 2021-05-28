@@ -67,7 +67,7 @@ class Shabad extends React.PureComponent {
    * @memberof Shabad
    */
   static propTypes = {
-    gurbani: PropTypes.array.isRequired,
+    gurbani: PropTypes.array,
     highlight: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
