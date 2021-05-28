@@ -18,7 +18,10 @@ const strategy = new passportSaml.Strategy(
     callbackUrl: process.env.SSO_CALLBACK_URL,
     cert: process.env.SSO_CERT,
   },
-  (profile, done) => done(null, profile),
+  (profile, done) => {
+    
+    return done(null, profile)
+  },
 );
 
 Passport.use(strategy);
