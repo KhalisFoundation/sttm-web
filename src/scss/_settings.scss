@@ -320,10 +320,21 @@ $panel-width-560: 65vw;
     list-style: none;
   }
 
+  &-child-container {
+    grid-column: 1/-1;
+    list-style: none;
+
+    .item {
+      align-items: center;
+      display: flex;
+    }
+  }
+
   &-item {
     align-items: center;
-    display: flex;
-    height: 30px;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    min-height: 30px;
 
     &-label {
       margin-left: 10px;

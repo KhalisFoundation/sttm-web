@@ -108,6 +108,12 @@ export const setTransliterationFontSize = createAction(SET_TRANSLITERATION_FONT_
 export const SET_STEEK_LANGUAGES = 'SET_STEEK_LANGUAGES';
 export const setSteekLanguages = createAction(SET_STEEK_LANGUAGES);
 
+export const SET_ENGLISH_TRANSLATION_LANGUAGES = 'SET_ENGLISH_TRANSLATION_LANGUAGES';
+export const setEnglishTranslationLanguages = createAction(SET_ENGLISH_TRANSLATION_LANGUAGES);
+
+export const SET_HINDI_TRANSLATION_LANGUAGES = 'SET_HINDI_TRANSLATION_LANGUAGES';
+export const setHindiTranslationLanguages = createAction(SET_HINDI_TRANSLATION_LANGUAGES);
+
 export const SET_LARIVAAR_ASSIST_STRENGTH = 'SET_LARIVAAR_ASSIST_STRENGTH';
 export const setLarivaarAssistStrength = createAction(SET_LARIVAAR_ASSIST_STRENGTH);
 
