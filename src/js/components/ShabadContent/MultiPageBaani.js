@@ -21,6 +21,7 @@ export const MultiPageBaani = React.memo((props) => {
               history={history}
               isParagraphMode={false}
               isSehajPaathMode={sehajPaathMode}
+              isSundarGutkaRoute={false}
               // offsetY={isLastPage ? lastScrollPosition : -1}
               onBaaniLineClick={(highlightVerseId) => () => {
                 const newUrl = toAngURL({
