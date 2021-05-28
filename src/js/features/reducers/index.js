@@ -44,6 +44,8 @@ import {
   CLEAR_MULTIPLE_SHABADS,
   REMOVE_MULTIPLE_SHABADS,
   SET_MULTI_VIEW_PANEL,
+  SET_ENGLISH_TRANSLATION_LANGUAGES,
+  SET_HINDI_TRANSLATION_LANGUAGES,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -69,6 +71,11 @@ import {
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
   LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
   LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+  LOCAL_STORAGE_KEY_FOR_ENGLISH_TRANSLATION_LANGUAGES,
+  LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
+  PUNJABI_LANGUAGE,
+  HINDI_LANGUAGE,
+  ENGLISH_LANGUAGE
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -417,15 +424,38 @@ export default function reducer(state, action) {
     }
     case SET_TRANSLATION_LANGUAGES: {
       const isPunjabiLanguageSelected = action.payload.includes('punjabi');
+      const isEnglishLanguageSelected = action.payload.includes('english');
+      const isHindiLanguageSelected = action.payload.includes('hindi');
+
       const translationLanguages = action.payload || [];
+      
       const isSteekLanguageSelected = state.steekLanguages.length > 0;
       let steekLanguages = [];
       if (isPunjabiLanguageSelected) {
         if (isSteekLanguageSelected)
           steekLanguages = state.steekLanguages;
         else {
-          // const storedSteekLanguages = getArrayFromLocalStorage(LOCAL_STORAGE_KEY_FOR_STEEK_LANGUAGES);
           steekLanguages = ['BaniDB'];
+        }
+      }
+
+      const isEnglishTranslationLanguageSelected = state.englishTranslationLanguages.length > 0;
+      let englishTranslationLanguages = [];
+      if (isEnglishLanguageSelected) {
+        if (isEnglishTranslationLanguageSelected)
+          englishTranslationLanguages = state.englishTranslationLanguages;
+        else {
+          englishTranslationLanguages = ['BaniDB'];
+        }
+      }
+
+      const isHindiTranslationLanguageSelected = state.hindiTranslationLanguages.length > 0;
+      let hindiTranslationLanguages = [];
+      if (isHindiLanguageSelected) {
+        if (isHindiTranslationLanguageSelected)
+          hindiTranslationLanguages = state.hindiTranslationLanguages;
+        else {
+          hindiTranslationLanguages = ['sahib singh'];
         }
       }
 
@@ -445,22 +475,34 @@ export default function reducer(state, action) {
         JSON.stringify(steekLanguages)
       );
 
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_ENGLISH_TRANSLATION_LANGUAGES,
+        JSON.stringify(englishTranslationLanguages)
+      );
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
+        JSON.stringify(hindiTranslationLanguages)
+      );
+
       return {
         ...state,
         translationLanguages,
         steekLanguages,
+        englishTranslationLanguages,
+        hindiTranslationLanguages,
       };
     }
 
     case SET_STEEK_LANGUAGES: {
       const steekLanguages = action.payload || [];
 
-      let translationLanguages = []
+      let translationLanguages = state.translationLanguages
       if (steekLanguages.length > 0) {
-        const isPunjabiLanguageSelected = state.translationLanguages.includes(t => t === 'punjabi');
-        translationLanguages = isPunjabiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, 'punjabi'];
+        const isPunjabiLanguageSelected = state.translationLanguages.includes(PUNJABI_LANGUAGE);
+        translationLanguages = isPunjabiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, PUNJABI_LANGUAGE];
       } else {
-        translationLanguages = state.translationLanguages.filter(t => t !== 'punjabi');
+        translationLanguages = state.translationLanguages.filter(t => t !== PUNJABI_LANGUAGE);
       }
 
       clickEvent({
@@ -484,6 +526,72 @@ export default function reducer(state, action) {
         steekLanguages
       }
 
+    }
+
+    case SET_ENGLISH_TRANSLATION_LANGUAGES: {
+      let englishTranslationLanguages = action.payload || [];
+
+      let translationLanguages = []
+      if (englishTranslationLanguages.length > 0) {
+        const isEnglishLanguageSelected = state.translationLanguages.includes(ENGLISH_LANGUAGE);
+        translationLanguages = isEnglishLanguageSelected ? state.translationLanguages : [...state.translationLanguages, ENGLISH_LANGUAGE];
+      } else {
+        translationLanguages = state.translationLanguages.filter(t => t !== ENGLISH_LANGUAGE);
+      }
+
+      clickEvent({
+        action: LOCAL_STORAGE_KEY_FOR_ENGLISH_TRANSLATION_LANGUAGES,
+        label: JSON.stringify(englishTranslationLanguages),
+      });
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
+        JSON.stringify(translationLanguages)
+      );
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_ENGLISH_TRANSLATION_LANGUAGES,
+        JSON.stringify(englishTranslationLanguages)
+      );
+
+      return {
+        ...state,
+        translationLanguages,
+        englishTranslationLanguages
+      }
+    }
+    
+    case SET_HINDI_TRANSLATION_LANGUAGES: {
+      let hindiTranslationLanguages = action.payload || [];
+
+      let translationLanguages = []
+      if (hindiTranslationLanguages.length > 0) {
+        const isHindiLanguageSelected = state.translationLanguages.includes(HINDI_LANGUAGE);
+        translationLanguages = isHindiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, HINDI_LANGUAGE];
+      } else {
+        translationLanguages = state.translationLanguages.filter(t => t !== HINDI_LANGUAGE);
+      }
+
+      clickEvent({
+        action: LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
+        label: JSON.stringify(hindiTranslationLanguages),
+      });
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES,
+        JSON.stringify(translationLanguages)
+      );
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
+        JSON.stringify(hindiTranslationLanguages)
+      );
+
+      return {
+        ...state,
+        translationLanguages,
+        hindiTranslationLanguages
+      }
     }
 
     case SET_LARIVAAR_ASSIST_STRENGTH: {

@@ -6,6 +6,8 @@ import {
   SG_BAANIS,
   DEFAULT_SG_BAANI_LENGTH,
   DEFAULT_VISRAAM_STYLE,
+  HINDI_TRANSLATION_LANGUAGES,
+  ENGLISH_TRANSLATION_LANGUAGES,
 } from '@/constants';
 
 import {
@@ -21,8 +23,11 @@ import {
   SizeControl,  
 } from '@/components/Icons/CustomIcons';
 
+
 export interface ISettingActions {
   setTranslationLanguages: () => {},
+  setEnglishTranslationLanguages: (attr: string[]) => {},
+  setHindiTranslationLanguages: (attr: string[]) => {},
   setTransliterationLanguages: () => {},
   resetDisplayOptions: () => {},
   resetFontOptions: () => {},
@@ -92,6 +97,8 @@ export const HEADER_SETTINGS = ({
 export const QUICK_SETTINGS = ({
   setTranslationLanguages,
   setTransliterationLanguages,
+  setEnglishTranslationLanguages, 
+  setHindiTranslationLanguages,
   toggleVisraams,
   toggleLarivaarOption,
   toggleLarivaarAssistOption,
@@ -105,6 +112,8 @@ export const QUICK_SETTINGS = ({
   setSgBaaniLength,
   setVisraamStyle,
   translationLanguages,
+  englishTranslationLanguages,
+  hindiTranslationLanguages,
   transliterationLanguages,
   sehajPaathMode,
   autoScrollMode,
@@ -263,25 +272,42 @@ export const QUICK_SETTINGS = ({
             setTranslationLanguages(
               selectItemInArray(lang, translationLanguages)
             )
+          },
+          // children keys must be present in parent options values
+          children: {
+            punjabi: {
+              label: TEXTS.PUNJABI_TRANSLATION,
+              options: STEEK_LANGUAGES,
+              checked: steekLanguages,
+              action: (lang: string) => {
+                setSteekLanguages(
+                  selectItemInArray(lang, steekLanguages)
+                )
+              }
+            },
+            english: {
+              label: TEXTS.ENGLISH_TRANSLATION,
+              options: ENGLISH_TRANSLATION_LANGUAGES,
+              checked: englishTranslationLanguages,
+              action: (lang: string) => {
+                setEnglishTranslationLanguages(
+                  selectItemInArray(lang, englishTranslationLanguages)
+                )
+              },
+            }, 
+            hindi: {
+              label: TEXTS.HINDI_TRANSLATION,
+              options: HINDI_TRANSLATION_LANGUAGES,
+              checked: hindiTranslationLanguages,
+              action: (lang: string) => {
+                setHindiTranslationLanguages(
+                  selectItemInArray(lang, hindiTranslationLanguages)
+                )
+              },
+            }
           }
         },
       ]
-    },
-    {
-      type: 'collapsible_item',
-      label: 'Steek',
-      collections: [
-        {
-          label: 'Steek',
-          options: STEEK_LANGUAGES,
-          checked: steekLanguages,
-          action: (lang: string) => {
-            setSteekLanguages(
-              selectItemInArray(lang, steekLanguages)
-            )
-          }
-        }
-      ],
     },
   ];
 }
