@@ -11,19 +11,18 @@ Passport.deserializeUser((user, done) => {
 });
 
 // SAML strategy for passport -- Single IPD
-const strategy = new passportSaml.Strategy(
+const samlStrategy = new passportSaml.Strategy(
   {
     entryPoint: process.env.SSO_ENTRYPOINT,
     issuer: process.env.SSO_ISSUER,
     callbackUrl: process.env.SSO_CALLBACK_URL,
     cert: process.env.SSO_CERT,
   },
-  (profile, done) => {
-    
+  (profile, done) => {    
     return done(null, profile)
   },
 );
 
-Passport.use(strategy);
+Passport.use("saml", samlStrategy);
 
 module.exports = Passport;

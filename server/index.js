@@ -2,6 +2,7 @@
 import compression from 'compression';
 require("dotenv").config();
 import express from 'express';
+import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
@@ -21,15 +22,17 @@ port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
 
-// Define routes here
-require("./config/routes")(app);
 
 app
+  // Add body parser
+  .use(bodyParser.json())
+
   // Compress files
   .use(compression())
 
   // Add cookie parser
   .use(cookieParser())
+
 
   // Infrastructure display
   .use((req, res, next) => {
@@ -88,3 +91,6 @@ app
 
   // Listen on port
   .listen(port, () => console.log(`Server started on port:${port}`));
+
+// Define routes here
+require("./config/routes")(app);

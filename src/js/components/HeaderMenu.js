@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import BarsIcon from './Icons/Bars';
 import BackIcon from './Icons/Back';
+import UserLogin from './UserLogin';
 
 const Menu = ({ isHome }) => {
   const displayAreaRefInfo = useRef(null)
@@ -174,6 +175,7 @@ const Menu = ({ isHome }) => {
               Donate
               </Link>
           </li>
+          <UserLogin />
         </ul>
       </div>
     </React.Fragment>

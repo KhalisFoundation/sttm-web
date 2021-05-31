@@ -1,8 +1,13 @@
 const Jwt = require("jsonwebtoken");
 
-const jwtSign = email => {
-  const JWT_TOKEN = Jwt.sign({ email: email }, process.env.JWT_SECRET);
+const jwtSign = options => {
+  const JWT_TOKEN = Jwt.sign({ ...options }, process.env.JWT_SECRET);
   return JWT_TOKEN;
 };
 
-module.exports = jwtSign;
+const jwtVerify = token => {
+  const decoded = Jwt.verify(token, process.env.JWT_SECRET);
+  return decoded
+}
+
+module.exports = {jwtSign, jwtVerify};

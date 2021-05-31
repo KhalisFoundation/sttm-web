@@ -1,5 +1,5 @@
-const jwtSign = require('../utils/jwt')
-const authenticationSocialHelper = require('../utils/auth')
+const {jwtSign, jwtVerify} = require('../utils/jwt')
+const {authenticationHelper, authenticationSocialHelper} = require('../utils/auth')
 
 /**
  * This Route Authenticates req with IDP
@@ -19,6 +19,12 @@ const sso = (req, res, next) => {
   );
 }
 
+const ssoDemo = (req, res, next) => {
+  const email = req.query.email
+  const token = jwtSign(email);  
+  res.redirect('/?token=' + token)
+}
+
 const ssoCallback = (req, res, next) => {
   authenticationSocialHelper(
     req,
@@ -27,18 +33,18 @@ const ssoCallback = (req, res, next) => {
     { failureRedirect: '/', failureFlash: true },
     "saml",
     user => {
-      return res.send(user)
+      console.log(user)
+      const {email} = user;
+      const token = jwtSign({email});
+      return res.send({token})
     }
   );
 }
 
-const getJwt = (req, res) => {
-  const email = req.query.email
-  if (email) {
-    const token = jwtSign(email);
-    return res.send(token)
-  }
-  res.status(401).send({message: 'Email is empty'})
+const authJwt = (req, res, next) => {
+  const {token} = req.body;
+  const isVerfied = jwtVerify(token)
+  return res.status(200).send(isVerfied)
 };
 
 const googleSignIn = (req, res, next) => {
@@ -64,10 +70,12 @@ const googleSignInCallback = (req, res, next) => {
   );
 }
 
+
 module.exports = function(server) {
   server.get('/login/sso', sso);
-  server.post('/login/sso/callback', ssoCallback);
-  server.post('/auth/jwt', getJwt);
+  server.post('/login/saml', ssoCallback);
+  server.get('/login/demo', ssoDemo);
+  server.post('/auth/jwt', authJwt);
   server.get('/auth/google', googleSignIn);
   server.get('/auth/google/callback', googleSignInCallback);
 }
