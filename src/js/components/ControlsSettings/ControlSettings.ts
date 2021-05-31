@@ -166,31 +166,8 @@ export const QUICK_SETTINGS = ({
           action: toggleLarivaarAssistOption
         },
       ]
-    },
-    {
-      type: 'label-options-custom',
-      label: 'Vishraam Style',
-      checked: visraams,
-      collections: [
-        {
-          label: 'Vishraams - Colored',
-          options: 'colored-words',
-          checked: visraamStyle === 'colored-words' && visraams,
-          action: (selectedVisraamStyleValue: string) => {
-            setVisraamStyle(selectedVisraamStyleValue ? selectedVisraamStyleValue : DEFAULT_VISRAAM_STYLE)
-          }
-        },
-        {
-          label: 'Vishraams - Gradient',
-          options: 'gradient-bg',
-          checked: visraamStyle === 'gradient-bg' && visraams,
-          action: (selectedVisraamStyleValue: string) => {
-            setVisraamStyle(selectedVisraamStyleValue ? selectedVisraamStyleValue : DEFAULT_VISRAAM_STYLE)
-          }
-        },
-      ]
-    },  
-     isSundarGutkaRoute ? {
+    },    
+    isSundarGutkaRoute ? {
       type: 'label-options-custom',
       label: 'Baanis Length',
       checked: true,
@@ -225,6 +202,30 @@ export const QUICK_SETTINGS = ({
       checked: visraams,
       action: toggleVisraams,
     },
+    visraams ?
+    {
+      type: 'label-options-custom',
+      label: 'Vishraam Style',
+      checked: visraams,
+      collections: [
+        {
+          label: 'Vishraams - Colored',
+          options: 'colored-words',
+          checked: visraamStyle === 'colored-words' && visraams,
+          action: (selectedVisraamStyleValue: string) => {
+            setVisraamStyle(selectedVisraamStyleValue ? selectedVisraamStyleValue : DEFAULT_VISRAAM_STYLE)
+          }
+        },
+        {
+          label: 'Vishraams - Gradient',
+          options: 'gradient-bg',
+          checked: visraamStyle === 'gradient-bg' && visraams,
+          action: (selectedVisraamStyleValue: string) => {
+            setVisraamStyle(selectedVisraamStyleValue ? selectedVisraamStyleValue : DEFAULT_VISRAAM_STYLE)
+          }
+        },
+      ]
+    }: {},
     isShowSehajPaathMode ? {
       type: 'toggle-option',
       label: 'Reading [Akhand Paath]',
