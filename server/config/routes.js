@@ -1,5 +1,5 @@
 const {jwtSign, jwtVerify} = require('../utils/jwt')
-const {authenticationHelper, authenticationSocialHelper} = require('../utils/auth')
+const {authenticationSocialHelper} = require('../utils/auth')
 
 /**
  * This Route Authenticates req with IDP
@@ -19,7 +19,7 @@ const sso = (req, res, next) => {
   );
 }
 
-const ssoDemo = (req, res, next) => {
+const ssoDemo = (req, res) => {
   const email = req.query.email
   const token = jwtSign(email);  
   res.redirect('/?token=' + token)
@@ -33,7 +33,6 @@ const ssoCallback = (req, res, next) => {
     { failureRedirect: '/', failureFlash: true },
     "saml",
     user => {
-      console.log(user)
       const {email} = user;
       const token = jwtSign({email});
       return res.send({token})
@@ -41,7 +40,7 @@ const ssoCallback = (req, res, next) => {
   );
 }
 
-const authJwt = (req, res, next) => {
+const authJwt = (req, res) => {
   const {token} = req.body;
   const isVerfied = jwtVerify(token)
   return res.status(200).send(isVerfied)
