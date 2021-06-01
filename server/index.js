@@ -9,10 +9,9 @@ import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
+import { authJwt, ssoDemo } from './config/routes';
 
 const passport = require("./config/passport-auth");
-
-
 
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
@@ -22,6 +21,8 @@ port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
 
+// Define routes here
+//require("./config/routes")(app);
 
 app
   // Add body parser
@@ -32,7 +33,6 @@ app
 
   // Add cookie parser
   .use(cookieParser())
-
 
   // Infrastructure display
   .use((req, res, next) => {
@@ -45,6 +45,10 @@ app
 
   // Use client for static files
   .use(express.static(`${__dirname}/../public`))
+
+  // sso routes
+  .get('/login/demo', ssoDemo)
+  .post('/auth/jwt', authJwt)
 
   // Direct all calls to index template
   .get('*', async (req, res) => {
@@ -92,5 +96,4 @@ app
   // Listen on port
   .listen(port, () => console.log(`Server started on port:${port}`));
 
-// Define routes here
-require("./config/routes")(app);
+//require("./config/routes")(app);

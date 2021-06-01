@@ -19,9 +19,9 @@ const sso = (req, res, next) => {
   );
 }
 
-const ssoDemo = (req, res) => {
+export const ssoDemo = (req, res) => {
   const email = req.query.email
-  const token = jwtSign(email);  
+  const token = jwtSign({email});  
   res.redirect('/?token=' + token)
 }
 
@@ -40,10 +40,10 @@ const ssoCallback = (req, res, next) => {
   );
 }
 
-const authJwt = (req, res) => {
+export const authJwt = (req, res) => {
   const {token} = req.body;
   const isVerfied = jwtVerify(token)
-  return res.status(200).send(isVerfied)
+  return res.status(200).json(isVerfied)
 };
 
 const googleSignIn = (req, res, next) => {

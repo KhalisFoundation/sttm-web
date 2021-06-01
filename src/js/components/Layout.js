@@ -16,7 +16,7 @@ import { setOnlineMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
-import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, getQueryParams } from '../util';
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, getQueryParams, isFalsy } from '../util';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -150,8 +150,11 @@ class Layout extends React.PureComponent {
       token
     } = getQueryParams(location.search);
     // @TODO: use redux to control state of session user
-    token && localStorage.setItem('SESSION_USER', JSON.stringify({token}))
-    history.push('/')
+    if(!isFalsy(token)) {
+      token && localStorage.setItem('SESSION_USER', JSON.stringify({token}))
+      history.push('/')
+    }
+    return;
   }
 
   componentDidMount() {
