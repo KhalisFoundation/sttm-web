@@ -2,14 +2,24 @@ footer {
   background-color: $sttm-white;
   border-top: 1px solid $sttm-lighter-grey;
   bottom: 0;
+  font-family: 'Lato', sans-serif;
   left: 0;
-  min-height: 49px;
-  position: absolute;
+  min-height: 50px;
+  position: fixed;
   width: 100%;
+  z-index: 2;
 
   .dark-mode & {
     background-color: $sttm-light-black;
     border-top: 1px solid $sttm-lighter-black;
+  }
+
+  .fullscreen-view & {
+    display: none;
+  }
+
+  @media screen and (max-width: 950px) {
+    position: fixed;
   }
 
   .footer {
@@ -42,6 +52,7 @@ footer {
         font-size: 0.9em;
         margin: 0;
         padding: 1rem;
+        transition: 0.2s;
 
         &:hover {
           background-color: $sttm-lighter-grey;
@@ -57,24 +68,66 @@ footer {
       }
     }
 
-    @media screen and (max-width: 900px) {
+    .footer-seperator {
+      color: $sttm-darkest-grey;
+      display: block;
+      font-size: 0.9em;
+      line-height: 1;
+      margin: 0;
+      padding: 1rem 2rem 1rem 1rem;
+    }
+
+    .download-icon {
+      opacity: 0.7;
+      padding: 12px 0 9px 0 !important;
+      transition: 0.2s;
+
+      &:hover {
+        background: none !important;
+        opacity: 0.9;
+      }
+
+      img {
+        margin-right: 0.5rem;
+        width: 95px;
+      }
+    }
+
+    @media screen and (max-width: 1300px) {
+      .menu {
+        font-size: 0.7em;
+
+        & li a,
+        .footer-seperator {
+          padding: 2em 0.5em;
+        }
+      }
+    }
+
+    @media screen and (max-width: 950px) {
       align-items: flex-start;
       flex-direction: column;
 
-      .menu {
-        justify-content: center;
+      .version {
+        display: none;
       }
 
-      .version,
       .copyright {
         padding: 5px 0;
         text-align: center;
         width: 100%;
       }
 
-      .menu,
-      .version {
-        li a {
+      .download-icon,
+      .footer-seperator {
+        display: none;
+      }
+
+      .menu {
+        justify-content: center;
+
+        li a,
+        li span {
           padding: 10px 5px;
         }
       }
@@ -84,19 +137,21 @@ footer {
       align-items: center;
 
       .version {
-        font-size: 0.8rem;
-      }
-
-      .menu li a {
-        font-size: 0.8rem;
-        padding: 5px 2px;
+        display: none;
       }
 
       .copyright {
         padding: 5px 2px;
 
-        span {
+        span,
+        .footer-seperator {
           display: none;
+        }
+
+        .menu li a,
+        .menu li span {
+          font-size: 0.8rem;
+          padding: 5px 2px;
         }
       }
     }

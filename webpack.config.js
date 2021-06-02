@@ -1,19 +1,11 @@
 const webpack = require('webpack');
 
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 const path = require('path');
-
-const API_URLS = {
-  BANIS: '//api.banidb.com/v2/banis',
-  PRODUCTION: '//api.banidb.com/v2/',
-  DEVELOPMENT: '//api.banidb.com/v2/',
-  SYNC: {
-    PRODUCTION: '//api.sikhitothemax.org/',
-    LOCAL: '//api.sikhitothemax.org/',
-  },
-};
+const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -21,28 +13,41 @@ const commonPlugins = [new ManifestPlugin()];
 
 const plugins = PRODUCTION
   ? commonPlugins.concat([
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production'),
-          npm_package_version: JSON.stringify(process.env.npm_package_version),
-        },
-        PRODUCTION: JSON.stringify(true),
-        API_URL: JSON.stringify(API_URLS.PRODUCTION),
-        SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
-        BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
-      }),
-    ])
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+        npm_package_version: JSON.stringify(process.env.npm_package_version),
+      },
+      PRODUCTION: JSON.stringify(true),
+      API_URL: JSON.stringify(API_URLS.PRODUCTION),
+      AMRIT_KEERTAN_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN),
+      AMRIT_KEERTAN_SHABADS_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN_SHABADS),
+      SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
+      BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
+      BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
+      CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
+      DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
+      WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
+    }),
+  ])
   : commonPlugins.concat([
-      new webpack.DefinePlugin({
-        'process.env': {
-          npm_package_version: JSON.stringify(process.env.npm_package_version),
-        },
-        PRODUCTION: JSON.stringify(false),
-        API_URL: JSON.stringify(API_URLS.PRODUCTION),
-        SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
-        BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
-      }),
-    ]);
+    new webpack.DefinePlugin({
+      'process.env': {
+        npm_package_version: JSON.stringify(process.env.npm_package_version),
+      },
+      PRODUCTION: JSON.stringify(false),
+      API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
+      SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
+      AMRIT_KEERTAN_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN),
+      AMRIT_KEERTAN_SHABADS_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN_SHABADS),
+      BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
+      BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
+      CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
+      DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
+      WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
+    }),
+    new CleanWebpackPlugin(),
+  ]);
 
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');
 
@@ -53,8 +58,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'public/assets', 'js'),
-    chunkFilename: 'chunks/[name]-[hash].js',
-    filename: '[name]-[hash].js',
+    chunkFilename: PRODUCTION ? 'chunks/[name]-[hash].js' : 'chunks/[name].js',
+    filename: PRODUCTION ? '[name]-[hash].js' : '[name].js',
     publicPath: '/assets/js/',
   },
   devtool: PRODUCTION ? undefined : 'inline-source-map',
@@ -86,6 +91,14 @@ module.exports = {
       {
         test: /\.(tsx?)|(js)$/,
         loader: 'babel-loader',
+      },
+      {
+        test: /\.less$/,
+        loader: 'less-loader', // compiles Less to CSS
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },

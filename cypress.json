@@ -1,0 +1,12 @@
+{
+  "baseUrl": "http://localhost:8080",
+  "_baseUrl": "https://stg.sikhitothemax.org",
+  "__baseUrl": "https://sikhitothemax.org",
+  "experimentalFetchPolyfill": true,
+  "env": {
+    "colors": {
+      "sttmBlue": "rgb(1, 102, 155)"
+    }
+  },
+  "projectId": "7y3f9z"
+}

@@ -32,8 +32,8 @@ export default class GenericError extends React.PureComponent {
           {typeof description === 'string' ? (
             <section dangerouslySetInnerHTML={{ __html: description }} />
           ) : (
-            <section>{description}</section>
-          )}
+              <section>{description}</section>
+            )}
         </div>
         <div>
           <img src={url} alt={alt} />

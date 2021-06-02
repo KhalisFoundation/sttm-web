@@ -1,7 +1,22 @@
 .search-page {
   display: flex;
   justify-content: center;
-  padding-top: 10vh;
+  padding-top: 5vh;
+
+  .search-form {
+    max-width: 625px;
+  }
+
+  &.doodle-logo-page {
+    padding-top: 6vh;
+  }
+}
+
+.doodle-credit {
+  color: $sttm-dark-grey;
+  font-size: 14px;
+  margin-top: 16px;
+  text-align: center;
 }
 
 /*
@@ -18,11 +33,15 @@
 .search-options {
   display: flex;
   justify-content: space-between;
-  margin: 1rem -5px 0 -5px;
+  margin: 1rem -5px;
 
   .search-option {
     margin: 5px;
     width: calc(50% - 10px);
+
+    select {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -42,7 +61,9 @@
   }
 
   &Button {
+    border: none;
     cursor: pointer;
+    outline: none;
     padding: 10px;
   }
 

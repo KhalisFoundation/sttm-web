@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
-import { toNavURL, shouldSaveAng, saveAng } from '../util';
+import { toNavURL, shouldSaveAng, saveAng, dateMath } from '../util';
 import Chevron from './Icons/Chevron';
+import Hour24 from './Icons/Hour24';
 
 class FootNav extends React.PureComponent {
   static propTypes = {
@@ -16,40 +17,74 @@ class FootNav extends React.PureComponent {
   };
 
   render() {
-    const { nav } = this.props;
+    const { nav, type } = this.props;
     const link = toNavURL(this.props);
+    const isHukamnama = type === 'hukamnama';
+    const isSync = type === 'sync';
     return (
-      <div className="pagination">
-        {nav.previous ? (
-          <div className="shabad-nav left">
-            <Link to={link + nav.previous}>
-              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-              <span>Previous</span>
-            </Link>
-          </div>
-        ) : (
-          <div className="shabad-nav left disabled-nav">
-            <a>
-              <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-              <span>Previous</span>
-            </a>
-          </div>
-        )}
+      <div className={`pagination pagination-${type}`}>
+
+        {/* Previous navigation */}
+        {nav.previous ?
+          (
+            <div className="shabad-nav left">
+              <Link to={link + nav.previous}>
+                {isHukamnama ?
+                  (
+                    <Hour24 direction='previous' />
+                  ) :
+                  (
+                    <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                  )}
+                <span>{isHukamnama ? dateMath.expand(nav.previous, false) : 'Previous'}</span>
+              </Link>
+            </div>
+          ) :
+          !isSync ? (
+            <div className="shabad-nav left disabled-nav">
+              <a>
+                {isHukamnama ?
+                  (
+                    <Hour24 direction='previous' />
+                  ) :
+                  (
+                    <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+                  )}
+                <span>{isHukamnama ? '' : 'Previous'}</span>
+              </a>
+            </div>
+          ) : ''}
+
+        {/* Next navigation */}
         {nav.next ? (
           <div className="shabad-nav right">
-            <a role="button" aria-label="next" onClick={this.handleSaveAng}>
-              <span>Next</span>
-              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+            <a role="button" aria-label="next" onClick={this.goToNextAng}>
+              <span>{isHukamnama ? dateMath.expand(nav.next, false) : 'Next'}</span>
+              {isHukamnama ?
+                (
+                  <Hour24 direction='Next' />
+                ) :
+                (
+                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                )}
             </a>
           </div>
-        ) : (
-          <div className="shabad-nav right disabled-nav">
-            <a>
-              <span>Next</span>
-              <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-            </a>
-          </div>
-        )}
+        ) :
+          !isSync ? (
+            <div className="shabad-nav right disabled-nav">
+              <a>
+                <span>{isHukamnama ? '' : 'Next'}</span>
+                {isHukamnama ?
+                  (
+                    <Hour24 direction='next' />
+                  ) :
+                  (
+                    <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+                  )}
+              </a>
+            </div>
+          ) : ''}
+
       </div>
     );
   }
@@ -58,9 +93,8 @@ class FootNav extends React.PureComponent {
    * Handle SaveAng
    * @memberof FootNav
    */
-  handleSaveAng = () => {
+  goToNextAng = () => {
     const link = toNavURL(this.props);
-    shouldSaveAng(this.props) && saveAng(this.props.nav.next);
     this.props.history.push(link + this.props.nav.next);
   };
 }

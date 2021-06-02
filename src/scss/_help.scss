@@ -1,41 +1,9 @@
 #help {
-  display: flex;
-  flex-wrap: wrap;
+  display: block;
   width: 100%;
 
   h2 {
     margin-top: 10px;
-  }
-
-  #sidebar {
-    border: 1px solid $sttm-light-grey;
-    border-radius: 2px;
-    font-size: 0.9em;
-    margin: 1rem;
-    padding: 1rem;
-    width: 100%;
-
-    ul {
-      color: $sttm-blue;
-      list-style-type: square;
-
-      ul {
-        color: $sttm-bright-orange;
-      }
-
-      .dark-mode & {
-        color: $sttm-light-blue;
-      }
-    }
-  }
-
-  main {
-    padding: 1rem;
-    width: 100%;
-  }
-
-  section {
-    margin-bottom: 45px;
   }
 
   .question {
@@ -62,16 +30,70 @@
       max-width: 80%;
     }
   }
+
+  #sidebar {
+    border: 1px solid $sttm-light-grey;
+    border-radius: 2px;
+    font-size: 0.9em;
+    padding: 1rem;
+    width: 100%;
+
+    ul {
+      color: $sttm-blue;
+      list-style-type: none;
+
+      ul {
+        color: $sttm-bright-orange;
+      }
+
+      li {
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: bold;
+
+        & li {
+          font-size: 0.9em;
+          font-weight: normal;
+        }
+
+        &:hover {
+          color: $sttm-orange;
+          transition: 0.2s;
+        }
+      }
+
+      a {
+        color: $sttm-blue;
+
+        &:hover {
+          color: $sttm-orange;
+          transition: 0.2s;
+        }
+      }
+
+      .dark-mode & {
+        color: $sttm-light-blue;
+      }
+    }
+  }
+
+  main {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  section {
+    margin-bottom: 45px;
+  }
 }
 
 @media screen and (min-width: 46em) {
   #help {
-    display: flex;
-    flex-wrap: nowrap;
+    display: block;
     width: 100%;
 
     #sidebar {
-      width: 23%;
+      width: 100%;
     }
 
     .video {
@@ -80,7 +102,6 @@
 
     main {
       padding: 0;
-      width: 77%;
     }
   }
 }

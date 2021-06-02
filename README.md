@@ -24,13 +24,13 @@ Open terminal and follow these steps;
 - Step 1: Clone the repo.
 
 ```bash
-git clone https://github.com/KhalisFoundation/SikhiToTheMax-Web/
+git clone https://github.com/KhalisFoundation/sttm-web/
 ```
 
 You should now see a `SikhiToTheMax-Web` folder in your present working directory. Let's change directory to it.
 
 ```bash
-cd SikhiToTheMax-Web/
+cd sttm-web/
 ```
 
 - Step 2: Install dependencies.

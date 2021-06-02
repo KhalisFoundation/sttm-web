@@ -17,10 +17,11 @@ export default class Search extends React.PureComponent {
     type: PropTypes.number,
     source: PropTypes.string,
     offset: PropTypes.number,
+    writer: PropTypes.string
   };
 
   render() {
-    const { q, type, source, offset } = this.props;
+    const { q, type, source, offset, writer } = this.props;
 
     if (q === '') {
       return (
@@ -32,7 +33,7 @@ export default class Search extends React.PureComponent {
       );
     }
 
-    const url = encodeURI(buildApiUrl({ q, type, source, offset, API_URL }));
+    const url = encodeURI(buildApiUrl({ q, type, source, offset, writer, API_URL }));
 
     return (
       <PageLoader url={url}>
@@ -46,7 +47,7 @@ export default class Search extends React.PureComponent {
               pages={Array.from(
                 Array(
                   parseInt(
-                    resultsInfo.totalResults / resultsInfo.pages.resultsPerPage
+                    resultsInfo.pages.totalPages
                   )
                 ),
                 (_, i) => i + 1
@@ -59,6 +60,7 @@ export default class Search extends React.PureComponent {
               q={q}
               type={type}
               source={source}
+              writer={writer}
             />
           );
         }}

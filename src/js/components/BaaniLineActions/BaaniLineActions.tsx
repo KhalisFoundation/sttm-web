@@ -30,7 +30,7 @@ export interface IBaaniLineActionsProps {
 
 export default class BaaniLineActions extends React.PureComponent<
   IBaaniLineActionsProps
-> {
+  > {
   public static defaultProps = {
     disabledActions: [],
   };
@@ -49,8 +49,8 @@ export default class BaaniLineActions extends React.PureComponent<
         <Link
           key={0}
           role="button"
-          aria-label="Go to shabad"
-          title="Go to shabad"
+          aria-label="Go to Shabad"
+          title="Go to Shabad"
           onClick={openShabad}
           to={toShabadURL({ shabad })}
         >

@@ -29,14 +29,17 @@ class SehajPaathLink extends React.PureComponent {
 
     return Number.isNaN(this._previouslyReadAng) === false &&
       this._previouslyReadAng > 0 ? (
-      <a
-        className="sehaj-paath-link"
-        role="button"
-        aria-label="open"
-        onClick={this.handleClick}
-      >
-        <History /> {TEXTS.SEHAJ_PAATH(this._previouslyReadAng)}
-      </a>
+      <div className="">
+        <button
+          className="apps-item sehaj-paath-link fp-buttons"
+          role="button"
+          aria-label="open"
+          onClick={this.handleClick}
+        >
+          <div className="apps-text"><History /></div>
+        </button>
+        <div className="fp-buttons-text">{TEXTS.SEHAJ_PAATH(this._previouslyReadAng)}</div>
+      </div>
     ) : null;
   }
 

@@ -15,7 +15,7 @@ export default class Doodle extends React.PureComponent {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src={`/assets/images/doodles/${src}`} />
+        <img src={`/assets/images/doodles/${src}`} alt="doodle" />
       </a>
     );
   }

@@ -1,22 +1,72 @@
+.gurbani-word {
+  position: relative;
+
+  & .vishraam-icon {
+    fill: $sttm-white;
+    width: 8px;
+
+    &-wrapper {
+      align-items: center;
+      border-radius: 50%;
+      bottom: 90%;
+      display: flex;
+      justify-content: center;
+      left: -8px;
+      padding: 4px;
+      position: absolute;
+    }
+  }
+}
+
+.larivaar-assist-word,
+.larivaar-assist-word span {
+  color: #f39c1d !important;
+}
+
 .search-results {
   margin: 0.5rem 0;
 }
 
-.search-result {
+/* stylelint-disable no-descending-specificity */
+li.search-result {
   border-bottom: 1px solid $sttm-lighter-grey;
+  display: flex;
   list-style: none;
   padding: 0.5rem 1rem;
 
-  .dark-mode & {
-    border-color: $sttm-dark-grey;
+  .shabad-detail {
+    flex-basis: 100%;
   }
 
   a {
-    color: $sttm-blue-30;
+    color: $sttm-light-blue;
     text-decoration: none;
     transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
     .search-highlight-word {
+      color: $sttm-blue;
+    }
+
+    .larivaar-assist-word {
+      color: #f39c1d;
+    }
+  }
+
+  .dark-mode & {
+    border-color: $sttm-dark-grey;
+
+    a {
+      color: $sttm-blue;
+
+      .search-highlight-word {
+        color: $sttm-light-blue;
+      }
+    }
+  }
+
+  .english-translation-search &,
+  .main-letter-search & {
+    .gurbani-display {
       color: $sttm-blue;
 
       .dark-mode & {
@@ -24,9 +74,24 @@
       }
     }
 
-    .dark-mode & {
-      color: $sttm-light-blue-60;
+    .search-highlight-word {
+      color: $sttm-black;
+      font-size: 0.95em;
+
+      .dark-mode & {
+        color: $sttm-white;
+      }
     }
+  }
+
+  .show-all-results {
+    color: $sttm-blue;
+    text-align: center;
+  }
+
+  .meta a {
+    color: grey;
+    padding-right: 5px;
   }
 
   p {
@@ -39,9 +104,24 @@
     word-wrap: break-word;
   }
 
-  .meta a {
-    color: grey;
-    padding-right: 5px;
+  .add-shabad-wrap {
+    display: inline-flex;
+    flex-basis: 40px;
+    justify-content: center;
+  }
+}
+
+.larivaar:hover {
+  .larivaar-word {
+    color: #f39c1d;
+
+    .display-visraams & {
+      color: inherit;
+
+      &.search-highlight-word {
+        color: #01669b;
+      }
+    }
   }
 }
 

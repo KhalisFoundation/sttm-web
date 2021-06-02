@@ -1,9 +1,11 @@
 import React from 'react';
 import Header from './Header';
+import Banner from './Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
 import { connect } from 'react-redux';
+import throttle from 'lodash.throttle';
 import {
   DARK_MODE_CLASS_NAME,
   ONLINE_COLOR,
@@ -11,13 +13,15 @@ import {
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
 import { setOnlineMode } from '../features/actions';
-import ScrollToTop from './ScrollToTop';
-import throttle from 'lodash.throttle';
+import { FloatingActions } from './FloatingActions';
+import MultipleShabadsDisplay from './MultipleShabadsDisplay';
+
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute } from '../util';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
     isHome: false,
-    title: DEFAULT_PAGE_TITLE,
+    title: DEFAULT_PAGE_TITLE
   };
 
   static propTypes = {
@@ -25,11 +29,15 @@ class Layout extends React.PureComponent {
     online: PropTypes.bool,
     children: PropTypes.node.isRequired,
     darkMode: PropTypes.bool.isRequired,
+    autoScrollMode: PropTypes.bool.isRequired,
     location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
       .isRequired,
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
+    isController: PropTypes.bool,
     isAng: PropTypes.bool,
+    multipleShabads: PropTypes.array,
+    showMultiViewPanel: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
   };
 
@@ -72,9 +80,15 @@ class Layout extends React.PureComponent {
       children,
       isAng = false,
       isHome = false,
+      isController = false,
+      autoScrollMode,
+      showMultiViewPanel,
       location: { pathname = '/' } = {},
       ...props
     } = this.props;
+
+    const isShowFullScreen = isShowFullscreenRoute(pathname);
+    const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
@@ -89,28 +103,39 @@ class Layout extends React.PureComponent {
 
     return online || pathname !== '/' ? (
       <React.Fragment>
-        <Header
-          defaultQuery={this.props.defaultQuery}
-          isHome={isHome}
-          isAng={isAng}
-          {...props}
-        />
-        {this.state.error ? (
-          <GenericError {...this.state.errorProps} />
-        ) : (
-          children
-        )}
-        {this.state.showScrollToTop && <ScrollToTop />}
+        <Banner />
+        <div className={`pusher ${showMultiViewPanel ? 'enable' : ''}`}>
+          <Header
+            defaultQuery={this.props.defaultQuery}
+            isHome={isHome}
+            isAng={isAng}
+            isController={isController}
+            {...props}
+          />
+
+          {this.state.error ? (
+            <GenericError {...this.state.errorProps} />
+          ) : (
+              children
+          )}
+        </div>
+        <MultipleShabadsDisplay />  
+
+        <FloatingActions
+          isShowAutoScroll={isShowAutoScroll}
+          isShowFullScreen={isShowFullScreen}
+          isShowScrollToTop={this.state.showScrollToTop} />
+
       </React.Fragment>
     ) : (
-      <div className="content-root">
-        <GenericError
-          title={TEXTS.OFFLINE}
-          description={TEXTS.OFFLINE_DESCRIPTION}
-          image={SachKaur}
-        />
-      </div>
-    );
+        <div className="content-root">
+          <GenericError
+            title={TEXTS.OFFLINE}
+            description={TEXTS.OFFLINE_DESCRIPTION}
+            image={SachKaur}
+          />
+        </div>
+      )
   }
 
   updateTheme() {
@@ -123,8 +148,10 @@ class Layout extends React.PureComponent {
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
     window.addEventListener('scroll', this.onScroll, { passive: true });
+
     document.title = this.props.title;
     this.updateTheme();
+    addVisraamClass();
   }
 
   componentWillUnmount() {
@@ -164,7 +191,7 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode }) => ({ online, darkMode }),
+  ({ online, darkMode, autoScrollMode, showMultiViewPanel }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel }),
   {
     setOnlineMode,
   }

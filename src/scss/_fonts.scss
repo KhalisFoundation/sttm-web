@@ -1,21 +1,14 @@
 /* stylelint-disable at-rule-no-unknown */
 
-@mixin load_fonts($name, $fontfile) {
-  @font-face {
-    font-display: block;
-    font-family: $name;
-    src: url('/assets/fonts/'+$fontfile+'?v=1');
-  }
-}
-
 $fontlist: (
-  gurmukhi_normal:"GurbaniAkharTrue.ttf",
-  gurmukhi_heavy: "GurbaniAkharHeavyTrue.ttf",
-  gurmukhi_thick: "GurbaniAkharThickTrue.ttf",
-  anmol_lipi: "AnmolLipiSG.ttf",
-  anmol_bold: "AnmolLipiBoldTrue.ttf",
-  notosans:"NotoSansGurmukhiTrue.ttf",
-  notosans_bold: "NotoSansGurmukhiBoldTrue.ttf",
+  gurmukhi_normal: 'GurbaniAkharTrue.ttf',
+  gurmukhi_heavy: 'GurbaniAkharHeavyTrue.ttf',
+  gurmukhi_thick: 'GurbaniAkharThickTrue.ttf',
+  anmol_lipi: 'AnmolLipiSG.ttf',
+  anmol_bold: 'AnmolLipiBoldTrue.ttf',
+  notosans: 'NotoSansGurmukhiTrue.ttf',
+  notosans_bold: 'NotoSansGurmukhiBoldTrue.ttf',
+  prabhki: 'PrabhkiTrue.ttf',
 );
 
 @each $name, $file in $fontlist {

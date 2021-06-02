@@ -4,7 +4,6 @@ import { buildApiUrl } from '@sttm/banidb';
 import PageLoader from '../PageLoader';
 import PropTypes from 'prop-types';
 import Layout, { Stub } from './Layout';
-
 export default class Hukamnama extends React.PureComponent {
   static propTypes = {
     location: PropTypes.shape({
@@ -19,7 +18,7 @@ export default class Hukamnama extends React.PureComponent {
 
     return (
       <PageLoader url={url}>
-        {({ loading, data }) => (loading ? <Stub /> : <Layout data={data} />)}
+        {({ loading, data }) => (loading ? <Stub /> : <Layout history={this.props.history} data={data} />)}
       </PageLoader>
     );
   }

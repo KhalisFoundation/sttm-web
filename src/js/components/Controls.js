@@ -1,95 +1,114 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ShabadControls from './ShabadControls';
+import ControlsSettings from "../components/ControlsSettings/ControlsSettings";
+
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
+  setSgBaaniLength,
   setFontSize,
+  setTranslationFontSize,
+  setTransliterationFontSize,
+  setLineHeight,
   setTranslationLanguages,
+  setSteekLanguages,
   setTransliterationLanguages,
+  setLarivaarAssistStrength,
   resetDisplayOptions,
   resetFontOptions,
-  toggleDisplayOptions,
-  toggleFontOptions,
+  toggleAdvancedOptions,
   toggleLarivaarAssistOption,
   toggleLarivaarOption,
   toggleTranslationOptions,
   toggleTransliterationOptions,
+  toggleSettingsPanel,
   toggleSplitViewOption,
   toggleDarkMode,
+  toggleSehajPaathMode,
+  toggleAutoScrollMode,
+  toggleParagraphMode,
+  toggleVisraams,
+  setVisraamSource,
+  setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
-} from '../features/actions';
+  closeSettingsPanel,
+  closeMultiViewPanel,
+} from '@/features/actions';
+
 
 export const supportedMedia = _s;
 
-class Controls extends React.PureComponent {
+class Controls extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.setRef = this.setRef.bind(this);
+    this.settingsRef = React.createRef();
+  }
+
   state = {
     showBorder: false,
+    showControls: true
   };
 
-  componentDidMount() {
-    this.mounted = true;
-    window.addEventListener('scroll', this.scrollListener, { passive: true });
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-    window.removeEventListener('scroll', this.scrollListener, {
-      passive: true,
-    });
-  }
-
-  scrollListener = () => {
-    if (window.scrollY >= this.$wrapper.offsetTop) {
-      if (this.mounted && this.state.showBorder === false) {
-        this.setState({ showBorder: true });
-      }
-    } else {
-      if (this.mounted && this.state.showBorder === true) {
-        this.setState({ showBorder: false });
-      }
-    }
+  static propTypes = {
+    showSettingsPanel: PropTypes.bool,
   };
 
-  setRef = node => (this.$wrapper = node);
+  setRef = node => (this.wrapperRef = node);
 
   render() {
+    const { showSettingsPanel } = this.props;
+
     return (
-      <div
-        id="controls-wrapper"
-        className={`no-select ${this.state.showBorder ? 'with-border' : ''}`}
-        ref={this.setRef}
-      >
-        <ShareButtons {...this.props} />
-        <ShabadControls {...this.props} />
-      </div>
+      <>
+        <ShareButtons settingIdRef={this.settingsRef} {...this.props} />        
+        <div className={`settings-panel ${showSettingsPanel ? 'settings-show' : ''}`}>
+          {showSettingsPanel && <ControlsSettings settingsRef={this.settingsRef} {...this.props} />}
+        </div>
+      </>
     );
   }
 }
 
 // TODO: Take exactly what we need.
-const stateToProps = state => state;
+const mapStateToProps = (state) => state
 
-const dispatchToProps = {
+const mapDispatchToProps = {
   setFontSize,
+  setTranslationFontSize,
+  setTransliterationFontSize,
   setTranslationLanguages,
   setTransliterationLanguages,
+  setSteekLanguages,
+  setLarivaarAssistStrength,
+  setSgBaaniLength,
   resetDisplayOptions,
   resetFontOptions,
-  toggleDisplayOptions,
-  toggleFontOptions,
+  toggleAdvancedOptions,
   toggleLarivaarAssistOption,
   toggleLarivaarOption,
   toggleTranslationOptions,
   toggleTransliterationOptions,
+  toggleSettingsPanel,
   toggleSplitViewOption,
+  toggleParagraphMode,
+  toggleSehajPaathMode,
   toggleDarkMode,
+  toggleAutoScrollMode,
+  toggleVisraams,
+  setLineHeight,
+  setVisraamSource,
+  setVisraamStyle,
   changeFont,
   toggleCenterAlignOption,
+  closeSettingsPanel,
+  closeMultiViewPanel,
 };
 
 // TODO: Connect individual components instead of all controls.
 export default connect(
-  stateToProps,
-  dispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Controls);
