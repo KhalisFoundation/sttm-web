@@ -25,7 +25,7 @@ export const ssoDemo = (req, res) => {
   res.redirect('/?token=' + token)
 }
 
-const ssoCallback = (req, res, next) => {
+export const ssoCallback = (req, res, next) => {
   authenticationSocialHelper(
     req,
     res,

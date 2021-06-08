@@ -9,13 +9,13 @@ import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
-import { authJwt, ssoDemo } from './config/routes';
+import { authJwt, ssoDemo, ssoCallback } from './config/routes';
 
 const passport = require("./config/passport-auth");
 
 // Setup Mariadb
-const mariadb = require('mariadb');
-const pool = mariadb.createPool({host: 'mariadb', port: 3306, user: 'root', password: 'root', database: 'tp3'});
+// const mariadb = require('mariadb');
+// const pool = mariadb.createPool({host: 'mariadb', port: 3306, user: 'root', password: 'root', database: 'tp3'});
 
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
@@ -51,20 +51,21 @@ app
   .use(express.static(`${__dirname}/../public`))
 
   // sso routes
+  .post('/login/saml', ssoCallback)
   .get('/login/demo', ssoDemo)
   .post('/auth/jwt', authJwt)
 
   // MariaDB routes
-  .get('/mariadb', (req, res) => {
-    pool.getConnection()
-      .then(conn => {
-        console.log(conn)
-        res.status(200).json({message: 'MariaDB Connection Successful'})
-      }).catch(err => {
-        console.log(err);
-        res.json({error: err, success: false});
-    });
-  })
+  // .get('/mariadb', (req, res) => {
+  //   pool.getConnection()
+  //     .then(conn => {
+  //       console.log(conn)
+  //       res.status(200).json({message: 'MariaDB Connection Successful'})
+  //     }).catch(err => {
+  //       console.log(err);
+  //       res.json({error: err, success: false});
+  //   });
+  // })
 
   // Direct all calls to index template
   .get('*', async (req, res) => {
