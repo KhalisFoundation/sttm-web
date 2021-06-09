@@ -3,7 +3,7 @@ import Header from './Header';
 import Banner from './Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
-import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
+import { DEFAULT_PAGE_TITLE, LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, TEXTS } from '../constants';
 import { connect } from 'react-redux';
 import throttle from 'lodash.throttle';
 import {
@@ -151,7 +151,7 @@ class Layout extends React.PureComponent {
     } = getQueryParams(location.search);
     // @TODO: use redux to control state of session user
     if(!isFalsy(token)) {
-      token && localStorage.setItem('SESSION_USER', JSON.stringify({token}))
+      token && localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, JSON.stringify({token}))
       history.push('/')
     }
     return;

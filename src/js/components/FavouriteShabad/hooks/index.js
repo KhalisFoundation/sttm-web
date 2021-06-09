@@ -1,7 +1,6 @@
 import React from "react";
 import { client } from "../utils/api-client";
-
-const localStorageKey = '__khalis_auth_token__'
+import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from "@/constants";
 
 export async function getUser() {
   let user = null;
@@ -15,7 +14,7 @@ export async function getUser() {
 }
 
 async function getToken() {
-  return window.localStorage.getItem(localStorageKey)
+  return window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
 }
 
 function useClient() {

@@ -35,7 +35,7 @@ export const ssoCallback = (req, res, next) => {
     user => {
       const {email} = user;
       const token = jwtSign({email});
-      return res.send({token})
+      res.redirect('/?token=' + token)
     }
   );
 }
