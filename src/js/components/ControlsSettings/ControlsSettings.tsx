@@ -29,7 +29,7 @@ const ControlsSettings = (props: any) => {
     settingsRef
   } = props;
 
-  useOnClickOutside(wrapperRef, settingsRef, () => closeSettingsPanel())
+  useOnClickOutside(settingsRef, () => closeSettingsPanel())
   useEscapeKeyEventHandler(closeSettingsPanel)
 
   useEffect(() => {

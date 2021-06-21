@@ -62,7 +62,6 @@ class ShareButtons extends React.PureComponent {
     toggleSettingsPanel: PropTypes.func,
     closeMultiViewPanel: PropTypes.func,
     showMultiViewPanel: PropTypes.bool,
-    settingIdRef: PropTypes.object,
     highlight: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -98,7 +97,7 @@ class ShareButtons extends React.PureComponent {
   }
 
   render() {
-    const { media, onEmbedClick, onCopyAllClick, settingIdRef } = this.props;
+    const { media, onEmbedClick, onCopyAllClick } = this.props;
 
     if (media.length === 0) {
       return null;
@@ -153,7 +152,7 @@ class ShareButtons extends React.PureComponent {
       ),
       settings: (
         <li key={5}>
-          <button id="settings-icon" ref={settingIdRef} onClick={this.onClickSettings}>
+          <button id="settings-icon" onClick={this.onClickSettings}>
             <GearsIcon />
             <span className="show-on-desktop">Display</span>
           </button>
