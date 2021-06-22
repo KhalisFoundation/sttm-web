@@ -121,6 +121,7 @@ class Shabad extends React.PureComponent {
         nav,
         pages,
         sgBaaniLength,
+        fullScreenMode,
         ...baniProps
       },
       handleEmbed,
@@ -141,13 +142,14 @@ class Shabad extends React.PureComponent {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
 
+    const isSyncRoute = location.pathname.includes('sync');
     const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
     const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
     const isParagraphMode = paragraphMode && isSundarGutkaRoute;
     const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
-    const isShowMetaData = this.props.hideMeta === false;
+    const isShowMetaData = this.props.hideMeta === false && !fullScreenMode;
     const isShowControls = this.props.hideControls === false;
-    const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute;
+    const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute && !fullScreenMode;
 
     return (
       <GlobalHotKeys

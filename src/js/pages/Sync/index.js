@@ -4,7 +4,8 @@ import { TEXTS, LOCAL_STORAGE_KEY_FOR_SYNC_CODE } from '../../constants';
 import Viewer from './Viewer';
 import BreadCrumb from '../../components/Breadcrumb';
 import { saveToLocalStorage, getStringFromLocalStorage } from '@/util'
-
+import { connect } from 'react-redux';
+import { setFullScreenMode } from '../../features/actions';
 /**
  *
  *
@@ -12,7 +13,7 @@ import { saveToLocalStorage, getStringFromLocalStorage } from '@/util'
  * @class Sync
  * @augments {React.PureComponent<SyncProps, SyncState>}
  */
-export default class Sync extends React.PureComponent {
+class Sync extends React.PureComponent {
   /**
    * @typedef {object} SyncProps
    */
@@ -80,7 +81,7 @@ export default class Sync extends React.PureComponent {
   }
 
   fullScreenView = (event) => {
-    this.setState({ showFullScreen: event.currentTarget.checked });
+    setFullScreenMode(event.currentTarget.checked)
   }
 
   stopSync = () => {
@@ -205,3 +206,11 @@ export default class Sync extends React.PureComponent {
       .catch(error => this._setState({ error, data: null, connected: false }));
   };
 }
+
+const mapStateToProps =({}) => ({})
+
+const mapDispatchToProps = {
+  setFullScreenMode
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sync);
