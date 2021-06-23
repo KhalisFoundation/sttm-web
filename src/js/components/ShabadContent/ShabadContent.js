@@ -105,6 +105,7 @@ class Shabad extends React.PureComponent {
     showFullScreen: PropTypes.bool,
     paragraphMode: PropTypes.bool,
     sgBaaniLength: PropTypes.string,
+    fullScreenMode: PropTypes.bool,
   };
 
   constructor(props) {
@@ -142,7 +143,6 @@ class Shabad extends React.PureComponent {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
 
-    const isSyncRoute = location.pathname.includes('sync');
     const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
     const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
     const isParagraphMode = paragraphMode && isSundarGutkaRoute;
