@@ -30,6 +30,7 @@ import {
   shortenURL,
   steekMap,
   hindiTranslationMap,
+  getBaaniVerseId,
 } from '@/util';
 import { MahankoshContext } from '@/context';
 import { changeAng, prefetchAng } from './utils';
@@ -228,6 +229,7 @@ export default class Baani extends React.PureComponent {
       highlight,
       showFullScreen,
       visraams,
+      isSundarGutkaRoute,
     } = this.props;
 
     return (
@@ -237,7 +239,7 @@ export default class Baani extends React.PureComponent {
         shouldHighlight={
           showFullScreen
             ? false
-            : highlight === parseInt(getVerseId(shabad), 10)
+            : highlight === parseInt(isSundarGutkaRoute ? getBaaniVerseId(shabad) : getVerseId(shabad), 10)
         }
         larivaar={larivaar}
         larivaarAssist={larivaarAssist}
