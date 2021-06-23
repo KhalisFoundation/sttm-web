@@ -32,7 +32,6 @@ class Sync extends React.PureComponent {
     namespaceString: '',
     error: null,
     data: {},
-    showFullScreen: false,
   };
 
   /**
@@ -47,6 +46,7 @@ class Sync extends React.PureComponent {
 
   render() {
     const { connected, error } = this.state;
+    const { fullScreenMode } = this.props;
     return (
       <div className="row" id="content-root">
         <BreadCrumb links={[{ title: TEXTS.SYNC }]} />
@@ -70,7 +70,7 @@ class Sync extends React.PureComponent {
                   <button onClick={this.stopSync}>Exit</button>
                 </div>
               </div>
-              <Viewer {...this.state} />
+              <Viewer showFullScreen={fullScreenMode} {...this.state} />
             </div>
           ) : (
               <Sync.Form onSubmit={this.handleSubmit} error={error} getCode={this.getPrevCode} />
@@ -81,6 +81,7 @@ class Sync extends React.PureComponent {
   }
 
   fullScreenView = (event) => {
+    const {setFullScreenMode} = this.props;
     setFullScreenMode(event.currentTarget.checked)
   }
 
@@ -207,7 +208,7 @@ class Sync extends React.PureComponent {
   };
 }
 
-const mapStateToProps =({}) => ({})
+const mapStateToProps =({fullScreenMode}) => ({fullScreenMode})
 
 const mapDispatchToProps = {
   setFullScreenMode
