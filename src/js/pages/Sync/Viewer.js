@@ -85,6 +85,8 @@ export default class Viewer extends React.PureComponent {
       state: { response, type },
     } = this;
 
+    console.log(namespaceString, data, showFullScreen, type)
+
     if (Object.keys(data).length === 0) {
       return <h4>{TEXTS.SYNC_CONNECTED(namespaceString)}</h4>;
     }

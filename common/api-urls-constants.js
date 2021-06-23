@@ -9,7 +9,7 @@ module.exports = {
   BANNERS: '//api.sikhitothemax.org/messages/web',
   SYNC: {
     PRODUCTION: '//api.sikhitothemax.org/',
-    LOCAL: '//stgapi.sikhitothemax.org/',
+    LOCAL: '//api.sikhitothemax.org/',
   },
   CEREMONIES: '//api.sikhitothemax.org/ceremonies/',
   DOODLE: '//api.sikhitothemax.org/doodle/',
