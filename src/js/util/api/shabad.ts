@@ -17,8 +17,6 @@ export const getGurmukhiVerse = shabad => shabad.verse.gurmukhi;
 
 export const getVerseId = shabad => shabad.verseId;
 
-export const getBaaniVerseId = baani => baani.verse.verseId;
-
 export const getShabadId = shabad => {
   return shabad.shabadId || shabad.ceremonyID || shabad.baniID;
 }
