@@ -1,5 +1,6 @@
 /* globals SYNC_API_URL */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TEXTS, LOCAL_STORAGE_KEY_FOR_SYNC_CODE } from '../../constants';
 import Viewer from './Viewer';
 import BreadCrumb from '../../components/Breadcrumb';
@@ -17,6 +18,10 @@ class Sync extends React.PureComponent {
   /**
    * @typedef {object} SyncProps
    */
+  static propTypes = {
+    fullScreenMode: PropTypes.bool.isRequired,
+    setFullScreenMode: PropTypes.func.isRequired,
+  }
 
   /**
    * @typedef {object} SyncState
