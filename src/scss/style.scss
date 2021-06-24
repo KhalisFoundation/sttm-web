@@ -108,6 +108,10 @@ select {
   .fullscreen-view & {
     display: none;
   }
+
+  + #share-menu {
+    margin-top: -27px;
+  }
 }
 
 .wrapper {
