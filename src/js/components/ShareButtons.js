@@ -45,7 +45,7 @@ class ShareButtons extends React.PureComponent {
     this.formattedShabad = {}
     this.onClickSettings = this.onClickSettings.bind(this);
     const { highlight, gurbani } = props;
-    if (!isFalsy(gurbani)) {
+    if (!isFalsy(gurbani) && gurbani.length) {
       const selectedShabad = highlight ? (gurbani?.find(({ verseId }) => verseId === highlight) ?? gurbani[0]) : gurbani[0]
       this.formattedShabad = multiviewFormattedShabad(selectedShabad)
     }
