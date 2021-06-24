@@ -111,6 +111,10 @@ select {
 
   + #share-menu {
     margin-top: -27px;
+
+    @media screen and (max-width: 790px) {
+      margin-top: 0;
+    }
   }
 }
 
@@ -446,4 +450,9 @@ body:not(.dark-mode) a {
     transform: translate(10%, 0);
     transform-origin: 0 0;
   }
+}
+
+.settingsTooltipWrapper {
+  background-color: $sttm-dark-blue !important;
+  max-width: 60%;
 }

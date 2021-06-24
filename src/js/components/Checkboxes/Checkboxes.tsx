@@ -4,6 +4,7 @@ export interface Collection {
   options: any,
   action: (attr: any) => {},
   label: string,
+  tooltip: string,
   checked: any,
   children?: {}
 }

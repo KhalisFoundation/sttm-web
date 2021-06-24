@@ -53,10 +53,12 @@ export interface ISettingActions {
   setLarivaarAssistStrength: (attr: any) => {},
   setSgBaaniLength: (attr: any) => {},
   location: {
-    pathname: string,
+    pathname?: string,
   },
   larivaarAssistStrength: number,
   translationLanguages: string[],
+  englishTranslationLanguages: string[],
+  hindiTranslationLanguages: string[],
   steekLanguages: string[],
   transliterationLanguages: string[],
   showSettingsPanel: string,
@@ -127,6 +129,8 @@ export const QUICK_SETTINGS = ({
   paragraphMode,
   steekLanguages,
   sgBaaniLength,
+  // eslint-disable-next-line no-unused-vars
+  location: { pathname = '/' } = {},
 }: ISettingActions) => {
   const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
   const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
@@ -136,6 +140,7 @@ export const QUICK_SETTINGS = ({
     {
       type: 'label-options',
       label: 'Text Align',
+      tooltip: 'Align the shabad',
       collections: [
         {
           label: 'Text Align Left',
@@ -158,11 +163,13 @@ export const QUICK_SETTINGS = ({
         {
           label: 'Larivaar',
           checked: larivaar,
+          tooltip: "Set the Larivaar or Padhshed mode",
           action: toggleLarivaarOption
         },
         {
           label: 'Larivaar Assist',
           checked: larivaarAssist,
+          tooltip: "Toggle the Larivaar assistance",
           action: toggleLarivaarAssistOption
         },
       ]
@@ -170,6 +177,7 @@ export const QUICK_SETTINGS = ({
     isSundarGutkaRoute ? {
       type: 'label-options-custom',
       label: 'Baanis Length',
+      tooltip: 'Set Baani Type',
       checked: true,
       collections:         
         SG_BAANIS.map(({name: lengthName, length, value: lengthValue}) => (
@@ -187,18 +195,21 @@ export const QUICK_SETTINGS = ({
     isSundarGutkaRoute ? {
       type: 'toggle-option',
       label: "Paragraph",
+      tooltip: 'Set the paragraph mode',
       checked: paragraphMode,
       action: toggleParagraphMode
     } : {},   
     {
       type: 'toggle-option',
       label: 'Dark Mode',
+      tooltip: 'Set the dark or light mode',
       checked: darkMode,
       action: toggleDarkMode,
     },
     {
       type: 'toggle-option',
       label: 'Vishraams',
+      tooltip: 'Add vishraams help',
       checked: visraams,
       action: toggleVisraams,
     },
@@ -206,6 +217,7 @@ export const QUICK_SETTINGS = ({
     {
       type: 'label-options-custom',
       label: 'Vishraam Style',
+      tooltip: 'Set vishraams style',
       checked: visraams,
       collections: [
         {
@@ -229,6 +241,7 @@ export const QUICK_SETTINGS = ({
     isShowSehajPaathMode ? {
       type: 'toggle-option',
       label: 'Reading [Akhand Paath]',
+      tooltip: 'Set reading mode into Akhand Paath',
       checked: sehajPaathMode,
       stage: 'beta',
       action: toggleSehajPaathMode,
@@ -236,18 +249,21 @@ export const QUICK_SETTINGS = ({
     isShowAutoScroll ? {
       type: 'toggle-option',
       label: 'Auto Scroll',
+      tooltip: 'Start auto scrolling',
       checked: autoScrollMode,
       action: toggleAutoScrollMode,
     } : {},
     {
       type: 'toggle-option',
       label: 'Split',
+      tooltip: 'Set split mode',
       checked: splitView,
       action: toggleSplitViewOption,
     },          
     {
       type: 'collapsible_item',
       label: TEXTS.TRANSLITERATION,
+      tooltip: 'Open the dropdown and select the transliteration source',
       collections: [
         {
           label: TEXTS.TRANSLITERATION,
@@ -264,6 +280,7 @@ export const QUICK_SETTINGS = ({
     {
       type: 'collapsible_item',
       label: TEXTS.TRANSLATION,
+      tooltip: 'Open the dropdown and select the translation source',
       collections: [
         {
           label: TEXTS.TRANSLATION,

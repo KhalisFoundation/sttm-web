@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ReactTooltip from 'react-tooltip';
 import Checkboxes, { Collection as CollectionProps } from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
@@ -201,7 +202,9 @@ const ControlsSettings = (props: any) => {
                     aria-label={collection.label}
                     className={`settings-action-icon ${collection.checked ? 'active-setting' : ''}`}
                     onClick={collection.action}
-                  >{renderIcon(collection.label)}</button>
+                  >
+                    {renderIcon(collection.label)}
+                  </button>
                 ))
               }
             </div>
@@ -235,10 +238,13 @@ const ControlsSettings = (props: any) => {
           <div className="settings-2cols">
             {
               settingsObj.collections?.map((collection: CollectionProps, index: number) => (
-                <div key={index} className={`settings-item ${collection.checked ? 'active-setting' : ''}`} onClick={collection.action}>
+                <div key={index} data-tip data-for={collection.label} className={`settings-item ${collection.checked ? 'active-setting' : ''}`} onClick={collection.action}>
                   <span className="settings-text">{collection.label}</span>
                   <div className="flex-spacer"></div>
                   <span className="settings-action-icon">{renderIcon(collection.label)}</span>
+                  <ReactTooltip place="top" id={collection.label} className="settingsTooltipWrapper">
+                    {collection.tooltip}
+                  </ReactTooltip>
                 </div>
               ))
             }
@@ -270,9 +276,14 @@ const ControlsSettings = (props: any) => {
             return (
               <div
                 data-cy={element.label}
+                data-tip
+                data-for={element.label}
                 key={`settings-${i}`}
                 className={`${element.type}`}>
                 {bakeSettings(element, i)}
+                <ReactTooltip place="top" id={element.label} className="settingsTooltipWrapper">
+                  {element.tooltip}
+                </ReactTooltip>
               </div>
             )
           }
@@ -304,7 +315,7 @@ const ControlsSettings = (props: any) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
