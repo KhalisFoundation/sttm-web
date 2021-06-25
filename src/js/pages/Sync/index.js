@@ -68,6 +68,7 @@ class Sync extends React.PureComponent {
                   <input type='checkbox'
                     id='fullscreen-control'
                     className="toggle-checkbox"
+                    checked={fullScreenMode}
                     onChange={this.fullScreenView} />
                   <label className="toggle-label" htmlFor='fullscreen-control'></label>
                 </div>}
@@ -91,7 +92,9 @@ class Sync extends React.PureComponent {
   }
 
   stopSync = () => {
+    const {setFullScreenMode} = this.props;
     this.setState({ connected: false });
+    setFullScreenMode(false)
   }
 
   componentDidMount() {
