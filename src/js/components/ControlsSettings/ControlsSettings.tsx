@@ -12,6 +12,7 @@ import {
 } from '../../constants';
 import { clearVisraamClass } from '@/util';
 import { useEscapeKeyEventHandler, useOnClickOutside } from "@/hooks";
+import SettingsTooltip from '../SettingsTooltip';
 
 
 const ControlsSettings = (props: any) => {
@@ -242,9 +243,7 @@ const ControlsSettings = (props: any) => {
                   <span className="settings-text">{collection.label}</span>
                   <div className="flex-spacer"></div>
                   <span className="settings-action-icon">{renderIcon(collection.label)}</span>
-                  <ReactTooltip place="top" id={collection.label} className="settingsTooltipWrapper">
-                    {collection.tooltip}
-                  </ReactTooltip>
+                  <SettingsTooltip referenceName={collection.label} tooltip={collection.tooltip} extraSettings={{ place: 'top', delayShow: 1000 }} />
                 </div>
               ))
             }
@@ -281,9 +280,7 @@ const ControlsSettings = (props: any) => {
                 key={`settings-${i}`}
                 className={`${element.type}`}>
                 {bakeSettings(element, i)}
-                <ReactTooltip place="top" id={element.label} className="settingsTooltipWrapper">
-                  {element.tooltip}
-                </ReactTooltip>
+                <SettingsTooltip referenceName={element.label} tooltip={element.tooltip} extraSettings={{ place: 'top', delayShow: 1000 }} />
               </div>
             )
           }
