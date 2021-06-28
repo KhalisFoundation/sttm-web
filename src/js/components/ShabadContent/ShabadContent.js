@@ -263,7 +263,7 @@ class Shabad extends React.PureComponent {
 
   handleCopyAll = () =>
     Promise.resolve(
-      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).innerText
+      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).textContent
     )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.GURBAANI_COPIED))
