@@ -6,7 +6,7 @@ const {authenticationSocialHelper} = require('../utils/auth')
  * If Session is active it returns saml response
  * If Session is not active it redirects to IDP's login form
  */
-const sso = (req, res, next) => {
+export const sso = (req, res, next) => {
   authenticationSocialHelper(
     req,
     res,
@@ -67,6 +67,17 @@ const googleSignInCallback = (req, res, next) => {
       return res.send(user)
     }
   );
+}
+
+export const addFavouriteShabad = (req, res) => {
+  //const {id} = req.params;
+  const {token} = req.body;
+  const isVerfied = jwtVerify(token)
+  if(isVerfied) {
+    // @TODO Sent request to mariadb table to add entry of user_id & shabad_id
+    return res.send()
+  }
+
 }
 
 

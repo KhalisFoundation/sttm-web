@@ -9,7 +9,7 @@ import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
-import { authJwt, ssoDemo, ssoCallback } from './config/routes';
+import { authJwt, sso, ssoDemo, ssoCallback } from './config/routes';
 
 const passport = require("./config/passport-auth");
 
@@ -51,9 +51,11 @@ app
   .use(express.static(`${__dirname}/../public`))
 
   // sso routes
-  .post('/login/saml', ssoCallback)
+  .get('/login/sso', sso)
   .get('/login/demo', ssoDemo)
+  .post('/login/saml', ssoCallback)
   .post('/auth/jwt', authJwt)
+  .post('/favourite-shabads/:id', addFavouriteShabad)
 
   // MariaDB routes
   // .get('/mariadb', (req, res) => {

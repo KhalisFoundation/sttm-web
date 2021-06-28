@@ -1,35 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants';
+import { useGetUser } from '@/hooks/use-get-user';
 
 function UserLogin() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useGetUser()
 
-  useEffect(() => {
-    const session = localStorage.getItem('SESSION_USER');
-    if (session) {
-      const { token } = JSON.parse(session);
-      console.log(JSON.stringify({ token }))
-      // @TODO: Get token and fetch user details
-      fetch('/auth/jwt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ token })
-      })
-        .then(result => result.json())
-        .then(response => {
-          console.log(response)
-          setUser(response)
-        })
-        .catch(e => {
-          console.log('E: ' + e)
-        })
-    }
-  }, [])
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    window.localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
+    setUser(null)
+  }
 
   return (
     user &&
-    (<li>Logged In</li>)
+    (<li><button onClick={handleLogout}><span>Logout</span></button></li>)
   )
 }
 

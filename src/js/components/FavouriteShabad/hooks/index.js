@@ -43,6 +43,7 @@ function onCreateFavourite(shabad) {
 }
 
 export {
+  getToken,
   onRemoveFavourite,
   onCreateFavourite,
 }
