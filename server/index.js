@@ -55,7 +55,7 @@ app
   .get('/login/demo', ssoDemo)
   .post('/login/saml', ssoCallback)
   .post('/auth/jwt', authJwt)
-  .post('/favourite-shabads/:id', addFavouriteShabad)
+  //.post('/favourite-shabads/:id', addFavouriteShabad)
 
   // MariaDB routes
   // .get('/mariadb', (req, res) => {
