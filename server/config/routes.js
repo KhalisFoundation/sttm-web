@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const {jwtSign, jwtVerify} = require('../utils/jwt')
 const {authenticationSocialHelper} = require('../utils/auth')
 
