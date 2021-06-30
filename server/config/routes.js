@@ -33,6 +33,8 @@ export const ssoCallback = (req, res, next) => {
     { failureRedirect: '/', failureFlash: true },
     "saml",
     user => {
+      console.log(req);
+      console.log(user);
       const {email} = user;
       const token = jwtSign({email});
       res.redirect('/?token=' + token)
