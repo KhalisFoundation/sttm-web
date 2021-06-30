@@ -9,7 +9,7 @@ import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
-import { authJwt, sso, ssoDemo, ssoCallback, ssoLogout } from './config/routes';
+import { authJwt, sso, ssoDemo, ssoLogout } from './config/routes';
 
 const passport = require("./config/passport-auth");
 
