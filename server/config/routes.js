@@ -40,6 +40,11 @@ export const ssoCallback = (req, res, next) => {
   );
 }
 
+export const ssoLogout = (req, res) => {
+  req.logout();
+  res.redirect('/');
+}
+
 export const authJwt = (req, res) => {
   const {token} = req.body;
   const isVerfied = jwtVerify(token)
