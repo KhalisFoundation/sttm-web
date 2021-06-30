@@ -54,7 +54,13 @@ app
   .get('/login/sso', sso)
   .get('/login/demo', ssoDemo)
   .get('/logout/saml', ssoLogout)
-  .post('/login/saml', ssoCallback)
+  .post('/login/saml', 
+    bodyParser.urlencoded({ extended: false }),
+    passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
+    function (req, res) {
+      res.redirect("/");
+    }
+  )
   .post('/auth/jwt', authJwt)
   //.post('/favourite-shabads/:id', addFavouriteShabad)
 
