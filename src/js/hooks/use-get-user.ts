@@ -2,8 +2,10 @@ import * as React from 'react'
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants'
 
 
-export const useGetUser = () => {
-  const [user, setUser] = React.useState(null);
+
+
+export const useGetUser = <D>() => {
+  const [user, setUser] = React.useState<D | null>(null);
 
   React.useEffect(() => {
     const session = window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
@@ -27,6 +29,6 @@ export const useGetUser = () => {
     }
   }, []);
 
-  return [user, setUser] as const;
+  return user;
 }
 
