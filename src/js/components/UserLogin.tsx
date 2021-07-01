@@ -1,5 +1,4 @@
 import React from 'react'
-import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants';
 import { useGetUser } from '@/hooks/use-get-user';
 import BackIcon from './Icons/Back';
 import { Link } from 'react-router-dom';
@@ -14,13 +13,6 @@ function UserLogin() {
   const dropTogglerRefProfile = React.useRef(null)
   const displayAreaRefProfile = React.useRef(null)
   const [toggleDropdownProfile, setToggleDropdownProfile] = React.useState(false);
-
-  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    window.localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
-    //setUser()
-  }
 
   function toggleDropdownHandlerProfile() {
     setToggleDropdownProfile(!toggleDropdownProfile)
