@@ -12,7 +12,7 @@ Passport.deserializeUser((user, done) => {
 
 Passport.logoutSaml = function(req, res) {
     // eslint-disable-next-line no-console
-    console.log(req.profile)    
+    console.log(req.body)    
 
     samlStrategy.logout(req, function(err, request){
         if(!err){
