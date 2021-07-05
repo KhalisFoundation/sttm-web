@@ -12,7 +12,7 @@ import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 import { authJwt, sso, ssoDemo, ssoLogout } from './config/routes';
 import { jwtSign } from './utils/jwt';
 
-const passport = require("./config/passport-auth");
+const {Passport, samlStrategy} = require("./config/Passport-auth");
 
 // Setup Mariadb
 // const mariadb = require('mariadb');
@@ -46,7 +46,7 @@ app
   })
 
   // Passport middleware
-  .use(passport.initialize())
+  .use(Passport.initialize())
 
   // Use client for static files
   .use(express.static(`${__dirname}/../public`))
@@ -54,17 +54,22 @@ app
   // sso routes
   .get('/login/sso', sso)
   .post('/logout', function (req, res) {
-    // const {nameID, nameIDFormat} = req.body;    
-    // req.profile = {};
-    // req.profile.nameID = nameID
-    // req.profile.nameIDFormat = nameIDFormat
-    passport.logoutSaml(req, res)
+    const {nameID, nameIDFormat} = req.body;    
+    req.profile = {};
+    req.profile.nameID = nameID
+    req.profile.nameIDFormat = nameIDFormat    
+     samlStrategy.logout(req, function(err, request){
+        if(!err){
+            //redirect to the IdP Logout URL
+            res.redirect(request);
+        }
+    });
   })
   .get('/login/demo', ssoDemo)
   .post('/logout/saml', ssoLogout)
   .post('/login/saml', 
     bodyParser.urlencoded({ extended: false }),
-    passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
+    Passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
     function (req, res) {
       const {nameID, email, nameIDFormat} = req.user;
       const token = jwtSign({nameID, email, nameIDFormat});

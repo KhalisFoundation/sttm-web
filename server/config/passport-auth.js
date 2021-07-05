@@ -40,4 +40,4 @@ const samlStrategy = new passportSaml.Strategy(
 
 Passport.use("saml", samlStrategy);
 
-module.exports = Passport;
+module.exports = {Passport, samlStrategy};
