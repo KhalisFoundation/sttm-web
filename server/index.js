@@ -10,7 +10,7 @@ import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 import { authJwt, sso, ssoDemo, ssoLogout } from './config/routes';
-import { jwtSign } from './utils/jwt';
+import { jwtSign, jwtVerify } from './utils/jwt';
 
 const passport = require("./config/passport-auth");
 
@@ -53,14 +53,21 @@ app
 
   // sso routes
   .get('/login/sso', sso)
+  .post('/logout', function (req, res) {
+    const {token} = req.body;
+    const decodedToken = jwtVerify(token)
+    req.user.saml.nameID = decodedToken.nameID
+    req.user.saml.nameIDFormat = decodedToken.nameIDFormat
+    passport.logoutSaml(req, res)
+  })
   .get('/login/demo', ssoDemo)
-  .get('/logout/saml', ssoLogout)
+  .post('/logout/saml', ssoLogout)
   .post('/login/saml', 
     bodyParser.urlencoded({ extended: false }),
     passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
     function (req, res) {
-      const {email} = req.user;
-      const token = jwtSign({email});
+      const {nameID, email, nameIDFormat} = req.user;
+      const token = jwtSign({nameID, email, nameIDFormat});
       res.redirect('/?token=' + token)
     }
   )
