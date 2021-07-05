@@ -31,7 +31,7 @@ const samlStrategy = new passportSaml.Strategy(
     entryPoint: process.env.SSO_ENTRYPOINT,
     issuer: process.env.SSO_ISSUER,
     callbackUrl: process.env.SSO_CALLBACK_URL,
-    logoutUrl: process.enc.SSO_LOGOUT_ENTRYPOINT,
+    logoutUrl: process.env.SSO_LOGOUT_ENTRYPOINT,
     cert: process.env.SSO_CERT,
   },
   (profile, done) => {    
