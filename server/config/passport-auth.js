@@ -21,6 +21,8 @@ Passport.logoutSaml = function(req, res) {
             res.redirect(request);
         }
     });
+
+    res.status(401).json({message: 'Something wrong happens while logout'})
 };
 
 // SAML strategy for passport -- Single IPD

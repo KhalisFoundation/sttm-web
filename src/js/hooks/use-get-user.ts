@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants'
 
-
-
-
 export const useGetUser = <D>() => {
   const [user, setUser] = React.useState<D | null>(null);
 

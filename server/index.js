@@ -54,10 +54,9 @@ app
   // sso routes
   .get('/login/sso', sso)
   .post('/logout', function (req, res) {
-    const {token} = req.body;
-    const decodedToken = jwtVerify(token)
-    req.user.saml.nameID = decodedToken.nameID
-    req.user.saml.nameIDFormat = decodedToken.nameIDFormat
+    const {nameID, nameIDFormat} = req.body;    
+    req.user.saml.nameID = nameID
+    req.user.saml.nameIDFormat = nameIDFormat
     passport.logoutSaml(req, res)
   })
   .get('/login/demo', ssoDemo)

@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 interface IUser {
   email: string,
   iat: number,
+  nameID: string,
+  nameIDFormat: string,
 }
 
 function UserLogin() {
@@ -17,6 +19,15 @@ function UserLogin() {
   function toggleDropdownHandlerProfile() {
     setToggleDropdownProfile(!toggleDropdownProfile)
   }
+
+  function handleLogout(e: React.MouseEvent<HTMLElement>) {
+    e.preventDefault()
+    fetch('/logout', {
+      method: 'POST',
+      body: JSON.stringify({ nameID: user?.nameID, nameIDFormat: user?.nameIDFormat })
+    })
+  }
+
 
   return (
     user ?
@@ -32,7 +43,7 @@ function UserLogin() {
             <Link to="/">
               {user.email}
             </Link>
-            <Link to="/logout">
+            <Link to="/logout" onClick={handleLogout}>
               Logout
             </Link>
           </div>
