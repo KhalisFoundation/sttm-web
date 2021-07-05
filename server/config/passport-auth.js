@@ -12,10 +12,7 @@ Passport.deserializeUser((user, done) => {
 
 Passport.logoutSaml = function(req, res) {
     // eslint-disable-next-line no-console
-    console.log(req.profile)
-    //Here add the nameID and nameIDFormat to the user if you stored it someplace.
-    req.profile.nameID = req.profile.saml.nameID;
-    req.profile.nameIDFormat = req.profile.saml.nameIDFormat;
+    console.log(req.profile)    
 
     samlStrategy.logout(req, function(err, request){
         if(!err){
