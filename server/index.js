@@ -56,6 +56,7 @@ app
   .post('/logout', function (req, res) {
     const {nameID, nameIDFormat} = req.body;    
     req.profile = {nameID, nameIDFormat};
+    console.log(req.profile);
     return passport.logoutSaml(req, res)
   })
   .get('/login/demo', ssoDemo)

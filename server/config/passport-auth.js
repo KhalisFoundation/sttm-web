@@ -13,10 +13,10 @@ Passport.deserializeUser((user, done) => {
 
 Passport.logoutSaml = function(req, res) {
     // eslint-disable-next-line no-console
+    console.log(req)
      const {nameID, nameIDFormat} = req.profile;   
     console.log(req.profile);
-    req.user.nameID = nameID;
-    req.user.nameIDFormat = nameIDFormat;
+    req.user = {nameID, nameIDFormat}
     console.log(req.user);
 
     samlStrategy.logout(req, function(err, request){
