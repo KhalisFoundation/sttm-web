@@ -11,7 +11,7 @@ Passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-Passport.logoutSaml = function(req, res) {
+Passport.logoutSaml = (req, res) => {
     console.log(req.user)
     samlStrategy.logout(req, function(err, request){
       // eslint-disable-next-line no-console
@@ -19,6 +19,7 @@ Passport.logoutSaml = function(req, res) {
         if(!err){
             //redirect to the IdP Logout URL
             res.redirect(request);
+            return;
         }
     });
 
