@@ -59,6 +59,7 @@ app
     req.profile.nameID = nameID
     req.profile.nameIDFormat = nameIDFormat    
      samlStrategy.logout(req, function(err, request){
+       console.log(err)
         if(!err){
             //redirect to the IdP Logout URL
             res.redirect(request);
