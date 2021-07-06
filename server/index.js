@@ -53,10 +53,7 @@ app
 
   // sso routes
   .get('/login/sso', sso)
-  .post('/logout', function (req, res) {
-    const {nameID, nameIDFormat} = req.body;    
-    req.profile = {nameID, nameIDFormat};
-    console.log(req.profile);
+  .post('/logout', function (req, res) {    
     return passport.logoutSaml(req, res)
   })
   .get('/login/demo', ssoDemo)
