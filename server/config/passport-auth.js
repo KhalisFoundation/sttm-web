@@ -12,18 +12,14 @@ Passport.deserializeUser((user, done) => {
 });
 
 Passport.logoutSaml = (req, res) => {
-    console.log(req.user)
     samlStrategy.logout(req, function(err, request){
       // eslint-disable-next-line no-console
       console.log(err, request)
         if(!err){
             //redirect to the IdP Logout URL
             res.redirect(request);
-            return;
         }
     });
-
-    res.status(401).json({message: 'Something wrong happens while logout'})
 };
 
 // SAML strategy for passport -- Single IPD
