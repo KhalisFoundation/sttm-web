@@ -24,6 +24,9 @@ function UserLogin() {
     e.preventDefault()
     fetch('/logout', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ nameID: user?.nameID, nameIDFormat: user?.nameIDFormat })
     })
   }
