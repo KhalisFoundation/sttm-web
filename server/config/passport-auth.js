@@ -12,7 +12,7 @@ Passport.deserializeUser((user, done) => {
 
 Passport.logoutSaml = function(req, res) {
     // eslint-disable-next-line no-console
-    console.log(req.body)    
+    console.log(req)    
 
     samlStrategy.logout(req, function(err, request){
         if(!err){
@@ -40,4 +40,4 @@ const samlStrategy = new passportSaml.Strategy(
 
 Passport.use("saml", samlStrategy);
 
-module.exports = {Passport, samlStrategy};
+module.exports = Passport;
