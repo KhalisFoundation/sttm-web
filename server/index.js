@@ -4,6 +4,7 @@ require("dotenv").config();
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+var cors = require('cors')
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../common/seo';
@@ -30,6 +31,9 @@ const app = express();
 //require("./config/routes")(app);
 
 app
+  // Add CORS
+  .use(cors())
+
   // Add body parser
   .use(bodyParser.json())
 
@@ -53,13 +57,13 @@ app
 
   // sso routes
   .get('/login/sso', sso)
-  .post('/logout', (req, res) => {   
+  .post('/logout', async (req, res) => {   
     const {nameID, nameIDFormat} = req.body
     req.user = { nameID, nameIDFormat }
     passport.logoutSaml(req, res)
   })
   .get('/login/demo', ssoDemo)
-  .post('/logout/saml', ssoLogout)
+  .get('/logout/saml', ssoLogout)
   .post('/login/saml', 
     bodyParser.urlencoded({ extended: false }),
     passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
