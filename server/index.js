@@ -61,8 +61,8 @@ app
     next();
   })
   .get('/login/sso', sso)
-  .post('/logout', (req, res) => {   
-    const {nameID, nameIDFormat} = req.body
+  .get('/logout', (req, res) => {   
+    const {nameID, nameIDFormat} = req.params
     req.user = { nameID, nameIDFormat }
     passport.logoutSaml(req, res)
   })

@@ -22,19 +22,13 @@ function UserLogin() {
 
   function handleLogout(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault()
-    fetch('/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ nameID: user?.nameID, nameIDFormat: user?.nameIDFormat })
-    })
+    window.location.href = `/logout?nameID=${user?.nameID}&nameIDFormat=${encodeURIComponent(!!user?.nameIDFormat)}`;
   }
 
   return (
     user ?
       (
-        <li data-cy="sync" className={`${toggleDropdownProfile ? 'opened' : ''} submenu`}>
+        <li className={`${toggleDropdownProfile ? 'opened' : ''} submenu`}>
           <button name="sync-btn" onClick={toggleDropdownHandlerProfile} ref={dropTogglerRefProfile}>
             <span>
               Profile
