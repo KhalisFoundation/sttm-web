@@ -31,9 +31,6 @@ const app = express();
 //require("./config/routes")(app);
 
 app
-  // Add CORS
-  .use(cors())
-
   // Add body parser
   .use(bodyParser.json())
 
@@ -56,8 +53,9 @@ app
   .use(express.static(`${__dirname}/../public`))
 
   // sso routes
+  .options('*', cors())
   .get('/login/sso', sso)
-  .post('/logout', async (req, res) => {   
+  .post('/logout', (req, res) => {   
     const {nameID, nameIDFormat} = req.body
     req.user = { nameID, nameIDFormat }
     passport.logoutSaml(req, res)
