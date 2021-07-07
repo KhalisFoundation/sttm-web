@@ -22,7 +22,9 @@ function UserLogin() {
 
   function handleLogout(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault()
-    window.location.href = `/logout?nameID=${user?.nameID}&nameIDFormat=${encodeURIComponent(!!user?.nameIDFormat)}`;
+    if (user) {
+      window.location.href = `/logout?nameID=${user?.nameID}&nameIDFormat=${encodeURIComponent(user.nameIDFormat)}`;
+    }
   }
 
   return (
