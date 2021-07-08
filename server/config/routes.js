@@ -45,7 +45,7 @@ export const ssoCallback = (req, res, next) => {
 
 export const ssoLogout = (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.redirect('/?logout=success');
 }
 
 export const authJwt = (req, res) => {

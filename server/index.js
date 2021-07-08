@@ -4,7 +4,6 @@ require("dotenv").config();
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-var cors = require('cors')
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../common/seo';
@@ -52,22 +51,8 @@ app
   // Use client for static files
   .use(express.static(`${__dirname}/../public`))
 
-  // sso routes
-  .options('*', cors())
-  .use((req, res, next) => {
-    res.append('Access-Control-Allow-Origin', ['*']);
-    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.append('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-  })
+  // sso routes  
   .get('/login/sso', sso)
-  .get('/logout', (req, res) => {   
-    const {nameID, nameIDFormat} = req.params
-    req.user = { nameID, nameIDFormat }
-    passport.logoutSaml(req, res)
-  })
-  .get('/login/demo', ssoDemo)
-  .get('/logout/saml', ssoLogout)
   .post('/login/saml', 
     bodyParser.urlencoded({ extended: false }),
     passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
@@ -77,6 +62,12 @@ app
       res.redirect('/?token=' + token)
     }
   )
+  .get('/logout', (req, res) => {   
+    const {nameID, nameIDFormat} = req.params
+    req.user = { nameID, nameIDFormat }
+    passport.logoutSaml(req, res)
+  })
+  .get('/logout/saml', ssoLogout)
   .post('/auth/jwt', authJwt)
   //.post('/favourite-shabads/:id', addFavouriteShabad)
 

@@ -144,21 +144,30 @@ class Layout extends React.PureComponent {
     );
   }
 
-  processToken() {
+  processAuth() {
     const {location, history} = this.props
     const {
-      token
+      token, logout
     } = getQueryParams(location.search);
     // @TODO: use redux to control state of session user
     if(!isFalsy(token)) {
       token && localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, JSON.stringify({token}))
       history.push('/')
     }
+    // @TODO: use redux to remove user sesssion
+    if(logout === 'success') {
+      localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
+      history.push('/')
+    }
     return;
   }
 
+  logout() {
+
+  }
+
   componentDidMount() {
-    this.processToken();
+    this.processAuth();
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
     window.addEventListener('scroll', this.onScroll, { passive: true });
