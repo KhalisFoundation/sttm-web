@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetUser } from '@/hooks/use-get-user';
+import { useGetUser, useOnClickOutside } from '@/hooks';
 import BackIcon from './Icons/Back';
 import { Link } from 'react-router-dom';
 
@@ -10,28 +10,34 @@ interface IUser {
   nameIDFormat: string,
 }
 
-function UserLogin() {
-  const user = useGetUser<IUser>()
+const UserLogin = () => {
   const dropTogglerRefProfile = React.useRef(null)
   const displayAreaRefProfile = React.useRef(null)
   const [toggleDropdownProfile, setToggleDropdownProfile] = React.useState(false);
+  useOnClickOutside(dropTogglerRefProfile, null, () => setToggleDropdownProfile(false))
+  const user = useGetUser<IUser>()
 
-  function toggleDropdownHandlerProfile() {
+  const toggleDropdownHandlerProfile = () => {
     setToggleDropdownProfile(!toggleDropdownProfile)
   }
 
-  function handleLogout(e: React.MouseEvent<HTMLElement>) {
+  const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
     if (user) {
       window.location.href = `/logout?nameID=${user?.nameID}&nameIDFormat=${encodeURIComponent(user.nameIDFormat)}`;
     }
   }
 
+  const onLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    window.location.href = `/login/sso`
+  }
+
   return (
     user ?
       (
         <li className={`${toggleDropdownProfile ? 'opened' : ''} submenu`}>
-          <button name="sync-btn" onClick={toggleDropdownHandlerProfile} ref={dropTogglerRefProfile}>
+          <button name="profile-btn" onClick={toggleDropdownHandlerProfile} ref={dropTogglerRefProfile}>
             <span>
               Profile
               <BackIcon />
@@ -45,9 +51,17 @@ function UserLogin() {
               Logout
             </Link>
           </div>
-        </li >
+        </li>
       )
-      : null
+      : (
+        <li>
+          <button name="login-btn" onClick={onLogin}>
+            <span>
+              Login
+            </span>
+          </button>
+        </li>
+      )
   )
 }
 

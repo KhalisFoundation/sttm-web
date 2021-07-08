@@ -162,10 +162,6 @@ class Layout extends React.PureComponent {
     return;
   }
 
-  logout() {
-
-  }
-
   componentDidMount() {
     this.processAuth();
     window.addEventListener('online', this.onOnline);
