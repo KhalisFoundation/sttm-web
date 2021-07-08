@@ -14,7 +14,7 @@ const UserLogin = () => {
   const dropTogglerRefProfile = React.useRef(null)
   const displayAreaRefProfile = React.useRef(null)
   const [toggleDropdownProfile, setToggleDropdownProfile] = React.useState(false);
-  useOnClickOutside(dropTogglerRefProfile, null, () => setToggleDropdownProfile(false))
+  useOnClickOutside(dropTogglerRefProfile, displayAreaRefProfile, () => setToggleDropdownProfile(false))
   const user = useGetUser<IUser>()
 
   const toggleDropdownHandlerProfile = () => {
