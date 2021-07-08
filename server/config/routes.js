@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import bodyParser from 'body-parser';
-const passport = require("./config/passport-auth");
+const passport = require("./passport-auth");
 const {jwtSign, jwtVerify} = require('../utils/jwt')
 const {authenticationSocialHelper} = require('../utils/auth')
 
