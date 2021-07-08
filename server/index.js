@@ -24,7 +24,7 @@ port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
 
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
 // Compress files

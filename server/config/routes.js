@@ -22,14 +22,11 @@ const sso = (req, res, next) => {
   );
 }
 
-const ssoCallback = () => {
-  bodyParser.urlencoded({ extended: false }),
-  passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
-  (req, res) => {
-    const {nameID, email, nameIDFormat} = req.user;
-    const token = jwtSign({nameID, email, nameIDFormat});
-    res.redirect('/?token=' + token)
-  }
+const ssoCallback = (req, res) => {    
+  const {nameID, email, nameIDFormat} = req.user;
+  const token = jwtSign({nameID, email, nameIDFormat});
+  res.redirect('/?token=' + token);
+  passport.authenticate("saml", { failureRedirect: "/", failureFlash: true });
 }
 
 const ssoLogout = (req, res) => {
