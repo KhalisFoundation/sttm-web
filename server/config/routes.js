@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import bodyParser from 'body-parser';
 const passport = require("./passport-auth");
+import bodyParser from 'body-parser';
 const {jwtSign, jwtVerify} = require('../utils/jwt')
 const {authenticationSocialHelper} = require('../utils/auth')
 
@@ -26,7 +26,6 @@ const ssoCallback = (req, res) => {
   const {nameID, email, nameIDFormat} = req.user;
   const token = jwtSign({nameID, email, nameIDFormat});
   res.redirect('/?token=' + token);
-  passport.authenticate("saml", { failureRedirect: "/", failureFlash: true });
 }
 
 const ssoLogout = (req, res) => {
@@ -59,7 +58,7 @@ export const addFavouriteShabad = (req, res) => {
 
 module.exports = function(server) {
   server.get('/login/sso', sso);
-  server.post('/login/saml', ssoCallback);
+  server.post('/login/saml', bodyParser.urlencoded({ extended: false }), passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }), ssoCallback);
   server.get('/logout', ssoLogout);
   server.get('/logout/saml', ssoLogoutCallback);
   server.post('/auth/jwt', authJwt);  
