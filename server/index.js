@@ -9,7 +9,7 @@ import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
-import { authJwt, sso, ssoDemo, ssoLogout } from './config/routes';
+import { authJwt, sso, ssoLogout } from './config/routes';
 import { jwtSign } from './utils/jwt';
 
 const passport = require("./config/passport-auth");
@@ -26,49 +26,47 @@ port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
 
-// Define routes here
-//require("./config/routes")(app);
 
-app
-  // Add body parser
-  .use(bodyParser.json())
+app.use(bodyParser.json())
 
-  // Compress files
-  .use(compression())
+// Compress files
+app.use(compression())
 
   // Add cookie parser
-  .use(cookieParser())
+app.use(cookieParser())
 
   // Infrastructure display
-  .use((req, res, next) => {
+app.use((req, res, next) => {
     res.setHeader('origin-server', hostname);
     return next();
   })
 
   // passport middleware
-  .use(passport.initialize())
+app.use(passport.initialize())
 
   // Use client for static files
-  .use(express.static(`${__dirname}/../public`))
+app.use(express.static(`${__dirname}/../public`))
 
+// Define routes here
+require("./config/routes")(app);
   // sso routes  
-  .get('/login/sso', sso)
-  .post('/login/saml', 
-    bodyParser.urlencoded({ extended: false }),
-    passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
-    function (req, res) {
-      const {nameID, email, nameIDFormat} = req.user;
-      const token = jwtSign({nameID, email, nameIDFormat});
-      res.redirect('/?token=' + token)
-    }
-  )
-  .get('/logout', (req, res) => {   
-    const {nameID, nameIDFormat} = req.params
-    req.user = { nameID, nameIDFormat }
-    passport.logoutSaml(req, res)
-  })
-  .get('/logout/saml', ssoLogout)
-  .post('/auth/jwt', authJwt)
+  // .get('/login/sso', sso)
+  // .post('/login/saml', 
+  //   bodyParser.urlencoded({ extended: false }),
+  //   passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
+  //   function (req, res) {
+  //     const {nameID, email, nameIDFormat} = req.user;
+  //     const token = jwtSign({nameID, email, nameIDFormat});
+  //     res.redirect('/?token=' + token)
+  //   }
+  // )
+  // .get('/logout', (req, res) => {   
+  //   const {nameID, nameIDFormat} = req.params
+  //   req.user = { nameID, nameIDFormat }
+  //   passport.logoutSaml(req, res)
+  // })
+  // .get('/logout/saml', ssoLogout)
+  // .post('/auth/jwt', authJwt)
   //.post('/favourite-shabads/:id', addFavouriteShabad)
 
   // MariaDB routes
@@ -84,7 +82,7 @@ app
   // })
 
   // Direct all calls to index template
-  .get('*', async (req, res) => {
+app.get('*', async (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     const language = req.cookies[LANGUAGE_COOKIE] || DEFAULT_LANGUAGE;
@@ -127,6 +125,4 @@ app
 
 
   // Listen on port
-  .listen(port, () => console.log(`Server started on port:${port}`));
-
-//require("./config/routes")(app);
+app.listen(port, () => console.log(`Server started on port:${port}`));

@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import bodyParser from 'body-parser';
+const passport = require("./config/passport-auth");
 const {jwtSign, jwtVerify} = require('../utils/jwt')
 const {authenticationSocialHelper} = require('../utils/auth')
 
@@ -7,7 +9,7 @@ const {authenticationSocialHelper} = require('../utils/auth')
  * If Session is active it returns saml response
  * If Session is not active it redirects to IDP's login form
  */
-export const sso = (req, res, next) => {
+const sso = (req, res, next) => {
   authenticationSocialHelper(
     req,
     res,
@@ -20,30 +22,23 @@ export const sso = (req, res, next) => {
   );
 }
 
-export const ssoDemo = (req, res) => {
-  const email = req.query.email
-  const token = jwtSign({email});  
-  res.redirect('/?token=' + token)
+const ssoCallback = () => {
+  bodyParser.urlencoded({ extended: false }),
+  passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
+  (req, res) => {
+    const {nameID, email, nameIDFormat} = req.user;
+    const token = jwtSign({nameID, email, nameIDFormat});
+    res.redirect('/?token=' + token)
+  }
 }
 
-export const ssoCallback = (req, res, next) => {
-  authenticationSocialHelper(
-    req,
-    res,
-    next,
-    { failureRedirect: '/', failureFlash: true },
-    "saml",
-    user => {
-      console.log(req);
-      console.log(user);
-      const {email} = user;
-      const token = jwtSign({email});
-      res.redirect('/?token=' + token)
-    }
-  );
+const ssoLogout = (req, res) => {
+  const {nameID, nameIDFormat} = req.params
+  req.user = { nameID, nameIDFormat }
+  passport.logoutSaml(req, res)
 }
 
-export const ssoLogout = (req, res) => {
+export const ssoLogoutCallback = (req, res) => {
   req.logout();
   res.redirect('/?logout=success');
 }
@@ -54,29 +49,6 @@ export const authJwt = (req, res) => {
   return res.status(200).json(isVerfied)
 };
 
-const googleSignIn = (req, res, next) => {
-  authenticationSocialHelper(
-    req,
-    res,
-    next,
-    { scope: ["profile", "email"] },
-    "googleAuth"
-  );
-}
-
-const googleSignInCallback = (req, res, next) => {
-  authenticationSocialHelper(
-    req,
-    res,
-    next,
-    {},
-    "googleAuth",
-    user => {
-      return res.send(user)
-    }
-  );
-}
-
 export const addFavouriteShabad = (req, res) => {
   //const {id} = req.params;
   const {token} = req.body;
@@ -85,15 +57,13 @@ export const addFavouriteShabad = (req, res) => {
     // @TODO Sent request to mariadb table to add entry of user_id & shabad_id
     return res.send()
   }
-
 }
 
 
 module.exports = function(server) {
   server.get('/login/sso', sso);
   server.post('/login/saml', ssoCallback);
-  server.get('/login/demo', ssoDemo);
-  server.post('/auth/jwt', authJwt);
-  server.get('/auth/google', googleSignIn);
-  server.get('/auth/google/callback', googleSignInCallback);
+  server.get('/logout', ssoLogout);
+  server.get('/logout/saml', ssoLogoutCallback);
+  server.post('/auth/jwt', authJwt);  
 }

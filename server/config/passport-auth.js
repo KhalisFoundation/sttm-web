@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 require("dotenv").config();
 const Passport = require("passport");
 const passportSaml = require('passport-saml');
@@ -13,12 +12,10 @@ Passport.deserializeUser((user, done) => {
 
 Passport.logoutSaml = (req, res) => {
     samlStrategy.logout(req, function(err, request){
-      // eslint-disable-next-line no-console
-      console.log(err, request)
-        if(!err){
-            //redirect to the IdP Logout URL
-            res.redirect(request);
-        }
+      if(!err){
+          //redirect to the IdP Logout URL
+          res.redirect(request);
+      }
     });
 };
 
