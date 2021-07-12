@@ -24,7 +24,7 @@ const sso = (req, res, next) => {
 
 const ssoCallback = (req, res) => {    
   const {nameID, email, nameIDFormat, getAssertion, getAssertionXml, getSamlResponseXml} = req.user;
-  console.log(nameID, email, nameIDFormat, getAssertion, getAssertionXml, getSamlResponseXml)
+  console.log("LOGGING: ", nameID, email, nameIDFormat, getAssertion(), getAssertionXml(), getSamlResponseXml())
   const token = jwtSign({nameID, email, nameIDFormat});
   res.redirect('/?token=' + token);
 }
