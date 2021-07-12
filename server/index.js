@@ -45,38 +45,7 @@ app.use(passport.initialize())
 app.use(express.static(`${__dirname}/../public`))
 
 // Define routes here
-require("./config/routes")(app);
-  // sso routes  
-  // .get('/login/sso', sso)
-  // .post('/login/saml', 
-  //   bodyParser.urlencoded({ extended: false }),
-  //   passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
-  //   function (req, res) {
-  //     const {nameID, email, nameIDFormat} = req.user;
-  //     const token = jwtSign({nameID, email, nameIDFormat});
-  //     res.redirect('/?token=' + token)
-  //   }
-  // )
-  // .get('/logout', (req, res) => {   
-  //   const {nameID, nameIDFormat} = req.params
-  //   req.user = { nameID, nameIDFormat }
-  //   passport.logoutSaml(req, res)
-  // })
-  // .get('/logout/saml', ssoLogout)
-  // .post('/auth/jwt', authJwt)
-  //.post('/favourite-shabads/:id', addFavouriteShabad)
-
-  // MariaDB routes
-  // .get('/mariadb', (req, res) => {
-  //   pool.getConnection()
-  //     .then(conn => {
-  //       console.log(conn)
-  //       res.status(200).json({message: 'MariaDB Connection Successful'})
-  //     }).catch(err => {
-  //       console.log(err);
-  //       res.json({error: err, success: false});
-  //   });
-  // })
+require("./config/routes")(app);  
 
   // Direct all calls to index template
 app.get('*', async (req, res) => {

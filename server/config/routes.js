@@ -23,7 +23,8 @@ const sso = (req, res, next) => {
 }
 
 const ssoCallback = (req, res) => {    
-  const {nameID, email, nameIDFormat} = req.user;
+  const {nameID, email, nameIDFormat, getAssertion, getAssertionXml, getSamlResponseXml} = req.user;
+  console.log(nameID, email, nameIDFormat, getAssertion, getAssertionXml, getSamlResponseXml)
   const token = jwtSign({nameID, email, nameIDFormat});
   res.redirect('/?token=' + token);
 }
@@ -34,26 +35,43 @@ const ssoLogout = (req, res) => {
   passport.logoutSaml(req, res)
 }
 
-export const ssoLogoutCallback = (req, res) => {
+const ssoLogoutCallback = (req, res) => {
   req.logout();
   res.redirect('/?logout=success');
 }
 
-export const authJwt = (req, res) => {
+const authJwt = (req, res) => {
   const {token} = req.body;
   const isVerfied = jwtVerify(token)
   return res.status(200).json(isVerfied)
 };
 
-export const addFavouriteShabad = (req, res) => {
-  //const {id} = req.params;
-  const {token} = req.body;
-  const isVerfied = jwtVerify(token)
-  if(isVerfied) {
-    // @TODO Sent request to mariadb table to add entry of user_id & shabad_id
-    return res.send()
-  }
+const authSaml = (req, res, next) => {
+  authenticationSocialHelper(
+    req,
+    res,
+    next,
+    {
+      successRedirect: '/',
+      failureRedirect: '/login',
+    },
+    "saml",
+    (user) => {
+      console.log(user)
+    }
+  );
 }
+
+
+// const addFavouriteShabad = (req, res) => {
+//   //const {id} = req.params;
+//   const {token} = req.body;
+//   const isVerfied = jwtVerify(token)
+//   if(isVerfied) {
+//     // @TODO Sent request to mariadb table to add entry of user_id & shabad_id
+//     return res.send()
+//   }
+// }
 
 
 module.exports = function(server) {
@@ -62,4 +80,5 @@ module.exports = function(server) {
   server.get('/logout', ssoLogout);
   server.get('/logout/saml', ssoLogoutCallback);
   server.post('/auth/jwt', authJwt);  
+  server.get('/auth/saml', authSaml);  
 }

@@ -39,14 +39,11 @@ const UserLogin = () => {
         <li className={`${toggleDropdownProfile ? 'opened' : ''} submenu`}>
           <button name="profile-btn" onClick={toggleDropdownHandlerProfile} ref={dropTogglerRefProfile}>
             <span>
-              Profile
+              {user.nameID}
               <BackIcon />
             </span>
           </button>
           <div className="submenu-items" ref={displayAreaRefProfile}>
-            <Link to="/">
-              {user.email}
-            </Link>
             <Link to="/logout" onClick={handleLogout}>
               Logout
             </Link>
