@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 const passport = require("./passport-auth");
 import bodyParser from 'body-parser';
-import { stubString } from 'cypress/types/lodash';
 const {jwtSign, jwtVerify} = require('../utils/jwt')
 const {authenticationSocialHelper} = require('../utils/auth')
 
