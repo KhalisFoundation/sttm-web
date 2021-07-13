@@ -20,7 +20,11 @@ export const useGetUser = <D>() => {
       .catch(e => {            
         // eslint-disable-next-line no-console
         console.log('E: ' + e)
+        localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
       })
+    }
+    return ()=> {
+      localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
     }
   }, []);
 

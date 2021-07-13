@@ -13,12 +13,6 @@ async function client(
 
   return window.fetch(`${endpoint}`, config).then(async response => {
     if (response.status === 401) {
-      // @TODO logout 
-      // await auth.logout()
-      // refresh the page for them
-      const query = new URLSearchParams(window.location.search);
-      query.append("logout", "success");
-      window.location.assign(query)
       return Promise.reject({message: 'Please re-authenticate.'})
     }
     const data = await response.json()

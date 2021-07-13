@@ -46,8 +46,12 @@ const authJwt = (req, res) => {
     return res.status(401).json({ error: 'No credentials sent!' });
   }
   const token = bearerToken.substr(7);
-  const isVerfied = jwtVerify(token)
-  return isVerfied ? res.status(200).json(isVerfied) : res.status(401);
+  try {
+    const isVerfied = jwtVerify(token)
+    res.status(200).json(isVerfied)
+  } catch(err) {
+    res.status(401).json({error: err})
+  }
 };
 
 const authSaml = (req, res, next) => {
