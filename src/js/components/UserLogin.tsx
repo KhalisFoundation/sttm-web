@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 interface IUser {
   email: string,
   iat: number,
+  firstname: string,
+  lastname: string,
   nameID: string,
   nameIDFormat: string,
 }
@@ -39,7 +41,7 @@ const UserLogin = () => {
         <li className={`${toggleDropdownProfile ? 'opened' : ''} submenu`}>
           <button name="profile-btn" onClick={toggleDropdownHandlerProfile} ref={dropTogglerRefProfile}>
             <span>
-              {user.nameID}
+              {user.firstname + ' ' + user.lastname}
               <BackIcon />
             </span>
           </button>

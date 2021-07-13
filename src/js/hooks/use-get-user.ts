@@ -1,33 +1,26 @@
 import * as React from 'react'
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants'
-//import { client } from '@/components/FavouriteShabad/utils/api-client';
+import { client } from '@/components/FavouriteShabad/utils/api-client';
 
 export const useGetUser = <D>() => {
   const [user, setUser] = React.useState<D | null>(null);
 
   
-  React.useEffect(() => {
-    // client(`auth/saml`)
-    //   .then(profile => setUser(profile))
-    //   .catch(err => {throw new Error(err)})
+  React.useEffect(() => {    
     const session = window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
     if (session) {
       const { token } = JSON.parse(session);        
-      fetch('/auth/jwt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ token })
+      client('/auth/jwt', {
+        data: {},
+        token
+      })      
+      .then(response => {
+        setUser(response)
       })
-        .then(result => result.json())
-        .then(response => {
-          setUser(response)
-        })
-        .catch(e => {            
-          // eslint-disable-next-line no-console
-          console.log('E: ' + e)
-        })
+      .catch(e => {            
+        // eslint-disable-next-line no-console
+        console.log('E: ' + e)
+      })
     }
   }, []);
 

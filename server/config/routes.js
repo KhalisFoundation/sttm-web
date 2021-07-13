@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const passport = require("./passport-auth");
 import bodyParser from 'body-parser';
+import { stubString } from 'cypress/types/lodash';
 const {jwtSign, jwtVerify} = require('../utils/jwt')
 const {authenticationSocialHelper} = require('../utils/auth')
 
@@ -25,7 +26,7 @@ const sso = (req, res, next) => {
 const ssoCallback = (req, res) => {    
   const {nameID, email, nameIDFormat, firstname, lastname, getAssertion, getAssertionXml, getSamlResponseXml} = req.user;
   console.log("LOGGING: ", nameID, email, nameIDFormat, firstname, lastname, getAssertion(), getAssertionXml(), getSamlResponseXml())
-  const token = jwtSign({nameID, email, nameIDFormat});
+  const token = jwtSign({firstname, lastname, email, nameID, nameIDFormat});
   res.redirect('/?token=' + token);
 }
 
@@ -41,9 +42,13 @@ const ssoLogoutCallback = (req, res) => {
 }
 
 const authJwt = (req, res) => {
-  const {token} = req.body;
+  const bearerToken = req.headers.authorization;
+  if(!bearerToken) {
+    return res.status(401).json({ error: 'No credentials sent!' });
+  }
+  const token = bearerToken.substr(7);
   const isVerfied = jwtVerify(token)
-  return res.status(200).json(isVerfied)
+  return isVerfied ? res.status(200).json(isVerfied) : res.status(401);
 };
 
 const authSaml = (req, res, next) => {
@@ -51,10 +56,7 @@ const authSaml = (req, res, next) => {
     req,
     res,
     next,
-    {
-      successRedirect: '/',
-      failureRedirect: '/login',
-    },
+    {},
     "saml",
     (user) => {
       console.log(user)
