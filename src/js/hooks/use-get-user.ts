@@ -23,9 +23,6 @@ export const useGetUser = <D>() => {
         localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
       })
     }
-    return ()=> {
-      localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
-    }
   }, []);
 
   return user;
