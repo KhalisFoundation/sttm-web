@@ -54,17 +54,11 @@ const authJwt = (req, res) => {
   }
 };
 
-const authSaml = (req, res, next) => {
-  authenticationSocialHelper(
-    req,
-    res,
-    next,
-    {},
-    "saml",
-    (user) => {
-      console.log(user)
-    }
-  );
+const userFavouriteShabad = (req, res) => {
+  const {email, shabadId} = req.body;
+  // @TODO Sent request to mariadb table to add entry of user_id & shabad_id
+  const response = null;
+  res.status(200).json({shabad: response});
 }
 
 
@@ -84,6 +78,6 @@ module.exports = function(server) {
   server.post('/login/saml', bodyParser.urlencoded({ extended: false }), passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }), ssoCallback);
   server.get('/logout', ssoLogout);
   server.get('/logout/saml', ssoLogoutCallback);
-  server.post('/auth/jwt', authJwt);  
-  server.get('/auth/saml', authSaml);  
+  server.get('/auth/jwt', authJwt);  
+  server.post('/user-favourite-shabad', userFavouriteShabad);  
 }

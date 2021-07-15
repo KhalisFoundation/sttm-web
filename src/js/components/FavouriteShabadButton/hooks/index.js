@@ -4,25 +4,22 @@ import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from "@/constants";
 
 export async function getUser() {
   let user = null;
-  const {token} = await getToken()
-  // @TODO send me request to get user details
+  const {token} = getToken()
   if (token) {
-    const data = await client('me', {token})
-    user = data.user
+    user = await client('auth/jwt', {token})
   }
   return user;
 }
 
-async function getToken() {
-  return window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
+function getToken() {
+  const session = window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
+  return JSON.parse(session)  
 }
 
 function useClient() {
-  const {
-    user: {token},
-  } = getUser()
+  const {token} = getToken()  
   return React.useCallback(
-    (endpoint, config) => client(endpoint, {...config, token}),
+    (endpoint, config) => client(endpoint, {config, token}),
     [token],
   )
 }
@@ -42,8 +39,17 @@ function onCreateFavourite(shabad) {
   .catch(err => {throw new Error(err)})
 }
 
+function userFavouriteShabad(shabad) {
+  const client = useClient()
+
+  client(`user-favourite-shabad/${shabad.id}`, {method: 'POST'})
+  .catch(err => {throw new Error(err)})
+}
+
 export {
   getToken,
+  useClient,
   onRemoveFavourite,
   onCreateFavourite,
+  userFavouriteShabad,
 }

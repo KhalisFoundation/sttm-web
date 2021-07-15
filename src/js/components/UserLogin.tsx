@@ -2,15 +2,7 @@ import React from 'react'
 import { useGetUser, useOnClickOutside } from '@/hooks';
 import BackIcon from './Icons/Back';
 import { Link } from 'react-router-dom';
-
-interface IUser {
-  email: string,
-  iat: number,
-  firstname: string,
-  lastname: string,
-  nameID: string,
-  nameIDFormat: string,
-}
+import { IUser } from '@/types/user'
 
 const UserLogin = () => {
   const dropTogglerRefProfile = React.useRef(null)
