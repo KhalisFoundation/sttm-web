@@ -182,7 +182,7 @@ class ShareButtons extends React.PureComponent {
         </li>
       ),
        favouriteShabad: (
-        <li key={7}>
+        <li key={9}>
           {
             <FavouriteShabadButton shabad={this.formattedShabad} />
           }

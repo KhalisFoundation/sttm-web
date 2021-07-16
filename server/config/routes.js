@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 const {jwtSign, jwtVerify} = require('../utils/jwt')
 const {authenticationSocialHelper} = require('../utils/auth')
 
+
 /**
  * This Route Authenticates req with IDP
  * If Session is active it returns saml response
@@ -22,9 +23,13 @@ const sso = (req, res, next) => {
   );
 }
 
+const createUserCallback = async (connection) => {
+  const rows = await connection.query("SELECT * from users");
+  console.log(rows)
+}
+
 const ssoCallback = (req, res) => {    
-  const {nameID, email, nameIDFormat, firstname, lastname, getAssertion, getAssertionXml, getSamlResponseXml} = req.user;
-  console.log("LOGGING: ", nameID, email, nameIDFormat, firstname, lastname, getAssertion(), getAssertionXml(), getSamlResponseXml())
+  const {nameID, email, nameIDFormat, firstname, lastname} = req.user;
   const token = jwtSign({firstname, lastname, email, nameID, nameIDFormat});
   res.redirect('/?token=' + token);
 }
@@ -54,11 +59,17 @@ const authJwt = (req, res) => {
   }
 };
 
-const userFavouriteShabad = (req, res) => {
-  const {email, shabadId} = req.body;
+const favouriteShabad = (req, res) => {
+  const shabadId = req.params.shabadId;
+  const bearerToken = req.headers.authorization;
+  const token = bearerToken.substr(7);
+  const {email} = jwtVerify(token)
+  
+  //asyncFunction(createUserCallback)
+
   // @TODO Sent request to mariadb table to add entry of user_id & shabad_id
-  const response = null;
-  res.status(200).json({shabad: response});
+  const response = false;
+  res.status(200).json({favourite: response, shabadId, email});
 }
 
 
@@ -79,5 +90,5 @@ module.exports = function(server) {
   server.get('/logout', ssoLogout);
   server.get('/logout/saml', ssoLogoutCallback);
   server.get('/auth/jwt', authJwt);  
-  server.post('/user-favourite-shabad', userFavouriteShabad);  
+  server.get('/favourite-shabad/:shabadId', favouriteShabad);  
 }

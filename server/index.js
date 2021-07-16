@@ -12,10 +12,6 @@ import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 
 const passport = require("./config/passport-auth");
 
-// Setup Mariadb
-// const mariadb = require('mariadb');
-// const pool = mariadb.createPool({host: 'mariadb', port: 3306, user: 'root', password: 'root', database: 'tp3'});
-
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
 const ON_HEROKU = 'ON_HEROKU' in process.env;

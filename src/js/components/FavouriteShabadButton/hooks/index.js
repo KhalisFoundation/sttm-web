@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { client } from "../utils/api-client";
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from "@/constants";
 
@@ -39,11 +39,19 @@ function onCreateFavourite(shabad) {
   .catch(err => {throw new Error(err)})
 }
 
-function userFavouriteShabad(shabad) {
+function useFavouriteShabad(shabadId) {
+  const [isFavourite, setIsFavourite] = useState(false)
   const client = useClient()
 
-  client(`user-favourite-shabad/${shabad.id}`, {method: 'POST'})
-  .catch(err => {throw new Error(err)})
+  useEffect(() => {
+    client(`/favourite-shabad/${shabadId}`)
+    .then(data =>  {
+      console.log(data)
+      setIsFavourite(data.favourite)
+    })
+  }, [shabadId])
+
+  return isFavourite
 }
 
 export {
@@ -51,5 +59,5 @@ export {
   useClient,
   onRemoveFavourite,
   onCreateFavourite,
-  userFavouriteShabad,
+  useFavouriteShabad,
 }
