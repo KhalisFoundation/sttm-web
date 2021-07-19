@@ -41,7 +41,8 @@ app.use(passport.initialize())
 app.use(express.static(`${__dirname}/../public`))
 
 // Define routes here
-require("./config/routes")(app);  
+require("./routes/ssoRoutes")(app);
+require("./routes/favouriteShabadsRoutes")(app);
 
   // Direct all calls to index template
 app.get('*', async (req, res) => {

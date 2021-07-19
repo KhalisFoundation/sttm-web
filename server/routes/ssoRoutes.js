@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-const passport = require("./passport-auth");
+const passport = require("../config/passport-auth");
 import bodyParser from 'body-parser';
 const {jwtSign, jwtVerify} = require('../utils/jwt')
 const {authenticationSocialHelper} = require('../utils/auth')
-
 
 /**
  * This Route Authenticates req with IDP
@@ -21,11 +20,6 @@ const sso = (req, res, next) => {
     },
     "saml"
   );
-}
-
-const createUserCallback = async (connection) => {
-  const rows = await connection.query("SELECT * from users");
-  console.log(rows)
 }
 
 const ssoCallback = (req, res) => {    
@@ -59,36 +53,10 @@ const authJwt = (req, res) => {
   }
 };
 
-const favouriteShabad = (req, res) => {
-  const shabadId = req.params.shabadId;
-  const bearerToken = req.headers.authorization;
-  const token = bearerToken.substr(7);
-  const {email} = jwtVerify(token)
-  
-  //asyncFunction(createUserCallback)
-
-  // @TODO Sent request to mariadb table to add entry of user_id & shabad_id
-  const response = false;
-  res.status(200).json({favourite: response, shabadId, email});
-}
-
-
-// const addFavouriteShabad = (req, res) => {
-//   //const {id} = req.params;
-//   const {token} = req.body;
-//   const isVerfied = jwtVerify(token)
-//   if(isVerfied) {
-//     // @TODO Sent request to mariadb table to add entry of user_id & shabad_id
-//     return res.send()
-//   }
-// }
-
-
 module.exports = function(server) {
   server.get('/login/sso', sso);
   server.post('/login/saml', bodyParser.urlencoded({ extended: false }), passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }), ssoCallback);
   server.get('/logout', ssoLogout);
   server.get('/logout/saml', ssoLogoutCallback);
-  server.get('/auth/jwt', authJwt);  
-  server.get('/favourite-shabad/:shabadId', favouriteShabad);  
+  server.get('/auth/jwt', authJwt);
 }

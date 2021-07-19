@@ -1,21 +1,38 @@
 // Setup Mariadb
 const mariadb = require('mariadb');
+require('dotenv').config();
 
-const pool = mariadb.createPool({host: process.env.MARIADB_HOST, port: process.env.MARIADB_PORT, user: process.env.MARIADB_USERNAME, password: process.env.MARIADB_PASSWORD, database: process.env.MARIADB_DATABASE});
+// Retrieve the Certificate Authority chain file (using the File System package)
+const fs = require("fs");
+const serverCert = [fs.readFileSync("skysql_chain.pem", "utf8")];
 
-async function asyncFunction(cb) {
+const pool = mariadb.createPool({
+  host: process.env.MARIADB_HOST, 
+  port: process.env.MARIADB_PORT, 
+  user: process.env.MARIADB_USERNAME, 
+  password: process.env.MARIADB_PASSWORD, 
+  database: process.env.MARIADB_DATABASE,
+  ssl: {
+    ca: serverCert
+  }
+});
+
+const getQuery = async (cb) => {
   let conn;
   try {
-    conn = await pool.getConnection();
-    cb(conn);    
+      // Establish connection to SkySQL using the db.js module
+      conn = await pool.getConnection();
+      console.log("connected ! connection id is " + conn.threadId);
+      cb(conn)
   } catch (err) {
-    throw err;
+      throw err;
   } finally {
-    conn.end();
+      // Release (close) the connection 
+      if (conn) return conn.release();
   }
 }
 
 module.exports = {
-  pool,
-  asyncFunction
+  getConnection: async () => pool.getConnection(),
+  getQuery
 }
