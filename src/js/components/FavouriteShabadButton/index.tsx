@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import { StarIcon } from '../Icons/StarIcon'
-import { onCreateFavourite, onRemoveFavourite, useFavouriteShabad } from './hooks'
+import { onCreateFavourite, onRemoveFavourite, useClient, useFavouriteShabad } from './hooks'
 import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 
 
@@ -10,30 +10,34 @@ type FCProps = {
 }
 
 export const FavouriteShabadButton: React.FC<FCProps> = ({ shabad: { shabadId } }) => {
-  console.log(shabadId)
   const isFavourite = useFavouriteShabad(shabadId)
+  const client = useClient()
+  // const handleAddFavourite = onCreateFavourite(shabadId)
+  // const handleRemoveFavourite = onRemoveFavourite(shabadId)
 
   const handleAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    onCreateFavourite(shabadId)
+    client(`favourite-shabad/${shabadId}`, { method: 'POST' })
+      .catch(err => { throw new Error(err) })
   }
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    onRemoveFavourite(shabadId)
+    client(`favourite-shabad/${shabadId}`, { method: 'DELETE' })
+      .catch(err => { throw new Error(err) })
   }
 
   return (
     isFavourite ?
       <button
         data-cy="favourite-shabad"
-        onClick={handleAddClick}
+        onClick={handleRemoveClick}
       >
         <StarIcon />
       </button>
       :
       <button
         data-cy="favourite-shabad"
-        onClick={handleRemoveClick}
+        onClick={handleAddClick}
       >
         <StarIcon fill="#868383" />
       </button>

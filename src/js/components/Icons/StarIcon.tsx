@@ -10,5 +10,5 @@ export const StarIcon = ({ fill = '#ffc107' }) => {
 }
 
 StarIcon.propTypes = {
-  fill: PropTypes.string.isRequired
+  fill: PropTypes.string
 }

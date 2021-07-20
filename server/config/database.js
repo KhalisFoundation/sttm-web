@@ -17,13 +17,13 @@ const pool = mariadb.createPool({
   }
 });
 
-const getQuery = async (cb) => {
+const runQuery = async (req, res, data, cb) => {
   let conn;
   try {
       // Establish connection to SkySQL using the db.js module
       conn = await pool.getConnection();
       console.log("connected ! connection id is " + conn.threadId);
-      cb(conn)
+      cb(req, res, data, conn)
   } catch (err) {
       throw err;
   } finally {
@@ -34,5 +34,5 @@ const getQuery = async (cb) => {
 
 module.exports = {
   getConnection: async () => pool.getConnection(),
-  getQuery
+  runQuery
 }

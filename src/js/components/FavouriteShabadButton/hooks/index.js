@@ -19,23 +19,23 @@ function getToken() {
 function useClient() {
   const {token} = getToken()  
   return React.useCallback(
-    (endpoint, config) => client(endpoint, {config, token}),
+    (endpoint, config) => client(endpoint, {...config, token}),
     [token],
   )
 }
 
-function onRemoveFavourite(shabad) {
+function onRemoveFavourite(shabadId) {
   const client = useClient()
 
-  client(`favourite-shabads/${shabad.id}`, {method: 'DELETE'})
+  return client(`favourite-shabad/${shabadId}`, {method: 'DELETE'})
   .catch(err => {throw new Error(err)})
   
 }
 
-function onCreateFavourite(shabad) {
+function onCreateFavourite(shabadId) {
   const client = useClient()
 
-  client(`favourite-shabads/${shabad.id}`, {method: 'POST'})
+  return client(`favourite-shabad/${shabadId}`, {method: 'POST'})
   .catch(err => {throw new Error(err)})
 }
 
@@ -46,7 +46,6 @@ function useFavouriteShabad(shabadId) {
   useEffect(() => {
     client(`/favourite-shabad/${shabadId}`)
     .then(data =>  {
-      console.log(data)
       setIsFavourite(data.favourite)
     })
   }, [shabadId])

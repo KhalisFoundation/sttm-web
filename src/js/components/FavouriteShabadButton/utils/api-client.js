@@ -1,6 +1,6 @@
 async function client(
   endpoint,
-  {data, token} = {},
+  {data, token, ...customConfig} = {},
 ) {
   const config = {
     method: data ? 'POST' : 'GET',
@@ -9,6 +9,7 @@ async function client(
       Authorization: token ? `Bearer ${token}` : undefined,
       'Content-Type': data ? 'application/json' : undefined,
     },
+    ...customConfig,
   }
 
   return window.fetch(`${endpoint}`, config).then(async response => {
