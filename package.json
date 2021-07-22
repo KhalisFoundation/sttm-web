@@ -141,6 +141,7 @@
     "react-h5-audio-player": "^3.4.1",
     "react-hotkeys": "^2.0.0",
     "react-intersection-observer": "^8.27.1",
+    "react-query": "^3.19.0",
     "react-range": "^1.6.6",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",

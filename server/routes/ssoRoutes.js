@@ -40,11 +40,11 @@ const ssoLogoutCallback = (req, res) => {
 }
 
 const authJwt = (req, res) => {
-  const bearerToken = req.headers.authorization;
-  if(!bearerToken) {
-    return res.status(401).json({ error: 'No credentials sent!' });
-  }
-  const token = bearerToken.substr(7);
+  const authHeader = req.headers.authorization;
+  const token = authHeader.replace('Bearer ', '')
+  if(authHeader === undefined) {
+    res.status(401).json({ error: 'No credentials sent!' });
+  }  
   try {
     const isVerfied = jwtVerify(token)
     res.status(200).json(isVerfied)

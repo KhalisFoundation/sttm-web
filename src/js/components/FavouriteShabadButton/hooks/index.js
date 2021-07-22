@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { client } from "../utils/api-client";
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from "@/constants";
+import { useQuery, queryCache } from "react-query";
 
 export async function getUser() {
   let user = null;
@@ -12,12 +13,11 @@ export async function getUser() {
 }
 
 function getToken() {
-  const session = window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
-  return JSON.parse(session)  
+  return window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
 }
 
 function useClient() {
-  const {token} = getToken()  
+  const token = getToken()  
   return React.useCallback(
     (endpoint, config) => client(endpoint, {...config, token}),
     [token],
@@ -39,18 +39,32 @@ function onCreateFavourite(shabadId) {
   .catch(err => {throw new Error(err)})
 }
 
+function setQueryDataForShabad(shabad) {
+  queryCache.setQueryData(['shabad', {shabadId: shabad.shabad_id}], shabad)
+}
+
+
+function useFavouriteShabads() {
+    const client = useClient()
+
+    const {data: favouriteShabads} = useQuery({
+    queryKey: 'favourite-shabads',
+    queryFn: () =>
+      client(`favourite-shabads`).then(data => data.favouriteShabads),
+    config: {
+      onSuccess(favouriteShabads) {
+        for (const favouriteShabad of favouriteShabads) {
+          setQueryDataForShabad(favouriteShabad)
+        }
+      },
+    },
+  })
+  return favouriteShabads ?? []
+}
+
 function useFavouriteShabad(shabadId) {
-  const [isFavourite, setIsFavourite] = useState(false)
-  const client = useClient()
-
-  useEffect(() => {
-    client(`/favourite-shabad/${shabadId}`)
-    .then(data =>  {
-      setIsFavourite(data.favourite)
-    })
-  }, [shabadId])
-
-  return isFavourite
+  const favouriteShabads = useFavouriteShabads()
+  return !!favouriteShabads.find(shabad => shabad.shabad_id === shabadId) ?? false
 }
 
 export {
