@@ -14,7 +14,8 @@ type FCProps = {
 export const FavouriteShabadButton: React.FC<FCProps> = ({ shabad: { shabadId } }) => {
   //  
   const user = useGetUser<IUser>()
-  const isFav = useFavouriteShabad(shabadId)
+  // If user is valid then check for favourite shabads
+  const isFav = user && useFavouriteShabad(shabadId)
   const [isFavourite, setIsFavourite] = useState(isFav)
   const client = useClient()
 
