@@ -1,14 +1,12 @@
 async function client(
   endpoint,
-  {data, token, ...customConfig} = {},
+  {token, ...customConfig} = {},
 ) {
-  console.log(token)
   const config = {
-    method: data ? 'POST' : 'GET',
-    body: data ? JSON.stringify(data) : undefined,
+    method: 'GET',
     headers: {
       Authorization: token ? `Bearer ${token}` : undefined,
-      'Content-Type': data ? 'application/json' : undefined,
+      'Content-Type': 'application/json'
     },
     ...customConfig,
   }

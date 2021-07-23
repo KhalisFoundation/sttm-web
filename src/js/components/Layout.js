@@ -151,7 +151,6 @@ class Layout extends React.PureComponent {
     } = getQueryParams(location.search);
     // @TODO: use redux to control state of session user
     if(!isFalsy(token)) {
-      console.log(token);
       window.localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, token)
       history.push('/')
     }

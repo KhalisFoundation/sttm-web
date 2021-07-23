@@ -9,8 +9,8 @@ const checkFavouriteShabadsCallback = async (req, res, data, connection) => {
   const row = await connection.query("SELECT id FROM users where email = ?", [email]);
   const user = row[0]
   const q = "SELECT * FROM favourite_shabads WHERE user_id = ?";
-  const rows = await connection.query(q, [user.id, shabad_id])
-  const favouriteShabads = rows[0] ?? []
+  const rows = await connection.query(q, [user.id])
+  const favouriteShabads = rows ?? []
   res.status(200).json({favouriteShabads});
 }    
 
@@ -30,7 +30,6 @@ const deleteFavouriteShabadCallback = async (req, res, data, connection) => {
   const user = row[0]
   const q = "DELETE FROM favourite_shabads WHERE user_id = ? AND shabad_id = ?";
   const rows = await connection.query(q, [user.id, shabad_id])
-  console.log(rows)
   const result = rows.affectedRows ?? false
   res.status(200).json({success: result});
 }   

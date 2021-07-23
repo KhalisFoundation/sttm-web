@@ -17,9 +17,9 @@ function getToken() {
 }
 
 function useClient() {
-  const token = getToken()  
+  const token = window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
   return React.useCallback(
-    (endpoint, config) => client(endpoint, {...config, token}),
+    (endpoint, ...config) => client(endpoint, {token, ...config}),
     [token],
   )
 }

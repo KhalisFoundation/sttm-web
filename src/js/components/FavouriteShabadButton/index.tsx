@@ -15,24 +15,18 @@ export const FavouriteShabadButton: React.FC<FCProps> = ({ shabad: { shabadId } 
   //  
   const user = useGetUser<IUser>()
   // If user is valid then check for favourite shabads
-  const isFav = user && useFavouriteShabad(shabadId)
-  const [isFavourite, setIsFavourite] = useState(isFav)
+  const isFav = useFavouriteShabad(shabadId)
+  const isFavourite = user && isFav
   const client = useClient()
-
-  useEffect(() => {
-    setIsFavourite(isFav)
-  }, [isFav])
 
   const handleAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     client(`favourite-shabad/${shabadId}`, { method: 'POST' })
-      .then(success => setIsFavourite(success))
       .catch(err => { throw new Error(err) })
   }
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     client(`favourite-shabad/${shabadId}`, { method: 'DELETE' })
-      .then(success => setIsFavourite(!success))
       .catch(err => { throw new Error(err) })
   }
 
