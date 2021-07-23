@@ -15,4 +15,3 @@ cypress/screenshots/**/*.*
 cypress/videos/**/*.*
 .env
 .env.develop
-*.pem
