@@ -2,6 +2,7 @@ async function client(
   endpoint,
   {data, token, ...customConfig} = {},
 ) {
+  console.log(token)
   const config = {
     method: data ? 'POST' : 'GET',
     body: data ? JSON.stringify(data) : undefined,
