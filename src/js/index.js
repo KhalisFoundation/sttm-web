@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 import 'regenerator-runtime/runtime';
 import store from './features/store';
@@ -10,10 +11,13 @@ import Root from './Root';
  const queryClient = new QueryClient()
 
 render(
-  <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <Root />
-    </Provider>
-  </QueryClientProvider>,
+  <>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <Root />
+      </Provider>    
+      <ReactQueryDevtools initialIsOpen={true} />
+    </QueryClientProvider>
+  </>,
   document.getElementById('app-root')
 );

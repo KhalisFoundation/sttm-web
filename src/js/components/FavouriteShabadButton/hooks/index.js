@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { client } from "../utils/api-client";
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from "@/constants";
-import { useQuery, queryCache } from "react-query";
+import { useQuery, queryCache, queryClient, useMutation } from "react-query";
 
 export async function getUser() {
   let user = null;
@@ -17,40 +17,25 @@ function getToken() {
 }
 
 function useClient() {
-  const token = window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
+  const token = getToken()
   return React.useCallback(
     (endpoint, ...config) => client(endpoint, {token, ...config}),
     [token],
   )
 }
 
-function onRemoveFavourite(shabadId) {
-  const client = useClient()
-
-  return client(`favourite-shabad/${shabadId}`, {method: 'DELETE'})
-  .catch(err => {throw new Error(err)})
-  
-}
-
-function onCreateFavourite(shabadId) {
-  const client = useClient()
-
-  return client(`favourite-shabad/${shabadId}`, {method: 'POST'})
-  .catch(err => {throw new Error(err)})
-}
-
 function setQueryDataForShabad(shabad) {
-  queryCache.setQueryData(['shabad', {shabadId: shabad.shabad_id}], shabad)
+  queryCache.setQueryData('favourite-shabads', item => {
+    return item.push(shabad.shabad_id)
+  })
 }
 
 
 function useFavouriteShabads() {
-    const client = useClient()
-
     const {data: favouriteShabads} = useQuery({
     queryKey: 'favourite-shabads',
     queryFn: () =>
-      client(`favourite-shabads`).then(data => data.favouriteShabads),
+      client(`favourite-shabads`, {token: getToken()}).then(data => data.favouriteShabads),
     config: {
       onSuccess(favouriteShabads) {
         for (const favouriteShabad of favouriteShabads) {
@@ -67,10 +52,41 @@ function useFavouriteShabad(shabadId) {
   return !!favouriteShabads.find(shabad => shabad.shabad_id === shabadId) ?? false
 }
 
+const defaultMutationOptions = {
+  onError: (err, variables, recover) =>
+    typeof recover === 'function' ? recover() : null,
+  onSettled: () => queryCache.invalidateQueries('favourite-shabads'),
+}
+
+function useCreateFavouriteShabad(options) {
+  return useMutation((shabadId) => client(`favourite-shabads`, {token: getToken(), data: {shabadId}}),
+     {...defaultMutationOptions, ...options},
+  )
+}
+
+function useRemoveFavouriteShabad(options) {
+  return useMutation(
+    (shabadId) => client(`favourite-shabads/${shabadId}`, {token: getToken(), method: 'DELETE'}),
+    {
+      onMutate(removedItem) {
+        const previousItems = queryClient.getQueryData('favourite-shabads')
+
+        queryCache.setQueryData('favourite-shabads', old => {
+          return old.filter(item => item.shabadId !== removedItem.shabadId)
+        })
+
+        return () => queryCache.setQueryData('favourite-shabads', previousItems)
+      },
+      ...options,
+      ...defaultMutationOptions,
+    },
+  )
+}
+
 export {
   getToken,
   useClient,
-  onRemoveFavourite,
-  onCreateFavourite,
+  useCreateFavouriteShabad,
+  useRemoveFavouriteShabad,
   useFavouriteShabad,
 }

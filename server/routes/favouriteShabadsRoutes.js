@@ -49,7 +49,7 @@ const favouriteShabads = async (req, res) => {
 }
 
 const addFavouriteShabad = (req, res) => {
-  const shabadId = req.params.shabadId;
+  const shabadId = req.body.shabadId;
   const bearerToken = req.headers.authorization;
   const token = bearerToken.substr(7);
   const {email} = jwtVerify(token)
@@ -78,6 +78,6 @@ const deleteFavouriteShabad = (req, res) => {
 
 module.exports = function(server) {  
   server.get('/favourite-shabads', favouriteShabads);  
-  server.post('/favourite-shabad/:shabadId', addFavouriteShabad);  
-  server.delete('/favourite-shabad/:shabadId', deleteFavouriteShabad);  
+  server.post('/favourite-shabads', addFavouriteShabad);  
+  server.delete('/favourite-shabads/:shabadId', deleteFavouriteShabad);  
 }

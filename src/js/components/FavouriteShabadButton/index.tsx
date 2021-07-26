@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import { StarIcon } from '../Icons/StarIcon'
-import { useClient, useFavouriteShabad } from './hooks'
+import { useClient, useFavouriteShabad, useCreateFavouriteShabad, useRemoveFavouriteShabad } from './hooks'
 import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 import { useQuery } from 'react-query'
 import { IUser } from '@/types/user'
@@ -12,22 +12,22 @@ type FCProps = {
 }
 
 export const FavouriteShabadButton: React.FC<FCProps> = ({ shabad: { shabadId } }) => {
-  //  
   const user = useGetUser<IUser>()
   // If user is valid then check for favourite shabads
   const isFav = useFavouriteShabad(shabadId)
   const isFavourite = user && isFav
-  const client = useClient()
+
+  const create = useCreateFavouriteShabad()
+  const remove = useRemoveFavouriteShabad()
 
   const handleAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    client(`favourite-shabad/${shabadId}`, { method: 'POST' })
-      .catch(err => { throw new Error(err) })
+    create.mutate(shabadId)
   }
+
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    client(`favourite-shabad/${shabadId}`, { method: 'DELETE' })
-      .catch(err => { throw new Error(err) })
+    remove.mutate(shabadId)
   }
 
   return (
