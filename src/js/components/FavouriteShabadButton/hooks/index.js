@@ -1,7 +1,9 @@
 import React from "react";
 import { client } from "../utils/api-client";
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from "@/constants";
-import { useQuery, queryCache, queryClient, useMutation } from "react-query";
+import { useQuery, QueryClient, useMutation } from "react-query";
+
+const queryClient = new QueryClient()
 
 export async function getUser() {
   let user = null;
@@ -24,26 +26,16 @@ function useClient() {
   )
 }
 
-function setQueryDataForShabad(shabad) {
-  queryCache.setQueryData('favourite-shabads', item => {
-    return item.push(shabad.shabad_id)
-  })
-}
-
-
 function useFavouriteShabads() {
-    const {data: favouriteShabads} = useQuery({
+  const {data: favouriteShabads} = useQuery({
     queryKey: 'favourite-shabads',
     queryFn: () =>
       client(`favourite-shabads`, {token: getToken()}).then(data => data.favouriteShabads),
-    config: {
-      onSuccess(favouriteShabads) {
-        for (const favouriteShabad of favouriteShabads) {
-          setQueryDataForShabad(favouriteShabad)
-        }
-      },
-    },
+    config : {
+      staleTime: 5000
+    }
   })
+
   return favouriteShabads ?? []
 }
 
@@ -55,30 +47,42 @@ function useFavouriteShabad(shabadId) {
 const defaultMutationOptions = {
   onError: (err, variables, recover) =>
     typeof recover === 'function' ? recover() : null,
-  onSettled: () => queryCache.invalidateQueries('favourite-shabads'),
+  onSuccess: () => queryClient.invalidateQueries('favourite-shabads'),
 }
 
-function useCreateFavouriteShabad(options) {
-  return useMutation((shabadId) => client(`favourite-shabads`, {token: getToken(), data: {shabadId}}),
-     {...defaultMutationOptions, ...options},
+function useCreateFavouriteShabad() {
+  return useMutation(
+    (shabadId) => client(`favourite-shabads`, {token: getToken(), data: {shabadId}}),
+    {
+      onMutate: (newShabad) => {
+        const oldShabads = queryClient.getQueryData('favourite-shabads')
+
+        if (queryClient.getQueryData('favourite-shabads')) {
+          queryClient.setQueryData('favourite-shabads', old => [...old, newShabad])
+        }        
+
+        return () => queryClient.setQueryData('favourite-shabads', oldShabads)
+      },
+      ...defaultMutationOptions
+    }
   )
 }
 
-function useRemoveFavouriteShabad(options) {
+function useRemoveFavouriteShabad() {
   return useMutation(
     (shabadId) => client(`favourite-shabads/${shabadId}`, {token: getToken(), method: 'DELETE'}),
     {
-      onMutate(removedItem) {
-        const previousItems = queryClient.getQueryData('favourite-shabads')
+      onMutate: (shabadId) => {
+        console.log(shabadId)
+        const oldShabads = queryClient.getQueryData('favourite-shabads')
 
-        queryCache.setQueryData('favourite-shabads', old => {
-          return old.filter(item => item.shabadId !== removedItem.shabadId)
-        })
+        if (queryClient.getQueryData('favourite-shabads')) {
+          queryClient.setQueryData('favourite-shabads', old => old.filter(e => e.shabad_id !== Number(shabadId)))
+        }
 
-        return () => queryCache.setQueryData('favourite-shabads', previousItems)
+        return () => queryClient.setQueryData('favourite-shabads', oldShabads)
       },
-      ...options,
-      ...defaultMutationOptions,
+      ...defaultMutationOptions
     },
   )
 }
