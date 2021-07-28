@@ -8,7 +8,13 @@ import 'regenerator-runtime/runtime';
 import store from './features/store';
 import Root from './Root';
 
- const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 render(
   <>
@@ -16,7 +22,7 @@ render(
       <Provider store={store}>
         <Root />
       </Provider>    
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </>,
   document.getElementById('app-root')
