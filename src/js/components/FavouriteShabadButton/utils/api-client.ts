@@ -1,8 +1,12 @@
-async function client(
-  endpoint,
-  {token, data, ...customConfig} = {},
-) {
-  const config = {
+type IProps = {
+  token?: string | null | undefined,
+  data?: string
+}
+export const client = async (
+  endpoint : string,
+  {token, data, ...customConfig}: IProps = {},
+) => {
+  const config: any = {
     method: data ? 'POST' : 'GET',
     body: data ? JSON.stringify(data) : undefined,
     headers: {
@@ -24,5 +28,3 @@ async function client(
     }
   })
 }
-
-export {client}

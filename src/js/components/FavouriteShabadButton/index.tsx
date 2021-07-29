@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { StarIcon } from '../Icons/StarIcon'
-import { useClient, useFavouriteShabad, useCreateFavouriteShabad, useRemoveFavouriteShabad } from './hooks'
+import { useFavouriteShabad, useCreateFavouriteShabad, useRemoveFavouriteShabad } from './hooks'
 import { IMultipleShabadsProps } from '@/types/multiple-shabads';
-import { useQuery } from 'react-query'
 import { IUser } from '@/types/user'
 import { useGetUser } from '@/hooks';
 
@@ -12,7 +11,7 @@ type FCProps = {
 }
 
 export const FavouriteShabadButton: React.FC<FCProps> = ({ shabad: { shabadId } }) => {
-  const user = useGetUser<IUser>()
+  const { user } = useGetUser<IUser>()
   // If user is valid then check for favourite shabads
   const isFav = useFavouriteShabad(shabadId)
   const isFavourite = user && isFav

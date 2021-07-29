@@ -29,7 +29,7 @@ function useFavouriteShabads() {
   const {data: favouriteShabads} = useQuery({
     queryKey: 'favourite-shabads',
     queryFn: () =>
-      client(`favourite-shabads`, {token: getToken()}).then(data => data.favouriteShabads.map(e => e.shabad_id)),
+      client(`/favourite-shabads`, {token: getToken()}).then(data => data.favouriteShabads.map(e => e.shabad_id)),
   })
 
   return favouriteShabads ?? []
@@ -109,4 +109,5 @@ export {
   useCreateFavouriteShabad,
   useRemoveFavouriteShabad,
   useFavouriteShabad,
+  useFavouriteShabads,
 }
