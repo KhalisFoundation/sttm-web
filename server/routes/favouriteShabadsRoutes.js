@@ -1,11 +1,10 @@
 "use strict";
 
-let express = require("express"),
-    pool = require('../config/database'),
+let pool = require('../config/database'),
     { jwtVerify } = require("../utils/jwt");
 
 const checkFavouriteShabadsCallback = async (req, res, data, connection) => {
-  const {email, shabad_id} = data;
+  const {email} = data;
   const row = await connection.query("SELECT id FROM users where email = ?", [email]);
   const user = row[0]
   const q = "SELECT * FROM favourite_shabads WHERE user_id = ?";
@@ -31,7 +30,6 @@ const deleteFavouriteShabadCallback = async (req, res, data, connection) => {
   const q = "DELETE FROM favourite_shabads WHERE user_id = ? AND shabad_id = ?";
   const rows = await connection.query(q, [user.id, shabad_id])
   const result = rows.affectedRows ? shabad_id : false
-  console.log({shabadId: result})
   res.status(200).json({shabadId: result});
 }   
 
