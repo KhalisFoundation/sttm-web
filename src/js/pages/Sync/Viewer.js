@@ -119,7 +119,7 @@ export default class Viewer extends React.PureComponent {
           <ShabadContent
             type="sync"
             highlight={parseInt(data.highlight)}
-            gurbani={versesToGurbani(response.verses, false)}
+            gurbani={versesToGurbani(response.verses, false, 'ceremony')}
             info={response.ceremonyInfo}
             showFullScreen={showFullScreen}
           />

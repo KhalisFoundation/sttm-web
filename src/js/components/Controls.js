@@ -12,6 +12,8 @@ import {
   setLineHeight,
   setTranslationLanguages,
   setSteekLanguages,
+  setEnglishTranslationLanguages,
+  setHindiTranslationLanguages,
   setTransliterationLanguages,
   setLarivaarAssistStrength,
   resetDisplayOptions,
@@ -63,8 +65,8 @@ class Controls extends React.Component {
 
     return (
       <>
-        <ShareButtons settingIdRef={this.settingsRef} {...this.props} />        
-        <div className={`settings-panel ${showSettingsPanel ? 'settings-show' : ''}`}>
+        <ShareButtons {...this.props} />        
+        <div ref={this.settingsRef} className={`settings-panel ${showSettingsPanel ? 'settings-show' : ''}`}>
           {showSettingsPanel && <ControlsSettings settingsRef={this.settingsRef} {...this.props} />}
         </div>
       </>
@@ -82,6 +84,8 @@ const mapDispatchToProps = {
   setTranslationLanguages,
   setTransliterationLanguages,
   setSteekLanguages,
+  setEnglishTranslationLanguages,
+  setHindiTranslationLanguages,
   setLarivaarAssistStrength,
   setSgBaaniLength,
   resetDisplayOptions,

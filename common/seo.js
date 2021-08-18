@@ -26,6 +26,22 @@ export default {
     createTitle: () => suffixAppName('Index'),
     createDescription: () => 'Index page of Sri Guru Granth Sahib Jee, Sri Dasam Granth. Read Asa Ki Vaar, Raag Dhanasari, Ramkali Ki Vaar Rai Balvand, Shalok Sehskritee, Shalok Vaaran Te Vadeek, Salok Mahalla 9, Raag Maala, Akaal Ustat, Vaar Sri Bhagouti Jee kee, Sri Shastar Naam Mala, Zafarnamah, Khalsa Mahima, Sri Charitropakhyan',
   },
+  '/index/sri-guru-granth-sahib': {
+    createTitle: () => suffixAppName('Index Sri Guru Granth Sahib Jee'),
+    createDescription: () => 'Index page of Sri Guru Granth Sahib Jee.',
+  },
+  '/index/sri-dasam-granth-sahib': {
+    createTitle: () => suffixAppName('Index Sri Dasam Granth Sahib'),
+    createDescription: () => 'Index page of Sri Dasam Granth Sahib.',
+  },
+  '/index/bhai-nand-lal-vaaran': {
+    createTitle: () => suffixAppName('Index Bhai Nand Lal Ji Vaaran'),
+    createDescription: () => 'Index page of Bhai Nand Lal Ji Vaaran.',
+  },
+  '/index/amrit-keertan': {
+    createTitle: () => suffixAppName('Index Amrit Keertan'),
+    createDescription: () => 'Index page of Amrit Keertan.',
+  },
   '/help': {
     createTitle: () => suffixAppName('Help'),
     createDescription: () => 'Needs help in understanding how to use SikhiTheMax?'

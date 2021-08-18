@@ -4,6 +4,10 @@ export const LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE = 'searchType';
 export const LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER = 'searchWriter';
 export const LOCAL_STORAGE_KEY_FOR_TRANSLATION_LANGUAGES =
   'translationLanguages';
+export const LOCAL_STORAGE_KEY_FOR_ENGLISH_TRANSLATION_LANGUAGES =
+  'englishTranslationLanguages';
+export const LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES =
+  'hindiTranslationLanguages';
 export const LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_LANGUAGES =
   'transliterationLanguages';
 export const LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST = 'larivaarAssist';

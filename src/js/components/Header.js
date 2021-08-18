@@ -32,6 +32,7 @@ class Header extends React.PureComponent {
     isHome: PropTypes.bool,
     isController: PropTypes.bool,
     isAng: PropTypes.bool,
+    fullScreenMode: PropTypes.bool,
     location: PropTypes.shape({
       search: PropTypes.string,
     }),
@@ -76,11 +77,15 @@ class Header extends React.PureComponent {
 
   render() {
     const {
-      props: { defaultQuery, isHome, isAng, isController },
+      props: { defaultQuery, isHome, isAng, fullScreenMode, isController },
       state: { showDoodle, doodleData },
       onFormSubmit,
       handleFormSubmit,
     } = this;
+
+    if (fullScreenMode) {
+      return null;
+    }
 
     const {
       source: defaultSource = null,
@@ -110,12 +115,7 @@ class Header extends React.PureComponent {
 
     return (
       <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
-        {/* <ControlsSettings {...this.props} /> */}
-        <div className="top-bar-wrapper row">
-          {!isHome && (
-            <>
-
-            </>)}
+        <div className="top-bar-wrapper row">          
           <SearchForm
             key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
@@ -346,7 +346,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ }) => ({})
+const mapStateToProps = ({ fullScreenMode }) => ({ fullScreenMode })
 
 const mapDispatchToProps = {
   toggleSettingsPanel,
