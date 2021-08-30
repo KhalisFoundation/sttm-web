@@ -1,6 +1,6 @@
 import {
   DEFAULT_LARIVAAR_ASSIST_STRENGTH,
-  DEFAULT_TRANSLATION_LANGUAGES,
+  DEFAULT_ENGLISH_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLATION_FONT_SIZE,
   DEFAULT_STEEK_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
@@ -169,7 +169,7 @@ export const SET_ERROR = 'SET_ERROR';
 
 export const resetDisplayOptions = () => dispatch => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
-  dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
+  dispatch(setEnglishTranslationLanguages(DEFAULT_ENGLISH_TRANSLATION_LANGUAGES));
   dispatch(setSteekLanguages(DEFAULT_STEEK_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
   dispatch(setAutoScrollMode(DEFAULT_AUTO_SCROLL_MODE));
