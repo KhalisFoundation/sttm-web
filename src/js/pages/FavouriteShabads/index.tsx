@@ -10,7 +10,7 @@ import { useGetUser } from '@/hooks';
 import { useFavouriteShabads } from '@/components/FavouriteShabadButton/hooks';
 
 import { IUser } from '@/types/user'
-import { IFavoriteShabad, IShabad } from './type';
+import { IFavoriteShabad, IShabad } from '@/types/favorite-shabads';
 
 const Stub = () => <div className="spinner" />;
 
