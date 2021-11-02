@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { IFavoriteShabad } from './type';
+import { IFavoriteShabad } from '@/types/favorite-shabads';
 
-type Pshabad = {
+interface ShabadProps {
   data: IFavoriteShabad
 }
 
-const Shabad: React.FC<Pshabad> = ({ data }) => {
+const Shabad: React.FC<ShabadProps> = ({ data }) => {
   return (
-    <div className="favourite-shabads--row">
+    <li className="favourite-shabads--row">
       <div>{data.id}</div>
       <div>{data.verse}</div>
       <div>{data?.source}</div>
-    </div>
+    </li>
   )
 }
 

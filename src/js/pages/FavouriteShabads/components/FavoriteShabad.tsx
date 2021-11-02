@@ -11,9 +11,7 @@ import { useFavouriteShabads } from '@/components/FavouriteShabadButton/hooks';
 
 import { IUser } from '@/types/user'
 import { IFavoriteShabad, IShabad } from '@/types/favorite-shabads';
-
-const Stub = () => <div className="spinner" />;
-
+import Spinner from '@/components/Spinner/Spinner';
 
 const FavouriteShabads: React.FC = () => {
   const { isLoading } = useGetUser<IUser>()
@@ -50,7 +48,7 @@ const FavouriteShabads: React.FC = () => {
     <>
       {
         isLoading
-          ? <Stub />
+          ? <Spinner />
           : (
             <>
               <div className="favourite-shabads">
