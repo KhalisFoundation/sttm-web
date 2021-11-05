@@ -16,7 +16,7 @@ import store from '@/features/store';
 import convertApiDataToFavoriteShabad from '../utils/convert-api-data-to-favorite-shabad';
 
 const FavouriteShabads: React.FC = () => {
-  const { isLoading } = useGetUser<IUser>()
+  const { isLoading: isUserLoading } = useGetUser<IUser>()
   const favouriteShabads = useFavouriteShabads()
   const [shabadsLoading, setShabadsLoading] = useState(true)
   const [shabadsListing, setShabadsListing] = useState<any[]>([])
@@ -35,15 +35,21 @@ const FavouriteShabads: React.FC = () => {
       const id = favouriteShabads.join(',')
       const url = encodeURI(buildApiUrl({ API_URL, id }));
       // console.log(url, "FAVORITE SHABAD")
-      client(url).then(data => {
-        let shabadsArray: any[] = []
-        if (isKeyExists(data, 'shabadIds')) {
-          shabadsArray = data.shabads.map(convertApiDataToFavoriteShabad)
-        } else {
-          shabadsArray.push(convertApiDataToFavoriteShabad(data))
-        }
-        setShabadsListing(shabadsArray)
-      })
+      client(url)
+        .then(data => {
+          let shabadsArray: any[] = []
+          if (isKeyExists(data, 'shabadIds')) {
+            shabadsArray = data.shabads.map(convertApiDataToFavoriteShabad)
+          } else {
+            shabadsArray.push(convertApiDataToFavoriteShabad(data))
+          }
+          setShabadsListing(shabadsArray)
+          setShabadsLoading(false);
+        }).finally(() => {
+          setShabadsLoading(false);
+        })
+    } else {
+      setShabadsLoading(false);
     }
   }, [favouriteShabads])
 
@@ -53,32 +59,33 @@ const FavouriteShabads: React.FC = () => {
     }
   }, [shabadsListing, setShabadsLoading])
 
+
+  if (isUserLoading) {
+    return <Spinner />
+  }
+
   return (
     <>
       {
-        isLoading
-          ?
-          <Spinner />
-          :
-          <div className="favourite-shabads row">
-            <h2 className="favourite-shabads-heading">Favourite Shabads</h2>
-            <ul className='favourite-shabads-list'>
-              {
-                shabadsLoading
+        <div className="favourite-shabads row">
+          <h2 className="favourite-shabads-heading">Favourite Shabads</h2>
+          <ul className='favourite-shabads-list'>
+            {
+              shabadsLoading
+                ?
+                <p> Loading Shabads... </p>
+                :
+                shabadsListing.length
                   ?
-                  <p> Loading Shabads... </p>
+                  <SearchResults
+                    shabads={shabadsListing}
+                    {...userSettingsState}
+                  />
                   :
-                  shabadsListing.length
-                    ?
-                    <SearchResults
-                      shabads={shabadsListing}
-                      {...userSettingsState}
-                    />
-                    :
-                    <p> Add your favorite shabads </p>
-              }
-            </ul>
-          </div>
+                  <p> There is no favourite shabad selected. Add some shabads to your list of favourite shabads. </p>
+            }
+          </ul>
+        </div>
       }
     </>
   )
