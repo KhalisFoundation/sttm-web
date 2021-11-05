@@ -1,36 +1,46 @@
 /* globals API_URL */
 import React, { useState, useEffect } from 'react'
-import Shabad from './Shabad';
 
 import { buildApiUrl } from '@sttm/banidb';
 import { client } from '@/components/FavouriteShabadButton/utils/api-client';
 import { isKeyExists } from '@/util';
 
-import { useGetUser } from '@/hooks';
 import { useFavouriteShabads } from '@/components/FavouriteShabadButton/hooks';
+import Spinner from '@/components/Spinner/Spinner';
+import SearchResults from '@/components/SearchResults';
+import { useGetUser } from '@/hooks';
 
 import { IUser } from '@/types/user'
-import { IFavoriteShabad, IShabad } from '@/types/favorite-shabads';
-import Spinner from '@/components/Spinner/Spinner';
+import { useSelector } from 'react-redux';
+import store from '@/features/store';
+import convertApiDataToFavoriteShabad from '../utils/convert-api-data-to-favorite-shabad';
 
 const FavouriteShabads: React.FC = () => {
   const { isLoading } = useGetUser<IUser>()
   const favouriteShabads = useFavouriteShabads()
   const [shabadsLoading, setShabadsLoading] = useState(true)
-  const [shabadsListing, setShabadsListing] = useState<IFavoriteShabad[]>([])
+  const [shabadsListing, setShabadsListing] = useState<any[]>([])
+  const userSettingsState = useSelector<typeof store>(state => ({
+    translationLanguages: state.translationLanguages,
+    transliterationLanguages: state.transliterationLanguages,
+    larivaarAssist: state.larivaarAssist,
+    larivaar: state.larivaar,
+    unicode: state.unicode,
+    fontSize: state.fontSize,
+    fontFamily: state.fontFamily,
+  }));
 
   useEffect(() => {
     if (favouriteShabads.length) {
       const id = favouriteShabads.join(',')
-      const url = buildApiUrl({ API_URL, id });
+      const url = encodeURI(buildApiUrl({ API_URL, id }));
+      // console.log(url, "FAVORITE SHABAD")
       client(url).then(data => {
-        const shabadsArray: IFavoriteShabad[] = []
+        let shabadsArray: any[] = []
         if (isKeyExists(data, 'shabadIds')) {
-          data.shabads.map((shabad: IShabad) => {
-            shabadsArray.push({ id: Number(shabad.shabadInfo.shabadId), verse: shabad.verses[0].verse.unicode })
-          });
+          shabadsArray = data.shabads.map(convertApiDataToFavoriteShabad)
         } else {
-          shabadsArray.push({ id: data.shabadInfo.shabadId, verse: data.verses[0].verse.unicode })
+          shabadsArray.push(convertApiDataToFavoriteShabad(data))
         }
         setShabadsListing(shabadsArray)
       })
@@ -43,29 +53,32 @@ const FavouriteShabads: React.FC = () => {
     }
   }, [shabadsListing, setShabadsLoading])
 
-
   return (
     <>
       {
         isLoading
-          ? <Spinner />
-          : (
-            <>
-              <div className="favourite-shabads">
-                <h2>Favourite Shabads</h2>
-                <ul>
-                  {
-                    shabadsLoading
-                      ? 'Loading Shabads...'
-                      :
-                      shabadsListing.length
-                        ? shabadsListing?.map((shabad, index) => <li key={index}><Shabad data={shabad} /></li>)
-                        : 'No Favourite Shabad Yet'
-                  }
-                </ul>
-              </div>
-            </>
-          )
+          ?
+          <Spinner />
+          :
+          <div className="favourite-shabads">
+            <h2 className="favourite-shabads-heading">Favourite Shabads</h2>
+            <ul className='favourite-shabads-list'>
+              {
+                shabadsLoading
+                  ?
+                  <p> Loading Shabads... </p>
+                  :
+                  shabadsListing.length
+                    ?
+                    <SearchResults
+                      shabads={shabadsListing}
+                      {...userSettingsState}
+                    />
+                    :
+                    <p> Add your favorite shabads </p>
+              }
+            </ul>
+          </div>
       }
     </>
   )
