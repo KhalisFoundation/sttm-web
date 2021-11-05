@@ -1,1 +1,1 @@
-export { default } from './components/FavoriteShabad';
+export { default } from './components/FavouriteShabad';
