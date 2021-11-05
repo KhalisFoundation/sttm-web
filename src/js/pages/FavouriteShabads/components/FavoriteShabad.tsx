@@ -60,7 +60,7 @@ const FavouriteShabads: React.FC = () => {
           ?
           <Spinner />
           :
-          <div className="favourite-shabads">
+          <div className="favourite-shabads row">
             <h2 className="favourite-shabads-heading">Favourite Shabads</h2>
             <ul className='favourite-shabads-list'>
               {
