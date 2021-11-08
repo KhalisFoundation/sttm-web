@@ -8,6 +8,7 @@
   height: 50px;
   justify-content: center;
   padding: 8px;
+  padding-left: 0px;
   width: auto;
 
   &IncreaseSpeed,
@@ -108,4 +109,15 @@
 
 .backgroundTransparent {
   background-color: transparent;
+}
+
+.autoScrollLoopModeBtn {
+  color: $sttm-white;
+  margin-top: 6px;
+  &:hover {
+    color: $sttm-orange;
+  }
+  &.on {
+    color: $sttm-orange;
+  }
 }
