@@ -1,10 +1,15 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { useGetUser, useOnClickOutside } from '@/hooks';
-import BackIcon from './Icons/Back';
+import BackIcon from '../Icons/Back';
 import { Link } from 'react-router-dom';
 import { IUser } from '@/types/user'
 
-const UserLogin = () => {
+interface UserLoginMenuProps {
+  toggleMenu: () => void
+}
+
+const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
   const dropTogglerRefProfile = React.useRef(null)
   const displayAreaRefProfile = React.useRef(null)
   const [toggleDropdownProfile, setToggleDropdownProfile] = React.useState(false);
@@ -38,6 +43,9 @@ const UserLogin = () => {
             </span>
           </button>
           <div className="submenu-items" ref={displayAreaRefProfile}>
+            <Link to="/user/favourite-shabads" onClick={toggleMenu}>
+              Favourite Shabads
+            </Link>
             <Link to="/logout" onClick={handleLogout}>
               Logout
             </Link>
@@ -56,4 +64,4 @@ const UserLogin = () => {
   )
 }
 
-export default UserLogin
+export default UserLoginMenu
