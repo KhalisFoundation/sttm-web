@@ -203,7 +203,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     //Force this to remove the autoscroll-mode class from the body.
     this.setAutoScrollModeDOMChanges(false);
   };
-  handleAutoScrollLoopMode=()=>{
+  toggleAutoScrollLoopMode=()=>{
     this.setState({autoScrollLoopMode:!this.state.autoScrollLoopMode})
   }
   render() {
@@ -226,7 +226,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
               Speed
             </label>
             <div className="autoScrollControlSlider">
-              <button onClick={this.handleAutoScrollLoopMode} className={`autoScrollLoopModeBtn ${autoScrollLoopMode ? 'on':''}`}>
+              <button onClick={this.toggleAutoScrollLoopMode} className={`autoScrollLoopModeBtn ${autoScrollLoopMode ? 'on':''}`}>
                 <Loop />
               </button>
               <button

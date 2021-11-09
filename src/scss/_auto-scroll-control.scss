@@ -8,7 +8,7 @@
   height: 50px;
   justify-content: center;
   padding: 8px;
-  padding-left: 0px;
+  padding-left: 0;
   width: auto;
 
   &IncreaseSpeed,
@@ -114,9 +114,8 @@
 .autoScrollLoopModeBtn {
   color: $sttm-white;
   margin-top: 6px;
-  &:hover {
-    color: $sttm-orange;
-  }
+  cursor: pointer;
+
   &.on {
     color: $sttm-orange;
   }
