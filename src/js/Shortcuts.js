@@ -1,14 +1,15 @@
-import store from './features/store'
-import { selectItemInArray } from './util'
+import store from './features/store';
+import { selectItemInArray } from './util';
+import { toFixedFloat } from './util';
 
 const ViewerShortcuts = {
   toggleLarivar: {
     name: 'Toggle Larivar',
-    sequences: ['l']
+    sequences: ['l'],
   },
   toggleLarivarAssist: {
-    name: "Toggle Larivar Assist",
-    sequences: ['shift+l']
+    name: 'Toggle Larivar Assist',
+    sequences: ['shift+l'],
   },
   toggleVishraams: {
     name: 'Toggle Vishraams',
@@ -16,7 +17,7 @@ const ViewerShortcuts = {
   },
   toggleAutoScrollMode: {
     name: 'Toggle AutoScroll Mode',
-    sequences: ['a']
+    sequences: ['a'],
   },
   toggleDarkMode: {
     name: 'Toggle Dark Mode',
@@ -40,7 +41,7 @@ const ViewerShortcuts = {
   },
   centerAlign: {
     name: 'Center Align',
-    sequences: ['meta+shift+c', 'ctrl+shift+c']
+    sequences: ['meta+shift+c', 'ctrl+shift+c'],
   },
   toggleEngTranslation: {
     name: 'Toggle English Translation',
@@ -48,7 +49,7 @@ const ViewerShortcuts = {
   },
   togglePunjabiTranslation: {
     name: 'Toggle Punjabi Translation',
-    sequences: ['t']
+    sequences: ['t'],
   },
   toggleSpanishTranslation: {
     name: 'Toggle Spanish Translation',
@@ -56,15 +57,15 @@ const ViewerShortcuts = {
   },
   toggleEngTranslit: {
     name: 'Toggle English Transliteration',
-    sequences: ['shift+e']
+    sequences: ['shift+e'],
   },
   toggleShahTranslit: {
     name: 'Toggle Shahmukhi Transliteration',
-    sequences: ['shift+s']
+    sequences: ['shift+s'],
   },
   toggleHinTranslit: {
     name: 'Toggle Hindi Transliteration',
-    sequences: ['shift+h']
+    sequences: ['shift+h'],
   },
   increaseFontSize: {
     name: 'Increase Font Size',
@@ -74,24 +75,23 @@ const ViewerShortcuts = {
     name: 'Decrease Font Size',
     sequences: ['-'],
   },
-
-}
+};
 const GlobalShortcuts = {
   toggleSearchBar: {
     name: 'activate search bar',
-    sequences: ['meta+/', 'ctrl+/']
-  }
-}
+    sequences: ['meta+/', 'ctrl+/'],
+  },
+};
 
 const GlobalHandlers = {
   toggleSearchBar: (e) => {
     e.preventDefault();
-    const searchbar = document.querySelector('#search')
+    const searchbar = document.querySelector('#search');
 
-    searchbar.focus()
-    searchbar.value = ''
-  }
-}
+    searchbar.focus();
+    searchbar.value = '';
+  },
+};
 const ViewerShortcutHanders = {
   toggleLarivar: (event) => {
     /*
@@ -101,17 +101,17 @@ const ViewerShortcutHanders = {
     */
     const isMeta = event?.metaKey;
     if (!isMeta) {
-      store.dispatch({ type: "TOGGLE_LARIVAAR_OPTION" })
+      store.dispatch({ type: 'TOGGLE_LARIVAAR_OPTION' });
     }
   },
   toggleLarivarAssist: () => {
-    store.dispatch({ type: 'TOGGLE_LARIVAAR_ASSIST_OPTION', })
+    store.dispatch({ type: 'TOGGLE_LARIVAAR_ASSIST_OPTION' });
   },
   toggleVishraams: () => {
-    store.dispatch({ type: "TOGGLE_VISRAAMS" })
+    store.dispatch({ type: 'TOGGLE_VISRAAMS' });
   },
   toggleAutoScrollMode: () => {
-    store.dispatch({ type: "TOGGLE_AUTO_SCROLL_MODE" })
+    store.dispatch({ type: 'TOGGLE_AUTO_SCROLL_MODE' });
   },
   toggleDarkMode: () => {
     store.dispatch({ type: 'TOGGLE_DARK_MODE' });
@@ -147,34 +147,55 @@ const ViewerShortcutHanders = {
   },
   centerAlign: () => {
     const state = store.getState();
-    store.dispatch({ type: "SET_CENTER_ALIGN_OPTION", payload: !state.centerAlignGurbani })
+    store.dispatch({
+      type: 'SET_CENTER_ALIGN_OPTION',
+      payload: !state.centerAlignGurbani,
+    });
   },
   toggleEngTranslation: (e) => {
     e.preventDefault();
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: selectItemInArray('english', state.translationLanguages) })
+    store.dispatch({
+      type: 'SET_TRANSLATION_LANGUAGES',
+      payload: selectItemInArray('english', state.translationLanguages),
+    });
   },
   togglePunjabiTranslation: (e) => {
     e.preventDefault();
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: selectItemInArray('punjabi', state.translationLanguages) })
+    store.dispatch({
+      type: 'SET_TRANSLATION_LANGUAGES',
+      payload: selectItemInArray('punjabi', state.translationLanguages),
+    });
   },
   toggleSpanishTranslation: (e) => {
     e.preventDefault();
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLATION_LANGUAGES', payload: selectItemInArray('spanish', state.translationLanguages) })
+    store.dispatch({
+      type: 'SET_TRANSLATION_LANGUAGES',
+      payload: selectItemInArray('spanish', state.translationLanguages),
+    });
   },
   toggleEngTranslit: () => {
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: selectItemInArray('english', state.transliterationLanguages) })
+    store.dispatch({
+      type: 'SET_TRANSLITERATION_LANGUAGES',
+      payload: selectItemInArray('english', state.transliterationLanguages),
+    });
   },
   toggleShahTranslit: () => {
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: selectItemInArray('shahmukhi', state.transliterationLanguages) })
+    store.dispatch({
+      type: 'SET_TRANSLITERATION_LANGUAGES',
+      payload: selectItemInArray('shahmukhi', state.transliterationLanguages),
+    });
   },
   toggleHinTranslit: () => {
     const state = store.getState();
-    store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: selectItemInArray('hindi', state.transliterationLanguages) })
+    store.dispatch({
+      type: 'SET_TRANSLITERATION_LANGUAGES',
+      payload: selectItemInArray('hindi', state.transliterationLanguages),
+    });
   },
   increaseFontSize: () => {
     const state = store.getState();
@@ -213,7 +234,10 @@ const ViewerShortcutHanders = {
     });
   },
 };
-}
-
 // export default Shortcuts;
-export { ViewerShortcutHanders, ViewerShortcuts, GlobalHandlers, GlobalShortcuts }
+export {
+  ViewerShortcutHanders,
+  ViewerShortcuts,
+  GlobalHandlers,
+  GlobalShortcuts,
+};

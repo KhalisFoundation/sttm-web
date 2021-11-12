@@ -129,8 +129,7 @@
   > .slide-type {
     background-color: $sttm-white;
     border-radius: 12px;
-    box-shadow:
-      0 2px 2px 0 $sttm-transparent-black,
+    box-shadow: 0 2px 2px 0 $sttm-transparent-black,
       0 0 0 1px $sttm-transparent-light-black;
     color: $sttm-light-black;
     cursor: pointer;
@@ -404,6 +403,77 @@
       li.submenu > .submenu-items {
         border-color: transparent;
       }
+    }
+  }
+}
+
+// toggleSwitch
+.switch {
+  width: 60px;
+  height: 34px;
+
+  &.input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:focus {
+      + {
+        .slider {
+          box-shadow: 0 0 1px orange;
+        }
+      }
+    }
+  }
+
+  &:checked {
+    + {
+      .slider {
+        background-color: $sttm-orange;
+
+        &:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+      }
+    }
+  }
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $sttm-grey;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+
+  &:before {
+    position: absolute;
+    content: '';
+    height: 21px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    margin-bottom: 1.5px;
+  }
+
+  &.round {
+    border-radius: 34px;
+    height: 1.9rem;
+    margin-bottom: 0;
+    margin-top: 8px;
+    width: 3.5rem;
+
+    &:before {
+      border-radius: 50%;
     }
   }
 }
