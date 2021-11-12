@@ -11,7 +11,9 @@ import {
   TOGGLE_VISRAAMS,
   TOGGLE_SEHAJ_PAATH_MODE,
   TOGGLE_SETTINGS_PANEL,
+  TOGGLE_KEYBOARD_SHORTCUTS_PANEL,
   SET_SETTINGS_PANEL,
+  SET_KEYBOARD_SHORTCUTS_PANEL,
   SET_MAHANKOSH_TOOLTIP_EXPLAINATION,
   SET_MAHANKOSH_TOOLTIP_ACTIVE,
   SET_VISRAAM_SOURCE,
@@ -75,12 +77,12 @@ import {
   LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
   PUNJABI_LANGUAGE,
   HINDI_LANGUAGE,
-  ENGLISH_LANGUAGE
+  ENGLISH_LANGUAGE,
 } from '@/constants';
 import {
   saveToLocalStorage,
   getArrayFromLocalStorage,
-  clickEvent
+  clickEvent,
 } from '@/util';
 import { DARK_MODE_COOKIE } from '../../../../common/constants';
 
@@ -89,42 +91,41 @@ export default function reducer(state, action) {
     case SET_MAHANKOSH_TOOLTIP_EXPLAINATION: {
       return {
         ...state,
-        isMahankoshTooltipExplaination: action.payload
-      }
+        isMahankoshTooltipExplaination: action.payload,
+      };
     }
     case SET_MAHANKOSH_TOOLTIP_ACTIVE: {
       return {
         ...state,
-        isMahankoshTooltipActive: action.payload
-      }
+        isMahankoshTooltipActive: action.payload,
+      };
     }
     case SET_LOADING_ANG: {
       return {
         ...state,
-        isLoadingAng: action.payload
-      }
+        isLoadingAng: action.payload,
+      };
     }
     case SET_PREFETCH_ANG: {
       return {
         ...state,
-        prefetchAng: action.payload
-      }
+        prefetchAng: action.payload,
+      };
     }
     case SET_ONLINE_MODE: {
       {
         return {
           ...state,
-          online: action.payload
-        }
-      }
-    }
-    case SET_FULLSCREEN_MODE:
-      {
-        return {
-          ...state,
-          fullScreenMode: action.payload,
+          online: action.payload,
         };
       }
+    }
+    case SET_FULLSCREEN_MODE: {
+      return {
+        ...state,
+        fullScreenMode: action.payload,
+      };
+    }
 
     case TOGGLE_TRANSLITERATION_OPTIONS: {
       const showTransliterationOptions = !state.showTransliterationOptions;
@@ -173,8 +174,25 @@ export default function reducer(state, action) {
     case SET_SETTINGS_PANEL: {
       return {
         ...state,
-        showSettingsPanel: action.payload
-      }
+        showSettingsPanel: action.payload,
+      };
+    }
+    case SET_KEYBOARD_SHORTCUTS_PANEL: {
+      return {
+        ...state,
+        showKeyboardShortcutsPanel: action.payload,
+      };
+    }
+    case TOGGLE_KEYBOARD_SHORTCUTS_PANEL: {
+      const showKeyboardShortcutsPanel = !state.showKeyboardShortcutsPanel;
+      clickEvent({
+        action: TOGGLE_KEYBOARD_SHORTCUTS_PANEL,
+        label: showKeyboardShortcutsPanel ? 1 : 0,
+      });
+      return {
+        ...state,
+        showKeyboardShortcutsPanel,
+      };
     }
     case TOGGLE_DARK_MODE: {
       const darkMode = !state.darkMode;
@@ -197,7 +215,10 @@ export default function reducer(state, action) {
         label: autoScrollMode ? 1 : 0,
       });
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE, autoScrollMode);
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE,
+        autoScrollMode
+      );
 
       return {
         ...state,
@@ -210,14 +231,17 @@ export default function reducer(state, action) {
 
       clickEvent({
         action: SET_SEHAJ_PAATH_MODE,
-        label: sehajPaathMode
-      })
+        label: sehajPaathMode,
+      });
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE, sehajPaathMode);
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
+        sehajPaathMode
+      );
       return {
         ...state,
-        sehajPaathMode
-      }
+        sehajPaathMode,
+      };
     }
 
     case TOGGLE_SEHAJ_PAATH_MODE: {
@@ -226,13 +250,16 @@ export default function reducer(state, action) {
       clickEvent({
         action: TOGGLE_SEHAJ_PAATH_MODE,
         label: sehajPaathMode ? 1 : 0,
-      })
+      });
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE, sehajPaathMode);
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
+        sehajPaathMode
+      );
       return {
         ...state,
-        sehajPaathMode
-      }
+        sehajPaathMode,
+      };
     }
 
     case TOGGLE_PARAGRAPH_MODE: {
@@ -241,13 +268,13 @@ export default function reducer(state, action) {
       clickEvent({
         action: TOGGLE_PARAGRAPH_MODE,
         label: paragraphMode ? 1 : 0,
-      })
+      });
 
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE, paragraphMode);
       return {
         ...state,
-        paragraphMode
-      }
+        paragraphMode,
+      };
     }
 
     case TOGGLE_VISRAAMS: {
@@ -307,13 +334,13 @@ export default function reducer(state, action) {
       return {
         ...state,
         larivaar,
-        larivaarAssist
+        larivaarAssist,
       };
     }
     case TOGGLE_LARIVAAR_ASSIST_OPTION: {
-      let larivaar = state.larivaar
+      let larivaar = state.larivaar;
 
-      if (!larivaar) larivaar = !larivaar
+      if (!larivaar) larivaar = !larivaar;
 
       const larivaarAssist = !state.larivaarAssist;
       clickEvent({
@@ -327,7 +354,7 @@ export default function reducer(state, action) {
         ...state,
         larivaarAssist,
         visraams,
-        larivaar
+        larivaar,
       };
     }
 
@@ -335,7 +362,7 @@ export default function reducer(state, action) {
       return {
         ...state,
         isAutoScrolling: action.payload,
-      }
+      };
     }
 
     case SET_UNICODE: {
@@ -366,7 +393,10 @@ export default function reducer(state, action) {
 
       if (translationFontSize === state.translationFontSize) return state;
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_TRANSLATION_FONT_SIZE, action.payload);
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_TRANSLATION_FONT_SIZE,
+        action.payload
+      );
       return {
         ...state,
         translationFontSize,
@@ -375,9 +405,13 @@ export default function reducer(state, action) {
     case SET_TRANSLITERATION_FONT_SIZE: {
       const transliterationFontSize = parseFloat(action.payload, 10);
 
-      if (transliterationFontSize === state.transliterationFontSize) return state;
+      if (transliterationFontSize === state.transliterationFontSize)
+        return state;
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE, action.payload);
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE,
+        action.payload
+      );
       return {
         ...state,
         transliterationFontSize,
@@ -403,12 +437,12 @@ export default function reducer(state, action) {
         label: JSON.stringify(sgBaaniLength),
       });
 
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH, sgBaaniLength)
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH, sgBaaniLength);
 
       return {
         ...state,
-        sgBaaniLength
-      }
+        sgBaaniLength,
+      };
     }
 
     case CHANGE_FONT: {
@@ -428,18 +462,18 @@ export default function reducer(state, action) {
       const isHindiLanguageSelected = action.payload.includes('hindi');
 
       const translationLanguages = action.payload || [];
-      
+
       const isSteekLanguageSelected = state.steekLanguages.length > 0;
       let steekLanguages = [];
       if (isPunjabiLanguageSelected) {
-        if (isSteekLanguageSelected)
-          steekLanguages = state.steekLanguages;
+        if (isSteekLanguageSelected) steekLanguages = state.steekLanguages;
         else {
           steekLanguages = ['BaniDB'];
         }
       }
 
-      const isEnglishTranslationLanguageSelected = state.englishTranslationLanguages.length > 0;
+      const isEnglishTranslationLanguageSelected =
+        state.englishTranslationLanguages.length > 0;
       let englishTranslationLanguages = [];
       if (isEnglishLanguageSelected) {
         if (isEnglishTranslationLanguageSelected)
@@ -449,7 +483,8 @@ export default function reducer(state, action) {
         }
       }
 
-      const isHindiTranslationLanguageSelected = state.hindiTranslationLanguages.length > 0;
+      const isHindiTranslationLanguageSelected =
+        state.hindiTranslationLanguages.length > 0;
       let hindiTranslationLanguages = [];
       if (isHindiLanguageSelected) {
         if (isHindiTranslationLanguageSelected)
@@ -497,12 +532,17 @@ export default function reducer(state, action) {
     case SET_STEEK_LANGUAGES: {
       const steekLanguages = action.payload || [];
 
-      let translationLanguages = state.translationLanguages
+      let translationLanguages = state.translationLanguages;
       if (steekLanguages.length > 0) {
-        const isPunjabiLanguageSelected = state.translationLanguages.includes(PUNJABI_LANGUAGE);
-        translationLanguages = isPunjabiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, PUNJABI_LANGUAGE];
+        const isPunjabiLanguageSelected =
+          state.translationLanguages.includes(PUNJABI_LANGUAGE);
+        translationLanguages = isPunjabiLanguageSelected
+          ? state.translationLanguages
+          : [...state.translationLanguages, PUNJABI_LANGUAGE];
       } else {
-        translationLanguages = state.translationLanguages.filter(t => t !== PUNJABI_LANGUAGE);
+        translationLanguages = state.translationLanguages.filter(
+          (t) => t !== PUNJABI_LANGUAGE
+        );
       }
 
       clickEvent({
@@ -523,20 +563,24 @@ export default function reducer(state, action) {
       return {
         ...state,
         translationLanguages,
-        steekLanguages
-      }
-
+        steekLanguages,
+      };
     }
 
     case SET_ENGLISH_TRANSLATION_LANGUAGES: {
       let englishTranslationLanguages = action.payload || [];
 
-      let translationLanguages = []
+      let translationLanguages = [];
       if (englishTranslationLanguages.length > 0) {
-        const isEnglishLanguageSelected = state.translationLanguages.includes(ENGLISH_LANGUAGE);
-        translationLanguages = isEnglishLanguageSelected ? state.translationLanguages : [...state.translationLanguages, ENGLISH_LANGUAGE];
+        const isEnglishLanguageSelected =
+          state.translationLanguages.includes(ENGLISH_LANGUAGE);
+        translationLanguages = isEnglishLanguageSelected
+          ? state.translationLanguages
+          : [...state.translationLanguages, ENGLISH_LANGUAGE];
       } else {
-        translationLanguages = state.translationLanguages.filter(t => t !== ENGLISH_LANGUAGE);
+        translationLanguages = state.translationLanguages.filter(
+          (t) => t !== ENGLISH_LANGUAGE
+        );
       }
 
       clickEvent({
@@ -557,19 +601,24 @@ export default function reducer(state, action) {
       return {
         ...state,
         translationLanguages,
-        englishTranslationLanguages
-      }
+        englishTranslationLanguages,
+      };
     }
-    
+
     case SET_HINDI_TRANSLATION_LANGUAGES: {
       let hindiTranslationLanguages = action.payload || [];
 
-      let translationLanguages = []
+      let translationLanguages = [];
       if (hindiTranslationLanguages.length > 0) {
-        const isHindiLanguageSelected = state.translationLanguages.includes(HINDI_LANGUAGE);
-        translationLanguages = isHindiLanguageSelected ? state.translationLanguages : [...state.translationLanguages, HINDI_LANGUAGE];
+        const isHindiLanguageSelected =
+          state.translationLanguages.includes(HINDI_LANGUAGE);
+        translationLanguages = isHindiLanguageSelected
+          ? state.translationLanguages
+          : [...state.translationLanguages, HINDI_LANGUAGE];
       } else {
-        translationLanguages = state.translationLanguages.filter(t => t !== HINDI_LANGUAGE);
+        translationLanguages = state.translationLanguages.filter(
+          (t) => t !== HINDI_LANGUAGE
+        );
       }
 
       clickEvent({
@@ -590,8 +639,8 @@ export default function reducer(state, action) {
       return {
         ...state,
         translationLanguages,
-        hindiTranslationLanguages
-      }
+        hindiTranslationLanguages,
+      };
     }
 
     case SET_LARIVAAR_ASSIST_STRENGTH: {
@@ -600,7 +649,7 @@ export default function reducer(state, action) {
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST_STRENGTH,
         JSON.stringify(larivaarAssistStrength)
-      )
+      );
 
       return {
         ...state,
@@ -654,7 +703,10 @@ export default function reducer(state, action) {
         action: SET_AUTO_SCROLL_MODE,
         label: autoScrollMode ? true : false,
       });
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE, autoScrollMode);
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE,
+        autoScrollMode
+      );
       return {
         ...state,
         autoScrollMode,
@@ -698,23 +750,28 @@ export default function reducer(state, action) {
     }
 
     case SET_MULTIPLE_SHABADS: {
-      const newShabad = action.payload;      
-      const multipleShabads = state.multipleShabads.findIndex(e => e.id === newShabad.id) === -1 ? [...state.multipleShabads, newShabad] : [...state.multipleShabads]
+      const newShabad = action.payload;
+      const multipleShabads =
+        state.multipleShabads.findIndex((e) => e.id === newShabad.id) === -1
+          ? [...state.multipleShabads, newShabad]
+          : [...state.multipleShabads];
 
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
         JSON.stringify(multipleShabads)
       );
-      
+
       return {
         ...state,
         multipleShabads,
       };
     }
-    
+
     case REMOVE_MULTIPLE_SHABADS: {
       const id = action.payload;
-      const multipleShabads = state.multipleShabads.filter(shabad => shabad.id !== id)
+      const multipleShabads = state.multipleShabads.filter(
+        (shabad) => shabad.id !== id
+      );
 
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
@@ -728,7 +785,7 @@ export default function reducer(state, action) {
     }
 
     case CLEAR_MULTIPLE_SHABADS: {
-      const multipleShabads = [];            
+      const multipleShabads = [];
 
       saveToLocalStorage(
         LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
@@ -744,8 +801,8 @@ export default function reducer(state, action) {
       const showMultiViewPanel = action.payload;
       return {
         ...state,
-        showMultiViewPanel
-      }
+        showMultiViewPanel,
+      };
     }
 
     case SET_ERROR: {
@@ -753,8 +810,8 @@ export default function reducer(state, action) {
 
       return {
         ...state,
-        error
-      }
+        error,
+      };
     }
 
     default:

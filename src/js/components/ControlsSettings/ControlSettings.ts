@@ -46,6 +46,7 @@ export interface ISettingActions {
   toggleParagraphMode: () => {},
   toggleSehajPaathMode: () => {},
   toggleSettingsPanel: () => {},
+  toggleKeyboardShortcutsPanel: () => {},
   setVisraamSource: () => {},
   setVisraamStyle: () => {},
   changeFont: () => {},
@@ -62,6 +63,7 @@ export interface ISettingActions {
   steekLanguages: string[],
   transliterationLanguages: string[],
   showSettingsPanel: string,
+  showKeyboardShortcutsPanel: string,
   visraams: boolean,
   visraamSource: string,
   visraamStyle: string,
@@ -85,15 +87,116 @@ export interface ISettingActions {
 export const HEADER_SETTINGS = ({
   toggleSettingsPanel,
   showSettingsPanel,
+  showKeyboardShortcutsPanel  
 }: ISettingActions) => {
   return [
     {
       type: 'header',
-      label: 'Settings',
+      label: showKeyboardShortcutsPanel ? 'Shortcuts':'Settings',
       value: showSettingsPanel,
       action: toggleSettingsPanel,
     },
   ]
+}
+
+export const KEYBOARD_SHORTCUTS = () =>{
+  return [
+    {
+      type: 'label-options',
+      label: 'Larivar',
+      shortcut: ['l'],
+    },
+    {
+      type: 'label-options',
+      label: 'Larivar Assist',
+      shortcut: ['shift+l'],
+    },
+    {
+      type: 'label-options',
+      label: 'Vishraams',
+      shortcut: ['v'],
+    },
+    {
+      type: 'label-options',
+      label: 'AutoScroll Mode',
+      shortcut: ['a'],
+    },
+    {
+      type: 'label-options',
+      label: 'Dark Mode',
+      shortcut: ['o'],
+    },
+    {
+      type: 'label-options',
+      label: 'Split Mode',
+      shortcut: ['/'],
+    },
+    {
+      type: 'label-options',
+      label: 'FullScreen Mode',
+      shortcut: ['f'],
+    },
+    {
+      type: 'label-options',
+      label: 'Reading Mode',
+      shortcut: ['r'],
+    },
+    {
+      type: 'label-options',
+      label: 'Unicode',
+      shortcut: ['u'],
+    },
+    {
+      type: 'label-options',
+      label: 'Center Align',
+      shortcut: ['(cmd)ctrl+shift+c'],
+    },
+    {
+      type: 'label-options',
+      label: 'English Translation',
+      shortcut: ['e'],
+    },
+    {
+      type: 'label-options',
+      label: 'Punjabi Translation',
+      shortcut: ['t'],
+    },
+    {
+      type: 'label-options',
+      label: 'Spanish Translation',
+      shortcut: ['s'],
+    },
+    {
+      type: 'label-options',
+      label: 'English Transliteration',
+      shortcut: ['shift+e'],
+    },
+    {
+      type: 'label-options',
+      label: 'Shahmukhi Transliteration',
+      shortcut: ['shift+s'],
+    },
+    {
+      type: 'label-options',
+      label: 'Hindi Transliteration',
+      shortcut: ['shift+h'],
+    },
+    {
+      type: 'label-options',
+      label: 'Increase Font Size',
+      shortcut: ['+'],
+    },
+    {
+      type: 'label-options',
+      label: 'Decrease Font Size',
+      shortcut: ['-'],
+    },
+    {
+      type: 'label-options',
+      label: 'Search Bar',
+      shortcut: ['(cmd)ctrl+/'],
+    },
+]
 }
 
 export const QUICK_SETTINGS = ({
