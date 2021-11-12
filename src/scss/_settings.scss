@@ -54,6 +54,7 @@ $panel-width-560: 65vw;
   }
 
   &-header {
+    align-items: center;
     background-color: $sttm-blue;
     border-bottom: 1px solid $sttm-lighter-grey;
     display: flex;
@@ -61,7 +62,6 @@ $panel-width-560: 65vw;
     justify-content: space-between;
     padding: 10px 12px;
     width: inherit;
-    align-items: center;
   }
 
   &-heading {
