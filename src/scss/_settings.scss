@@ -215,11 +215,12 @@ $panel-width-560: 65vw;
   }
 
   &.gradient {
-    background: linear-gradient(
-      to right,
-      rgba(229, 229, 229, 0) 20%,
-      rgba($sttm-vishraam-red, 0.7) 100%
-    );
+    background: 
+      linear-gradient(
+        to right,
+        rgba(229, 229, 229, 0) 20%,
+        rgba($sttm-vishraam-red, 0.7) 100%
+      );
     color: $sttm-darkest-grey;
   }
 

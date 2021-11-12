@@ -129,7 +129,8 @@
   > .slide-type {
     background-color: $sttm-white;
     border-radius: 12px;
-    box-shadow: 0 2px 2px 0 $sttm-transparent-black,
+    box-shadow: 
+      0 2px 2px 0 $sttm-transparent-black,
       0 0 0 1px $sttm-transparent-light-black;
     color: $sttm-light-black;
     cursor: pointer;
@@ -413,12 +414,12 @@
   background-color: $sttm-grey;
   bottom: 0;
   cursor: pointer;
-  position: absolute;
   left: 0;
+  position: absolute;
   right: 0;
   top: 0;
-  transition: 0.4s;
   -webkit-transition: 0.4s;
+  transition: 0.4s;
 
   &::before {
     background-color: white;
@@ -428,9 +429,9 @@
     left: 4px;
     margin-bottom: 1.5px;
     position: absolute;
+    -webkit-transition: 0.4s;
     transition: 0.4s;
     width: 20px;
-    -webkit-transition: 0.4s;
   }
 
   &.round {
