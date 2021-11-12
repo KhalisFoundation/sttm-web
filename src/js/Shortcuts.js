@@ -18,6 +18,26 @@ const ViewerShortcuts = {
     name: 'Toggle AutoScroll Mode',
     sequences: ['a']
   },
+  toggleDarkMode: {
+    name: 'Toggle Dark Mode',
+    sequences: ['o'],
+  },
+  toggleSplitMode: {
+    name: 'Toggle Split Mode',
+    sequences: ['/'],
+  },
+  toggleFullScreenMode: {
+    name: 'Toggle FullScreen Mode',
+    sequences: ['f'],
+  },
+  toggleReadingMode: {
+    name: 'Toggle Reading Mode', // SehajPaath Mode
+    sequences: ['r'],
+  },
+  unicode: {
+    name: 'Unicode',
+    sequences: ['u'],
+  },
   centerAlign: {
     name: 'Center Align',
     sequences: ['meta+shift+c', 'ctrl+shift+c']
@@ -45,6 +65,14 @@ const ViewerShortcuts = {
   toggleHinTranslit: {
     name: 'Toggle Hindi Transliteration',
     sequences: ['shift+h']
+  },
+  increaseFontSize: {
+    name: 'Increase Font Size',
+    sequences: ['+'],
+  },
+  decreaseFontSize: {
+    name: 'Decrease Font Size',
+    sequences: ['-'],
   },
 
 }
@@ -85,6 +113,38 @@ const ViewerShortcutHanders = {
   toggleAutoScrollMode: () => {
     store.dispatch({ type: "TOGGLE_AUTO_SCROLL_MODE" })
   },
+  toggleDarkMode: () => {
+    store.dispatch({ type: 'TOGGLE_DARK_MODE' });
+  },
+  toggleSplitMode: () => {
+    store.dispatch({ type: 'TOGGLE_SPLIT_VIEW_OPTION' });
+  },
+  toggleReadingMode: () => {
+    store.dispatch({ type: 'TOGGLE_SEHAJ_PAATH_MODE' });
+  },
+  toggleFullScreenMode: () => {
+    const html = document.querySelector('html');
+    const state = store.getState();
+    store.dispatch({
+      type: 'SET_FULLSCREEN_MODE',
+      payload: !state.fullScreenMode,
+    });
+    if (!state.fullScreenMode) {
+      document.body.classList.add('fullscreen-view');
+      html.requestFullscreen && html.requestFullscreen();
+      html.webkitRequestFullscreen && html.webkitRequestFullscreen();
+    } else {
+      document.fullscreen && document.exitFullscreen();
+      document.body.classList.remove('fullscreen-view');
+    }
+  },
+  unicode: () => {
+    const state = store.getState();
+    store.dispatch({
+      type: 'SET_UNICODE',
+      payload: !state.unicode,
+    });
+  },
   centerAlign: () => {
     const state = store.getState();
     store.dispatch({ type: "SET_CENTER_ALIGN_OPTION", payload: !state.centerAlignGurbani })
@@ -115,7 +175,44 @@ const ViewerShortcutHanders = {
   toggleHinTranslit: () => {
     const state = store.getState();
     store.dispatch({ type: 'SET_TRANSLITERATION_LANGUAGES', payload: selectItemInArray('hindi', state.transliterationLanguages) })
-  }
+  },
+  increaseFontSize: () => {
+    const state = store.getState();
+    store.dispatch({
+      type: 'SET_FONT_SIZE',
+      payload:
+        state.fontSize < 3.2
+          ? toFixedFloat(state.fontSize + 0.4)
+          : toFixedFloat(state.fontSize),
+    });
+    store.dispatch({
+      type: 'SET_TRANSLATION_FONT_SIZE',
+      payload: Math.min(toFixedFloat(state.translationFontSize + 0.4), 2.4),
+    });
+    store.dispatch({
+      type: 'SET_TRANSLITERATION_FONT_SIZE',
+      payload: Math.min(toFixedFloat(state.transliterationFontSize + 0.4), 3.2),
+    });
+  },
+  decreaseFontSize: () => {
+    const state = store.getState();
+    store.dispatch({
+      type: 'SET_FONT_SIZE',
+      payload:
+        state.fontSize >= 1.6
+          ? toFixedFloat(state.fontSize - 0.4)
+          : toFixedFloat(state.fontSize),
+    });
+    store.dispatch({
+      type: 'SET_TRANSLATION_FONT_SIZE',
+      payload: Math.max(toFixedFloat(state.translationFontSize - 0.4), 1.2),
+    });
+    store.dispatch({
+      type: 'SET_TRANSLITERATION_FONT_SIZE',
+      payload: Math.max(toFixedFloat(state.transliterationFontSize - 0.4), 1.2),
+    });
+  },
+};
 }
 
 // export default Shortcuts;
