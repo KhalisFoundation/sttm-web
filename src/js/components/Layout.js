@@ -30,7 +30,7 @@ class Layout extends React.PureComponent {
     children: PropTypes.node.isRequired,
     darkMode: PropTypes.bool.isRequired,
     autoScrollMode: PropTypes.bool.isRequired,
-    location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
+    location: PropTypes.shape({ pathname: PropTypes.string.isRequired})
       .isRequired,
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
@@ -39,6 +39,7 @@ class Layout extends React.PureComponent {
     multipleShabads: PropTypes.array,
     showMultiViewPanel: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
+    history: PropTypes.object 
   };
 
   state = {
