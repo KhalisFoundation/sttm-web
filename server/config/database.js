@@ -15,13 +15,13 @@ const runQuery = async (req, res, data, cb) => {
   try {
       // Establish connection to SkySQL
       conn = await pool.getConnection();
-      console.log("connected ! connection id is " + conn.threadId);
+      // console.log("connected ! connection id is " + conn.threadId);
       cb(req, res, data, conn)
   } catch (err) {
       throw err;
   } finally {
       // Release (close) the connection 
-      if (conn) return conn.release();
+      if (conn) conn.release();
   }
 }
 
