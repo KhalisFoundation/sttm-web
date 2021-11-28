@@ -647,4 +647,29 @@ export default [
       );
     },
   },
+  {
+    path: '/user/favourite-shabads',
+    render(props) {
+      return (
+        <Layout title="Favourite Shabads - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(/* webpackChunkName: "FavouriteShabads" */ './pages/FavouriteShabads')
+            }
+          >
+            {({ pending, resolved: { default: FavouriteShabads } = {}, rejected }) =>
+              pending ? null : FavouriteShabads ? (
+                <FavouriteShabads {...props} />
+              ) : (
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
+                )
+            }
+          </RenderPromise>
+        </Layout>
+      )
+    }
+  }
 ];

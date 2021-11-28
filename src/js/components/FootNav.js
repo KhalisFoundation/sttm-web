@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
-import { toNavURL, shouldSaveAng, saveAng, dateMath } from '../util';
+import { toNavURL, dateMath } from '../util';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
 
@@ -23,68 +23,65 @@ class FootNav extends React.PureComponent {
     const isSync = type === 'sync';
     return (
       <div className={`pagination pagination-${type}`}>
-
         {/* Previous navigation */}
-        {nav.previous ?
-          (
-            <div className="shabad-nav left">
-              <Link to={link + nav.previous}>
-                {isHukamnama ?
-                  (
-                    <Hour24 direction='previous' />
-                  ) :
-                  (
-                    <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                  )}
-                <span>{isHukamnama ? dateMath.expand(nav.previous, false) : 'Previous'}</span>
-              </Link>
-            </div>
-          ) :
-          !isSync ? (
-            <div className="shabad-nav left disabled-nav">
-              <a>
-                {isHukamnama ?
-                  (
-                    <Hour24 direction='previous' />
-                  ) :
-                  (
-                    <Chevron direction={Chevron.DIRECTIONS.LEFT} />
-                  )}
-                <span>{isHukamnama ? '' : 'Previous'}</span>
-              </a>
-            </div>
-          ) : ''}
+        {nav.previous ? (
+          <div className="shabad-nav left">
+            <Link to={link + nav.previous}>
+              {isHukamnama ? (
+                <Hour24 direction="previous" />
+              ) : (
+                <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              )}
+              <span>
+                {isHukamnama
+                  ? dateMath.expand(nav.previous, false)
+                  : 'Previous'}
+              </span>
+            </Link>
+          </div>
+        ) : !isSync ? (
+          <div className="shabad-nav left disabled-nav">
+            <a>
+              {isHukamnama ? (
+                <Hour24 direction="previous" />
+              ) : (
+                <Chevron direction={Chevron.DIRECTIONS.LEFT} />
+              )}
+              <span>{isHukamnama ? '' : 'Previous'}</span>
+            </a>
+          </div>
+        ) : (
+          ''
+        )}
 
         {/* Next navigation */}
         {nav.next ? (
           <div className="shabad-nav right">
             <a role="button" aria-label="next" onClick={this.goToNextAng}>
-              <span>{isHukamnama ? dateMath.expand(nav.next, false) : 'Next'}</span>
-              {isHukamnama ?
-                (
-                  <Hour24 direction='Next' />
-                ) :
-                (
-                  <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-                )}
+              <span>
+                {isHukamnama ? dateMath.expand(nav.next, false) : 'Next'}
+              </span>
+              {isHukamnama ? (
+                <Hour24 direction="Next" />
+              ) : (
+                <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              )}
             </a>
           </div>
-        ) :
-          !isSync ? (
-            <div className="shabad-nav right disabled-nav">
-              <a>
-                <span>{isHukamnama ? '' : 'Next'}</span>
-                {isHukamnama ?
-                  (
-                    <Hour24 direction='next' />
-                  ) :
-                  (
-                    <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
-                  )}
-              </a>
-            </div>
-          ) : ''}
-
+        ) : !isSync ? (
+          <div className="shabad-nav right disabled-nav">
+            <a>
+              <span>{isHukamnama ? '' : 'Next'}</span>
+              {isHukamnama ? (
+                <Hour24 direction="next" />
+              ) : (
+                <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
+              )}
+            </a>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     );
   }

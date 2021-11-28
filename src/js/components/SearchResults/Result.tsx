@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices, multiviewFormattedShabad } from '../../util';
-import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 import { getHighlightString } from './util/get-highlight-string';
-import { isShabadExistMultiview } from '../../util/shabad/is-shabad-exist-multiview';
 
 import {
   SEARCH_TYPES
@@ -50,6 +47,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   larivaar,
   larivaarAssist,
 }) => {
+  console.log(shabad, "SHABAD...")
   const _source = getSource(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
   const presentationalSource = _source

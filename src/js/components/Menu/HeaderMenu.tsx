@@ -1,29 +1,34 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import BarsIcon from './Icons/Bars';
-import BackIcon from './Icons/Back';
+import BarsIcon from '../Icons/Bars';
+import BackIcon from '../Icons/Back';
+import UserLoginMenu from './UserLoginMenu';
 
-const Menu = ({ isHome }) => {
-  const displayAreaRefInfo = useRef(null)
-  const dropTogglerRefInfo = useRef(null)
-  const displayAreaRefIndex = useRef(null)
-  const dropTogglerRefIndex = useRef(null)
-  const displayAreaRefSync = useRef(null)
-  const dropTogglerRefSync = useRef(null)
+interface MenuProps {
+  isHome: boolean,
+}
+
+const Menu: React.FC<MenuProps> = ({ isHome }) => {
+  const displayAreaRefInfo = useRef(null);
+  const dropTogglerRefInfo = useRef(null);
+  const displayAreaRefIndex = useRef(null);
+  const dropTogglerRefIndex = useRef(null);
+  const displayAreaRefSync = useRef(null);
+  const dropTogglerRefSync = useRef(null);
 
   const [toggleDropdownInfo, setToggleDropdownInfo] = useState(false);
   const [toggleDropdownSync, setToggleDropdownSync] = useState(false);
   const [toggleDropdownIndex, setToggleDropdownIndex] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
     return () => {
-      document.removeEventListener("click", handleClickOutside);
-    }
-  }, [])
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
-  function handleClickOutside(event) {
+  function handleClickOutside(event: any) {
     const path = event.path || (event.composedPath && event.composedPath());
 
     if (
@@ -63,15 +68,15 @@ const Menu = ({ isHome }) => {
   }
 
   function toggleDropdownHandlerInfo() {
-    setToggleDropdownInfo(!toggleDropdownInfo)
+    setToggleDropdownInfo(!toggleDropdownInfo);
   }
 
   function toggleDropdownHandlerSync() {
-    setToggleDropdownSync(!toggleDropdownSync)
+    setToggleDropdownSync(!toggleDropdownSync);
   }
 
   function toggleDropdownHandlerIndex() {
-    setToggleDropdownIndex(!toggleDropdownIndex)
+    setToggleDropdownIndex(!toggleDropdownIndex);
   }
 
   return (
@@ -103,11 +108,18 @@ const Menu = ({ isHome }) => {
           <li>
             <Link to="/hukamnama" onClick={toggleMenu}>
               Hukamnama
-              </Link>
+            </Link>
           </li>
 
-          <li data-cy="index" className={`${toggleDropdownIndex ? 'opened' : ''} submenu`}>
-            <button name="index-btn" onClick={toggleDropdownHandlerIndex} ref={dropTogglerRefIndex}>
+          <li
+            data-cy="index"
+            className={`${toggleDropdownIndex ? 'opened' : ''} submenu`}
+          >
+            <button
+              name="index-btn"
+              onClick={toggleDropdownHandlerIndex}
+              ref={dropTogglerRefIndex}
+            >
               <span>
                 Index
                 <BackIcon />
@@ -132,8 +144,15 @@ const Menu = ({ isHome }) => {
             </div>
           </li>
 
-          <li data-cy="info" className={`${toggleDropdownInfo ? 'opened' : ''} submenu`}>
-            <button name="info-btn" onClick={toggleDropdownHandlerInfo} ref={dropTogglerRefInfo}>
+          <li
+            data-cy="info"
+            className={`${toggleDropdownInfo ? 'opened' : ''} submenu`}
+          >
+            <button
+              name="info-btn"
+              onClick={toggleDropdownHandlerInfo}
+              ref={dropTogglerRefInfo}
+            >
               <span>
                 Information
                 <BackIcon />
@@ -142,16 +161,19 @@ const Menu = ({ isHome }) => {
             <div className="submenu-items" ref={displayAreaRefInfo}>
               <Link to="/rehat-maryadha" onClick={toggleMenu}>
                 Rehat Maryadha
-                </Link>
+              </Link>
             </div>
           </li>
 
-
-
-
-
-          <li data-cy="sync" className={`${toggleDropdownSync ? 'opened' : ''} submenu`}>
-            <button name="sync-btn" onClick={toggleDropdownHandlerSync} ref={dropTogglerRefSync}>
+          <li
+            data-cy="sync"
+            className={`${toggleDropdownSync ? 'opened' : ''} submenu`}
+          >
+            <button
+              name="sync-btn"
+              onClick={toggleDropdownHandlerSync}
+              ref={dropTogglerRefSync}
+            >
               <span>
                 Sync
                 <BackIcon />
@@ -160,31 +182,33 @@ const Menu = ({ isHome }) => {
             <div className="submenu-items" ref={displayAreaRefSync}>
               <Link to="/sync" onClick={toggleMenu}>
                 Sangat Sync
-                </Link>
+              </Link>
               <Link to="/control" onClick={toggleMenu}>
                 Bani Controller
-                </Link>
+              </Link>
             </div>
           </li>
           <li className="close">
             <span role="button" aria-label="Close menu" onClick={closeMenu}>
               Close
-              </span>
+            </span>
           </li>
           <li className="donate-button">
-            <Link className="donate-button-text" to={{ pathname: "https://khalisfoundation.org/donate/" }} target="_blank" onClick={toggleMenu}>
-
+            <Link
+              className="donate-button-text"
+              to={{ pathname: 'https://khalisfoundation.org/donate/' }}
+              target="_blank"
+              onClick={toggleMenu}
+            >
               Donate
-              </Link>
+            </Link>
           </li>
+          <UserLoginMenu toggleMenu={toggleMenu} />
         </ul>
       </div>
     </React.Fragment>
   );
-}
-
-Menu.propTypes = {
-  isHome: PropTypes.bool
 };
+
 
 export default Menu;

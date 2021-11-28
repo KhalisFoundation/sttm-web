@@ -3,7 +3,7 @@ import Header from './Header';
 import Banner from './Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
-import { DEFAULT_PAGE_TITLE, TEXTS } from '../constants';
+import { DEFAULT_PAGE_TITLE, LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, TEXTS } from '../constants';
 import { connect } from 'react-redux';
 import throttle from 'lodash.throttle';
 import {
@@ -16,7 +16,7 @@ import { setOnlineMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
-import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute } from '../util';
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -83,10 +83,10 @@ class Layout extends React.PureComponent {
       isController = false,
       autoScrollMode,
       showMultiViewPanel,
-      location: { pathname = '/' } = {},
+      location: { pathname = '/' } = {},      
       ...props
     } = this.props;
-
+    
     const isShowFullScreen = isShowFullscreenRoute(pathname);
     const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
     const isShowSettings = isShowSettingsRoute(location.pathname)
@@ -146,7 +146,26 @@ class Layout extends React.PureComponent {
     );
   }
 
+  processAuth() {
+    const {location, history} = this.props
+    const {
+      token, logout
+    } = getQueryParams(location.search);
+    // @TODO: use redux to control state of session user
+    if(!isFalsy(token)) {
+      window.localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, token)
+      history.push('/')
+    }
+    // @TODO: use redux to remove user sesssion
+    if(logout === 'success') {
+      window.localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
+      history.push('/')
+    }
+    return;
+  }
+
   componentDidMount() {
+    this.processAuth();
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
     window.addEventListener('scroll', this.onScroll, { passive: true });
