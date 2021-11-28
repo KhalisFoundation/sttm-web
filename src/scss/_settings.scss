@@ -20,7 +20,6 @@ $panel-width-560: 65vw;
     flex-direction: column;
     height: 100vh;
     opacity: 0;
-    overflow-x: hidden;
     position: fixed;
     right: 0;
     top: 0;
@@ -29,6 +28,10 @@ $panel-width-560: 65vw;
     transition: 0.3s all ease-in-out;
     width: $panel-width;
     z-index: 100;
+
+    [role="dialog"] {
+      overflow-y: auto;
+    }
 
     .dark-mode & {
       background-color: $sttm-lighter-black;
@@ -320,10 +323,21 @@ $panel-width-560: 65vw;
     list-style: none;
   }
 
+  &-child-container {
+    grid-column: 1/-1;
+    list-style: none;
+
+    .item {
+      align-items: center;
+      display: flex;
+    }
+  }
+
   &-item {
     align-items: center;
-    display: flex;
-    height: 30px;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    min-height: 30px;
 
     &-label {
       margin-left: 10px;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { showToast, copyToClipboard, shortenURL, isKeyExists, multiviewFormattedShabad } from '../util';
 import { TEXTS } from '../constants';
 import { clickEvent, ACTIONS } from '../util/analytics';
-import { delay } from '../util/misc';
+import { delay, isFalsy } from '../util/misc';
 import ShareIcon from './Icons/Share';
 import EmbedIcon from './Icons/Embed';
 import CopyAllIcon from './Icons/CopyAll';
@@ -46,7 +46,7 @@ class ShareButtons extends React.PureComponent {
     this.formattedShabad = {}
     this.onClickSettings = this.onClickSettings.bind(this);
     const { highlight, gurbani } = props;
-    if (gurbani !== undefined) {
+    if (!isFalsy(gurbani) && gurbani.length) {
       const selectedShabad = highlight ? (gurbani?.find(({ verseId }) => verseId === highlight) ?? gurbani[0]) : gurbani[0]
       this.formattedShabad = multiviewFormattedShabad(selectedShabad)
     }
@@ -63,7 +63,6 @@ class ShareButtons extends React.PureComponent {
     toggleSettingsPanel: PropTypes.func,
     closeMultiViewPanel: PropTypes.func,
     showMultiViewPanel: PropTypes.bool,
-    settingIdRef: PropTypes.object,
     highlight: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -99,7 +98,7 @@ class ShareButtons extends React.PureComponent {
   }
 
   render() {
-    const { media, onEmbedClick, onCopyAllClick, settingIdRef } = this.props;
+    const { media, onEmbedClick, onCopyAllClick } = this.props;
 
     if (media.length === 0) {
       return null;
@@ -154,7 +153,7 @@ class ShareButtons extends React.PureComponent {
       ),
       settings: (
         <li key={5}>
-          <button id="settings-icon" ref={settingIdRef} onClick={this.onClickSettings}>
+          <button id="settings-icon" onClick={this.onClickSettings}>
             <GearsIcon />
             <span className="show-on-desktop">Display</span>
           </button>

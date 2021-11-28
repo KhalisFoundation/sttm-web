@@ -1,23 +1,27 @@
+export 
 interface Index {
   name: string,
   pages: [number, number],
   highlight?: number
 }
-interface IRaagIndex {
+
+export interface IRaagIndex {
   name: string;
-  source: 'G';
+  source: 'G' | 'D';
+  path: string;
   indices: Index[];
 }
 
-interface IRaagIndices {
-  SGGS: IRaagIndex,
-  DG: IRaagIndex
+export interface IRaagIndices {
+  SGGS: IRaagIndex;
+  DG: IRaagIndex;
 }
 
 export const raagIndices: IRaagIndices = {
   SGGS: {
     name: 'Sri Guru Granth Sahib Jee',
     source: 'G',
+    path: 'sri-guru-granth-sahib',
     indices: [
       {
         name: 'Raag Sri',
@@ -290,6 +294,7 @@ export const raagIndices: IRaagIndices = {
   DG: {
     name: 'Sri Dasam Granth Sahib',
     source: 'D',
+    path: 'sri-dasam-granth-sahib',
     indices: [
       { name: 'Jaap Sahib', pages: [1, 10] },
       { name: 'Akal Ustat', pages: [11, 38] },
@@ -318,5 +323,5 @@ export const raagIndices: IRaagIndices = {
       { name: 'Zafarnamah', pages: [1389, 1389] },
       { name: 'Hikayat', pages: [1394, 1428], highlight: 140380 },
     ],
-  },
+  }
 };

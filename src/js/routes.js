@@ -186,17 +186,11 @@ export default [
     },
   },
   {
-    path: '/index',
-    render(props) {
-      // update the meta tags to display banner for sundar-gutka
-      updateSmartAppBannerMetaTags({
-        appIdApple: 1393849213,
-        appIdGoogle: "com.KhalisFoundation.AmritKeertan",
-        appIconPath: '/assets/images/amrit-keertan-icon.png',
-      })
+    path: '/index/sri-guru-granth-sahib',
+    render(props) {      
 
       return (
-        <Layout title="Index - SikhiToTheMax" {...props}>
+        <Layout title="Index - Sri Guru Granth Sahib Ji - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
               import(
@@ -219,6 +213,125 @@ export default [
       );
     },
   },
+  {
+    path: '/index/sri-dasam-granth-sahib',
+    render(props) {      
+
+      return (
+        <Layout title="Index - Sri Dasam Granth Sahib Ji - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(
+                /* webpackChunkName: "GranthIndex" */ './pages/GranthIndex'
+              )
+            }
+          >
+            {({ pending, resolved: { default: Index } = {}, rejected }) =>
+              pending ? null : Index ? (
+                <Index {...props} />
+              ) : (
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
+                )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
+    path: '/index/bhai-nand-lal-vaaran',
+    render(props) {      
+
+      return (
+        <Layout title="Index - Bhai Nand Lal Ji Vaaran - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(
+                /* webpackChunkName: "GranthIndex" */ './pages/BhaiNandLalVaaranIndex'
+              )
+            }
+          >
+            {({ pending, resolved: { default: Index } = {}, rejected }) =>
+              pending ? null : Index ? (
+                <Index {...props} />
+              ) : (
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
+                )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
+    path: '/index/amrit-keertan',
+    render(props) {      
+
+      return (
+        <Layout title="Index - Amrit Keertan - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(
+                /* webpackChunkName: "AmritKeertanIndex" */ './pages/AmritKeertanIndex'
+              )
+            }
+          >
+            {({ pending, resolved: { default: Index } = {}, rejected }) =>
+              pending ? null : Index ? (
+                <Index {...props} />
+              ) : (
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
+                )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
+    path: '/index',
+    render(props) {
+      // update the meta tags to display banner for amrit-keertan
+      updateSmartAppBannerMetaTags({
+        appIdApple: 1393849213,
+        appIdGoogle: "com.KhalisFoundation.AmritKeertan",
+        appIconPath: '/assets/images/amrit-keertan-icon.png',
+      })
+
+      return (
+        <Layout title="Index - SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(
+                /* webpackChunkName: "BaniIndex" */ './pages/BaniIndex'
+              )
+            }
+          >
+            {({ pending, resolved: { default: Index } = {}, rejected }) =>
+              pending ? null : Index ? (
+                <Index {...props} />
+              ) : (
+                  throwError(
+                    `We are having trouble in rendering this route.`,
+                    rejected
+                  )
+                )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+   
   {
     path: '/sundar-gutka',
     render(props) {

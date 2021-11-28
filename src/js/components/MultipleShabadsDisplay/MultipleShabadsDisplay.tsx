@@ -10,6 +10,7 @@ import { TEXTS } from '@/constants';
 import { clearMultipleShabads, removeMultipleShabads, setMultiViewPanel, setMultipleShabads } from '@/features/actions';
 import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 import { RemoveShabadButton } from '../RemoveShabadButton';
+import { useEscapeKeyEventHandler } from '@/hooks';
 
 interface IMultipleShabadsDisplayProps {
   multipleShabads: IMultipleShabadsProps[];
@@ -30,6 +31,8 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
   const [history, setHistory] = useState<IMultipleShabadsProps[]>(multipleShabads);
   const urlHistory = useHistory();
   const wrapperRef = React.useRef(null);
+
+  useEscapeKeyEventHandler(() => setMultiViewPanel(false))
 
   const undoMultipleShabads = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -60,10 +63,6 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
       setHistory(multipleShabads)
     }
   }, [multipleShabads])
-
-  // useEffect(() => {
-  //   showMultiViewPanel && wrapperRef.current.focus();
-  // }, [wrapperRef, showMultiViewPanel]);
 
   return (
     <div className="multiple-shabads-display" ref={wrapperRef} tabIndex="-1" role="dialog" data-testid="multi-view">
@@ -99,7 +98,7 @@ const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
           <button className="btn btn-primary" disabled={sortableState.length === 0} onClick={handleDisplayShabads}>Display</button>
         </div>
 
-        <button title="Close" className="close" onClick={() => { setMultiViewPanel(false) }}>×</button>
+        <button title="Close" className="close" onClick={() => setMultiViewPanel(false)}>×</button>
       </div>
     </div>
   )

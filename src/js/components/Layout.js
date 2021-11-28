@@ -16,7 +16,7 @@ import { setOnlineMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
-import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, getQueryParams, isFalsy } from '../util';
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -30,7 +30,7 @@ class Layout extends React.PureComponent {
     children: PropTypes.node.isRequired,
     darkMode: PropTypes.bool.isRequired,
     autoScrollMode: PropTypes.bool.isRequired,
-    location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
+    location: PropTypes.shape({ pathname: PropTypes.string.isRequired})
       .isRequired,
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
@@ -39,6 +39,7 @@ class Layout extends React.PureComponent {
     multipleShabads: PropTypes.array,
     showMultiViewPanel: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
+    history: PropTypes.object 
   };
 
   state = {
@@ -89,6 +90,7 @@ class Layout extends React.PureComponent {
     
     const isShowFullScreen = isShowFullscreenRoute(pathname);
     const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
+    const isShowSettings = isShowSettingsRoute(location.pathname)
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
@@ -124,7 +126,8 @@ class Layout extends React.PureComponent {
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
           isShowFullScreen={isShowFullScreen}
-          isShowScrollToTop={this.state.showScrollToTop} />
+          isShowScrollToTop={this.state.showScrollToTop} 
+          isShowSettings={isShowSettings} />
 
       </React.Fragment>
     ) : (

@@ -15,7 +15,7 @@ import { changeHighlightedPankti } from '../utils';
 
 export const Stub = () => <div className="spinner" />;
 
-type Sources = keyof typeof SOURCES;
+type Sources = keyof typeof SOURCES
 interface IAngProps {
   ang: number
   source: Sources
@@ -77,7 +77,7 @@ const Ang: React.FC<IAngProps> = ({
               {' '}
               {TEXTS.HELP_SECTION}
             </Link>{' '}
-              or
+            or
             <Link to="/index"> {TEXTS.INDEX_SECTION}</Link>.
           </>
         }

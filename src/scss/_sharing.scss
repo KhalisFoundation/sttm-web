@@ -38,7 +38,7 @@
 
 #share-menu {
   border-radius: 2px;
-  margin: -27px 2rem 0 auto;
+  margin: 0 2rem 0 auto;
 
   .fullscreen-view & {
     display: none;
@@ -47,6 +47,7 @@
   a {
     background-color: transparent !important;
     color: $sttm-blue;
+    height: 30px;
 
     .dark-mode & {
       color: $sttm-light-blue;
@@ -55,58 +56,47 @@
 
   @media screen and (max-width: 790px) {
     margin: 0 1rem 0 1rem;
+  }
+}
 
-    .share-buttons {
-      margin-top: 10px;
-      text-align: center;
-    }
+.share-buttons {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin: 0;
+  text-align: right;
+
+  @media screen and (max-width: 790px) {
+    margin-top: 10px;
+    text-align: center;
   }
 
-  .share-buttons {
-    align-items: center;
+  li {
     display: flex;
-    justify-content: flex-end;
-    list-style: none;
-    margin: 0;
-    text-align: right;
+    margin-left: 5px;
 
-    li {
-      display: flex;
-      margin-left: 5px;
-
-      &:first-of-type {
-        margin-left: 0;
-      }
-
-      button {
-        align-items: center;
-        color: #999;
-        display: inline-flex;
-        font-weight: 700;
-        justify-content: center;
-
-        &:hover,
-        &.active {
-          span {
-            color: $sttm-orange;
-          }
-
-          svg {
-            fill: $sttm-orange;
-          }
-        }
-      }
+    &:first-of-type {
+      margin-left: 0;
     }
 
-    .sr-only {
-      border: 0;
-      clip: rect(1px 1px 1px 1px);
-      clip: rect(1px, 1px, 1px, 1px);
-      height: 1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
+    button {
+      align-items: center;
+      color: #999;
+      display: inline-flex;
+      font-weight: 700;
+      justify-content: center;
+
+      &:hover,
+      &.active {
+        span {
+          color: $sttm-orange;
+        }
+
+        svg {
+          fill: $sttm-orange;
+        }
+      }
     }
 
     #copy-short-url {
@@ -130,6 +120,10 @@
             border-color: $sttm-black;
             color: $sttm-white;
           }
+
+          @media screen and (max-width: 790px) {
+            display: none;
+          }
         }
 
         &-icon {
@@ -142,6 +136,11 @@
 
           .dark-mode & {
             box-shadow: -5px 0 7px -6px $sttm-light-black;
+          }
+
+          @media screen and (max-width: 790px) {
+            box-shadow: none;
+            position: relative;
           }
         }
       }
