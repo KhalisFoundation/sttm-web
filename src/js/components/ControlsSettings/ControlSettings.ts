@@ -86,6 +86,7 @@ export interface ISettingActions {
 
 export const HEADER_SETTINGS = ({
   toggleSettingsPanel,
+  toggleKeyboardShortcutsPanel,
   showSettingsPanel,
   showKeyboardShortcutsPanel  
 }: ISettingActions) => {
@@ -94,7 +95,7 @@ export const HEADER_SETTINGS = ({
       type: 'header',
       label: showKeyboardShortcutsPanel ? 'Shortcuts':'Settings',
       value: showSettingsPanel,
-      action: toggleSettingsPanel,
+      action: showKeyboardShortcutsPanel ? ()=>{toggleKeyboardShortcutsPanel(),toggleSettingsPanel()} : toggleSettingsPanel
     },
   ]
 }
