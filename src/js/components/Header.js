@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER, TEXTS } from '../constants';
+import {
+  SOURCES,
+  SEARCH_TYPES,
+  TYPES,
+  SOURCES_WITH_ANG,
+  MAX_ANGS,
+  SOURCE_WRITER_FILTER,
+  TEXTS,
+} from '../constants';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { EnhancedGurmukhiKeyboard } from './EnhancedGurmukhiKeyboard';
 import SearchForm from './SearchForm';
-import Menu from './HeaderMenu';
+import Menu from './Menu/HeaderMenu';
 import SearchIcon from './Icons/Search';
 import Reset from './Icons/Reset';
 import Autocomplete from '@/components/Autocomplete';
@@ -19,7 +27,6 @@ import {
   getQueryParams,
   getShabadList,
   reformatSearchTypes,
-  isShowSehajPaathModeRoute
 } from '@/util';
 
 const { BACK_TO_HOME } = TEXTS;
@@ -43,37 +50,41 @@ class Header extends React.PureComponent {
   state = {
     showDoodle: false,
     doodleData: null,
-  }
+  };
 
   fetchDoodle = () => {
     fetch(`${DOODLE_URL}`)
-      .then(r => r.json())
-      .then((data) => {
-        if (data.error) {
+      .then((r) => r.json())
+      .then(
+        (data) => {
+          if (data.error) {
+            this.setState({ showDoodle: false, doodleData: null });
+          } else if (data.rows.length) {
+            this.setState({ showDoodle: true, doodleData: data.rows[0] });
+          }
+        },
+        (error) => {
+          console.log(error);
           this.setState({ showDoodle: false, doodleData: null });
-        } else if (data.rows.length) {
-          this.setState({ showDoodle: true, doodleData: data.rows[0] });
         }
-      }, (error) => {
-        console.log(error);
-        this.setState({ showDoodle: false, doodleData: null });
-      }
       );
-  }
+  };
   componentDidMount() {
     this.fetchDoodle();
   }
 
-  onFormSubmit = ({ handleSubmit, ...data }) => e => {
-    e.preventDefault();
-    e.stopPropagation();
-    handleSubmit();
-    this.handleFormSubmit(data);
-  };
+  onFormSubmit =
+    ({ handleSubmit, ...data }) =>
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleSubmit();
+      this.handleFormSubmit(data);
+    };
 
-  handleFormSubmit = data => {
+  handleFormSubmit = (data) => {
     this.props.history.push(toSearchURL(data));
-  }
+  };
 
   render() {
     const {
@@ -100,7 +111,9 @@ class Header extends React.PureComponent {
         <div className="top-bar-wrapper row controller-header">
           <div className="top-bar-title">
             <Link id="sync-logo" to="/" aria-label="back to home" />
-            <span className="logo-text"><span className="bolder">Bani</span> Controller</span>
+            <span className="logo-text">
+              <span className="bolder">Bani</span> Controller
+            </span>
           </div>
           <div className="responsive-menu">
             <Menu isHome={true} />
@@ -114,8 +127,13 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <div id="nav-bar" className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}>
-        <div className="top-bar-wrapper row">          
+      <div
+        id="nav-bar"
+        className={`top-bar no-select ${isHome ? 'top-bar-naked' : ''}`}
+      >
+        {/* <ControlsSettings {...this.props} /> */}
+        <div className="top-bar-wrapper row">
+          {!isHome && <></>}
           <SearchForm
             key={key}
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
@@ -152,23 +170,37 @@ class Header extends React.PureComponent {
               handleSubmit,
               handleReset,
             }) => {
-
               return (
                 <React.Fragment>
                   <div className="top-bar-title">
-                    {showDoodle ?
-                      (<>
-                        <Link to="/" title={doodleData['Description']} className="doodle-link icon"
-                          style={{ backgroundImage: `url(${doodleData['ImageSquare']}) ` }}>
+                    {showDoodle ? (
+                      <>
+                        <Link
+                          to="/"
+                          title={doodleData['Description']}
+                          className="doodle-link icon"
+                          style={{
+                            backgroundImage: `url(${doodleData['ImageSquare']}) `,
+                          }}
+                        >
                           {BACK_TO_HOME}
                         </Link>
-                        <Link to="/" title={doodleData['Description']} className="doodle-link bigger-image"
-                          style={{ backgroundImage: `url(${doodleData['Image']}) ` }}>
+                        <Link
+                          to="/"
+                          title={doodleData['Description']}
+                          className="doodle-link bigger-image"
+                          style={{
+                            backgroundImage: `url(${doodleData['Image']}) `,
+                          }}
+                        >
                           {BACK_TO_HOME}
                         </Link>
-                      </>) :
-                      (<Link to="/" className="transparent-color">{BACK_TO_HOME}</Link>)
-                    }
+                      </>
+                    ) : (
+                      <Link to="/" className="transparent-color">
+                        {BACK_TO_HOME}
+                      </Link>
+                    )}
                   </div>
                   <div className="top-bar-menu">
                     <div id="responsive-menu">
@@ -184,7 +216,7 @@ class Header extends React.PureComponent {
                                 type,
                                 source,
                                 query,
-                                writer
+                                writer,
                               })}
                               className="search-form"
                             >
@@ -210,7 +242,12 @@ class Header extends React.PureComponent {
                                   />
                                 </li>
                                 <li>
-                                  <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
+                                  <div
+                                    id="search-container"
+                                    className={
+                                      displayGurmukhiKeyboard ? 'kb-active' : ''
+                                    }
+                                  >
                                     <input
                                       type={inputType}
                                       id="search"
@@ -228,10 +265,23 @@ class Header extends React.PureComponent {
                                       title={title}
                                       pattern={pattern}
                                       min={name === 'ang' ? 1 : undefined}
-                                      max={name === 'ang' ? MAX_ANGS[source] : undefined}
+                                      max={
+                                        name === 'ang'
+                                          ? MAX_ANGS[source]
+                                          : undefined
+                                      }
                                     />
-                                    <ClearSearchButton clickHandler={setQueryAs} />
-                                    {isShowKeyboard && <GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />}
+                                    <ClearSearchButton
+                                      clickHandler={setQueryAs}
+                                    />
+                                    {isShowKeyboard && (
+                                      <GurmukhiKeyboardToggleButton
+                                        clickHandler={
+                                          setGurmukhiKeyboardVisibilityAs
+                                        }
+                                        isVisible={displayGurmukhiKeyboard}
+                                      />
+                                    )}
 
                                     <button
                                       type="submit"
@@ -246,15 +296,27 @@ class Header extends React.PureComponent {
                                         value={query}
                                         searchType={parseInt(type)}
                                         active={displayGurmukhiKeyboard}
-                                        onKeyClick={newValue => setQueryAs(newValue)()}
-                                        onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                                        onKeyClick={(newValue) =>
+                                          setQueryAs(newValue)()
+                                        }
+                                        onClose={setGurmukhiKeyboardVisibilityAs(
+                                          false
+                                        )}
                                       />
                                     )}
 
                                     <Autocomplete
-                                      isShowFullResults={(!isSearchPageRoute) || (isSearchPageRoute && decodeURI(defaultQuery) !== query)}
+                                      isShowFullResults={
+                                        !isSearchPageRoute ||
+                                        (isSearchPageRoute &&
+                                          decodeURI(defaultQuery) !== query)
+                                      }
                                       getSuggestions={getShabadList}
-                                      searchOptions={{ type: parseInt(type), source, writer }}
+                                      searchOptions={{
+                                        type: parseInt(type),
+                                        source,
+                                        writer,
+                                      }}
                                       value={query}
                                       isHome={isHome}
                                     />
@@ -265,9 +327,7 @@ class Header extends React.PureComponent {
                           </>
                         )}
                       </div>
-                      <Menu
-                        isHome={isHome}
-                      />
+                      <Menu isHome={isHome} />
                     </div>
                     {!isHome && (
                       <div id="search-options">
@@ -286,15 +346,21 @@ class Header extends React.PureComponent {
                         {parseInt(type) === SEARCH_TYPES['ANG'] ? (
                           <select
                             name="source"
-                            value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
+                            value={
+                              Object.keys(SOURCES_WITH_ANG).includes(source)
+                                ? source
+                                : 'G'
+                            }
                             onChange={handleSearchSourceChange}
                             className={[isSourceChanged ? 'selected' : null]}
                           >
-                            {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
-                              <option key={value} value={value}>
-                                {children}
-                              </option>
-                            ))}
+                            {Object.entries(SOURCES_WITH_ANG).map(
+                              ([value, children]) => (
+                                <option key={value} value={value}>
+                                  {children}
+                                </option>
+                              )
+                            )}
                           </select>
                         ) : (
                           <select
@@ -303,41 +369,55 @@ class Header extends React.PureComponent {
                             onChange={handleSearchSourceChange}
                             className={[isSourceChanged ? 'selected' : null]}
                           >
-                            {Object.entries(SOURCES).map(([value, children]) => (
-                              <option key={value} value={value}>
-                                {children}
-                              </option>
-                            ))}
-                          </select>)}
+                            {Object.entries(SOURCES).map(
+                              ([value, children]) => (
+                                <option key={value} value={value}>
+                                  {children}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        )}
                         <select
                           name="writer"
                           value={writer}
                           onChange={handleSearchWriterChange}
-                          className={[isWriterChanged ? 'selected' : null]}>
-                          {
-                            writers?.filter(e =>
-                              source === 'G' || source === 'A' ? !SOURCE_WRITER_FILTER[source].includes(e.writerID)
-                                : source !== 'all' ? SOURCE_WRITER_FILTER[source].includes(e.writerID)
-                                  : true
-                            ).map(writer => (
-                              <option key={writer.writerID} value={writer.writerID}>
+                          className={[isWriterChanged ? 'selected' : null]}
+                        >
+                          {writers
+                            ?.filter((e) =>
+                              source === 'G' || source === 'A'
+                                ? !SOURCE_WRITER_FILTER[source].includes(
+                                    e.writerID
+                                  )
+                                : source !== 'all'
+                                ? SOURCE_WRITER_FILTER[source].includes(
+                                    e.writerID
+                                  )
+                                : true
+                            )
+                            .map((writer) => (
+                              <option
+                                key={writer.writerID}
+                                value={writer.writerID}
+                              >
                                 {writer.writerEnglish}
                               </option>
-                            ))
-                          }
+                            ))}
                         </select>
                         <button
                           className="reset"
                           onClick={handleReset}
                           title="Reset"
-                          aria-label="Reset">
+                          aria-label="Reset"
+                        >
                           <Reset />
                         </button>
                       </div>
                     )}
                   </div>
                 </React.Fragment>
-              )
+              );
             }}
           </SearchForm>
         </div>
@@ -346,13 +426,10 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ fullScreenMode }) => ({ fullScreenMode })
+const mapStateToProps = ({}) => ({});
 
 const mapDispatchToProps = {
   toggleSettingsPanel,
-}
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
