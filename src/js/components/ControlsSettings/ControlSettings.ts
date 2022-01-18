@@ -46,6 +46,7 @@ export interface ISettingActions {
   toggleParagraphMode: () => {},
   toggleSehajPaathMode: () => {},
   toggleSettingsPanel: () => {},
+  toggleKeyboardShortcutsPanel: () => {},
   setVisraamSource: () => {},
   setVisraamStyle: () => {},
   changeFont: () => {},
@@ -62,6 +63,7 @@ export interface ISettingActions {
   steekLanguages: string[],
   transliterationLanguages: string[],
   showSettingsPanel: string,
+  showKeyboardShortcutsPanel: string,
   visraams: boolean,
   visraamSource: string,
   visraamStyle: string,
@@ -84,16 +86,118 @@ export interface ISettingActions {
 
 export const HEADER_SETTINGS = ({
   toggleSettingsPanel,
+  toggleKeyboardShortcutsPanel,
   showSettingsPanel,
+  showKeyboardShortcutsPanel  
 }: ISettingActions) => {
   return [
     {
       type: 'header',
-      label: 'Settings',
+      label: showKeyboardShortcutsPanel ? 'Shortcuts':'Settings',
       value: showSettingsPanel,
-      action: toggleSettingsPanel,
+      action: showKeyboardShortcutsPanel ? ()=>{toggleKeyboardShortcutsPanel(),toggleSettingsPanel()} : toggleSettingsPanel
     },
   ]
+}
+
+export const KEYBOARD_SHORTCUTS = () =>{
+  return [
+    {
+      type: 'label-options',
+      label: 'Larivar',
+      shortcut: ['l'],
+    },
+    {
+      type: 'label-options',
+      label: 'Larivar Assist',
+      shortcut: ['shift+l'],
+    },
+    {
+      type: 'label-options',
+      label: 'Vishraams',
+      shortcut: ['v'],
+    },
+    {
+      type: 'label-options',
+      label: 'AutoScroll Mode',
+      shortcut: ['a'],
+    },
+    {
+      type: 'label-options',
+      label: 'Dark Mode',
+      shortcut: ['o'],
+    },
+    {
+      type: 'label-options',
+      label: 'Split Mode',
+      shortcut: ['/'],
+    },
+    {
+      type: 'label-options',
+      label: 'FullScreen Mode',
+      shortcut: ['f'],
+    },
+    {
+      type: 'label-options',
+      label: 'Reading Mode',
+      shortcut: ['r'],
+    },
+    {
+      type: 'label-options',
+      label: 'Unicode',
+      shortcut: ['u'],
+    },
+    {
+      type: 'label-options',
+      label: 'Center Align',
+      shortcut: ['(cmd)ctrl+shift+c'],
+    },
+    {
+      type: 'label-options',
+      label: 'English Translation',
+      shortcut: ['e'],
+    },
+    {
+      type: 'label-options',
+      label: 'Punjabi Translation',
+      shortcut: ['t'],
+    },
+    {
+      type: 'label-options',
+      label: 'Spanish Translation',
+      shortcut: ['s'],
+    },
+    {
+      type: 'label-options',
+      label: 'English Transliteration',
+      shortcut: ['shift+e'],
+    },
+    {
+      type: 'label-options',
+      label: 'Shahmukhi Transliteration',
+      shortcut: ['shift+s'],
+    },
+    {
+      type: 'label-options',
+      label: 'Hindi Transliteration',
+      shortcut: ['shift+h'],
+    },
+    {
+      type: 'label-options',
+      label: 'Increase Font Size',
+      shortcut: ['+'],
+    },
+    {
+      type: 'label-options',
+      label: 'Decrease Font Size',
+      shortcut: ['-'],
+    },
+    {
+      type: 'label-options',
+      label: 'Search Bar',
+      shortcut: ['(cmd)ctrl+/'],
+    },
+]
 }
 
 export const QUICK_SETTINGS = ({
@@ -140,7 +244,7 @@ export const QUICK_SETTINGS = ({
     {
       type: 'label-options',
       label: 'Text Align',
-      tooltip: 'Align the shabad',
+      tooltip: 'Align the shabad ( cmd/ctrl+shift+c )',
       collections: [
         {
           label: 'Text Align Left',
@@ -163,13 +267,13 @@ export const QUICK_SETTINGS = ({
         {
           label: 'Larivaar',
           checked: larivaar,
-          tooltip: "Set the Larivaar or Padhshed mode",
+          tooltip: "Set the Larivaar or Padhshed mode ( l )",
           action: toggleLarivaarOption
         },
         {
           label: 'Larivaar Assist',
           checked: larivaarAssist,
-          tooltip: "Toggle the Larivaar assistance",
+          tooltip: "Toggle the Larivaar assistance ( shift+l )",
           action: toggleLarivaarAssistOption
         },
       ]
@@ -202,14 +306,14 @@ export const QUICK_SETTINGS = ({
     {
       type: 'toggle-option',
       label: 'Dark Mode',
-      tooltip: 'Set the dark or light mode',
+      tooltip: 'Set the dark or light mode ( o )',
       checked: darkMode,
       action: toggleDarkMode,
     },
     {
       type: 'toggle-option',
       label: 'Vishraams',
-      tooltip: 'Add vishraams help',
+      tooltip: 'Add vishraams help ( v )',
       checked: visraams,
       action: toggleVisraams,
     },
@@ -241,7 +345,7 @@ export const QUICK_SETTINGS = ({
     isShowSehajPaathMode ? {
       type: 'toggle-option',
       label: 'Reading [Akhand Paath]',
-      tooltip: 'Set reading mode into Akhand Paath',
+      tooltip: 'Set reading mode into Akhand Paath ( r )',
       checked: sehajPaathMode,
       stage: 'beta',
       action: toggleSehajPaathMode,
@@ -249,21 +353,21 @@ export const QUICK_SETTINGS = ({
     isShowAutoScroll ? {
       type: 'toggle-option',
       label: 'Auto Scroll',
-      tooltip: 'Start auto scrolling',
+      tooltip: 'Start auto scrolling ( a )',
       checked: autoScrollMode,
       action: toggleAutoScrollMode,
     } : {},
     {
       type: 'toggle-option',
       label: 'Split',
-      tooltip: 'Set split mode',
+      tooltip: 'Set split mode ( / )',
       checked: splitView,
       action: toggleSplitViewOption,
     },          
     {
       type: 'collapsible_item',
       label: TEXTS.TRANSLITERATION,
-      tooltip: 'Open the dropdown and select the transliteration source',
+      tooltip: 'Open the dropdown and select the transliteration source.(English - shift+e , Shahmukhi - shift+s , Hindi - shift+h)',
       collections: [
         {
           label: TEXTS.TRANSLITERATION,
@@ -280,7 +384,7 @@ export const QUICK_SETTINGS = ({
     {
       type: 'collapsible_item',
       label: TEXTS.TRANSLATION,
-      tooltip: 'Open the dropdown and select the translation source',
+      tooltip: 'Open the dropdown and select the translation source.(English - e , Punjabi - t , Spanish - s)',
       collections: [
         {
           label: TEXTS.TRANSLATION,

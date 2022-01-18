@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ControlsSettings from "../components/ControlsSettings/ControlsSettings";
+import ControlsSettings from '../components/ControlsSettings/ControlsSettings';
 
 import ShareButtons, { supportedMedia as _s } from './ShareButtons';
 import {
@@ -24,6 +24,7 @@ import {
   toggleTranslationOptions,
   toggleTransliterationOptions,
   toggleSettingsPanel,
+  toggleKeyboardShortcutsPanel,
   toggleSplitViewOption,
   toggleDarkMode,
   toggleSehajPaathMode,
@@ -38,7 +39,6 @@ import {
   closeMultiViewPanel,
 } from '@/features/actions';
 
-
 export const supportedMedia = _s;
 
 class Controls extends React.Component {
@@ -51,23 +51,30 @@ class Controls extends React.Component {
 
   state = {
     showBorder: false,
-    showControls: true
+    showControls: true,
   };
 
   static propTypes = {
     showSettingsPanel: PropTypes.bool,
   };
 
-  setRef = node => (this.wrapperRef = node);
+  setRef = (node) => (this.wrapperRef = node);
 
   render() {
     const { showSettingsPanel } = this.props;
 
     return (
       <>
-        <ShareButtons {...this.props} />        
-        <div ref={this.settingsRef} className={`settings-panel ${showSettingsPanel ? 'settings-show' : ''}`}>
-          {showSettingsPanel && <ControlsSettings settingsRef={this.settingsRef} {...this.props} />}
+        <ShareButtons {...this.props} />
+        <div
+          ref={this.settingsRef}
+          className={`settings-panel ${
+            showSettingsPanel ? 'settings-show' : ''
+          }`}
+        >
+          {showSettingsPanel && (
+            <ControlsSettings settingsRef={this.settingsRef} {...this.props} />
+          )}
         </div>
       </>
     );
@@ -75,7 +82,7 @@ class Controls extends React.Component {
 }
 
 // TODO: Take exactly what we need.
-const mapStateToProps = (state) => state
+const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = {
   setFontSize,
@@ -96,6 +103,7 @@ const mapDispatchToProps = {
   toggleTranslationOptions,
   toggleTransliterationOptions,
   toggleSettingsPanel,
+  toggleKeyboardShortcutsPanel,
   toggleSplitViewOption,
   toggleParagraphMode,
   toggleSehajPaathMode,
@@ -112,7 +120,4 @@ const mapDispatchToProps = {
 };
 
 // TODO: Connect individual components instead of all controls.
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Controls);
+export default connect(mapStateToProps, mapDispatchToProps)(Controls);
