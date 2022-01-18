@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Range } from 'react-range';
 
 import { toFixedFloat } from '../../util/numbers';
-import { Pause, Play } from "../../components/Icons/controls";
+import { Pause, Play,Loop } from "../../components/Icons/controls";
 import { setAutoScrolling } from '@/features/actions';
 
 interface IReduxStateAsProps {
@@ -16,6 +16,7 @@ interface IReduxDispatchProps {
 interface IAutoScrollControlState {
   isScrolling: boolean;
   scrollingSpeed: number[];
+  autoScrollLoopMode: boolean;
 }
 
 // Hidden controls controlsState will have all the controls hidden by default and shown only when playing
@@ -53,6 +54,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     this.state = {
       isScrolling: this.props.isAutoScrolling || false,
       scrollingSpeed: [50],
+      autoScrollLoopMode: false
     }
   }
 
@@ -138,6 +140,14 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
         const isMaxScrollCrossed = this._maxScrollPossible >= scrollY;
         if (isMaxScrollCrossed) {
           this.removeScroll();
+          if(this.state.autoScrollLoopMode){
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+            },1000)
+            setTimeout(()=>{
+              this.startScroll();
+            },1000)
+          }
         }
       }
 
@@ -193,10 +203,12 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
     //Force this to remove the autoscroll-mode class from the body.
     this.setAutoScrollModeDOMChanges(false);
   };
-
+  toggleAutoScrollLoopMode=()=>{
+    this.setState({autoScrollLoopMode:!this.state.autoScrollLoopMode})
+  }
   render() {
 
-    const { scrollingSpeed } = this.state;
+    const { scrollingSpeed,autoScrollLoopMode } = this.state;
     const hideSliderClass = this.getHideSliderClass();
     const {
       isBackgroundTransparent,
@@ -214,6 +226,9 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
               Speed
             </label>
             <div className="autoScrollControlSlider">
+              <button onClick={this.toggleAutoScrollLoopMode} className={`autoScrollLoopModeBtn ${autoScrollLoopMode ? 'on':''}`}>
+                <Loop />
+              </button>
               <button
                 className="autoScrollControlDecreaseSpeed"
                 onClick={this.setSpeed('decrement')}> - </button>
