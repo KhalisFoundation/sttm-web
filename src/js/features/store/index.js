@@ -52,7 +52,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_ENGLISH_TRANSLATION_LANGUAGES,
   DEFAULT_ENGLISH_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
-  DEFAULT_HINDI_TRANSLATION_LANGUAGES
+  DEFAULT_HINDI_TRANSLATION_LANGUAGES,
 } from '../../constants';
 import {
   getArrayFromLocalStorage,
@@ -60,7 +60,6 @@ import {
   getNumberFromLocalStorage,
   getStringFromLocalStorage,
 } from '../../util';
-
 
 const initialState = {
   online: window !== undefined ? window.navigator.onLine : true,
@@ -82,7 +81,7 @@ const initialState = {
   ),
   larivaarAssistStrength: getNumberFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST_STRENGTH,
-    DEFAULT_LARIVAAR_ASSIST_STRENGTH,
+    DEFAULT_LARIVAAR_ASSIST_STRENGTH
   ),
   larivaar: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_LARIVAAR,
@@ -110,7 +109,7 @@ const initialState = {
   ),
   lineHeight: getNumberFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT,
-    DEFAULT_LINE_HEIGHT,
+    DEFAULT_LINE_HEIGHT
   ),
   fontFamily: getStringFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
@@ -118,7 +117,7 @@ const initialState = {
   ),
   paragraphMode: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE,
-    DEFAULT_PARAGRAPH_MODE,
+    DEFAULT_PARAGRAPH_MODE
   ),
   darkMode: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_DARK_MODE,
@@ -169,13 +168,13 @@ const initialState = {
   isMahankoshTooltipExplaination: false,
   prefetchAng: undefined,
   showSettingsPanel: false,
+  showKeyboardShortcutsPanel: false,
   multipleShabads: getArrayFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
     []
   ),
   showMultiViewPanel: false,
 };
-
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(applyMiddleware(createDebounce(), thunk));

@@ -1,6 +1,6 @@
 import {
   DEFAULT_LARIVAAR_ASSIST_STRENGTH,
-  DEFAULT_TRANSLATION_LANGUAGES,
+  DEFAULT_ENGLISH_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLATION_FONT_SIZE,
   DEFAULT_STEEK_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
@@ -19,10 +19,10 @@ import {
   DEFAULT_CENTER_ALIGN_GURBANI,
   DEFAULT_SPLIT_VIEW,
   DEFAULT_SEHAJ_PAATH_MODE,
-  DEFAULT_SG_BAANI_LENGTH
+  DEFAULT_SG_BAANI_LENGTH,
 } from '../../constants';
 
-export const createAction = (type, meta) => payload => ({
+export const createAction = (type, meta) => (payload) => ({
   type,
   meta,
   payload,
@@ -40,6 +40,17 @@ export const toggleSettingsPanel = createAction(TOGGLE_SETTINGS_PANEL);
 export const SET_SETTINGS_PANEL = 'SET_SETTINGS_PANEL';
 export const setSettingsPanel = createAction(SET_SETTINGS_PANEL);
 
+export const TOGGLE_KEYBOARD_SHORTCUTS_PANEL =
+  'TOGGLE_KEYBOARD_SHORTCUTS_PANEL';
+export const toggleKeyboardShortcutsPanel = createAction(
+  TOGGLE_KEYBOARD_SHORTCUTS_PANEL
+);
+
+export const SET_KEYBOARD_SHORTCUTS_PANEL = 'SET_KEYBOARD_SHORTCUTS_PANEL';
+export const setKeyboardShortcutsPanel = createAction(
+  SET_KEYBOARD_SHORTCUTS_PANEL
+);
+
 export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE';
 export const toggleDarkMode = createAction(TOGGLE_DARK_MODE);
 
@@ -56,14 +67,10 @@ export const toggleTranslationOptions = createAction(
 );
 
 export const TOGGLE_PARAGRAPH_MODE = 'TOGGLE_PARAGRAPH_MODE';
-export const toggleParagraphMode = createAction(
-  TOGGLE_PARAGRAPH_MODE
-)
+export const toggleParagraphMode = createAction(TOGGLE_PARAGRAPH_MODE);
 
 export const TOGGLE_SEHAJ_PAATH_MODE = 'TOGGLE_SEHAJ_PAATH_MODE';
-export const toggleSehajPaathMode = createAction(
-  TOGGLE_SEHAJ_PAATH_MODE
-)
+export const toggleSehajPaathMode = createAction(TOGGLE_SEHAJ_PAATH_MODE);
 
 export const TOGGLE_TRANSLITERATION_OPTIONS = 'TOGGLE_TRANSLITERATION_OPTIONS';
 export const toggleTransliterationOptions = createAction(
@@ -103,19 +110,29 @@ export const SET_TRANSLATION_FONT_SIZE = 'SET_TRANSLATION_FONT_SIZE';
 export const setTranslationFontSize = createAction(SET_TRANSLATION_FONT_SIZE);
 
 export const SET_TRANSLITERATION_FONT_SIZE = 'SET_TRANSLITERATION_FONT_SIZE';
-export const setTransliterationFontSize = createAction(SET_TRANSLITERATION_FONT_SIZE);
+export const setTransliterationFontSize = createAction(
+  SET_TRANSLITERATION_FONT_SIZE
+);
 
 export const SET_STEEK_LANGUAGES = 'SET_STEEK_LANGUAGES';
 export const setSteekLanguages = createAction(SET_STEEK_LANGUAGES);
 
-export const SET_ENGLISH_TRANSLATION_LANGUAGES = 'SET_ENGLISH_TRANSLATION_LANGUAGES';
-export const setEnglishTranslationLanguages = createAction(SET_ENGLISH_TRANSLATION_LANGUAGES);
+export const SET_ENGLISH_TRANSLATION_LANGUAGES =
+  'SET_ENGLISH_TRANSLATION_LANGUAGES';
+export const setEnglishTranslationLanguages = createAction(
+  SET_ENGLISH_TRANSLATION_LANGUAGES
+);
 
-export const SET_HINDI_TRANSLATION_LANGUAGES = 'SET_HINDI_TRANSLATION_LANGUAGES';
-export const setHindiTranslationLanguages = createAction(SET_HINDI_TRANSLATION_LANGUAGES);
+export const SET_HINDI_TRANSLATION_LANGUAGES =
+  'SET_HINDI_TRANSLATION_LANGUAGES';
+export const setHindiTranslationLanguages = createAction(
+  SET_HINDI_TRANSLATION_LANGUAGES
+);
 
 export const SET_LARIVAAR_ASSIST_STRENGTH = 'SET_LARIVAAR_ASSIST_STRENGTH';
-export const setLarivaarAssistStrength = createAction(SET_LARIVAAR_ASSIST_STRENGTH);
+export const setLarivaarAssistStrength = createAction(
+  SET_LARIVAAR_ASSIST_STRENGTH
+);
 
 export const SET_LINE_HEIGHT = 'SET_LINE_HEIGHT';
 export const setLineHeight = createAction(SET_LINE_HEIGHT);
@@ -163,18 +180,21 @@ export const setMultiViewPanel = createAction(SET_MULTI_VIEW_PANEL);
 export const SET_PREFETCH_ANG = 'SET_PREFETCH_ANG';
 export const SET_LOADING_ANG = 'SET_LOADING_ANG';
 export const SET_MAHANKOSH_TOOLTIP_ACTIVE = 'SET_MAHANKOSH_TOOLTIP_ACTIVE';
-export const SET_MAHANKOSH_TOOLTIP_EXPLAINATION = 'SET_MAHANKOSH_TOOTIP_EXPLAINATION';
+export const SET_MAHANKOSH_TOOLTIP_EXPLAINATION =
+  'SET_MAHANKOSH_TOOTIP_EXPLAINATION';
 
 export const SET_ERROR = 'SET_ERROR';
 
-export const resetDisplayOptions = () => dispatch => {
+export const resetDisplayOptions = () => (dispatch) => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
-  dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
+  dispatch(
+    setEnglishTranslationLanguages(DEFAULT_ENGLISH_TRANSLATION_LANGUAGES)
+  );
   dispatch(setSteekLanguages(DEFAULT_STEEK_LANGUAGES));
   dispatch(setDarkMode(DEFAULT_DARK_MODE));
   dispatch(setAutoScrollMode(DEFAULT_AUTO_SCROLL_MODE));
   dispatch(setAutoScrolling(DEFAULT_IS_AUTOSCROLLING));
-  dispatch(setParagraphMode(DEFAULT_PARAGRAPH_MODE))
+  dispatch(setParagraphMode(DEFAULT_PARAGRAPH_MODE));
   dispatch(setVisraams(DEFAULT_VISRAAMS));
   dispatch(setVisraamSource(DEFAULT_VISRAAM_SOURCE));
   dispatch(setVisraamStyle(DEFAULT_VISRAAM_STYLE));
@@ -188,7 +208,7 @@ export const resetDisplayOptions = () => dispatch => {
 export const CHANGE_FONT = 'CHANGE_FONT';
 export const changeFont = createAction(CHANGE_FONT);
 
-export const resetFontOptions = () => dispatch => {
+export const resetFontOptions = () => (dispatch) => {
   dispatch(setUnicode(DEFAULT_UNICODE));
   dispatch(setFontSize(DEFAULT_FONT_SIZE));
   dispatch(setTranslationFontSize(DEFAULT_TRANSLATION_FONT_SIZE));
@@ -205,10 +225,11 @@ export const toggleCenterAlignOption = () => (dispatch, getState) => {
   dispatch(setCenterAlignOption(!state.centerAlignGurbani));
 };
 
-export const closeSettingsPanel = () => dispatch => {
-  dispatch(setSettingsPanel(false))
-}
+export const closeSettingsPanel = () => (dispatch) => {
+  dispatch(setSettingsPanel(false));
+  dispatch(setKeyboardShortcutsPanel(false));
+};
 
-export const closeMultiViewPanel = () => dispatch => {
-  dispatch(setMultiViewPanel(false))
-}
+export const closeMultiViewPanel = () => (dispatch) => {
+  dispatch(setMultiViewPanel(false));
+};

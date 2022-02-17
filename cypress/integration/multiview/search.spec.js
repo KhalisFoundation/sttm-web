@@ -24,7 +24,7 @@ describe('Multi View', () => {
         .scrollIntoView()
         .click({ force: true })
 
-      cy.get('.search-results-display li:first-child button[data-cy=add-shabad]').as('result')    
+      cy.get('.search-results-display li:first-child button[data-cy=add-shabad]').as('result')
 
       cy.get('@result').click().then(() => {
         cy.get('.multiple-shabads-display ul li').should('have.length', 1)  

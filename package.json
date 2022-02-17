@@ -64,6 +64,7 @@
     "@testing-library/user-event": "^13.1.5",
     "@types/classnames": "^2.3.1",
     "@types/jest": "^23.3.14",
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
@@ -117,15 +118,22 @@
   "dependencies": {
     "@sttm/banidb": "^2.2.4",
     "ajv-keywords": "^3.4.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
+    "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^9.0.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "lodash.throttle": "^4.1.1",
     "lru": "^3.1.0",
+    "mariadb": "^2.5.3",
     "marinate": "^0.1.5",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-saml": "^3.0.0",
     "postcss-root-to-json": "0.0.0",
     "react": "^16.13.1",
     "react-date-picker": "^8.0.3",
@@ -133,6 +141,7 @@
     "react-h5-audio-player": "^3.4.1",
     "react-hotkeys": "^2.0.0",
     "react-intersection-observer": "^8.27.1",
+    "react-query": "^3.19.0",
     "react-range": "^1.6.6",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
@@ -149,10 +158,5 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run pre-push-message && npm run test"
-    }
   }
 }

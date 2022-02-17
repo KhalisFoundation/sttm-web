@@ -15,6 +15,7 @@ import { RandomIcon } from './Icons/RandomIcon';
 import { GearsIcon } from './Icons/CustomIcons';
 import MultiViewButton from '@/components/MultiViewButton';
 import { ShabadButtonWrapper } from './ShabadButtonWrapper';
+import { FavouriteShabadButton } from './FavouriteShabadButton';
 
 const handleWhatsapp = () => {
   clickEvent({ action: ACTIONS.SHARE, label: 'whatsapp' });
@@ -37,7 +38,7 @@ const copyShortUrl = () =>
     )
     .catch(() => showToast(TEXTS.COPY_FAILURE));
 
-export const supportedMedia = ['addShabad', 'multiView', 'random', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
+export const supportedMedia = ['favouriteShabad', 'addShabad', 'multiView', 'random', 'settings', 'print', 'copyAll', 'embed', 'whatsapp', 'copy'];
 
 class ShareButtons extends React.PureComponent {
   constructor(props) {
@@ -177,6 +178,13 @@ class ShareButtons extends React.PureComponent {
             <RandomIcon />
             <span className="show-on-desktop">Random</span>
           </button>
+        </li>
+      ),
+       favouriteShabad: (
+        <li key={9}>
+          {
+            <FavouriteShabadButton shabad={this.formattedShabad} />
+          }
         </li>
       ),
     };

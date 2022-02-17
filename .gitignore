@@ -13,3 +13,5 @@ yarn.lock
 .idea/
 cypress/screenshots/**/*.*
 cypress/videos/**/*.*
+.env
+.env.develop
