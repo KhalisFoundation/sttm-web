@@ -47,7 +47,7 @@ function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (shabadId) =>
-      client(`favourite-shabads`, { token: getToken(), data: { shabadId } }),
+      client(`/favourite-shabads`, { token: getToken(), data: { shabadId } }),
     {
       onMutate: (newShabad) => {
         // Snapshot the previous values
@@ -74,21 +74,11 @@ function useCreateFavouriteShabad() {
   );
 }
 
-// const defaultMutationOptions = {
-//   // If the mutation fails, use the context returned from onMutate to roll back
-//   onError: (err, variables, recover) =>
-//     typeof recover === 'function' ? recover() : null,
-//   // Always refetch after error or success:
-//   onSettled: () => {
-//     queryClient.invalidateQueries()
-//   }
-// }
-
 function useRemoveFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (shabadId) =>
-      client(`favourite-shabads/${shabadId}`, {
+      client(`/favourite-shabads/${shabadId}`, {
         token: getToken(),
         method: 'DELETE',
       }),
