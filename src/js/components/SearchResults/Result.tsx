@@ -19,6 +19,8 @@ import {
   getWriter
 } from '@/util/api/shabad';
 import { ShabadButtonWrapper } from '../ShabadButtonWrapper';
+import { useRemoveFavouriteShabad } from '../FavouriteShabadButton/hooks/index'
+import { StarIcon } from '../Icons/StarIcon'
 
 interface IShabadResultProps {
   shabad: any
@@ -67,6 +69,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   );
 
   const formattedShabad = multiviewFormattedShabad(shabad)
+
+  const remove = useRemoveFavouriteShabad()
 
   return (
     <React.Fragment key={shabad.id}>
