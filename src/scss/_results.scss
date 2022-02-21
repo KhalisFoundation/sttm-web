@@ -113,11 +113,26 @@ li.search-result {
     word-wrap: break-word;
   }
 
-  .add-shabad-wrap {
+  .favourite-shabad-wrap {
     display: inline-flex;
     flex-basis: 40px;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
+
+  .remove-favourite-shabad-wrap{
+    button{
+      svg{
+        width: 1.5em;
+        height: 1.5em;
+      }
+    }
+  }
+  // .add-shabad-wrap {
+  //   display: inline-flex;
+  //   flex-basis: 40px;
+  //   justify-content: center;
+  // }
 }
 
 .larivaar:hover {
