@@ -72,6 +72,11 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 
   const remove = useRemoveFavouriteShabad()
 
+  const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    remove.mutate(formattedShabad.shabadId)
+  }
+
   return (
     <React.Fragment key={shabad.id}>
       <li
@@ -198,10 +203,21 @@ const SearchResult: React.FC<IShabadResultProps> = ({
           </div>
         </div>
 
-        <div className="add-shabad-wrap">
-          {
-            <ShabadButtonWrapper shabad={formattedShabad} />
-          }
+        <div className="favourite-shabad-wrap">
+          <div className="remove-favourite-shabad-wrap">
+              <button
+                data-cy="favourite-shabad"
+                onClick={handleRemoveClick}
+              >
+                <StarIcon/>
+              </button>
+          </div>
+
+          <div className="add-shabad-wrap">
+            {
+              <ShabadButtonWrapper shabad={formattedShabad} />
+            }
+          </div>
         </div>
       </li>
     </React.Fragment>
