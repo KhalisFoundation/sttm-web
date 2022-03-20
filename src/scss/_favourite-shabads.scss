@@ -15,9 +15,16 @@
   &-heading {
     padding: 1rem;
     padding-left: 0;
-    margin-left: 1.5rem;
+    margin-left: 7.5rem;
+    margin-right: 3rem;
     font-size: 2rem;
     border-bottom: 1px solid $sttm-darkest-grey;
+    
+      @media screen and (max-width: 69.9em) {
+        margin-left: 1.5rem;
+        margin-right: 0;
+      }
+
   }
 
 }
