@@ -74,7 +74,7 @@ const FavouriteShabads: React.FC = () => {
             {
               shabadsLoading
                 ?
-                <p> Loading Shabads... </p>
+                <p className="favourite-shabads-loading" > Loading Shabads... </p>
                 :
                 shabadsListing.length
                   ?
@@ -83,7 +83,7 @@ const FavouriteShabads: React.FC = () => {
                     {...userSettingsState}
                   />
                   :
-                  <p> There is no favourite shabad selected. Add some shabads to your list of favourite shabads. </p>
+                  <p className="favourite-shabads-no-select"> There is no favourite shabad selected. Add some shabads to your list of favourite shabads. </p>
             }
           </ul>
         </div>
