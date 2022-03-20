@@ -21,7 +21,11 @@ import {
 import { ShabadButtonWrapper } from '../ShabadButtonWrapper';
 import { useRemoveFavouriteShabad } from '../FavouriteShabadButton/hooks/index'
 import { StarIcon } from '../Icons/StarIcon'
-
+import { isShabadExistMultiview } from '@/util/shabad';
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
+interface IShabadButtonWrapper {
+  multipleShabads: IMultipleShabadsProps[]
+}
 interface IShabadResultProps {
   shabad: any
   q: string,
@@ -76,7 +80,9 @@ const SearchResult: React.FC<IShabadResultProps> = ({
     e.preventDefault();
     remove.mutate(formattedShabad.shabadId)
   }
-
+  const typedUseSelector: TypedUseSelectorHook<IShabadButtonWrapper> = useSelector;
+  const multipleShabads = typedUseSelector(state => state.multipleShabads)
+  const isShabadAdded = isShabadExistMultiview(multipleShabads, formattedShabad.verseId);
   return (
     <React.Fragment key={shabad.id}>
       <li
@@ -204,19 +210,22 @@ const SearchResult: React.FC<IShabadResultProps> = ({
         </div>
 
         <div className="favourite-shabad-wrap">
-          <div className="remove-favourite-shabad-wrap">
-              <button
-                data-cy="favourite-shabad"
-                onClick={handleRemoveClick}
-              >
-                <StarIcon/>
-              </button>
+          <div className="favourite-shabad-wrap icons">
+            <button
+              data-cy="favourite-shabad"
+              onClick={handleRemoveClick}
+              className="remove-fav-button"
+            >
+              <StarIcon />
+            </button>
+            <ShabadButtonWrapper shabad={formattedShabad} />
           </div>
 
-          <div className="add-shabad-wrap">
-            {
-              <ShabadButtonWrapper shabad={formattedShabad} />
-            }
+          <div className="favourite-shabad-wrap headings">
+            <span className='remove-fav-title'>Remove favourite</span>
+            {isShabadAdded
+              ? (<span className='multiview-title'>Remove from multiview</span>)
+              : (<span className='multiview-title' >Add to multiview</span>)}
           </div>
         </div>
       </li>
