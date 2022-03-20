@@ -221,7 +221,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             <ShabadButtonWrapper shabad={formattedShabad} />
           </div>
 
-          <div className="favourite-shabad-wrap headings">
+          <div className="favourite-shabad-wrap labels">
             <span className='remove-fav-title'>Remove favourite</span>
             {isShabadAdded
               ? (<span className='multiview-title'>Remove from multiview</span>)
