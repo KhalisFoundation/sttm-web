@@ -49,6 +49,7 @@ const FavouriteShabads: React.FC = () => {
           setShabadsLoading(false);
         })
     } else {
+      setShabadsListing([])
       setShabadsLoading(false);
     }
   }, [favouriteShabads])
