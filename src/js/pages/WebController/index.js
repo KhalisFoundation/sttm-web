@@ -268,11 +268,11 @@ export default class WebControllerPage extends React.PureComponent {
                   pattern="[A-Z,a-z]{3}-[A-Z,a-z]{3}"
                   onKeyUp={e => {
                     const typedValue = e.currentTarget.value;
-                    const typedChar = e.key;
-                    const parsedValue = typedValue.match('^[A-Z,a-z]{3}');
-                    const d = parsedValue ? parsedValue[0] === typedValue : false;
-                    if (d && typedChar !== 'Backspace') {
-                      e.currentTarget.value = typedValue + '-';
+                    const parsedValue = typedValue.match('^[A-Z,a-z]{4}');
+                    const isParsedValueExist = parsedValue ? parsedValue[0] === typedValue : false;
+                    if (isParsedValueExist) {
+                      const lastChar = typedValue.slice(-1);
+                      e.currentTarget.value = typedValue.slice(0, 3) + '-' + lastChar;
                     }
                   }}
                   required
