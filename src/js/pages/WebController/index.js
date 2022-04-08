@@ -14,7 +14,7 @@ import { Stub } from '../Search/Layout';
 import ControllerShabad from '@/pages/WebController/shabad';
 import { versesToGurbani } from '@/util';
 import ShabadControls from '@/components/ShabadControls';
-
+import { isMobile } from 'react-device-detect';
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -268,11 +268,25 @@ export default class WebControllerPage extends React.PureComponent {
                   pattern="[A-Z,a-z]{3}-[A-Z,a-z]{3}"
                   onKeyUp={e => {
                     const typedValue = e.currentTarget.value;
-                    const parsedValue = typedValue.match('^[A-Z,a-z]{4}');
-                    const isParsedValueExist = parsedValue ? parsedValue[0] === typedValue : false;
-                    if (isParsedValueExist) {
-                      const lastChar = typedValue.slice(-1);
-                      e.currentTarget.value = typedValue.slice(0, 3) + '-' + lastChar;
+                    if (isMobile) {
+                      const parsedValue = typedValue.match('^[A-Z,a-z]{4}');
+                      const isParsedValueExist = parsedValue
+                        ? parsedValue[0] === typedValue
+                        : false;
+                      if (isParsedValueExist) {
+                        const lastChar = typedValue.slice(-1);
+                        e.currentTarget.value =
+                          typedValue.slice(0, 3) + '-' + lastChar;
+                      }
+                    } else {
+                      const typedChar = e.key;
+                      const parsedValue = typedValue.match('^[A-Z,a-z]{3}');
+                      const isParsedValueExist = parsedValue
+                        ? parsedValue[0] === typedValue
+                        : false;
+                      if (isParsedValueExist && typedChar !== 'Backspace') {
+                        e.currentTarget.value = typedValue + '-';
+                      }
                     }
                   }}
                   required
