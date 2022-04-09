@@ -132,7 +132,7 @@
     font-size: 0.9em;
     justify-content: center;
     margin: 0;
-    padding: 14px;
+    padding: 10px;
     transition: 0.2s;
 
     &:hover {
@@ -435,7 +435,7 @@
   display: flex;
   flex-direction: column;
   margin-left: 8px;
-  width: 90%;
+  width: 93%;
 }
 
 #responsive-menu {
@@ -637,7 +637,7 @@
 
 @media screen and (min-width: 56em) {
   .top-bar #search-container {
-    min-width: 532px;
+    min-width: 465px;
   }
 
   .top-bar #search {
