@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices, multiviewFormattedShabad } from '../../util';
 import { getHighlightString } from './util/get-highlight-string';
@@ -23,6 +23,8 @@ import { useRemoveFavouriteShabad } from '../FavouriteShabadButton/hooks/index'
 import { StarIcon } from '../Icons/StarIcon'
 import { isShabadExistMultiview } from '@/util/shabad';
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
+import { IUser } from '@/types/user'
+import { useGetUser } from '@/hooks';
 interface IShabadButtonWrapper {
   multipleShabads: IMultipleShabadsProps[]
 }
@@ -54,6 +56,9 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   larivaarAssist,
 }) => {
   console.log(shabad, "SHABAD...")
+  const { user } = useGetUser<IUser>()
+  const location = useLocation();
+  const isFavShabadPage = location.pathname === '/user/favourite-shabads'
   const _source = getSource(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
   const presentationalSource = _source
@@ -210,7 +215,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
         </div>
 
         <div className="favourite-shabad-wrap">
-          <div className="favourite-shabad-wrap icons">
+          {(user && isFavShabadPage) ? <div className="favourite-shabad-wrap icons">
             <button
               data-cy="favourite-shabad"
               onClick={handleRemoveClick}
@@ -219,10 +224,14 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               <StarIcon />
             </button>
             <ShabadButtonWrapper shabad={formattedShabad} />
-          </div>
-
+          </div> :
+            <div className="favourite-shabad-wrap icons">
+              {
+                <ShabadButtonWrapper shabad={formattedShabad} />
+              }
+            </div>}
           <div className="favourite-shabad-wrap labels">
-            <span className='remove-fav-title'>Remove favourite</span>
+            {(user && isFavShabadPage) && <span className='remove-fav-title'>Remove favourite</span>}
             {isShabadAdded
               ? (<span className='multiview-title'>Remove from multiview</span>)
               : (<span className='multiview-title' >Add to multiview</span>)}
