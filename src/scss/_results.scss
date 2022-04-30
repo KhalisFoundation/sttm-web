@@ -2,10 +2,10 @@
   margin-left: 8rem;
   margin-right: 1rem;
 
-    @media screen and (max-width: 69.9em) {
-      margin-left: 1.5rem;
-      margin-right: 0;
-    }
+  @media screen and (max-width: 69.9em) {
+    margin-left: 1.5rem;
+    margin-right: 0;
+  }
 }
 
 .gurbani-word {
@@ -121,32 +121,32 @@ li.search-result {
 
     .icons,
     .labels {
+      align-items: flex-start;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
     }
 
-    .labels{
-      width: 13rem;
+    .labels {
       color: $sttm-black;
-      
+      width: 13rem;
+
       .remove-fav-title,
-      .multiview-title{
-        width:max-content;
+      .multiview-title {
         padding-bottom: 0.5rem;
+        width: max-content;
       }
 
-      @media screen and (max-width: 37.5em){
+      @media screen and (max-width: 37.5em) {
         display: none;
       }
     }
 
     .remove-fav-button {
       padding-bottom: 0.5rem;
-      
-      svg{
-        width: 1.5em;
+
+      svg {
         height: 1.5em;
+        width: 1.5em;
       }
     }
   }
