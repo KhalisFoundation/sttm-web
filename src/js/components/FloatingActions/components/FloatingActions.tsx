@@ -40,33 +40,33 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
     if (isShowNothing) return null;
 
     return (
-      <>
-        <div className="floatingActions">
-          {isShowAutoScroll &&
-            <AutoScrollControl
-              hideSliderScreenSize="mobile"
-              isControlsAlwaysVisible={false}
-              isBackgroundTransparent />}
-          {isShowIcons &&
-            <div
-              className="floatingActionsIcons">
-              {isShowScrollToTop &&
-                <div
-                  style={lastIconStyles}
-                  className="floatingActionsControl">
-                  <ScrollToTop />
-                </div>}
-              {isShowFullScreen &&
-                <div
-                  style={lastIconStyles}
-                  className="floatingActionsControl">
-                  <FullScreen />
-                </div>}
-            </div>}
-        </div>
-        <DisplaySettingsButton
-          isShowSettings={isShowSettings} />
-      </>
+      <div className="floatingActions">
+        {isShowAutoScroll &&
+          <AutoScrollControl
+            hideSliderScreenSize="mobile"
+            isControlsAlwaysVisible={false}
+            isBackgroundTransparent />}
+        {isShowIcons &&
+          <div className="floatingActionsIcons">
+            {isShowScrollToTop &&
+              <div
+                style={lastIconStyles}
+                className="floatingActionsControl">
+                <ScrollToTop />
+              </div>}
+            {isShowFullScreen &&
+              <div
+                style={lastIconStyles}
+                className="floatingActionsControl">
+                <FullScreen />
+              </div>}
+            {isShowScrollToTop &&
+              <div style={lastIconStyles} className="floatingActionsControl">
+                <DisplaySettingsButton isShowSettings={isShowSettings} />
+              </div>
+            }
+          </div>}
+      </div>
     )
   }
 }
