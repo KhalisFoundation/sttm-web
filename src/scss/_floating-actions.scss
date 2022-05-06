@@ -39,9 +39,9 @@
 }
 
 .settingsButton {
-  fill: $sttm-white;
   align-items: center;
   display: flex;
+  fill: $sttm-white;
 
   &:hover,
   &.active {
