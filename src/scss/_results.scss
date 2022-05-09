@@ -101,7 +101,22 @@ li.search-result {
 
   .meta a {
     color: grey;
-    padding-right: 5px;
+    padding: 0px 6px;
+  }
+
+  .search-result-icon-wrap {
+    display: flex;
+    align-items: center;
+    @-moz-document url-prefix() {
+      svg {
+        margin-top: 2px
+      }
+    }
+    .search-result-icon {
+      height: 0.75em;
+      width: 0.75em;
+      fill: grey;
+    }
   }
 
   p {

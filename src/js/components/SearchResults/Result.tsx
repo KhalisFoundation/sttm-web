@@ -25,6 +25,11 @@ import { isShabadExistMultiview } from '@/util/shabad';
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import { IUser } from '@/types/user'
 import { useGetUser } from '@/hooks';
+import RaagIcon from '../Icons/RaagIcon'
+import WriterIcon from '../Icons/WriterIcon'
+import SourceIcon from '../Icons/SourceIcon'
+import { Play } from '../Icons/controls/Play'
+
 interface IShabadButtonWrapper {
   multipleShabads: IMultipleShabadsProps[]
 }
@@ -55,15 +60,11 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   larivaar,
   larivaarAssist,
 }) => {
-  console.log(shabad, "SHABAD...")
   const { user } = useGetUser<IUser>()
   const location = useLocation();
   const isFavShabadPage = location.pathname === '/user/favourite-shabads'
   const _source = getSource(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
-  const presentationalSource = _source
-    ? `${_source} - ${shabadPageNo}`
-    : null;
 
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   const shabadEnglishTranslation = translationMap['english'](shabad);
@@ -201,15 +202,30 @@ const SearchResult: React.FC<IShabadResultProps> = ({
           )}
 
           <div className="meta flex wrap">
-            {presentationalSource && <a href="#">{presentationalSource}</a>}
-
-            <a href="#">{getWriter(shabad)['english']}</a>
-
+            {_source &&
+              <div className='search-result-icon-wrap' >
+                <SourceIcon />
+                <a href="#">{_source}</a>
+              </div>
+            }
+            {shabadPageNo &&
+              <div className='search-result-icon-wrap' >
+                <Play className='search-result-icon' />
+                <a href="#">{shabadPageNo}</a>
+              </div>
+            }
+            <div className='search-result-icon-wrap'>
+              <WriterIcon className='search-result-icon' />
+              <a href="#">{getWriter(shabad)['english']}</a>
+            </div>
             {getRaag(shabad)['english'] === 'No Raag' ||
               getRaag(shabad)['english'] === null ? (
               ''
             ) : (
-              <a href="#">{getRaag(shabad)['english']}</a>
+              <div className='search-result-icon-wrap'>
+                <RaagIcon className='search-result-icon' />
+                <a href="#">{getRaag(shabad)['english']}</a>
+              </div>
             )}
           </div>
         </div>
