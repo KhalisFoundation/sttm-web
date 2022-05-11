@@ -101,21 +101,23 @@ li.search-result {
 
   .meta a {
     color: grey;
-    padding: 0px 6px;
+    padding: 0 6px;
   }
 
   .search-result-icon-wrap {
-    display: flex;
     align-items: center;
+    display: flex;
+
     @-moz-document url-prefix() {
       svg {
-        margin-top: 2px
+        margin-top: 2px;
       }
     }
+
     .search-result-icon {
+      fill: grey;
       height: 0.75em;
       width: 0.75em;
-      fill: grey;
     }
   }
 
