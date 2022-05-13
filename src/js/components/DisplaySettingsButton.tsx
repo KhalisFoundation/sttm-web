@@ -15,14 +15,9 @@ function DisplaySettingsButton({ isShowSettings }: { isShowSettings: boolean }) 
     isShowSettings
       ?
       <div className="settingsButton">
-        <ul className="share-buttons">
-          <li>
-            <button id="settings-icon" onClick={onClick}>
-              <GearsIcon />
-              <span className="sr-only">Display</span>
-            </button>
-          </li>
-        </ul>
+        <button id="settings-icon" onClick={onClick}>
+          <GearsIcon />
+        </button>
       </div>
       : null
   )

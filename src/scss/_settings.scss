@@ -29,7 +29,7 @@ $panel-width-560: 65vw;
     width: $panel-width;
     z-index: 100;
 
-    [role="dialog"] {
+    [role='dialog'] {
       overflow-y: auto;
     }
 
@@ -54,6 +54,7 @@ $panel-width-560: 65vw;
   }
 
   &-header {
+    align-items: center;
     background-color: $sttm-blue;
     border-bottom: 1px solid $sttm-lighter-grey;
     display: flex;

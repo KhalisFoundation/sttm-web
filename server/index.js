@@ -1,12 +1,16 @@
 /* eslint-disable no-console */
 import compression from 'compression';
+require("dotenv").config();
 import express from 'express';
+import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
 import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
+
+const passport = require("./config/passport-auth");
 
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
@@ -16,24 +20,32 @@ port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
 
-app
-  // Compress files
-  .use(compression())
+app.use(bodyParser.json())
+
+// Compress files
+app.use(compression())
 
   // Add cookie parser
-  .use(cookieParser())
+app.use(cookieParser())
 
   // Infrastructure display
-  .use((req, res, next) => {
+app.use((req, res, next) => {
     res.setHeader('origin-server', hostname);
     return next();
   })
 
+  // passport middleware
+app.use(passport.initialize())
+
   // Use client for static files
-  .use(express.static(`${__dirname}/../public`))
+app.use(express.static(`${__dirname}/../public`))
+
+// Define routes here
+require("./routes/ssoRoutes")(app);
+require("./routes/favouriteShabadsRoutes")(app);
 
   // Direct all calls to index template
-  .get('*', async (req, res) => {
+app.get('*', async (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     const language = req.cookies[LANGUAGE_COOKIE] || DEFAULT_LANGUAGE;
@@ -76,4 +88,4 @@ app
 
 
   // Listen on port
-  .listen(port, () => console.log(`Server started on port:${port}`));
+app.listen(port, () => console.log(`Server started on port:${port}`));

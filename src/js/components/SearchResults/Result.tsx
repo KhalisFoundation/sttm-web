@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { TypedUseSelectorHook, useSelector } from 'react-redux'
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices, multiviewFormattedShabad } from '../../util';
-import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 import { getHighlightString } from './util/get-highlight-string';
-import { isShabadExistMultiview } from '../../util/shabad/is-shabad-exist-multiview';
 
 import {
   SEARCH_TYPES
@@ -22,7 +19,20 @@ import {
   getWriter
 } from '@/util/api/shabad';
 import { ShabadButtonWrapper } from '../ShabadButtonWrapper';
+import { useRemoveFavouriteShabad } from '../FavouriteShabadButton/hooks/index'
+import { StarIcon } from '../Icons/StarIcon'
+import { isShabadExistMultiview } from '@/util/shabad';
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
+import { IUser } from '@/types/user'
+import { useGetUser } from '@/hooks';
+import RaagIcon from '../Icons/RaagIcon'
+import WriterIcon from '../Icons/WriterIcon'
+import SourceIcon from '../Icons/SourceIcon'
+import { Play } from '../Icons/controls/Play'
 
+interface IShabadButtonWrapper {
+  multipleShabads: IMultipleShabadsProps[]
+}
 interface IShabadResultProps {
   shabad: any
   q: string,
@@ -50,11 +60,11 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   larivaar,
   larivaarAssist,
 }) => {
+  const { user } = useGetUser<IUser>()
+  const location = useLocation();
+  const isFavShabadPage = location.pathname === '/user/favourite-shabads'
   const _source = getSource(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
-  const presentationalSource = _source
-    ? `${_source} - ${shabadPageNo}`
-    : null;
 
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   const shabadEnglishTranslation = translationMap['english'](shabad);
@@ -70,6 +80,15 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 
   const formattedShabad = multiviewFormattedShabad(shabad)
 
+  const remove = useRemoveFavouriteShabad()
+
+  const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    remove.mutate(formattedShabad.shabadId)
+  }
+  const typedUseSelector: TypedUseSelectorHook<IShabadButtonWrapper> = useSelector;
+  const multipleShabads = typedUseSelector(state => state.multipleShabads)
+  const isShabadAdded = isShabadExistMultiview(multipleShabads, formattedShabad.verseId);
   return (
     <React.Fragment key={shabad.id}>
       <li
@@ -183,23 +202,56 @@ const SearchResult: React.FC<IShabadResultProps> = ({
           )}
 
           <div className="meta flex wrap">
-            {presentationalSource && <a href="#">{presentationalSource}</a>}
-
-            <a href="#">{getWriter(shabad)['english']}</a>
-
+            {_source &&
+              <div className='search-result-icon-wrap' >
+                <SourceIcon />
+                <a href="#">{_source}</a>
+              </div>
+            }
+            {shabadPageNo &&
+              <div className='search-result-icon-wrap' >
+                <Play className='search-result-icon' />
+                <a href="#">{shabadPageNo}</a>
+              </div>
+            }
+            <div className='search-result-icon-wrap'>
+              <WriterIcon className='search-result-icon' />
+              <a href="#">{getWriter(shabad)['english']}</a>
+            </div>
             {getRaag(shabad)['english'] === 'No Raag' ||
               getRaag(shabad)['english'] === null ? (
               ''
             ) : (
-              <a href="#">{getRaag(shabad)['english']}</a>
+              <div className='search-result-icon-wrap'>
+                <RaagIcon className='search-result-icon' />
+                <a href="#">{getRaag(shabad)['english']}</a>
+              </div>
             )}
           </div>
         </div>
 
-        <div className="add-shabad-wrap">
-          {
+        <div className="favourite-shabad-wrap">
+          {(user && isFavShabadPage) ? <div className="favourite-shabad-wrap icons">
+            <button
+              data-cy="favourite-shabad"
+              onClick={handleRemoveClick}
+              className="remove-fav-button"
+            >
+              <StarIcon />
+            </button>
             <ShabadButtonWrapper shabad={formattedShabad} />
-          }
+          </div> :
+            <div className="favourite-shabad-wrap icons">
+              {
+                <ShabadButtonWrapper shabad={formattedShabad} />
+              }
+            </div>}
+          <div className="favourite-shabad-wrap labels">
+            {(user && isFavShabadPage) && <span className='remove-fav-title'>Remove favourite</span>}
+            {isShabadAdded
+              ? (<span className='multiview-title'>Remove from multiview</span>)
+              : (<span className='multiview-title' >Add to multiview</span>)}
+          </div>
         </div>
       </li>
     </React.Fragment>

@@ -3,7 +3,7 @@ const { presets, plugins } = require('../.babelrc');
 
 module.exports = require('babel-jest').createTransformer({
   // we don't need any config for `@babel/preset-env`
-  presets: presets.map(p =>
+  presets: presets.map((p) =>
     Array.isArray(p) && p[0] === '@babel/preset-env'
       ? [
           p[0],

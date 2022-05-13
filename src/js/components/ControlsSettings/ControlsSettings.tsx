@@ -4,7 +4,7 @@ import Checkboxes, { Collection as CollectionProps } from '@/components/Checkbox
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import Accordion from '../Accordion';
-import { ADVANCED_SETTINGS, HEADER_SETTINGS, QUICK_SETTINGS, RESET_SETTING } from './ControlSettings';
+import { ADVANCED_SETTINGS, HEADER_SETTINGS, KEYBOARD_SHORTCUTS, QUICK_SETTINGS, RESET_SETTING } from './ControlSettings';
 import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, } from "../Icons/CustomIcons";
 import {
   FONT_OPTIONS,
@@ -13,7 +13,7 @@ import {
 import { clearVisraamClass } from '@/util';
 import { useEscapeKeyEventHandler, useOnClickOutside } from "@/hooks";
 import SettingsTooltip from '../SettingsTooltip';
-
+import { ToggleSwitch } from './ToggleSwitch.js';
 
 const ControlsSettings = (props: any) => {
   const wrapperRef = React.useRef(null);
@@ -21,6 +21,7 @@ const ControlsSettings = (props: any) => {
   const quickSettings = QUICK_SETTINGS(props);
   const advancedSettings = ADVANCED_SETTINGS(props);
   const resetSetting = RESET_SETTING(props);
+  const keyboardShortcuts = KEYBOARD_SHORTCUTS();
   const {
     fontFamily,
     changeFont,
@@ -28,7 +29,9 @@ const ControlsSettings = (props: any) => {
     visraamSource,
     visraamStyle,
     closeSettingsPanel,
-    settingsRef
+    settingsRef,
+    showKeyboardShortcutsPanel,
+    toggleKeyboardShortcutsPanel
   } = props;
 
   useOnClickOutside(settingsRef, () => closeSettingsPanel())
@@ -134,6 +137,7 @@ const ControlsSettings = (props: any) => {
         return (
           <>
             <p className="settings-heading">{settingsObj.label}</p>
+            <ToggleSwitch onButtonClick={()=>toggleKeyboardShortcutsPanel()}/> 
             <button className="settings-times" aria-label="close" onClick={settingsObj.action}><Times /></button>
           </>
         )
@@ -196,7 +200,7 @@ const ControlsSettings = (props: any) => {
             <span className="settings-text active-setting">{settingsObj.label}</span>
             <div className="flex-spacer"></div>
             <div className="settings-options">
-              {
+              {showKeyboardShortcutsPanel ? <span>{settingsObj.shortcut}</span>:
                 settingsObj.collections?.map((collection: CollectionProps, index: number) => (
                   <button
                     key={index}
@@ -270,7 +274,21 @@ const ControlsSettings = (props: any) => {
         })}
       </>
       <div className="settings-items settings-border">
-        {quickSettings.map((element: any, i: any) => {
+      {showKeyboardShortcutsPanel ? 
+        keyboardShortcuts.map((element: any, i: any)=>{
+            if (element.type) {
+              return (
+                <div
+                  data-cy={element.label}
+                  key={`settings-${i}`}
+                  className={`${element.type}`}>
+                  {bakeSettings(element, i)}
+                </div>
+              )
+            }
+            return null;
+        }):
+        quickSettings.map((element: any, i: any) => {
           if (element.type) {
             return (
               <div
@@ -287,7 +305,8 @@ const ControlsSettings = (props: any) => {
           return null;
         })}
       </div>
-      <div className="settings-advance">
+      {!showKeyboardShortcutsPanel ?
+      (<div className="settings-advance">
         <div className="settings-item">
           <span className="settings-heading">Fonts &amp; Sizes</span>
         </div>
@@ -311,8 +330,8 @@ const ControlsSettings = (props: any) => {
             <button className="settings-reset-button" onClick={resetSetting.action}>{resetSetting.label}</button>
           </div>
         </div>
-      </div>
-    </div >
+      </div>) : null}
+    </div>
   );
 }
 

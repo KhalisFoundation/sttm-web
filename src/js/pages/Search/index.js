@@ -17,7 +17,7 @@ export default class Search extends React.PureComponent {
     type: PropTypes.number,
     source: PropTypes.string,
     offset: PropTypes.number,
-    writer: PropTypes.string
+    writer: PropTypes.string,
   };
 
   render() {
@@ -33,7 +33,10 @@ export default class Search extends React.PureComponent {
       );
     }
 
-    const url = encodeURI(buildApiUrl({ q, type, source, offset, writer, API_URL }));
+    const url = encodeURI(
+      buildApiUrl({ q, type, source, offset, writer, API_URL })
+    );
+    console.log(url, 'SEARCH RESULTS...');
 
     return (
       <PageLoader url={url}>
@@ -45,11 +48,7 @@ export default class Search extends React.PureComponent {
           return (
             <Layout
               pages={Array.from(
-                Array(
-                  parseInt(
-                    resultsInfo.pages.totalPages
-                  )
-                ),
+                Array(parseInt(resultsInfo.pages.totalPages)),
                 (_, i) => i + 1
               )}
               totalResults={resultsInfo.totalResults || 0}
