@@ -108,6 +108,13 @@ const SearchResult: React.FC<IShabadResultProps> = ({
     return newUrl
   }
 
+  const handleWriterClick = () => {
+    const { writer } = getQueryParams(searchQuery)
+    const newSearchQuery = searchQuery.replace(`writer=${writer}`, `writer=${writerId}`)
+    const newUrl = pathName + newSearchQuery;
+    return newUrl
+  }
+
   return (
     <React.Fragment key={shabad.id}>
       <li
@@ -235,7 +242,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             }
             <div className='search-result-icon-wrap'>
               <WriterIcon className='search-result-icon' />
-              <a href="#">{getWriter(shabad)['english']}</a>
+              <Link to={handleWriterClick}>{getWriter(shabad)['english']}</Link>
             </div>
             {getRaag(shabad)['english'] === 'No Raag' ||
               getRaag(shabad)['english'] === null ? (
