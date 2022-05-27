@@ -100,7 +100,7 @@ li.search-result {
   }
 
   .meta a {
-    color: grey;
+    color: $sttm-dark-grey;
     padding: 0 6px;
   }
 
@@ -115,9 +115,15 @@ li.search-result {
     }
 
     .search-result-icon {
-      fill: grey;
+      fill: $sttm-dark-grey;
       height: 0.75em;
       width: 0.75em;
+    }
+
+    .raag-title{
+      color: $sttm-dark-grey;
+      padding: 0 6px;
+      cursor: grab;
     }
   }
 

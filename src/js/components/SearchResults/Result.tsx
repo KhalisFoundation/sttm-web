@@ -241,7 +241,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             ) : (
               <div className='search-result-icon-wrap'>
                 <RaagIcon className='search-result-icon' />
-                <a href="#">{getRaag(shabad)['english']}</a>
+                <p className='raag-title'>{getRaag(shabad)['english']}</p>
               </div>
             )}
           </div>
