@@ -9,8 +9,13 @@ import {
 } from '@/constants';
 
 import {
+  getQueryParams
+} from '@/util';
+
+import {
   getAng,
   getSource,
+  getSourceId,
   getUnicodeVerse,
   getGurmukhiVerse,
   translationMap,
@@ -62,8 +67,11 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 }) => {
   const { user } = useGetUser<IUser>()
   const location = useLocation();
-  const isFavShabadPage = location.pathname === '/user/favourite-shabads'
+  const pathName = location.pathname;
+  const searchQuery = location.search;
+  const isFavShabadPage = pathName === '/user/favourite-shabads'
   const _source = getSource(shabad);
+  const sourceId = getSourceId(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
 
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
@@ -89,6 +97,14 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const typedUseSelector: TypedUseSelectorHook<IShabadButtonWrapper> = useSelector;
   const multipleShabads = typedUseSelector(state => state.multipleShabads)
   const isShabadAdded = isShabadExistMultiview(multipleShabads, formattedShabad.verseId);
+
+  const handleSourceClick = () => {
+    const { source } = getQueryParams(searchQuery)
+    const newSearchQuery = searchQuery.replace(`source=${source}`, `source=${sourceId}`)
+    const newUrl = pathName + newSearchQuery;
+    return newUrl
+  }
+
   return (
     <React.Fragment key={shabad.id}>
       <li
@@ -205,7 +221,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             {_source &&
               <div className='search-result-icon-wrap' >
                 <SourceIcon />
-                <a href="#">{_source}</a>
+                <Link to={handleSourceClick}>{_source}</Link>
               </div>
             }
             {shabadPageNo &&
