@@ -67,3 +67,5 @@ export const getWriter = (shabad) => ({
   gurmukhi: shabad.writer ? shabad.writer.gurmukhi : '',
   unicode: shabad.writer ? shabad.writer.unicode : '',
 });
+
+export const getWriterId = (shabad) => shabad.writer && shabad.writer.writerId;

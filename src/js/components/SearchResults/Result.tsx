@@ -22,7 +22,8 @@ import {
   translationMap,
   transliterationMap,
   getRaag,
-  getWriter
+  getWriter,
+  getWriterId,
 } from '@/util/api/shabad';
 import { ShabadButtonWrapper } from '../ShabadButtonWrapper';
 import { useRemoveFavouriteShabad } from '../FavouriteShabadButton/hooks/index'
@@ -73,6 +74,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const isFavShabadPage = pathName === '/user/favourite-shabads'
   const _source = getSource(shabad);
   const sourceId = getSourceId(shabad);
+  const writerId = getWriterId(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
 
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
