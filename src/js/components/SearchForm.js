@@ -52,8 +52,9 @@ export default class SearchForm extends React.PureComponent {
    * @typedef {object} SearchFormProps
    * @property {SearchFormRenderProps => React.Element} children as a function
    * @property {string} defaultQuery to initialize with
-   * @property {string} defaultType to initialize with
+   * @property {number} defaultType to initialize with
    * @property {string} defaultSource to initiaize with
+   * @property {number} defaultWriter to intilaize with
    * @property {Array<'type'|'source'|'query'|'writer'>} submitOnChangeOf given fields
    * @property {function} onSubmit event handler
    *
@@ -65,6 +66,7 @@ export default class SearchForm extends React.PureComponent {
     defaultQuery: PropTypes.string,
     defaultType: PropTypes.oneOf(Object.keys(TYPES).map(type => parseInt(type))),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
+    defaultWriter: PropTypes.number,
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'query', 'writer'])
     ),
@@ -95,7 +97,8 @@ export default class SearchForm extends React.PureComponent {
       this.props.defaultSource ||
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
       DEFAULT_SEARCH_SOURCE,
-    writer: 
+    writer:
+      this.props.defaultWriter || 
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
       DEFAULT_SEARCH_WRITER,
     writers: DEFAULT_SEARCH_WRITERS,
