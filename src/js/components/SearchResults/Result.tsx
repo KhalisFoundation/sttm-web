@@ -9,7 +9,8 @@ import {
 } from '@/constants';
 
 import {
-  getQueryParams
+  getQueryParams,
+  toAngURL,
 } from '@/util';
 
 import {
@@ -227,7 +228,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             {shabadPageNo &&
               <div className='search-result-icon-wrap' >
                 <Play className='search-result-icon' />
-                <a href="#">{shabadPageNo}</a>
+                <Link to={toAngURL({ ang: shabadPageNo, source: sourceId })}>{shabadPageNo}</Link>
               </div>
             }
             <div className='search-result-icon-wrap'>
