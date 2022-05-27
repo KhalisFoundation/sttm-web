@@ -9,14 +9,21 @@ import {
 } from '@/constants';
 
 import {
+  getQueryParams,
+  toAngURL,
+} from '@/util';
+
+import {
   getAng,
   getSource,
+  getSourceId,
   getUnicodeVerse,
   getGurmukhiVerse,
   translationMap,
   transliterationMap,
   getRaag,
-  getWriter
+  getWriter,
+  getWriterId,
 } from '@/util/api/shabad';
 import { ShabadButtonWrapper } from '../ShabadButtonWrapper';
 import { useRemoveFavouriteShabad } from '../FavouriteShabadButton/hooks/index'
@@ -62,8 +69,12 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 }) => {
   const { user } = useGetUser<IUser>()
   const location = useLocation();
-  const isFavShabadPage = location.pathname === '/user/favourite-shabads'
+  const pathName = location.pathname;
+  const searchQuery = location.search;
+  const isFavShabadPage = pathName === '/user/favourite-shabads'
   const _source = getSource(shabad);
+  const sourceId = getSourceId(shabad);
+  const writerId = getWriterId(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
 
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
@@ -89,6 +100,21 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const typedUseSelector: TypedUseSelectorHook<IShabadButtonWrapper> = useSelector;
   const multipleShabads = typedUseSelector(state => state.multipleShabads)
   const isShabadAdded = isShabadExistMultiview(multipleShabads, formattedShabad.verseId);
+
+  const handleSourceClick = () => {
+    const { source } = getQueryParams(searchQuery)
+    const newSearchQuery = searchQuery.replace(`source=${source}`, `source=${sourceId}`)
+    const newUrl = pathName + newSearchQuery;
+    return newUrl
+  }
+
+  const handleWriterClick = () => {
+    const { writer } = getQueryParams(searchQuery)
+    const newSearchQuery = searchQuery.replace(`writer=${writer}`, `writer=${writerId}`)
+    const newUrl = pathName + newSearchQuery;
+    return newUrl
+  }
+
   return (
     <React.Fragment key={shabad.id}>
       <li
@@ -205,18 +231,18 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             {_source &&
               <div className='search-result-icon-wrap' >
                 <SourceIcon />
-                <a href="#">{_source}</a>
+                <Link to={handleSourceClick}>{_source}</Link>
               </div>
             }
             {shabadPageNo &&
               <div className='search-result-icon-wrap' >
                 <Play className='search-result-icon' />
-                <a href="#">{shabadPageNo}</a>
+                <Link to={toAngURL({ ang: shabadPageNo, source: sourceId })}>{shabadPageNo}</Link>
               </div>
             }
             <div className='search-result-icon-wrap'>
               <WriterIcon className='search-result-icon' />
-              <a href="#">{getWriter(shabad)['english']}</a>
+              <Link to={handleWriterClick}>{getWriter(shabad)['english']}</Link>
             </div>
             {getRaag(shabad)['english'] === 'No Raag' ||
               getRaag(shabad)['english'] === null ? (
@@ -224,7 +250,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             ) : (
               <div className='search-result-icon-wrap'>
                 <RaagIcon className='search-result-icon' />
-                <a href="#">{getRaag(shabad)['english']}</a>
+                <p className='raag-title'>{getRaag(shabad)['english']}</p>
               </div>
             )}
           </div>
