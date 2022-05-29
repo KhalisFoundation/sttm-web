@@ -7,8 +7,8 @@
     justify-content: center;
     opacity: 0.9;
     position: fixed;
-    right: 2.5em;
-    top: 0.5em;
+    right: 2.5rem;
+    top: 0.5rem;
     z-index: 1;
   }
 
@@ -17,36 +17,34 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 0.3em 0.5em 0;
-    width: 30em;
+    padding: 0.3rem 0.5rem;
+    width: 35rem;
   }
 
   &-title {
-    font-size: 1.2em;
+    font-size: 1.2rem;
     font-weight: 900;
     text-align: right;
   }
 
   &-body {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
     justify-content: start;
-    padding: 0 1em;
+    padding: 0 1rem;
 
     .shabad-verses {
       align-items: flex-start;
       display: flex;
       flex-direction: column;
-      font-family: 'Muli', sans-serif;
-      font-size: 1em;
-      font-weight: 600;
-      line-height: 1.8em;
+      font-size: 1.2rem;
+      line-height: 1.8rem;
     }
   }
 
   &-loading {
     display: flex;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     font-weight: 800;
     justify-content: center;
   }
@@ -54,7 +52,7 @@
   &-footer {
     align-items: center;
     display: flex;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     font-weight: 800;
     justify-content: center;
   }
