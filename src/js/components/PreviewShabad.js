@@ -4,18 +4,22 @@ import PropTypes from 'prop-types';
 const PreviewShabad = (props) => {
   const { verses } = props;
   const displayVerseCount = 15;
-  const totalVerseCount = verses.length;
+  const totalVerseCount = verses?.length;
   return (
     <div className="preview-shabad-background">
       <div className="preview-shabad-container">
         <div className="preview-shabad-title">PREVIEW</div>
-        <div className="preview-shabad-body">
-          <div className="shabad-verses">
-            {verses.slice(0, displayVerseCount).map((item) => (
-              <div key={item.verseId}>{item.verse.unicode}</div>
-            ))}
+        {verses.length ? (
+          <div className="preview-shabad-body">
+            <div className="shabad-verses">
+              {verses.slice(0, displayVerseCount).map((item) => (
+                <div key={item.verseId}>{item.verse.unicode}</div>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <span className="preview-shabad-loading">Loading...</span>
+        )}
         {totalVerseCount - displayVerseCount > 0 && (
           <div className="preview-shabad-footer">
             + {totalVerseCount - displayVerseCount} more lines...

@@ -124,10 +124,10 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   }
 
   const handleMouseEnter = async (id) => {
+    setIsShabadPreview(true);
     let response = await fetch(getShabadUrl(id));
     let shabad = await response.json();
     setVerses(shabad?.verses);
-    setIsShabadPreview(true);
   }
 
   return (
