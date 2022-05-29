@@ -11,9 +11,9 @@ const PreviewShabad = (props) => {
         <div className="preview-shabad-title">PREVIEW</div>
         {verses.length ? (
           <div className="preview-shabad-body">
-            <div className="shabad-verses">
+            <div className="shabad-verses gurbani-font">
               {verses.slice(0, displayVerseCount).map((item) => (
-                <div key={item.verseId}>{item.verse.unicode}</div>
+                <div key={item.verseId}>{item.verse.gurmukhi}</div>
               ))}
             </div>
           </div>
