@@ -37,6 +37,7 @@ import WriterIcon from '../Icons/WriterIcon'
 import SourceIcon from '../Icons/SourceIcon'
 import { Play } from '../Icons/controls/Play'
 import PreviewShabad from '../PreviewShabad';
+import { useEscapeKeyEventHandler } from '@/hooks';
 
 interface IShabadButtonWrapper {
   multipleShabads: IMultipleShabadsProps[]
@@ -97,6 +98,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const remove = useRemoveFavouriteShabad()
 
   const getShabadUrl = (id) => `${API_URL}/shabads/${id}`
+
+  useEscapeKeyEventHandler(() => setIsShabadPreview(false))
 
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
