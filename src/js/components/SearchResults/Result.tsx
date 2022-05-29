@@ -141,7 +141,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               fontFamily: `${fontFamily}`
             }}
             to={toShabadURL({ shabad, q, type, source })}
-            className="gurbani-font gurbani-display"
+            className="gurbani-font gurbani-display shabad-title"
             onMouseEnter={() => handleMouseEnter(shabad.shabadId)}
             onMouseLeave={() => setIsShabadPreview(false)}
           >

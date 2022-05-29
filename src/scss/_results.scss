@@ -46,6 +46,12 @@ li.search-result {
 
   .shabad-detail {
     flex-basis: 100%;
+
+        .shabad-title {
+            &:hover * {
+              color: $sttm-orange;
+            }
+      }
   }
 
   a {
