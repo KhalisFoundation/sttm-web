@@ -97,7 +97,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 
   const remove = useRemoveFavouriteShabad()
 
-  const getShabadUrl = (id) => `${API_URL}/shabads/${id}`
+  const getShabadUrl = (id) => `${API_URL}shabads/${id}`
 
   useEscapeKeyEventHandler(() => setIsShabadPreview(false))
 
