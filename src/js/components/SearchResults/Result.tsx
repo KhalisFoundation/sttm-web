@@ -93,6 +93,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 
   const remove = useRemoveFavouriteShabad()
 
+  const getShabadUrl = (id) => `${API_URL}/shabads/${id}`
+
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     remove.mutate(formattedShabad.shabadId)
@@ -115,6 +117,12 @@ const SearchResult: React.FC<IShabadResultProps> = ({
     return newUrl
   }
 
+  const handleMouseEnter = async (id) => {
+    let response = await fetch(getShabadUrl(id));
+    let shabad = await response.json();
+    console.log(shabad?.verses)
+  }
+
   return (
     <React.Fragment key={shabad.id}>
       <li
@@ -127,6 +135,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             }}
             to={toShabadURL({ shabad, q, type, source })}
             className="gurbani-font gurbani-display"
+            onMouseEnter={() => handleMouseEnter(shabad.shabadId)}
           >
             {unicode ? (
               <div className={`unicode ${larivaar ? 'larivaar' : ''}`}>
