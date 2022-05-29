@@ -36,6 +36,7 @@ import RaagIcon from '../Icons/RaagIcon'
 import WriterIcon from '../Icons/WriterIcon'
 import SourceIcon from '../Icons/SourceIcon'
 import { Play } from '../Icons/controls/Play'
+import PreviewShabad from '../PreviewShabad';
 
 interface IShabadButtonWrapper {
   multipleShabads: IMultipleShabadsProps[]
@@ -268,6 +269,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             )}
           </div>
         </div>
+
+        {isShabadPreview && <PreviewShabad verses={verses} />}
 
         <div className="favourite-shabad-wrap">
           {(user && isFavShabadPage) ? <div className="favourite-shabad-wrap icons">
