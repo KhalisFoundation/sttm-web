@@ -1,0 +1,54 @@
+.preview-shabad {
+  &-background {
+    align-items: center;
+    background-color: $sttm-dark-orange;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    opacity: 0.9;
+    position: fixed;
+    right: 2.5em;
+    top: 1.5em;
+    z-index: 1;
+  }
+
+  &-container {
+    color: $sttm-white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.5em 0.5em 0;
+    width: 32em;
+  }
+
+  &-title {
+    font-size: 1em;
+    font-weight: 800;
+    text-align: right;
+  }
+
+  &-body {
+    align-items: center;
+    display: flex;
+    justify-content: start;
+    padding: 0 1em;
+    text-align: center;
+
+    .shabad-verses {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Muli', sans-serif;
+      font-size: 1em;
+      line-height: 1.7em;
+    }
+  }
+
+  &-footer {
+    align-items: center;
+    display: flex;
+    font-size: 1.2em;
+    font-weight: 800;
+    justify-content: center;
+  }
+}
