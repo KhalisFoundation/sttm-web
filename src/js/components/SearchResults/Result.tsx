@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices, multiviewFormattedShabad } from '../../util';
@@ -69,6 +69,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 }) => {
   const { user } = useGetUser<IUser>()
   const location = useLocation();
+  const [isShabadPreview, setIsShabadPreview] = useState(false);
+  const [verses, setVerses] = useState([])
   const pathName = location.pathname;
   const searchQuery = location.search;
   const isFavShabadPage = pathName === '/user/favourite-shabads'
@@ -120,7 +122,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const handleMouseEnter = async (id) => {
     let response = await fetch(getShabadUrl(id));
     let shabad = await response.json();
-    console.log(shabad?.verses)
+    setVerses(shabad?.verses);
+    setIsShabadPreview(true);
   }
 
   return (
@@ -136,6 +139,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             to={toShabadURL({ shabad, q, type, source })}
             className="gurbani-font gurbani-display"
             onMouseEnter={() => handleMouseEnter(shabad.shabadId)}
+            onMouseLeave={() => setIsShabadPreview(false)}
           >
             {unicode ? (
               <div className={`unicode ${larivaar ? 'larivaar' : ''}`}>
