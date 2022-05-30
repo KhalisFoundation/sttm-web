@@ -108,6 +108,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const typedUseSelector: TypedUseSelectorHook<IShabadButtonWrapper> = useSelector;
   const multipleShabads = typedUseSelector(state => state.multipleShabads)
   const isShabadAdded = isShabadExistMultiview(multipleShabads, formattedShabad.verseId);
+  const showMultiViewPanel = typedUseSelector(state => state.showMultiViewPanel)
+  const showSettingsPanel = typedUseSelector(state => state.showSettingsPanel)
 
   const handleSourceClick = () => {
     const { source } = getQueryParams(searchQuery)
@@ -124,10 +126,14 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   }
 
   const handleMouseEnter = async (id) => {
-    setIsShabadPreview(true);
-    let response = await fetch(getShabadUrl(id));
-    let shabad = await response.json();
-    setVerses(shabad?.verses);
+    if (showMultiViewPanel || showSettingsPanel) {
+      setIsShabadPreview(false);
+    } else {
+      setIsShabadPreview(true);
+      let response = await fetch(getShabadUrl(id));
+      let shabad = await response.json();
+      setVerses(shabad?.verses)
+    }
   }
 
   return (
