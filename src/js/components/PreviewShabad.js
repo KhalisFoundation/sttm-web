@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const PreviewShabad = (props) => {
   const { verses } = props;
-  const displayVerseCount = 15;
+  const displayVerseCount = 12;
   const totalVerseCount = verses?.length;
   return (
     <div className="preview-shabad-background">
