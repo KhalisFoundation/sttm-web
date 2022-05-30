@@ -104,7 +104,7 @@ select {
     font-weight: 500;
   }
 
-  @media screen and (max-width: 790px) {
+  @media screen and (max-width: 950px) {
     display: none;
   }
 
@@ -115,7 +115,7 @@ select {
   + #share-menu {
     margin-top: -27px;
 
-    @media screen and (max-width: 790px) {
+    @media screen and (max-width: 950px) {
       margin-top: 0;
     }
   }
