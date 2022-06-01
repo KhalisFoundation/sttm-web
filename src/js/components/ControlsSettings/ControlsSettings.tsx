@@ -13,7 +13,8 @@ import {
 import { clearVisraamClass } from '@/util';
 import { useEscapeKeyEventHandler, useOnClickOutside } from "@/hooks";
 import SettingsTooltip from '../SettingsTooltip';
-import { ToggleSwitch } from './ToggleSwitch.js';
+import PinIcon from '@/components/Icons/PinIcon';
+import ShortcutIcon from '@/components/Icons/ShortcutIcon';
 
 const ControlsSettings = (props: any) => {
   const wrapperRef = React.useRef(null);
@@ -137,8 +138,13 @@ const ControlsSettings = (props: any) => {
         return (
           <>
             <p className="settings-heading">{settingsObj.label}</p>
-            <ToggleSwitch onButtonClick={()=>toggleKeyboardShortcutsPanel()}/> 
-            <button className="settings-times" aria-label="close" onClick={settingsObj.action}><Times /></button>
+            <div className='settings-header-icons'>
+              <button className={`shortcut-icon-container ${showKeyboardShortcutsPanel ? 'active' : ''}`} onClick={() => toggleKeyboardShortcutsPanel()}>
+                <ShortcutIcon className={`shortcut-icon ${showKeyboardShortcutsPanel ? 'active' : ''}`} />
+              </button>
+              <PinIcon className='pin-icon' />
+              <button className="settings-times" aria-label="close" onClick={settingsObj.action}><Times /></button>
+            </div>
           </>
         )
       case 'collapsible_item':
@@ -200,7 +206,7 @@ const ControlsSettings = (props: any) => {
             <span className="settings-text active-setting">{settingsObj.label}</span>
             <div className="flex-spacer"></div>
             <div className="settings-options">
-              {showKeyboardShortcutsPanel ? <span>{settingsObj.shortcut}</span>:
+              {showKeyboardShortcutsPanel ? <span>{settingsObj.shortcut}</span> :
                 settingsObj.collections?.map((collection: CollectionProps, index: number) => (
                   <button
                     key={index}
@@ -212,6 +218,16 @@ const ControlsSettings = (props: any) => {
                   </button>
                 ))
               }
+            </div>
+          </div>
+        )
+      case 'keyboard-shortcut-options':
+        return (
+          <div className="settings-item">
+            <span className="shortcuts-text">{settingsObj.label}</span>
+            <div className="flex-spacer"></div>
+            <div className="settings-options">
+              {showKeyboardShortcutsPanel && <span>{settingsObj.shortcut}</span>}
             </div>
           </div>
         )
@@ -274,8 +290,8 @@ const ControlsSettings = (props: any) => {
         })}
       </>
       <div className="settings-items settings-border">
-      {showKeyboardShortcutsPanel ? 
-        keyboardShortcuts.map((element: any, i: any)=>{
+        {showKeyboardShortcutsPanel ?
+          keyboardShortcuts.map((element: any, i: any) => {
             if (element.type) {
               return (
                 <div
@@ -287,50 +303,50 @@ const ControlsSettings = (props: any) => {
               )
             }
             return null;
-        }):
-        quickSettings.map((element: any, i: any) => {
-          if (element.type) {
-            return (
-              <div
-                data-cy={element.label}
-                data-tip
-                data-for={element.label}
-                key={`settings-${i}`}
-                className={`${element.type}`}>
-                {bakeSettings(element, i)}
-                <SettingsTooltip referenceName={element.label} tooltip={element.tooltip} extraSettings={{ place: 'top', delayShow: 1000 }} />
-              </div>
-            )
-          }
-          return null;
-        })}
+          }) :
+          quickSettings.map((element: any, i: any) => {
+            if (element.type) {
+              return (
+                <div
+                  data-cy={element.label}
+                  data-tip
+                  data-for={element.label}
+                  key={`settings-${i}`}
+                  className={`${element.type}`}>
+                  {bakeSettings(element, i)}
+                  <SettingsTooltip referenceName={element.label} tooltip={element.tooltip} extraSettings={{ place: 'top', delayShow: 1000 }} />
+                </div>
+              )
+            }
+            return null;
+          })}
       </div>
       {!showKeyboardShortcutsPanel ?
-      (<div className="settings-advance">
-        <div className="settings-item">
-          <span className="settings-heading">Fonts &amp; Sizes</span>
-        </div>
-        <div className="settings-items pt-0">
-          <>
-            {advancedSettings.map((element: any, i: any) => {
-              if (element.type) {
-                return (
-                  <div
-                    data-cy={element.label}
-                    key={`settings-${i}`}
-                    className={`settings-item font-item ${element.type}`}>
-                    {bakeSettings(element, i)}
-                  </div>
-                )
-              }
-              return null;
-            })}
-          </>
-          <div className="settings-item font-item">
-            <button className="settings-reset-button" onClick={resetSetting.action}>{resetSetting.label}</button>
+        (<div className="settings-advance">
+          <div className="settings-item">
+            <span className="settings-heading">Fonts &amp; Sizes</span>
           </div>
-        </div>
-      </div>) : null}
+          <div className="settings-items pt-0">
+            <>
+              {advancedSettings.map((element: any, i: any) => {
+                if (element.type) {
+                  return (
+                    <div
+                      data-cy={element.label}
+                      key={`settings-${i}`}
+                      className={`settings-item font-item ${element.type}`}>
+                      {bakeSettings(element, i)}
+                    </div>
+                  )
+                }
+                return null;
+              })}
+            </>
+            <div className="settings-item font-item">
+              <button className="settings-reset-button" onClick={resetSetting.action}>{resetSetting.label}</button>
+            </div>
+          </div>
+        </div>) : null}
     </div>
   );
 }

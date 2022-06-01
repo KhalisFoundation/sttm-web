@@ -75,6 +75,38 @@ $panel-width-560: 65vw;
     }
   }
 
+  &-header-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+
+    .shortcut-icon-container {
+      border: 2px solid $sttm-white;
+      display: flex;
+      padding: 2px;
+
+      &:hover {
+        border: 2px solid $sttm-orange;
+      }
+
+      &.active {
+        border: 2px solid $sttm-orange;
+      }
+
+      .shortcut-icon {
+        fill: $sttm-white;
+
+        &:hover {
+          fill: $sttm-orange;
+        }
+
+        &.active {
+          fill: $sttm-orange;
+        }
+      }
+    }
+  }
+
   &-times {
     align-items: center;
     display: flex;
