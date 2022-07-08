@@ -454,6 +454,18 @@ body:not(.dark-mode) a {
   }
 }
 
+.pin-settings {
+  min-height: 85vh;
+  right: 0;
+  top: 0;
+  transition: transform 0.5s;
+
+  &.active {
+    transform-origin: 0 0;
+    width: 80%;
+  }
+}
+
 .settingsTooltipWrapper {
   background-color: $sttm-dark-blue !important;
   max-width: 60%;

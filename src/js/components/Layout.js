@@ -38,6 +38,7 @@ class Layout extends React.PureComponent {
     isAng: PropTypes.bool,
     multipleShabads: PropTypes.array,
     showMultiViewPanel: PropTypes.bool,
+    showPinSettings: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
     history: PropTypes.object 
   };
@@ -84,6 +85,7 @@ class Layout extends React.PureComponent {
       isController = false,
       autoScrollMode,
       showMultiViewPanel,
+      showPinSettings,
       location: { pathname = '/' } = {},      
       ...props
     } = this.props;
@@ -106,7 +108,7 @@ class Layout extends React.PureComponent {
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner />
-        <div className={`pusher ${showMultiViewPanel ? 'enable' : ''}`}>
+        <div className={`pusher ${showMultiViewPanel ? 'enable' : ''} pin-settings ${showPinSettings ? 'active' : ''}`}>
           <Header
             defaultQuery={this.props.defaultQuery}
             isHome={isHome}
@@ -213,7 +215,7 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode, autoScrollMode, showMultiViewPanel }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel }),
+  ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings }),
   {
     setOnlineMode,
   }
