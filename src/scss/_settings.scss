@@ -79,6 +79,16 @@ $panel-width-560: 65vw;
     display: flex;
     justify-content: space-between;
     width: 37%;
+    
+    .pin-icon {
+      &:hover {
+        fill: $sttm-orange;
+      }
+
+      &.active {
+        fill: $sttm-orange;
+      }
+    }
 
     .shortcut-icon-container {
       border: 2px solid $sttm-white;
