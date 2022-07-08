@@ -62,7 +62,9 @@ class ShareButtons extends React.PureComponent {
     onCopyAllClick: PropTypes.func,
     toggleSettingsPanel: PropTypes.func,
     closeMultiViewPanel: PropTypes.func,
+    closePinSettings: PropTypes.func,
     showMultiViewPanel: PropTypes.bool,
+    showPinSettings: PropTypes.bool,
     highlight: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -84,11 +86,14 @@ class ShareButtons extends React.PureComponent {
 
   onClickSettings(e) {
     e.preventDefault();
-    const { toggleSettingsPanel, closeMultiViewPanel, showMultiViewPanel } = this.props
+    const { toggleSettingsPanel, closeMultiViewPanel, showMultiViewPanel, showPinSettings, closePinSettings } = this.props
     if (showMultiViewPanel) {
       closeMultiViewPanel()
       delay(600).then(() => toggleSettingsPanel())
       return
+    }
+    if (showPinSettings) {
+      closePinSettings();
     }
     toggleSettingsPanel()
   }
