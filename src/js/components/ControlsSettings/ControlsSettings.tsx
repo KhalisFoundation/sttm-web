@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
+import { useDispatch, useSelector } from 'react-redux'
 import Checkboxes, { Collection as CollectionProps } from '@/components/Checkboxes/Checkboxes';
 import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
@@ -15,6 +15,7 @@ import { useEscapeKeyEventHandler, useOnClickOutside } from "@/hooks";
 import SettingsTooltip from '../SettingsTooltip';
 import PinIcon from '@/components/Icons/PinIcon';
 import ShortcutIcon from '@/components/Icons/ShortcutIcon';
+import { setPinSettings, closePinSettings } from "@/features/actions";
 
 const ControlsSettings = (props: any) => {
   const wrapperRef = React.useRef(null);
@@ -35,9 +36,8 @@ const ControlsSettings = (props: any) => {
     toggleKeyboardShortcutsPanel
   } = props;
 
-  useOnClickOutside(settingsRef, () => closeSettingsPanel())
+  useOnClickOutside(settingsRef, () => { closePinSettings(), closeSettingsPanel() })
   useEscapeKeyEventHandler(closeSettingsPanel)
-
   useEffect(() => {
     clearVisraamClass();
     document.body.classList[visraams ? 'add' : 'remove'](
@@ -47,6 +47,10 @@ const ControlsSettings = (props: any) => {
     );
     wrapperRef.current.focus();
   }, [visraams, visraamSource, visraamStyle])
+
+  const dispatch = useDispatch();
+
+  const showPinSettings = useSelector(state => state.showPinSettings);
 
   const renderIcon = (itemName: any) => {
     switch (itemName) {
@@ -142,7 +146,7 @@ const ControlsSettings = (props: any) => {
               <button className={`shortcut-icon-container ${showKeyboardShortcutsPanel ? 'active' : ''}`} onClick={() => toggleKeyboardShortcutsPanel()}>
                 <ShortcutIcon className={`shortcut-icon ${showKeyboardShortcutsPanel ? 'active' : ''}`} />
               </button>
-              <PinIcon className='pin-icon' />
+              <PinIcon className={`pin-icon ${showPinSettings ? 'active' : ''}`} onClick={() => dispatch(setPinSettings(!showPinSettings))} />
               <button className="settings-times" aria-label="close" onClick={settingsObj.action}><Times /></button>
             </div>
           </>

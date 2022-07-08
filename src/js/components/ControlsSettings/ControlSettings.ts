@@ -46,6 +46,7 @@ export interface ISettingActions {
   toggleParagraphMode: () => {},
   toggleSehajPaathMode: () => {},
   toggleSettingsPanel: () => {},
+  closePinSettings: () => {},
   toggleKeyboardShortcutsPanel: () => {},
   setVisraamSource: () => {},
   setVisraamStyle: () => {},
@@ -86,6 +87,7 @@ export interface ISettingActions {
 
 export const HEADER_SETTINGS = ({
   toggleSettingsPanel,
+  closePinSettings,
   toggleKeyboardShortcutsPanel,
   showSettingsPanel,
   showKeyboardShortcutsPanel  
@@ -93,11 +95,17 @@ export const HEADER_SETTINGS = ({
   return [
     {
       type: 'header',
-      label: showKeyboardShortcutsPanel ? 'Shortcuts':'Settings',
+      label: showKeyboardShortcutsPanel ? 'Shortcuts' : 'Settings',
       value: showSettingsPanel,
-      action: showKeyboardShortcutsPanel ? ()=>{toggleKeyboardShortcutsPanel(),toggleSettingsPanel()} : toggleSettingsPanel
+      action: showKeyboardShortcutsPanel
+        ? () => {
+            toggleKeyboardShortcutsPanel(), toggleSettingsPanel();
+          }
+        : () => {
+            closePinSettings(), toggleSettingsPanel();
+          },
     },
-  ]
+  ];
 }
 
 export const KEYBOARD_SHORTCUTS = () =>{
