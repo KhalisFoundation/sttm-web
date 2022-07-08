@@ -89,16 +89,16 @@ $panel-width-560: 65vw;
         border: 2px solid $sttm-orange;
       }
 
+      &:hover * {
+        fill: $sttm-orange;
+      }
+
       &.active {
         border: 2px solid $sttm-orange;
       }
 
       .shortcut-icon {
         fill: $sttm-white;
-
-        &:hover {
-          fill: $sttm-orange;
-        }
 
         &.active {
           fill: $sttm-orange;
