@@ -37,6 +37,7 @@ import {
   toggleCenterAlignOption,
   closeSettingsPanel,
   closeMultiViewPanel,
+  closePinSettings,
 } from '@/features/actions';
 
 export const supportedMedia = _s;
@@ -117,6 +118,7 @@ const mapDispatchToProps = {
   toggleCenterAlignOption,
   closeSettingsPanel,
   closeMultiViewPanel,
+  closePinSettings,
 };
 
 // TODO: Connect individual components instead of all controls.
