@@ -71,7 +71,8 @@ class Meta extends React.PureComponent {
       previous: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       next: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
-    isArrowsHidden: PropTypes.bool
+    isArrowsHidden: PropTypes.bool,
+    showPinSettings: PropTypes.bool,
   };
 
   renderLeftArrow() {
@@ -200,6 +201,7 @@ class Meta extends React.PureComponent {
       isUnicode,
       translationLanguages,
       transliterationLanguages,
+      showPinSettings,
     } = this.props;
     const Item = ({ children, last = false }) =>
       children ? (
@@ -322,7 +324,7 @@ class Meta extends React.PureComponent {
         </div>
 
         {hasAudioPlayer && (
-          <div className={`hukamnama-audio ${this.state.isHukamnamaAudioPlayerVisible ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'}`}>
+          <div className={`hukamnama-audio ${this.state.isHukamnamaAudioPlayerVisible ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings && 'hukamnama-audio--pin-settings'}`}>
             <AudioPlayer
               ref={this.audioPlayerRef}
               src={HUKAMNAMA_AUDIO_URL}
