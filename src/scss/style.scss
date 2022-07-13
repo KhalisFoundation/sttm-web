@@ -466,6 +466,19 @@ body:not(.dark-mode) a {
   }
 }
 
+.pin-settings-footer {
+  right: 0;
+  transform-origin: 0 0;
+  transition: transform 0.5s;
+  width: 77.5%;
+}
+
+.pin-settings-floating-icons {
+  right: 300px;
+  transform-origin: 0 0;
+  transition: transform 0.5s;
+}
+
 .settingsTooltipWrapper {
   background-color: $sttm-dark-blue !important;
   max-width: 60%;
