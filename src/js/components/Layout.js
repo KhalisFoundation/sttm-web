@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import Banner from './Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
@@ -128,9 +129,11 @@ class Layout extends React.PureComponent {
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
           isShowFullScreen={isShowFullScreen}
-          isShowScrollToTop={this.state.showScrollToTop} 
+          isShowScrollToTop={this.state.showScrollToTop}
+          showPinSettings={showPinSettings} 
           isShowSettings={isShowSettings} />
 
+        <Footer showPinSettings={showPinSettings}/>
       </React.Fragment>
     ) : (
         <div className="content-root">
