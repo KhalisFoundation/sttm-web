@@ -13,7 +13,7 @@ import {
   OFFLINE_COLOR,
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
-import { setOnlineMode } from '../features/actions';
+import { setOnlineMode, closeSettingsPanel } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
@@ -41,6 +41,7 @@ class Layout extends React.PureComponent {
     showMultiViewPanel: PropTypes.bool,
     showPinSettings: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
+    closeSettingsPanel: PropTypes.func,
     history: PropTypes.object 
   };
 
@@ -136,13 +137,15 @@ class Layout extends React.PureComponent {
         <Footer showPinSettings={showPinSettings}/>
       </React.Fragment>
     ) : (
-        <div className="content-root">
-          <GenericError
-            title={TEXTS.OFFLINE}
-            description={TEXTS.OFFLINE_DESCRIPTION}
-            image={SachKaur}
-          />
-        </div>
+        <>
+          <div className="content-root">
+            <GenericError
+              title={TEXTS.OFFLINE}
+              description={TEXTS.OFFLINE_DESCRIPTION}
+              image={SachKaur} />
+          </div>
+          <Footer showPinSettings={showPinSettings} />
+        </>  
       )
   }
 
@@ -171,6 +174,9 @@ class Layout extends React.PureComponent {
   }
 
   componentDidMount() {
+    if(location.pathname!=="/hukamnama" && location.pathname!=="/shabad" && location.pathname!=="/search"){
+      this.props.closeSettingsPanel();
+    }
     this.processAuth();
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
@@ -221,5 +227,6 @@ export default connect(
   ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings }),
   {
     setOnlineMode,
+    closeSettingsPanel,
   }
 )(Layout);
