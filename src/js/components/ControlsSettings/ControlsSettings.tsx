@@ -15,7 +15,7 @@ import { useEscapeKeyEventHandler, useOnClickOutside } from "@/hooks";
 import SettingsTooltip from '../SettingsTooltip';
 import PinIcon from '@/components/Icons/PinIcon';
 import ShortcutIcon from '@/components/Icons/ShortcutIcon';
-import { setPinSettings, closePinSettings } from "@/features/actions";
+import { setPinSettings } from "@/features/actions";
 
 const ControlsSettings = (props: any) => {
   const wrapperRef = React.useRef(null);
@@ -36,7 +36,7 @@ const ControlsSettings = (props: any) => {
     toggleKeyboardShortcutsPanel
   } = props;
 
-  useOnClickOutside(settingsRef, () => { closePinSettings(), closeSettingsPanel() })
+  useOnClickOutside(settingsRef, () => { closeSettingsPanel() })
   useEscapeKeyEventHandler(closeSettingsPanel)
   useEffect(() => {
     clearVisraamClass();
