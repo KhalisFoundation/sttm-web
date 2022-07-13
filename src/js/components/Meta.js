@@ -324,7 +324,7 @@ class Meta extends React.PureComponent {
         </div>
 
         {hasAudioPlayer && (
-          <div className={`hukamnama-audio ${this.state.isHukamnamaAudioPlayerVisible ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings && 'hukamnama-audio--pin-settings'}`}>
+          <div className={`hukamnama-audio ${this.state.isHukamnamaAudioPlayerVisible ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
             <AudioPlayer
               ref={this.audioPlayerRef}
               src={HUKAMNAMA_AUDIO_URL}
