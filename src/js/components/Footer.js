@@ -56,7 +56,7 @@ const Footer = ({showPinSettings}) => {
             <a
               className="download-icon"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               href="https://khalisfoundation.org/portfolio/sikhitothemax/"
             >
               <img src="/assets/images/app-desktop.png" alt="Desktop icon" />
@@ -66,7 +66,7 @@ const Footer = ({showPinSettings}) => {
             <a
               className="download-icon"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               href="https://apps.apple.com/us/app/sikhitothemax/id1370303478"
             >
               <img src="/assets/images/app-ios.png" alt="iOS icon" />
@@ -76,7 +76,7 @@ const Footer = ({showPinSettings}) => {
             <a
               className="download-icon"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               href="https://play.google.com/store/apps/details?id=com.nest.sttm&hl=en_US"
             >
               <img src="/assets/images/app-android.png" alt="Android icon" />
