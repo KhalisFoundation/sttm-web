@@ -4,8 +4,8 @@ const ShortcutIcon = (props) => (
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    width="0.5em"
-    height="0.5em"
+    width="0.7em"
+    height="0.7em"
     viewBox="0 0 64.000000 64.000000"
     preserveAspectRatio="xMidYMid meet"
     {...props}

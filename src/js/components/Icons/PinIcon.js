@@ -7,8 +7,8 @@ const PinIcon = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 53.011 53.011"
-    height="0.7em"
-    width="0.7em"
+    height="0.8em"
+    width="0.8em"
     fill="#fff"
     {...props}
   >

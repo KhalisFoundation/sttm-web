@@ -76,11 +76,21 @@ $panel-width-560: 65vw;
   }
 
   &-header-icons {
+    align-items: center;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     width: 37%;
 
+    @media screen and (max-width: 900px) {
+      width: 20%;
+    }
+
     .pin-icon {
+      @media screen and (max-width: 900px) {
+        display: none;
+      }
+
       &:hover {
         fill: $sttm-orange;
       }
@@ -91,20 +101,22 @@ $panel-width-560: 65vw;
     }
 
     .shortcut-icon-container {
-      border: 2px solid $sttm-white;
+      border: 1px solid $sttm-white;
       display: flex;
-      padding: 2px;
+      padding: 3px;
 
-      &:hover {
-        border: 2px solid $sttm-orange;
-      }
+      @media screen and (min-width: 900px) {
+        &:hover {
+          border: 1px solid $sttm-orange;
+        }
 
-      &:hover * {
-        fill: $sttm-orange;
+        &:hover * {
+          fill: $sttm-orange;
+        }
       }
 
       &.active {
-        border: 2px solid $sttm-orange;
+        border: 1px solid $sttm-orange;
       }
 
       .shortcut-icon {
