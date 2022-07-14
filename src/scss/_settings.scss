@@ -86,13 +86,13 @@ $panel-width-560: 65vw;
       width: 20%;
     }
 
+    @media screen and (min-width: 1500px) {
+      width: 25%;
+    }
+
     .pin-icon {
       @media screen and (max-width: 900px) {
         display: none;
-      }
-
-      &:hover {
-        fill: $sttm-orange;
       }
 
       &.active {
@@ -104,16 +104,6 @@ $panel-width-560: 65vw;
       border: 1px solid $sttm-white;
       display: flex;
       padding: 3px;
-
-      @media screen and (min-width: 900px) {
-        &:hover {
-          border: 1px solid $sttm-orange;
-        }
-
-        &:hover * {
-          fill: $sttm-orange;
-        }
-      }
 
       &.active {
         border: 1px solid $sttm-orange;
