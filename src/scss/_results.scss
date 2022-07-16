@@ -46,6 +46,12 @@ li.search-result {
 
   .shabad-detail {
     flex-basis: 100%;
+
+    .shabad-title {
+      &:hover * {
+        color: $sttm-orange;
+      }
+    }
   }
 
   a {
@@ -157,6 +163,10 @@ li.search-result {
       .multiview-title {
         padding-bottom: 0.5rem;
         width: max-content;
+
+        .dark-mode & {
+          color: $sttm-white;
+        }
       }
 
       @media screen and (max-width: 37.5em) {

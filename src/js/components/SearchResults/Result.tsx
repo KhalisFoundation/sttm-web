@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices, multiviewFormattedShabad } from '../../util';
@@ -36,6 +36,8 @@ import RaagIcon from '../Icons/RaagIcon'
 import WriterIcon from '../Icons/WriterIcon'
 import SourceIcon from '../Icons/SourceIcon'
 import { Play } from '../Icons/controls/Play'
+import PreviewShabad from '../PreviewShabad';
+import { useEscapeKeyEventHandler } from '@/hooks';
 
 interface IShabadButtonWrapper {
   multipleShabads: IMultipleShabadsProps[]
@@ -69,6 +71,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 }) => {
   const { user } = useGetUser<IUser>()
   const location = useLocation();
+  const [isShabadPreview, setIsShabadPreview] = useState(false);
+  const [verses, setVerses] = useState([])
   const pathName = location.pathname;
   const searchQuery = location.search;
   const isFavShabadPage = pathName === '/user/favourite-shabads'
@@ -93,6 +97,10 @@ const SearchResult: React.FC<IShabadResultProps> = ({
 
   const remove = useRemoveFavouriteShabad()
 
+  const getShabadUrl = (id) => `${API_URL}shabads/${id}`
+
+  useEscapeKeyEventHandler(() => setIsShabadPreview(false))
+
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     remove.mutate(formattedShabad.shabadId)
@@ -100,6 +108,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const typedUseSelector: TypedUseSelectorHook<IShabadButtonWrapper> = useSelector;
   const multipleShabads = typedUseSelector(state => state.multipleShabads)
   const isShabadAdded = isShabadExistMultiview(multipleShabads, formattedShabad.verseId);
+  const showMultiViewPanel = typedUseSelector(state => state.showMultiViewPanel)
+  const showSettingsPanel = typedUseSelector(state => state.showSettingsPanel)
 
   const handleSourceClick = () => {
     const { source } = getQueryParams(searchQuery)
@@ -115,6 +125,17 @@ const SearchResult: React.FC<IShabadResultProps> = ({
     return newUrl
   }
 
+  const handleMouseEnter = async (id) => {
+    if (showMultiViewPanel || showSettingsPanel) {
+      setIsShabadPreview(false);
+    } else {
+      setIsShabadPreview(true);
+      let response = await fetch(getShabadUrl(id));
+      let shabad = await response.json();
+      setVerses(shabad?.verses)
+    }
+  }
+
   return (
     <React.Fragment key={shabad.id}>
       <li
@@ -126,7 +147,9 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               fontFamily: `${fontFamily}`
             }}
             to={toShabadURL({ shabad, q, type, source })}
-            className="gurbani-font gurbani-display"
+            className="gurbani-font gurbani-display shabad-title"
+            onMouseEnter={() => handleMouseEnter(shabad.shabadId)}
+            onMouseLeave={() => setIsShabadPreview(false)}
           >
             {unicode ? (
               <div className={`unicode ${larivaar ? 'larivaar' : ''}`}>
@@ -255,6 +278,8 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             )}
           </div>
         </div>
+
+        {isShabadPreview && <PreviewShabad verses={verses} />}
 
         <div className="favourite-shabad-wrap">
           {(user && isFavShabadPage) ? <div className="favourite-shabad-wrap icons">
