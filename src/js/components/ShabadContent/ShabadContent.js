@@ -106,6 +106,7 @@ class Shabad extends React.PureComponent {
     paragraphMode: PropTypes.bool,
     sgBaaniLength: PropTypes.string,
     fullScreenMode: PropTypes.bool,
+    showPinSettings: PropTypes.bool,
   };
 
   constructor(props) {
@@ -123,6 +124,7 @@ class Shabad extends React.PureComponent {
         pages,
         sgBaaniLength,
         fullScreenMode,
+        showPinSettings,
         ...baniProps
       },
       handleEmbed,
@@ -190,6 +192,7 @@ class Shabad extends React.PureComponent {
               type={type}
               translationLanguages={translationLanguages}
               transliterationLanguages={transliterationLanguages}
+              showPinSettings={showPinSettings}
             />
           )}
           <div id="shabad" className={`shabad display display-${type}`}>

@@ -60,7 +60,7 @@ $panel-width-560: 65vw;
     display: flex;
     height: auto;
     justify-content: space-between;
-    padding: 10px 12px;
+    padding: 15px 12px;
     width: inherit;
   }
 
@@ -72,6 +72,50 @@ $panel-width-560: 65vw;
 
     .dark-mode & {
       color: $sttm-white;
+    }
+  }
+
+  &-header-icons {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    width: 37%;
+
+    @media screen and (max-width: 900px) {
+      width: 20%;
+    }
+
+    @media screen and (min-width: 1500px) {
+      width: 25%;
+    }
+
+    .pin-icon {
+      @media screen and (max-width: 900px) {
+        display: none;
+      }
+
+      &.active {
+        fill: $sttm-orange;
+      }
+    }
+
+    .shortcut-icon-container {
+      border: 1px solid $sttm-white;
+      display: flex;
+      padding: 3px;
+
+      &.active {
+        border: 1px solid $sttm-orange;
+      }
+
+      .shortcut-icon {
+        fill: $sttm-white;
+
+        &.active {
+          fill: $sttm-orange;
+        }
+      }
     }
   }
 
@@ -123,6 +167,17 @@ $panel-width-560: 65vw;
     display: flex;
     margin: 8px auto;
     width: 100%;
+
+    .shortcuts-text {
+      color: $sttm-black;
+      font-size: 14px;
+      font-weight: 900;
+      margin-left: 6px;
+
+      .dark-mode & {
+        color: $sttm-white;
+      }
+    }
   }
 
   &-options {

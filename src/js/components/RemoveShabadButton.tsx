@@ -1,20 +1,28 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { removeMultipleShabads } from "@/features/actions";
+import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux'
+import { removeMultipleShabads, closeSettingsPanel } from "@/features/actions";
 import { TEXTS } from '@/constants';
 import { showToast } from '@/util';
+
+interface IRemoveShabadButton {
+  showPinSettings: boolean
+}
 
 type FCProps = {
   id: number | undefined
 }
 
 export const RemoveShabadButton: React.FC<FCProps> = ({ id }) => {
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const typedUseSelector: TypedUseSelectorHook<IRemoveShabadButton> = useSelector;
+  const showPinSettings = typedUseSelector(state => state.showPinSettings)
   const onRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
+    if (showPinSettings) {
+      dispatch(closeSettingsPanel());
+    }
 
     const { id } = event.currentTarget.dataset
 

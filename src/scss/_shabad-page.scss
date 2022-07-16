@@ -70,6 +70,10 @@ blockquote {
   & .hukamnama-audio--shown {
     transform: translateX(-50%) scaleY(1);
   }
+
+  & .hukamnama-audio--pin-settings {
+    left: 40%;
+  }
 }
 
 .meta {

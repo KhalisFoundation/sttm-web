@@ -10,6 +10,7 @@ interface IFloatingActionsProps {
   isShowScrollToTop?: boolean;
   isShowFullScreen?: boolean;
   isShowSettings: boolean;
+  showPinSettings: boolean;
 }
 
 export class FloatingActions extends React.PureComponent<IFloatingActionsProps, {}> {
@@ -17,7 +18,8 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
     isShowAutoScroll: true,
     isShowScrollToTop: true,
     isShowFullScreen: true,
-    isShowSettings: false
+    isShowSettings: false,
+    showPinSettings: false,
   }
 
   constructor(props: Readonly<IFloatingActionsProps>) {
@@ -29,7 +31,8 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
       isShowFullScreen,
       isShowScrollToTop,
       isShowAutoScroll,
-      isShowSettings
+      isShowSettings,
+      showPinSettings,
     } = this.props;
     const isShowIcons = isShowScrollToTop || isShowFullScreen;
     const isShowNothing = !isShowFullScreen && !isShowAutoScroll && !isShowScrollToTop
@@ -40,7 +43,7 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
     if (isShowNothing) return null;
 
     return (
-      <div className="floatingActions">
+      <div className={`floatingActions ${showPinSettings ? 'pin-settings-floating-icons' : ''}`}>
         {isShowAutoScroll &&
           <AutoScrollControl
             hideSliderScreenSize="mobile"

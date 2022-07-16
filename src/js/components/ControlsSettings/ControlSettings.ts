@@ -46,6 +46,7 @@ export interface ISettingActions {
   toggleParagraphMode: () => {},
   toggleSehajPaathMode: () => {},
   toggleSettingsPanel: () => {},
+  closePinSettings: () => {},
   toggleKeyboardShortcutsPanel: () => {},
   setVisraamSource: () => {},
   setVisraamStyle: () => {},
@@ -86,6 +87,7 @@ export interface ISettingActions {
 
 export const HEADER_SETTINGS = ({
   toggleSettingsPanel,
+  closePinSettings,
   toggleKeyboardShortcutsPanel,
   showSettingsPanel,
   showKeyboardShortcutsPanel  
@@ -93,107 +95,113 @@ export const HEADER_SETTINGS = ({
   return [
     {
       type: 'header',
-      label: showKeyboardShortcutsPanel ? 'Shortcuts':'Settings',
+      label: showKeyboardShortcutsPanel ? 'Shortcuts' : 'Settings',
       value: showSettingsPanel,
-      action: showKeyboardShortcutsPanel ? ()=>{toggleKeyboardShortcutsPanel(),toggleSettingsPanel()} : toggleSettingsPanel
+      action: showKeyboardShortcutsPanel
+        ? () => {
+            toggleKeyboardShortcutsPanel(), toggleSettingsPanel();
+          }
+        : () => {
+            closePinSettings(), toggleSettingsPanel();
+          },
     },
-  ]
+  ];
 }
 
 export const KEYBOARD_SHORTCUTS = () =>{
   return [
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Larivar',
       shortcut: ['l'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Larivar Assist',
       shortcut: ['shift+l'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Vishraams',
       shortcut: ['v'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'AutoScroll Mode',
       shortcut: ['a'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Dark Mode',
       shortcut: ['o'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Split Mode',
       shortcut: ['/'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'FullScreen Mode',
       shortcut: ['f'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Reading Mode',
       shortcut: ['r'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Unicode',
       shortcut: ['u'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Center Align',
       shortcut: ['(cmd)ctrl+shift+c'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'English Translation',
       shortcut: ['e'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Punjabi Translation',
       shortcut: ['t'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Spanish Translation',
       shortcut: ['s'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'English Transliteration',
       shortcut: ['shift+e'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Shahmukhi Transliteration',
       shortcut: ['shift+s'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Hindi Transliteration',
       shortcut: ['shift+h'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Increase Font Size',
       shortcut: ['+'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Decrease Font Size',
       shortcut: ['-'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Search Bar',
       shortcut: ['(cmd)ctrl+/'],
     },

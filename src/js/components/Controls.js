@@ -37,6 +37,7 @@ import {
   toggleCenterAlignOption,
   closeSettingsPanel,
   closeMultiViewPanel,
+  closePinSettings,
 } from '@/features/actions';
 
 export const supportedMedia = _s;
@@ -56,24 +57,25 @@ class Controls extends React.Component {
 
   static propTypes = {
     showSettingsPanel: PropTypes.bool,
+    showPinSettings: PropTypes.bool,
   };
 
   setRef = (node) => (this.wrapperRef = node);
 
   render() {
-    const { showSettingsPanel } = this.props;
+    const { showSettingsPanel, showPinSettings } = this.props;
 
     return (
       <>
         <ShareButtons {...this.props} />
         <div
-          ref={this.settingsRef}
+          ref={!showPinSettings && this.settingsRef}
           className={`settings-panel ${
             showSettingsPanel ? 'settings-show' : ''
           }`}
         >
           {showSettingsPanel && (
-            <ControlsSettings settingsRef={this.settingsRef} {...this.props} />
+            <ControlsSettings settingsRef={!showPinSettings && this.settingsRef} {...this.props} />
           )}
         </div>
       </>
@@ -117,6 +119,7 @@ const mapDispatchToProps = {
   toggleCenterAlignOption,
   closeSettingsPanel,
   closeMultiViewPanel,
+  closePinSettings,
 };
 
 // TODO: Connect individual components instead of all controls.
