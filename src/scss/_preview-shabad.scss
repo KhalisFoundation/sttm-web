@@ -1,5 +1,9 @@
 .preview-shabad {
   &-background {
+    @media screen and (max-width: 1000px) {
+      display: none;
+    }
+
     align-items: center;
     background-color: $sttm-dark-orange;
     bottom: 0;
