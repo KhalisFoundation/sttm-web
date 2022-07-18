@@ -9,12 +9,12 @@ const PreviewShabad = (props) => {
   return (
     <div className="preview-shabad-background">
       <div className="preview-shabad-container">
-        <div className="preview-shabad-title">PREVIEW</div>
+        <h3 className="preview-shabad-title">PREVIEW</h3>
         {verses.length ? (
           <div className="preview-shabad-body">
             <div className="shabad-verses gurbani-font">
               {verses.slice(0, displayVerseCount).map((item) => (
-                <div key={item.verseId}>{item.verse.gurmukhi}</div>
+                <p key={item.verseId}>{item.verse.gurmukhi}</p>
               ))}
             </div>
           </div>
