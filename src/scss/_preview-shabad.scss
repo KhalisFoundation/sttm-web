@@ -1,16 +1,18 @@
 .preview-shabad {
   &-background {
+    @media screen and (max-width: 1000px) {
+      display: none;
+    }
+
     align-items: center;
     background-color: $sttm-dark-orange;
     bottom: 0;
     display: flex;
     height: 30rem;
     justify-content: center;
-    opacity: 0.9;
     position: fixed;
     right: 2.5rem;
     top: 0.5rem;
-    z-index: 1;
   }
 
   &-container {
@@ -23,7 +25,8 @@
   }
 
   &-title {
-    font-size: 1.2rem;
+    font-family: sans-serif;
+    font-size: 1.5rem;
     font-weight: 900;
     text-align: right;
   }

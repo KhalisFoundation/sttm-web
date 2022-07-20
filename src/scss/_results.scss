@@ -143,6 +143,19 @@ li.search-result {
     word-wrap: break-word;
   }
 
+  .preview-shabad-visible {
+    opacity: 0.93;
+    transition: opacity 0.4s linear;
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .preview-shabad-hidden {
+    opacity: 0;
+    transition: visibility 0s 0.3s, opacity 0.3s linear;
+    visibility: hidden;
+  }
+
   .favourite-shabad-wrap {
     display: inline-flex;
     flex-basis: 40px;

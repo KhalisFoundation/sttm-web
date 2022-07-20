@@ -279,7 +279,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
           </div>
         </div>
 
-        {isShabadPreview && <PreviewShabad verses={verses} />}
+        <div className={`${isShabadPreview ? 'preview-shabad-visible' : 'preview-shabad-hidden'}`}><PreviewShabad verses={verses} /></div>
 
         <div className="favourite-shabad-wrap">
           {(user && isFavShabadPage) ? <div className="favourite-shabad-wrap icons">
