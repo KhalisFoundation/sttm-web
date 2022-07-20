@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const Footer = ({showPinSettings}) => {
   return (
-    <footer className={`${showPinSettings ? 'pin-settings-footer' : ''}`}>
+    <footer className={`footer-background ${showPinSettings ? 'pin-settings-footer' : ''}`}>
       <div className="footer row">
         <ul className="version">
           <li>

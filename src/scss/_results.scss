@@ -145,14 +145,14 @@ li.search-result {
 
   .preview-shabad-visible {
     opacity: 0.93;
-    transition: opacity 0.4s linear;
+    transition: opacity 0.25s linear;
     visibility: visible;
-    z-index: 1;
+    z-index: 10;
   }
 
   .preview-shabad-hidden {
     opacity: 0;
-    transition: visibility 0s 0.3s, opacity 0.3s linear;
+    transition: visibility 0s 0.25s, opacity 0.25s linear;
     visibility: hidden;
   }
 
