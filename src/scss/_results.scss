@@ -147,7 +147,7 @@ li.search-result {
     opacity: 0.93;
     transition: opacity 0.25s linear;
     visibility: visible;
-    z-index: 1;
+    z-index: 10;
   }
 
   .preview-shabad-hidden {
