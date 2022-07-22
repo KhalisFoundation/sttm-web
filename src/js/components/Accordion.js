@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { PlusIcon, MinusIcon } from '@/components/Icons/CustomIcons'
+import Chevron from '@/components/Icons/Chevron';
 
 const Accordion = ({ title, index, content, defaultState, ariaLabel }) => {
   const [active, setActive] = useState(defaultState);
@@ -31,13 +31,25 @@ const Accordion = ({ title, index, content, defaultState, ariaLabel }) => {
           aria-controls={`accordion-panel-${index}`}
           id={`accordion-header-${index}`}
           onClick={toggleAccordion}
-          aria-label={ariaLabel ? ariaLabel : title}>
-          {title}{active ? <MinusIcon /> : <PlusIcon />}
+          aria-label={ariaLabel ? ariaLabel : title}
+        >
+          {title}
+          {active ? (
+            <Chevron
+              style={{ fontSize: 16 }}
+              direction={Chevron.DIRECTIONS.TOP}
+            />
+          ) : (
+            <Chevron
+              style={{ fontSize: 16 }}
+              direction={Chevron.DIRECTIONS.BOTTOM}
+            />
+          )}
         </button>
       </h4>
       {createContent()}
-    </div >
-  )
+    </div>
+  );
 }
 
 Accordion.propTypes = {

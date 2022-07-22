@@ -30,6 +30,7 @@
   "accordion",
   "settings",
   "multiple-shabads",
+  "preview-shabad",
   "favourite-shabads";
 @import 'node_modules/react-smartbanner/dist/main';
 @import 'node_modules/react-toastify/dist/ReactToastify.min';
@@ -103,7 +104,7 @@ select {
     font-weight: 500;
   }
 
-  @media screen and (max-width: 790px) {
+  @media screen and (max-width: 950px) {
     display: none;
   }
 
@@ -114,7 +115,7 @@ select {
   + #share-menu {
     margin-top: -27px;
 
-    @media screen and (max-width: 790px) {
+    @media screen and (max-width: 950px) {
       margin-top: 0;
     }
   }
@@ -452,6 +453,31 @@ body:not(.dark-mode) a {
     transform: translate(10%, 0);
     transform-origin: 0 0;
   }
+}
+
+.pin-settings {
+  min-height: 85vh;
+  right: 0;
+  top: 0;
+  transition: transform 0.5s;
+
+  &.active {
+    transform-origin: 0 0;
+    width: 80%;
+  }
+}
+
+.pin-settings-footer {
+  right: 0;
+  transform-origin: 0 0;
+  transition: transform 0.5s;
+  width: 77.5%;
+}
+
+.pin-settings-floating-icons {
+  right: 22%;
+  transform-origin: 0 0;
+  transition: transform 0.5s;
 }
 
 .settingsTooltipWrapper {

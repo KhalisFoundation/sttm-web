@@ -46,6 +46,7 @@ import {
   CLEAR_MULTIPLE_SHABADS,
   REMOVE_MULTIPLE_SHABADS,
   SET_MULTI_VIEW_PANEL,
+  SET_PIN_SETTINGS,
   SET_ENGLISH_TRANSLATION_LANGUAGES,
   SET_HINDI_TRANSLATION_LANGUAGES,
 } from '../actions';
@@ -802,6 +803,14 @@ export default function reducer(state, action) {
       return {
         ...state,
         showMultiViewPanel,
+      };
+    }
+
+    case SET_PIN_SETTINGS: {
+      const showPinSettings = action.payload;
+      return {
+        ...state,
+        showPinSettings,
       };
     }
 

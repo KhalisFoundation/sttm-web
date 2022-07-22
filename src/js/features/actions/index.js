@@ -178,6 +178,9 @@ export const removeMultipleShabads = createAction(REMOVE_MULTIPLE_SHABADS);
 export const SET_MULTI_VIEW_PANEL = 'SET_MULTI_VIEW_PANEL';
 export const setMultiViewPanel = createAction(SET_MULTI_VIEW_PANEL);
 
+export const SET_PIN_SETTINGS = 'SET_PIN_SETTINGS';
+export const setPinSettings = createAction(SET_PIN_SETTINGS);
+
 export const SET_PREFETCH_ANG = 'SET_PREFETCH_ANG';
 export const SET_LOADING_ANG = 'SET_LOADING_ANG';
 export const SET_MAHANKOSH_TOOLTIP_ACTIVE = 'SET_MAHANKOSH_TOOLTIP_ACTIVE';
@@ -230,8 +233,13 @@ export const toggleCenterAlignOption = () => (dispatch, getState) => {
 export const closeSettingsPanel = () => (dispatch) => {
   dispatch(setSettingsPanel(false));
   dispatch(setKeyboardShortcutsPanel(false));
+  dispatch(setPinSettings(false));
 };
 
 export const closeMultiViewPanel = () => (dispatch) => {
   dispatch(setMultiViewPanel(false));
+};
+
+export const closePinSettings = () => (dispatch) => {
+  dispatch(setPinSettings(false));
 };
