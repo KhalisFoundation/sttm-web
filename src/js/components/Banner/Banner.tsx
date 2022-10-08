@@ -1,30 +1,30 @@
 import React from 'react';
 import CrossIcon from '../Icons/Times';
+import { useFetchData } from '@/hooks';
 
 const Banner: React.FC = () => {
-  const response = {
-    active: true,
-    data: {
-      message: 'Website is down',
-      type: 1
-    }
-  }
-  const lastSeen = sessionStorage.getItem("urgentMessage");
+  const url = "https://sttm.s3.us-west-2.amazonaws.com/urgent-message.json";
+
+  const {
+    isFetchingData: isFetchingBannerMessage,
+    data: bannerMessage,
+  } = useFetchData(url);
+
+  const lastSeen = sessionStorage.getItem("bannerMessage");
   const updateLastSeen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.currentTarget.parentElement.remove();
-    sessionStorage.setItem("urgentMessage", "seen");
+    sessionStorage.setItem("bannerMessage", "seen");
   };
 
-
-  if (!response.active || lastSeen === 'seen') {
+  if (isFetchingBannerMessage || !bannerMessage.active || lastSeen === 'seen') {
     return null
   }
 
   return (
     <div className="banner">
-      <div className={`notification type-${response.data.type}`}>
+      <div className={`notification type-${bannerMessage.data.type}`}>
         <div className="banner-text">
-          <span className="banner-title">{response.data.message}</span>
+          <span className="banner-title">{bannerMessage.data.message}</span>
         </div>
         <button className="banner-cross-bg" onClick={(e) => updateLastSeen(e)}>
           <CrossIcon className="banner-cross" />
