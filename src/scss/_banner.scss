@@ -6,33 +6,38 @@
   width: 100%;
 
   .notification {
+    align-items: center;
     display: flex;
-    padding: 10px 25px;
+    justify-content: space-between;
+    padding: 10px;
     width: 100vw;
 
     .banner-text {
       align-items: center;
       color: white;
       font-size: 1rem;
-      margin: 5px 5% 10px;
-      max-width: 75rem;
+      margin: 5px 10px;
+      width: 100%;
 
       @media screen and (max-width: 45.999999em) {
         font-size: 0.8rem;
       }
     }
 
-    &.message {
+    &.message,
+    &.type-2 {
       background-color: $sttm-orange;
       color: $sttm-black;
     }
 
-    &.warning {
+    &.warning,
+    &.type-1 {
       background-color: $sttm-red;
       color: $sttm-white;
     }
 
-    &.announcement {
+    &.announcement,
+    &.type-3 {
       background-color: $sttm-blue;
       color: $sttm-white;
     }
@@ -54,5 +59,9 @@
 
   &:hover {
     color: black;
+  }
+
+  .banner-cross {
+    fill: $sttm-white;
   }
 }
