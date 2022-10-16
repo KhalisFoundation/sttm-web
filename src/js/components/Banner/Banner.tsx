@@ -1,5 +1,6 @@
 import React from 'react';
 import CrossIcon from '../Icons/Times';
+import { Link } from 'react-router-dom';
 import { useFetchData } from '@/hooks';
 
 const Banner: React.FC = () => {
@@ -21,10 +22,23 @@ const Banner: React.FC = () => {
   }
 
   return (
-    <div className="banner">
+    <div className="banner-container">
       <div className={`notification type-${bannerMessage.data.type}`}>
-        <div className="banner-text">
-          <span className="banner-title">{bannerMessage.data.message}</span>
+        <div className='banner-text-container'>
+          <div className="banner-text">
+            <span className="banner-title">{bannerMessage.data.message}</span>
+          </div>
+          {bannerMessage?.visit?.label &&
+            <button className={`banner-link-button type-${bannerMessage.data.type}`}>
+              <Link
+                className="banner-link-button-text"
+                to={{ pathname: `https://${bannerMessage?.visit?.link}` }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {bannerMessage?.visit?.label}
+              </Link>
+            </button>}
         </div>
         <button className="banner-cross-bg" onClick={(e) => updateLastSeen(e)}>
           <CrossIcon className="banner-cross" />
