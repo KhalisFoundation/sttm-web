@@ -28,15 +28,15 @@ const Banner: React.FC = () => {
           <div className="banner-text">
             <span className="banner-title">{bannerMessage.data.message}</span>
           </div>
-          {bannerMessage?.visit?.label &&
+          {bannerMessage.data?.label &&
             <button className={`banner-link-button type-${bannerMessage.data.type}`}>
               <Link
                 className="banner-link-button-text"
-                to={{ pathname: `https://${bannerMessage?.visit?.link}` }}
+                to={{ pathname: `https://${bannerMessage.data?.link}` }}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {bannerMessage?.visit?.label}
+                {bannerMessage.data?.label}
               </Link>
             </button>}
         </div>
