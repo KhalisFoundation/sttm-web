@@ -59,12 +59,15 @@ class Layout extends React.PureComponent {
           description={
             <React.Fragment>
               {TEXTS.NO_RESULTS_FOUND_DESCRIPTION(SOURCES[source], TYPES[type])}
-              <Link to="/help#Desktop-i-cant-find-my-shabad.">
-                {' '}
+              <a
+                href="https://support.khalisfoundation.org/support/home"
+                rel="noopener"
+                aria-label={TEXTS.HELP_SECTION}
+              >
                 {TEXTS.HELP_SECTION}
-              </Link>
+              </a>
               .
-            </React.Fragment>
+            </ React.Fragment>
           }
           image={SachKaur}
         />
