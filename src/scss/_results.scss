@@ -60,7 +60,7 @@ li.search-result {
     transition: font-size 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
     .search-highlight-word {
-      color: $sttm-blue;
+      color: $sttm-orange;
     }
 
     .larivaar-assist-word {
@@ -72,10 +72,10 @@ li.search-result {
     border-color: $sttm-dark-grey;
 
     a {
-      color: $sttm-blue;
+      color: $sttm-light-blue;
 
       .search-highlight-word {
-        color: $sttm-light-blue;
+        color: $sttm-lighter-blue;
       }
     }
   }
