@@ -200,7 +200,7 @@ const Menu: React.FC<MenuProps> = ({ isHome }) => {
               Donate
             </Link>
           </li>
-          {/* <UserLoginMenu toggleMenu={toggleMenu} /> */}
+          <UserLoginMenu toggleMenu={toggleMenu} />
         </ul>
       </div>
     </React.Fragment>
