@@ -139,7 +139,7 @@
     "marinate": "^0.1.5",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "passport-saml": "^3.2.1",
+    "passport-saml": "^3.2.2",
     "postcss-root-to-json": "0.0.0",
     "react": "^16.13.1",
     "react-date-picker": "^8.0.3",
