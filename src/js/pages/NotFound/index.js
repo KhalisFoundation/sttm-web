@@ -19,12 +19,12 @@ export default class NotFound extends React.PureComponent {
           <div id="error-msg">{TEXTS.PAGE_NOT_FOUND_MESSAGE}</div>
           <div id="error-desc">{TEXTS.URL_NOT_FOUND(url)}</div>
         </div>
-        <div>
+        {/* <div>
           <img
             src="/assets/images/404.png"
             alt="Image of Sikh Man smiling at you"
           />
-        </div>
+        </div> */}
       </div>
     );
   }

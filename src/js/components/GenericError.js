@@ -35,9 +35,9 @@ export default class GenericError extends React.PureComponent {
               <section>{description}</section>
             )}
         </div>
-        <div>
+        {/* <div>
           <img src={url} alt={alt} />
-        </div>
+        </div> */}
       </div>
     );
   }
