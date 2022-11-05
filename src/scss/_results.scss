@@ -108,6 +108,10 @@ li.search-result {
   .meta a {
     color: $sttm-dark-grey;
     padding: 0 6px;
+
+    &:hover {
+      color: $sttm-orange;
+    }
   }
 
   .search-result-icon-wrap {
