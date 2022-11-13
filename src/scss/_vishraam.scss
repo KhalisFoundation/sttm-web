@@ -7,7 +7,6 @@
 
   @each $source in $visraam-sources {
     &.display-visraams.vishraam-vishraam-options-colored-words.vishraam-vishraam-source-#{$source} {
-
       .gurlipi,
       .unicode {
         .visraam-#{$source}-main {
@@ -21,7 +20,6 @@
     }
 
     &.display-visraams.vishraam-vishraam-options-gradient-bg.vishraam-vishraam-source-#{$source} {
-
       .gurlipi,
       .unicode {
         span {
@@ -35,16 +33,20 @@
 
         .visraam-#{$source}-main {
           background:
-            linear-gradient(to right,
+            linear-gradient(
+              to right,
               rgba(229, 229, 229, 0) 20%,
-              rgba($visraam-main, 0.7) 100%) !important;
+              rgba($visraam-main, 0.7) 100%
+            ) !important;
         }
 
         .visraam-#{$source}-yamki {
           background:
-            linear-gradient(to right,
+            linear-gradient(
+              to right,
               rgba(229, 229, 229, 0) 20%,
-              rgba($visraam-yamki, 0.7) 100%) !important;
+              rgba($visraam-yamki, 0.7) 100%
+            ) !important;
         }
       }
     }
