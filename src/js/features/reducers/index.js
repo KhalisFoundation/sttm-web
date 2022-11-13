@@ -49,6 +49,8 @@ import {
   SET_PIN_SETTINGS,
   SET_ENGLISH_TRANSLATION_LANGUAGES,
   SET_HINDI_TRANSLATION_LANGUAGES,
+  TOGGLE_CARTOONIFIED_PAGES,
+  SET_CARTOONIFIED_PAGES,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -79,6 +81,7 @@ import {
   PUNJABI_LANGUAGE,
   HINDI_LANGUAGE,
   ENGLISH_LANGUAGE,
+  LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES,
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -209,6 +212,21 @@ export default function reducer(state, action) {
         darkMode,
       };
     }
+
+    case TOGGLE_CARTOONIFIED_PAGES: {
+      const showCartoonifiedPages = !state.showCartoonifiedPages;
+      clickEvent({
+        action: TOGGLE_CARTOONIFIED_PAGES,
+        label: showCartoonifiedPages ? 1 : 0,
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES, showCartoonifiedPages);
+      return {
+        ...state,
+        showCartoonifiedPages,
+      };
+    }
+
     case TOGGLE_AUTO_SCROLL_MODE: {
       const autoScrollMode = !state.autoScrollMode;
       clickEvent({
@@ -698,6 +716,20 @@ export default function reducer(state, action) {
         darkMode,
       };
     }
+
+    case SET_CARTOONIFIED_PAGES: {
+      const showCartoonifiedPages = action.payload || false;
+      clickEvent({
+        action: SET_CARTOONIFIED_PAGES,
+        label: showCartoonifiedPages ? true : false,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES, showCartoonifiedPages);
+      return {
+        ...state,
+        showCartoonifiedPages,
+      };
+    }
+
     case SET_AUTO_SCROLL_MODE: {
       const autoScrollMode = action.payload || false;
       clickEvent({

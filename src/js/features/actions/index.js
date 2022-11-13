@@ -21,9 +21,10 @@ import {
   DEFAULT_SPLIT_VIEW,
   DEFAULT_SEHAJ_PAATH_MODE,
   DEFAULT_SG_BAANI_LENGTH,
+  DEFAULT_CARTOONIFIED_PAGES,
 } from '../../constants';
 
-export const createAction = (type, meta) => (payload) => ({
+export const  createAction = (type, meta) => (payload) => ({
   type,
   meta,
   payload,
@@ -88,6 +89,9 @@ export const toggleLarivaarAssistOption = createAction(
 
 export const TOGGLE_SPLIT_VIEW_OPTION = 'TOGGLE_SPLIT_VIEW_OPTION';
 export const toggleSplitViewOption = createAction(TOGGLE_SPLIT_VIEW_OPTION);
+
+export const TOGGLE_CARTOONIFIED_PAGES = 'TOGGLE_CARTOONIFIED_PAGES';
+export const toggleCartoonifiedPages = createAction(TOGGLE_CARTOONIFIED_PAGES);
 
 export const SET_AUTOSCROLLING = 'SET_AUTOSCROLLING';
 export const setAutoScrolling = createAction(SET_AUTOSCROLLING);
@@ -154,6 +158,9 @@ export const setTransliterationLanguages = createAction(
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const setDarkMode = createAction(SET_DARK_MODE);
 
+export const SET_CARTOONIFIED_PAGES = 'SET_CARTOONIFIED_PAGES';
+export const setCartoonifiedPages = createAction(SET_CARTOONIFIED_PAGES);
+
 export const SET_AUTO_SCROLL_MODE = 'SET_AUTO_SCROLL_MODE';
 export const setAutoScrollMode = createAction(SET_AUTO_SCROLL_MODE);
 
@@ -208,6 +215,7 @@ export const resetDisplayOptions = () => (dispatch) => {
   dispatch(setSplitView(DEFAULT_SPLIT_VIEW));
   dispatch(setSehajPaathMode(DEFAULT_SEHAJ_PAATH_MODE));
   dispatch(setSgBaaniLength(DEFAULT_SG_BAANI_LENGTH));
+  dispatch(setCartoonifiedPages(DEFAULT_CARTOONIFIED_PAGES));
 };
 
 export const CHANGE_FONT = 'CHANGE_FONT';
