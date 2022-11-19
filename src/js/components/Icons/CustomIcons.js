@@ -140,6 +140,16 @@ export const LarivaarAssistIcon = (props) => (
 );
 LarivaarAssistIcon.propTypes = iconPropTypes;
 
+export const ErrorIcon = (props) => (
+  <span
+    onClick={props.onClick}
+    className={`${props.className}`}
+  >
+    404
+  </span>
+);
+ErrorIcon.propTypes = iconPropTypes;
+
 export const DarkModeIcon = (props) => (
   <span onClick={props.onClick} className={props.className}>
     <svg

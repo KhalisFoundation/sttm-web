@@ -43,6 +43,7 @@ export interface ISettingActions {
   toggleCenterAlignOption: () => {},
   toggleSplitViewOption: () => {},
   toggleDarkMode: () => {},
+  toggleCartoonifiedPages: () => {},
   toggleParagraphMode: () => {},
   toggleSehajPaathMode: () => {},
   toggleSettingsPanel: () => {},
@@ -83,6 +84,7 @@ export interface ISettingActions {
   sgBaaniLength: string,
   fontFamily: string,
   showAdvancedOptions: boolean,
+  showCartoonifiedPages: boolean,
 }
 
 export const HEADER_SETTINGS = ({
@@ -219,6 +221,7 @@ export const QUICK_SETTINGS = ({
   toggleCenterAlignOption,
   toggleSplitViewOption,
   toggleDarkMode,
+  toggleCartoonifiedPages,
   toggleParagraphMode,
   toggleSehajPaathMode,
   toggleAutoScrollMode,
@@ -238,6 +241,7 @@ export const QUICK_SETTINGS = ({
   centerAlignGurbani,
   splitView,
   darkMode,
+  showCartoonifiedPages,
   paragraphMode,
   steekLanguages,
   sgBaaniLength,
@@ -371,6 +375,13 @@ export const QUICK_SETTINGS = ({
       tooltip: 'Set split mode ( / )',
       checked: splitView,
       action: toggleSplitViewOption,
+    },
+    {
+      type: 'toggle-option',
+      label: 'Cartoonified Pages',
+      tooltip: 'Enable or disable cartoonified pages',
+      checked: showCartoonifiedPages,
+      action: toggleCartoonifiedPages,
     },          
     {
       type: 'collapsible_item',
