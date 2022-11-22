@@ -140,15 +140,33 @@ export const LarivaarAssistIcon = (props) => (
 );
 LarivaarAssistIcon.propTypes = iconPropTypes;
 
-export const ErrorIcon = (props) => (
-  <span
-    onClick={props.onClick}
-    className={`${props.className}`}
-  >
-    404
-  </span>
+export const CartoonIcon = (props) => (
+ <span onClick={props.onClick} className={props.className}> 
+    <svg 
+      version="1.0" 
+      xmlns="http://www.w3.org/2000/svg"
+      width="20px" 
+      height="20px" 
+      viewBox="0 0 346.000000 282.000000"
+      preserveAspectRatio="xMidYMid meet">
+    <g 
+      transform="translate(0.000000,282.000000) scale(0.100000,-0.100000)"
+      stroke="none">
+      <path d="M2433 2520 c-151 -27 -289 -143 -347 -290 -22 -55 -31 -203 -18 -282
+      10 -62 8 -64 -33 -48 -136 52 -394 52 -531 0 -15 -6 -29 -8 -32 -6 -2 3 1 25
+      7 50 16 64 14 169 -5 234 -46 158 -142 261 -299 322 -54 20 -282 21 -345 0
+      -113 -36 -203 -92 -291 -179 -143 -143 -208 -285 -209 -456 0 -207 125 -384
+      320 -451 42 -15 82 -19 173 -19 64 1 117 0 117 0 0 0 -9 -25 -20 -55 -66 -179
+      -67 -406 -4 -599 87 -264 310 -481 580 -564 163 -50 285 -59 429 -32 345 66
+      606 298 712 633 26 82 28 97 27 262 -1 167 -2 179 -31 268 l-31 92 118 0 c86
+      0 131 5 172 18 153 51 258 158 308 316 18 56 15 220 -4 287 -67 228 -244 407
+      -480 484 -60 19 -213 27 -283 15z"/>
+    </g>
+  </svg>
+</span>
 );
-ErrorIcon.propTypes = iconPropTypes;
+
+CartoonIcon.propTypes = iconPropTypes;
 
 export const DarkModeIcon = (props) => (
   <span onClick={props.onClick} className={props.className}>

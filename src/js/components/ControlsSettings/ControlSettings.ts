@@ -378,8 +378,8 @@ export const QUICK_SETTINGS = ({
     },
     {
       type: 'toggle-option',
-      label: 'Cartoonified Pages',
-      tooltip: 'Enable or disable cartoonified pages',
+      label: 'Cartoon Images',
+      tooltip: 'Enable or disable cartoon images',
       checked: showCartoonifiedPages,
       action: toggleCartoonifiedPages,
     },          
