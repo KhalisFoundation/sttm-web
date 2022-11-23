@@ -334,6 +334,10 @@ select {
   font-style: italic;
 }
 
+.__react_component_tooltip.show {
+  opacity: 0.8 !important;
+}
+
 .hukamnama-player {
   &-close-icon {
     align-items: center;
