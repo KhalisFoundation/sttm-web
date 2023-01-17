@@ -33,5 +33,6 @@ export const LOCAL_STORAGE_KEY_FOR_SYNC_CODE = 'previous-sync';
 export const LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE = 'paragraphMode';
 export const LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE = 'sehajPaathMode';
 export const LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH = 'sgBaani';
+export const LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES = 'cartoonifiedPages';
 export const LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS = 'multipleShabads';
 export const LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN = '__khalis_auth_token__'
