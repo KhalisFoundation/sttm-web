@@ -423,11 +423,11 @@ blockquote {
     &-steek {
       font-family: gurmukhi_normal, sans-serif;
       margin-bottom: 4px;
-      
+
       &-sahib {
+        border-left: 5px double $sttm-lilac;
         margin-left: 5px;
         padding-left: 10px;
-        border-left: 5px double $sttm-lilac;
       }
 
       &.paragraph-mode * {
