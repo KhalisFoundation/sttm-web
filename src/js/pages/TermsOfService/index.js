@@ -109,7 +109,7 @@ export default class TermsOfService extends React.PureComponent {
           <hr />
           <h3 id="copyright">Copyright</h3>
           All images and assets not covered under other licenses are covered
-          under full Copyright © 2019 Khalis Foundation.
+          under full Copyright &copy; {new Date().getFullYear()} Khalis Foundation.
           <hr />
           <h3 id="acknowledgements">Legal Acknowledgements</h3>
           <section>
