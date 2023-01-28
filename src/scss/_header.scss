@@ -120,6 +120,14 @@
     p {
       display: inline-block;
     }
+
+    & .profile-btn {
+      display: none;
+    }
+  }
+
+  &.submenu-login {
+    display: none;
   }
 
   a,
@@ -508,6 +516,10 @@
     .submenu {
       .submenu-items {
         width: 100%;
+
+        & .submenu-logout {
+          display: none;
+        }
       }
 
       button {
