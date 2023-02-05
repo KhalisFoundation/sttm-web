@@ -53,6 +53,7 @@ const ssoLogoutCallback = (req, res) => {
 
 const authJwt = (req, res) => {
   const authHeader = req.headers.authorization;
+  console.log(authHeader,"auth Header...")
   const token = authHeader.replace('Bearer ', '');
   if (authHeader === undefined) {
     res.status(401).json({ error: 'No credentials sent!' });
