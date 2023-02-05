@@ -3,7 +3,7 @@
 let pool = require('../config/database'),
     { jwtVerify } = require("../utils/jwt");
 
-const checkFavouriteShabadsCallback = async (req, res, data, connection) => {
+const checkFavouriteShabadsCallback = async (_req, res, data, connection) => {
   const {email} = data;
   const row = await connection.query("SELECT id FROM users where email = ?", [email]);
   const user = row[0]
@@ -13,7 +13,7 @@ const checkFavouriteShabadsCallback = async (req, res, data, connection) => {
   res.status(200).json({favouriteShabads});
 }    
 
-const addFavouriteShabadCallback = async (req, res, data, connection) => {
+const addFavouriteShabadCallback = async (_req, res, data, connection) => {
   const {email, shabad_id} = data;
   const row = await connection.query("SELECT id FROM users where email = ?", [email]);
   const user = row[0]
@@ -23,7 +23,7 @@ const addFavouriteShabadCallback = async (req, res, data, connection) => {
   res.status(200).json(result[0]);
 }   
 
-const deleteFavouriteShabadCallback = async (req, res, data, connection) => {
+const deleteFavouriteShabadCallback = async (_req, res, data, connection) => {
   const {email, shabad_id} = data;
   const row = await connection.query("SELECT id FROM users where email = ?", [email]);
   const user = row[0]
@@ -33,7 +33,7 @@ const deleteFavouriteShabadCallback = async (req, res, data, connection) => {
   res.status(200).json({shabadId: result});
 }   
 
-const favouriteShabads = async (req, res) => {
+const getFavouriteShabads = async (req, res) => {
   const shabadId = req.params.shabadId;
   const bearerToken = req.headers.authorization;
   const token = bearerToken.substr(7);
@@ -76,7 +76,7 @@ const deleteFavouriteShabad = (req, res) => {
 }
 
 module.exports = function(server) {  
-  server.get('/favourite-shabads', favouriteShabads);  
+  server.get('/favourite-shabads', getFavouriteShabads);  
   server.post('/favourite-shabads', addFavouriteShabad);  
   server.delete('/favourite-shabads/:shabadId', deleteFavouriteShabad);  
 }
