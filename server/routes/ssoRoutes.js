@@ -10,7 +10,7 @@ const pool = require('../config/database');
  * If Session is active it returns saml response
  * If Session is not active it redirects to IDP's login form
  */
-const sso = (req, res, next) => {
+const startSSOProcess = (req, res, next) => {
   authenticationSocialHelper(
     req,
     res,
@@ -23,10 +23,10 @@ const sso = (req, res, next) => {
   );
 };
 
-const ssoCallback = (req, res) => {
+const ssoLoginCallback = (req, res) => {
   try {
     const { nameID, email, nameIDFormat, firstname, lastname } = req.user;
-    console.log(req.user, 'REQ.USER');
+    console.log('.....ssoLoginCallback.....',req.user);
     const token = jwtSign({ firstname, lastname, email, nameID, nameIDFormat });
     //@TODO create user in database
     pool.runQuery(
@@ -40,20 +40,20 @@ const ssoCallback = (req, res) => {
   }
 };
 
-const ssoLogout = (req, res) => {
-  const { nameID, nameIDFormat } = req.params;
-  req.user = { nameID, nameIDFormat };
-  passport.logoutSaml(req, res);
-};
-
 const ssoLogoutCallback = (req, res) => {
   req.logout();
   res.redirect('/?logout=success');
 };
 
-const authJwt = (req, res) => {
+const logoutCallback = (req, res) => {
+  const { nameID, nameIDFormat } = req.params;
+  req.user = { nameID, nameIDFormat };
+  passport.logoutSaml(req, res);
+};
+
+const authenticateJwtToken = (req, res) => {
   const authHeader = req.headers.authorization;
-  console.log(authHeader,"auth Header...")
+  console.log(".....authenticateJwtToken.....", authHeader)
   const token = authHeader.replace('Bearer ', '');
   if (authHeader === undefined) {
     res.status(401).json({ error: 'No credentials sent!' });
@@ -66,8 +66,9 @@ const authJwt = (req, res) => {
   }
 };
 
-const createUserCallback = async (req, res, data, connection) => {
+const createUserCallback = async (_req, res, data, connection) => {
   const { email, firstname, lastname, token } = data;
+  console.log('.....createUserCallback......', email, firstname, lastname, token)
   const row = await connection.query('SELECT id FROM users where email = ?', [
     email,
   ]);
@@ -88,15 +89,25 @@ const createUserCallback = async (req, res, data, connection) => {
   res.redirect('/?token=' + token);
 };
 
+function passportAuthMiddleware() {
+  try {
+    console.log('.....passportAuthMiddleware.....')
+    passport.authenticate('saml', { failureRedirect: '/', failureFlash: true })
+  }
+  catch(e) {
+    console.log('error in passport auth middleware', e.message)
+  }
+}
+
 module.exports = function (server) {
-  server.get('/login/sso', sso);
+  server.get('/login/sso', startSSOProcess);
   server.post(
     '/login/saml',
     bodyParser.urlencoded({ extended: false }),
-    passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
-    ssoCallback
+    passportAuthMiddleware,
+    ssoLoginCallback
   );
-  server.get('/logout', ssoLogout);
+  server.get('/logout', logoutCallback);
   server.get('/logout/saml', ssoLogoutCallback);
-  server.get('/auth/jwt', authJwt);
+  server.get('/auth/jwt', authenticateJwtToken);
 };
