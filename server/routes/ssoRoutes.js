@@ -89,22 +89,12 @@ const createUserCallback = async (_req, res, data, connection) => {
   res.redirect('/?token=' + token);
 };
 
-function passportAuthMiddleware() {
-  try {
-    console.log('.....passportAuthMiddleware.....')
-    passport.authenticate('saml', { failureRedirect: '/', failureFlash: true })
-  }
-  catch(e) {
-    console.log('error in passport auth middleware', e.message)
-  }
-}
-
 module.exports = function (server) {
   server.get('/login/sso', startSSOProcess);
   server.post(
     '/login/saml',
     bodyParser.urlencoded({ extended: false }),
-    passportAuthMiddleware,
+    passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
     ssoLoginCallback
   );
   server.get('/logout', logoutCallback);
