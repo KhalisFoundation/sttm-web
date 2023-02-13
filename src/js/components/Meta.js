@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -21,7 +21,7 @@ import {
   getWriter,
   getRaag
 } from '@/util';
-import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL } from '@/constants';
+import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL, S3_BUCKET_URL, API_URL  } from '@/constants';
 
 /**
  *
@@ -37,6 +37,8 @@ class Meta extends React.PureComponent {
     this.state = {
       audioPlayer: null,
       isHukamnamaAudioPlayerVisible: true,
+      shabadURL: '',
+      isShabadPlayable: false,
     }
     this.audioPlayerRef = createRef();
     this.audioPlayerIconRef = createRef();
@@ -171,6 +173,17 @@ class Meta extends React.PureComponent {
     return '';
   }
 
+  setShabadURL = (url) => {
+    if (url === '') {
+      this.setState(previousState => {
+        return ({
+          ...previousState,
+          shabadURL: url
+        })
+      })
+    }
+  }
+
   setHukamnamaAudioPlayerVisibility = (e) => {
     e.preventDefault();
     const audioPlayer = this.audioPlayerRef.current.audio.current;
@@ -193,6 +206,90 @@ class Meta extends React.PureComponent {
   }
 
 
+  checkAPI = async function () {
+
+    console.log("AUDIO_API_PASS: ", process.env.AUDIO_API_PASS)
+
+    let uri = `${API_URL}health/`;
+    let user = 'admin';
+    let password = process.env.AUDIO_API_PASS;
+    let h = new Headers({
+        'Accept': '*/*',
+        'Access-Control-Allow-Origin': "*",
+        'Authorization': `Basic ${btoa(user + ':' + password)}`,
+        'Content-Type': 'application/json',
+        'Connection': 'keep-alive'
+    });
+
+    let req = new require('http').Request(uri, {
+        method: 'GET',
+        headers: h,
+        credentials: 'same-origin',
+        mode: 'cors'
+    });
+
+    let APIisHealthy = false;
+
+    const res = await fetch(req)
+      .then((response) => {return response.json()})
+      .then((json) => {
+        if (json.ok) {
+          APIisHealthy=true;
+          console.log("It's True!");
+        }
+      });
+    return APIisHealthy;
+  }
+
+  getAudio = async function (info) {
+    let uri = `${API_URL}shabads/${info.shabadId}/`;
+    let user = 'admin';
+    let password = process.env.AUDIO_API_PASS;
+    let h = new Headers({
+        'Accept': '*/*',
+        'Authorization': `Basic ${btoa(user + ':' + password)}`,
+        'Content-Type': 'application/json',
+        'Connection': 'keep-alive'
+    });
+
+    let req = new Request(uri, {
+        method: 'GET',
+        headers: h,
+        credentials: 'same-origin',
+        mode: 'cors'
+    });
+
+    const res = await fetch(req)
+      .then((response) => {return response.json()})
+      .catch((error) => {console.log('error is', error)});
+
+    let hasAudio = false;
+    if (res.status === 'success') {
+      hasAudio = true;
+      let shbdUrl = `${S3_BUCKET_URL}${res.track_url.replace(/%20/g, "+")}`;
+      this.setShabadURL(shbdUrl);
+      return shbdUrl;
+    } else {
+      console.log('No audio for this shabad');
+    }
+    return hasAudio ;
+  }
+
+  async componentDidMount() {
+    if (this.props.type === 'shabad' ) {
+      if (this.checkAPI) {
+        const audioUrl = await this.getAudio(this.props.info);
+        this.setState(previousState => {
+          return ({
+            ...previousState,
+            shabadURL: audioUrl,
+            isShabadPlayable: !!audioUrl
+          })
+        });
+      }
+    }
+  }
+  
   render() {
     const {
       type,
@@ -214,12 +311,12 @@ class Meta extends React.PureComponent {
     const shouldShowEnglishInHeader =
       translationLanguages.includes('english') ||
       transliterationLanguages.includes('english');
-    const contentType = isUnicode ? 'unicode' : 'gurmukhi'
+    const contentType = isUnicode ? 'unicode' : 'gurmukhi';
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
     const hukamnamaDate = new Date(nav.current);
     const maximumHukamnamaDate = new Date(todayDate);
-    const hasAudioPlayer = isHukamnama
+    const hasAudioPlayer = isHukamnama;
     // hukamnamaDate.getTime() == todayDate.getTime();
 
     return (
@@ -266,7 +363,6 @@ class Meta extends React.PureComponent {
                   {TEXTS.HUKAMNAMA_HEADING}, <span>{nav.current}</span>
                 </h4>
                 <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
-
                   <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to Today's Hukamnama">{`Today's Hukamnama`}</a></span>
                 </div>
               </div>
@@ -321,6 +417,11 @@ class Meta extends React.PureComponent {
               )}
             </h4>
           )}
+          {this.state.isShabadPlayable && (
+            <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
+              <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to this Shabad">{`Listen shabad`}</a></span>
+            </div>
+          )}
         </div>
 
         {hasAudioPlayer && (
@@ -340,6 +441,26 @@ class Meta extends React.PureComponent {
               )}
             />
           </div>)}
+        
+        {this.state.isShabadPlayable && (
+          <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && this.state.isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
+          <AudioPlayer
+              ref={this.audioPlayerRef}
+              src={this.state.shabadURL}//"http://94.130.59.126/baru_sahib/01%20-%20Sri%20Raag%20Final%20(09-73)/0066%20D%20ਕੁਦਰਤਿ%20ਕਰਿ%20ਕੈ%20ਵਸਿਆ%20ਸੋਇ%20॥.mp3"}
+              // onPlay={e => console.log(`onPlay: ${e} ${this.state.shabadURL}`)}
+              customAdditionalControls={[]}
+              customVolumeControls={[]}
+              header={(
+                <div>
+                  <h3 className="hukamnama-player-title">{`Listen to this Shabad`}</h3>
+                  <span className="hukamnama-player-close-icon">
+                    <TimesIcon onClick={this.removeAudioPlayer} />
+                  </span>
+                </div>
+              )}
+            />
+          </div>
+        )}
         {!isHukamnama && this.renderRightArrow()}
       </div >
     );
