@@ -221,7 +221,7 @@ class Meta extends React.PureComponent {
         'Connection': 'keep-alive'
     });
 
-    let req = new require('http').Request(uri, {
+    let req = new Request(uri, {
         method: 'GET',
         headers: h,
         credentials: 'same-origin',
