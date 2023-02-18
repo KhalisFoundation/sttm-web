@@ -53,7 +53,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
     this.state = {
       isScrolling: this.props.isAutoScrolling || false,
-      scrollingSpeed: [50],
+      scrollingSpeed: [30],
       autoScrollLoopMode: false
     }
   }
@@ -155,8 +155,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
       const [scrollingSpeed] = this.state.scrollingSpeed;
 
       // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
-      const movement = toFixedFloat((0.1 + ((scrollingSpeed / 100) * AutoScrollControl.thresHold)), 3);
-      console.log(this.state.scrollingSpeed, movement, 'scrolling speed and movement..')
+      const movement = toFixedFloat((0.1 + ((scrollingSpeed / 100) * AutoScrollControl.thresHold)), 2);
       // Only allow the scrolling if we have surpassed previous scrolls or if it's firefox browser.
       if (this._isFirefoxAgent || scrollY >= Math.round(this._nextScrollPosition)) {
         this._nextScrollPosition += movement;
