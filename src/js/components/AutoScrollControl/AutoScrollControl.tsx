@@ -35,7 +35,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
   static minScrollingSpeed = 1;
   // static lowerSpeedThreshHold = 0.4;
   // static higherSpeedThreshHold = 1.2;
-  static thresHold = 2;
+  static thresHold = 3.33;
   _maxScrollPossible!: number;
   _nextScrollPosition!: number;
   _sliding!: boolean;
@@ -141,11 +141,12 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
         if (isMaxScrollCrossed) {
           this.removeScroll();
           if(this.state.autoScrollLoopMode){
-            setTimeout(() => {
+            const timeoutInterval = setTimeout(() => {
               window.scrollTo(0, 0);
-            },1000)
-            setTimeout(()=>{
-              this.startScroll();
+              setTimeout(() => {
+                this.startScroll();
+                clearTimeout(timeoutInterval);
+              }, 1000);
             },1000)
           }
         }
@@ -155,11 +156,11 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
 
       // We are having minimum scroll per pixel + adding the extra dynamic pixel movement based on slider value.
       const movement = toFixedFloat((0.1 + ((scrollingSpeed / 100) * AutoScrollControl.thresHold)), 3);
-
+      console.log(this.state.scrollingSpeed, movement, 'scrolling speed and movement..')
       // Only allow the scrolling if we have surpassed previous scrolls or if it's firefox browser.
       if (this._isFirefoxAgent || scrollY >= Math.round(this._nextScrollPosition)) {
         this._nextScrollPosition += movement;
-        window.scrollTo({ left: 0, top: Math.round(this._nextScrollPosition), behavior: 'smooth' });
+        window.scrollTo({ left: 0, top: Math.round(this._nextScrollPosition)});
       }
 
       this._interval = requestAnimationFrame(this.handleAutoScroll);
@@ -223,7 +224,7 @@ class AutoScrollControl extends React.PureComponent<IAutoScrollControlProps, IAu
         <div className="autoScrollControlSpeed">
           <div className={`autoScrollControlGroup ${isShowControls ? 'visible' : 'hidden'}`}>
             <label className="autoScrollControlSliderLabel">
-              Speed
+              Speed {`(${scrollingSpeed})`}
             </label>
             <div className="autoScrollControlSlider">
               <button onClick={this.toggleAutoScrollLoopMode} className={`autoScrollLoopModeBtn ${autoScrollLoopMode ? 'on':''}`}>
