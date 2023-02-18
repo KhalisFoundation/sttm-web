@@ -19,7 +19,9 @@ import {
   dateMath,
   getSourceId,
   getWriter,
-  getRaag
+  getRaag,
+  checkAPI,
+  getAudio
 } from '@/util';
 import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL, S3_BUCKET_URL, API_URL  } from '@/constants';
 
@@ -205,80 +207,11 @@ class Meta extends React.PureComponent {
     return this.setHukamnamaAudioPlayerVisibility(e);
   }
 
-
-  checkAPI = async function () {
-
-    console.log("AUDIO_API_PASS: ", process.env.AUDIO_API_PASS)
-
-    let uri = `${API_URL}health/`;
-    let user = 'admin';
-    let password = process.env.AUDIO_API_PASS;
-    let h = new Headers({
-        'Accept': '*/*',
-        'Access-Control-Allow-Origin': "*",
-        'Authorization': `Basic ${btoa(user + ':' + password)}`,
-        'Content-Type': 'application/json',
-        'Connection': 'keep-alive'
-    });
-
-    let req = new Request(uri, {
-        method: 'GET',
-        headers: h,
-        credentials: 'same-origin',
-        mode: 'cors'
-    });
-
-    let APIisHealthy = false;
-
-    const res = await fetch(req)
-      .then((response) => {return response.json()})
-      .then((json) => {
-        if (json.ok) {
-          APIisHealthy=true;
-          console.log("It's True!");
-        }
-      });
-    return APIisHealthy;
-  }
-
-  getAudio = async function (info) {
-    let uri = `${API_URL}shabads/${info.shabadId}/`;
-    let user = 'admin';
-    let password = process.env.AUDIO_API_PASS;
-    let h = new Headers({
-        'Accept': '*/*',
-        'Authorization': `Basic ${btoa(user + ':' + password)}`,
-        'Content-Type': 'application/json',
-        'Connection': 'keep-alive'
-    });
-
-    let req = new Request(uri, {
-        method: 'GET',
-        headers: h,
-        credentials: 'same-origin',
-        mode: 'cors'
-    });
-
-    const res = await fetch(req)
-      .then((response) => {return response.json()})
-      .catch((error) => {console.log('error is', error)});
-
-    let hasAudio = false;
-    if (res.status === 'success') {
-      hasAudio = true;
-      let shbdUrl = `${S3_BUCKET_URL}${res.track_url.replace(/%20/g, "+")}`;
-      this.setShabadURL(shbdUrl);
-      return shbdUrl;
-    } else {
-      console.log('No audio for this shabad');
-    }
-    return hasAudio ;
-  }
-
   async componentDidMount() {
     if (this.props.type === 'shabad' ) {
-      if (this.checkAPI) {
-        const audioUrl = await this.getAudio(this.props.info);
+      const healthy = await checkAPI()
+      if (healthy) {
+        const audioUrl = await getAudio(this.props.info);
         this.setState(previousState => {
           return ({
             ...previousState,
