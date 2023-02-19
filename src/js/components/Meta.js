@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -21,7 +21,7 @@ import {
   getWriter,
   getRaag,
   checkAPI,
-  getAudio
+  getShabadAudioUrl
 } from '@/util';
 import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL, S3_BUCKET_URL, API_URL  } from '@/constants';
 
@@ -211,12 +211,12 @@ class Meta extends React.PureComponent {
     if (this.props.type === 'shabad' ) {
       const healthy = await checkAPI()
       if (healthy) {
-        const audioUrl = await getAudio(this.props.info);
+        const audioUrl = await getShabadAudioUrl(this.props.info);
         this.setState(previousState => {
           return ({
             ...previousState,
             shabadURL: audioUrl,
-            isShabadPlayable: !!audioUrl
+            isShabadPlayable: (audioUrl!='')
           })
         });
       }
@@ -379,8 +379,7 @@ class Meta extends React.PureComponent {
           <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && this.state.isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
           <AudioPlayer
               ref={this.audioPlayerRef}
-              src={this.state.shabadURL}//"http://94.130.59.126/baru_sahib/01%20-%20Sri%20Raag%20Final%20(09-73)/0066%20D%20ਕੁਦਰਤਿ%20ਕਰਿ%20ਕੈ%20ਵਸਿਆ%20ਸੋਇ%20॥.mp3"}
-              // onPlay={e => console.log(`onPlay: ${e} ${this.state.shabadURL}`)}
+              src={this.state.shabadURL}
               customAdditionalControls={[]}
               customVolumeControls={[]}
               header={(
