@@ -60,7 +60,7 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
             {isShowFullScreen &&
               <div
                 style={lastIconStyles}
-                className="floatingActionsControl">
+                className="floatingActionsControl hide-tablet">
                 <FullScreen />
               </div>}
             {isShowScrollToTop &&
