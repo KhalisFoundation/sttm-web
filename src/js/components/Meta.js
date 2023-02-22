@@ -19,9 +19,11 @@ import {
   dateMath,
   getSourceId,
   getWriter,
-  getRaag
+  getRaag,
+  checkAPIHealth,
+  getShabadAudioUrl
 } from '@/util';
-import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL } from '@/constants';
+import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL, S3_BUCKET_URL, API_URL  } from '@/constants';
 
 /**
  *
@@ -37,6 +39,8 @@ class Meta extends React.PureComponent {
     this.state = {
       audioPlayer: null,
       isHukamnamaAudioPlayerVisible: true,
+      shabadURL: '',
+      isShabadPlayable: false,
     }
     this.audioPlayerRef = createRef();
     this.audioPlayerIconRef = createRef();
@@ -171,6 +175,15 @@ class Meta extends React.PureComponent {
     return '';
   }
 
+  setShabadURL = (url) => {
+    this.setState(previousState => {
+      return ({
+        ...previousState,
+        shabadURL: url
+      })
+    })
+  }
+
   setHukamnamaAudioPlayerVisibility = (e) => {
     e.preventDefault();
     const audioPlayer = this.audioPlayerRef.current.audio.current;
@@ -192,7 +205,16 @@ class Meta extends React.PureComponent {
     return this.setHukamnamaAudioPlayerVisibility(e);
   }
 
-
+  async componentDidMount() {
+    if (this.props.type === 'shabad' ) {
+      const healthy = await checkAPIHealth()
+      if (healthy) {
+        const audioUrl = await getShabadAudioUrl(this.props.info);
+        this.setShabadURL(audioUrl);
+      }
+    }
+  }
+  
   render() {
     const {
       type,
@@ -214,12 +236,13 @@ class Meta extends React.PureComponent {
     const shouldShowEnglishInHeader =
       translationLanguages.includes('english') ||
       transliterationLanguages.includes('english');
-    const contentType = isUnicode ? 'unicode' : 'gurmukhi'
+    const contentType = isUnicode ? 'unicode' : 'gurmukhi';
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
     const hukamnamaDate = new Date(nav.current);
     const maximumHukamnamaDate = new Date(todayDate);
-    const hasAudioPlayer = isHukamnama
+    const hasAudioPlayer = isHukamnama;
+    const isShabadPlayable = !!this.state.shabadURL;
     // hukamnamaDate.getTime() == todayDate.getTime();
 
     return (
@@ -266,7 +289,6 @@ class Meta extends React.PureComponent {
                   {TEXTS.HUKAMNAMA_HEADING}, <span>{nav.current}</span>
                 </h4>
                 <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
-
                   <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to Today's Hukamnama">{`Today's Hukamnama`}</a></span>
                 </div>
               </div>
@@ -321,6 +343,11 @@ class Meta extends React.PureComponent {
               )}
             </h4>
           )}
+          {isShabadPlayable && (
+            <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
+              <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to this Shabad">{`Listen shabad`}</a></span>
+            </div>
+          )}
         </div>
 
         {hasAudioPlayer && (
@@ -340,6 +367,25 @@ class Meta extends React.PureComponent {
               )}
             />
           </div>)}
+        
+        {isShabadPlayable && (
+          <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
+          <AudioPlayer
+              ref={this.audioPlayerRef}
+              src={this.state.shabadURL}
+              customAdditionalControls={[]}
+              customVolumeControls={[]}
+              header={(
+                <div>
+                  <h3 className="hukamnama-player-title">Listen to this Shabad</h3>
+                  <span className="hukamnama-player-close-icon">
+                    <TimesIcon onClick={this.removeAudioPlayer} />
+                  </span>
+                </div>
+              )}
+            />
+          </div>
+        )}
         {!isHukamnama && this.renderRightArrow()}
       </div >
     );
