@@ -20,7 +20,7 @@ import {
   getSourceId,
   getWriter,
   getRaag,
-  checkAPI,
+  checkAPIHealth,
   getShabadAudioUrl
 } from '@/util';
 import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL, S3_BUCKET_URL, API_URL  } from '@/constants';
@@ -176,14 +176,12 @@ class Meta extends React.PureComponent {
   }
 
   setShabadURL = (url) => {
-    if (url === '') {
-      this.setState(previousState => {
-        return ({
-          ...previousState,
-          shabadURL: url
-        })
+    this.setState(previousState => {
+      return ({
+        ...previousState,
+        shabadURL: url
       })
-    }
+    })
   }
 
   setHukamnamaAudioPlayerVisibility = (e) => {
@@ -209,16 +207,10 @@ class Meta extends React.PureComponent {
 
   async componentDidMount() {
     if (this.props.type === 'shabad' ) {
-      const healthy = await checkAPI()
+      const healthy = await checkAPIHealth()
       if (healthy) {
         const audioUrl = await getShabadAudioUrl(this.props.info);
-        this.setState(previousState => {
-          return ({
-            ...previousState,
-            shabadURL: audioUrl,
-            isShabadPlayable: (audioUrl!='')
-          })
-        });
+        this.setShabadURL(audioUrl);
       }
     }
   }
@@ -250,6 +242,7 @@ class Meta extends React.PureComponent {
     const hukamnamaDate = new Date(nav.current);
     const maximumHukamnamaDate = new Date(todayDate);
     const hasAudioPlayer = isHukamnama;
+    const isShabadPlayable = !!this.state.shabadURL;
     // hukamnamaDate.getTime() == todayDate.getTime();
 
     return (
@@ -350,7 +343,7 @@ class Meta extends React.PureComponent {
               )}
             </h4>
           )}
-          {this.state.isShabadPlayable && (
+          {isShabadPlayable && (
             <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
               <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to this Shabad">{`Listen shabad`}</a></span>
             </div>
@@ -375,8 +368,8 @@ class Meta extends React.PureComponent {
             />
           </div>)}
         
-        {this.state.isShabadPlayable && (
-          <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && this.state.isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
+        {isShabadPlayable && (
+          <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
           <AudioPlayer
               ref={this.audioPlayerRef}
               src={this.state.shabadURL}
@@ -384,7 +377,7 @@ class Meta extends React.PureComponent {
               customVolumeControls={[]}
               header={(
                 <div>
-                  <h3 className="hukamnama-player-title">{`Listen to this Shabad`}</h3>
+                  <h3 className="hukamnama-player-title">Listen to this Shabad</h3>
                   <span className="hukamnama-player-close-icon">
                     <TimesIcon onClick={this.removeAudioPlayer} />
                   </span>

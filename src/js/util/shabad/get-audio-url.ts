@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL, S3_BUCKET_URL } from "@/constants";
 
-export const checkAPI = async function () {
+export const checkAPIHealth = async function () {
   const uri = `${API_URL}health/`;
   const user = 'admin';
   const password = process.env.AUDIO_API_PASS;
