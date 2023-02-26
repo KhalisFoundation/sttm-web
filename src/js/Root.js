@@ -15,7 +15,7 @@ export default class Root extends React.PureComponent {
     super();
 
     configure({
-      logLevel: 'debug',
+      // logLevel: 'debug',
       defaultKeyEvent: 'keydown',
       defaultComponent: 'div',
       ignoreTags: ['input'],
