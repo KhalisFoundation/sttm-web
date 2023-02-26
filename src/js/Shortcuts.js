@@ -1,5 +1,5 @@
 import store from './features/store';
-import { selectItemInArray } from './util';
+import { selectItemInArray, toggleFullScreenMode as toggleFSMode } from './util';
 import { toFixedFloat } from './util';
 
 const ViewerShortcuts = {
@@ -122,20 +122,17 @@ const ViewerShortcutHanders = {
   toggleReadingMode: () => {
     store.dispatch({ type: 'TOGGLE_SEHAJ_PAATH_MODE' });
   },
-  toggleFullScreenMode: () => {
-    const html = document.querySelector('html');
+  toggleFullScreenMode: (e) => {
     const state = store.getState();
     store.dispatch({
       type: 'SET_FULLSCREEN_MODE',
       payload: !state.fullScreenMode,
     });
-    if (!state.fullScreenMode) {
-      document.body.classList.add('fullscreen-view');
-      html.requestFullscreen && html.requestFullscreen();
-      html.webkitRequestFullscreen && html.webkitRequestFullscreen();
-    } else {
-      document.fullscreen && document.exitFullscreen();
-      document.body.classList.remove('fullscreen-view');
+    console.log("What is this", 'toggle full screen mode ?')
+    try {
+      toggleFSMode(!state.fullScreenMode);
+    } catch(err) {
+      console.log(err.message,' SHORT CUT ERROR')
     }
   },
   unicode: () => {
