@@ -1,70 +1,64 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch} from 'react-redux';
+import { setFullScreenMode as setFullScreenModeGlobal } from '@/features/actions';
+import FullscreenIcon from '@/components/Icons/FullscreenIcon';
 
-import FullscreenIcon from '../../Icons/FullscreenIcon';
-import { setFullScreenMode } from '../../../features/actions';
-interface IFullScreenProps {
-  setFullScreenMode: (payload: boolean) => {}
-}
 
-interface IFullScreenState {
-  isFullScreen: boolean
-}
+const html = document.querySelector('html');
 
-class FullScreen extends React.PureComponent<IFullScreenProps, IFullScreenState> {
+const FullScreen = () => {
+  const dispatch = useDispatch()
+  const [isFullScreenMode, setFullScreenMode] = useState<boolean>(false);
 
-  state = {
-    isFullScreen: false,
-  }
-
-  $htmlNode = document.querySelector('html');
-
-  handleClick = () => {
-    this.setState({ isFullScreen: !this.state.isFullScreen });
+  const handleToggleFullScreen = () => {
+    setFullScreenMode(!isFullScreenMode);
   };
 
-  handleFullScreen = () => {
-    this.setState({ isFullScreen: document.fullscreen || document.webkitIsFullScreen });
-  }
-
-  componentDidMount() {
-    this.setState({ isFullScreen: document.fullscreen || document.webkitIsFullScreen || false });
-    document.addEventListener('fullscreenchange', this.handleFullScreen);
-  }
-
-  componentDidUpdate() {
-    const html = this.$htmlNode;
-    const { setFullScreenMode } = this.props;
-    if (this.state.isFullScreen) {
-      document.body.classList.add('fullscreen-view');
-      html.requestFullscreen && html.requestFullscreen();
-      html.webkitRequestFullscreen && html.webkitRequestFullscreen();
-      setFullScreenMode(true);
-    } else {
-      document.fullscreen && document.exitFullscreen();
-      document.body.classList.remove('fullscreen-view');
-      setFullScreenMode(false);
-    }
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('fullscreenchange', this.handleFullScreen);
-  }
-
-  render() {
-    const { isFullScreen } = this.state;
-    return (
-      <div className="fab fullscreen" onClick={this.handleClick}>
-        <FullscreenIcon state={isFullScreen} />
-      </div>
+  const handleFullScreenMode = () => {
+    setFullScreenMode(
+      document.fullscreen || document.webkitIsFullScreen || false
     );
-  }
-}
+  };
 
-const mapStateToProps = state => ({});
+  useEffect(() => {
+    handleFullScreenMode();
+    document.addEventListener('fullscreenchange', handleFullScreenMode);
 
-const mapDispatchToProps: any = {
-  setFullScreenMode
-}
+    return () =>
+      document.removeEventListener('fullscreenchange', handleFullScreenMode);
+  }, []);
 
-export default connect(mapStateToProps, mapDispatchToProps)(FullScreen);
+  useEffect(() => {
+    const updateFullScreenMode = async () => {
+      try {
+        if (isFullScreenMode) {
+          document.body.classList.add('fullscreen-view');
+          console.log(html, 'HTML ?', html?.requestFullscreen);
+          html.requestFullscreen && html.requestFullscreen();
+          html.webkitRequestFullscreen && html.webkitRequestFullscreen();
+          dispatch(setFullScreenModeGlobal(true));
+        } else {
+          document.fullscreen && document.exitFullscreen();
+          document.body.classList.remove('fullscreen-view');
+          dispatch(setFullScreenModeGlobal(false));
+        }
+      } catch (err) {
+        console.warn(err, 'ERROR');
+      }
+    };
+
+    updateFullScreenMode();
+  });
+
+  return (
+    <div
+      role="button"
+      className="fab fullscreen"
+      onClick={handleToggleFullScreen}
+    >
+      <FullscreenIcon state={isFullScreenMode} />
+    </div>
+  );
+};
+
+export default FullScreen;

@@ -63,7 +63,7 @@ import {
   getStringFromLocalStorage,
 } from '../../util';
 
-const initialState = {
+export const initialState = {
   online: window !== undefined ? window.navigator.onLine : true,
   showAdvancedOptions: false,
   showTransliterationOptions: false,
