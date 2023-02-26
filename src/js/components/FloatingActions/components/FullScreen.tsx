@@ -3,7 +3,6 @@ import { useDispatch} from 'react-redux';
 import { setFullScreenMode as setFullScreenModeGlobal } from '@/features/actions';
 import FullscreenIcon from '@/components/Icons/FullscreenIcon';
 
-
 const html = document.querySelector('html');
 
 const FullScreen = () => {

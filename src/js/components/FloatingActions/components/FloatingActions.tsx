@@ -5,7 +5,7 @@ import ScrollToTop from './ScrollToTop';
 import FullScreen from './FullScreen';
 import DisplaySettingsButton from '@/components/DisplaySettingsButton';
 
-interface IFloatingActionsProps {
+interface Props  {
   isShowAutoScroll?: boolean;
   isShowScrollToTop?: boolean;
   isShowFullScreen?: boolean;
@@ -13,36 +13,24 @@ interface IFloatingActionsProps {
   showPinSettings: boolean;
 }
 
-export class FloatingActions extends React.PureComponent<IFloatingActionsProps, {}> {
-  static defaultProps = {
-    isShowAutoScroll: true,
-    isShowScrollToTop: true,
-    isShowFullScreen: true,
-    isShowSettings: false,
-    showPinSettings: false,
-  }
+export const FloatingActions = (props: Props) => {
+  const {
+    isShowFullScreen,
+    isShowScrollToTop,
+    isShowAutoScroll,
+    isShowSettings,
+    showPinSettings,
+  } = props;
+  const isShowIcons = isShowScrollToTop || isShowFullScreen;
+  const isShowNothing = !isShowFullScreen && !isShowAutoScroll && !isShowScrollToTop
+  const isLastIcon = [isShowScrollToTop, isShowFullScreen, isShowAutoScroll]
+    .filter(isShowEntry => isShowEntry).length === 1;
+  const lastIconStyles = isLastIcon ? { margin: 0 } : {};
 
-  constructor(props: Readonly<IFloatingActionsProps>) {
-    super(props);
-  }
+  if (isShowNothing) return null;
 
-  render() {
-    const {
-      isShowFullScreen,
-      isShowScrollToTop,
-      isShowAutoScroll,
-      isShowSettings,
-      showPinSettings,
-    } = this.props;
-    const isShowIcons = isShowScrollToTop || isShowFullScreen;
-    const isShowNothing = !isShowFullScreen && !isShowAutoScroll && !isShowScrollToTop
-    const isLastIcon = [isShowScrollToTop, isShowFullScreen, isShowAutoScroll]
-      .filter(isShowEntry => isShowEntry).length === 1;
-    const lastIconStyles = isLastIcon ? { margin: 0 } : {};
+  return (
     
-    if (isShowNothing) return null;
-
-    return (
       <div className={`floatingActions ${showPinSettings ? 'pin-settings-floating-icons' : ''}`}>
         {isShowAutoScroll &&
           <AutoScrollControl
@@ -71,5 +59,6 @@ export class FloatingActions extends React.PureComponent<IFloatingActionsProps, 
           </div>}
       </div>
     )
-  }
 }
+
+export default FloatingActions;
