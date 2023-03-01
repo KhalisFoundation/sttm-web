@@ -1,0 +1,33 @@
+.background-modal {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+}
+
+.add-fav-shabad-container {
+  background: $sttm-white;
+  height: 300px;
+  width: 80%;
+
+  .header {
+    align-items: center;
+    background: $sttm-blue;
+    color: $sttm-white;
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: space-between;
+    padding: 10px 20px;
+
+    svg {
+      font-size: 20px;
+    }
+  }
+}

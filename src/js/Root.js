@@ -10,6 +10,7 @@ import {
   showToast,
   saveToLocalStorage,
 } from './util';
+import Modals from '@/components/Modals';
 export default class Root extends React.PureComponent {
   constructor() {
     super();
@@ -32,6 +33,7 @@ export default class Root extends React.PureComponent {
             ))}
             <Route render={() => <NotFound />} />
           </Switch>
+          <Modals />
           <Notifier />
         </GlobalHotKeys>
       </Router>
