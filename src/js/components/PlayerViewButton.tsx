@@ -7,7 +7,7 @@ interface IPlayerViewButton {
   showShabadAudioPlayer: boolean,
 }
 
-const PlayerViewButton = (props: any) => {
+const PlayerViewButton = () => {
   const dispatch = useDispatch()
   const typedUseSelector: TypedUseSelectorHook<IPlayerViewButton> = useSelector;
   const showShabadAudioPlayer = typedUseSelector(state => state.showShabadAudioPlayer)
@@ -19,7 +19,7 @@ const PlayerViewButton = (props: any) => {
 
   return (
     <button className={'meta-hukamnama-right'} onClick={onClick}>
-        <AudioPlayerIcon className='hukamnama-right-headphonesIcon' children={<a title="Listen to Shabad">{`Listen to Shabad`}</a>}/>
+        <AudioPlayerIcon className='hukamnama-right-headphonesIcon'><a title="Listen to Shabad">{`Listen to Shabad`}</a></AudioPlayerIcon>
     </button>
   )
 }

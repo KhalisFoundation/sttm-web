@@ -19,7 +19,7 @@ jest.mock('react-date-picker', () => () => <div>react calendar</div>)
 describe('<Meta />', () => {
   const translationLanguages = ['english', 'spanish', 'punjabi'];
   const transliterationLanguages = ['english'];
-  const store = mockStore({ darkMode: false, autoScrollMode: false });
+  const store = mockStore({ darkMode: false, autoScrollMode: false, showShabadAudioPlayer: true });
 
   describe('<Meta type=\"ang\" />', () => {
     let renderedComponent = null;
@@ -56,14 +56,18 @@ describe('<Meta />', () => {
 
   describe('<Meta type=\"shabad\" />', () => {
     let renderedComponent = null;
+    const store = mockStore({ showShabadAudioPlayer: true });
+
     beforeEach(() => {
       renderedComponent = render(
-        <Meta
-          type="shabad"
-          isUnicode={false}
-          info={shabad.shabadInfo}
-          translationLanguages={translationLanguages}
-          transliterationLanguages={transliterationLanguages} />,
+        <Provider store={store}>
+          <Meta
+            type="shabad"
+            isUnicode={false}
+            info={shabad.shabadInfo}
+            translationLanguages={translationLanguages}
+            transliterationLanguages={transliterationLanguages} />
+        </Provider>,
         { wrapper: MemoryRouter }
       );
     })

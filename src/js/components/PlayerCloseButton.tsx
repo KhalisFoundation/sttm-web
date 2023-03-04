@@ -7,7 +7,7 @@ interface IPlayerCloseButton {
   showShabadAudioPlayer: boolean,
 }
 
-const PlayerCloseButton = (props: any) => {
+const PlayerCloseButton = () => {
   const dispatch = useDispatch()
   const typedUseSelector: TypedUseSelectorHook<IPlayerCloseButton> = useSelector;
   const showShabadAudioPlayer = typedUseSelector(state => state.showShabadAudioPlayer)

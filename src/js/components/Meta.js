@@ -23,7 +23,7 @@ import {
   checkAPIHealth,
   getShabadAudioUrl
 } from '@/util';
-import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL, S3_BUCKET_URL, API_URL  } from '@/constants';
+import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL } from '@/constants';
 import PlayerViewButton from './PlayerViewButton';
 import PlayerCloseButton from './PlayerCloseButton';
 
@@ -419,5 +419,4 @@ class Meta extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({ showShabadAudioPlayer: state.showShabadAudioPlayer })
-
 export default connect(mapStateToProps)(Meta);
