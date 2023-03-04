@@ -36,4 +36,13 @@ $theme-color: $sttm-blue;
   &_time {
     color: $sttm-white;
   }
+
+  &_footer {
+    margin-top: -22.5px;
+  }
+  @media screen and (max-width: 480px) {
+    &_footer {
+      margin-top: -5px;
+    }
+  }
 }

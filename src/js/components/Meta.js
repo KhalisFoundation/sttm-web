@@ -381,7 +381,7 @@ class Meta extends React.PureComponent {
               customVolumeControls={[]}
               header={(
                 <div>
-                  <h3 className="shabad-player-title">Listen to Shabad</h3>
+                  <h3 className="shabad-player-title">Shabad player</h3>
                   <PlayerCloseButton />
                 </div>
               )}
