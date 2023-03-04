@@ -39,6 +39,7 @@ import {
   closeMultiViewPanel,
   closePinSettings,
   toggleCartoonifiedPages,
+  toggleShabadAudioPlayer
 } from '@/features/actions';
 
 export const supportedMedia = _s;
@@ -122,6 +123,7 @@ const mapDispatchToProps = {
   closeMultiViewPanel,
   closePinSettings,
   toggleCartoonifiedPages,
+  toggleShabadAudioPlayer
 };
 
 // TODO: Connect individual components instead of all controls.

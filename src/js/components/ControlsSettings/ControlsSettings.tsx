@@ -5,7 +5,7 @@ import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import Accordion from '../Accordion';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, KEYBOARD_SHORTCUTS, QUICK_SETTINGS, RESET_SETTING } from './ControlSettings';
-import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, CartoonIcon } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, CartoonIcon, AudioPlayerIcon } from "../Icons/CustomIcons";
 import {
   FONT_OPTIONS,
   VISRAAM,
@@ -133,6 +133,10 @@ const ControlsSettings = (props: any) => {
       case 'Cartoon Images':
         return (
           <CartoonIcon className="settings-action-icon" />
+        )
+      case 'Audio Player':
+        return (
+          <AudioPlayerIcon className="settings-action-icon" />
         )
       default:
         return (
