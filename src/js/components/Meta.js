@@ -371,7 +371,7 @@ class Meta extends React.PureComponent {
               )}
             />
           </div>)}
-        
+          
         {isShabadPlayable && showShabadAudioPlayer && (
           <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
           <AudioPlayer

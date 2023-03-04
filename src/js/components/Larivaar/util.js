@@ -10,6 +10,7 @@ const allMatrasHalfCharAndNasalSoundChar =
   halfCharThatAppearAtRightSideOfChar +
   nasalSoundCaharacter;
 const unicodeMatras = 'ਾਿੀੁੂੇੈੋੌੰਂੱ';
+const unicodeOtherMatras = 'ਁਃ਼੍ੑੵ';
 
 // Look for consonants and break word
 export function fixLarivaarGurmukhiFont(str) {
@@ -58,5 +59,7 @@ export function fixLarivaarUnicode(str) {
 
 const isConsonant = char =>
   allMatrasHalfCharAndNasalSoundChar.includes(char) === false;
-const isUnicodeConsonant = char => unicodeMatras.includes(char) === false;
+const isUnicodeConsonant = char =>
+  unicodeMatras.includes(char) === false &&
+  unicodeOtherMatras.includes(char) === false;
 const isSihari = char => char === sihari;

@@ -36,7 +36,7 @@
   }
 }
 
-#share-menu {
+#controls-menu {
   border-radius: 2px;
   margin: 0 2rem 0 auto;
 
@@ -155,7 +155,7 @@
 
 @media screen and (max-width: 45.999999em) {
   .share-buttons,
-  #share-menu {
+  #controls-menu {
     .dark-mode & {
       background-color: $sttm-light-black;
     }
