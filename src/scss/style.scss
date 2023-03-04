@@ -364,6 +364,40 @@ select {
   }
 }
 
+.shabad-player {
+  &-close-icon {
+    align-items: center;
+    background: $sttm-white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    fill: $sttm-blue;
+    float: right;
+    height: 27px;
+    justify-content: center;
+    width: 27px;
+  }
+
+  &-close-icon-svg {
+    fill: $sttm-blue;
+    font-size: 14px;
+  }
+
+  &-title {
+    color: $sttm-white;
+    display: inline-block;
+    font-size: 1rem;
+  }
+
+  &-footer {
+    color: $sttm-white;
+    display: flex;
+    font-size: 1rem;
+    justify-content: flex-end;
+    margin: 0;
+  }
+}
+
 .donate-button {
   background-color: $sttm-dark-orange;
 

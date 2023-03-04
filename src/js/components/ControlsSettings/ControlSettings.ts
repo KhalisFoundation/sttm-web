@@ -44,6 +44,7 @@ export interface ISettingActions {
   toggleSplitViewOption: () => {},
   toggleDarkMode: () => {},
   toggleCartoonifiedPages: () => {},
+  toggleShabadAudioPlayer: () => {},
   toggleParagraphMode: () => {},
   toggleSehajPaathMode: () => {},
   toggleSettingsPanel: () => {},
@@ -85,6 +86,7 @@ export interface ISettingActions {
   fontFamily: string,
   showAdvancedOptions: boolean,
   showCartoonifiedPages: boolean,
+  showShabadAudioPlayer: boolean,
 }
 
 export const HEADER_SETTINGS = ({
@@ -222,6 +224,7 @@ export const QUICK_SETTINGS = ({
   toggleSplitViewOption,
   toggleDarkMode,
   toggleCartoonifiedPages,
+  toggleShabadAudioPlayer,
   toggleParagraphMode,
   toggleSehajPaathMode,
   toggleAutoScrollMode,
@@ -242,6 +245,7 @@ export const QUICK_SETTINGS = ({
   splitView,
   darkMode,
   showCartoonifiedPages,
+  showShabadAudioPlayer,
   paragraphMode,
   steekLanguages,
   sgBaaniLength,
@@ -382,6 +386,13 @@ export const QUICK_SETTINGS = ({
       tooltip: 'Enable or disable cartoon images',
       checked: showCartoonifiedPages,
       action: toggleCartoonifiedPages,
+    },
+    {
+      type: 'toggle-option',
+      label: 'Audio Player',
+      tooltip: 'Enable or disable audio player',
+      checked: showShabadAudioPlayer,
+      action: toggleShabadAudioPlayer,
     },          
     {
       type: 'collapsible_item',
