@@ -1,5 +1,5 @@
 /* globals API_URL */
-import React, { useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ import { SOURCES, TEXTS } from '@/constants';
 import { useKeydownEventHandler } from '@/hooks';
 import { useFetchAngData } from '../hooks/use-fetch-ang-data';
 import { changeHighlightedPankti } from '../utils';
+import { createAngTitle } from '@/util/ang/create-ang-page-title';
 
 export const Stub = () => <div className="spinner" />;
 
@@ -38,6 +39,14 @@ const Ang: React.FC<IAngProps> = ({
 
   const { errorFetchingAngData, angsDataMap } = useFetchAngData({ ang, source, isSehajPaathMode });
   const angData = angsDataMap[ang];
+
+  useEffect(() => {
+    document.title = createAngTitle({
+      ang,
+      source,
+    })
+  }, [ang, source])
+
   const changeHighlightedPanktiHandler = useCallback(changeHighlightedPankti({
     ang,
     source,
@@ -95,6 +104,7 @@ const Ang: React.FC<IAngProps> = ({
 
   const pages = Object.values(angsDataMap).filter(pageData => !!pageData);
   const gurbani = isSehajPaathMode ? null : angsDataMap[ang].page;
+
 
   return (
     <div className="row" id="content-root">
