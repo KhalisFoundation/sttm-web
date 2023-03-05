@@ -103,7 +103,7 @@ class ShareButtons extends React.PureComponent {
   }
 
   render() {
-    const { media, onEmbedClick, onCopyAllClick } = this.props;
+    const { media, onEmbedClick, onCopyAllClick, gurbani } = this.props;
 
     if (media.length === 0) {
       return null;
@@ -188,7 +188,7 @@ class ShareButtons extends React.PureComponent {
        favouriteShabad: (
         <li key={9}>
           {
-            <FavouriteShabadButton shabad={this.formattedShabad} />
+            <FavouriteShabadButton shabad={this.formattedShabad} gurbani={gurbani} />
           }
         </li>
       ),

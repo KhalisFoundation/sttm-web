@@ -13,7 +13,7 @@
 
 .add-fav-shabad-container {
   background: $sttm-white;
-  height: 300px;
+  height: 65%;
   width: 80%;
 
   .header {
@@ -28,6 +28,22 @@
 
     svg {
       font-size: 20px;
+    }
+  }
+
+  .content {
+    padding: 10px 10%;
+
+    .title {
+      color: $sttm-darker-blue;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .save-btn {
+      align-items: center;
+      display: flex;
+      justify-content: flex-end;
     }
   }
 }

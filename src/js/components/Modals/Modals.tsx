@@ -1,25 +1,25 @@
 import React from 'react';
-import BackgroundModal from './BackgroundModal';
+import { useSelector } from 'react-redux';
 import AddFavouriteShabadModal from './AddFavouriteShabadModal';
+import BackgroundModal from './BackgroundModal';
 
 const Modals = () => {
-  
-  const modalType = 'addFavShabad';//for testing
 
-  const isModalOpen = true; //for testing
-  
-  if(!isModalOpen) {
+  const { isModalOpen, modalType } = useSelector(store => store)
+
+  if (!isModalOpen) {
     return null;
   }
-  
+
   const content = () => {
-    switch(modalType) {
-      case 'addFavShabad' : 
+    switch (modalType) {
+      case 'addFavouriteShabad':
         return <AddFavouriteShabadModal />
       default:
-        return null;  
+        return null;
     }
   }
+
   return (
     <BackgroundModal>{content()}</BackgroundModal>
   )

@@ -10,7 +10,8 @@ import {
   showToast,
   saveToLocalStorage,
 } from './util';
-import Modals from '@/components/Modals';
+import { Modals } from '@/components/Modals';
+
 export default class Root extends React.PureComponent {
   constructor() {
     super();
