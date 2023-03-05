@@ -177,6 +177,9 @@ const initialState = {
   ),
   showMultiViewPanel: false,
   showPinSettings: false,
+  isModalOpen: false,
+  modalType: '',
+  gurbaniVerses: [],
   showCartoonifiedPages: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES,
     DEFAULT_CARTOONIFIED_PAGES

@@ -51,6 +51,9 @@ import {
   SET_HINDI_TRANSLATION_LANGUAGES,
   TOGGLE_CARTOONIFIED_PAGES,
   SET_CARTOONIFIED_PAGES,
+  SET_IS_MODAL_OPEN,
+  SET_MODAL_TYPE,
+  SET_GURBANI_VERSES,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -85,7 +88,6 @@ import {
 } from '@/constants';
 import {
   saveToLocalStorage,
-  getArrayFromLocalStorage,
   clickEvent,
 } from '@/util';
 import { DARK_MODE_COOKIE } from '../../../../common/constants';
@@ -848,10 +850,33 @@ export default function reducer(state, action) {
 
     case SET_ERROR: {
       const error = action.payload;
-
       return {
         ...state,
         error,
+      };
+    }
+
+    case SET_IS_MODAL_OPEN: {
+      const isModalOpen = action.payload;
+      return {
+        ...state,
+        isModalOpen
+      };
+    }
+
+    case SET_MODAL_TYPE: {
+      const modalType = action.payload;
+      return {
+        ...state,
+        modalType
+      };
+    }
+
+    case SET_GURBANI_VERSES: {
+      const gurbaniVerses = action.payload;
+      return {
+        ...state,
+        gurbaniVerses
       };
     }
 
