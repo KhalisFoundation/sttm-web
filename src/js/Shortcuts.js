@@ -1,11 +1,11 @@
 import store from './features/store';
-import { selectItemInArray } from './util';
+import { selectItemInArray, toggleFullScreenMode as toggleFSMode } from './util';
 import { toFixedFloat } from './util';
 
 const ViewerShortcuts = {
   toggleLarivar: {
     name: 'Toggle Larivar',
-    sequences: ['l'],
+    sequences: ['l', 'f+l'],
   },
   toggleLarivarAssist: {
     name: 'Toggle Larivar Assist',
@@ -13,19 +13,19 @@ const ViewerShortcuts = {
   },
   toggleVishraams: {
     name: 'Toggle Vishraams',
-    sequences: ['v'],
+    sequences: ['v', 'f+v'],
   },
   toggleAutoScrollMode: {
     name: 'Toggle AutoScroll Mode',
-    sequences: ['a'],
+    sequences: ['a','f+a'],
   },
   toggleDarkMode: {
     name: 'Toggle Dark Mode',
-    sequences: ['o'],
+    sequences: ['o','f+o'],
   },
   toggleSplitMode: {
     name: 'Toggle Split Mode',
-    sequences: ['/'],
+    sequences: ['/','f+/'],
   },
   toggleFullScreenMode: {
     name: 'Toggle FullScreen Mode',
@@ -33,11 +33,11 @@ const ViewerShortcuts = {
   },
   toggleReadingMode: {
     name: 'Toggle Reading Mode', // SehajPaath Mode
-    sequences: ['r'],
+    sequences: ['r','f+r'],
   },
   unicode: {
     name: 'Unicode',
-    sequences: ['u'],
+    sequences: ['u','f+u'],
   },
   centerAlign: {
     name: 'Center Align',
@@ -45,27 +45,27 @@ const ViewerShortcuts = {
   },
   toggleEngTranslation: {
     name: 'Toggle English Translation',
-    sequences: ['e'], // alt + e = Dead, accoring to hotkeys handler
+    sequences: ['e','f+e'], // alt + e = Dead, accoring to hotkeys handler
   },
   togglePunjabiTranslation: {
     name: 'Toggle Punjabi Translation',
-    sequences: ['t'],
+    sequences: ['t','f+t'],
   },
   toggleSpanishTranslation: {
     name: 'Toggle Spanish Translation',
-    sequences: ['s'],
+    sequences: ['s','f+s'],
   },
   toggleEngTranslit: {
     name: 'Toggle English Transliteration',
-    sequences: ['shift+e'],
+    sequences: ['shift+e','f+shift+e'],
   },
   toggleShahTranslit: {
     name: 'Toggle Shahmukhi Transliteration',
-    sequences: ['shift+s'],
+    sequences: ['shift+s','f+shift+s'],
   },
   toggleHinTranslit: {
     name: 'Toggle Hindi Transliteration',
-    sequences: ['shift+h'],
+    sequences: ['shift+h','f+shift+h'],
   },
   increaseFontSize: {
     name: 'Increase Font Size',
@@ -122,20 +122,17 @@ const ViewerShortcutHanders = {
   toggleReadingMode: () => {
     store.dispatch({ type: 'TOGGLE_SEHAJ_PAATH_MODE' });
   },
-  toggleFullScreenMode: () => {
-    const html = document.querySelector('html');
+  toggleFullScreenMode: (e) => {
     const state = store.getState();
     store.dispatch({
       type: 'SET_FULLSCREEN_MODE',
       payload: !state.fullScreenMode,
     });
-    if (!state.fullScreenMode) {
-      document.body.classList.add('fullscreen-view');
-      html.requestFullscreen && html.requestFullscreen();
-      html.webkitRequestFullscreen && html.webkitRequestFullscreen();
-    } else {
-      document.fullscreen && document.exitFullscreen();
-      document.body.classList.remove('fullscreen-view');
+    try {
+      toggleFSMode(!state.fullScreenMode);
+    } catch(err) {
+      // eslint-disable-next-line no-console
+      console.warn(err.message,' SHORT CUT ERROR')
     }
   },
   unicode: () => {

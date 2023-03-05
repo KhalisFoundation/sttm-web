@@ -28,6 +28,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
   LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
   LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES,
+  LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER,
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_STEEK_LANGUAGES,
@@ -55,6 +56,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
   DEFAULT_HINDI_TRANSLATION_LANGUAGES,
   DEFAULT_CARTOONIFIED_PAGES,
+  DEFAULT_SHABAD_AUDIO_PLAYER
 } from '../../constants';
 import {
   getArrayFromLocalStorage,
@@ -63,7 +65,7 @@ import {
   getStringFromLocalStorage,
 } from '../../util';
 
-const initialState = {
+export const initialState = {
   online: window !== undefined ? window.navigator.onLine : true,
   showAdvancedOptions: false,
   showTransliterationOptions: false,
@@ -184,6 +186,10 @@ const initialState = {
     LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES,
     DEFAULT_CARTOONIFIED_PAGES
   ),
+  showShabadAudioPlayer: getBooleanFromLocalStorage(
+    LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER,
+    DEFAULT_SHABAD_AUDIO_PLAYER
+  )
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

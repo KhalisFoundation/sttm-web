@@ -111,6 +111,11 @@ blockquote {
       &-row {
         padding: 5px 0;
       }
+
+      svg {
+        fill: $sttm-blue;
+        width: 18px;
+      }
     }
 
     &-left {

@@ -54,6 +54,8 @@ import {
   SET_IS_MODAL_OPEN,
   SET_MODAL_TYPE,
   SET_GURBANI_VERSES,
+  TOGGLE_SHABAD_AUDIO_PLAYER,
+  SET_SHABAD_AUDIO_PLAYER,
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
@@ -85,6 +87,7 @@ import {
   HINDI_LANGUAGE,
   ENGLISH_LANGUAGE,
   LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES,
+  LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -226,6 +229,20 @@ export default function reducer(state, action) {
       return {
         ...state,
         showCartoonifiedPages,
+      };
+    }
+
+    case TOGGLE_SHABAD_AUDIO_PLAYER: {
+      const showShabadAudioPlayer = !state.showShabadAudioPlayer;
+      clickEvent({
+        action: TOGGLE_SHABAD_AUDIO_PLAYER,
+        label: showShabadAudioPlayer ? 1 : 0,
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER, showShabadAudioPlayer);
+      return {
+        ...state,
+        showShabadAudioPlayer,
       };
     }
 
@@ -729,6 +746,19 @@ export default function reducer(state, action) {
       return {
         ...state,
         showCartoonifiedPages,
+      };
+    }
+
+    case SET_SHABAD_AUDIO_PLAYER: {
+      const showShabadAudioPlayer = action.payload || false;
+      clickEvent({
+        action: SET_SHABAD_AUDIO_PLAYER,
+        label: showShabadAudioPlayer ? true : false,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER, showShabadAudioPlayer);
+      return {
+        ...state,
+        showShabadAudioPlayer,
       };
     }
 
