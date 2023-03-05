@@ -5,4 +5,5 @@ export * from './show-toast';
 export * from './reformat-search-types';
 export * from './object-to-query-params';
 export * from './throw-error';
+export * from './toggle-fullscreen-mode';
 export * from './delay';

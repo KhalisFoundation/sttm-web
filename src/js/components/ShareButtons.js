@@ -196,7 +196,7 @@ class ShareButtons extends React.PureComponent {
 
     if (window !== undefined && 'share' in window.navigator) {
       return (
-        <div id="share-menu">
+        <div id="controls-menu">
           <ul className="share-buttons">
             <li>
               <a title="Open Share Dialog" onClick={ShareButtons.handleShare}>
@@ -211,7 +211,7 @@ class ShareButtons extends React.PureComponent {
     }
 
     return (
-      <div id="share-menu">
+      <div id="controls-menu">
         <ul className="share-buttons">{media.map(item => mediaMap[item])}</ul>
       </div>
     );
