@@ -1,9 +1,10 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { connect,  } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import DatePicker from 'react-date-picker';
 import AudioPlayer from 'react-h5-audio-player';
+import { compose } from 'redux';
 
 import CalendarIcon from './Icons/CalendarIcon';
 import Chevron from './Icons/Chevron';
@@ -217,7 +218,7 @@ class Meta extends React.PureComponent {
       }
     }
   }
-  
+
   render() {
     const {
       type,
@@ -369,8 +370,10 @@ class Meta extends React.PureComponent {
                   </span>
                 </div>
               )}
-            />
+              />
           </div>)}
+
+        {!isHukamnama && this.renderRightArrow()}
           
         {isShabadPlayable && showShabadAudioPlayer && (
           <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
@@ -393,11 +396,10 @@ class Meta extends React.PureComponent {
             />
           </div>
         )}
-        {!isHukamnama && this.renderRightArrow()}
       </div >
     );
   }
-
+  
   /**
    * Handle SaveAng
    * @memberof Meta
@@ -416,7 +418,11 @@ class Meta extends React.PureComponent {
     const link = toNavURL(this.props);
     this.props.history.push(link + this.props.nav.next);
   };
+  
 }
 
 const mapStateToProps = state => ({ showShabadAudioPlayer: state.showShabadAudioPlayer })
-export default connect(mapStateToProps)(Meta);
+export default compose(
+  withRouter,
+  connect(mapStateToProps)
+)(Meta);
