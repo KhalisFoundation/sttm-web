@@ -10,6 +10,23 @@
   &.doodle-logo-page {
     padding-top: 6vh;
   }
+
+  .new-text {
+    color: $sttm-orange;
+    font-size: 16px;
+    font-weight: 800;
+    margin: -10px 0 1rem;
+    text-align: center;
+
+    &-blue {
+      color: $sttm-blue;
+    }
+  }
+
+  .logo-long {
+    margin: 1rem 0 0;
+    max-height: 125px;
+  }
 }
 
 .doodle-credit {
@@ -24,11 +41,6 @@
   max-width: calc(320px - 2rem);
 }
 */
-
-.logo-long {
-  margin: 1rem 0;
-  max-height: 125px;
-}
 
 .search-options {
   display: flex;

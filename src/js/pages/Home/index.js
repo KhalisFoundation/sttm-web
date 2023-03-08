@@ -116,12 +116,16 @@ class Home extends React.PureComponent {
                   })}
                 >
                   <div className="flex justify-center align-center">
-                    <div>
+                    <div className="flex flex-direction-column">
                       {showDoodle ? (
                         <Logo className="logo-long" doodle={doodleData} />)
                         : (
                           <Logo className="logo-long" />
                         )}
+                      <span className='new-text'>
+                        <b className='new-text-blue'>NEW{" "}</b>
+                        Listen to every Shabad in Sri Guru Granth Sahib in raag keertan!
+                      </span>
                     </div>
                   </div>
 

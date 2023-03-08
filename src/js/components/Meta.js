@@ -1,9 +1,10 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
+import { connect,  } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import DatePicker from 'react-date-picker';
 import AudioPlayer from 'react-h5-audio-player';
+import { compose } from 'redux';
 
 import CalendarIcon from './Icons/CalendarIcon';
 import Chevron from './Icons/Chevron';
@@ -19,9 +20,13 @@ import {
   dateMath,
   getSourceId,
   getWriter,
-  getRaag
+  getRaag,
+  checkAPIHealth,
+  getShabadAudioUrl
 } from '@/util';
 import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL } from '@/constants';
+import PlayerViewButton from './PlayerViewButton';
+import PlayerCloseButton from './PlayerCloseButton';
 
 /**
  *
@@ -37,6 +42,8 @@ class Meta extends React.PureComponent {
     this.state = {
       audioPlayer: null,
       isHukamnamaAudioPlayerVisible: true,
+      shabadURL: '',
+      isShabadPlayable: false,
     }
     this.audioPlayerRef = createRef();
     this.audioPlayerIconRef = createRef();
@@ -73,6 +80,7 @@ class Meta extends React.PureComponent {
     }),
     isArrowsHidden: PropTypes.bool,
     showPinSettings: PropTypes.bool,
+    showShabadAudioPlayer: PropTypes.bool,
   };
 
   renderLeftArrow() {
@@ -171,6 +179,15 @@ class Meta extends React.PureComponent {
     return '';
   }
 
+  setShabadURL = (url) => {
+    this.setState(previousState => {
+      return ({
+        ...previousState,
+        shabadURL: url
+      })
+    })
+  }
+
   setHukamnamaAudioPlayerVisibility = (e) => {
     e.preventDefault();
     const audioPlayer = this.audioPlayerRef.current.audio.current;
@@ -192,6 +209,15 @@ class Meta extends React.PureComponent {
     return this.setHukamnamaAudioPlayerVisibility(e);
   }
 
+  async componentDidMount() {
+    if (this.props.type === 'shabad' ) {
+      const healthy = await checkAPIHealth()
+      if (healthy) {
+        const audioUrl = await getShabadAudioUrl(this.props.info);
+        this.setShabadURL(audioUrl);
+      }
+    }
+  }
 
   render() {
     const {
@@ -202,6 +228,7 @@ class Meta extends React.PureComponent {
       translationLanguages,
       transliterationLanguages,
       showPinSettings,
+      showShabadAudioPlayer
     } = this.props;
     const Item = ({ children, last = false }) =>
       children ? (
@@ -214,12 +241,13 @@ class Meta extends React.PureComponent {
     const shouldShowEnglishInHeader =
       translationLanguages.includes('english') ||
       transliterationLanguages.includes('english');
-    const contentType = isUnicode ? 'unicode' : 'gurmukhi'
+    const contentType = isUnicode ? 'unicode' : 'gurmukhi';
     const isHukamnama = type === 'hukamnama';
     const todayDate = new Date(new Date().toDateString());
     const hukamnamaDate = new Date(nav.current);
     const maximumHukamnamaDate = new Date(todayDate);
-    const hasAudioPlayer = isHukamnama
+    const hasAudioPlayer = isHukamnama;
+    const isShabadPlayable = !!this.state.shabadURL;
     // hukamnamaDate.getTime() == todayDate.getTime();
 
     return (
@@ -266,7 +294,6 @@ class Meta extends React.PureComponent {
                   {TEXTS.HUKAMNAMA_HEADING}, <span>{nav.current}</span>
                 </h4>
                 <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
-
                   <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to Today's Hukamnama">{`Today's Hukamnama`}</a></span>
                 </div>
               </div>
@@ -321,6 +348,11 @@ class Meta extends React.PureComponent {
               )}
             </h4>
           )}
+          {isShabadPlayable && 
+            (<div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right">
+              <PlayerViewButton/>
+            </div>)
+          }
         </div>
 
         {hasAudioPlayer && (
@@ -338,13 +370,36 @@ class Meta extends React.PureComponent {
                   </span>
                 </div>
               )}
-            />
+              />
           </div>)}
+
         {!isHukamnama && this.renderRightArrow()}
+          
+        {isShabadPlayable && showShabadAudioPlayer && (
+          <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
+          <AudioPlayer
+              ref={this.audioPlayerRef}
+              src={this.state.shabadURL}
+              customAdditionalControls={[]}
+              customVolumeControls={[]}
+              header={(
+                <div>
+                  <h3 className="shabad-player-title">Shabad player</h3>
+                  <PlayerCloseButton />
+                </div>
+              )}
+              footer={(
+                <div>
+                  <h4 className='shabad-player-footer'>Courtesy: Baru Sahib</h4>
+                </div>
+              )}
+            />
+          </div>
+        )}
       </div >
     );
   }
-
+  
   /**
    * Handle SaveAng
    * @memberof Meta
@@ -363,6 +418,11 @@ class Meta extends React.PureComponent {
     const link = toNavURL(this.props);
     this.props.history.push(link + this.props.nav.next);
   };
+  
 }
 
-export default withRouter(Meta);
+const mapStateToProps = state => ({ showShabadAudioPlayer: state.showShabadAudioPlayer })
+export default compose(
+  withRouter,
+  connect(mapStateToProps)
+)(Meta);

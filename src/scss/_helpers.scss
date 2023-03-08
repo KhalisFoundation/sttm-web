@@ -60,6 +60,10 @@
   display: flex;
 }
 
+.flex.flex-direction-column {
+  flex-direction: column;
+}
+
 .flex.justify-center {
   justify-content: center;
 }

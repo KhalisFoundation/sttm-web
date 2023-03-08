@@ -17,6 +17,7 @@ const plugins = PRODUCTION
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
         npm_package_version: JSON.stringify(process.env.npm_package_version),
+        AUDIO_API_PASS: JSON.stringify(process.env.AUDIO_API_PASS)
       },
       PRODUCTION: JSON.stringify(true),
       API_URL: JSON.stringify(API_URLS.PRODUCTION),
@@ -28,12 +29,13 @@ const plugins = PRODUCTION
       CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
       DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
       WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
-    }),
+    })
   ])
   : commonPlugins.concat([
     new webpack.DefinePlugin({
       'process.env': {
         npm_package_version: JSON.stringify(process.env.npm_package_version),
+        AUDIO_API_PASS: JSON.stringify(process.env.AUDIO_API_PASS)
       },
       PRODUCTION: JSON.stringify(false),
       API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
