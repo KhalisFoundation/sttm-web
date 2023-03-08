@@ -73,6 +73,15 @@
       height: 30px;
       width: 30px;
     }
+
+    @media screen and (max-width: 700px) {
+      height: 35px;
+      width: 35px;
+      > svg {
+        height: 12px;
+        width: 12px;
+      }
+    }
   }
 
   &Speed {
