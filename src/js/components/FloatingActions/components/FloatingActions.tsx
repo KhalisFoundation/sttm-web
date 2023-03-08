@@ -48,7 +48,7 @@ export const FloatingActions = (props: Props) => {
             {isShowFullScreen &&
               <div
                 style={lastIconStyles}
-                className="floatingActionsControl">
+                className="floatingActionsControl hide-tablet">
                 <FullScreen />
               </div>}
             {isShowScrollToTop &&
