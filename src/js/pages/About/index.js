@@ -34,7 +34,7 @@ export default class About extends React.PureComponent {
             SHARE Charity UK
           </a>
           , Khalis Foundation, Khalsa Foundation UK, Dr. Sant Singh Khalsa, Dr.
-          Kulbir Singh Thind.
+          Kulbir Singh Thind, <a href="https://barusahib.org/">Baru Sahib</a>.
           <br />
           <br />
           <div className="text-center">
