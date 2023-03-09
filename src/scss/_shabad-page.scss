@@ -136,13 +136,18 @@ blockquote {
 }
 
 .hukamnama-right {
-  &-headphonesIcon {
-    text-align: right;
-  }
-
   &-link {
     svg {
       padding-right: 5px;
+    }
+  }
+
+  &-headphonesIcon {
+    text-align: right;
+
+    &:hover * {
+      color: $sttm-orange;
+      fill: $sttm-orange;
     }
   }
 }
