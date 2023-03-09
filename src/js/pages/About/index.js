@@ -19,9 +19,8 @@ export default class About extends React.PureComponent {
           make Gurbani more accessible and understandable.
           <br />
           <br />
-          SikhiToTheMax is now developed by Khalis Foundation as seva to the
-          Panth and are working hard to ensure it remains the most accurate
-          Gurbani application.
+          SikhiToTheMax is now developed by Khalis Foundation (a registered 501(c)(3) non-profit organization) as seva to the
+          Panth and are working hard to ensure it remains the most accurate Gurbani application, powered by BaniDB.
           <br />
           <br />
           <span style={{ fontWeight: 500 }}>Website: </span>
