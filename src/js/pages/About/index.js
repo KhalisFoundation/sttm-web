@@ -10,13 +10,13 @@ export default class About extends React.PureComponent {
         <BreadCrumb links={[{ title: TEXTS.URIS.ABOUT }]} />
         <div className="wrapper">
           <h4>About</h4>
-          Originally developed by Bhai Tarsem Singh (SHARE Charity UK),
-          SikhiToTheMax has become a defacto standard for Keertan events, camps
-          and Gurdwaras around the world to display Gurbani on large screens for
-          Sangat to be able to join into the depth of Gurbani and translations.
-          Our website further expands the reach of the software allowing anyone
-          to search Gurbani any time from their desktop web browsers or handheld
-          devices.
+          SikhiToTheMax has become a defacto standard for events, camps and Gurdwaras around the world
+          to display Gurbani on large screens for Sangat to be able to join into the depth of Gurbani
+          and translations. This website further expands the reach of the software allowing anyone
+          to search Gurbani any time from their desktop web browsers or mobile devices. Our desktop
+          application also includes features for overlaying Gurbani and translations as subtitles whilst
+          broadcasting live. We offer multiple languages for translations and transliterations to
+          make Gurbani more accessible and understandable.
           <br />
           <br />
           SikhiToTheMax is now developed by Khalis Foundation as seva to the
