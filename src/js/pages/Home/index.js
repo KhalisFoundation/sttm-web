@@ -122,7 +122,10 @@ class Home extends React.PureComponent {
                         : (
                           <Logo className="logo-long" />
                         )}
-
+                      <span className='new-text'>
+                        <b className='new-text-blue'>NEW{" "}</b>
+                        Listen to every Shabad in Sri Guru Granth Sahib in raag keertan!
+                      </span>
                           </div>
                   </div>
 
