@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-
+require('dotenv').config();
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -8,7 +8,6 @@ const path = require('path');
 const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
-
 const commonPlugins = [new ManifestPlugin()];
 
 const plugins = PRODUCTION
@@ -17,7 +16,7 @@ const plugins = PRODUCTION
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
         npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.AUDIO_API_PASS)
+        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS)
       },
       PRODUCTION: JSON.stringify(true),
       API_URL: JSON.stringify(API_URLS.PRODUCTION),
@@ -35,7 +34,7 @@ const plugins = PRODUCTION
     new webpack.DefinePlugin({
       'process.env': {
         npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.AUDIO_API_PASS)
+        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS)
       },
       PRODUCTION: JSON.stringify(false),
       API_URL: JSON.stringify(API_URLS.DEVELOPMENT),

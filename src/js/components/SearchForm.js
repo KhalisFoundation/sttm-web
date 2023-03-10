@@ -17,7 +17,6 @@ import {
   DEFAULT_SEARCH_WRITERS,
 } from '@/constants';
 import { getNumberFromLocalStorage, clickEvent, ACTIONS, getWriterList } from '@/util';
-import { addMultipleShabads } from '@/features/actions';
 
 /**
  *
