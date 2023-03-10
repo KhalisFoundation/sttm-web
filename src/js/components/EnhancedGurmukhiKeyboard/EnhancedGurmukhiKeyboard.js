@@ -161,7 +161,7 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
                             }
 
                             const isCurrentKeyDefaultMatraKey = defaultMatraKeys.includes(keyboardKey);
-                            console.log(getMatraAkhar(keyboardKey, this.props.value), keyboardKey,'KEYBOARD VALUE..')
+                            
                             return (
                               <button
                                 type='button'
