@@ -96,6 +96,12 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
 
   render() {
     const { searchType, active } = this.props;
+    const defaultMatraKeys = Object.keys(defaultMatraValue);
+    const isWithMatras = searchType === SEARCH_TYPES.GURMUKHI_WORD;
+    const keys = isWithMatras ? withMatra : withoutMatra;
+    const keyboardGrid = [keys];
+    const hiddenKeys = this.getHiddenKeys();
+
     const spaceKey = (
       <button
         key="space-key"
@@ -106,12 +112,6 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
         <SpaceBar />
       </button>
     );
-
-    const defaultMatraKeys = Object.keys(defaultMatraValue);
-    const isWithMatras = searchType === SEARCH_TYPES.GURMUKHI_WORD;
-    const keys = isWithMatras ? withMatra : withoutMatra;
-    const keyboardGrid = [keys];
-    const hiddenKeys = this.getHiddenKeys();
 
     const meta = (
       <React.Fragment key="meta-key">
@@ -161,7 +161,7 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
                             }
 
                             const isCurrentKeyDefaultMatraKey = defaultMatraKeys.includes(keyboardKey);
-
+                            
                             return (
                               <button
                                 type='button'
