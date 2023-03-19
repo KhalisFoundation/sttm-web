@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { buildApiUrl } from '@sttm/banidb';
-import { client } from '@/components/FavouriteShabadButton/utils/api-client';
+import { apiClient } from '@/components/FavouriteShabadButton/utils/api-client';
 import { isKeyExists } from '@/util';
 
 import { useFavouriteShabads } from '@/components/FavouriteShabadButton/hooks';
@@ -15,11 +15,9 @@ import { useSelector } from 'react-redux';
 import store from '@/features/store';
 import convertApiDataToFavoriteShabad from '../utils/convert-api-data-to-favorite-shabad';
 
-const FavouriteShabads: React.FC = () => {
+const FavouriteShabads = () => {
   const { isLoading: isUserLoading } = useGetUser<IUser>()
   const favouriteShabads = useFavouriteShabads();
-  const favouriteShabadsIds = favouriteShabads.map(s => s.shabad_id)
-  console.log(favouriteShabads, "favShabads...")
   const [shabadsLoading, setShabadsLoading] = useState(true)
   const [shabadsListing, setShabadsListing] = useState<any[]>([])
   const userSettingsState = useSelector<typeof store>(state => ({
@@ -34,14 +32,11 @@ const FavouriteShabads: React.FC = () => {
 
   useEffect(() => {
     if (favouriteShabads.length) {
-      const id = favouriteShabadsIds.join(',')
-      console.log(id, "id...")
+      const id = favouriteShabads.join(',')
       const url = encodeURI(buildApiUrl({ API_URL, id }));
-      console.log(url, 'url...')
       // console.log(url, "FAVORITE SHABAD")
-      client(url)
+      apiClient(url)
         .then(data => {
-          console.log(data, "client data...")
           let shabadsArray: any[] = []
           if (isKeyExists(data, 'shabadIds')) {
             shabadsArray = data.shabads.map(convertApiDataToFavoriteShabad)
@@ -63,13 +58,13 @@ const FavouriteShabads: React.FC = () => {
     if (shabadsListing.length) {
       setShabadsLoading(false)
     }
-  }, [shabadsListing.length > 0, setShabadsLoading])
+  }, [shabadsListing , setShabadsLoading])
 
 
   if (isUserLoading) {
     return <Spinner />
   }
-  console.log(shabadsListing, "shabadsListing...")
+
   return (
     <>
       {

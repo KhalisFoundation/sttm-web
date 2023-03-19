@@ -8,25 +8,27 @@ import { useGetUser } from '@/hooks';
 import { useDispatch } from 'react-redux';
 import { setGurbaniVerses, setIsModalOpen, setModalType } from '@/features/actions';
 
-type FCProps = {
+type Props = {
   shabad: IMultipleShabadsProps;
   gurbani: [];
 }
 
-export const FavouriteShabadButton: React.FC<FCProps> = ({ shabad: { shabadId }, gurbani }) => {
+export const FavouriteShabadButton = ({ shabad: { shabadId }, gurbani }: Props) => {
   const { user } = useGetUser<IUser>()
+  
   // If user is valid then check for favourite shabads
   const isFav = useFavouriteShabad(shabadId)
   const isFavourite = user && isFav
   const create = useCreateFavouriteShabad()
   const remove = useRemoveFavouriteShabad()
   const dispatch = useDispatch();
+
   const handleAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // dispatch(setGurbaniVerses(gurbani))
-    // dispatch(setModalType('addFavouriteShabad'));
-    // dispatch(setIsModalOpen(true));
-    create.mutate(shabadId)
+    dispatch(setGurbaniVerses(gurbani))
+    dispatch(setModalType('addFavouriteShabad'));
+    dispatch(setIsModalOpen(true));
+    // create.mutate(shabadId)
   }
 
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {

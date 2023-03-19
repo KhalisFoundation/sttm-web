@@ -3,9 +3,6 @@ const convertApiDataToFavoriteShabad = (apiShabadData: any) => {
     ...apiShabadData.shabadInfo,
     ...apiShabadData.verses[0],
   };
-
-  console.log(apiShabadData, favouriteShabad, 'API SHABAD DATA...');
-
   return favouriteShabad;
 };
 

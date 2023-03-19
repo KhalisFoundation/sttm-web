@@ -1,13 +1,13 @@
 import React from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { client } from '../utils/api-client';
+import { apiClient } from '../utils/api-client';
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants';
 
 export async function getUser() {
   let user = null;
   const { token } = getToken();
   if (token) {
-    user = await client('auth/jwt', { token });
+    user = await apiClient('auth/jwt', { token });
   }
   return user;
 }
@@ -19,7 +19,7 @@ function getToken() {
 function useClient() {
   const token = getToken();
   return React.useCallback(
-    (endpoint, ...config) => client(endpoint, { token, ...config }),
+    (endpoint, ...config) => apiClient(endpoint, { token, ...config }),
     [token]
   );
 }
@@ -28,10 +28,8 @@ function useFavouriteShabads() {
   const { data: favouriteShabads } = useQuery({
     queryKey: 'favourite-shabads',
     queryFn: () =>
-      client(`/favourite-shabads`, { token: getToken() }).then((data) =>{
-        console.log(data,"useFAVSHABADS...")
-        return (data.favouriteShabads)
-      }
+      apiClient(`/favourite-shabads`, { token: getToken() }).then((data) =>
+        data.favouriteShabads.map(f=>f.shabad_id)
       ),
   });
 
@@ -48,14 +46,14 @@ function useFavouriteShabad(shabadId) {
 function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
-    (shabadId) =>
-      client(`/favourite-shabads`, { token: getToken(), data: shabadId }),
+    (shabadId, comment = '') => {
+      const data = {shabadId, comment};
+      apiClient(`/favourite-shabads`, { token: getToken(), data })
+    },
     {
       onMutate: (newShabad) => {
         // Snapshot the previous values
-        console.log(newShabad,"newShabad...")
         const oldShabads = queryClient.getQueryData('favourite-shabads');
-        console.log(oldShabads,"oldShabads...")
         if (queryClient.getQueryData('favourite-shabads')) {
           queryClient.setQueryData('favourite-shabads', (old) => [
             ...old,
@@ -81,7 +79,7 @@ function useRemoveFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (shabadId) =>
-      client(`/favourite-shabads/${shabadId}`, {
+      apiClient(`/favourite-shabads/${shabadId}`, {
         token: getToken(),
         method: 'DELETE',
       }),
@@ -98,7 +96,7 @@ function useRemoveFavouriteShabad() {
         return () => queryClient.setQueryData('favourite-shabads', oldShabads);
       },
       // If the mutation fails, use the context returned from onMutate to roll back
-      onError: (err, variables, recover) =>
+      onError: (_err, _variables, recover) =>
         typeof recover === 'function' ? recover() : null,
       // Always refetch after error or success:
       onSettled: () => {

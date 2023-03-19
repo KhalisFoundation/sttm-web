@@ -1,16 +1,14 @@
-type IProps = {
+type Props = {
   token?: string | null | undefined;
   data?: string;
 };
-export const client = async (
+export const apiClient = async (
   endpoint: string,
-  { token, data, ...customConfig }: IProps = {}
+  { token, data, ...customConfig }: Props = {}
 ) => {
-  const payload = {...data,comment: "Testing Comment"}
-  console.log(payload,"payload... ")  
-  const config: any = {
+  const config = {
     method: data ? 'POST' : 'GET',
-    body: data ? JSON.stringify(payload) : undefined,
+    body: data ? JSON.stringify(data) : undefined,
     headers: {
       Authorization: token ? `Bearer ${token}` : undefined,
       'Content-Type': 'application/json',
@@ -18,7 +16,7 @@ export const client = async (
     ...customConfig,
   };
 
-  return window.fetch(`${endpoint}`, config).then(async (response) => {
+  return window.fetch(endpoint, config).then(async (response) => {
     if (response.status === 401) {
       return Promise.reject({ message: 'Please re-authenticate.' });
     }
@@ -28,5 +26,8 @@ export const client = async (
     } else {
       return Promise.reject(data);
     }
+  }).catch(err => {
+    console.log(err,"ERROR OBJECT..")
+    console.log(err.message,"ERR.message")
   });
 };
