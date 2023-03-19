@@ -28,8 +28,10 @@ function useFavouriteShabads() {
   const { data: favouriteShabads } = useQuery({
     queryKey: 'favourite-shabads',
     queryFn: () =>
-      client(`/favourite-shabads`, { token: getToken() }).then((data) =>
-        data.favouriteShabads.map((e) => e.shabad_id)
+      client(`/favourite-shabads`, { token: getToken() }).then((data) =>{
+        console.log(data,"useFAVSHABADS...")
+        return (data.favouriteShabads)
+      }
       ),
   });
 
@@ -47,12 +49,13 @@ function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (shabadId) =>
-      client(`/favourite-shabads`, { token: getToken(), data: { shabadId } }),
+      client(`/favourite-shabads`, { token: getToken(), data: shabadId }),
     {
       onMutate: (newShabad) => {
         // Snapshot the previous values
+        console.log(newShabad,"newShabad...")
         const oldShabads = queryClient.getQueryData('favourite-shabads');
-
+        console.log(oldShabads,"oldShabads...")
         if (queryClient.getQueryData('favourite-shabads')) {
           queryClient.setQueryData('favourite-shabads', (old) => [
             ...old,

@@ -23,10 +23,10 @@ export const FavouriteShabadButton: React.FC<FCProps> = ({ shabad: { shabadId },
   const dispatch = useDispatch();
   const handleAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(setGurbaniVerses(gurbani))
-    dispatch(setModalType('addFavouriteShabad'));
-    dispatch(setIsModalOpen(true));
-    // create.mutate(shabadId)
+    // dispatch(setGurbaniVerses(gurbani))
+    // dispatch(setModalType('addFavouriteShabad'));
+    // dispatch(setIsModalOpen(true));
+    create.mutate(shabadId)
   }
 
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {

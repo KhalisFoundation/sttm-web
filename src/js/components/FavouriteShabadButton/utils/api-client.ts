@@ -6,9 +6,11 @@ export const client = async (
   endpoint: string,
   { token, data, ...customConfig }: IProps = {}
 ) => {
+  const payload = {...data,comment: "Testing Comment"}
+  console.log(payload,"payload... ")  
   const config: any = {
     method: data ? 'POST' : 'GET',
-    body: data ? JSON.stringify(data) : undefined,
+    body: data ? JSON.stringify(payload) : undefined,
     headers: {
       Authorization: token ? `Bearer ${token}` : undefined,
       'Content-Type': 'application/json',
