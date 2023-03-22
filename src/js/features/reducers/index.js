@@ -52,7 +52,6 @@ import {
   TOGGLE_CARTOONIFIED_PAGES,
   SET_CARTOONIFIED_PAGES,
   SET_IS_MODAL_OPEN,
-  SET_MODAL_TYPE,
   SET_GURBANI_VERSES,
   TOGGLE_SHABAD_AUDIO_PLAYER,
   SET_SHABAD_AUDIO_PLAYER,
@@ -891,14 +890,6 @@ export default function reducer(state, action) {
       return {
         ...state,
         isModalOpen
-      };
-    }
-
-    case SET_MODAL_TYPE: {
-      const modalType = action.payload;
-      return {
-        ...state,
-        modalType
       };
     }
 
