@@ -81,13 +81,13 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const sourceId = getSourceId(shabad);
   const writerId = getWriterId(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
-  const comment = "It was a dark and stormy night....";
+  const comment = shabad.comment;
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   const shabadEnglishTranslation = translationMap['english'](shabad);
-  const created_at = new Date("2023-03-18T11:12:10.000Z");
+  const createdAt = new Date(shabad.createdAt);
   const dateFormat = 'PP';
   const timeFormat = 'p'
-  const dateTime = `${format(created_at, dateFormat)} | ${format(created_at, timeFormat)}`
+  const dateTime = `${format(createdAt, dateFormat)} | ${format(createdAt, timeFormat)}`
 
   // english-word search type we needs to highlight index for english translations.
   // romanized first letters we needs to highlight index for english transliterations
