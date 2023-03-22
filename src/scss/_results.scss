@@ -52,9 +52,10 @@ li.search-result {
         color: $sttm-orange;
       }
     }
+
     .comments {
-      font-style: italic;
       color: $sttm-orange;
+      font-style: italic;
       word-break: break-word;
     }
   }
@@ -206,9 +207,13 @@ li.search-result {
     }
 
     .date-time {
-      font-weight: 600;
       font-size: 15px;
+      font-weight: 600;
       width: max-content;
+
+      .dark-mode & {
+        color: $sttm-white;
+      }
     }
   }
 }
