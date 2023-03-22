@@ -18,6 +18,7 @@ import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
 import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
+import { AddFavouriteShabadModal } from './Modals';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -40,6 +41,7 @@ class Layout extends React.PureComponent {
     multipleShabads: PropTypes.array,
     showMultiViewPanel: PropTypes.bool,
     showPinSettings: PropTypes.bool,
+    isModalOpen: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
     closeSettingsPanel: PropTypes.func,
     history: PropTypes.object 
@@ -88,6 +90,7 @@ class Layout extends React.PureComponent {
       autoScrollMode,
       showMultiViewPanel,
       showPinSettings,
+      isModalOpen,
       location: { pathname = '/' } = {},      
       ...props
     } = this.props;
@@ -110,6 +113,7 @@ class Layout extends React.PureComponent {
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner />
+        {isModalOpen && <AddFavouriteShabadModal />}
         <div className={`pusher ${showMultiViewPanel ? 'enable' : ''} pin-settings ${showPinSettings ? 'active' : ''}`}>
           <Header
             defaultQuery={this.props.defaultQuery}
@@ -224,7 +228,7 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings }),
+  ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, isModalOpen }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, isModalOpen }),
   {
     setOnlineMode,
     closeSettingsPanel,

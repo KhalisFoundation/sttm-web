@@ -10,7 +10,6 @@ import {
   showToast,
   saveToLocalStorage,
 } from './util';
-import { Modals } from '@/components/Modals';
 
 export default class Root extends React.PureComponent {
   constructor() {
@@ -20,7 +19,7 @@ export default class Root extends React.PureComponent {
       // logLevel: 'debug',
       defaultKeyEvent: 'keydown',
       defaultComponent: 'div',
-      ignoreTags: ['input'],
+      ignoreTags: ['input', 'dialog', 'textarea'],
       defaultTabIndex: -1
     })
   }
@@ -34,7 +33,6 @@ export default class Root extends React.PureComponent {
             ))}
             <Route render={() => <NotFound />} />
           </Switch>
-          <Modals />
           <Notifier />
         </GlobalHotKeys>
       </Router>
