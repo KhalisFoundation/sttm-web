@@ -28,7 +28,7 @@ const addFavouriteShabadCallback = async (_req, res, data, connection) => {
     const result = await connection.query("SELECT * from favourite_shabads WHERE id = ?", [rows.insertId])
     res.status(200).json(result[0]);
   }catch(err) {
-    console.log(err.message,'ERROR.MESSAGE ADD FAVORITE SHABAD..')
+    // console.log(err.message,'ERROR.MESSAGE ADD FAVORITE SHABAD..')
   }
 }   
 
