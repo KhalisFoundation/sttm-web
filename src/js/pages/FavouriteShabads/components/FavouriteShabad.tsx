@@ -14,10 +14,13 @@ import { IUser } from '@/types/user'
 import { useSelector } from 'react-redux';
 import store from '@/features/store';
 import convertApiDataToFavoriteShabad from '../utils/convert-api-data-to-favorite-shabad';
+import getFormattedShabads from '@/pages/FavouriteShabads/utils/getFormattedFavShabads';
+
 
 const FavouriteShabads = () => {
   const { isLoading: isUserLoading } = useGetUser<IUser>()
   const favouriteShabads = useFavouriteShabads();
+  const favouriteShabadIds = favouriteShabads.length > 0 && favouriteShabads.map(f => f.shabad_id)
   const [shabadsLoading, setShabadsLoading] = useState(true)
   const [shabadsListing, setShabadsListing] = useState<any[]>([])
   const userSettingsState = useSelector<typeof store>(state => ({
@@ -32,16 +35,17 @@ const FavouriteShabads = () => {
 
   useEffect(() => {
     if (favouriteShabads.length) {
-      const id = favouriteShabads.join(',')
+      const id = favouriteShabadIds.join(',')
       const url = encodeURI(buildApiUrl({ API_URL, id }));
       // console.log(url, "FAVORITE SHABAD")
       apiClient(url)
         .then(data => {
+          const formattedShabads = getFormattedShabads(data.shabads, favouriteShabads)
           let shabadsArray: any[] = []
           if (isKeyExists(data, 'shabadIds')) {
-            shabadsArray = data.shabads.map(convertApiDataToFavoriteShabad)
+            shabadsArray = formattedShabads.map(convertApiDataToFavoriteShabad)
           } else {
-            shabadsArray.push(convertApiDataToFavoriteShabad(data))
+            shabadsArray.push(convertApiDataToFavoriteShabad(formattedShabads))
           }
           setShabadsListing(shabadsArray)
           setShabadsLoading(false);
@@ -52,7 +56,7 @@ const FavouriteShabads = () => {
       setShabadsListing([])
       setShabadsLoading(false);
     }
-  }, [favouriteShabads])
+  }, [favouriteShabads.length])
 
   useEffect(() => {
     if (shabadsListing.length) {
