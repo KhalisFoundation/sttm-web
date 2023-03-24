@@ -176,6 +176,7 @@ li.search-result {
       align-items: flex-start;
       display: flex;
       flex-direction: column;
+      gap: 0.5rem;
     }
 
     .labels {
@@ -184,7 +185,7 @@ li.search-result {
 
       .remove-fav-title,
       .multiview-title {
-        padding-bottom: 0.5rem;
+        // padding-bottom: 0.5rem;
         width: max-content;
 
         .dark-mode & {
@@ -198,11 +199,20 @@ li.search-result {
     }
 
     .remove-fav-button {
-      padding-bottom: 0.5rem;
+      // padding-bottom: 0.5rem;
 
       svg {
         height: 1.5em;
         width: 1.5em;
+      }
+    }
+
+    .date-time-icon {
+      height: 1.5em;
+      width: 1.5em;
+
+      .dark-mode & {
+        fill: $sttm-white;
       }
     }
 

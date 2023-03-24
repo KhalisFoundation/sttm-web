@@ -39,6 +39,7 @@ import { Play } from '../Icons/controls/Play'
 import PreviewShabad from '../PreviewShabad';
 import { useEscapeKeyEventHandler } from '@/hooks';
 import { format } from 'date-fns';
+import DateAndTimeIcon from '@/components/Icons/DateAndTimeIcon';
 
 interface IShabadButtonWrapper {
   multipleShabads: IMultipleShabadsProps[]
@@ -300,6 +301,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               <StarIcon />
             </button>
             <ShabadButtonWrapper shabad={formattedShabad} />
+            <DateAndTimeIcon className="date-time-icon" />
           </div> :
             <div className="favourite-shabad-wrap icons">
               <ShabadButtonWrapper shabad={formattedShabad} />
@@ -309,7 +311,9 @@ const SearchResult: React.FC<IShabadResultProps> = ({
             {isShabadAdded
               ? (<span className='multiview-title'>Remove from multiview</span>)
               : (<span className='multiview-title' >Add to multiview</span>)}
-            <span className='date-time'>{dateTime}</span>
+            <span className='date-time'>
+              {dateTime}
+            </span>
           </div>
         </div>
       </li>
