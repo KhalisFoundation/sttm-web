@@ -38,8 +38,8 @@ import SourceIcon from '../Icons/SourceIcon'
 import { Play } from '../Icons/controls/Play'
 import PreviewShabad from '../PreviewShabad';
 import { useEscapeKeyEventHandler } from '@/hooks';
-import { format } from 'date-fns';
 import DateAndTimeIcon from '@/components/Icons/DateAndTimeIcon';
+import { getFormattedDateTime } from '@/components/SearchResults/util/get-formatted-date-time';
 
 interface IShabadButtonWrapper {
   multipleShabads: IMultipleShabadsProps[]
@@ -85,11 +85,6 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const comment = shabad.comment;
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   const shabadEnglishTranslation = translationMap['english'](shabad);
-  const createdAt = new Date(shabad.createdAt);
-  const dateFormat = 'PP';
-  const timeFormat = 'p'
-  const dateTime = `${format(createdAt, dateFormat)} | ${format(createdAt, timeFormat)}`
-
   // english-word search type we needs to highlight index for english translations.
   // romanized first letters we needs to highlight index for english transliterations
 
@@ -283,7 +278,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               </div>
             )}
           </div>
-          {comment !== null &&
+          {(comment !== null || comment !== undefined) &&
             <p className='comments'>
               {comment}
             </p>}
@@ -312,7 +307,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               ? (<span className='multiview-title'>Remove from multiview</span>)
               : (<span className='multiview-title' >Add to multiview</span>)}
             <span className='date-time'>
-              {dateTime}
+              {shabad.createdAt && getFormattedDateTime(shabad.createdAt)}
             </span>
           </div>
         </div>
