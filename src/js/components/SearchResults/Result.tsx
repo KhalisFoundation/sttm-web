@@ -38,6 +38,8 @@ import SourceIcon from '../Icons/SourceIcon'
 import { Play } from '../Icons/controls/Play'
 import PreviewShabad from '../PreviewShabad';
 import { useEscapeKeyEventHandler } from '@/hooks';
+import { format } from 'date-fns';
+import DateAndTimeIcon from '@/components/Icons/DateAndTimeIcon';
 
 interface IShabadButtonWrapper {
   multipleShabads: IMultipleShabadsProps[]
@@ -80,9 +82,13 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const sourceId = getSourceId(shabad);
   const writerId = getWriterId(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
-
+  const comment = shabad.comment;
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   const shabadEnglishTranslation = translationMap['english'](shabad);
+  const createdAt = new Date(shabad.createdAt);
+  const dateFormat = 'PP';
+  const timeFormat = 'p'
+  const dateTime = `${format(createdAt, dateFormat)} | ${format(createdAt, timeFormat)}`
 
   // english-word search type we needs to highlight index for english translations.
   // romanized first letters we needs to highlight index for english transliterations
@@ -277,6 +283,10 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               </div>
             )}
           </div>
+          {comment !== null &&
+            <p className='comments'>
+              {comment}
+            </p>}
         </div>
 
         <div className={`${isShabadPreview ? 'preview-shabad-visible' : 'preview-shabad-hidden'}`}><PreviewShabad verses={verses} /></div>
@@ -291,17 +301,19 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               <StarIcon />
             </button>
             <ShabadButtonWrapper shabad={formattedShabad} />
+            <DateAndTimeIcon className="date-time-icon" />
           </div> :
             <div className="favourite-shabad-wrap icons">
-              {
-                <ShabadButtonWrapper shabad={formattedShabad} />
-              }
+              <ShabadButtonWrapper shabad={formattedShabad} />
             </div>}
           <div className="favourite-shabad-wrap labels">
             {(user && isFavShabadPage) && <span className='remove-fav-title'>Remove favourite</span>}
             {isShabadAdded
               ? (<span className='multiview-title'>Remove from multiview</span>)
               : (<span className='multiview-title' >Add to multiview</span>)}
+            <span className='date-time'>
+              {dateTime}
+            </span>
           </div>
         </div>
       </li>

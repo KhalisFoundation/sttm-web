@@ -1,0 +1,68 @@
+.background-modal {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 0;
+  bottom: 0;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.add-fav-shabad-container {
+  background: $sttm-white;
+  height: auto;
+  width: 70%;
+
+  .header {
+    align-items: center;
+    background: $sttm-blue;
+    color: $sttm-white;
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: space-between;
+    padding: 10px 20px;
+
+    svg {
+      font-size: 20px;
+    }
+  }
+
+  .content {
+    padding: 20px 10%;
+
+    .title {
+      color: $sttm-darker-blue;
+      font-size: 24px;
+      font-weight: 600;
+
+      .dark-mode & {
+        color: $sttm-dark-white;
+      }
+    }
+
+    .textarea {
+      .dark-mode & {
+        background-color: $sttm-lighter-black;
+        color: $sttm-dark-white;
+      }
+    }
+
+    .save-btn {
+      align-items: center;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+    color: $sttm-dark-white;
+  }
+}

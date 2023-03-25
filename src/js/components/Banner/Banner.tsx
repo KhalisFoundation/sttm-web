@@ -3,7 +3,7 @@ import CrossIcon from '../Icons/Times';
 import { Link } from 'react-router-dom';
 import { useFetchData } from '@/hooks';
 
-const Banner: React.FC = () => {
+const Banner = () => {
   const url = "https://sttm.s3.us-west-2.amazonaws.com/urgent-message.json";
 
   const {
@@ -13,7 +13,7 @@ const Banner: React.FC = () => {
 
   const lastSeen = sessionStorage.getItem("bannerMessage");
   const updateLastSeen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.currentTarget.parentElement.remove();
+    e.currentTarget.parentElement?.remove();
     sessionStorage.setItem("bannerMessage", "seen");
   };
 

@@ -10,6 +10,7 @@ import {
   showToast,
   saveToLocalStorage,
 } from './util';
+
 export default class Root extends React.PureComponent {
   constructor() {
     super();
@@ -18,7 +19,7 @@ export default class Root extends React.PureComponent {
       // logLevel: 'debug',
       defaultKeyEvent: 'keydown',
       defaultComponent: 'div',
-      ignoreTags: ['input'],
+      ignoreTags: ['input', 'dialog', 'textarea'],
       defaultTabIndex: -1
     })
   }

@@ -51,6 +51,8 @@ import {
   SET_HINDI_TRANSLATION_LANGUAGES,
   TOGGLE_CARTOONIFIED_PAGES,
   SET_CARTOONIFIED_PAGES,
+  SET_IS_MODAL_OPEN,
+  SET_GURBANI_VERSES,
   TOGGLE_SHABAD_AUDIO_PLAYER,
   SET_SHABAD_AUDIO_PLAYER,
 } from '../actions';
@@ -88,7 +90,6 @@ import {
 } from '@/constants';
 import {
   saveToLocalStorage,
-  getArrayFromLocalStorage,
   clickEvent,
 } from '@/util';
 import { DARK_MODE_COOKIE } from '../../../../common/constants';
@@ -878,10 +879,25 @@ export default function reducer(state, action) {
 
     case SET_ERROR: {
       const error = action.payload;
-
       return {
         ...state,
         error,
+      };
+    }
+
+    case SET_IS_MODAL_OPEN: {
+      const isModalOpen = action.payload;
+      return {
+        ...state,
+        isModalOpen
+      };
+    }
+
+    case SET_GURBANI_VERSES: {
+      const gurbaniVerses = action.payload;
+      return {
+        ...state,
+        gurbaniVerses
       };
     }
 
