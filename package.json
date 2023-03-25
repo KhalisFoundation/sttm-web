@@ -129,7 +129,6 @@
     "classnames": "^2.2.6",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
-    "date-fns": "^2.29.3",
     "dotenv": "^9.0.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
