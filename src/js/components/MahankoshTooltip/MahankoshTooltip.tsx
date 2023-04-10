@@ -1,3 +1,4 @@
+/* globals API_URL */
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
