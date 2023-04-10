@@ -57,6 +57,8 @@ export interface ISettingActions {
   toggleAdvancedOptions: () => {},
   setLarivaarAssistStrength: (attr: any) => {},
   setSgBaaniLength: (attr: any) => {},
+  setSplitView: (attr: boolean) => {},
+  setReadingMode: (attr: boolean) => {},
   location: {
     pathname?: string,
   },
@@ -234,6 +236,8 @@ export const QUICK_SETTINGS = ({
   setSteekLanguages,
   setSgBaaniLength,
   setVisraamStyle,
+  setSplitView,
+  setReadingMode,
   translationLanguages,
   englishTranslationLanguages,
   hindiTranslationLanguages,
@@ -382,14 +386,14 @@ export const QUICK_SETTINGS = ({
       label: 'Split',
       tooltip: 'Set split mode ( / )',
       checked: splitView,
-      action: toggleSplitViewOption,
+      action: () => {toggleSplitViewOption(), setReadingMode(false)}
     },
     {
       type: 'toggle-option',
       label: 'Reading',
       tooltip: 'Set reading mode',
       checked: readingMode,
-      action: () => {toggleReadingMode(), setTranslationLanguages([]), setTransliterationLanguages([]) }
+      action: () => {toggleReadingMode(), setSplitView(false) }
     },
     {
       type: 'toggle-option',
