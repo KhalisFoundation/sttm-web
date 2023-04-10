@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Larivaar from './Larivaar';
 
 interface IBaaniLineProps {
@@ -14,6 +14,8 @@ interface IBaaniLineProps {
   fontFamily: string,
   lineHeight?: number,
   visraam?: object,
+  visraams: boolean,
+  isReadingMode?: boolean,
 };
 
 const BaaniLine: React.FC<IBaaniLineProps> = ({
@@ -26,36 +28,53 @@ const BaaniLine: React.FC<IBaaniLineProps> = ({
   unicode,
   text,
   visraam,
+  visraams,
+  isReadingMode = false,
 }) => {
 
-  return (
-    <div
-      className={`gurmukhi gurbani-display gurbani-font ${
-        shouldHighlight ? 'highlight' : ''
-        }`}
-      style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}`, lineHeight: lineHeight }}
-    >
-      {'\n'}
+  if (isReadingMode) {
+    return (
       <div
-        className={`${larivaar ? 'larivaar' : ''} ${
-          unicode ? 'unicode' : 'gurlipi'
-          }`}
+        className={`gurmukhi gurbani-display gurbani-font ${shouldHighlight ? 'highlight' : ''
+          } ${larivaar ? 'larivaar' : ''} ${unicode ? 'unicode' : 'gurlipi-reading-mode'}`}
+        style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}`, lineHeight: lineHeight + 0.2 }}
       >
         <Larivaar
-          setSelectedLineNo={setSelectedLineNo}
-          selectedLineNo={selectedLineNo}
           isShowMahankoshTooltip
           larivaarAssist={larivaarAssist}
           enable={larivaar}
           unicode={unicode}
           visraam={visraam}
+          visraams={visraams}
+        >
+          {unicode ? text.unicode : text.gurmukhi}
+        </Larivaar>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`gurmukhi gurbani-display gurbani-font ${shouldHighlight ? 'highlight' : ''
+        }`}
+      style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}`, lineHeight: lineHeight }}
+    >
+      {'\n'}
+      <div className={`${larivaar ? 'larivaar' : ''} ${unicode ? 'unicode' : 'gurlipi'}`}>
+        <Larivaar
+          isShowMahankoshTooltip
+          larivaarAssist={larivaarAssist}
+          enable={larivaar}
+          unicode={unicode}
+          visraam={visraam}
+          visraams={visraams}
         >
           {unicode ? text.unicode : text.gurmukhi}
         </Larivaar>
       </div>
       {'\n'}
     </div>
-  );;
+  );
 }
 
 export default BaaniLine;
