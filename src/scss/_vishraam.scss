@@ -8,6 +8,7 @@
   @each $source in $visraam-sources {
     &.display-visraams.vishraam-vishraam-options-colored-words.vishraam-vishraam-source-#{$source} {
       .gurlipi,
+      .gurlipi-reading-mode,
       .unicode {
         .visraam-#{$source}-main {
           color: $visraam-main !important;
@@ -21,6 +22,7 @@
 
     &.display-visraams.vishraam-vishraam-options-gradient-bg.vishraam-vishraam-source-#{$source} {
       .gurlipi,
+      .gurlipi-reading-mode,
       .unicode {
         span {
           border-radius: 15px;
