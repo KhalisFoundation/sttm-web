@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TRANSLATION_LANGUAGES, ENGLISH_TRANSLATION_LANGUAGES, HINDI_TRANSLATION_LANGUAGES, PUNJABI_LANGUAGE } from '@/constants';
 
 export default class Translation extends React.PureComponent {
-  static defaultProps = { children: '' };
+  static defaultProps = { children: '', isReadingMode: false };
   static defaultFontSize = '18px';
   static propTypes = {
     type: PropTypes.oneOf([...TRANSLATION_LANGUAGES, ...ENGLISH_TRANSLATION_LANGUAGES, ...HINDI_TRANSLATION_LANGUAGES]),
@@ -51,7 +51,7 @@ export default class Translation extends React.PureComponent {
     const { defaultFontSize } = Translation;
     const { type, unicode, text, fontSize: _fontSize, children, isReadingMode } = this.props;
     const fontSize = _fontSize ? _fontSize + 'em' : defaultFontSize;
-    const translationClass = isReadingMode ? 'reading-mode-translation':'translation';
+    const translationClass = isReadingMode ? 'reading-mode-translation' : 'translation';
 
     const isTranslationExists = (!!text && (!!text.unicode || !!text.gurmukhi)) || !!children;
     if (!isTranslationExists) return null;

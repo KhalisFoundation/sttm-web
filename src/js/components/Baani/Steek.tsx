@@ -7,7 +7,7 @@ interface ISteekProps {
 	shabad: object,
 	unicode: boolean,
 	fontSize: number,
-	isReadingMode: boolean,
+	isReadingMode?: boolean,
 }
 
 const Steek: React.FC<ISteekProps> = ({
@@ -15,7 +15,7 @@ const Steek: React.FC<ISteekProps> = ({
 	shabad,
 	unicode,
 	fontSize: _fontSize,
-	isReadingMode
+	isReadingMode = false
 }) => {
 	const defaultFontSize = '18px';
 	const text = steekMap[type](shabad);
@@ -25,7 +25,7 @@ const Steek: React.FC<ISteekProps> = ({
 		return null;
 
 	return (
-		<blockquote style={{fontSize}} className={`${steekClass} ${type}`}>
+		<blockquote style={{ fontSize }} className={`${steekClass} ${type}`}>
 			{unicode
 				? (text.unicode && <div className={`${steekClass} unicode`}>{text.unicode}</div>)
 				: (text.gurmukhi && <div className={`${steekClass} gurlipi`}>{text.gurmukhi}</div>)}
