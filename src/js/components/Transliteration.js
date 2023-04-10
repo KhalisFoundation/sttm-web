@@ -11,18 +11,20 @@ export default class Transliteration extends React.PureComponent {
       PropTypes.string,
       PropTypes.number
     ]),
+    isReadingMode: PropTypes.bool,
   };
   render() {
     const { defaultFontSize } = Transliteration;
-    const { fontSize: _fontSize, language, children } = this.props;
+    const { fontSize: _fontSize, language, children, isReadingMode } = this.props;
     const fontSize = _fontSize ? _fontSize + 'em' : defaultFontSize;
     const isTransliterationExists = !!children;
-    if (!isTransliterationExists) return null;
+    const transliterationClass = isReadingMode ? 'reading-mode-transliteration ' : 'transliteration '; 
+    if (!isTransliterationExists) return null; 
 
     return (
       <div
         style={{ fontSize }}
-        className={'transliteration ' + language}>
+        className={transliterationClass + language}>
         {children + ''}
       </div>
     );

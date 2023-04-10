@@ -17,6 +17,7 @@ export default class BaaniLine extends React.PureComponent {
     lineHeight: PropTypes.number,
     visraam: PropTypes.object,
     visraams: PropTypes.bool,
+    isReadingMode: PropTypes.bool, 
   };
 
   render() {
@@ -30,10 +31,11 @@ export default class BaaniLine extends React.PureComponent {
       unicode,
       text,
       visraam,
-      visraams
+      visraams,
+      isReadingMode,
     } = this.props;
-
-    return (
+    if(!isReadingMode){
+      return (
       <div
         className={`gurmukhi gurbani-display gurbani-font ${
           shouldHighlight ? 'highlight' : ''
@@ -58,6 +60,26 @@ export default class BaaniLine extends React.PureComponent {
           </Larivaar>
         </div>
         {'\n'}
+      </div>
+      )
+    }
+    return (
+      <div
+        className={`gurmukhi gurbani-display gurbani-font ${
+          shouldHighlight ? 'highlight' : ''
+          } ${larivaar ? 'larivaar' : ''} ${unicode ? 'unicode' : 'gurlipi-reading-mode'}`}
+        style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}`, lineHeight: lineHeight + 0.2 }}
+      >
+          <Larivaar
+            isShowMahankoshTooltip
+            larivaarAssist={larivaarAssist}
+            enable={larivaar}
+            unicode={unicode}
+            visraam={visraam}
+            visraams={visraams}
+          >
+            {unicode ? text.unicode : text.gurmukhi}
+          </Larivaar>
       </div>
     );
   }

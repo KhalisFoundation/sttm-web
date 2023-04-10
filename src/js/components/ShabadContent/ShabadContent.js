@@ -107,6 +107,7 @@ class Shabad extends React.PureComponent {
     sgBaaniLength: PropTypes.string,
     fullScreenMode: PropTypes.bool,
     showPinSettings: PropTypes.bool,
+    readingMode: PropTypes.bool,
   };
 
   constructor(props) {
@@ -125,6 +126,7 @@ class Shabad extends React.PureComponent {
         sgBaaniLength,
         fullScreenMode,
         showPinSettings,
+        readingMode,
         ...baniProps
       },
       handleEmbed,
@@ -203,6 +205,7 @@ class Shabad extends React.PureComponent {
                     {...baniProps}
                     pages={pages}
                     isParagraphMode={isParagraphMode}
+                    isReadingMode={readingMode}
                   />
                   {this.getContinueButton()}
                 </>
@@ -212,6 +215,7 @@ class Shabad extends React.PureComponent {
                     sgBaaniLength={sgBaaniLength}
                     isSundarGutkaRoute={isSundarGutkaRoute}
                     isParagraphMode={isParagraphMode}
+                    isReadingMode={readingMode}
                   />
                 )}
               {isLoadingContent && <div className="spinner" />}

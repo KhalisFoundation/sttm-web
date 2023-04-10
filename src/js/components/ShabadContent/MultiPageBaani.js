@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
 export const MultiPageBaani = React.memo((props) => {
-  const { pages, ...baaniProps } = props;
+  const { pages, isReadingMode,...baaniProps } = props;
   const history = useHistory();
   const sehajPaathMode = useSelector(state => state.sehajPaathMode);
 
@@ -22,6 +22,7 @@ export const MultiPageBaani = React.memo((props) => {
               isParagraphMode={false}
               isSehajPaathMode={sehajPaathMode}
               isSundarGutkaRoute={false}
+              isReadingMode={isReadingMode}
               // offsetY={isLastPage ? lastScrollPosition : -1}
               onBaaniLineClick={(highlightVerseId) => () => {
                 const newUrl = toAngURL({
