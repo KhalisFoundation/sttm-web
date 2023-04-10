@@ -14,6 +14,7 @@ export const DEFAULT_LARIVAAR = false;
 export const DEFAULT_LARIVAAR_ASSIST = false;
 export const DEFAULT_UNICODE = false;
 export const DEFAULT_SPLIT_VIEW = false;
+export const DEFAULT_READING_MODE = false;
 export const DEFAULT_FONT_SIZE = 2;
 export const DEFAULT_TRANSLATION_FONT_SIZE = 1.2;
 export const DEFAULT_TRANSLITERATION_FONT_SIZE = 1.2;

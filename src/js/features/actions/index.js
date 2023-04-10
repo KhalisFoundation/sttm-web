@@ -19,6 +19,7 @@ import {
   DEFAULT_FONT_FAMILY,
   DEFAULT_CENTER_ALIGN_GURBANI,
   DEFAULT_SPLIT_VIEW,
+  DEFAULT_READING_MODE,
   DEFAULT_SEHAJ_PAATH_MODE,
   DEFAULT_SG_BAANI_LENGTH,
   DEFAULT_CARTOONIFIED_PAGES,
@@ -96,6 +97,9 @@ export const toggleCartoonifiedPages = createAction(TOGGLE_CARTOONIFIED_PAGES);
 
 export const TOGGLE_SHABAD_AUDIO_PLAYER = 'TOGGLE_SHABAD_AUDIO_PLAYER';
 export const toggleShabadAudioPlayer = createAction(TOGGLE_SHABAD_AUDIO_PLAYER);
+
+export const TOGGLE_READING_MODE = 'TOGGLE_READING_MODE';
+export const toggleReadingMode = createAction(TOGGLE_READING_MODE);
 
 export const SET_AUTOSCROLLING = 'SET_AUTOSCROLLING';
 export const setAutoScrolling = createAction(SET_AUTOSCROLLING);
@@ -177,6 +181,9 @@ export const setVisraams = createAction(SET_VISRAAMS);
 export const SET_SPLIT_VIEW = 'SET_SPLIT_VIEW';
 export const setSplitView = createAction(SET_SPLIT_VIEW);
 
+export const SET_READING_MODE = 'SET_READING_MODE';
+export const setReadingMode = createAction(SET_READING_MODE);
+
 export const SET_SG_BAANI_LENGTH = 'SET_SG_BAANI_LENGTH';
 export const setSgBaaniLength = createAction(SET_SG_BAANI_LENGTH);
 
@@ -226,6 +233,7 @@ export const resetDisplayOptions = () => (dispatch) => {
   dispatch(setCenterAlignOption(DEFAULT_CENTER_ALIGN_GURBANI));
   dispatch(setLarivaarAssistStrength(DEFAULT_LARIVAAR_ASSIST_STRENGTH));
   dispatch(setSplitView(DEFAULT_SPLIT_VIEW));
+  dispatch(setReadingMode(DEFAULT_READING_MODE));
   dispatch(setSehajPaathMode(DEFAULT_SEHAJ_PAATH_MODE));
   dispatch(setSgBaaniLength(DEFAULT_SG_BAANI_LENGTH));
   dispatch(setCartoonifiedPages(DEFAULT_CARTOONIFIED_PAGES));
