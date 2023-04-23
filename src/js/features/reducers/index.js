@@ -7,6 +7,7 @@ import {
   TOGGLE_DARK_MODE,
   TOGGLE_AUTO_SCROLL_MODE,
   TOGGLE_PARAGRAPH_MODE,
+  TOGGLE_READING_MODE,
   TOGGLE_SPLIT_VIEW_OPTION,
   TOGGLE_VISRAAMS,
   TOGGLE_SEHAJ_PAATH_MODE,
@@ -33,6 +34,7 @@ import {
   SET_DARK_MODE,
   SET_AUTO_SCROLL_MODE,
   SET_PARAGRAPH_MODE,
+  SET_READING_MODE,
   SET_SEHAJ_PAATH_MODE,
   SET_VISRAAMS,
   SET_SPLIT_VIEW,
@@ -58,6 +60,7 @@ import {
 } from '../actions';
 import {
   LOCAL_STORAGE_KEY_FOR_SPLIT_VIEW,
+  LOCAL_STORAGE_KEY_FOR_READING_MODE,
   LOCAL_STORAGE_KEY_FOR_UNICODE,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR,
   LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST,
@@ -311,6 +314,21 @@ export default function reducer(state, action) {
       return {
         ...state,
         paragraphMode,
+      };
+    }
+
+    case TOGGLE_READING_MODE: {
+      const readingMode = !state.readingMode;
+
+      clickEvent({
+        action: TOGGLE_READING_MODE,
+        label: readingMode ? 1 : 0,
+      });
+
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_READING_MODE, readingMode);
+      return {
+        ...state,
+        readingMode,
       };
     }
 
@@ -901,6 +919,19 @@ export default function reducer(state, action) {
       };
     }
 
+    case SET_READING_MODE: {
+      const readingMode = action.payload || false;
+      clickEvent({
+        action: SET_READING_MODE,
+        label: readingMode ? true : false,
+      });
+      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_READING_MODE, readingMode);
+      return {
+        ...state,
+        readingMode,
+      };
+    }
+    
     default:
       return state;
   }

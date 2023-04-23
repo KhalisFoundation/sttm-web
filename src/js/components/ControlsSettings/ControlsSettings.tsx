@@ -106,6 +106,10 @@ const ControlsSettings = (props: any) => {
         return (
           <ParagraphIcon className="settings-action-icon" />
         )
+      case 'Reading':
+        return (
+          <AkhandPaathIcon className="settings-action-icon" />
+        )
       case 'Short':
         return (
           <>S</>
