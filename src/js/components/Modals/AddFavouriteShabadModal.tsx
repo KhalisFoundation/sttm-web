@@ -9,14 +9,23 @@ const AddFavouriteShabadModal = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector(state => state.isModalOpen)
   const gurbaniVerses = useSelector(state => state.gurbaniVerses);
-  // const verses = gurbaniVerses.map(gurbani => gurbani.verse.unicode);
+  const options = gurbaniVerses.map(gurbani => {
+    return (
+      {
+        label: gurbani.verse.gurmukhi,
+        value: gurbani.verseId,
+      }
+    )
+  });
+
   const shabadId = getShabadId(gurbaniVerses[0]);
-  // const [pankti, setPankti] = useState<string>(verses[0]);
+  const [pankti, setPankti] = useState<string>(options[0].value);
   const [comment, setComment] = useState<string>('');
-  const create = useCreateFavouriteShabad()
+  const create = useCreateFavouriteShabad();
+
   const onSave = (e) => {
     e.preventDefault();
-    create.mutate({ shabadId, comment });
+    create.mutate({ shabadId, comment, verseId: pankti });
     dispatch(setIsModalOpen(false))
   }
 
@@ -29,18 +38,16 @@ const AddFavouriteShabadModal = () => {
         </div>
         <div className='content'>
           <form method="dialog" onSubmit={onSave}>
-            {/* 
-          Release in version..
-          <label className="title">Select a line to save as the title:
-            <select value={pankti} onChange={(e) => setPankti(e.target.value)}>
-              {verses.map((value, idx) =>
-                <option key={`${idx}-${value}`}>
-                  {value}
-                </option>)
-              }
-            </select>
-          </label> 
-          */}
+            <label className="title">Select a line to save as the title:
+              <select className="dropdown" value={pankti} onChange={(e) => setPankti(e.target.value)}>
+                {options.map((option) =>
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>)
+                }
+              </select>
+            </label>
+
             <label className='title'>Notes:
               <textarea
                 name="comment"
@@ -50,7 +57,7 @@ const AddFavouriteShabadModal = () => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 className="textarea"
-                autoFocus 
+                autoFocus
               />
             </label>
             <div className="save-btn">
