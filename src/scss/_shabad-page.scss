@@ -24,6 +24,11 @@ blockquote {
   display: inline-block;
 }
 
+.gurlipi-reading-mode {
+  display: inline;
+  font-size: 0.9em;
+}
+
 #metadata {
   align-items: center;
   background-color: #e9e9e9;
@@ -380,6 +385,37 @@ blockquote {
     &-wrapper {
       &.paragraph-mode {
         margin-bottom: 16px;
+      }
+    }
+  }
+
+  .reading-mode-baani {
+    &-transliteration {
+      display: inline;
+
+      & .reading-mode-transliteration {
+        display: inline;
+      }
+    }
+
+    &-translation {
+      display: inline;
+
+      & .reading-mode-translation {
+        display: inline;
+      }
+    }
+
+    &-steek {
+      display: inline;
+      font-family: gurmukhi_normal, sans-serif;
+
+      & .reading-mode-steek {
+        display: inline;
+
+        & .gurlipi {
+          display: inline;
+        }
       }
     }
   }
