@@ -388,13 +388,13 @@ export const QUICK_SETTINGS = ({
       checked: splitView,
       action: () => {toggleSplitViewOption(), setReadingMode(false)}
     },
-    {
+    !isShowSehajPaathMode ? {
       type: 'toggle-option',
       label: 'Reading',
       tooltip: 'Set reading mode',
       checked: readingMode,
       action: () => {toggleReadingMode(), setSplitView(false) }
-    },
+    } : {},
     {
       type: 'toggle-option',
       label: 'Cartoon Images',
