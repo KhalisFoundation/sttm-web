@@ -35,6 +35,7 @@ class ShabadControls extends React.PureComponent {
     setSgBaaniLength: PropTypes.func,
     setSplitView: PropTypes.func,
     setReadingMode: PropTypes.func,
+    setSehajPaathMode: PropTypes.func,
 
     translationLanguages: PropTypes.array,
     transliterationLanguages: PropTypes.array,
