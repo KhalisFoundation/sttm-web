@@ -1,18 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 
-const Footer = ({showPinSettings}) => {
+interface IProps {
+  showPinSettings: boolean;
+}
+
+const Footer: React.FC = (props: IProps) => {
+
+  const { showPinSettings } = props;
+
   return (
     <footer className={`footer-background ${showPinSettings ? 'pin-settings-footer' : ''}`}>
       <div className="footer row">
         <ul className="version">
           <li>
-            {/* <!--v${process.env.npm_package_version}--> */}
             <a
               href="https://github.com/KhalisFoundation/sttm-web/releases"
               target="_blank"
               rel="noopener noreferrer"
-            ></a>
+            >v{process.env.npm_package_version}</a>
           </li>
         </ul>
         <ul className="menu footer-menu">
@@ -84,16 +89,12 @@ const Footer = ({showPinSettings}) => {
           </li>
         </ul>
         <div className="copyright">
-          Copyright © <span id="year"></span> Khalis Foundation
+          Copyright © <span id="year">{new Date().getFullYear()}</span> Khalis Foundation
           <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
         </div>
       </div>
     </footer>
-)
+  )
 };
-
-Footer.propTypes = {
-  showPinSettings: PropTypes.bool.isRequired
-}
 
 export default Footer;
