@@ -30,6 +30,7 @@ import {
   shortenURL,
   steekMap,
   hindiTranslationMap,
+  isShowSehajPaathModeRoute,
 } from '@/util';
 import { MahankoshContext } from '@/context';
 import { changeAng, prefetchAng } from './utils';
@@ -1053,13 +1054,13 @@ export default class Baani extends React.PureComponent {
     )
   }
   getMarkup = () => {
-    const { splitView, showFullScreen, isReadingMode } = this.props;
-
+    const { splitView, showFullScreen, isReadingMode, history} = this.props;
+    const isSehajPaathMode = isShowSehajPaathModeRoute(history.location.pathname);
     if (showFullScreen) {
       return this.createFullScreenMarkup();
     } else if (splitView) {
       return this.createSplitViewMarkup();
-    } else if (isReadingMode) {
+    } else if (isReadingMode && !isSehajPaathMode) {
       return this.createReadingModeMarkup();
     }
 
