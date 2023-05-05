@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import {  Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Pagination from '../../components/Pagination';
@@ -25,7 +26,6 @@ class Layout extends React.PureComponent {
   static propTypes = {
     pages: PropTypes.array,
     offset: PropTypes.number,
-    ...SearchResults.propTypes,
   };
 
   render() {

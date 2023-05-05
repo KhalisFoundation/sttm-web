@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
 import { getVisraamClass } from '../../util';
 
-interface IHighlightedSearchResultProps {
+interface Props {
   children: React.ReactChildren;
   darkMode: boolean;
   highlightIndex: string[];
@@ -14,16 +14,16 @@ interface IHighlightedSearchResultProps {
   mahankoshIndex?: number;
   onMouseOver?: (word: string, index: number) => void;
   isShowMahankoshTooltip: boolean;
-};
+}
 
-const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
+const HighlightedSearchResult = ({
   children,
   highlightIndex,
   visraams,
   mahankoshIndex = -1,
   onMouseOver,
   isShowMahankoshTooltip,
-}) => {
+}: Props) => {
   const darkMode = useSelector(state => state.darkMode);
   const mahankoshTooltipAttributes = useMemo(() => {
     if (isShowMahankoshTooltip) {
