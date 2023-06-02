@@ -76,12 +76,12 @@ class Header extends React.PureComponent {
 
   onFormSubmit =
     ({ handleSubmit, ...data }) =>
-    (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      handleSubmit();
-      this.handleFormSubmit(data);
-    };
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit();
+        this.handleFormSubmit(data);
+      };
 
   handleFormSubmit = (data) => {
     this.props.history.push(toSearchURL(data));
@@ -371,6 +371,7 @@ class Header extends React.PureComponent {
                             value={source}
                             onChange={handleSearchSourceChange}
                             className={[isSourceChanged ? 'selected' : null]}
+                            disabled={type === SEARCH_TYPES.ASK_A_QUESTION}
                           >
                             {Object.entries(SOURCES).map(
                               ([value, children]) => (
@@ -386,18 +387,19 @@ class Header extends React.PureComponent {
                           value={writer}
                           onChange={handleSearchWriterChange}
                           className={[isWriterChanged ? 'selected' : null]}
+                          disabled={type === SEARCH_TYPES.ASK_A_QUESTION}
                         >
                           {writers
                             ?.filter((e) =>
                               source === 'G' || source === 'A'
                                 ? !SOURCE_WRITER_FILTER[source].includes(
-                                    e.writerID
-                                  )
+                                  e.writerID
+                                )
                                 : source !== 'all'
-                                ? SOURCE_WRITER_FILTER[source].includes(
+                                  ? SOURCE_WRITER_FILTER[source].includes(
                                     e.writerID
                                   )
-                                : true
+                                  : true
                             )
                             .map((writer) => (
                               <option
@@ -429,7 +431,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({}) => ({});
+const mapStateToProps = ({ }) => ({});
 
 const mapDispatchToProps = {
   toggleSettingsPanel,

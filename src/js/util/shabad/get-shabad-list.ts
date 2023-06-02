@@ -1,5 +1,3 @@
-/* globals GURBANIBOT */
-
 import { buildApiUrl } from '@sttm/banidb';
 import { SEARCH_TYPES } from '@/constants';
 import { toShabadURL } from '../url';
@@ -10,20 +8,13 @@ export const getShabadList = (q, { type, source, writer }) => {
   const offset = 1;
   const isSearchTypeRomanizedFirstLetters = type === SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE;
   const livesearch = !isSearchTypeRomanizedFirstLetters;
-  let url;
-  if (type !== 8) {
-     url = encodeURI(buildApiUrl({ q, type, source, writer, offset, API_URL, livesearch }));
-  } else {
-    url = encodeURI(`${GURBANIBOT}?q=${q}`);
-  }
+  const url = encodeURI(buildApiUrl({ q, type, source, writer, offset, API_URL, livesearch }));
 
   return new Promise((resolve, reject) => {
     const json = fetch(url).then((response) => response.json());
     json.then(
       (data) => {
-        console.log('search data');
-        console.log(data);
-        const { verses } = data;
+        let { verses } = data;
         let panktiList = [];
         for (const shabad of verses) {
           let highlightPankti = getGurmukhiVerse(shabad);

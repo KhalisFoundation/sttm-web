@@ -1,0 +1,1 @@
+export { parseSemanticData } from "./parseSemantic";

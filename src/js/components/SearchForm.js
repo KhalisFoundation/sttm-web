@@ -97,7 +97,7 @@ export default class SearchForm extends React.PureComponent {
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
       DEFAULT_SEARCH_SOURCE,
     writer:
-      this.props.defaultWriter || 
+      this.props.defaultWriter ||
       localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
       DEFAULT_SEARCH_WRITER,
     writers: DEFAULT_SEARCH_WRITERS,
@@ -155,7 +155,7 @@ export default class SearchForm extends React.PureComponent {
     getWriterList()
       .then(writersData => {
         this._setState({ writers: writersData })
-      })    
+      })
   }
 
   selectHighlight = () => {
@@ -345,7 +345,7 @@ export default class SearchForm extends React.PureComponent {
     }
   };
 
-  handleSearchSourceChange = ({target}) => {
+  handleSearchSourceChange = ({ target }) => {
     const source = target.value
     this.setState(
       {
@@ -363,7 +363,7 @@ export default class SearchForm extends React.PureComponent {
         localStorage.setItem(
           LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
           this.state.source
-        );        
+        );
       }
     );
   }
@@ -412,7 +412,7 @@ export default class SearchForm extends React.PureComponent {
     );
   }
 
-  handleSearchWriterChange = ({target}) => {
+  handleSearchWriterChange = ({ target }) => {
     const writer = target.value
     this.setState({
       writer,
@@ -421,16 +421,16 @@ export default class SearchForm extends React.PureComponent {
         this.state.query !== '',
       isWriterChanged: writer !== DEFAULT_SEARCH_WRITER
     },
-    () => {
-      clickEvent({
-        action: ACTIONS.SEARCH_WRITER,
-        label: this.state.writer,
-      });
-      localStorage.setItem(
-        LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
-        this.state.writer
-      );
-    })
+      () => {
+        clickEvent({
+          action: ACTIONS.SEARCH_WRITER,
+          label: this.state.writer,
+        });
+        localStorage.setItem(
+          LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
+          this.state.writer
+        );
+      })
   }
 
   handleReset = (e) => {
@@ -446,10 +446,10 @@ export default class SearchForm extends React.PureComponent {
         this.props.submitOnChangeOf.includes('writer') &&
         this.state.query !== ''
     },
-    () => {
-      localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE, this.state.source);
-      localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER);
-    })
+      () => {
+        localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE, this.state.source);
+        localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER);
+      })
   }
 
   handleSubmit = () => {
