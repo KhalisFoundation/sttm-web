@@ -241,7 +241,11 @@ class Autocomplete extends Component {
       }
     }
 
-    return !isChatBot ? suggestionsListComponent : null;
+    return (
+      <Fragment>
+        {!isChatBot && suggestionsListComponent}
+      </Fragment>
+    );
   }
 }
 
