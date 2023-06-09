@@ -1,12 +1,10 @@
 export const parseSemanticData = (semanticData, verseIdList) => {
   const parsedData = {};
   parsedData.verses = semanticData.shabads.map((shabadObj) => {
-    const { shabadInfo } = shabadObj;
+    const { source, raag, writer } = shabadObj.shabadInfo;
     shabadObj.verses = shabadObj.verses.reduce((filteredVerses, verseObj) => {
       if (verseIdList.includes(verseObj.verseId)) {
-        verseObj.source = shabadInfo.source;
-        verseObj.raag = shabadInfo.raag;
-        verseObj.writer = shabadInfo.writer;
+        verseObj = { ...verseObj, source, raag, writer };
         filteredVerses.push(verseObj);
       }
       return filteredVerses;

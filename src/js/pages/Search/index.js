@@ -31,28 +31,34 @@ export default class Search extends React.PureComponent {
     const { q, type, source, offset, writer } = this.props;
     const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
     let semanticInfo;
+    let verseIDs = [];
 
     if (isChatBot) {
       const semanticApi = encodeURI(`${GURBANIBOT_URL}search/?query=${q}`);
-      const semanticReq = fetch(semanticApi).then((response) => response.json());
-      semanticReq.then((semanticData) => {
-        const shabadIdList = semanticData.results.map((dataObj) => {
-          const { ShabadID, VerseID } = dataObj.Payload;
-          this.state.verseIdList.push(VerseID);
-          return ShabadID;
-        });
+      try {
+        const semanticReq = fetch(semanticApi).then((response) => response.json());
+        semanticReq.then((semanticData) => {
+          const shabadIdList = semanticData.results.map((dataObj) => {
+            const { ShabadID, VerseID } = dataObj.Payload;
+            verseIDs.push(VerseID);
+            return ShabadID;
+          });
 
-        semanticInfo = {
-          pageResults: shabadIdList.length,
-          TotalResults: shabadIdList.length,
-          pages: {
-            page: 1,
-            resultsPerPage: 20,
-            totalPages: 1
+          semanticInfo = {
+            pageResults: shabadIdList.length,
+            TotalResults: shabadIdList.length,
+            pages: {
+              page: 1,
+              resultsPerPage: 20,
+              totalPages: 1
+            }
           }
-        }
-        this.setState({ semanticInfo, searchURL: `${API_URL}shabads/${shabadIdList.toString()}` });
-      });
+          this.setState({ verseIdList: verseIDs, semanticInfo, searchURL: `${API_URL}shabads/${shabadIdList.toString()}` });
+        });
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('err.message', err.message);
+      }
     } else {
       this.setState({
         searchURL: encodeURI(
@@ -66,8 +72,10 @@ export default class Search extends React.PureComponent {
     this.setSearchUrl();
   }
 
-  componentDidUpdate() {
-    this.setSearchUrl();
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchURL != this.state.searchURL) {
+      this.setSearchUrl();
+    }
   }
 
   render() {
