@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL, S3_BUCKET_URL } from "@/constants";
+import { API_URL } from "@/constants";
 
 export const checkAPIHealth = async function () {
   const uri = `${API_URL}health/`;
@@ -52,7 +52,7 @@ export const getShabadAudioUrl = async function (info: any) {
 
   let shbdUrl = '';
   if (res.data.status === 'success') {
-    shbdUrl = `${S3_BUCKET_URL}${res.data.track_url.replace(/%20/g, "+")}`;
+    shbdUrl = `${res.data.track_url.replace(/%20/g, "+")}`;
   } else {
     console.log('No audio for this shabad');
   }
