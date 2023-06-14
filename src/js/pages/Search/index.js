@@ -21,17 +21,18 @@ export default class Search extends React.PureComponent {
     writer: PropTypes.string,
   };
 
-  state = {
-    searchURL: '',
-    verseIdList: [],
-    semanticInfo: {}
-  };
+  constructor() {
+    super();
+    this.state = {
+      searchURL: '',
+    };
+    this.verseIdList = [];
+    this.semanticInfo = {};
+  }
 
   setSearchUrl() {
-    const { q, type, source, offset, writer } = this.props;
+    const { q, type } = this.props;
     const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
-    let semanticInfo;
-    let verseIDs = [];
 
     if (isChatBot) {
       const semanticApi = encodeURI(`${GURBANIBOT_URL}search/?query=${q}`);
@@ -40,11 +41,11 @@ export default class Search extends React.PureComponent {
         semanticReq.then((semanticData) => {
           const shabadIdList = semanticData.results.map((dataObj) => {
             const { ShabadID, VerseID } = dataObj.Payload;
-            verseIDs.push(VerseID);
+            this.verseIdList.push(VerseID);
             return ShabadID;
           });
 
-          semanticInfo = {
+          this.semanticInfo = {
             pageResults: shabadIdList.length,
             TotalResults: shabadIdList.length,
             pages: {
@@ -53,18 +54,12 @@ export default class Search extends React.PureComponent {
               totalPages: 1
             }
           }
-          this.setState({ verseIdList: verseIDs, semanticInfo, searchURL: `${API_URL}shabads/${shabadIdList.toString()}` });
+          this.setState({ searchURL: `${API_URL}shabads/${shabadIdList.toString()}` });
         });
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('err.message', err.message);
       }
-    } else {
-      this.setState({
-        searchURL: encodeURI(
-          buildApiUrl({ q, type, source, offset, writer, API_URL })
-        )
-      });
     }
   }
 
@@ -73,7 +68,8 @@ export default class Search extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchURL != this.state.searchURL) {
+    if (prevProps.q !== this.props.q ||
+      prevState.searchURL != this.state.searchURL) {
       this.setSearchUrl();
     }
   }
@@ -81,6 +77,9 @@ export default class Search extends React.PureComponent {
   render() {
     const { q, type, source, offset, writer } = this.props;
     const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
+    const url = isChatBot ? this.state.searchURL : encodeURI(
+      buildApiUrl({ q, type, source, offset, writer, API_URL })
+    );
 
     if (q === '') {
       return (
@@ -93,13 +92,13 @@ export default class Search extends React.PureComponent {
     }
 
     return (
-      <PageLoader url={this.state.searchURL}>
+      <PageLoader url={url}>
         {({ loading, data }) => {
           if (loading || data === undefined) return <Stub />;
           let parsedData = {};
           if (isChatBot) {
-            parsedData = parseSemanticData(data, this.state.verseIdList);
-            parsedData.resultsInfo = this.state.semanticInfo;
+            parsedData = parseSemanticData(data, this.verseIdList);
+            parsedData.resultsInfo = this.semanticInfo;
           } else {
             parsedData = data;
           }
