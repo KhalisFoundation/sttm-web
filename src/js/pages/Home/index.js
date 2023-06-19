@@ -124,7 +124,9 @@ class Home extends React.PureComponent {
                         )}
                       <span className='new-text'>
                         <b className='new-text-blue'>NEW{" "}</b>
-                        Listen to every Shabad in Sri Guru Granth Sahib in raag keertan!
+                        <span style={{ 'cursor': 'pointer' }} onClick={() => handleSearchTypeChange({ currentTarget: { value: SEARCH_TYPES['ASK_A_QUESTION'] } })}>
+                          <u>Click here</u> to get your questions answered from the Gurbani.
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -335,8 +337,9 @@ class Home extends React.PureComponent {
                 </a>
               )}
             </div>
-          </React.Fragment>
-        )}
+          </React.Fragment >
+        )
+        }
       </SearchForm>
     );
   }
