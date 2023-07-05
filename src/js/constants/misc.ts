@@ -19,5 +19,4 @@ export const TYPES = _TYPES.filter((value, index) =>
 export const SHORT_DOMAIN = 'sttm.co';
 export const MAHANKOSH_TOOLTIP_SOURCE = 'Source: Mahaan Kosh (Encyclopedia)';
 export const HUKAMNAMA_AUDIO_URL='http://old.sgpc.net/hukumnama/jpeg%20hukamnama/hukamnama.mp3';
-export const S3_BUCKET_URL = 'https://sikhifm-audio.s3.us-west-1.amazonaws.com/';
-export const API_URL = "https://sttm-fm.thedev.studio/v1/";
+export const API_URL = "https://audio.sikhitothemax.org/v1/";
