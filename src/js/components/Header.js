@@ -371,7 +371,6 @@ class Header extends React.PureComponent {
                             value={source}
                             onChange={handleSearchSourceChange}
                             className={[isSourceChanged ? 'selected' : null]}
-                            disabled={type === SEARCH_TYPES.ASK_A_QUESTION}
                           >
                             {Object.entries(SOURCES).map(
                               ([value, children]) => (

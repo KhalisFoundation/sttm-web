@@ -25,10 +25,11 @@ export default class Search extends React.PureComponent {
     this.state = {
       searchURL: '',
     };
+    this.verseIdList = [];
   }
 
   setSearchUrl() {
-    const { q, type, offset } = this.props;
+    const { q, type, offset, source } = this.props;
     const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
 
     if (isChatBot) {
@@ -36,11 +37,15 @@ export default class Search extends React.PureComponent {
       try {
         const semanticReq = fetch(semanticApi).then((response) => response.json());
         semanticReq.then((semanticData) => {
-          const verseIdList = semanticData.results.map((dataObj) => {
-            const { VerseID } = dataObj.Payload;
-            return VerseID;
+          this.verseIdList = semanticData.results.flatMap((dataObj) => {
+            const { VerseID, SourceID } = dataObj.Payload;
+            if (SourceID === source || source === 'all') {
+              return VerseID;
+            } else {
+              return [];
+            }
           });
-          this.setState({ searchURL: `${API_URL}search-results/${verseIdList.toString()}?page=${offset}` });
+          this.setState({ searchURL: `${API_URL}search-results/${this.verseIdList.toString()}?page=${offset}` });
         });
       } catch (err) {
         // eslint-disable-next-line no-console
@@ -55,7 +60,8 @@ export default class Search extends React.PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.q !== this.props.q ||
-      prevState.searchURL != this.state.searchURL ||
+      prevProps.source !== this.props.source ||
+      prevState.searchURL !== this.state.searchURL ||
       prevProps.offset !== this.props.offset) {
       this.setSearchUrl();
     }

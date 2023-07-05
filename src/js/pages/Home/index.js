@@ -210,7 +210,6 @@ class Home extends React.PureComponent {
                           value={source}
                           className={[isSourceChanged ? 'selected' : null]}
                           onChange={handleSearchSourceChange}
-                          disabled={type === SEARCH_TYPES.ASK_A_QUESTION}
                         >
                           {Object.entries(SOURCES).map(([value, children]) => (
                             <option key={value} value={value}>
