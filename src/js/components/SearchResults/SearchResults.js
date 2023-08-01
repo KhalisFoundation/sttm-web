@@ -34,7 +34,11 @@ export default class SearchResults extends React.PureComponent {
     const warning = type === SEARCH_TYPES['ASK_A_QUESTION'] && (
       <div className='warning-box'>
         <h4>⚠ This is an experimental feature.</h4>
-        <p>If you come across any bug or conflict in the search results, let us know.</p>
+        <p>If you come across any bug or conflict in the search results,
+          <a href="https://support.khalisfoundation.org/support/tickets/new" target="blank">
+            <u>let us know.</u>
+          </a>
+        </p>
       </div>
     );
 

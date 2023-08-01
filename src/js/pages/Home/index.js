@@ -125,7 +125,7 @@ class Home extends React.PureComponent {
                       <span className='new-text'>
                         <b className='new-text-blue'>NEW{" "}</b>
                         <span style={{ 'cursor': 'pointer' }} onClick={() => handleSearchTypeChange({ currentTarget: { value: SEARCH_TYPES['ASK_A_QUESTION'] } })}>
-                          <u>Click here</u> to get your questions answered from the Gurbani.
+                          Get your questions answered by our AI Gurbani bot! <u>Try it now.</u>
                         </span>
                       </span>
                     </div>
