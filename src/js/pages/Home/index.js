@@ -124,9 +124,11 @@ class Home extends React.PureComponent {
                         )}
                       <span className='new-text'>
                         <b className='new-text-blue'>NEW{" "}</b>
-                        Listen to every Shabad in Sri Guru Granth Sahib in raag keertan!
+                        <span style={{ 'cursor': 'pointer' }} onClick={() => handleSearchTypeChange({ currentTarget: { value: SEARCH_TYPES['ASK_A_QUESTION'] } })}>
+                          Get your questions answered by our AI Gurbani bot! <u>Try it now.</u>
+                        </span>
                       </span>
-                          </div>
+                    </div>
                   </div>
 
                   <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
@@ -194,6 +196,7 @@ class Home extends React.PureComponent {
                           value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
                           className={[isSourceChanged ? 'selected' : null]}
                           onChange={handleSearchSourceChange}
+                          disabled={type === SEARCH_TYPES.ASK_A_QUESTION}
                         >
                           {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
                             <option key={value} value={value}>
@@ -223,6 +226,7 @@ class Home extends React.PureComponent {
                         name="writer"
                         value={writer}
                         className={[isWriterChanged ? 'selected' : null]}
+                        disabled={type === SEARCH_TYPES.ASK_A_QUESTION}
                         onChange={handleSearchWriterChange}>
                         {
                           writers?.filter(e =>
@@ -332,8 +336,9 @@ class Home extends React.PureComponent {
                 </a>
               )}
             </div>
-          </React.Fragment>
-        )}
+          </React.Fragment >
+        )
+        }
       </SearchForm>
     );
   }
