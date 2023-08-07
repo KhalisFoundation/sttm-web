@@ -9,5 +9,5 @@ export const PLACEHOLDERS = {
   [SEARCH_TYPES.ANG]: ['123', true], // ang
   [SEARCH_TYPES.MAIN_LETTERS]: ['j mgh Tkr Apn q'], // main letters
   [SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE]: ['jmtatssd', true], //romanized first letter anywhere
-  [SEARCH_TYPES.ASK_A_QUESTION]: ['What is the best time to meditate', true] // ask a question
+  [SEARCH_TYPES.ASK_A_QUESTION]: ['What is the best time to meditate?', true] // ask a question
 };
