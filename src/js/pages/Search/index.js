@@ -33,7 +33,8 @@ export default class Search extends React.PureComponent {
     const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
 
     if (isChatBot) {
-      const semanticApi = encodeURI(`${GURBANIBOT_URL}search/?query=${q}&count=100`);
+      const processedQuery = [...q.matchAll(/[a-zA-Z0-9 ]/g)].join('');
+      const semanticApi = encodeURI(`${GURBANIBOT_URL}search/?query=${processedQuery}&count=100`);
       try {
         const semanticReq = fetch(semanticApi).then((response) => response.json());
         semanticReq.then((semanticData) => {
