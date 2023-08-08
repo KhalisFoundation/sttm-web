@@ -1,8 +1,8 @@
-/* globals API_URL */
+/* globals API_URL, GURBANIBOT_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
-import { TEXTS } from '../../constants';
+import { SEARCH_TYPES, TEXTS } from '../../constants';
 import PageLoader from '../PageLoader';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Layout, { Stub } from './Layout';
@@ -20,8 +20,60 @@ export default class Search extends React.PureComponent {
     writer: PropTypes.string,
   };
 
+  constructor() {
+    super();
+    this.state = {
+      searchURL: '',
+    };
+    this.verseIdList = [];
+  }
+
+  setSearchUrl() {
+    const { q, type, offset, source } = this.props;
+    const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
+
+    if (isChatBot) {
+      const processedQuery = [...q.matchAll(/[a-zA-Z0-9 ]/g)].join('');
+      const semanticApi = encodeURI(`${GURBANIBOT_URL}search/?query=${processedQuery}&count=100`);
+      try {
+        const semanticReq = fetch(semanticApi).then((response) => response.json());
+        semanticReq.then((semanticData) => {
+          this.verseIdList = semanticData.results.flatMap((dataObj) => {
+            const { VerseID, SourceID } = dataObj.Payload;
+            if (SourceID === source || source === 'all') {
+              return VerseID;
+            } else {
+              return [];
+            }
+          });
+          this.setState({ searchURL: `${API_URL}search-results/${this.verseIdList.toString()}?page=${offset}` });
+        });
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('err.message', err.message);
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.setSearchUrl();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.q !== this.props.q ||
+      prevProps.source !== this.props.source ||
+      prevState.searchURL !== this.state.searchURL ||
+      prevProps.offset !== this.props.offset) {
+      this.setSearchUrl();
+    }
+  }
+
   render() {
     const { q, type, source, offset, writer } = this.props;
+    const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
+    const url = isChatBot ? this.state.searchURL : encodeURI(
+      buildApiUrl({ q, type, source, offset, writer, API_URL })
+    );
 
     if (q === '') {
       return (
@@ -32,11 +84,6 @@ export default class Search extends React.PureComponent {
         />
       );
     }
-
-    const url = encodeURI(
-      buildApiUrl({ q, type, source, offset, writer, API_URL })
-    );
-    console.log(url, 'SEARCH RESULTS...');
 
     return (
       <PageLoader url={url}>

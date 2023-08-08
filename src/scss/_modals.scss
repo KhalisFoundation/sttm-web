@@ -47,6 +47,14 @@
       }
     }
 
+    .dropdown {
+      font-family: 'gurmukhi_normal', sans-serif;
+
+      .dark-mode & {
+        color: $sttm-dark-white;
+      }
+    }
+
     .textarea {
       .dark-mode & {
         background-color: $sttm-lighter-black;

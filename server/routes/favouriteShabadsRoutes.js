@@ -15,16 +15,16 @@ const getFavouriteShabadsCallback = async (_req, res, data, connection) => {
 
 const addFavouriteShabadCallback = async (_req, res, data, connection) => {
   try {
-    const {email, shabadId, comment} = data;
+    const {email, shabadId, comment, verseId} = data;
     const row = await connection.query("SELECT id FROM users where email = ?", [email]);
     const user = row[0];
     const favShabad = await connection.query('SELECT * FROM favourite_shabads WHERE shabad_id = ? AND user_id = ?', [shabadId, user.id])
     let rows = [];
-    let q = "INSERT INTO favourite_shabads (comment, shabad_id, user_id) VALUES (?,?,?)";
+    let q = "INSERT INTO favourite_shabads (comment, shabad_id, user_id, verse_id) VALUES (?,?,?,?)";
     if(favShabad[0]) {
       q = "UPDATE favourite_shabads SET comment = ? WHERE (shabad_id = ? AND user_id = ?)"    
     }
-    rows = await connection.query(q, [ comment, shabadId, user.id])
+    rows = await connection.query(q, [ comment, shabadId, user.id, verseId])
     const result = await connection.query("SELECT * from favourite_shabads WHERE id = ?", [rows.insertId])
     res.status(200).json(result[0]);
   }catch(err) {
@@ -60,6 +60,7 @@ const getFavouriteShabads = async (req, res) => {
 const addFavouriteShabad = (req, res) => {
   const shabadId = req.body.shabadId;
   const comment = req.body.comment;
+  const verseId = req.body.verseId;
   const bearerToken = req.headers.authorization;
   const token = bearerToken.substr(7);
   const {email} = jwtVerify(token)
@@ -67,7 +68,7 @@ const addFavouriteShabad = (req, res) => {
   pool.runQuery(
     req, 
     res, 
-    {email, shabadId, comment}, 
+    {email, shabadId, comment, verseId}, 
     addFavouriteShabadCallback
   )
 }

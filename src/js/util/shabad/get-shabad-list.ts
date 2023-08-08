@@ -14,7 +14,7 @@ export const getShabadList = (q, { type, source, writer }) => {
     const json = fetch(url).then((response) => response.json());
     json.then(
       (data) => {
-        const { verses } = data;
+        let { verses } = data;
         let panktiList = [];
         for (const shabad of verses) {
           let highlightPankti = getGurmukhiVerse(shabad);

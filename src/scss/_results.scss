@@ -1,3 +1,12 @@
+.warning-box {
+  border: 1px solid $sttm-darker-blue-2;
+  border-radius: 8px;
+  margin: 32px auto;
+  max-width: 620px;
+  padding: 16px;
+  text-align: center;
+}
+
 .search-results-display {
   margin-left: 8rem;
   margin-right: 1rem;

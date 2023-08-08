@@ -30,20 +30,33 @@ export default class SearchResults extends React.PureComponent {
       'main-letter-search': type === SEARCH_TYPES.MAIN_LETTERS
     });
 
+
+    const warning = type === SEARCH_TYPES['ASK_A_QUESTION'] && (
+      <div className='warning-box'>
+        <h4>⚠ This is an experimental feature.</h4>
+        <p>Please <a href="https://support.khalisfoundation.org/support/tickets/new" target="blank">
+          <u>get in touch</u></a> with us if you have any concerns or feedback.
+        </p>
+      </div>
+    );
+
     return (
-      <ul className={searchResultsClassName}>
-        {
-          shabads.map(shabad => {
-            return (
-              <SearchResult
-                key={getVerseId(shabad)}
-                type={type}
-                shabad={shabad}
-                {...props} />
-            );  
-          })
-        }
-      </ul>
+      <>
+        {warning}
+        <ul className={searchResultsClassName}>
+          {
+            shabads.map(shabad => {
+              return (
+                <SearchResult
+                  key={getVerseId(shabad)}
+                  type={type}
+                  shabad={shabad}
+                  {...props} />
+              );
+            })
+          }
+        </ul>
+      </>
     );
   }
 }
