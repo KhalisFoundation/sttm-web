@@ -130,43 +130,48 @@ class Home extends React.PureComponent {
                       </span>
                     </div>
                   </div>
+                  
+                  <div className="search-container-wrapper">
+                    <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
+                      <input
+                        autoFocus={true}
+                        name={name}
+                        id="search"
+                        type={inputType}
+                        autoCapitalize="none"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        required="required"
+                        value={query}
+                        onKeyDown={handleKeyDown}
+                        onChange={handleSearchChange}
+                        className={className}
+                        placeholder={placeholder}
+                        title={title}
+                        pattern={pattern}
+                        min={name === 'ang' ? 1 : undefined}
+                        max={name === 'ang' ? MAX_ANGS[source] : undefined}
+                      />
+                      <ClearSearchButton clickHandler={setQueryAs} />
+                      {isShowKeyboard && <GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />}
+                      <button type="submit" disabled={disabled}>
+                        <SearchIcon />
+                      </button>
 
-                  <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
-                    <input
-                      autoFocus={true}
-                      name={name}
-                      id="search"
-                      type={inputType}
-                      autoCapitalize="none"
-                      autoComplete="off"
-                      autoCorrect="off"
-                      spellCheck={false}
-                      required="required"
-                      value={query}
-                      onKeyDown={handleKeyDown}
-                      onChange={handleSearchChange}
-                      className={className}
-                      placeholder={placeholder}
-                      title={title}
-                      pattern={pattern}
-                      min={name === 'ang' ? 1 : undefined}
-                      max={name === 'ang' ? MAX_ANGS[source] : undefined}
-                    />
-                    <ClearSearchButton clickHandler={setQueryAs} />
-                    {isShowKeyboard && <GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />}
-                    <button type="submit" disabled={disabled}>
-                      <SearchIcon />
-                    </button>
-
-                    {isShowKeyboard && <EnhancedGurmukhiKeyboard
-                      value={query}
-                      searchType={type}
-                      active={displayGurmukhiKeyboard}
-                      onKeyClick={newValue => {
-                        setQueryAs(newValue)()
-                      }}
-                      onClose={setGurmukhiKeyboardVisibilityAs(false)}
-                    />}
+                      {isShowKeyboard && <EnhancedGurmukhiKeyboard
+                        value={query}
+                        searchType={type}
+                        active={displayGurmukhiKeyboard}
+                        onKeyClick={newValue => {
+                          setQueryAs(newValue)()
+                        }}
+                        onClose={setGurmukhiKeyboardVisibilityAs(false)}
+                      />}
+                    </div>
+                    {!isShowKeyboard && <a target='blank' rel="noreferrer" href="https://support.khalisfoundation.org/support/solutions" className="question-icon">
+                      <span>?</span>                
+                    </a>}
                   </div>
                   <Autocomplete
                     isShowFullResults
