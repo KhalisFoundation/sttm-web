@@ -14,14 +14,17 @@
   z-index: 10;
 }
 
-.add-fav-shabad-container {
+.add-fav-shabad {
   background: $sttm-white;
+  border-radius: 6px;
   height: auto;
   width: 70%;
 
   .header {
     align-items: center;
     background: $sttm-blue;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
     color: $sttm-white;
     display: flex;
     font-size: 20px;

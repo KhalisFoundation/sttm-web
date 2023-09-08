@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Select from 'react-select';
 import { useCreateFavouriteShabad } from '@/components/FavouriteShabadButton/hooks';
 import { setIsModalOpen } from '@/features/actions';
 import { getShabadId } from '@/util';
@@ -23,7 +24,7 @@ const AddFavouriteShabadModal = () => {
   const [comment, setComment] = useState<string>('');
   const create = useCreateFavouriteShabad();
 
-  const onSave = (e) => {
+  const handleShabadSave = (e) => {
     e.preventDefault();
     create.mutate({ shabadId, comment, verseId: pankti });
     dispatch(setIsModalOpen(false))
@@ -31,21 +32,20 @@ const AddFavouriteShabadModal = () => {
 
   return (
     <dialog open={isModalOpen} className='background-modal'>
-      <div className='add-fav-shabad-container'>
+      <div className='add-fav-shabad'>
         <div className='header'>
           <span>Add to Favourites</span>
           <button className='settings-times' aria-label="close" onClick={() => dispatch(setIsModalOpen(false))}><Times /></button>
         </div>
         <div className='content'>
-          <form method="dialog" onSubmit={onSave}>
+          <form method="dialog" onSubmit={handleShabadSave}>
             <label className="title">Select a line to save as the title:
-              <select className="dropdown" value={pankti} onChange={(e) => setPankti(e.target.value)}>
-                {options.map((option) =>
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>)
+              <Select options={options} className="dropdown" value={pankti} onChange={(value) => {
+                if (value) {
+                  setPankti(value)
                 }
-              </select>
+              }} />
+                
             </label>
 
             <label className='title'>Notes:
