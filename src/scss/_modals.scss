@@ -42,11 +42,24 @@
 
     .title {
       color: $sttm-darker-blue;
-      font-size: 24px;
+      font-size: 1.1rem;
       font-weight: 600;
+      margin-bottom: 1rem;
 
       .dark-mode & {
         color: $sttm-dark-white;
+      }
+    }
+
+    @media screen and (max-width: 450px) {
+      .title {
+        font-size: 1.125rem;
+      }
+    }
+
+    @media screen and (min-width: 40em) {
+      .title {
+        font-size: 1.5rem;
       }
     }
 
@@ -55,6 +68,58 @@
 
       .dark-mode & {
         color: $sttm-dark-white;
+      }
+    }
+
+    .react-select__ {
+      &control {
+        border-color: $sttm-blue;
+        cursor: pointer;
+        max-height: 50px;
+
+        .dark-mode & {
+          background: transparent;
+        }
+      }
+
+      &indicator-separator {
+        display: none;
+      }
+
+      &menu {
+        .dark-mode & {
+          background-color: $sttm-light-black;
+        }
+      }
+
+      &menu-list {
+        padding: 0;
+      }
+
+      &option {
+        &--is-selected {
+          background-color: $sttm-blue;
+        }
+
+        &:hover {
+          background-color: $sttm-lighter-blue;
+        }
+
+        .dark-mode & {
+          &:hover {
+            background-color: $sttm-dark-grey;
+          }
+        }
+      }
+
+      &single-value {
+        .dark-mode & {
+          color: $sttm-white;
+        }
+      }
+
+      &value-container {
+        padding: 0 4px;
       }
     }
 

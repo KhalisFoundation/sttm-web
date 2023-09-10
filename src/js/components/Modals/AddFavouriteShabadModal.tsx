@@ -40,12 +40,18 @@ const AddFavouriteShabadModal = () => {
         <div className='content'>
           <form method="dialog" onSubmit={handleShabadSave}>
             <label className="title">Select a line to save as the title:
-              <Select options={options} className="dropdown" value={pankti} onChange={(value) => {
-                if (value) {
-                  setPankti(value)
-                }
-              }} />
-                
+              <Select
+                options={options}
+                defaultValue={options[0]}
+                className="dropdown"
+                classNamePrefix="react-select"
+                noOptionsMessage={() => null}
+                onChange={(val) => {
+                  if (val) {
+                    setPankti(val.value)
+                  }
+                }} />
+
             </label>
 
             <label className='title'>Notes:
