@@ -152,6 +152,7 @@
     "react-range": "^1.6.6",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
+    "react-select": "^5.7.4",
     "react-smartbanner": "^5.1.4",
     "react-sortablejs": "^6.0.0",
     "react-toastify": "^6.0.9",
