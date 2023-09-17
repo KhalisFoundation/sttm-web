@@ -37,6 +37,10 @@ import { DesktopSync } from '@/components/Icons/DesktopSync';
 class Home extends React.PureComponent {
   static propTypes = {
     history: PropTypes.shape({ push: PropTypes.func }),
+    isHome: PropTypes.bool,
+  };
+  static defaultProps = {
+    isHome: false,
   };
 
   state = {
@@ -69,7 +73,7 @@ class Home extends React.PureComponent {
    */
   render() {
     const { showDoodle, doodleData } = this.state;
-
+    const {isHome} = this.props;
     return (
       <SearchForm>
         {({
@@ -169,8 +173,8 @@ class Home extends React.PureComponent {
                         onClose={setGurmukhiKeyboardVisibilityAs(false)}
                       />}
                     </div>
-                    {!isShowKeyboard && <a target='blank' rel="noreferrer" href="https://support.khalisfoundation.org/support/solutions" className="question-icon">
-                      <span>?</span>                
+                    {!displayGurmukhiKeyboard && <a target='blank' rel="noopener noreferrer" href="https://support.khalisfoundation.org/support/solutions" className="question-icon-wrapper">
+                      <span className='question-icon'>?</span>                
                     </a>}
                   </div>
                   <Autocomplete
@@ -178,6 +182,7 @@ class Home extends React.PureComponent {
                     getSuggestions={getShabadList}
                     searchOptions={{ type, source, writer }}
                     value={query}
+                    isHome={isHome}
                   />
                   <div className="search-options">
                     <div className="search-option">

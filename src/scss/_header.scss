@@ -152,17 +152,26 @@
 .search-container-wrapper {
   align-items: center;
   display: flex;
+  gap: 8px;
   justify-content: center;
 
-  & .question-icon {
+  & .question-icon-wrapper {
     align-items: center;
-    background-color: white;
+    background-color: $sttm-blue;
     border-radius: 50%;
     display: flex;
     height: 22px;
     justify-content: center;
-    margin-left: 8px;
     width: 22px;
+
+    &:hover {
+      background-color: $sttm-orange;
+    }
+
+    .question-icon {
+      color: $sttm-white;
+      font-weight: bold;
+    }
   }
 }
 
@@ -288,6 +297,10 @@
   > .suggestion-active {
     background-color: $sttm-lighter-grey;
   }
+}
+
+.search-result-home {
+  margin-right: 30px !important;
 }
 
 #search {
