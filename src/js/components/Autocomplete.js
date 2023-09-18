@@ -163,7 +163,8 @@ class Autocomplete extends Component {
       props: {
         isShowFullResults = false,
         value,
-        searchOptions
+        searchOptions,
+        isHome,
       }
     } = this;
 
@@ -174,7 +175,7 @@ class Autocomplete extends Component {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
           <ul
-            className="search-result"
+            className={`search-result ${isHome ? 'search-result-home' : ''}`}
             id="suggestions"
             ref={this.wrapperRef}
             onKeyDown={this.onKeyDown} >
