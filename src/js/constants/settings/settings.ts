@@ -28,9 +28,7 @@ import {
   GearsIcon,
   DarkModeIcon,
   VishraamIcon,
-  SteekIcon,
   AkhandPaathIcon,
-  AutoPlayIcon,
 } from '@/components/Icons/CustomIcons';
 
 export interface SETTING_ACTIONS {
@@ -51,6 +49,7 @@ export interface SETTING_ACTIONS {
   toggleSplitViewOption: Function,
   toggleDarkMode: Function,
   toggleParagraphMode: Function,
+  toggleReadingMode: Function,
   toggleSehajPaathMode: Function,
   setVisraamSource: Function,
   setVisraamStyle: Function,
@@ -75,6 +74,7 @@ export interface SETTING_ACTIONS {
   translationFontSize: number,
   transliterationFontSize: number,
   paragraphMode: boolean,
+  readingMode: boolean,
   sehajPaathMode: boolean,
   autoScrollMode: boolean,
   lineHeight: number,
@@ -99,6 +99,7 @@ export const QUICK_SETTINGS = ({
   toggleSplitViewOption,
   toggleAdvancedOptions,
   toggleParagraphMode,
+  toggleReadingMode,
   toggleDarkMode,
   setSteekLanguages,
   translationLanguages,
@@ -108,6 +109,7 @@ export const QUICK_SETTINGS = ({
   larivaar,
   fontSize,
   paragraphMode,
+  readingMode,
   centerAlignGurbani,
   splitView,
   showAdvancedOptions,
@@ -205,6 +207,17 @@ export const QUICK_SETTINGS = ({
           icon: SplitViewIcon,
           action: toggleSplitViewOption,
           value: splitView,
+        },
+      ],
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Reading',
+      controlsList: [
+        {
+          icon: AkhandPaathIcon,
+          action: toggleReadingMode,
+          value: readingMode,
         },
       ],
     },

@@ -1,4 +1,4 @@
-.banner {
+.banner-container {
   align-items: center;
   display: flex;
   flex-flow: column;
@@ -6,35 +6,84 @@
   width: 100%;
 
   .notification {
+    align-items: center;
     display: flex;
-    padding: 10px 25px;
+    justify-content: space-between;
+    padding: 10px;
     width: 100vw;
+
+    .banner-text-container {
+      align-items: center;
+      display: flex;
+
+      @media screen and (max-width: 45.999999em) {
+        flex-direction: column;
+      }
+    }
 
     .banner-text {
       align-items: center;
       color: white;
-      font-size: 1rem;
-      margin: 5px 5% 10px;
-      max-width: 75rem;
+      font-size: 1.1rem;
+      margin: 5px 10px;
+      text-align: center;
+      width: 100%;
 
       @media screen and (max-width: 45.999999em) {
-        font-size: 0.8rem;
+        font-size: 1rem;
       }
     }
 
-    &.message {
+    .banner-link-button {
+      border-radius: 4px;
+      box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+      font-size: 1rem;
+      margin: 4px;
+      padding: 10px;
+
+      &-text {
+        color: $sttm-white !important;
+        font-weight: bold;
+      }
+
+      &.type-1 {
+        background-color: $sttm-lighter-black;
+
+        &:hover {
+          background-color: $sttm-black;
+        }
+      }
+
+      &.type-2 {
+        background-color: $sttm-blue;
+
+        &:hover {
+          background-color: $sttm-dark-blue;
+        }
+      }
+
+      &.type-3 {
+        background-color: $sttm-orange;
+
+        &:hover {
+          background-color: $sttm-dark-orange;
+        }
+      }
+    }
+
+    &.message,
+    &.type-2 {
       background-color: $sttm-orange;
-      color: $sttm-black;
     }
 
-    &.warning {
+    &.warning,
+    &.type-1 {
       background-color: $sttm-red;
-      color: $sttm-white;
     }
 
-    &.announcement {
+    &.announcement,
+    &.type-3 {
       background-color: $sttm-blue;
-      color: $sttm-white;
     }
   }
 }
@@ -54,5 +103,9 @@
 
   &:hover {
     color: black;
+  }
+
+  .banner-cross {
+    fill: $sttm-white;
   }
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { setMultipleShabads, setMultiViewPanel } from "@/features/actions";
+import { setMultipleShabads, setMultiViewPanel, closeSettingsPanel } from "@/features/actions";
 import { TEXTS } from '@/constants';
 import { showToast } from '@/util';
 import { IMultipleShabadsProps } from '@/types/multiple-shabads';
@@ -9,7 +9,8 @@ import AddIcon from './Icons/AddIcon';
 
 interface IAddShabadButton {
   multipleShabads: IMultipleShabadsProps[],
-  showMultiViewPanel: boolean
+  showMultiViewPanel: boolean,
+  showPinSettings: boolean,
 }
 
 type FCProps = {
@@ -21,11 +22,14 @@ export const AddShabadButton: React.FC<FCProps> = ({ shabad: { verseId, shabadId
   const typedUseSelector: TypedUseSelectorHook<IAddShabadButton> = useSelector;
   const multipleShabads = typedUseSelector(state => state.multipleShabads)
   const showMultiViewPanel = typedUseSelector(state => state.showMultiViewPanel)
+  const showPinSettings = typedUseSelector(state => state.showPinSettings)
 
   const onClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
-
+    if (showPinSettings) {
+      dispatch(closeSettingsPanel());
+    }
     const { id, shabadid, verse, url } = event.currentTarget.dataset
 
     // If Shabad already added then dont add again.

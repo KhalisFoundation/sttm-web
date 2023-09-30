@@ -1,6 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 export const BalpreetSingh = 'Balpreet Singh';
 export const SachKaur = 'Sach Kaur';
 
@@ -15,16 +15,16 @@ const images = {
   },
 };
 
-export default class GenericError extends React.PureComponent {
+class GenericError extends React.PureComponent {
   static propTypes = {
     title: PropTypes.node,
     description: PropTypes.node,
     image: PropTypes.oneOf([SachKaur, BalpreetSingh]),
+    showCartoonifiedPages: PropTypes.bool,
   };
   render() {
-    const { title, description, image } = this.props;
+    const { title, description, image, showCartoonifiedPages } = this.props;
     const { url, alt } = images[image];
-
     return (
       <div className="error-message">
         <div>
@@ -35,10 +35,16 @@ export default class GenericError extends React.PureComponent {
               <section>{description}</section>
             )}
         </div>
-        <div>
-          <img src={url} alt={alt} />
-        </div>
+        {showCartoonifiedPages && 
+          <div>
+            <img src={url} alt={alt} />
+          </div> 
+        }
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({ showCartoonifiedPages: state.showCartoonifiedPages })
+
+export default connect(mapStateToProps)(GenericError);

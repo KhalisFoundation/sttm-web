@@ -6,7 +6,7 @@
   box-shadow: 0 4px 8px 0 $sttm-grey;
   display: flex;
   height: 50px;
-  max-width: 450px;
+  max-width: 480px;
   opacity: 0.5;
   padding: 8px 16px;
   position: fixed;
@@ -28,7 +28,7 @@
   }
 
   &Control {
-    margin: 0 12px;
+    margin: 0 9px;
   }
 
   &Icons {
@@ -39,12 +39,18 @@
 }
 
 .settingsButton {
-  display: none;
-  position: fixed;
-  right: 10px;
-  top: 10px;
+  align-items: center;
+  display: flex;
+  fill: $sttm-white;
 
-  .fullscreen-view & {
-    display: block;
+  &:hover,
+  &.active {
+    svg {
+      fill: $sttm-orange;
+    }
   }
+}
+
+.display-settings-icon {
+  display: flex;
 }

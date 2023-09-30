@@ -1,4 +1,4 @@
-footer {
+.footer-background {
   background-color: $sttm-white;
   border-top: 1px solid $sttm-lighter-grey;
   bottom: 0;
@@ -153,6 +153,44 @@ footer {
           font-size: 0.8rem;
           padding: 5px 2px;
         }
+      }
+    }
+  }
+}
+
+.pin-settings-footer {
+  @media screen and (max-width: 1200px) {
+    .footer {
+      display: block;
+    }
+
+    .version {
+      display: none;
+    }
+
+    .copyright {
+      padding: 5px 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .menu {
+      justify-content: center;
+
+      li a,
+      li span {
+        padding: 10px 5px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1500px) {
+    .menu {
+      font-size: 0.7em;
+
+      & li a,
+      .footer-seperator {
+        padding: 2em 0.5em;
       }
     }
   }

@@ -12,7 +12,7 @@ import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 import { RemoveShabadButton } from '../RemoveShabadButton';
 import { useEscapeKeyEventHandler } from '@/hooks';
 
-interface IMultipleShabadsDisplayProps {
+interface Props {
   multipleShabads: IMultipleShabadsProps[];
   showMultiViewPanel: boolean;
   clearMultipleShabads: () => {};
@@ -20,13 +20,13 @@ interface IMultipleShabadsDisplayProps {
   setMultipleShabads: (shabad: IMultipleShabadsProps) => {}
 }
 
-const MultipleShabadsDisplay: React.FC<IMultipleShabadsDisplayProps> = ({
+const MultipleShabadsDisplay = ({
   multipleShabads,
   showMultiViewPanel,
   setMultipleShabads,
   clearMultipleShabads,
   setMultiViewPanel,
-}) => {
+}: Props) => {
   const [sortableState, setSortableState] = useState<IMultipleShabadsProps[]>(multipleShabads);
   const [history, setHistory] = useState<IMultipleShabadsProps[]>(multipleShabads);
   const urlHistory = useHistory();

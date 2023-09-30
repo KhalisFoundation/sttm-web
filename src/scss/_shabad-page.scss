@@ -24,6 +24,11 @@ blockquote {
   display: inline-block;
 }
 
+.gurlipi-reading-mode {
+  display: inline;
+  font-size: 0.9em;
+}
+
 #metadata {
   align-items: center;
   background-color: #e9e9e9;
@@ -70,6 +75,10 @@ blockquote {
   & .hukamnama-audio--shown {
     transform: translateX(-50%) scaleY(1);
   }
+
+  & .hukamnama-audio--pin-settings {
+    left: 40%;
+  }
 }
 
 .meta {
@@ -107,6 +116,11 @@ blockquote {
       &-row {
         padding: 5px 0;
       }
+
+      svg {
+        fill: $sttm-blue;
+        width: 18px;
+      }
     }
 
     &-left {
@@ -127,13 +141,18 @@ blockquote {
 }
 
 .hukamnama-right {
-  &-headphonesIcon {
-    text-align: right;
-  }
-
   &-link {
     svg {
       padding-right: 5px;
+    }
+  }
+
+  &-headphonesIcon {
+    text-align: right;
+
+    &:hover * {
+      color: $sttm-orange;
+      fill: $sttm-orange;
     }
   }
 }
@@ -370,6 +389,37 @@ blockquote {
     }
   }
 
+  .reading-mode-baani {
+    &-transliteration {
+      display: inline;
+
+      & .reading-mode-transliteration {
+        display: inline;
+      }
+    }
+
+    &-translation {
+      display: inline;
+
+      & .reading-mode-translation {
+        display: inline;
+      }
+    }
+
+    &-steek {
+      display: inline;
+      font-family: gurmukhi_normal, sans-serif;
+
+      & .reading-mode-steek {
+        display: inline;
+
+        & .gurlipi {
+          display: inline;
+        }
+      }
+    }
+  }
+
   .mixed-view-baani {
     &-paragraph {
       margin-bottom: 4px;
@@ -419,6 +469,12 @@ blockquote {
     &-steek {
       font-family: gurmukhi_normal, sans-serif;
       margin-bottom: 4px;
+
+      &-sahib {
+        border-left: 5px double $sttm-lilac;
+        margin-left: 5px;
+        padding-left: 10px;
+      }
 
       &.paragraph-mode * {
         display: inline;
@@ -516,7 +572,7 @@ blockquote {
     padding: 4px 2rem 0 3rem;
   }
 
-  .dark-mode #share-menu {
+  .dark-mode #controls-menu {
     background-color: $sttm-light-black;
   }
 }

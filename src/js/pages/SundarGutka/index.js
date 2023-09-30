@@ -82,7 +82,7 @@ class SundarGutka extends React.PureComponent {
               <div className="sgCards">
                 {baanies
                   .filter(SundarGutka.filter(q))
-                  .map(({ ID, transliteration, gurmukhiUni }, i) => {
+                  .map(({ ID, transliteration, gurmukhi }, i) => {
                     const isMultipleVersionExists = SG_MULTIPLE_VERSION_BAANIS.some(bId => bId == ID)
                     return (
                       <Link
@@ -97,7 +97,7 @@ class SundarGutka extends React.PureComponent {
                         >
                           <h2
                             className="sgCardGurmukhi"
-                          >{gurmukhiUni}{' '}</h2>
+                          >{gurmukhi}{' '}</h2>
 
                           <div
                             className="sgCardEnglish"

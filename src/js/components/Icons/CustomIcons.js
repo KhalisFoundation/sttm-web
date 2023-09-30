@@ -140,6 +140,55 @@ export const LarivaarAssistIcon = (props) => (
 );
 LarivaarAssistIcon.propTypes = iconPropTypes;
 
+export const CartoonIcon = (props) => (
+ <span onClick={props.onClick} className={props.className}> 
+    <svg 
+      version="1.0" 
+      xmlns="http://www.w3.org/2000/svg"
+      width="20px" 
+      height="20px" 
+      viewBox="0 0 346.000000 282.000000"
+      preserveAspectRatio="xMidYMid meet">
+    <g 
+      transform="translate(0.000000,282.000000) scale(0.100000,-0.100000)"
+      stroke="none">
+      <path d="M2433 2520 c-151 -27 -289 -143 -347 -290 -22 -55 -31 -203 -18 -282
+      10 -62 8 -64 -33 -48 -136 52 -394 52 -531 0 -15 -6 -29 -8 -32 -6 -2 3 1 25
+      7 50 16 64 14 169 -5 234 -46 158 -142 261 -299 322 -54 20 -282 21 -345 0
+      -113 -36 -203 -92 -291 -179 -143 -143 -208 -285 -209 -456 0 -207 125 -384
+      320 -451 42 -15 82 -19 173 -19 64 1 117 0 117 0 0 0 -9 -25 -20 -55 -66 -179
+      -67 -406 -4 -599 87 -264 310 -481 580 -564 163 -50 285 -59 429 -32 345 66
+      606 298 712 633 26 82 28 97 27 262 -1 167 -2 179 -31 268 l-31 92 118 0 c86
+      0 131 5 172 18 153 51 258 158 308 316 18 56 15 220 -4 287 -67 228 -244 407
+      -480 484 -60 19 -213 27 -283 15z"/>
+    </g>
+  </svg>
+</span>
+);
+
+CartoonIcon.propTypes = iconPropTypes;
+
+export const AudioPlayerIcon = ({children, ...props}) => (
+  <span onClick={props.onClick} className={props.className}>
+    <svg
+      version="1.0" 
+      xmlns="http://www.w3.org/2000/svg"
+      width="18" 
+      height="18"
+      viewBox="0 0 512 512"
+      preserveAspectRatio="xMidYMid meet">
+      <path d="M256 31C115.39 31 0 145.39 0 286v120c0 24.814 20.186 45 45 45h15V301H45c-5.284 0-10.285 1.082-15 2.763V286C30 161.928 131.928 61 256 61s226 100.928 226 225v17.763c-4.715-1.681-9.716-2.763-15-2.763h-15v150h15c24.814 0 45-20.186 45-45V286c0-140.61-115.39-255-256-255z" /><path d="M135 271h-15c-16.569 0-30 13.431-30 30v150c0 16.569 13.431 30 30 30h15c8.284 0 15-6.716 15-15V286c0-8.284-6.716-15-15-15zM392 271h-15c-8.284 0-15 6.716-15 15v180c0 8.284 6.716 15 15 15h15c16.569 0 30-13.431 30-30V301c0-16.569-13.431-30-30-30z" />
+    </svg>
+    {children}
+  </span>
+);
+
+AudioPlayerIcon.propTypes = {
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
+};
+
 export const DarkModeIcon = (props) => (
   <span onClick={props.onClick} className={props.className}>
     <svg

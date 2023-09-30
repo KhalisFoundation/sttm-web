@@ -7,6 +7,7 @@ import { setMultipleShabads, setMultiViewPanel } from '@/features/actions';
 import Larivaar from '../components/Larivaar';
 import { toSearchURL } from '@/util';
 import { ShabadButtonWrapper } from "./ShabadButtonWrapper";
+import { SEARCH_TYPES } from "@/constants";
 
 class Autocomplete extends Component {
   static propTypes = {
@@ -77,10 +78,10 @@ class Autocomplete extends Component {
   // Closing suggestions on mouse down
   onMouseDown = e => {
     e.stopPropagation();
-    (this.state.showSuggestions && !this.wrapperRef.current.contains(e.target)) &&       
-    this.setState({
-      showSuggestions: false,
-    });    
+    (this.state.showSuggestions && !this.wrapperRef.current.contains(e.target)) &&
+      this.setState({
+        showSuggestions: false,
+      });
   }
 
   componentDidMount() {
@@ -117,7 +118,6 @@ class Autocomplete extends Component {
 
           getSuggestions(userInput, searchOptions)
             .then(suggestions => {
-
               // if any suggestion exists, only then add this as final result item
               if (isShowFullResults && suggestions.length) {
                 suggestions.push({
@@ -163,17 +163,19 @@ class Autocomplete extends Component {
       props: {
         isShowFullResults = false,
         value,
-        searchOptions
+        searchOptions,
+        isHome,
       }
     } = this;
 
     let suggestionsListComponent;
+    const isChatBot = searchOptions.type === SEARCH_TYPES.ASK_A_QUESTION;
 
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
           <ul
-            className="search-result"
+            className={`search-result ${isHome ? 'search-result-home' : ''}`}
             id="suggestions"
             ref={this.wrapperRef}
             onKeyDown={this.onKeyDown} >
@@ -218,14 +220,14 @@ class Autocomplete extends Component {
                           {searchOptions.type === 3 ? suggestion.translation : suggestion.pankti}
                         </Larivaar>
                         {searchOptions.type === 3 && (<p className="gurbani-font">{suggestion.pankti}</p>)}
-                      </a>  
+                      </a>
                       {
                         <div className="add-shabad-wrapper">
                           <ShabadButtonWrapper shabad={suggestion} />
                         </div>
-                      }                    
+                      }
                     </>
-                    }
+                  }
                 </li>
               );
             })}
@@ -242,7 +244,7 @@ class Autocomplete extends Component {
 
     return (
       <Fragment>
-        {suggestionsListComponent}
+        {!isChatBot && suggestionsListComponent}
       </Fragment>
     );
   }

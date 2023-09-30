@@ -120,6 +120,7 @@ $rhythm: 8px;
 
 .sgCardGurmukhi {
   border-left: 2px solid $sttm-orange;
+  font-family: 'gurmukhi_heavy', serif;
   font-size: 1.2em;
   padding-left: 10px;
 }
@@ -227,12 +228,16 @@ $rhythm: 8px;
 }
 
 @media (max-width: 600px) {
-  .sgCard { border-radius: 0; }
+  .sgCard {
+    border-radius: 0;
+  }
 }
 
 /* Screen larger than 600px? 2 column */
 @media (min-width: 600px) {
-  .sgCards { grid-template-columns: repeat(2, 1fr); }
+  .sgCards {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 700px) {
@@ -243,7 +248,9 @@ $rhythm: 8px;
 
 /* Screen larger than 900px? 3 columns */
 @media (min-width: 900px) {
-  .sgCards { grid-template-columns: repeat(3, 1fr); }
+  .sgCards {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 input[type=search] {

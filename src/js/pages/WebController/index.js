@@ -14,7 +14,7 @@ import { Stub } from '../Search/Layout';
 import ControllerShabad from '@/pages/WebController/shabad';
 import { versesToGurbani } from '@/util';
 import ShabadControls from '@/components/ShabadControls';
-
+import { isMobile } from 'react-device-detect';
 export default class WebControllerPage extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -54,7 +54,10 @@ export default class WebControllerPage extends React.PureComponent {
   }
 
   handleCeremony = (ceremonyID, highlight) => {
-    this.setState({ loading: true, shabadData: null });
+    const currentCeremony = this.state?.shabadData?.ceremonyInfo?.ceremonyID;
+    if (currentCeremony !== ceremonyID) {
+       this.setState({ loading: true, shabadData: null });
+    }
     fetch(`${CEREMONIES_URL}${ceremonyID}`)
       .then(r => r.json())
       .then((data) => {
@@ -72,7 +75,10 @@ export default class WebControllerPage extends React.PureComponent {
   }
 
   handleBani = (baniID, highlight, baniLength = 'extralong', mangalPosition = 'above') => {
-    this.setState({ loading: true, shabadData: null });
+    const currentBani = this.state?.shabadData?.baniInfo?.baniID;
+    if (currentBani !== baniID) {
+       this.setState({ loading: true, shabadData: null });
+    }
     fetch(`${BANIS_API_URL}/${baniID}`)
       .then(r => r.json())
       .then((data) => {
@@ -268,11 +274,25 @@ export default class WebControllerPage extends React.PureComponent {
                   pattern="[A-Z,a-z]{3}-[A-Z,a-z]{3}"
                   onKeyUp={e => {
                     const typedValue = e.currentTarget.value;
-                    const typedChar = e.key;
-                    const parsedValue = typedValue.match('^[A-Z,a-z]{3}');
-                    const d = parsedValue ? parsedValue[0] === typedValue : false;
-                    if (d && typedChar !== 'Backspace') {
-                      e.currentTarget.value = typedValue + '-';
+                    if (isMobile) {
+                      const parsedValue = typedValue.match('^[A-Z,a-z]{4}');
+                      const isParsedValueExist = parsedValue
+                        ? parsedValue[0] === typedValue
+                        : false;
+                      if (isParsedValueExist) {
+                        const lastChar = typedValue.slice(-1);
+                        e.currentTarget.value =
+                          typedValue.slice(0, 3) + '-' + lastChar;
+                      }
+                    } else {
+                      const typedChar = e.key;
+                      const parsedValue = typedValue.match('^[A-Z,a-z]{3}');
+                      const isParsedValueExist = parsedValue
+                        ? parsedValue[0] === typedValue
+                        : false;
+                      if (isParsedValueExist && typedChar !== 'Backspace') {
+                        e.currentTarget.value = typedValue + '-';
+                      }
                     }
                   }}
                   required

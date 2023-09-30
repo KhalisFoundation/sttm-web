@@ -79,50 +79,6 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
 
   <div id="app-root"></div>
 
-  <footer>
-    <div class="footer row">
-      <ul class="version">
-        <li>
-          <!--v${process.env.npm_package_version}-->
-          <a href="https://github.com/KhalisFoundation/sttm-web/releases" target="_blank" rel="noopener noreferrer"></a>
-        </li>
-      </ul>
-      <ul class="menu footer-menu">
-        <li>
-          <a href="http://support.khalisfoundation.org/" target="_blank" rel="noopener noreferrer">Help</a>
-        </li>
-        <li>
-          <a href="/about">About Us</a>
-        </li>
-        <li>
-          <a href="http://support.khalisfoundation.org/support/tickets/new" target="_blank" rel="noopener noreferrer">Feedback</a>
-        </li>
-        <li>
-          <a href="/terms-of-service">Legal</a>
-        </li>
-        <li>
-          <a href="https://khalisfoundation.org/donate/" target="_blank" rel="noopener noreferrer">Donate</a>
-        </li>
-        <li>
-        <span class="footer-seperator">|</span>
-        </li>
-        <li>
-          <a class="download-icon" target="_blank" href="https://khalisfoundation.org/portfolio/sikhitothemax/"><img src="/assets/images/app-desktop.png" alt="Desktop icon"/></a>
-        </li>
-        <li>
-          <a class="download-icon" target="_blank" href="https://apps.apple.com/us/app/sikhitothemax/id1370303478"><img src="/assets/images/app-ios.png" alt="iOS icon"/></a>
-        </li>
-        <li>
-          <a class="download-icon" target="_blank" href="https://play.google.com/store/apps/details?id=com.nest.sttm&hl=en_US"><img src="/assets/images/app-android.png" alt="Android icon"/></a>
-        </li>
-      </ul>
-      <div class="copyright">
-        Copyright © <span id="year"></span> Khalis Foundation
-        <span>, SikhiToTheMax Trademark SHARE Charity, UK</span>
-      </div>
-    </div>
-  </footer>
-
   <!-- Google Analytics -->
   <script>
     var ga;
@@ -139,6 +95,8 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
     }
     ga('create', 'UA-47386101-5', 'auto');
   </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-958770124"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-958770124'); </script>
 
   <!-- Polyfills -->
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Object.entries,Array.from,Array.prototype.includes,String.prototype.startsWith,String.prototype.includes,Map,Set,requestAnimationFrame,Array.prototype.@@iterator"></script>

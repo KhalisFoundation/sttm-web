@@ -36,7 +36,7 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
     user ?
       (
         <li className={`${toggleDropdownProfile ? 'opened' : ''} submenu`}>
-          <button name="profile-btn" onClick={toggleDropdownHandlerProfile} ref={dropTogglerRefProfile}>
+          <button name="profile-btn" className="profile-btn" onClick={toggleDropdownHandlerProfile} ref={dropTogglerRefProfile}>
             <span>
               {user.firstname + ' ' + user.lastname}
               <BackIcon />
@@ -46,14 +46,14 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
             <Link to="/user/favourite-shabads" onClick={toggleMenu}>
               Favourite Shabads
             </Link>
-            <Link to="/logout" onClick={handleLogout}>
+            <Link to="/logout" onClick={handleLogout} className="submenu-logout">
               Logout
             </Link>
           </div>
         </li>
       )
       : (
-        <li>
+        <li className='submenu-login'>
           <button name="login-btn" onClick={onLogin}>
             <span>
               Login

@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
-import Banner from './Banner';
+import Footer from './Footer';
+import Banner from './Banner/Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, TEXTS } from '../constants';
@@ -12,11 +13,12 @@ import {
   OFFLINE_COLOR,
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
-import { setOnlineMode } from '../features/actions';
+import { setOnlineMode, closeSettingsPanel } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
 import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
+import { AddFavouriteShabadModal } from './Modals';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -38,7 +40,10 @@ class Layout extends React.PureComponent {
     isAng: PropTypes.bool,
     multipleShabads: PropTypes.array,
     showMultiViewPanel: PropTypes.bool,
+    showPinSettings: PropTypes.bool,
+    isModalOpen: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
+    closeSettingsPanel: PropTypes.func,
     history: PropTypes.object 
   };
 
@@ -84,6 +89,8 @@ class Layout extends React.PureComponent {
       isController = false,
       autoScrollMode,
       showMultiViewPanel,
+      showPinSettings,
+      isModalOpen,
       location: { pathname = '/' } = {},      
       ...props
     } = this.props;
@@ -106,7 +113,8 @@ class Layout extends React.PureComponent {
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner />
-        <div className={`pusher ${showMultiViewPanel ? 'enable' : ''}`}>
+        {isModalOpen && <AddFavouriteShabadModal />}
+        <div className={`pusher ${showMultiViewPanel ? 'enable' : ''} pin-settings ${showPinSettings ? 'active' : ''}`}>
           <Header
             defaultQuery={this.props.defaultQuery}
             isHome={isHome}
@@ -126,18 +134,22 @@ class Layout extends React.PureComponent {
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
           isShowFullScreen={isShowFullScreen}
-          isShowScrollToTop={this.state.showScrollToTop} 
+          isShowScrollToTop={this.state.showScrollToTop}
+          showPinSettings={showPinSettings} 
           isShowSettings={isShowSettings} />
 
+        <Footer showPinSettings={showPinSettings}/>
       </React.Fragment>
     ) : (
-        <div className="content-root">
-          <GenericError
-            title={TEXTS.OFFLINE}
-            description={TEXTS.OFFLINE_DESCRIPTION}
-            image={SachKaur}
-          />
-        </div>
+        <>
+          <div className="content-root">
+            <GenericError
+              title={TEXTS.OFFLINE}
+              description={TEXTS.OFFLINE_DESCRIPTION}
+              image={SachKaur} />
+          </div>
+          <Footer showPinSettings={showPinSettings} />
+        </>  
       )
   }
 
@@ -166,6 +178,9 @@ class Layout extends React.PureComponent {
   }
 
   componentDidMount() {
+    if(location.pathname!=="/hukamnama" && location.pathname!=="/shabad" && location.pathname!=="/search"){
+      this.props.closeSettingsPanel();
+    }
     this.processAuth();
     window.addEventListener('online', this.onOnline);
     window.addEventListener('offline', this.onOffline);
@@ -213,8 +228,9 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode, autoScrollMode, showMultiViewPanel }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel }),
+  ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, isModalOpen }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, isModalOpen }),
   {
     setOnlineMode,
+    closeSettingsPanel,
   }
 )(Layout);

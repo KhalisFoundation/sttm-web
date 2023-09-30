@@ -65,6 +65,7 @@ class ListOfShabads extends React.PureComponent {
     centerAlignGurbani: PropTypes.bool.isRequired,
     showFullScreen: PropTypes.bool,
     paragraphMode: PropTypes.bool,
+    readingMode: PropTypes.bool,
     sgBaaniLength: PropTypes.string,
   };
 
@@ -75,6 +76,7 @@ class ListOfShabads extends React.PureComponent {
     const {
       props: {        
         sgBaaniLength,
+        readingMode,
         ...baniProps
       },
       handleEmbed,
@@ -137,6 +139,7 @@ class ListOfShabads extends React.PureComponent {
                           sgBaaniLength={sgBaaniLength}
                           isSundarGutkaRoute={false}
                           isParagraphMode={false}
+                          isReadingMode={readingMode}
                         />
                       }
                     </div>

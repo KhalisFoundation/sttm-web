@@ -20,6 +20,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_FONT_FAMILY,
   LOCAL_STORAGE_KEY_FOR_DARK_MODE,
   LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE,
+  LOCAL_STORAGE_KEY_FOR_READING_MODE,
   LOCAL_STORAGE_KEY_FOR_SEHAJ_PAATH_MODE,
   LOCAL_STORAGE_KEY_FOR_VISRAAMS,
   LOCAL_STORAGE_KEY_FOR_CENTER_ALIGN_VIEW,
@@ -27,6 +28,8 @@ import {
   LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE,
   LOCAL_STORAGE_KEY_FOR_SG_BAANI_LENGTH,
   LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS,
+  LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES,
+  LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER,
   DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
   DEFAULT_STEEK_LANGUAGES,
@@ -43,6 +46,7 @@ import {
   DEFAULT_DARK_MODE,
   DEFAULT_AUTO_SCROLL_MODE,
   DEFAULT_PARAGRAPH_MODE,
+  DEFAULT_READING_MODE,
   DEFAULT_SEHAJ_PAATH_MODE,
   DEFAULT_VISRAAMS,
   DEFAULT_CENTER_ALIGN_GURBANI,
@@ -53,6 +57,8 @@ import {
   DEFAULT_ENGLISH_TRANSLATION_LANGUAGES,
   LOCAL_STORAGE_KEY_FOR_HINDI_TRANSLATION_LANGUAGES,
   DEFAULT_HINDI_TRANSLATION_LANGUAGES,
+  DEFAULT_CARTOONIFIED_PAGES,
+  DEFAULT_SHABAD_AUDIO_PLAYER
 } from '../../constants';
 import {
   getArrayFromLocalStorage,
@@ -61,7 +67,7 @@ import {
   getStringFromLocalStorage,
 } from '../../util';
 
-const initialState = {
+export const initialState = {
   online: window !== undefined ? window.navigator.onLine : true,
   showAdvancedOptions: false,
   showTransliterationOptions: false,
@@ -119,6 +125,10 @@ const initialState = {
     LOCAL_STORAGE_KEY_FOR_PARAGRAPH_MODE,
     DEFAULT_PARAGRAPH_MODE
   ),
+  readingMode: getBooleanFromLocalStorage(
+    LOCAL_STORAGE_KEY_FOR_READING_MODE,
+    DEFAULT_READING_MODE
+  ),
   darkMode: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_DARK_MODE,
     DEFAULT_DARK_MODE
@@ -174,6 +184,17 @@ const initialState = {
     []
   ),
   showMultiViewPanel: false,
+  showPinSettings: false,
+  isModalOpen: false,
+  gurbaniVerses: [],
+  showCartoonifiedPages: getBooleanFromLocalStorage(
+    LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES,
+    DEFAULT_CARTOONIFIED_PAGES
+  ),
+  showShabadAudioPlayer: getBooleanFromLocalStorage(
+    LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER,
+    DEFAULT_SHABAD_AUDIO_PLAYER
+  )
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

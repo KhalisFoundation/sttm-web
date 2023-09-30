@@ -30,7 +30,9 @@
   "accordion",
   "settings",
   "multiple-shabads",
-  "favourite-shabads";
+  "preview-shabad",
+  "favourite-shabads",
+  "modals";
 @import 'node_modules/react-smartbanner/dist/main';
 @import 'node_modules/react-toastify/dist/ReactToastify.min';
 @import 'node_modules/react-h5-audio-player/src/styles.scss';
@@ -103,7 +105,7 @@ select {
     font-weight: 500;
   }
 
-  @media screen and (max-width: 790px) {
+  @media screen and (max-width: 950px) {
     display: none;
   }
 
@@ -111,10 +113,10 @@ select {
     display: none;
   }
 
-  + #share-menu {
+  + #controls-menu {
     margin-top: -27px;
 
-    @media screen and (max-width: 790px) {
+    @media screen and (max-width: 950px) {
       margin-top: 0;
     }
   }
@@ -333,6 +335,10 @@ select {
   font-style: italic;
 }
 
+.__react_component_tooltip.show {
+  opacity: 0.9 !important;
+}
+
 .hukamnama-player {
   &-close-icon {
     align-items: center;
@@ -356,6 +362,43 @@ select {
     color: $sttm-white;
     display: inline-block;
     font-size: 1rem;
+  }
+}
+
+.shabad-player {
+  &-close-icon {
+    align-items: center;
+    background: $sttm-white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    fill: $sttm-blue;
+    float: right;
+    height: 27px;
+    justify-content: center;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 27px;
+  }
+
+  &-close-icon-svg {
+    fill: $sttm-blue;
+    font-size: 14px;
+  }
+
+  &-title {
+    color: $sttm-white;
+    display: inline-block;
+    font-size: 1rem;
+  }
+
+  &-footer {
+    color: $sttm-white;
+    display: flex;
+    font-size: 1rem;
+    justify-content: flex-end;
+    margin: 0;
   }
 }
 
@@ -452,6 +495,31 @@ body:not(.dark-mode) a {
     transform: translate(10%, 0);
     transform-origin: 0 0;
   }
+}
+
+.pin-settings {
+  min-height: 85vh;
+  right: 0;
+  top: 0;
+  transition: transform 0.5s;
+
+  &.active {
+    transform-origin: 0 0;
+    width: 80%;
+  }
+}
+
+.pin-settings-footer {
+  right: 0;
+  transform-origin: 0 0;
+  transition: transform 0.5s;
+  width: 77.5%;
+}
+
+.pin-settings-floating-icons {
+  right: 22%;
+  transform-origin: 0 0;
+  transition: transform 0.5s;
 }
 
 .settingsTooltipWrapper {

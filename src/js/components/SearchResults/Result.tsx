@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Larivaar from '../../components/Larivaar';
 import { toShabadURL, getHighlightIndices, multiviewFormattedShabad } from '../../util';
 import { getHighlightString } from './util/get-highlight-string';
@@ -9,17 +9,41 @@ import {
 } from '@/constants';
 
 import {
+  getQueryParams,
+  toAngURL,
+} from '@/util';
+
+import {
   getAng,
   getSource,
+  getSourceId,
   getUnicodeVerse,
   getGurmukhiVerse,
   translationMap,
   transliterationMap,
   getRaag,
-  getWriter
+  getWriter,
+  getWriterId,
 } from '@/util/api/shabad';
 import { ShabadButtonWrapper } from '../ShabadButtonWrapper';
+import { useRemoveFavouriteShabad } from '../FavouriteShabadButton/hooks/index'
+import { StarIcon } from '../Icons/StarIcon'
+import { isShabadExistMultiview } from '@/util/shabad';
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
+import { IUser } from '@/types/user'
+import { useGetUser } from '@/hooks';
+import RaagIcon from '../Icons/RaagIcon'
+import WriterIcon from '../Icons/WriterIcon'
+import SourceIcon from '../Icons/SourceIcon'
+import { Play } from '../Icons/controls/Play'
+import PreviewShabad from '../PreviewShabad';
+import { useEscapeKeyEventHandler } from '@/hooks';
+import DateAndTimeIcon from '@/components/Icons/DateAndTimeIcon';
+import { getFormattedDateTime } from '@/components/SearchResults/util/get-formatted-date-time';
 
+interface IShabadButtonWrapper {
+  multipleShabads: IMultipleShabadsProps[]
+}
 interface IShabadResultProps {
   shabad: any
   q: string,
@@ -47,16 +71,20 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   larivaar,
   larivaarAssist,
 }) => {
-  console.log(shabad, "SHABAD...")
+  const { user } = useGetUser<IUser>()
+  const location = useLocation();
+  const [isShabadPreview, setIsShabadPreview] = useState(false);
+  const [verses, setVerses] = useState([])
+  const pathName = location.pathname;
+  const searchQuery = location.search;
+  const isFavShabadPage = pathName === '/user/favourite-shabads'
   const _source = getSource(shabad);
+  const sourceId = getSourceId(shabad);
+  const writerId = getWriterId(shabad);
   const shabadPageNo = getAng(shabad) === null ? '' : getAng(shabad);
-  const presentationalSource = _source
-    ? `${_source} - ${shabadPageNo}`
-    : null;
-
+  const comment = shabad.comment;
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   const shabadEnglishTranslation = translationMap['english'](shabad);
-
   // english-word search type we needs to highlight index for english translations.
   // romanized first letters we needs to highlight index for english transliterations
 
@@ -67,6 +95,47 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   );
 
   const formattedShabad = multiviewFormattedShabad(shabad)
+
+  const remove = useRemoveFavouriteShabad()
+
+  const getShabadUrl = (id) => `${API_URL}shabads/${id}`
+
+  useEscapeKeyEventHandler(() => setIsShabadPreview(false))
+
+  const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    remove.mutate(formattedShabad.shabadId)
+  }
+  const typedUseSelector: TypedUseSelectorHook<IShabadButtonWrapper> = useSelector;
+  const multipleShabads = typedUseSelector(state => state.multipleShabads)
+  const isShabadAdded = isShabadExistMultiview(multipleShabads, formattedShabad.verseId);
+  const showMultiViewPanel = typedUseSelector(state => state.showMultiViewPanel)
+  const showSettingsPanel = typedUseSelector(state => state.showSettingsPanel)
+
+  const handleSourceClick = () => {
+    const { source } = getQueryParams(searchQuery)
+    const newSearchQuery = searchQuery.replace(`source=${source}`, `source=${sourceId}`)
+    const newUrl = pathName + newSearchQuery;
+    return newUrl
+  }
+
+  const handleWriterClick = () => {
+    const { writer } = getQueryParams(searchQuery)
+    const newSearchQuery = searchQuery.replace(`writer=${writer}`, `writer=${writerId}`)
+    const newUrl = pathName + newSearchQuery;
+    return newUrl
+  }
+
+  const handleMouseEnter = async (id) => {
+    if (showMultiViewPanel || showSettingsPanel) {
+      setIsShabadPreview(false);
+    } else {
+      setIsShabadPreview(true);
+      let response = await fetch(getShabadUrl(id));
+      let shabad = await response.json();
+      setVerses(shabad?.verses)
+    }
+  }
 
   return (
     <React.Fragment key={shabad.id}>
@@ -79,7 +148,9 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               fontFamily: `${fontFamily}`
             }}
             to={toShabadURL({ shabad, q, type, source })}
-            className="gurbani-font gurbani-display"
+            className="gurbani-font gurbani-display shabad-title"
+            onMouseEnter={() => handleMouseEnter(shabad.shabadId)}
+            onMouseLeave={() => setIsShabadPreview(false)}
           >
             {unicode ? (
               <div className={`unicode ${larivaar ? 'larivaar' : ''}`}>
@@ -181,23 +252,64 @@ const SearchResult: React.FC<IShabadResultProps> = ({
           )}
 
           <div className="meta flex wrap">
-            {presentationalSource && <a href="#">{presentationalSource}</a>}
-
-            <a href="#">{getWriter(shabad)['english']}</a>
-
+            {_source &&
+              <div className='search-result-icon-wrap' >
+                <SourceIcon />
+                <Link to={handleSourceClick}>{_source}</Link>
+              </div>
+            }
+            {shabadPageNo &&
+              <div className='search-result-icon-wrap' >
+                <Play className='search-result-icon' />
+                <Link to={toAngURL({ ang: shabadPageNo, source: sourceId })}>{shabadPageNo}</Link>
+              </div>
+            }
+            <div className='search-result-icon-wrap'>
+              <WriterIcon className='search-result-icon' />
+              <Link to={handleWriterClick}>{getWriter(shabad)['english']}</Link>
+            </div>
             {getRaag(shabad)['english'] === 'No Raag' ||
               getRaag(shabad)['english'] === null ? (
               ''
             ) : (
-              <a href="#">{getRaag(shabad)['english']}</a>
+              <div className='search-result-icon-wrap'>
+                <RaagIcon className='search-result-icon' />
+                <p className='raag-title'>{getRaag(shabad)['english']}</p>
+              </div>
             )}
           </div>
+          {(comment !== null || comment !== undefined) &&
+            <p className='comments'>
+              {comment}
+            </p>}
         </div>
 
-        <div className="add-shabad-wrap">
-          {
+        <div className={`${isShabadPreview ? 'preview-shabad-visible' : 'preview-shabad-hidden'}`}><PreviewShabad verses={verses} /></div>
+
+        <div className="favourite-shabad-wrap">
+          {(user && isFavShabadPage) ? <div className="favourite-shabad-wrap icons">
+            <button
+              data-cy="favourite-shabad"
+              onClick={handleRemoveClick}
+              className="remove-fav-button"
+            >
+              <StarIcon />
+            </button>
             <ShabadButtonWrapper shabad={formattedShabad} />
-          }
+            <DateAndTimeIcon className="date-time-icon" />
+          </div> :
+            <div className="favourite-shabad-wrap icons">
+              <ShabadButtonWrapper shabad={formattedShabad} />
+            </div>}
+          <div className="favourite-shabad-wrap labels">
+            {(user && isFavShabadPage) && <span className='remove-fav-title'>Remove favourite</span>}
+            {isShabadAdded
+              ? (<span className='multiview-title'>Remove from multiview</span>)
+              : (<span className='multiview-title' >Add to multiview</span>)}
+            <span className='date-time'>
+              {shabad.createdAt && getFormattedDateTime(shabad.createdAt)}
+            </span>
+          </div>
         </div>
       </li>
     </React.Fragment>

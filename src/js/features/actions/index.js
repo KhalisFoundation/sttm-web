@@ -1,6 +1,7 @@
 import {
   DEFAULT_LARIVAAR_ASSIST_STRENGTH,
   DEFAULT_ENGLISH_TRANSLATION_LANGUAGES,
+  DEFAULT_TRANSLATION_LANGUAGES,
   DEFAULT_TRANSLATION_FONT_SIZE,
   DEFAULT_STEEK_LANGUAGES,
   DEFAULT_TRANSLITERATION_LANGUAGES,
@@ -18,11 +19,14 @@ import {
   DEFAULT_FONT_FAMILY,
   DEFAULT_CENTER_ALIGN_GURBANI,
   DEFAULT_SPLIT_VIEW,
+  DEFAULT_READING_MODE,
   DEFAULT_SEHAJ_PAATH_MODE,
   DEFAULT_SG_BAANI_LENGTH,
+  DEFAULT_CARTOONIFIED_PAGES,
+  DEFAULT_SHABAD_AUDIO_PLAYER
 } from '../../constants';
 
-export const createAction = (type, meta) => (payload) => ({
+export const  createAction = (type, meta) => (payload) => ({
   type,
   meta,
   payload,
@@ -87,6 +91,15 @@ export const toggleLarivaarAssistOption = createAction(
 
 export const TOGGLE_SPLIT_VIEW_OPTION = 'TOGGLE_SPLIT_VIEW_OPTION';
 export const toggleSplitViewOption = createAction(TOGGLE_SPLIT_VIEW_OPTION);
+
+export const TOGGLE_CARTOONIFIED_PAGES = 'TOGGLE_CARTOONIFIED_PAGES';
+export const toggleCartoonifiedPages = createAction(TOGGLE_CARTOONIFIED_PAGES);
+
+export const TOGGLE_SHABAD_AUDIO_PLAYER = 'TOGGLE_SHABAD_AUDIO_PLAYER';
+export const toggleShabadAudioPlayer = createAction(TOGGLE_SHABAD_AUDIO_PLAYER);
+
+export const TOGGLE_READING_MODE = 'TOGGLE_READING_MODE';
+export const toggleReadingMode = createAction(TOGGLE_READING_MODE);
 
 export const SET_AUTOSCROLLING = 'SET_AUTOSCROLLING';
 export const setAutoScrolling = createAction(SET_AUTOSCROLLING);
@@ -153,6 +166,12 @@ export const setTransliterationLanguages = createAction(
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const setDarkMode = createAction(SET_DARK_MODE);
 
+export const SET_CARTOONIFIED_PAGES = 'SET_CARTOONIFIED_PAGES';
+export const setCartoonifiedPages = createAction(SET_CARTOONIFIED_PAGES);
+
+export const SET_SHABAD_AUDIO_PLAYER = 'SET_SHABAD_AUDIO_PLAYER';
+export const setShabadAudioPlayer = createAction(SET_SHABAD_AUDIO_PLAYER);
+
 export const SET_AUTO_SCROLL_MODE = 'SET_AUTO_SCROLL_MODE';
 export const setAutoScrollMode = createAction(SET_AUTO_SCROLL_MODE);
 
@@ -161,6 +180,9 @@ export const setVisraams = createAction(SET_VISRAAMS);
 
 export const SET_SPLIT_VIEW = 'SET_SPLIT_VIEW';
 export const setSplitView = createAction(SET_SPLIT_VIEW);
+
+export const SET_READING_MODE = 'SET_READING_MODE';
+export const setReadingMode = createAction(SET_READING_MODE);
 
 export const SET_SG_BAANI_LENGTH = 'SET_SG_BAANI_LENGTH';
 export const setSgBaaniLength = createAction(SET_SG_BAANI_LENGTH);
@@ -177,6 +199,9 @@ export const removeMultipleShabads = createAction(REMOVE_MULTIPLE_SHABADS);
 export const SET_MULTI_VIEW_PANEL = 'SET_MULTI_VIEW_PANEL';
 export const setMultiViewPanel = createAction(SET_MULTI_VIEW_PANEL);
 
+export const SET_PIN_SETTINGS = 'SET_PIN_SETTINGS';
+export const setPinSettings = createAction(SET_PIN_SETTINGS);
+
 export const SET_PREFETCH_ANG = 'SET_PREFETCH_ANG';
 export const SET_LOADING_ANG = 'SET_LOADING_ANG';
 export const SET_MAHANKOSH_TOOLTIP_ACTIVE = 'SET_MAHANKOSH_TOOLTIP_ACTIVE';
@@ -185,8 +210,15 @@ export const SET_MAHANKOSH_TOOLTIP_EXPLAINATION =
 
 export const SET_ERROR = 'SET_ERROR';
 
+export const SET_IS_MODAL_OPEN = 'SET_IS_MODAL_OPEN';
+export const setIsModalOpen = createAction(SET_IS_MODAL_OPEN);
+
+export const SET_GURBANI_VERSES = 'SET_GURBANI_VERSES';
+export const setGurbaniVerses = createAction(SET_GURBANI_VERSES); 
+
 export const resetDisplayOptions = () => (dispatch) => {
   dispatch(setTransliterationLanguages(DEFAULT_TRANSLITERATION_LANGUAGES));
+  dispatch(setTranslationLanguages(DEFAULT_TRANSLATION_LANGUAGES));
   dispatch(
     setEnglishTranslationLanguages(DEFAULT_ENGLISH_TRANSLATION_LANGUAGES)
   );
@@ -201,8 +233,11 @@ export const resetDisplayOptions = () => (dispatch) => {
   dispatch(setCenterAlignOption(DEFAULT_CENTER_ALIGN_GURBANI));
   dispatch(setLarivaarAssistStrength(DEFAULT_LARIVAAR_ASSIST_STRENGTH));
   dispatch(setSplitView(DEFAULT_SPLIT_VIEW));
+  dispatch(setReadingMode(DEFAULT_READING_MODE));
   dispatch(setSehajPaathMode(DEFAULT_SEHAJ_PAATH_MODE));
   dispatch(setSgBaaniLength(DEFAULT_SG_BAANI_LENGTH));
+  dispatch(setCartoonifiedPages(DEFAULT_CARTOONIFIED_PAGES));
+  dispatch(setShabadAudioPlayer(DEFAULT_SHABAD_AUDIO_PLAYER));
 };
 
 export const CHANGE_FONT = 'CHANGE_FONT';
@@ -228,8 +263,13 @@ export const toggleCenterAlignOption = () => (dispatch, getState) => {
 export const closeSettingsPanel = () => (dispatch) => {
   dispatch(setSettingsPanel(false));
   dispatch(setKeyboardShortcutsPanel(false));
+  dispatch(setPinSettings(false));
 };
 
 export const closeMultiViewPanel = () => (dispatch) => {
   dispatch(setMultiViewPanel(false));
+};
+
+export const closePinSettings = () => (dispatch) => {
+  dispatch(setPinSettings(false));
 };

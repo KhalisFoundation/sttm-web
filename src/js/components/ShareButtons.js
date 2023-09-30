@@ -62,7 +62,9 @@ class ShareButtons extends React.PureComponent {
     onCopyAllClick: PropTypes.func,
     toggleSettingsPanel: PropTypes.func,
     closeMultiViewPanel: PropTypes.func,
+    closePinSettings: PropTypes.func,
     showMultiViewPanel: PropTypes.bool,
+    showPinSettings: PropTypes.bool,
     highlight: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -84,11 +86,14 @@ class ShareButtons extends React.PureComponent {
 
   onClickSettings(e) {
     e.preventDefault();
-    const { toggleSettingsPanel, closeMultiViewPanel, showMultiViewPanel } = this.props
+    const { toggleSettingsPanel, closeMultiViewPanel, showMultiViewPanel, showPinSettings, closePinSettings } = this.props
     if (showMultiViewPanel) {
       closeMultiViewPanel()
       delay(600).then(() => toggleSettingsPanel())
       return
+    }
+    if (showPinSettings) {
+      closePinSettings();
     }
     toggleSettingsPanel()
   }
@@ -98,7 +103,7 @@ class ShareButtons extends React.PureComponent {
   }
 
   render() {
-    const { media, onEmbedClick, onCopyAllClick } = this.props;
+    const { media, onEmbedClick, onCopyAllClick, gurbani } = this.props;
 
     if (media.length === 0) {
       return null;
@@ -183,7 +188,7 @@ class ShareButtons extends React.PureComponent {
        favouriteShabad: (
         <li key={9}>
           {
-            <FavouriteShabadButton shabad={this.formattedShabad} />
+            <FavouriteShabadButton shabad={this.formattedShabad} gurbani={gurbani} />
           }
         </li>
       ),
@@ -191,7 +196,7 @@ class ShareButtons extends React.PureComponent {
 
     if (window !== undefined && 'share' in window.navigator) {
       return (
-        <div id="share-menu">
+        <div id="controls-menu">
           <ul className="share-buttons">
             <li>
               <a title="Open Share Dialog" onClick={ShareButtons.handleShare}>
@@ -206,7 +211,7 @@ class ShareButtons extends React.PureComponent {
     }
 
     return (
-      <div id="share-menu">
+      <div id="controls-menu">
         <ul className="share-buttons">{media.map(item => mediaMap[item])}</ul>
       </div>
     );

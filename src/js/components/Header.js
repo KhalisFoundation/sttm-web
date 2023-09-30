@@ -8,6 +8,7 @@ import {
   MAX_ANGS,
   SOURCE_WRITER_FILTER,
   TEXTS,
+  DEFAULT_SEARCH_WRITER,
 } from '../constants';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -75,12 +76,12 @@ class Header extends React.PureComponent {
 
   onFormSubmit =
     ({ handleSubmit, ...data }) =>
-    (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      handleSubmit();
-      this.handleFormSubmit(data);
-    };
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit();
+        this.handleFormSubmit(data);
+      };
 
   handleFormSubmit = (data) => {
     this.props.history.push(toSearchURL(data));
@@ -101,10 +102,11 @@ class Header extends React.PureComponent {
     const {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
+      writer: defaultWriter = DEFAULT_SEARCH_WRITER,
     } = getQueryParams(location.search);
 
     const isSearchPageRoute = location.pathname.includes('search');
-    const key = `${defaultQuery}${defaultSource}${defaultType}`;
+    const key = `${defaultQuery}${defaultSource}${defaultType}${defaultWriter}`;
 
     const controllerHeader = (
       <div className="top-bar no-select" id="controller-bar">
@@ -139,6 +141,7 @@ class Header extends React.PureComponent {
             defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
             defaultType={Number(defaultType)}
+            defaultWriter={Number(defaultWriter)}
             submitOnChangeOf={['type', 'source', 'writer']}
             onSubmit={handleFormSubmit}
           >
@@ -383,18 +386,19 @@ class Header extends React.PureComponent {
                           value={writer}
                           onChange={handleSearchWriterChange}
                           className={[isWriterChanged ? 'selected' : null]}
+                          disabled={type === SEARCH_TYPES.ASK_A_QUESTION}
                         >
                           {writers
                             ?.filter((e) =>
                               source === 'G' || source === 'A'
                                 ? !SOURCE_WRITER_FILTER[source].includes(
-                                    e.writerID
-                                  )
+                                  e.writerID
+                                )
                                 : source !== 'all'
-                                ? SOURCE_WRITER_FILTER[source].includes(
+                                  ? SOURCE_WRITER_FILTER[source].includes(
                                     e.writerID
                                   )
-                                : true
+                                  : true
                             )
                             .map((writer) => (
                               <option
@@ -426,7 +430,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({}) => ({});
+const mapStateToProps = ({ }) => ({});
 
 const mapDispatchToProps = {
   toggleSettingsPanel,

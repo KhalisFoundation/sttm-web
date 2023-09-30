@@ -30,6 +30,7 @@ import {
   shortenURL,
   steekMap,
   hindiTranslationMap,
+  isShowSehajPaathModeRoute,
 } from '@/util';
 import { MahankoshContext } from '@/context';
 import { changeAng, prefetchAng } from './utils';
@@ -73,6 +74,7 @@ export default class Baani extends React.PureComponent {
     showFullScreen: PropTypes.bool,
     isSundarGutkaRoute: PropTypes.bool.isRequired,
     isParagraphMode: PropTypes.bool.isRequired,
+    isReadingMode: PropTypes.bool.isRequired,
     onBaaniLineClick: PropTypes.func,
     sgBaaniLength: PropTypes.string,
     visraams: PropTypes.bool,
@@ -860,13 +862,206 @@ export default class Baani extends React.PureComponent {
       </div>
     );
   };
+  createReadingModeMarkup  = () => {
+    const {
+      isReadingMode,
+      larivaarAssist,
+      larivaar,
+      unicode,
+      fontSize,
+      lineHeight,
+      fontFamily,
+      highlight,
+      showFullScreen,
+      visraams,
+      transliterationLanguages,
+      translationFontSize,
+      transliterationFontSize,
+    } = this.props;
+    const readingModeBaaniClass = 'reading-mode-baani';
+    const steekLanguages = this.getSteekLanguages();
+    const normalizedGurbani = this.normalizeGurbani();
+    const translationLanguages = this.getTranslationLanguages();
+    const englishTranslationLanguages = this.getEngLishTranslationLanguages();
+    const hindiTranslationLanguages = this.getHindiTranslationLanguages();
+    const spanishTranslationLanguage = translationLanguages.includes('spanish')
+    const shabads = Object.entries(normalizedGurbani).map(([idx, shabads]) => shabads.map(shabad => shabad)).flat();
+    return (
+      <div>
+        {shabads.map(shabad => {
+          return(
+            <div key={shabad.verseId} className={`${unicode ? 'unicode' : 'gurlipi-reading-mode'}`}>
+              <BaaniLine
+                text={shabad.verse}
+                unicode={unicode}
+                shouldHighlight={
+                  showFullScreen
+                    ? false
+                    : highlight === parseInt(getVerseId(shabad), 10)
+                }
+                larivaar={larivaar}
+                larivaarAssist={larivaarAssist}
+                fontSize={fontSize}
+                lineHeight={lineHeight}
+                fontFamily={fontFamily}
+                visraams={visraams}
+                visraam={shabad.visraam}
+                isReadingMode={isReadingMode}
+                key={shabad.verseId}
+                />
+              </div>
+          )
+        })}
+      {transliterationLanguages.map((language) => {
+          return (
+            <div
+              key={language}
+              className={`${readingModeBaaniClass}-wrapper`}
+            >
+              {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+                <div
+                  className={`${readingModeBaaniClass}-transliteration`}
+                  key={idx}
+                >
+                  {shabads.map((shabad) => (
+                    <Transliteration
+                      fontSize={transliterationFontSize}
+                      key={getVerseId(shabad)}
+                      isReadingMode={isReadingMode}
+                    >
+                      {transliterationMap[language](shabad)}
+                    </Transliteration>
+                  ))}
+                </div>
+              ))}
+            </div>
+          );
+        })}
+        
+        {/* English Translation Languages */}
+         {englishTranslationLanguages.map((source) => (
+           <div
+            key={ENGLISH_LANGUAGE + source}
+            className={`${readingModeBaaniClass}-wrapper`}
+          >
+            {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+              <div
+                key={idx}
+                className={`${readingModeBaaniClass}-translation`}
+              >
+                {shabads.map((shabad) => (
+                  <Translation
+                    fontSize={translationFontSize}
+                    key={getVerseId(shabad) + ENGLISH_LANGUAGE}
+                    type={source}
+                    {...Translation.getTranslationProps({
+                      translationMap: englishTranslationMap,
+                      language: source,
+                      shabad,
+                      unicode,
+                    })}
+                    isReadingMode={isReadingMode}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          ))}
+          {/* Hindi Translation Languages */}
+         {hindiTranslationLanguages.map((source) => (
+           <div
+            key={HINDI_LANGUAGE + source}
+            className={`${readingModeBaaniClass}-wrapper`}
+          >
+            {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+              <div
+                key={idx}
+                className={`${readingModeBaaniClass}-translation`}
+              >
+                {shabads.map((shabad) => (
+                  <Translation
+                    fontSize={translationFontSize}
+                    key={getVerseId(shabad) + HINDI_LANGUAGE}
+                    type={source}
+                    {...Translation.getTranslationProps({
+                      translationMap: hindiTranslationMap,
+                      language: source,
+                      shabad,
+                      unicode,
+                    })}
+                    isReadingMode={isReadingMode}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          ))}
+          {/* Punjabi Translation Languages */}
+        {steekLanguages.map((language) => (
+          <div
+            key={language}
+            className={`${readingModeBaaniClass}-wrapper`}
+          >
+            {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+              <div
+                key={idx}
+                className={`${readingModeBaaniClass}-steek`}
+              >
+                {shabads.map((shabad) => (
+                  <Steek
+                    fontSize={translationFontSize}
+                    key={getVerseId(shabad) + language}
+                    type={language}
+                    shabad={shabad}
+                    unicode={unicode}
+                    isReadingMode={isReadingMode}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+        {/* Spanish Translation Languages */}
+         {spanishTranslationLanguage &&
+           (<div
+            key={SPANISH_LANGUAGE}
+            className={`${readingModeBaaniClass}-wrapper`}
+          >
+            {Object.entries(normalizedGurbani).map(([idx, shabads]) => (
+              <div
+                key={idx}
+                className={`${readingModeBaaniClass}-translation`}
+              >
+                {shabads.map((shabad) => (
+                  <Translation
+                    fontSize={translationFontSize}
+                    key={getVerseId(shabad) + SPANISH_LANGUAGE}
+                    type={SPANISH_LANGUAGE}
+                    {...Translation.getTranslationProps({
+                      translationMap,
+                      language: SPANISH_LANGUAGE,
+                      shabad,
+                      unicode,
+                    })}
+                    isReadingMode={isReadingMode}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          )}
+        </div>
+    )
+  }
   getMarkup = () => {
-    const { splitView, showFullScreen } = this.props;
-
+    const { splitView, showFullScreen, isReadingMode, history} = this.props;
+    const isSehajPaathMode = isShowSehajPaathModeRoute(history.location.pathname);
     if (showFullScreen) {
       return this.createFullScreenMarkup();
     } else if (splitView) {
       return this.createSplitViewMarkup();
+    } else if (isReadingMode && !isSehajPaathMode) {
+      return this.createReadingModeMarkup();
     }
 
     return this.createMixedViewMarkup();

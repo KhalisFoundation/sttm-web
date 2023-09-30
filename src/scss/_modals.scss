@@ -1,0 +1,144 @@
+.background-modal {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 0;
+  bottom: 0;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.add-fav-shabad {
+  background: $sttm-white;
+  border-radius: 6px;
+  height: auto;
+  width: 70%;
+
+  .header {
+    align-items: center;
+    background: $sttm-blue;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    color: $sttm-white;
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: space-between;
+    padding: 10px 20px;
+
+    svg {
+      font-size: 20px;
+    }
+  }
+
+  .content {
+    padding: 20px 10%;
+
+    .title {
+      color: $sttm-darker-blue;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+
+      .dark-mode & {
+        color: $sttm-dark-white;
+      }
+    }
+
+    @media screen and (max-width: 450px) {
+      .title {
+        font-size: 1.125rem;
+      }
+    }
+
+    @media screen and (min-width: 40em) {
+      .title {
+        font-size: 1.5rem;
+      }
+    }
+
+    .dropdown {
+      font-family: 'gurmukhi_normal', sans-serif;
+
+      .dark-mode & {
+        color: $sttm-dark-white;
+      }
+    }
+
+    .react-select__ {
+      &control {
+        border-color: $sttm-blue;
+        cursor: pointer;
+        max-height: 50px;
+
+        .dark-mode & {
+          background: transparent;
+        }
+      }
+
+      &indicator-separator {
+        display: none;
+      }
+
+      &menu {
+        .dark-mode & {
+          background-color: $sttm-light-black;
+        }
+      }
+
+      &menu-list {
+        padding: 0;
+      }
+
+      &option {
+        &--is-selected {
+          background-color: $sttm-blue;
+        }
+
+        &:hover {
+          background-color: $sttm-lighter-blue;
+        }
+
+        .dark-mode & {
+          &:hover {
+            background-color: $sttm-dark-grey;
+          }
+        }
+      }
+
+      &single-value {
+        .dark-mode & {
+          color: $sttm-white;
+        }
+      }
+
+      &value-container {
+        padding: 0 4px;
+      }
+    }
+
+    .textarea {
+      .dark-mode & {
+        background-color: $sttm-lighter-black;
+        color: $sttm-dark-white;
+      }
+    }
+
+    .save-btn {
+      align-items: center;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+    color: $sttm-dark-white;
+  }
+}

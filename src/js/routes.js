@@ -56,7 +56,7 @@ export default [
     render(props) {
       return (
         <Layout title="SikhiToTheMax" isHome {...props}>
-          <Home {...props} />
+          <Home isHome {...props} />
         </Layout>
       );
     },

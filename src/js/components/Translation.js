@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TRANSLATION_LANGUAGES, ENGLISH_TRANSLATION_LANGUAGES, HINDI_TRANSLATION_LANGUAGES, PUNJABI_LANGUAGE } from '@/constants';
 
 export default class Translation extends React.PureComponent {
-  static defaultProps = { children: '' };
+  static defaultProps = { children: '', isReadingMode: false };
   static defaultFontSize = '18px';
   static propTypes = {
     type: PropTypes.oneOf([...TRANSLATION_LANGUAGES, ...ENGLISH_TRANSLATION_LANGUAGES, ...HINDI_TRANSLATION_LANGUAGES]),
@@ -33,6 +33,7 @@ export default class Translation extends React.PureComponent {
       PropTypes.number
     ]),
     children: PropTypes.string,
+    isReadingMode: PropTypes.bool,
   };
 
   static getTranslationProps = ({
@@ -48,15 +49,16 @@ export default class Translation extends React.PureComponent {
 
   render() {
     const { defaultFontSize } = Translation;
-    const { type, unicode, text, fontSize: _fontSize, children } = this.props;
+    const { type, unicode, text, fontSize: _fontSize, children, isReadingMode } = this.props;
     const fontSize = _fontSize ? _fontSize + 'em' : defaultFontSize;
+    const translationClass = isReadingMode ? 'reading-mode-translation' : 'translation';
 
     const isTranslationExists = (!!text && (!!text.unicode || !!text.gurmukhi)) || !!children;
     if (!isTranslationExists) return null;
 
     if (type === PUNJABI_LANGUAGE) {
       return (
-        <blockquote style={{ fontSize }} className="translation punjabi gurbani-font">
+        <blockquote style={{ fontSize }} className={`${translationClass} punjabi gurbani-font`}>
           {unicode ? (
             <div className="unicode">{text.unicode}</div>
           ) : (
@@ -66,7 +68,7 @@ export default class Translation extends React.PureComponent {
       );
     } else {
       return (
-        <blockquote style={{ fontSize }} className={`translation ${type}`}>
+        <blockquote style={{ fontSize }} className={`${translationClass} ${type}`}>
           {children}
         </blockquote>
       );

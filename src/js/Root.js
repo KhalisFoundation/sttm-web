@@ -10,15 +10,16 @@ import {
   showToast,
   saveToLocalStorage,
 } from './util';
+
 export default class Root extends React.PureComponent {
   constructor() {
     super();
 
     configure({
-      // logLevel: 'debug', use this when hotkeys break
+      // logLevel: 'debug',
       defaultKeyEvent: 'keydown',
       defaultComponent: 'div',
-      ignoreTags: ['input'],
+      ignoreTags: ['input', 'dialog', 'textarea'],
       defaultTabIndex: -1
     })
   }

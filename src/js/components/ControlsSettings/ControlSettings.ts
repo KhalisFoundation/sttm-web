@@ -43,9 +43,13 @@ export interface ISettingActions {
   toggleCenterAlignOption: () => {},
   toggleSplitViewOption: () => {},
   toggleDarkMode: () => {},
+  toggleCartoonifiedPages: () => {},
+  toggleShabadAudioPlayer: () => {},
   toggleParagraphMode: () => {},
+  toggleReadingMode: () => {},
   toggleSehajPaathMode: () => {},
   toggleSettingsPanel: () => {},
+  closePinSettings: () => {},
   toggleKeyboardShortcutsPanel: () => {},
   setVisraamSource: () => {},
   setVisraamStyle: () => {},
@@ -53,6 +57,9 @@ export interface ISettingActions {
   toggleAdvancedOptions: () => {},
   setLarivaarAssistStrength: (attr: any) => {},
   setSgBaaniLength: (attr: any) => {},
+  setSplitView: (attr: boolean) => {},
+  setReadingMode: (attr: boolean) => {},
+  setSehajPaathMode: (attr: boolean) => {},
   location: {
     pathname?: string,
   },
@@ -73,6 +80,7 @@ export interface ISettingActions {
   translationFontSize: number,
   transliterationFontSize: number,
   paragraphMode: boolean,
+  readingMode: boolean,
   sehajPaathMode: boolean,
   autoScrollMode: boolean,
   lineHeight: number,
@@ -82,10 +90,13 @@ export interface ISettingActions {
   sgBaaniLength: string,
   fontFamily: string,
   showAdvancedOptions: boolean,
+  showCartoonifiedPages: boolean,
+  showShabadAudioPlayer: boolean,
 }
 
 export const HEADER_SETTINGS = ({
   toggleSettingsPanel,
+  closePinSettings,
   toggleKeyboardShortcutsPanel,
   showSettingsPanel,
   showKeyboardShortcutsPanel  
@@ -93,107 +104,113 @@ export const HEADER_SETTINGS = ({
   return [
     {
       type: 'header',
-      label: showKeyboardShortcutsPanel ? 'Shortcuts':'Settings',
+      label: showKeyboardShortcutsPanel ? 'Shortcuts' : 'Settings',
       value: showSettingsPanel,
-      action: showKeyboardShortcutsPanel ? ()=>{toggleKeyboardShortcutsPanel(),toggleSettingsPanel()} : toggleSettingsPanel
+      action: showKeyboardShortcutsPanel
+        ? () => {
+            toggleKeyboardShortcutsPanel(), toggleSettingsPanel();
+          }
+        : () => {
+            closePinSettings(), toggleSettingsPanel();
+          },
     },
-  ]
+  ];
 }
 
 export const KEYBOARD_SHORTCUTS = () =>{
   return [
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Larivar',
       shortcut: ['l'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Larivar Assist',
       shortcut: ['shift+l'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Vishraams',
       shortcut: ['v'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'AutoScroll Mode',
       shortcut: ['a'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Dark Mode',
       shortcut: ['o'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Split Mode',
       shortcut: ['/'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'FullScreen Mode',
       shortcut: ['f'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Reading Mode',
       shortcut: ['r'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Unicode',
       shortcut: ['u'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Center Align',
       shortcut: ['(cmd)ctrl+shift+c'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'English Translation',
       shortcut: ['e'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Punjabi Translation',
       shortcut: ['t'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Spanish Translation',
       shortcut: ['s'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'English Transliteration',
       shortcut: ['shift+e'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Shahmukhi Transliteration',
       shortcut: ['shift+s'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Hindi Transliteration',
       shortcut: ['shift+h'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Increase Font Size',
       shortcut: ['+'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Decrease Font Size',
       shortcut: ['-'],
     },
     {
-      type: 'label-options',
+      type: 'keyboard-shortcut-options',
       label: 'Search Bar',
       shortcut: ['(cmd)ctrl+/'],
     },
@@ -211,12 +228,18 @@ export const QUICK_SETTINGS = ({
   toggleCenterAlignOption,
   toggleSplitViewOption,
   toggleDarkMode,
+  toggleCartoonifiedPages,
+  toggleShabadAudioPlayer,
   toggleParagraphMode,
+  toggleReadingMode,
   toggleSehajPaathMode,
   toggleAutoScrollMode,
   setSteekLanguages,
   setSgBaaniLength,
   setVisraamStyle,
+  setSplitView,
+  setReadingMode,
+  setSehajPaathMode,
   translationLanguages,
   englishTranslationLanguages,
   hindiTranslationLanguages,
@@ -230,7 +253,10 @@ export const QUICK_SETTINGS = ({
   centerAlignGurbani,
   splitView,
   darkMode,
+  showCartoonifiedPages,
+  showShabadAudioPlayer,
   paragraphMode,
+  readingMode,
   steekLanguages,
   sgBaaniLength,
   // eslint-disable-next-line no-unused-vars
@@ -348,7 +374,7 @@ export const QUICK_SETTINGS = ({
       tooltip: 'Set reading mode into Akhand Paath ( r )',
       checked: sehajPaathMode,
       stage: 'beta',
-      action: toggleSehajPaathMode,
+      action: () => {toggleSehajPaathMode(), setReadingMode(false), setSplitView(false)}
     } : {},
     isShowAutoScroll ? {
       type: 'toggle-option',
@@ -362,7 +388,28 @@ export const QUICK_SETTINGS = ({
       label: 'Split',
       tooltip: 'Set split mode ( / )',
       checked: splitView,
-      action: toggleSplitViewOption,
+      action: () => {toggleSplitViewOption(), setReadingMode(false), setSehajPaathMode(false) }
+    },
+    !isShowSehajPaathMode ? {
+      type: 'toggle-option',
+      label: 'Reading',
+      tooltip: 'Set reading mode',
+      checked: readingMode,
+      action: () => {toggleReadingMode(), setSplitView(false), setSehajPaathMode(false) }
+    } : {},
+    {
+      type: 'toggle-option',
+      label: 'Cartoon Images',
+      tooltip: 'Enable or disable cartoon images',
+      checked: showCartoonifiedPages,
+      action: toggleCartoonifiedPages,
+    },
+    {
+      type: 'toggle-option',
+      label: 'Audio Player',
+      tooltip: 'Enable or disable audio player',
+      checked: showShabadAudioPlayer,
+      action: toggleShabadAudioPlayer,
     },          
     {
       type: 'collapsible_item',

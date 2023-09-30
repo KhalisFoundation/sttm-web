@@ -78,6 +78,16 @@
             color: $sttm-white;
           }
         }
+
+        svg {
+          .dark-mode & {
+            fill: $sttm-white;
+
+            &:hover {
+              fill: $sttm-orange;
+            }
+          }
+        }
       }
 
       .content {

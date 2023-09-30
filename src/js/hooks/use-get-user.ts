@@ -1,26 +1,28 @@
 import * as React from 'react';
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants';
-import { client } from '@/components/FavouriteShabadButton/utils/api-client';
+import { apiClient } from '@/components/FavouriteShabadButton/utils/api-client';
 
 export const useGetUser = <D>() => {
   const [user, setUser] = React.useState<D | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
-
+  const isUserLoggedIn = !!window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN);
   React.useEffect(() => {
-    client('/auth/jwt', {
-      token: window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN),
-    })
-      .then((response) => {
-        setUser(response);
+    if(isUserLoggedIn) {
+      apiClient('/auth/jwt', {
+        token: window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN),
       })
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log('Error: ' + e.message);
-        localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+        .then((response) => {
+          setUser(response);
+        })
+        .catch((e) => {
+          // eslint-disable-next-line no-console
+          console.log('Error: ' + e.message);
+          localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+      }
   }, []);
 
   return { user, isLoading };
