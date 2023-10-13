@@ -2,7 +2,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
-import { mockStore } from '../__mocks__/';
+import { mockStore } from '../__mocks__';
 
 import MultiViewButton from '../MultiViewButton'
 import { setMultiViewPanel } from "@/features/actions";
