@@ -1,10 +1,9 @@
 /* global describe, it, expect, jest */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom';
-import { shabad, mockStore } from '../__mocks__/';
-import { setMultipleShabads } from '@/features/actions';
+import { shabad, mockStore } from '../__mocks__';
 
 import MultipleShabadsDisplay from "../MultipleShabadsDisplay";
 
