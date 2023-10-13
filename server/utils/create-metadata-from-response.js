@@ -14,7 +14,7 @@ export const createMetadataFromResponse = (req, apiResponse) => {
 
       const { shabadName } = shabadInfo;
 
-      // getting shabad object from verses
+      // getting shabad object from highlight/verses.
       let shabad 
       if(query.highlight) {
         shabad = verses.find(v => v.verseId == query.highlight);
