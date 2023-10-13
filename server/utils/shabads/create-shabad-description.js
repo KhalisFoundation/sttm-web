@@ -13,5 +13,5 @@ export const createShabadDescription = (shabad, shabadInfo) => {
   const shabadMeaning = shabad.translation.en.bdb || '';
   const shabadUnicode = shabad.verse.unicode || '';
 
-  return `${shabadMeaning} ${shabadUnicode} shabad ${shabadSource && `from ${shabadSource}`} ${shabadWriter && ` written by ${shabadWriter}`}`;
+  return `${shabadMeaning} ${shabadUnicode} shabad ${shabadSource ? `from ${shabadSource}` : ''} ${shabadWriter ? `written by ${shabadWriter}` : ''}`;
 }

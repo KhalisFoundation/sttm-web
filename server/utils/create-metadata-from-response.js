@@ -6,15 +6,21 @@ import { getAng, getSource } from './angs';
  * @param {object} apiResponse - The api response obj
  **/
 export const createMetadataFromResponse = (req, apiResponse) => {
-  const { path } = req;
+  const { path, query } = req;
+  
   switch (path) {
     case '/shabad': {
       const { shabadInfo, verses } = isKeyExists(apiResponse.data, 'shabadIds') ? apiResponse.data.shabads[0] : apiResponse.data;     
 
       const { shabadName } = shabadInfo;
 
-      // getting shabad object from verses
-      const shabad = verses.find(v => v.verseId === shabadName)
+      // getting shabad object from highlight/verses.
+      let shabad 
+      if(query.highlight) {
+        shabad = verses.find(v => v.verseId == query.highlight);
+      }else {
+        shabad = verses.find(v => v.verseId === shabadName);
+      }
 
       const title = createShabadTitle(shabad);
       const description = createShabadDescription(shabad, shabadInfo);
