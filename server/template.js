@@ -72,6 +72,22 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
 
   <link rel="android-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png">
   ${stylesheetsHTML}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.sikhitothemax.org",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://www.sikhitothemax.org/search?q={romanized_english_search}&type=4&source=all"
+      },
+      "query-input": "required name=romanized_english_search"
+    }
+  }
+  </script>
 </head>
 
 <body data-testid="bodyElement" class="${bodyClass}">
