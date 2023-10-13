@@ -4,11 +4,10 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import {
   render,
-  screen,
 } from '@testing-library/react';
 import { toHaveClass } from '@testing-library/jest-dom/matchers'
 
-import { shabad, mockStore } from '../__mocks__/';
+import { shabad, mockStore } from '../__mocks__';
 import Meta from '../Meta';
 expect.extend({ toHaveClass });
 
