@@ -1,5 +1,5 @@
 /* global describe, it, expect */
-import { getHighlightIndices, selectItemInArray } from '../';
+import { getHighlightIndices, selectItemInArray } from '..';
 
 describe('selectItemInArray()', () => {
   it('returns [1,3] when called with (2, [1,2,3])', () => {

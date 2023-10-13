@@ -193,7 +193,6 @@ class Meta extends React.PureComponent {
     const audioPlayer = this.audioPlayerRef.current.audio.current;
 
     this.setState(previousState => {
-      // console.log('set state 2 times got hit')
       const isAudioPlayerState = !previousState.isHukamnamaAudioPlayerVisible;
 
       !isAudioPlayerState && audioPlayer.pause();

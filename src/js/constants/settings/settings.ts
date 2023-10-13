@@ -28,9 +28,7 @@ import {
   GearsIcon,
   DarkModeIcon,
   VishraamIcon,
-  SteekIcon,
   AkhandPaathIcon,
-  AutoPlayIcon,
 } from '@/components/Icons/CustomIcons';
 
 export interface SETTING_ACTIONS {
