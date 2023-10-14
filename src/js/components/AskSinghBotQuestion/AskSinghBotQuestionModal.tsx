@@ -6,9 +6,7 @@ import { setIsModalOpen } from '@/features/actions';
 import SearchIcon from '@/components/Icons/Search';
 import ClearSearchButton from '../ClearSearchButton';
 import GurmukhiKeyboardToggleButton from '../GurmukhiKeyboardToggleButton';
-import Autocomplete from '../Autocomplete';
 import { MAX_ANGS } from '@/constants';
-import { getShabadList } from '@/util';
 
 interface Props {
     isModalOpen: boolean;
@@ -52,8 +50,18 @@ const AskSinghBotQuestionModal = (props: Props) => {
             handleSearchWriterChange,
             handleReset,
         }) => (
-            <>
-            <div className="search-container-wrapper">
+            <form
+                className="search-form"
+                action={action}
+                onSubmit={this.onSubmit({
+                    handleSubmit,
+                    query,
+                    type,
+                    source,
+                    writer,
+                })}
+            >
+                <div className="search-container-wrapper">
                 <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
                     <input
                         autoFocus={true}
@@ -87,10 +95,12 @@ const AskSinghBotQuestionModal = (props: Props) => {
                     </a>
                 )}
                 </div>
-            </>
+            </form>
         )}
           </SearchForm>
         </div>
       </dialog>
     )
 }
+
+export default AskSinghBotQuestionModal;

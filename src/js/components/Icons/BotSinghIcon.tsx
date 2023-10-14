@@ -2,8 +2,8 @@ import React from 'react';
 
 const BotSinghIcon = () => {
     return (
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	        viewBox="0 0 612 792" style="enable-background:new 0 0 612 792;" xmlSpace="preserve">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+	        viewBox="0 0 612 792" fill="white" xmlSpace="preserve">
         <g>
             <path d="M3.3,412.1c0-0.3,0-0.6,0-0.9c1.9-17.7,11.3-26.7,21.1-34c9-6.6,23.6-4.8,33.7-7.9c1.9-0.6,3.5-1.8,4.5-3.6
                 c8.1-14.1,15.2-29.4,25.4-42.1c13.7-17,33.7-24.3,55.5-24.3c108.9-0.2,217.9-0.3,326.8,0c36.7,0.1,68.4,25.7,76.6,61.5

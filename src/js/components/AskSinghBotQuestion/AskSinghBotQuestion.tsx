@@ -2,6 +2,8 @@
 import React from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import BotSinghIcon from '../Icons/BotSinghIcon';
+import AskSinghBotQuestionModal from './AskSinghBotQuestionModal';
+import { setIsModalOpen } from '@/features/actions';
 
 interface ModalOpenState {
     isModalOpen: boolean
@@ -12,18 +14,20 @@ const AskSinghBotQuestion = () => {
     const typedUseSelector: TypedUseSelectorHook<ModalOpenState> = useSelector;
     const isModalOpen = typedUseSelector(state => state.isModalOpen)
   
-    const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        
+        dispatch(setIsModalOpen(true));
     }
   
     return (
-        {isModalOpen && <AskSinghBotQuestionModal />}
-        <button className="fp-buttons apps-item" onClick={onClick}>
-            <div className="apps-icon-container">
-                <BotSinghIcon />
-            </div>
-        </button>
+        <>
+            {isModalOpen && <AskSinghBotQuestionModal isModalOpen={isModalOpen} />}
+            <button className="fp-buttons apps-item" onClick={handleClick}>
+                <div className="apps-icon-container">
+                    <BotSinghIcon />
+                </div>
+            </button>
+        </>
     )
 }
 
