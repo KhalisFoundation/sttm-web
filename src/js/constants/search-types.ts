@@ -1,8 +1,8 @@
-interface ISearchTypes {
+interface SearchTypes {
   [key: string]: number
 }
 
-export const SEARCH_TYPES: ISearchTypes = {
+export const SEARCH_TYPES: SearchTypes = {
   FIRST_LETTERS: 0,
   FIRST_LETTERS_ANYWHERE: 1,
   GURMUKHI_WORD: 2,
@@ -11,7 +11,7 @@ export const SEARCH_TYPES: ISearchTypes = {
   ANG: 5,
   MAIN_LETTERS: 6,
   ROMANIZED_FIRST_LETTERS_ANYWHERE: 7,
-  ASK_A_QUESTION: 8
+  // ASK_A_QUESTION: 8
 };
 
 export const SEARCH_TYPES_NOT_ALLOWED_KEYS = {

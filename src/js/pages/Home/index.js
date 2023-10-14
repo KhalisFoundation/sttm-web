@@ -1,12 +1,6 @@
 /* globals DOODLE_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../../constants';
-import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
-import { pageView } from '../../util/analytics';
-
 
 import { EnhancedGurmukhiKeyboard } from '@/components/EnhancedGurmukhiKeyboard';
 import SehajPaathLink from '@/components/SehajPaathLink';
@@ -14,18 +8,17 @@ import { BaaniLinks } from '@/components/BaaniLinks/';
 import SearchForm from '@/components/SearchForm';
 import Logo from '@/components/Icons/Logo';
 import SearchIcon from '@/components/Icons/Search';
-import { Temple } from '@/components/Icons/Temple';
 import Autocomplete from '@/components/Autocomplete';
 import ClearSearchButton from '@/components/ClearSearchButton';
 import Reset from '@/components/Icons/Reset';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
-import { SyncIcon } from '@/components/Icons/SyncIcon';
-import { Rehat } from '@/components/Icons/Rehat';
-import { Sundar } from '@/components/Icons/Sundar';
-import { RandomIcon } from '@/components/Icons/RandomIcon';
-import { IndexIcon } from '@/components/Icons/IndexIcon';
-import MultiViewHomeButton from '@/components/MultiViewHomeButton';
-import { DesktopSync } from '@/components/Icons/DesktopSync';
+
+import HomePageIcons from './HomePageIcons';
+import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../../constants';
+import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
+import { pageView } from '../../util/analytics';
+
+
 
 /**
  *
@@ -121,11 +114,9 @@ class Home extends React.PureComponent {
                 >
                   <div className="flex justify-center align-center">
                     <div className="flex flex-direction-column">
-                      {showDoodle ? (
-                        <Logo className="logo-long" doodle={doodleData} />)
-                        : (
-                          <Logo className="logo-long" />
-                        )}
+                      
+                      <Logo className="logo-long" doodle={showDoodle ? doodleData : null} />
+                        
                       <span className='new-text'>
                         <b className='new-text-blue'>NEW{" "}</b>
                         <span style={{ 'cursor': 'pointer' }} onClick={() => handleSearchTypeChange({ currentTarget: { value: SEARCH_TYPES['ASK_A_QUESTION'] } })}>
@@ -265,79 +256,7 @@ class Home extends React.PureComponent {
               <div className="apps-container">
                 <SehajPaathLink />
                 <BaaniLinks />
-                <div className="">
-                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/sundar-gutka'}>
-                    <div className="apps-icon-container">
-                      <Sundar />
-                    </div>
-                  </button>
-                  <div className="fp-buttons-text">Sundar Gutka</div>
-                </div>
-                <div className="">
-                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/hukamnama'}
-                    title="Today's Hukamnama"
-                    aria-label="Today's Hukamnama">
-                    <div className="apps-icon-container">
-                      <Temple />
-                    </div>
-                  </button>
-                  <div className="fp-buttons-text">Daily Hukamnama</div>
-
-                </div>
-                <div className="">
-                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/random'}
-                    title="Random Shabad"
-                    aria-label="Random Shabad">
-                    <div className="apps-icon-container">
-                      <RandomIcon />
-                    </div>
-                  </button>
-                  <div className="fp-buttons-text">Random</div>
-
-                </div>
-                <div className="">
-                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/rehat-maryadha'}>
-                    <div className="apps-icon-container">
-                      <Rehat />
-                    </div>
-                  </button>
-                  <div className="fp-buttons-text">Rehat Maryadha</div>
-
-                </div>
-
-                <div className="">
-                  <MultiViewHomeButton />
-
-                  <div className="fp-buttons-text">Multi-View</div>
-                </div>
-                <div className="">
-                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/index'}>
-                    <div className="apps-icon-container">
-                      <IndexIcon />
-                    </div>
-                  </button>
-                  <div className="fp-buttons-text">Bani Index</div>
-
-                </div>
-                <div className="">
-                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/sync'}>
-                    <div className="apps-icon-container">
-                      <SyncIcon />
-                    </div>
-                  </button>
-                  <div className="fp-buttons-text">Sangat Sync</div>
-
-                </div>
-                <div className="">
-                  <button className="fp-buttons apps-item" onClick={() => window.location.href = '/control'}>
-                    <div className="apps-icon-container">
-                      <DesktopSync />
-                    </div>
-
-                  </button>
-                  <div className="fp-buttons-text">Bani Controller</div>
-
-                </div>
+                <HomePageIcons />
               </div>
 
               {showDoodle && (
