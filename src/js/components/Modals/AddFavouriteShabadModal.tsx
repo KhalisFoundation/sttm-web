@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import { useCreateFavouriteShabad } from '@/components/FavouriteShabadButton/hooks';
@@ -24,7 +24,7 @@ const AddFavouriteShabadModal = () => {
   const [comment, setComment] = useState<string>('');
   const create = useCreateFavouriteShabad();
 
-  const handleShabadSave = (e) => {
+  const handleShabadSave = (e: FormEvent) => {
     e.preventDefault();
     create.mutate({ shabadId, comment, verseId: pankti });
     dispatch(setIsModalOpen(false))

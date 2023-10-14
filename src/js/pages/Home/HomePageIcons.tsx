@@ -8,6 +8,7 @@ import MultiViewHomeButton from '@/components/MultiViewHomeButton';
 import { IndexIcon } from '@/components/Icons/IndexIcon';
 import { SyncIcon } from '@/components/Icons/SyncIcon';
 import { DesktopSync } from '@/components/Icons/DesktopSync';
+import AskSinghBotQuestion from '@/components/AskSinghBotQuestion/AskSinghBotQuestion';
 
 const appRoutes = [{
     icon: <Sundar />,
@@ -47,6 +48,9 @@ const appRoutes = [{
     title: "Bani Controller",
     name: "Bani Controller",
     to: '/control',
+}, {
+    icon: <AskSinghBotQuestion />,
+    title: 'Ask singh bot question'
 }];
 
 const HomePageIcons = () => {

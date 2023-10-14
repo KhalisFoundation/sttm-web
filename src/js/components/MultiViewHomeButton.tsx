@@ -23,7 +23,6 @@ const MultiViewHomeButton = () => {
         <Multiview />
       </div>
     </button>
-
   )
 }
 
