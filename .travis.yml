@@ -2,7 +2,7 @@ language: node_js
 dist: trusty
 sudo: false
 
-node_js: '14'
+node_js: '20'
 
 branches:
   only:
