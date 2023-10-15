@@ -1,0 +1,23 @@
+.ask-gurbani-bot-question {
+  background: $sttm-white;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+    color: $sttm-dark-white;
+  }
+
+  & .search-form {
+    padding: 8px;
+    width: 100%;
+  }
+
+  & label {
+    color: currentColor;
+    font-size: 24px;
+    padding: 8px;
+  }
+}

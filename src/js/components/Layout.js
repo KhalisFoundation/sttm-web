@@ -90,7 +90,6 @@ class Layout extends React.PureComponent {
       autoScrollMode,
       showMultiViewPanel,
       showPinSettings,
-      isModalOpen,
       location: { pathname = '/' } = {},      
       ...props
     } = this.props;
@@ -110,10 +109,12 @@ class Layout extends React.PureComponent {
       }
     }
 
+    const isAddFavoriteShabadModalOpen = props.modalOpened === 'addFavoriteShabad';
+
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner />
-        {isModalOpen && <AddFavouriteShabadModal />}
+        {isAddFavoriteShabadModalOpen && <AddFavouriteShabadModal open={isAddFavoriteShabadModalOpen} />}
         <div className={`pusher ${showMultiViewPanel ? 'enable' : ''} pin-settings ${showPinSettings ? 'active' : ''}`}>
           <Header
             defaultQuery={this.props.defaultQuery}
@@ -228,7 +229,7 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, isModalOpen }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, isModalOpen }),
+  ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, modalOpened }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, modalOpened }),
   {
     setOnlineMode,
     closeSettingsPanel,
