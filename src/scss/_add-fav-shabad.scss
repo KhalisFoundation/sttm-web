@@ -1,4 +1,4 @@
-.add-fav-shabad {
+.modal {
     background: $sttm-white;
     border-radius: 6px;
     height: auto;
@@ -32,18 +32,6 @@
   
         .dark-mode & {
           color: $sttm-dark-white;
-        }
-      }
-  
-      @media screen and (max-width: 450px) {
-        .title {
-          font-size: 1.125rem;
-        }
-      }
-  
-      @media screen and (min-width: 40em) {
-        .title {
-          font-size: 1.5rem;
         }
       }
   
@@ -104,6 +92,18 @@
   
         &value-container {
           padding: 0 4px;
+        }
+
+        @media screen and (max-width: 450px) {
+          .title {
+            font-size: 1.125rem;
+          }
+        }
+    
+        @media screen and (min-width: 40em) {
+          .title {
+            font-size: 1.5rem;
+          }
         }
       }
   

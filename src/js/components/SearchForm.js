@@ -220,7 +220,6 @@ export default class SearchForm extends React.PureComponent {
     );
     const disabled = !new RegExp(pattern).test(query);
 
-
     return this.props.children({
       ...state,
       isShowKeyboard,

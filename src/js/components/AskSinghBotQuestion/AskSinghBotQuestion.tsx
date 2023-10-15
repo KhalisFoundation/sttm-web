@@ -4,7 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { setModalOpen } from '@/features/actions';
 
 import BotSinghIcon from '../Icons/BotSinghIcon';
-import AskSinghBotQuestionModal from './AskSinghBotQuestionModal';
+import {AskSinghBotQuestionModal} from '@/components/Modals';
 
 interface ModalOpenState {
     modalOpened: string

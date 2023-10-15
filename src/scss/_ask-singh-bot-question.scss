@@ -1,6 +1,25 @@
 .ask-singh-bot-question {
     background: $sttm-white;
     border-radius: 6px;
-    height: auto;
-    width: 70%;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: 60%;
+
+
+    .dark-mode & {
+        background-color: $sttm-lighter-black;
+        color: $sttm-dark-white;
+    }
+
+    & .search-form {
+        width: 100%;
+        padding: 8px;
+    }
+
+    & label {
+        padding: 8px;
+        font-size: 24px;
+        color: currentColor;
+    }
 }
