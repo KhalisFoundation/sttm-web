@@ -9,8 +9,7 @@ module.exports = {
   BANNERS: '//api.sikhitothemax.org/messages/web',
   SYNC: {
     PRODUCTION: '//api.sikhitothemax.org/',
-    // LOCAL: '//api.sikhitothemax.org/',
-    LOCAL: 'http://192.168.86.21:1338'
+    LOCAL: '//api.sikhitothemax.org/',
   },
   CEREMONIES: '//api.sikhitothemax.org/ceremonies/',
   DOODLE: '//api.sikhitothemax.org/doodle/',
