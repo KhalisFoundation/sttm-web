@@ -21,7 +21,7 @@ const AskSinghBotQuestion = () => {
     }
 
     const isAskSinghBotQuestionModalOpened = modalOpened === 'askSinghBotQuestion';
-    console.log(isAskSinghBotQuestionModalOpened, 'is Ask singh bot question')
+    
     return (
         <>
             {isAskSinghBotQuestionModalOpened && <AskSinghBotQuestionModal isModalOpen={isAskSinghBotQuestionModalOpened} />}
