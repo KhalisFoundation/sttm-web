@@ -1,2 +1,2 @@
 export { default as AddFavouriteShabadModal } from './AddFavouriteShabadModal';
-export { default as AskSinghBotQuestionModal } from './AskSinghBotQuestionModal';
+export { default as AskGurbaniBotQuestionModal } from './AskGurbaniBotQuestionModal';

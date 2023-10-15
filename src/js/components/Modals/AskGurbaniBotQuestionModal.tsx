@@ -1,5 +1,5 @@
 
-import React, { FormEvent } from 'react';
+import React, { FormEvent, FormEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -9,27 +9,31 @@ import SearchIcon from '@/components/Icons/Search';
 import { toSearchURL } from '@/util';
 
 import Dialog from './Dialog';
-import ClearSearchButton from '../ClearSearchButton';
 
 interface Props {
     isModalOpen: boolean;
 }
 
-const AskSinghBotQuestionModal = (props: Props) => {
+const AskGurbaniBotQuestionModal = (props: Props) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const handleSubmit = ({handleFormSubmit,...data}) => (e: FormEvent) => {
+    const handleSubmit = ({handleFormSubmit,query}: {handleFormSubmit: FormEventHandler, query: string}) => (e: FormEvent) => {
         e.preventDefault();
-        handleFormSubmit();
-        console.log(data,'DATA HANDLE SUBMIT')
-        history.push(toSearchURL(data));
-        dispatch(setModalOpen(false));
+        typeof handleFormSubmit === 'function' && handleFormSubmit();
+        history.push(toSearchURL({
+            query,
+            type: 8,
+            writer: 'all',
+            source: 'all',
+            offset: ''
+        }));
+        dispatch(setModalOpen(''));
     }
     
     return (
         <Dialog isModalOpen={props.isModalOpen} title="Ask gurbani your questions !">
-          <div className='ask-singh-bot-question'>
+          <div className='ask-gurbani-bot-question'>
           <SearchForm defaultType={8} defaultSource='all' defaultWriter={0}>
             {({
                 pattern,
@@ -54,21 +58,17 @@ const AskSinghBotQuestionModal = (props: Props) => {
                 handleKeyDown,
                 handleSearchChange,
                 handleSearchSourceChange,
-                handleSubmit,
+                handleSubmit: handleFormSubmit,
                 handleSearchTypeChange,
                 handleSearchWriterChange,
                 handleReset,
             }) => (
-            <>
                 <form
                     className="search-form"
                     action={action}
                     onSubmit={handleSubmit({
-                        handleFormSubmit: handleSubmit,
+                        handleFormSubmit: handleFormSubmit,
                         query,
-                        type: 8,
-                        writer: 'all',
-                        source: 'all'
                     })}
                 >
                     <div className="search-container-wrapper">
@@ -90,7 +90,6 @@ const AskSinghBotQuestionModal = (props: Props) => {
                                 title={title}
                                 pattern={pattern}
                             />
-                            <ClearSearchButton clickHandler={setQueryAs} />
                             
                             <button type="submit" disabled={disabled}>
                                 <SearchIcon />
@@ -98,7 +97,6 @@ const AskSinghBotQuestionModal = (props: Props) => {
                         </div>
                     </div>
                 </form>
-            </>
             )}
           </SearchForm>
         </div>
@@ -106,4 +104,4 @@ const AskSinghBotQuestionModal = (props: Props) => {
     )
 }
 
-export default AskSinghBotQuestionModal;
+export default AskGurbaniBotQuestionModal;

@@ -4,27 +4,27 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { setModalOpen } from '@/features/actions';
 
 import BotSinghIcon from '../Icons/BotSinghIcon';
-import {AskSinghBotQuestionModal} from '@/components/Modals';
+import {AskGurbaniBotQuestionModal} from '@/components/Modals';
 
 interface ModalOpenState {
     modalOpened: string
 }
 
-const AskSinghBotQuestion = () => {
+const AskGurbaniBotQuestion = () => {
     const dispatch = useDispatch()
     const typedUseSelector: TypedUseSelectorHook<ModalOpenState> = useSelector;
     const modalOpened = typedUseSelector(state => state.modalOpened)
   
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        dispatch(setModalOpen('askSinghBotQuestion'));
+        dispatch(setModalOpen('AskGurbaniBotQuestion'));
     }
 
-    const isAskSinghBotQuestionModalOpened = modalOpened === 'askSinghBotQuestion';
+    const isAskGurbaniBotQuestionModalOpened = modalOpened === 'AskGurbaniBotQuestion';
     
     return (
         <>
-            {isAskSinghBotQuestionModalOpened && <AskSinghBotQuestionModal isModalOpen={isAskSinghBotQuestionModalOpened} />}
+            {isAskGurbaniBotQuestionModalOpened && <AskGurbaniBotQuestionModal isModalOpen={isAskGurbaniBotQuestionModalOpened} />}
             <button className="fp-buttons apps-item" onClick={handleClick}>
                 <div className="apps-icon-container">
                     <BotSinghIcon />
@@ -34,4 +34,4 @@ const AskSinghBotQuestion = () => {
     )
 }
 
-export default AskSinghBotQuestion
+export default AskGurbaniBotQuestion
