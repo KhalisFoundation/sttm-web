@@ -2,13 +2,16 @@ import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import { useCreateFavouriteShabad } from '@/components/FavouriteShabadButton/hooks';
-import { setIsModalOpen } from '@/features/actions';
+import { setModalOpen } from '@/features/actions';
 import { getShabadId } from '@/util';
 import Times from '@/components/Icons/Times';
 
-const AddFavouriteShabadModal = () => {
+interface Props {
+  isModalOpen: boolean;
+}
+
+const AddFavouriteShabadModal = (props: Props) => {
   const dispatch = useDispatch();
-  const isModalOpen = useSelector(state => state.isModalOpen)
   const gurbaniVerses = useSelector(state => state.gurbaniVerses);
   const options = gurbaniVerses.map(gurbani => {
     return (
@@ -27,11 +30,11 @@ const AddFavouriteShabadModal = () => {
   const handleShabadSave = (e: FormEvent) => {
     e.preventDefault();
     create.mutate({ shabadId, comment, verseId: pankti });
-    dispatch(setIsModalOpen(false))
+    dispatch(setModalOpen(''))
   }
 
   return (
-    <dialog open={isModalOpen} className='background-modal'>
+    <dialog open={props.isModalOpen} className='background-modal'>
       <div className='add-fav-shabad'>
         <div className='header'>
           <span>Add to Favourites</span>

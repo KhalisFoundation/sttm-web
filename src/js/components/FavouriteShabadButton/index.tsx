@@ -6,7 +6,7 @@ import { IMultipleShabadsProps } from '@/types/multiple-shabads';
 import { IUser } from '@/types/user'
 import { useGetUser } from '@/hooks';
 import { useDispatch } from 'react-redux';
-import { setGurbaniVerses, setIsModalOpen } from '@/features/actions';
+import { setGurbaniVerses, setModalOpen } from '@/features/actions';
 
 type Props = {
   shabad: IMultipleShabadsProps;
@@ -25,7 +25,7 @@ export const FavouriteShabadButton = ({ shabad: { shabadId }, gurbani }: Props) 
   const handleAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setGurbaniVerses(gurbani))
-    dispatch(setIsModalOpen(true));
+    dispatch(setModalOpen('addFavoriteShabad'));
   }
 
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -1,12 +1,14 @@
 
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
 import SearchForm from '@/components/SearchForm';
-import { setIsModalOpen } from '@/features/actions';
+import { setIsModalOpen, setModalOpen } from '@/features/actions';
 import SearchIcon from '@/components/Icons/Search';
 import ClearSearchButton from '../ClearSearchButton';
 import GurmukhiKeyboardToggleButton from '../GurmukhiKeyboardToggleButton';
-import { MAX_ANGS } from '@/constants';
+import { toSearchURL } from '@/util';
 
 interface Props {
     isModalOpen: boolean;
@@ -14,14 +16,21 @@ interface Props {
 
 const AskSinghBotQuestionModal = (props: Props) => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const handleSubmit = () => {
-        dispatch(setIsModalOpen(false));
+    const handleSubmit = ({handleFormSubmit,...data}) => (e: FormEvent) => {
+        e.preventDefault();
+        handleFormSubmit();
+        history.push(toSearchURL(data));
+        dispatch(setModalOpen(false));
     }
+
+    console.log(props.isModalOpen, 'PROPS. IS MODAL OPEN')
+
     return (
         <dialog open={props.isModalOpen} className='background-modal'>
-        <div className='add-fav-shabad'>
-          <SearchForm>
+        {/* <div className='add-fav-shabad'>
+          <SearchForm defaultType={8}>
           {({
             pattern,
             disabled,
@@ -53,8 +62,8 @@ const AskSinghBotQuestionModal = (props: Props) => {
             <form
                 className="search-form"
                 action={action}
-                onSubmit={this.onSubmit({
-                    handleSubmit,
+                onSubmit={handleSubmit({
+                    handleFormSubmit: handleSubmit,
                     query,
                     type,
                     source,
@@ -72,7 +81,7 @@ const AskSinghBotQuestionModal = (props: Props) => {
                         autoComplete="off"
                         autoCorrect="off"
                         spellCheck={false}
-                        required="required"
+                        required
                         value={query}
                         onKeyDown={handleKeyDown}
                         onChange={handleSearchChange}
@@ -80,8 +89,6 @@ const AskSinghBotQuestionModal = (props: Props) => {
                         placeholder={placeholder}
                         title={title}
                         pattern={pattern}
-                        min={name === 'ang' ? 1 : undefined}
-                        max={name === 'ang' ? MAX_ANGS[source] : undefined}
                     />
                     <ClearSearchButton clickHandler={setQueryAs} />
                     {isShowKeyboard && <GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />}
@@ -98,7 +105,8 @@ const AskSinghBotQuestionModal = (props: Props) => {
             </form>
         )}
           </SearchForm>
-        </div>
+        </div> */}
+        <div className='add-fav-shabad'>Add fav shabad</div>
       </dialog>
     )
 }
