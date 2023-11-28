@@ -20,6 +20,10 @@
   height: auto;
   width: 70%;
 
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+
   .header {
     align-items: center;
     background: $sttm-blue;
@@ -39,6 +43,10 @@
 
   .content {
     padding: 20px 10%;
+
+    @media screen and (max-width: 600px) {
+      padding: 10px;
+    }
 
     .title {
       color: $sttm-darker-blue;
