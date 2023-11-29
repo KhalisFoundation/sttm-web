@@ -17,6 +17,8 @@ import HomePageIcons from './HomePageIcons';
 import { SOURCES, SEARCH_TYPES, TYPES, SOURCES_WITH_ANG, MAX_ANGS, SOURCE_WRITER_FILTER } from '../../constants';
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
+import { setModalOpen } from '@/features/actions';
+import { connect } from 'react-redux';
 
 /**
  *
@@ -29,6 +31,7 @@ class Home extends React.PureComponent {
   static propTypes = {
     history: PropTypes.shape({ push: PropTypes.func }),
     isHome: PropTypes.bool,
+    setModalOpen: PropTypes.func.isRequired,
   };
   static defaultProps = {
     isHome: false,
@@ -117,7 +120,7 @@ class Home extends React.PureComponent {
                         
                       <span className='new-text'>
                         <b className='new-text-blue'>NEW{" "}</b>
-                        <span style={{ 'cursor': 'pointer' }} onClick={() => handleSearchTypeChange({ currentTarget: { value: SEARCH_TYPES['ASK_A_QUESTION'] } })}>
+                        <span style={{ 'cursor': 'pointer' }} onClick={() => { this.props.setModalOpen('AskGurbaniBotQuestion')} }>
                           Get your questions answered by our AI Gurbani bot! <u>Try it now.</u>
                         </span>
                       </span>
@@ -276,4 +279,11 @@ class Home extends React.PureComponent {
   }
 }
 
-export default Home;
+const mapStateToProps = ({ }) => ({});
+
+const mapDispatchToProps = {
+  setModalOpen
+};
+
+export default connect( mapStateToProps, mapDispatchToProps )(Home);
+
