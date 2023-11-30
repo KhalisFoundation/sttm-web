@@ -182,6 +182,7 @@
     0 2px 2px 0 $sttm-transparent-black,
     0 0 0 1px $sttm-transparent-light-black;
   display: flex;
+  flex-wrap: wrap;
   height: 44px;
   justify-content: flex-end;
   margin: 0;
