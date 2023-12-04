@@ -104,7 +104,9 @@ class Header extends React.PureComponent {
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
     } = getQueryParams(location.search);
-
+    
+    const askGurbaniBotSearchType = Number(defaultType) === SEARCH_TYPES['ASK_A_QUESTION'];
+    
     const isSearchPageRoute = location.pathname.includes('search');
     const key = `${defaultQuery}${defaultSource}${defaultType}${defaultWriter}`;
 
@@ -138,7 +140,7 @@ class Header extends React.PureComponent {
           {!isHome && <></>}
           <SearchForm
             key={key}
-            defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
+            defaultQuery={askGurbaniBotSearchType ? '' : defaultQuery && decodeURIComponent(defaultQuery)}
             defaultSource={defaultSource}
             defaultType={Number(defaultType)}
             defaultWriter={Number(defaultWriter)}
@@ -264,7 +266,7 @@ class Header extends React.PureComponent {
                                       onKeyDown={handleKeyDown}
                                       onChange={handleSearchChange}
                                       className={className}
-                                      placeholder={placeholder}
+                                      placeholder={askGurbaniBotSearchType ? "": placeholder}
                                       title={title}
                                       pattern={pattern}
                                       min={name === 'ang' ? 1 : undefined}
