@@ -5,6 +5,10 @@
   flex-direction: column;
   height: 200px;
 
+  &-search {
+    margin: 16px 1rem 0 1rem;
+  }
+
   .dark-mode & {
     background-color: $sttm-lighter-black;
     color: $sttm-dark-white;
