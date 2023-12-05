@@ -32,7 +32,7 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
     }
     
     return (
-        <Dialog isModalOpen={props.isModalOpen} title="Ask gurbani your questions !">
+        <Dialog isModalOpen={props.isModalOpen} title="Ask a question to our Gurbani AI bot (beta)">
           <div className='ask-gurbani-bot-question'>
           <SearchForm defaultType={8} defaultSource='all' defaultWriter={0}>
             {({

@@ -460,6 +460,7 @@ body:not(.dark-mode) a {
 
   &-text {
     font-size: 0.9rem;
+    max-width: 140px;
     text-align: center;
   }
 }
