@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants';
 import { apiClient } from '@/components/FavouriteShabadButton/utils/api-client';
+import { getQueryParams } from '@/util';
 
 export const useGetUser = <D>() => {
+  const { token } = getQueryParams();
   const [user, setUser] = React.useState<D | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
-  const isUserLoggedIn = !!window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN);
+  const isUserLoggedIn =
+    window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN) || token;
   React.useEffect(() => {
-    if(isUserLoggedIn) {
+    if (isUserLoggedIn) {
       apiClient('/auth/jwt', {
         token: window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN),
       })
@@ -22,7 +25,7 @@ export const useGetUser = <D>() => {
         .finally(() => {
           setIsLoading(false);
         });
-      }
+    }
   }, []);
 
   return { user, isLoading };

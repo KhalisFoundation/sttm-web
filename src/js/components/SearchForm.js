@@ -109,6 +109,7 @@ export default class SearchForm extends React.PureComponent {
 
   animatePlaceholder = () => {
     const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
+    
     const millisecondPerLetter = 2000 / finalPlaceholder.length;
     const tick = () => {
       this.timer = setTimeout(
@@ -219,7 +220,6 @@ export default class SearchForm extends React.PureComponent {
       typeInt
     );
     const disabled = !new RegExp(pattern).test(query);
-
 
     return this.props.children({
       ...state,

@@ -213,6 +213,9 @@ export const SET_ERROR = 'SET_ERROR';
 export const SET_IS_MODAL_OPEN = 'SET_IS_MODAL_OPEN';
 export const setIsModalOpen = createAction(SET_IS_MODAL_OPEN);
 
+export const SET_MODAL_OPENED = 'SET_MODAL_OPENED'
+export const setModalOpen = createAction(SET_MODAL_OPENED);
+
 export const SET_GURBANI_VERSES = 'SET_GURBANI_VERSES';
 export const setGurbaniVerses = createAction(SET_GURBANI_VERSES); 
 

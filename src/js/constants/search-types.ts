@@ -1,8 +1,8 @@
-interface ISearchTypes {
+interface SearchTypes {
   [key: string]: number
 }
 
-export const SEARCH_TYPES: ISearchTypes = {
+export const SEARCH_TYPES: SearchTypes = {
   FIRST_LETTERS: 0,
   FIRST_LETTERS_ANYWHERE: 1,
   GURMUKHI_WORD: 2,

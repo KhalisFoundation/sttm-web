@@ -8,7 +8,12 @@ import {
   MAX_ANGS,
   SOURCE_WRITER_FILTER,
   TEXTS,
+  DEFAULT_SEARCH_SOURCE,
+  DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_WRITER,
+  LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
+  LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+  LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
 } from '../constants';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,6 +33,7 @@ import {
   getQueryParams,
   getShabadList,
   reformatSearchTypes,
+  getNumberFromLocalStorage,
 } from '@/util';
 
 const { BACK_TO_HOME } = TEXTS;
@@ -104,7 +110,9 @@ class Header extends React.PureComponent {
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
     } = getQueryParams(location.search);
-
+    
+    const isAskGurbaniBotSearchType = Number(defaultType) === SEARCH_TYPES['ASK_A_QUESTION'];
+    
     const isSearchPageRoute = location.pathname.includes('search');
     const key = `${defaultQuery}${defaultSource}${defaultType}${defaultWriter}`;
 
@@ -138,10 +146,15 @@ class Header extends React.PureComponent {
           {!isHome && <></>}
           <SearchForm
             key={key}
-            defaultQuery={defaultQuery && decodeURIComponent(defaultQuery)}
-            defaultSource={defaultSource}
-            defaultType={Number(defaultType)}
-            defaultWriter={Number(defaultWriter)}
+            defaultQuery={isAskGurbaniBotSearchType ? '' : defaultQuery && decodeURIComponent(defaultQuery)}
+            defaultSource={isAskGurbaniBotSearchType ? (localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
+              DEFAULT_SEARCH_SOURCE) : defaultSource}
+            defaultType={isAskGurbaniBotSearchType ? getNumberFromLocalStorage(
+              LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+              DEFAULT_SEARCH_TYPE
+            ) :  Number(defaultType)}
+            defaultWriter={isAskGurbaniBotSearchType ? (localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
+              DEFAULT_SEARCH_WRITER) : Number(defaultWriter)}
             submitOnChangeOf={['type', 'source', 'writer']}
             onSubmit={handleFormSubmit}
           >
@@ -430,7 +443,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ }) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
   toggleSettingsPanel,

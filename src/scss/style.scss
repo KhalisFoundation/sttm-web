@@ -1,6 +1,7 @@
 /* stylelint-disable at-rule-no-unknown */
 @import "mixin",
   "colours",
+  "ask-gurbani-bot-question",
   "auto-scroll-control",
   "display-controls",
   "error-page",
@@ -459,6 +460,7 @@ body:not(.dark-mode) a {
 
   &-text {
     font-size: 0.9rem;
+    max-width: 140px;
     text-align: center;
   }
 }

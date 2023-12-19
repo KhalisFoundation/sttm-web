@@ -1,4 +1,6 @@
-export const getQueryParams = (qString: string = document.location.search): object => {
+export const getQueryParams = (
+  qString: string = document.location.search
+): any => {
   const qs = qString.replace(/\+/g, ' ');
   const params: any = {};
   const re = /[?&]?([^=]+)=([^&]*)/g;
@@ -11,4 +13,4 @@ export const getQueryParams = (qString: string = document.location.search): obje
   }
 
   return params;
-}
+};

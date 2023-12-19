@@ -2,7 +2,7 @@ import { SOURCES, SOURCES_WITH_ANG, TYPES as _TYPES } from '@sttm/banidb';
 import { SEARCH_TYPES } from './search-types';
 
 // TODO: Need to move this to @sttm/banidb module
-_TYPES.push('Ask a Question (English)');
+// _TYPES.push('Ask a Question (English)');
 
 export { SOURCES, SOURCES_WITH_ANG };
 

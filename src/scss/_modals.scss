@@ -14,11 +14,15 @@
   z-index: 10;
 }
 
-.add-fav-shabad {
+.modal {
   background: $sttm-white;
   border-radius: 6px;
   height: auto;
   width: 70%;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 
   .header {
     align-items: center;
@@ -40,6 +44,10 @@
   .content {
     padding: 20px 10%;
 
+    @media screen and (max-width: 600px) {
+      padding: 10px;
+    }
+
     .title {
       color: $sttm-darker-blue;
       font-size: 1.1rem;
@@ -48,18 +56,6 @@
 
       .dark-mode & {
         color: $sttm-dark-white;
-      }
-    }
-
-    @media screen and (max-width: 450px) {
-      .title {
-        font-size: 1.125rem;
-      }
-    }
-
-    @media screen and (min-width: 40em) {
-      .title {
-        font-size: 1.5rem;
       }
     }
 
@@ -120,6 +116,18 @@
 
       &value-container {
         padding: 0 4px;
+      }
+
+      @media screen and (max-width: 450px) {
+        .title {
+          font-size: 1.125rem;
+        }
+      }
+
+      @media screen and (min-width: 40em) {
+        .title {
+          font-size: 1.5rem;
+        }
       }
     }
 
