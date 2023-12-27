@@ -6,7 +6,7 @@ module.exports = {
   coverageDirectory: '<rootDir>/jest/coverage',
   coverageReporters: ['html'],
   transform: {
-    '^.+\\.test.jsx|ts|tsx$': '<rootDir>/jest/transform.js',
+    '^.+\\.js|jsx|ts|tsx$': '<rootDir>/jest/transform.js',
   },
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/cypress/*'],
   preset: 'ts-jest',
