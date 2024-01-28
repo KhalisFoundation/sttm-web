@@ -14,7 +14,7 @@ interface IHighlightedSearchResultProps {
   mahankoshIndex?: number;
   onMouseOver?: (word: string, index: number) => void;
   isShowMahankoshTooltip: boolean;
-};
+}
 
 const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
   children,
@@ -43,6 +43,7 @@ const HighlightedSearchResult: React.FC<IHighlightedSearchResultProps> = ({
         akharClass += 'search-highlight-word'
       }
     }
+
 
     const isMahankoshLookupAvailable = (i === mahankoshIndex);
     if (isMahankoshLookupAvailable) {

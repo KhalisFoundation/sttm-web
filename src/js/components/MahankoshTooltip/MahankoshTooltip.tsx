@@ -1,65 +1,52 @@
+/* eslint-disable react/prop-types */
 /* globals API_URL */
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
 
-import { IMahankoshExplaination } from '@/types';
+import { MahankoshExplaination } from '@/types';
 import { useFetchData } from '@/hooks';
 import { getMahankoshTooltipContent } from './util/';
 import {
   SET_MAHANKOSH_TOOLTIP_ACTIVE,
-  SET_MAHANKOSH_TOOLTIP_EXPLAINATION
 } from '@/features/actions';
 
-interface IMahankoshTooltipProps {
-  tooltipRef: React.Ref<any>;
+interface Props {
+  tooltipRef: React.Ref<ReactTooltip>;
   tooltipId: string;
   gurbaniWord: string;
-  mahankoshExplaination: IMahankoshExplaination[];
+  mahankoshExplaination: MahankoshExplaination[];
   clearMahankoshInformation: () => {};
   isFetchingMahankoshExplaination: boolean;
 }
 
-export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
-  tooltipId,
-  gurbaniWord,
-  clearMahankoshInformation
-}) => {
+export const MahankoshTooltip = (props: Props) => {
   const dispatch = useDispatch();
-  const url = gurbaniWord ? `${API_URL}kosh/word/${gurbaniWord}` : '';
+  const url = props.gurbaniWord ? `${API_URL}kosh/word/${props.gurbaniWord}` : '';
   const {
     isFetchingData: isFetchingMahankoshExplaination,
     data: mahankoshExplaination,
   } = useFetchData(url);
-  const isMahankoshExplainationExists = !!mahankoshExplaination && !!mahankoshExplaination[0];
 
   useEffect(() => {
-    dispatch({ type: SET_MAHANKOSH_TOOLTIP_EXPLAINATION, payload: isMahankoshExplainationExists })
-  }, [isMahankoshExplainationExists])
+    document.addEventListener('click', props.clearMahankoshInformation);
 
-  useEffect(() => {
-    document.addEventListener('click', clearMahankoshInformation);
-
-    return document.removeEventListener('click', clearMahankoshInformation);
+    return document.removeEventListener('click', props.clearMahankoshInformation);
   }, [])
 
-
-    if (isFetchingMahankoshExplaination || !isMahankoshExplainationExists || !gurbaniWord) {
-      return null;
-    }
-
+  const mahankoshTooltipContent = getMahankoshTooltipContent(props.gurbaniWord, mahankoshExplaination, isFetchingMahankoshExplaination);
+  console.log(mahankoshTooltipContent,'MAHAN KOSH EXPLAINATION...')
   return (
     <ReactTooltip
-      id={tooltipId}
+      id={props.tooltipId}
       event="click"
       globalEventOff="click"
       afterShow={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true })
       }}
       afterHide={() => {
-        dispatch({ type: SET_MAHANKOSH_TOOLTIP_EXPLAINATION, payload: false })
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
-        clearMahankoshInformation()
+        props.clearMahankoshInformation()
         ReactTooltip.rebuild()
       }}
       className="mahankoshTooltipWrapper"
@@ -72,7 +59,7 @@ export const MahankoshTooltip: React.FC<IMahankoshTooltipProps> = ({
         }
         return { top, left }
       }}
-      getContent={() => getMahankoshTooltipContent(gurbaniWord, mahankoshExplaination, isFetchingMahankoshExplaination)}
+      getContent={() => mahankoshTooltipContent}
     />
   )
 }

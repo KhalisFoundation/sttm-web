@@ -42,7 +42,6 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   } = useContext(MahankoshContext);
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
   const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
-  const isMahankoshTooltipExplaination = useSelector(state => state.isMahankoshTooltipExplaination);
 
   // closure implementation
   const handleMahankoshMouseOver = (currentLine: number) => {
@@ -73,7 +72,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
     return {}
   }, [isShowMahankoshTooltip])
 
-  const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
+  const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine ? selectedWordIndex : -1;
   const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
 
   // If larivaar is disabled

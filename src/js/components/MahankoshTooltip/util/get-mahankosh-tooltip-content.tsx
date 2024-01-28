@@ -1,10 +1,10 @@
 import React from 'react';
-import { IMahankoshExplaination } from '@/types';
+import { MahankoshExplaination } from '@/types';
 import { MAHANKOSH_TOOLTIP_SOURCE } from '@/constants';
 
 export const getMahankoshTooltipContent = (
   gurbaniWord: string,
-  mahankoshExplaination: IMahankoshExplaination[],
+  mahankoshExplaination: MahankoshExplaination[],
   isFetchingMahankoshExplaination: boolean
 ) => {
 
@@ -19,7 +19,7 @@ export const getMahankoshTooltipContent = (
     )
   }
 
-  if (!mahankoshExplaination && !mahankoshExplaination[0]) {
+  if (!mahankoshExplaination) {
     return (
       <div className="mahankoshTooltip" >
         <span className="mahankoshTooltipWord" >
