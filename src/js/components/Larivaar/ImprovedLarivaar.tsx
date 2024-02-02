@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { memo, useContext, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
@@ -10,7 +11,8 @@ import { getLarivaarAssistColor } from '@/features/selectors';
 import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
 import { MahankoshContext } from '@/context';
 import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
-export interface ILarivaarProps {
+
+export interface Props {
   larivaarAssist?: boolean;
   highlightIndex?: number[];
   enable?: boolean;
@@ -22,7 +24,7 @@ export interface ILarivaarProps {
   isShowMahankoshTooltip?: boolean;
 }
 
-export const Larivaar: React.FC<ILarivaarProps> = ({
+export const Larivaar: React.FC<Props> = ({
   highlightIndex,
   larivaarAssist,
   enable = true,
@@ -42,7 +44,6 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
   } = useContext(MahankoshContext);
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
   const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
-  const isMahankoshTooltipExplaination = useSelector(state => state.isMahankoshTooltipExplaination);
 
   // closure implementation
   const handleMahankoshMouseOver = (currentLine: number) => {
@@ -54,6 +55,14 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
         selectedWordIndex,
       })
     }
+  }
+
+  const handleMouseLeave = () => {
+    setMahankoshInformation({
+      selectedLine: '',
+      selectedWord: '',
+      selectedWordIndex: ''
+    })
   }
 
   const clearMahankoshTooltip = () => {
@@ -73,7 +82,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
     return {}
   }, [isShowMahankoshTooltip])
 
-  const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine && isMahankoshTooltipExplaination ? selectedWordIndex : -1;
+  const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine ? selectedWordIndex : -1;
   const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
 
   // If larivaar is disabled
@@ -86,6 +95,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
         query={query}
         visraams={visraam}
         onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
       >
         {children}
       </HighlightedSearchResult>

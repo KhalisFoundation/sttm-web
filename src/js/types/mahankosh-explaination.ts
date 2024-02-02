@@ -1,4 +1,4 @@
-export interface IMahankoshExplaination {
+export interface MahankoshExplaination {
   definition: string;
   definitionUni: string;
   id: number;

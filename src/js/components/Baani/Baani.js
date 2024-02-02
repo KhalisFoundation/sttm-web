@@ -450,7 +450,6 @@ export default class Baani extends React.PureComponent {
       onBaaniLineClick,
       isParagraphMode,
       isSehajPaathMode,
-      isMultipage,
       transliterationLanguages,
     } = this.props;
 
@@ -685,7 +684,6 @@ export default class Baani extends React.PureComponent {
     const {
       isParagraphMode,
       unicode,
-      fontSize,
       highlight,
       transliterationLanguages,
       translationFontSize,
