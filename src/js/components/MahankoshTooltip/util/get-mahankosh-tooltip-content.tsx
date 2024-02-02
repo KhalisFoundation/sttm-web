@@ -19,17 +19,6 @@ export const getMahankoshTooltipContent = (
     )
   }
 
-  if (!mahankoshExplaination) {
-    return (
-      <div className="mahankoshTooltip" >
-        <span className="mahankoshTooltipWord" >
-          <span>No mahankosh explaination exists.</span>
-        </span>
-        <span className="mahankoshTooltipSource"> {MAHANKOSH_TOOLTIP_SOURCE} </span>
-      </div>
-    )
-  }
-
   if (mahankoshExplaination.length > 0) {
     let explaination = mahankoshExplaination[0].definition;
     explaination = explaination.length > 300 ? explaination.substr(0, 300) + '...' : explaination;
@@ -47,5 +36,11 @@ export const getMahankoshTooltipContent = (
     )
   }
 
-  return '';
+  return (
+    <div className="mahankoshTooltip" >
+      <span className="mahankoshTooltipNoExplainations">
+        <span>No mahankosh explaination exists.</span>
+      </span>
+    </div>
+  )
 }

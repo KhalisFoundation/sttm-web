@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { memo, useContext, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
@@ -10,7 +11,8 @@ import { getLarivaarAssistColor } from '@/features/selectors';
 import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
 import { MahankoshContext } from '@/context';
 import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
-export interface ILarivaarProps {
+
+export interface Props {
   larivaarAssist?: boolean;
   highlightIndex?: number[];
   enable?: boolean;
@@ -22,7 +24,7 @@ export interface ILarivaarProps {
   isShowMahankoshTooltip?: boolean;
 }
 
-export const Larivaar: React.FC<ILarivaarProps> = ({
+export const Larivaar: React.FC<Props> = ({
   highlightIndex,
   larivaarAssist,
   enable = true,
@@ -55,6 +57,14 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
     }
   }
 
+  const handleMouseLeave = () => {
+    setMahankoshInformation({
+      selectedLine: '',
+      selectedWord: '',
+      selectedWordIndex: ''
+    })
+  }
+
   const clearMahankoshTooltip = () => {
     ReactTooltip.hide();
     setMahankoshInformation({
@@ -85,6 +95,7 @@ export const Larivaar: React.FC<ILarivaarProps> = ({
         query={query}
         visraams={visraam}
         onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
       >
         {children}
       </HighlightedSearchResult>

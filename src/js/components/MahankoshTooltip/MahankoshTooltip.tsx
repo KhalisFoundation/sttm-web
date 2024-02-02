@@ -3,8 +3,6 @@
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
-
-import { MahankoshExplaination } from '@/types';
 import { useFetchData } from '@/hooks';
 import { getMahankoshTooltipContent } from './util/';
 import {
@@ -12,10 +10,8 @@ import {
 } from '@/features/actions';
 
 interface Props {
-  tooltipRef: React.Ref<ReactTooltip>;
   tooltipId: string;
   gurbaniWord: string;
-  mahankoshExplaination: MahankoshExplaination[];
   clearMahankoshInformation: () => {};
   isFetchingMahankoshExplaination: boolean;
 }
@@ -35,7 +31,7 @@ export const MahankoshTooltip = (props: Props) => {
   }, [])
 
   const mahankoshTooltipContent = getMahankoshTooltipContent(props.gurbaniWord, mahankoshExplaination, isFetchingMahankoshExplaination);
-  console.log(mahankoshTooltipContent,'MAHAN KOSH EXPLAINATION...')
+  
   return (
     <ReactTooltip
       id={props.tooltipId}
