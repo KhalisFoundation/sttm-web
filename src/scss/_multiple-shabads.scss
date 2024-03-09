@@ -52,6 +52,8 @@
     ul {
       list-style: none;
       margin: 0;
+      max-height: 50%;
+      overflow: scroll;
       padding: 0;
 
       li {
