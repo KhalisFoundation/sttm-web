@@ -270,7 +270,7 @@ class Shabad extends React.PureComponent {
 
   handleCopyAll = () =>
     Promise.resolve(
-      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).textContent
+      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).children[0].textContent
     )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.GURBAANI_COPIED))
@@ -278,7 +278,7 @@ class Shabad extends React.PureComponent {
       .catch(({ message: label = '' } = {}) =>
         errorEvent({ action: 'copy-all-failure', label })
       );
-
+    
   handleEmbed = () => {
     const { info, type } = this.props;
 
