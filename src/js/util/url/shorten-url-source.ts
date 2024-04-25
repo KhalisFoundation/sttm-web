@@ -17,7 +17,7 @@ const shortURLSource = (source) => {
 
 export const shortenURL = (url: string = window.location.href) => {
   const path = window.location.pathname;
-  const URL = `http://${SHORT_DOMAIN}`;
+  const URL = `https://${SHORT_DOMAIN}`;
 
   switch (path) {
     case '/shabad':
