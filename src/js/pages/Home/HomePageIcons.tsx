@@ -32,7 +32,7 @@ const appRoutes = [{
     icon: <Rehat />,
     title: "Rehat maryada",
     name: "Rehat",
-    to: '/reyat-maryada'
+    to: '/rehat-maryadha'
 }, {
     icon: <MultiViewHomeButton />,
     title: "Multi-view",
