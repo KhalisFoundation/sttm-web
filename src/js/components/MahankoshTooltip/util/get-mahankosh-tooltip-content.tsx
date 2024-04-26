@@ -39,7 +39,7 @@ export const getMahankoshTooltipContent = (
   return (
     <div className="mahankoshTooltip" >
       <span className="mahankoshTooltipNoExplainations">
-        <span>No mahankosh explaination exists.</span>
+        <span>No Mahaan Kosh entry available.</span>
       </span>
     </div>
   )
