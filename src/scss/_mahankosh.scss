@@ -14,6 +14,11 @@
   justify-content: center;
   padding: 8px;
 
+  &NoExplainations {
+    font-family: 'Muli', sans-serif;
+    font-weight: 700;
+  }
+
   &Explainations {
     font-family: inherit;
     font-size: 1em;
