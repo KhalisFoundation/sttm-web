@@ -7,12 +7,12 @@ export const getMahankoshTooltipContent = (
   mahankoshExplaination: MahankoshExplaination[],
   isFetchingMahankoshExplaination: boolean
 ) => {
-
-  if (isFetchingMahankoshExplaination) {
+  
+  if (!gurbaniWord || isFetchingMahankoshExplaination) {
     return (
       <div className="mahankoshTooltip" >
         <span className="mahankoshTooltipWord" >
-          <span>Loading...</span>
+          <span className="mahankoshTooltipLoading">Loading...</span>
         </span>
         <span className="mahankoshTooltipSource"> {MAHANKOSH_TOOLTIP_SOURCE} </span>
       </div>

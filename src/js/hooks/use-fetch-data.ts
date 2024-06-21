@@ -1,6 +1,6 @@
 import { useEffect, useState} from 'react';
 
-export const useFetchData = (url: string, cb?: () => {}) => {
+export const useFetchData = (url: string, cb?: (data: any) => {}) => {
   const [isFetchingData, setFetchingData] = useState<boolean>(false);
   const [errorFetchingData, setErrorFetchingData] = useState<string>('');
   const [data, setData] = useState<any>({});
@@ -23,7 +23,7 @@ export const useFetchData = (url: string, cb?: () => {}) => {
 
 
       // callback
-      cb && cb();
+      cb && cb(data);
 
     }
 

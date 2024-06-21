@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { memo, useContext, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
 
 import LarivaarWord from './Word';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
@@ -19,7 +18,7 @@ export interface Props {
   unicode: boolean;
   children: string;
   query: string;
-  visraam: object;
+  visraam: Object;
   visraams: boolean;
   isShowMahankoshTooltip?: boolean;
 }
@@ -48,7 +47,7 @@ export const Larivaar: React.FC<Props> = ({
   // closure implementation
   const handleMahankoshMouseOver = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
-      ReactTooltip.rebuild();
+      
       setMahankoshInformation({
         selectedLine: currentLine,
         selectedWord,
@@ -58,6 +57,7 @@ export const Larivaar: React.FC<Props> = ({
   }
 
   const handleMouseLeave = () => {
+   
     setMahankoshInformation({
       selectedLine: '',
       selectedWord: '',
@@ -66,7 +66,6 @@ export const Larivaar: React.FC<Props> = ({
   }
 
   const clearMahankoshTooltip = () => {
-    ReactTooltip.hide();
     setMahankoshInformation({
       selectedWord: '',
       selectedLine: -1,

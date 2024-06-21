@@ -1,22 +1,22 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { TEXTS, SG_BAANIS, STTM_BLUE } from '@/constants';
-interface ISundarGutkaHeaderProps {
+interface Props {
   sgBaaniLength: string;
   setSgBaaniLength: (length: string) => {}
 }
 
-export const SundarGutkaHeader: React.FC<ISundarGutkaHeaderProps> = ({
+export const SundarGutkaHeader= ({
   sgBaaniLength,
   setSgBaaniLength,
-}) => {
+}: Props) => {
   return (
     <div className="sundarGutkaHeader">
       <h2>{TEXTS.SUNDAR_GUTKA_HEADER}</h2>
       <div className="sgBaanis">
         <span className="sgBaanisInfoIcon" data-tip data-for="sgBaanisInfo">
-          <ReactTooltip backgroundColor={STTM_BLUE} place="top" id="sgBaanisInfo">
-            <div className="sgBaanisPopup">{TEXTS.SUNDAR_GUTKA_LENGTHS_INFO}</div>
+          <ReactTooltip place="top" id="sgBaanisInfo">
+            <div style={{backgroundColor: STTM_BLUE}} className="sgBaanisPopup">{TEXTS.SUNDAR_GUTKA_LENGTHS_INFO}</div>
           </ReactTooltip>
         </span>
         <span className="sgBaanisTitle">{TEXTS.SUNDAR_GUTKA_LENGTHS_TITLE} {' '}</span>
@@ -33,10 +33,7 @@ export const SundarGutkaHeader: React.FC<ISundarGutkaHeaderProps> = ({
               <ReactTooltip place="top" id={name}>
                 {tooltip}
               </ReactTooltip>
-
-
             </div>)}
-
         </div>
       </div>
     </div>

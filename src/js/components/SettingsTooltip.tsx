@@ -1,20 +1,18 @@
-/* eslint-disable react/prop-types */
-import React from 'react'
-import ReactTooltip from 'react-tooltip'
 
-interface ISettingsTooltip {
+import React from 'react'
+import { PlacesType, Tooltip as ReactTooltip } from 'react-tooltip'
+
+interface Props {
   referenceName: string;
   tooltip: string;
-  extraSettings?: any;
+  extraSettings?: {place: PlacesType, delayShow: number};
 }
 
-const SettingsTooltip: React.FC<ISettingsTooltip> = ({ referenceName, tooltip, extraSettings }) => {
+const SettingsTooltip = ({ referenceName, tooltip, extraSettings }: Props) => (
+  <ReactTooltip id={referenceName} className="settingsTooltipWrapper" {...extraSettings}>
+    {tooltip}
+  </ReactTooltip>
+)
 
-  return (
-    <ReactTooltip id={referenceName} className="settingsTooltipWrapper" {...extraSettings}>
-      {tooltip}
-    </ReactTooltip>
-  )
-}
 
 export default SettingsTooltip
