@@ -68,7 +68,7 @@ module.exports = {
   devtool: PRODUCTION ? undefined : 'inline-source-map',
   plugins,
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.mjs'],
     alias: {
       // Client root
       '@': path.resolve(__dirname, 'src/js/'),
@@ -103,6 +103,11 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      }
     ],
   },
 };
