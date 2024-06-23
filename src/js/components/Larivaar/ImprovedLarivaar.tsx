@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { memo, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -23,7 +22,7 @@ export interface Props {
   isShowMahankoshTooltip?: boolean;
 }
 
-export const Larivaar: React.FC<Props> = ({
+export const Larivaar = ({
   highlightIndex,
   larivaarAssist,
   enable = true,
@@ -33,7 +32,7 @@ export const Larivaar: React.FC<Props> = ({
   visraam,
   visraams,
   isShowMahankoshTooltip = false,
-}) => {
+}: Props) => {
   const dispatch = useDispatch();
   const {
     selectedLine,
@@ -55,15 +54,6 @@ export const Larivaar: React.FC<Props> = ({
         selectedWordIndex,
       })
     }
-  }
-
-  const handleMouseLeave = () => {
-   
-    setMahankoshInformation({
-      selectedLine: '',
-      selectedWord: '',
-      selectedWordIndex: ''
-    })
   }
 
   const clearMahankoshTooltip = () => {

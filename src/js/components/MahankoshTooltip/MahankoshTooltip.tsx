@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
 /* globals API_URL */
-import React, { useEffect } from 'react';
+import React from 'react';
 import {Tooltip as ReactTooltip} from 'react-tooltip';
 import { useDispatch } from 'react-redux';
 import { getMahankoshTooltipContent } from './util/';
@@ -17,13 +16,14 @@ interface Props {
   isFetchingMahankoshExplaination: boolean;
 }
 
-const mahanKoshConfig = {
+const MAHANKOSH_CONFIG = {
   openEvents: {
-    hover: false,
+    mouseeenter: false,
+    mouseover: false,
     click: true
   },
   closeEvent: {
-    mouseLeave: true,
+    mouseleave: true,
     click: true
   }
 }
@@ -32,10 +32,6 @@ export const MahankoshTooltip = (props: Props) => {
   const dispatch = useDispatch();
   
   const url = props.gurbaniWord ? `${API_URL}kosh/word/${props.gurbaniWord}` : '';
-  // const {
-  //   isFetchingData: isFetchingMahankoshExplaination,
-  //   data: mahankoshExplaination,
-  // } = useFetchData(url);
 
   const { data: mahankoshExplaination, isLoading: isFetchingMahankoshExplaination, isSuccess } = useQuery({
     queryKey: ['mahakosh-shabad', props.gurbaniWord ],
@@ -45,15 +41,13 @@ export const MahankoshTooltip = (props: Props) => {
     }
   });
 
-  console.log(props.gurbaniWord, mahankoshExplaination, isFetchingMahankoshExplaination, 'GURBANI WORD')
-
   const mahankoshTooltipContent = getMahankoshTooltipContent(props.gurbaniWord, mahankoshExplaination, isFetchingMahankoshExplaination);
   
   if(isFetchingMahankoshExplaination && !isSuccess) {
     return <ReactTooltip
             id={props.tooltipId}
             className='mahankoshTooltipWrapper'
-            {...mahanKoshConfig}
+            {...MAHANKOSH_CONFIG}
           >
           
       <div>Data is loading please wait</div>
@@ -68,12 +62,11 @@ export const MahankoshTooltip = (props: Props) => {
       }}
       afterHide={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
-        console.log("CLEAR MAHANKOSHINFORMAITON [MAHANKOSH-TOOLTIP]")
         props.clearMahankoshInformation()
       }}
       className="mahankoshTooltipWrapper"
       place="top"
-      {...mahanKoshConfig}
+      {...MAHANKOSH_CONFIG}
     >
       {mahankoshTooltipContent}
     </ReactTooltip>

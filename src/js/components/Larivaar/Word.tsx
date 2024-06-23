@@ -1,26 +1,23 @@
 import React, { memo } from 'react';
-import { Pause } from '../Icons/controls/';
-
-import { STTM_ORANGE } from '@/constants';
 import {
   fixLarivaarUnicode,
   fixLarivaarGurmukhiFont
 } from './util';
 
-export interface ILarivaarWordProps {
+export interface Props {
   word: string;
   unicode: boolean;
   larivaarAssist?: boolean;
   larivaarAssistColor: string;
   index: number;
   highlightIndex?: Array<number>;
-  visraam: object;
+  visraam: Object;
   visraams: boolean;
   visraamClass: string;
   highlight?: boolean;
 }
 
-const LarivaarWord: React.FC<ILarivaarWordProps> = ({
+const LarivaarWord = ({
   highlightIndex,
   word,
   unicode,
@@ -31,8 +28,8 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
   visraam,
   visraams,
   visraamClass,
-}) => {
-  const isBothLarivaarAndVisraam = visraams && larivaarAssist
+}: Props) => {
+  
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
   const segments = unicode
@@ -53,11 +50,6 @@ const LarivaarWord: React.FC<ILarivaarWordProps> = ({
     <span
       className={visraams ? visraamClass : '' + ' gurbani-word'}
     >
-      {/* {isBothLarivaarAndVisraam && isOddIdx &&
-        <span style={{backgroundColor: STTM_ORANGE}} className="vishraam-icon-wrapper">
-          <Pause className="vishraam-icon" />
-        </span>
-        } */}
       {segments.map((item, i) => {
         const key = `${index}.${i}`;
         let akharClass = '';
