@@ -93,7 +93,6 @@ class Baani extends React.PureComponent {
   }
 
   clearMahankoshInformation = () => {
-    console.log('ClearMahankoshInformation [Baani.js]')
     this.setState((state) => {
       return {
         ...state,
