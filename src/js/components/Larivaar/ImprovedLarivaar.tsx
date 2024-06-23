@@ -41,12 +41,14 @@ export const Larivaar = ({
     setMahankoshInformation
   } = useContext(MahankoshContext);
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
-  const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
   const isDarkMode = useSelector(state => state.darkMode);
 
   // closure implementation
-  const handleMahankoshMouseOver = (currentLine: number) => {
+  const handleMahankoshMouseEnter = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
+
+      //Clear any existing instance of the active tooltip before setting new word
+      dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
       
       setMahankoshInformation({
         selectedLine: currentLine,
@@ -56,18 +58,16 @@ export const Larivaar = ({
     }
   }
 
-  const clearMahankoshTooltip = () => {
-    setMahankoshInformation({
-      selectedWord: '',
-      selectedLine: -1,
-      selectedWordIndex: -1
-    })
+  const handleGurbaniShabadClick = () => {
+    dispatch({type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true})
+  }
+
+  const handleClearMahankoshTooltip = () => {
     dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
   }
 
-
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine ? selectedWordIndex : -1;
-  const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)  
+  const handleMahankoshWordStore = handleMahankoshMouseEnter(currentLine)  
 
   // If larivaar is disabled
   if (!enable) {
@@ -78,8 +78,9 @@ export const Larivaar = ({
         highlightIndex={highlightIndex}
         query={query}
         visraams={visraam}
-        onClick={handleMouseOver}
-        onMouseOver={handleMouseOver}
+        onMouseLeave={handleClearMahankoshTooltip}
+        onClick={handleGurbaniShabadClick}
+        onMouseEnter={handleMahankoshWordStore}
       >
         {children}
       </HighlightedSearchResult>
@@ -94,8 +95,8 @@ export const Larivaar = ({
         }
         const visraamClass = getVisraamClass(children, index, visraam);
         let akharClass = '';
-        const isMahankoshLookupAvailable = (index === mahankoshIndex);
-        if (isMahankoshLookupAvailable) {
+        
+        if (isShowMahankoshTooltip) {
           akharClass += ' mahankoshSelectedGurbaniWord';
         }
 
@@ -105,10 +106,11 @@ export const Larivaar = ({
           <span
             key={index}
             {...mahankoshTooltipAttributes}
-            onMouseOver={() => {
-              handleMouseOver(word, index)
+            onMouseEnter={() => {
+              handleMahankoshWordStore(word, index)
             }}
-            onClick={() => handleMouseOver(word, index)}
+            onClick={handleGurbaniShabadClick}
+            onMouseLeave={handleClearMahankoshTooltip}
             className={akharClass}
           >
             <LarivaarWord

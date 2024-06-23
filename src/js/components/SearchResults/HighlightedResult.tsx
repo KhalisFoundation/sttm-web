@@ -11,6 +11,7 @@ interface Props {
   visraams: any;
   mahankoshIndex?: number;
   onMouseOver?: (word: string, index: number) => void;
+  onMouseEnter?: (word: string, index: number) => void;
   onMouseLeave?: () => void;
   onClick: (word: string, index: number) => void;
   isShowMahankoshTooltip: boolean;
@@ -47,6 +48,11 @@ const HighlightedSearchResult = (props: Props) => {
         onMouseOver={() => {
           if (typeof props.onMouseOver === 'function') {
             props.onMouseOver(word, i)
+          }
+        }}
+        onMouseEnter={() => {
+          if (typeof props.onMouseEnter === 'function') {
+            props.onMouseEnter(word, i)
           }
         }}
         onClick={() => {

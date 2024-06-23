@@ -1,5 +1,6 @@
 import React from 'react';
 import { InView } from 'react-intersection-observer';
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import Actions from '../BaaniLineActions';
 import Translation from '../Translation';
@@ -43,7 +44,7 @@ import { changeAng, prefetchAng } from './utils';
  * @extends {React.PureComponent}
  */
 
-export default class Baani extends React.PureComponent {
+class Baani extends React.PureComponent {
   static defaultProps = {
     highlight: null,
   };
@@ -79,6 +80,7 @@ export default class Baani extends React.PureComponent {
     sgBaaniLength: PropTypes.string,
     visraams: PropTypes.bool,
     isScroll: PropTypes.bool,
+    isMahankoshTooltipActive: PropTypes.bool
   };
 
   constructor(props) {
@@ -91,6 +93,7 @@ export default class Baani extends React.PureComponent {
   }
 
   clearMahankoshInformation = () => {
+    console.log('ClearMahankoshInformation [Baani.js]')
     this.setState((state) => {
       return {
         ...state,
@@ -1063,9 +1066,9 @@ export default class Baani extends React.PureComponent {
     return this.createMixedViewMarkup();
   };
   render() {
-    const { centerAlignGurbani, showFullScreen } = this.props;
+    const { centerAlignGurbani, showFullScreen, isMahankoshTooltipActive } = this.props;
     const { selectedWord } = this.state;
-    console.table(this.state,"BAANI.JS STATE")
+    console.table({...this.state, isMahankoshTooltipActive}, "BAANI.JS STATE")
     return (
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${centerAlignGurbani || showFullScreen ? ' center-align' : ''
@@ -1073,6 +1076,7 @@ export default class Baani extends React.PureComponent {
       >
         {this.getMarkup()}
         <MahankoshTooltip
+          isTooltipOpen={isMahankoshTooltipActive}
           clearMahankoshInformation={this.clearMahankoshInformation}
           tooltipId="mahankoshTooltipHighlightSearchResult"
           gurbaniWord={selectedWord}
@@ -1081,3 +1085,5 @@ export default class Baani extends React.PureComponent {
     );
   }
 }
+const mapStateToProps = state => ({ isMahankoshTooltipActive: state.isMahankoshTooltipActive })
+export default connect(mapStateToProps)(Baani);

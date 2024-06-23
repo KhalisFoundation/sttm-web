@@ -1,7 +1,7 @@
 import React from 'react';
 import Larivaar from './Larivaar';
 
-interface IBaaniLineProps {
+interface Props {
   text: {
     unicode: string,
     gurmukhi: string,
@@ -13,12 +13,12 @@ interface IBaaniLineProps {
   fontSize: number,
   fontFamily: string,
   lineHeight?: number,
-  visraam?: object,
+  visraam?: Object,
   visraams: boolean,
   isReadingMode?: boolean,
-};
+}
 
-const BaaniLine: React.FC<IBaaniLineProps> = ({
+const BaaniLine = ({
   larivaar,
   larivaarAssist,
   shouldHighlight,
@@ -30,7 +30,7 @@ const BaaniLine: React.FC<IBaaniLineProps> = ({
   visraam,
   visraams,
   isReadingMode = false,
-}) => {
+}: Props) => {
 
   if (isReadingMode) {
     return (
