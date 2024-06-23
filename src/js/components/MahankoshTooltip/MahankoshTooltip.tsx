@@ -57,7 +57,7 @@ export const MahankoshTooltip = (props: Props) => {
       afterHide={() => {
         dispatch({type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false})
       }}
-      delayShow={100}
+      delayShow={200}
       place="top"
     >
       {isFetchingMahankoshExplaination && !isSuccess ? <div>Data is loading please wait.</div> : mahankoshTooltipContent}
