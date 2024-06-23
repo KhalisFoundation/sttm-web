@@ -17,6 +17,7 @@ interface Props {
 }
 
 const MAHANKOSH_CONFIG = {
+  className: 'mahankoshTooltipWrapper',
   openEvents: {
     mouseeenter: false,
     mouseover: false,
@@ -45,17 +46,16 @@ export const MahankoshTooltip = (props: Props) => {
   
   if(isFetchingMahankoshExplaination && !isSuccess) {
     return <ReactTooltip
-            id={props.tooltipId}
-            className='mahankoshTooltipWrapper'
+            id={props.tooltipId} 
             {...MAHANKOSH_CONFIG}
           >
-          
-      <div>Data is loading please wait</div>
-    </ReactTooltip>
+           <div>Data is loading please wait</div>
+          </ReactTooltip>
   }
 
   return (
     <ReactTooltip
+      {...MAHANKOSH_CONFIG}
       id={props.tooltipId}
       afterShow={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true })
@@ -64,9 +64,7 @@ export const MahankoshTooltip = (props: Props) => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
         props.clearMahankoshInformation()
       }}
-      className="mahankoshTooltipWrapper"
       place="top"
-      {...MAHANKOSH_CONFIG}
     >
       {mahankoshTooltipContent}
     </ReactTooltip>
