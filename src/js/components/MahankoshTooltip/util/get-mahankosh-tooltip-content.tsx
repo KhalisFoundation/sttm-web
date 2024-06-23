@@ -5,7 +5,7 @@ import { MAHANKOSH_TOOLTIP_SOURCE } from '@/constants';
 export const getMahankoshTooltipContent = (
   gurbaniWord: string,
   mahankoshExplaination: MahankoshExplaination[],
-  isFetchingMahankoshExplaination: boolean
+  isFetchingMahankoshExplaination: boolean = false
 ) => {
   
   if (!gurbaniWord || isFetchingMahankoshExplaination) {

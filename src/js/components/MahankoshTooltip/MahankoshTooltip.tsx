@@ -17,6 +17,17 @@ interface Props {
   isFetchingMahankoshExplaination: boolean;
 }
 
+const mahanKoshConfig = {
+  openEvents: {
+    hover: false,
+    click: true
+  },
+  closeEvent: {
+    mouseLeave: true,
+    click: true
+  }
+}
+
 export const MahankoshTooltip = (props: Props) => {
   const dispatch = useDispatch();
   
@@ -36,18 +47,13 @@ export const MahankoshTooltip = (props: Props) => {
 
   console.log(props.gurbaniWord, mahankoshExplaination, isFetchingMahankoshExplaination, 'GURBANI WORD')
 
-  useEffect(() => {
-    document.addEventListener('click', props.clearMahankoshInformation);
-
-    return () => document.removeEventListener('click', props.clearMahankoshInformation);
-  }, [])
-
   const mahankoshTooltipContent = getMahankoshTooltipContent(props.gurbaniWord, mahankoshExplaination, isFetchingMahankoshExplaination);
   
   if(isFetchingMahankoshExplaination && !isSuccess) {
     return <ReactTooltip
             id={props.tooltipId}
             className='mahankoshTooltipWrapper'
+            {...mahanKoshConfig}
           >
           
       <div>Data is loading please wait</div>
@@ -57,17 +63,17 @@ export const MahankoshTooltip = (props: Props) => {
   return (
     <ReactTooltip
       id={props.tooltipId}
-      events={['click']}
       afterShow={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true })
       }}
       afterHide={() => {
         dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
+        console.log("CLEAR MAHANKOSHINFORMAITON [MAHANKOSH-TOOLTIP]")
         props.clearMahankoshInformation()
       }}
       className="mahankoshTooltipWrapper"
       place="top"
-      clickable
+      {...mahanKoshConfig}
     >
       {mahankoshTooltipContent}
     </ReactTooltip>

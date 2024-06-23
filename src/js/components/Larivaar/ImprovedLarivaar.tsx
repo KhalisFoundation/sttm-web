@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { memo, useContext, useMemo } from 'react';
+import React, { memo, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import LarivaarWord from './Word';
@@ -43,6 +43,7 @@ export const Larivaar: React.FC<Props> = ({
   } = useContext(MahankoshContext);
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
   const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
+  const isDarkMode = useSelector(state => state.darkMode);
 
   // closure implementation
   const handleMahankoshMouseOver = (currentLine: number) => {
@@ -74,12 +75,6 @@ export const Larivaar: React.FC<Props> = ({
     dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
   }
 
-  const mahankoshTooltipAttributes = useMemo(() => {
-    if (isShowMahankoshTooltip) {
-      return getMahankoshTooltipAttributes(true, 'mahankoshTooltipHighlightSearchResult')
-    }
-    return {}
-  }, [isShowMahankoshTooltip])
 
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine ? selectedWordIndex : -1;
   const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
@@ -93,8 +88,8 @@ export const Larivaar: React.FC<Props> = ({
         highlightIndex={highlightIndex}
         query={query}
         visraams={visraam}
+        onClick={handleMouseOver}
         onMouseOver={handleMouseOver}
-        onMouseLeave={handleMouseLeave}
       >
         {children}
       </HighlightedSearchResult>
@@ -114,6 +109,8 @@ export const Larivaar: React.FC<Props> = ({
           akharClass += ' mahankoshSelectedGurbaniWord';
         }
 
+        const mahankoshTooltipAttributes = isShowMahankoshTooltip ? getMahankoshTooltipAttributes({isDarkMode, content: word}) : {};
+
         return (
           <span
             key={index}
@@ -121,6 +118,7 @@ export const Larivaar: React.FC<Props> = ({
             onMouseOver={() => {
               handleMouseOver(word, index)
             }}
+            onClick={() => handleMouseOver(word, index)}
             className={akharClass}
           >
             <LarivaarWord

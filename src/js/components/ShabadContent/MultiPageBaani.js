@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
+
 export const MultiPageBaani = React.memo((props) => {
   const { pages, isReadingMode,...baaniProps } = props;
   const history = useHistory();

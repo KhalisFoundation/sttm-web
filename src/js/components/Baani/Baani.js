@@ -205,11 +205,9 @@ export default class Baani extends React.PureComponent {
   componentDidMount() {
     const {isScroll = true} = this.props
     isScroll && this._scrollToHighlight();
-    document.addEventListener('click', this.clearMahankoshInformation);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.clearMahankoshInformation);
     this._scrollToHighlight();
   }
   componentDidUpdate(prevProps) {
@@ -1067,6 +1065,7 @@ export default class Baani extends React.PureComponent {
   render() {
     const { centerAlignGurbani, showFullScreen } = this.props;
     const { selectedWord } = this.state;
+    console.table(this.state,"BAANI.JS STATE")
     return (
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${centerAlignGurbani || showFullScreen ? ' center-align' : ''
