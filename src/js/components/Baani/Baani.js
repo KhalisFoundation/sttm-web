@@ -1068,7 +1068,7 @@ class Baani extends React.PureComponent {
   render() {
     const { centerAlignGurbani, showFullScreen, isMahankoshTooltipActive } = this.props;
     const { selectedWord } = this.state;
-    console.table({...this.state, isMahankoshTooltipActive}, "BAANI.JS STATE")
+    
     return (
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${centerAlignGurbani || showFullScreen ? ' center-align' : ''
