@@ -25,7 +25,6 @@ const LarivaarWord = ({
   larivaarAssistColor,
   index,
   highlight,
-  visraam,
   visraams,
   visraamClass,
 }: Props) => {

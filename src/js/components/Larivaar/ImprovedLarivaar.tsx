@@ -67,8 +67,9 @@ export const Larivaar = ({
 
 
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine ? selectedWordIndex : -1;
-  const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
+  const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)  
 
+  console.log(mahankoshIndex, "MAHAN KOSH INDEX [IMPROVED LARIVAAR]")
   // If larivaar is disabled
   if (!enable) {
     return (

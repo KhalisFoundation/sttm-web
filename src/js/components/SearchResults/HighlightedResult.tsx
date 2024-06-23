@@ -23,7 +23,7 @@ const HighlightedSearchResult = (props: Props) => {
 
   const isDarkMode = useSelector(state => state.darkMode);
 
-  return props.children?.split(' ').map((word: string, i: React.Key | undefined) => {
+  return props.children?.split(' ').map((word: string, i: number) => {
     let akharClass = getVisraamClass(props.children, i, props.visraams) || ' ';
     if (props.highlightIndex && props.highlightIndex.length > 0) {
       if (props.highlightIndex.includes(i)) {
@@ -51,8 +51,6 @@ const HighlightedSearchResult = (props: Props) => {
         }}
         onClick={() => {
           if(typeof props.onClick === 'function') {
-            console.log('CLICK ACTION WORKING?')
-            debugger;
             props.onClick(word, i);
           }
         }}
