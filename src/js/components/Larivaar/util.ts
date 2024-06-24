@@ -1,5 +1,3 @@
-import { MAX_LARIVAAR_ASSIST_STRENGTH } from '@/constants/';
-
 const matrasThatAppearAtRightSideOfChar = 'wIuUyYoOW';
 const halfCharThatAppearAtRightSideOfChar = 'Í´R@˜®';
 const nasalSoundCaharacter = 'NMµ';
@@ -13,7 +11,7 @@ const unicodeMatras = 'ਾਿੀੁੂੇੈੋੌੰਂੱ';
 const unicodeOtherMatras = 'ਁਃ਼੍ੑੵ';
 
 // Look for consonants and break word
-export function fixLarivaarGurmukhiFont(str) {
+export function fixLarivaarGurmukhiFont(str: string) {
   let arrWordBreak = [];
   // search and break till next consonant
   let segmentedStr = '';
@@ -36,7 +34,7 @@ export function fixLarivaarGurmukhiFont(str) {
 // In unicode All matras are right hand sided
 // and matras comes after main consonant and half character
 // we need to break word after Matras not consonant
-export function fixLarivaarUnicode(str) {
+export function fixLarivaarUnicode(str: string) {
   let arrWordBreak = [];
   // search and break till next consonant
   let segmentedStr = '';
@@ -57,9 +55,9 @@ export function fixLarivaarUnicode(str) {
   return arrWordBreak;
 }
 
-const isConsonant = char =>
+const isConsonant = (char: string) =>
   allMatrasHalfCharAndNasalSoundChar.includes(char) === false;
-const isUnicodeConsonant = char =>
+const isUnicodeConsonant = (char: string) =>
   unicodeMatras.includes(char) === false &&
   unicodeOtherMatras.includes(char) === false;
-const isSihari = char => char === sihari;
+const isSihari = (char: string) => char === sihari;
