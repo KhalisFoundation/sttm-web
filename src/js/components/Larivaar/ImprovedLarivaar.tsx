@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
-import React, { memo, useContext, useMemo } from 'react';
+import React, { memo, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
 
 import LarivaarWord from './Word';
 import HighlightedSearchResult from '../SearchResults/HighlightedResult';
@@ -19,12 +17,12 @@ export interface Props {
   unicode: boolean;
   children: string;
   query: string;
-  visraam: object;
+  visraam: Object;
   visraams: boolean;
   isShowMahankoshTooltip?: boolean;
 }
 
-export const Larivaar: React.FC<Props> = ({
+export const Larivaar = ({
   highlightIndex,
   larivaarAssist,
   enable = true,
@@ -34,7 +32,7 @@ export const Larivaar: React.FC<Props> = ({
   visraam,
   visraams,
   isShowMahankoshTooltip = false,
-}) => {
+}: Props) => {
   const dispatch = useDispatch();
   const {
     selectedLine,
@@ -43,12 +41,15 @@ export const Larivaar: React.FC<Props> = ({
     setMahankoshInformation
   } = useContext(MahankoshContext);
   const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
-  const isMahankoshTooltipActive = useSelector(state => state.isMahankoshTooltipActive);
+  const isDarkMode = useSelector(state => state.darkMode);
 
   // closure implementation
-  const handleMahankoshMouseOver = (currentLine: number) => {
+  const handleMahankoshMouseEnter = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
-      ReactTooltip.rebuild();
+
+      //Clear any existing instance of the active tooltip before setting new word
+      dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
+      
       setMahankoshInformation({
         selectedLine: currentLine,
         selectedWord,
@@ -57,33 +58,16 @@ export const Larivaar: React.FC<Props> = ({
     }
   }
 
-  const handleMouseLeave = () => {
-    setMahankoshInformation({
-      selectedLine: '',
-      selectedWord: '',
-      selectedWordIndex: ''
-    })
+  const handleGurbaniShabadClick = () => {
+    dispatch({type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true})
   }
 
-  const clearMahankoshTooltip = () => {
-    ReactTooltip.hide();
-    setMahankoshInformation({
-      selectedWord: '',
-      selectedLine: -1,
-      selectedWordIndex: -1
-    })
+  const handleClearMahankoshTooltip = () => {
     dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
   }
 
-  const mahankoshTooltipAttributes = useMemo(() => {
-    if (isShowMahankoshTooltip) {
-      return getMahankoshTooltipAttributes(true, 'mahankoshTooltipHighlightSearchResult')
-    }
-    return {}
-  }, [isShowMahankoshTooltip])
-
   const mahankoshIndex = selectedWordIndex > -1 && currentLine === selectedLine ? selectedWordIndex : -1;
-  const handleMouseOver = isMahankoshTooltipActive ? clearMahankoshTooltip : handleMahankoshMouseOver(currentLine)
+  const handleMahankoshWordStore = handleMahankoshMouseEnter(currentLine)  
 
   // If larivaar is disabled
   if (!enable) {
@@ -94,8 +78,9 @@ export const Larivaar: React.FC<Props> = ({
         highlightIndex={highlightIndex}
         query={query}
         visraams={visraam}
-        onMouseOver={handleMouseOver}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={handleClearMahankoshTooltip}
+        onClick={handleGurbaniShabadClick}
+        onMouseEnter={handleMahankoshWordStore}
       >
         {children}
       </HighlightedSearchResult>
@@ -110,18 +95,22 @@ export const Larivaar: React.FC<Props> = ({
         }
         const visraamClass = getVisraamClass(children, index, visraam);
         let akharClass = '';
-        const isMahankoshLookupAvailable = (index === mahankoshIndex);
-        if (isMahankoshLookupAvailable) {
+        
+        if (isShowMahankoshTooltip) {
           akharClass += ' mahankoshSelectedGurbaniWord';
         }
+
+        const mahankoshTooltipAttributes = isShowMahankoshTooltip ? getMahankoshTooltipAttributes({isDarkMode, content: word}) : {};
 
         return (
           <span
             key={index}
             {...mahankoshTooltipAttributes}
-            onMouseOver={() => {
-              handleMouseOver(word, index)
+            onMouseEnter={() => {
+              handleMahankoshWordStore(word, index)
             }}
+            onClick={handleGurbaniShabadClick}
+            onMouseLeave={handleClearMahankoshTooltip}
             className={akharClass}
           >
             <LarivaarWord
