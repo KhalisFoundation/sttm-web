@@ -114,9 +114,6 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-958770124"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-958770124'); </script>
 
-  <!-- Polyfills -->
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Object.entries,Array.from,Array.prototype.includes,String.prototype.startsWith,String.prototype.includes,Map,Set,requestAnimationFrame,Array.prototype.@@iterator"></script>
-
   <!-- Source Code -->
   ${scriptsHTML}
 
@@ -146,7 +143,7 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
 </html>
 `;
 
-const preconnect = ['//cdn.polyfill.io', '//api.banidb.com'];
+const preconnect = ['//api.banidb.com'];
 const preconnectHTML = preconnect
   .map(
     d =>
