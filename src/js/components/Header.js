@@ -86,6 +86,12 @@ class Header extends React.PureComponent {
         e.preventDefault();
         e.stopPropagation();
         handleSubmit();
+        // Remove the last space in from the searched query.
+        const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
+        if(isNotAngSearch) {
+          data.query = data.query.trim();
+        }
+        
         this.handleFormSubmit(data);
       };
 
