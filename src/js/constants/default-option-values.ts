@@ -1,5 +1,6 @@
 import { MAX_LARIVAAR_ASSIST_STRENGTH } from './maximum';
 import { SEARCH_TYPES } from "./search-types";
+import { VISRAAM } from './visraam';
 
 export const DEFAULT_SEARCH_TYPE = SEARCH_TYPES.FIRST_LETTERS;
 export const DEFAULT_SEARCH_SOURCE = 'all';
@@ -29,7 +30,7 @@ export const DEFAULT_PARAGRAPH_MODE = false;
 export const DEFAULT_CENTER_ALIGN_GURBANI = false;
 export const DEFAULT_VISRAAMS = false;
 export const DEFAULT_VISRAAM_SOURCE = 'sttm';
-export const DEFAULT_VISRAAM_STYLE = 'colored-words';
+export const DEFAULT_VISRAAM_STYLE = VISRAAM.TYPES['colored-words'];
 export const DEFAULT_SEHAJ_PAATH_MODE = false;
 export const DEFAULT_CARTOONIFIED_PAGES = false;
 export const DEFAULT_SHABAD_AUDIO_PLAYER = true;

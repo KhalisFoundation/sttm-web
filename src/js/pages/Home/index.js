@@ -59,6 +59,13 @@ class Home extends React.PureComponent {
   onSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
     handleSubmit();
+
+    // Remove the last space in from the searched query.
+    const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
+    if(isNotAngSearch) {
+      data.query = data.query.trim();
+    }
+    
     this.props.history.push(toSearchURL(data));
   };
 
