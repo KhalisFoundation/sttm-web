@@ -13,12 +13,17 @@ import {
 } from "../../constants";
 
 export const addVisraamClass = () => {
+  console.log('VISRAAM CLAAS',VISRAAM.CLASS_NAME,
+    VISRAAM.getSourceClass(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE) ||
+      DEFAULT_VISRAAM_SOURCE),
+    VISRAAM.getTypeClass(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE) ||
+      DEFAULT_VISRAAM_STYLE))
   clearVisraamClass();
   document.body.classList[getBooleanFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS) ? 'add' : 'remove'](
     VISRAAM.CLASS_NAME,
-    VISRAAM.SOURCE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE) ||
+    VISRAAM.getSourceClass(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE) ||
       DEFAULT_VISRAAM_SOURCE),
-    VISRAAM.TYPE_CLASS(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE) ||
+    VISRAAM.getTypeClass(getStringFromLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS_STYLE) ||
       DEFAULT_VISRAAM_STYLE)
   );
 }

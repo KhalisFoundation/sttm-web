@@ -42,8 +42,8 @@ const ControlsSettings = (props: any) => {
     clearVisraamClass();
     document.body.classList[visraams ? 'add' : 'remove'](
       VISRAAM.CLASS_NAME,
-      VISRAAM.SOURCE_CLASS(visraamSource),
-      VISRAAM.TYPE_CLASS(visraamStyle)
+      VISRAAM.getSourceClass(visraamSource),
+      VISRAAM.getTypeClass(visraamStyle)
     );
     wrapperRef.current.focus();
   }, [visraams, visraamSource, visraamStyle])

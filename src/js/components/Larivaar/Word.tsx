@@ -45,6 +45,9 @@ const LarivaarWord = ({
     }
   }
 
+  const isBothLarivaarAssistAndVisraam = isVisraam && larivaarAssist;
+  console.log(isBothLarivaarAssistAndVisraam,'IS BOTH LARIVAAR ASSIST AND VISRAAM')
+
   return (
     <span
       className={isVisraam ? visraamClass : '' + ' gurbani-word'}
