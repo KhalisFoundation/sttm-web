@@ -18,7 +18,7 @@ export interface Props {
   children: string;
   query: string;
   visraam: Object;
-  visraams: boolean;
+  isVisraam: boolean;
   isShowMahankoshTooltip?: boolean;
 }
 
@@ -30,7 +30,7 @@ export const Larivaar = ({
   unicode,
   query,
   visraam,
-  visraams,
+  isVisraam,
   isShowMahankoshTooltip = false,
 }: Props) => {
   const dispatch = useDispatch();
@@ -123,7 +123,7 @@ export const Larivaar = ({
               index={index}
               visraamClass={visraamClass}
               visraam={visraam}
-              visraams={visraams}
+              isVisraam={isVisraam}
             />
           </span>
         );

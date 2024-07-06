@@ -14,7 +14,7 @@ interface Props {
   fontFamily: string,
   lineHeight?: number,
   visraam?: Object,
-  visraams: boolean,
+  isVisraam: boolean,
   isReadingMode?: boolean,
 }
 
@@ -28,7 +28,7 @@ const BaaniLine = ({
   unicode,
   text,
   visraam,
-  visraams,
+  isVisraam,
   isReadingMode = false,
 }: Props) => {
 
@@ -45,7 +45,7 @@ const BaaniLine = ({
           enable={larivaar}
           unicode={unicode}
           visraam={visraam}
-          visraams={visraams}
+          isVisraam={isVisraam}
         >
           {unicode ? text.unicode : text.gurmukhi}
         </Larivaar>
@@ -67,7 +67,7 @@ const BaaniLine = ({
           enable={larivaar}
           unicode={unicode}
           visraam={visraam}
-          visraams={visraams}
+          isVisraam={isVisraam}
         >
           {unicode ? text.unicode : text.gurmukhi}
         </Larivaar>

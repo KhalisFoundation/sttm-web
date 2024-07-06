@@ -246,7 +246,7 @@ class Baani extends React.PureComponent {
         fontSize={fontSize}
         lineHeight={lineHeight}
         fontFamily={fontFamily}
-        visraams={visraams}
+        isVisraam={visraams}
         visraam={shabad.visraam}
       />
     );
