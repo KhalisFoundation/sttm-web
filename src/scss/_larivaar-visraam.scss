@@ -1,0 +1,18 @@
+.larivaar-visraam {
+  ::after {
+    border-radius: 50%;
+    color: white;
+    content: '||';
+    font-size: 12px;
+    position: relative;
+    top: -12px;
+  }
+
+  &-main {
+    background-color: $sttm-vishraam-yellow;
+  }
+
+  &-yamki {
+    background-color: $sttm-vishraam-red;
+  }
+}
