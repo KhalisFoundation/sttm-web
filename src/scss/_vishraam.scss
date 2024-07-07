@@ -17,6 +17,39 @@
         .visraam-#{$source}-yamki {
           color: $sttm-orange !important;
         }
+
+        .larivaar-visraam-#{$source} {
+          position: relative !important;
+
+          &::after {
+            align-items: center;
+            border-radius: 50%;
+            color: white;
+            content: '| |';
+            display: inline-flex;
+            font-family: 'Muli', sans-serif;
+            font-size: 8px;
+            font-weight: bold;
+            height: 12px;
+            justify-content: center;
+            padding: 2px;
+            position: absolute;
+            transform: translateY(-100%);
+            width: 12px;
+          }
+
+          &-main {
+            &::after {
+              background-color: $visraam-main;
+            }
+          }
+
+          &-yamki {
+            &::after {
+              background-color: $visraam-yamki;
+            }
+          }
+        }
       }
     }
 
@@ -49,6 +82,39 @@
               rgba(229, 229, 229, 0) 20%,
               rgba($visraam-yamki, 0.7) 100%
             ) !important;
+        }
+
+        .larivaar-visraam-#{$source} {
+          position: relative !important;
+
+          &::after {
+            align-items: center;
+            border-radius: 50%;
+            color: white;
+            content: '| |';
+            display: inline-flex;
+            font-family: 'Muli', sans-serif;
+            font-size: 8px;
+            font-weight: bold;
+            height: 12px;
+            justify-content: center;
+            padding: 2px;
+            position: absolute;
+            transform: translateY(-100%);
+            width: 12px;
+          }
+
+          &-main {
+            &::after {
+              background-color: $visraam-main;
+            }
+          }
+
+          &-yamki {
+            &::after {
+              background-color: $visraam-yamki;
+            }
+          }
         }
       }
     }

@@ -31,6 +31,7 @@ const LarivaarWord = ({
   
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
+  const isBothLarivaarAssistAndVisraam = isColoredLarivaarAssist && isVisraam;
   const segments = unicode
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
@@ -45,9 +46,9 @@ const LarivaarWord = ({
     }
   }
 
-  const isBothLarivaarAssistAndVisraam = isVisraam && larivaarAssist;
-  console.log(isBothLarivaarAssistAndVisraam,'IS BOTH LARIVAAR ASSIST AND VISRAAM')
-
+  console.log(visraamClass, isBothLarivaarAssistAndVisraam,'IS BOTH LARIVAAR ASSIST AND VISRAAM')
+  
+  
   return (
     <span
       className={isVisraam ? visraamClass : '' + ' gurbani-word'}

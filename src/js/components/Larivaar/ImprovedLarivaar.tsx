@@ -93,7 +93,10 @@ export const Larivaar = ({
         if (['॥', ']'].some(v => word.includes(v))) {
           return `${word} `;
         }
-        const visraamClass = getVisraamClass(children, index, visraam);
+
+        const isBothLarivaarAssistAndVisraam = isVisraam && larivaarAssist;
+       
+        const visraamClass = getVisraamClass({akharIndex: index, visraams: visraam, isBothLarivaarAssistAndVisraam});
         let akharClass = '';
         
         if (isShowMahankoshTooltip) {
@@ -101,7 +104,7 @@ export const Larivaar = ({
         }
 
         const mahankoshTooltipAttributes = isShowMahankoshTooltip ? getMahankoshTooltipAttributes({isDarkMode, content: word}) : {};
-
+        console.log(visraamClass, isBothLarivaarAssistAndVisraam, 'VIS RAAM CLASS')
         return (
           <span
             key={index}
