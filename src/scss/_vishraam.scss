@@ -10,10 +10,10 @@
 
     &::after {
       align-items: center;
-      border-top: 6px solid;
+      border-bottom: 6px solid transparent;
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
-      border-bottom: 6px solid transparent;
+      border-top: 6px solid;
       content: '';
       display: inline-flex;
       font-weight: bold;
@@ -21,7 +21,7 @@
       justify-content: center;
       padding: 0;
       position: absolute;
-      transform: translate(-5px,-90%);
+      transform: translate(-5px, -90%);
       width: 0;
     }
   }
@@ -41,13 +41,13 @@
 
         .larivaar-visraam-#{$source} {
           @extend %larivaar-visraam;
-          
+
           &-main {
             &::after {
               border-top-color: $visraam-main;
             }
           }
-      
+
           &-yamki {
             &::after {
               border-top-color: $visraam-yamki;
@@ -96,7 +96,7 @@
               background-color: $visraam-main;
             }
           }
-      
+
           &-yamki {
             &::after {
               background-color: $visraam-yamki;
