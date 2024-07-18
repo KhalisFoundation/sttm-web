@@ -1,6 +1,5 @@
 /* globals AMRIT_KEERTAN_API_URL */
-import React, { useEffect } from 'react';
-import SmartBanner from 'react-smartbanner';
+import React from 'react';
 import { AmritKeertanIndexRow } from './AmritKeertanIndexRow';
 import { IAmritKeertanHeader } from './types';
 import PageLoader from '@/pages/PageLoader';
