@@ -1,56 +1,39 @@
 import React from 'react';
 import CrossIcon from '../Icons/Times';
 import { Link } from 'react-router-dom';
-import { useFetchData } from '@/hooks';
 
 type Props = {
   banner?: {
     type: string;
     message: string;
-  }
+    label?: string;
+    link?: string;
+  },
+  onCrossIconClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const BASE_URL = "https://sttm.s3.us-west-2.amazonaws.com/urgent-message.json";
-
 const Banner = (props: Props) => {
-
-  const {
-    isFetchingData: isFetchingBannerMessage,
-    data: bannerData,
-  } = useFetchData(props.banner?.type ? '' : BASE_URL);
-
-  const lastSeen = sessionStorage.getItem("bannerMessage");
-  const updateLastSeen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.currentTarget.parentElement?.remove();
-    sessionStorage.setItem("bannerMessage", "seen");
-  };
-
-  if (isFetchingBannerMessage || !bannerData.active || lastSeen === 'seen' || props.banner?.message) {
-    return null
-  }
-
-  const banner = props.banner || bannerData;
-
+  const banner = props.banner;
   return (
     <div className="banner-container">
-      <div className={`notification type-${banner.data.type}`}>
+      <div className={`notification type-${banner?.type}`}>
         <div className='banner-text-container'>
           <div className="banner-text">
-            <span className="banner-title">{banner.data.message}</span>
+            <span className="banner-title">{banner?.message}</span>
           </div>
-          {banner.data?.label &&
-            <button className={`banner-link-button type-${banner.data.type}`}>
+          {banner?.label &&
+            <button className={`banner-link-button type-${banner?.type}`}>
               <Link
                 className="banner-link-button-text"
-                to={{ pathname: `https://${banner.data?.link}` }}
+                to={{ pathname: `https://${banner?.link}` }}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {banner.data?.label}
+                {banner?.label}
               </Link>
             </button>}
         </div>
-        <button className="banner-cross-bg" onClick={(e) => updateLastSeen(e)}>
+        <button className="banner-cross-bg" onClick={(e) => props.onCrossIconClick?.(e)}>
           <CrossIcon className="banner-cross" />
         </button>
       </div>
