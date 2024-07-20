@@ -17,7 +17,7 @@ const MainPageBanner = () => {
     sessionStorage.setItem("bannerMessage", "seen");
   };
 
-  if (isFetchingBannerMessage || !bannerData.active || lastSeen === 'seen') {
+  if (isFetchingBannerMessage || !bannerData.active || !bannerData.data || lastSeen === 'seen') {
     return null
   }
 

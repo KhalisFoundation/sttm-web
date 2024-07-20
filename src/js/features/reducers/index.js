@@ -339,13 +339,12 @@ export default function reducer(state, action) {
         action: TOGGLE_VISRAAMS,
         label: visraams ? 1 : 0,
       });
-      const larivaarAssist = state.larivaarAssist && !visraams;
+    
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS, visraams);
-      saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST, larivaarAssist);
+      
       return {
         ...state,
         visraams,
-        larivaarAssist,
       };
     }
     case SET_VISRAAM_SOURCE: {
