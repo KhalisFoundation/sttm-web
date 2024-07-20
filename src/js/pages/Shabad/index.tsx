@@ -70,13 +70,13 @@ const Shabad = (props: Props) => {
             <ListOfShabads
               type="shabad"
               shabads={data.shabads}
-              highlights={highlight}
+              highlights={props.highlight}
             />
           ) : (
             <ShabadContent
-              random={random}
+              random={props.random}
               type="shabad"
-              highlight={highlight}
+              highlight={props.highlight}
               info={data.shabadInfo}
               gurbani={data.verses}
               nav={data.navigation}
