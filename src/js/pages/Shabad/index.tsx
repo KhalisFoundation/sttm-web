@@ -29,7 +29,7 @@ interface StoreSliceState {
 const Shabad = (props: Props) => {
   const state = useSelector<StoreSliceState>((state) => ({
     isVisraam: state.visraams, isLarivaarAssist: state.larivaarAssist 
-  })) as unknown as StoreSliceState; 
+  })); 
   
   const [isHideBanner, setIsHideBanner] = useState<boolean>(false);
 
@@ -44,7 +44,7 @@ const Shabad = (props: Props) => {
   const url = buildApiUrl(
     props.random ? { random: props.random, API_URL } : { random: props.random, id: Number(props.id), API_URL }
   );
-
+  console.log(state,"STAATE")
   return (
     <PageLoader url={url}>
     {({ data, loading }) =>
@@ -52,7 +52,7 @@ const Shabad = (props: Props) => {
         <Spinner />
       ) : (
         <div className="row" id="content-root">
-          {state.visraams && state.larivaarAssist && !isHideBanner && (
+          {state.isVisraam && state.isLarivaarAssist && !isHideBanner && (
             <Banner 
               banner={{
                 classes: {

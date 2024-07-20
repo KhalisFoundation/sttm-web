@@ -104,7 +104,7 @@ export const Larivaar = ({
         }
 
         const mahankoshTooltipAttributes = isShowMahankoshTooltip ? getMahankoshTooltipAttributes({isDarkMode, content: word}) : {};
-        console.log(visraamClass, isBothLarivaarAssistAndVisraam, 'VIS RAAM CLASS')
+        
         return (
           <span
             key={index}
