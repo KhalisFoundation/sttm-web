@@ -25,9 +25,10 @@ const HighlightedSearchResult = (props: Props) => {
   const isDarkMode = useSelector(state => state.darkMode);
 
   return props.children?.split(' ').map((word: string, i: number) => {
-    let akharClass = getVisraamClass(props.children, i, props.visraams) || ' ';
+    let akharClass = getVisraamClass({akharIndex: i, visraams: props.visraams}) || ' ';
+   
     if (props.highlightIndex && props.highlightIndex.length > 0) {
-      if (props.highlightIndex.includes(i)) {
+      if (props.highlightIndex.includes(`${i}`)) {
         akharClass += 'search-highlight-word'
       }
     }
@@ -39,7 +40,6 @@ const HighlightedSearchResult = (props: Props) => {
     }
 
     const mahankoshTooltipAttributes = props.isShowMahankoshTooltip ? getMahankoshTooltipAttributes({isDarkMode, content: word}) : {};
-
 
     return (
       <span

@@ -105,7 +105,7 @@ class Home extends React.PureComponent {
           handleSearchWriterChange,
           handleReset,
         }) => (
-          <React.Fragment>
+          <>
             <div className="row" id="content-root">
               <div className={showDoodle ?
                 "search-page doodle-logo-page" : "search-page"}>
@@ -273,7 +273,7 @@ class Home extends React.PureComponent {
                 </a>
               )}
             </div>
-          </React.Fragment >
+          </ >
         )
         }
       </SearchForm>
@@ -286,7 +286,7 @@ class Home extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ }) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
   setModalOpen

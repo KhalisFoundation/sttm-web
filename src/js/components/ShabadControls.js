@@ -167,8 +167,8 @@ class ShabadControls extends React.PureComponent {
     clearVisraamClass();
     document.body.classList[this.props.visraams ? 'add' : 'remove'](
       VISRAAM.CLASS_NAME,
-      VISRAAM.SOURCE_CLASS(this.props.visraamSource),
-      VISRAAM.TYPE_CLASS(this.props.visraamStyle)
+      VISRAAM.getSourceClass(this.props.visraamSource),
+      VISRAAM.getTypeClass(this.props.visraamStyle)
     );
   }
 
