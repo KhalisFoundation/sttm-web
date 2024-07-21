@@ -44,7 +44,7 @@ const Shabad = (props: Props) => {
   const url = buildApiUrl(
     props.random ? { random: props.random, API_URL } : { random: props.random, id: Number(props.id), API_URL }
   );
-  console.log(state,"STAATE")
+  
   return (
     <PageLoader url={url}>
     {({ data, loading }) =>
