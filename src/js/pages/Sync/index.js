@@ -154,10 +154,13 @@ class Sync extends React.PureComponent {
           onKeyUp={e => {
             const typedValue = e.currentTarget.value;
             const typedChar = e.key;
+            const hasHyphen = typedValue.includes('-');
             const parsedValue = typedValue.match('^[A-Z,a-z]{3}');
             const d = parsedValue ? parsedValue[0] === typedValue : false;
             if (d && typedChar !== 'Backspace') {
               e.currentTarget.value = typedValue + '-';
+            } else if (typedChar === '-' && hasHyphen) {
+              e.currentTarget.value = typedValue.replace(/-+/g, '-');
             }
           }}
         />
