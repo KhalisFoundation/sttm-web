@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import CrossIcon from '../Icons/Times';
 import { Link } from 'react-router-dom';
 
 type Props = {
   banner: {
     type: string;
-    message: string;
+    message: string | ReactNode;
     label?: string;
     link?: string;
     classes?: {
