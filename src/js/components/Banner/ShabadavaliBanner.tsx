@@ -11,13 +11,10 @@ const ShabadavaliBanner = () => {
     data: {
       active: true,
       data: {
-        message: (
-            <>
-                Help preserve the Punjabi language by donating on <a href='https://dvnetwork.org/learnpunjabi'>dvnetwork.org/learnpunjabi</a>!{' '}
-                Every dollar will be doubled = double impact!
-            </>
-        ),
-        type: "2",
+        message: "Help us preserve the Punjabi language! Donate on Dasvandh Network and double your impact with matching!",
+        link: "dvnetwork.org/learnpunjabi",
+        label: "Donate now",
+        type: "3",
       }
     }
   };
