@@ -9,10 +9,10 @@ const ShabadavaliBanner = () => {
     type: "3",
   };
 
-  const lastSeen = sessionStorage.getItem("shbdvliBannerMsg");
+  const lastSeen = sessionStorage.getItem("shabadavliBannerMessage");
   const updateLastSeen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.currentTarget.parentElement?.remove();
-    sessionStorage.setItem("shbdvliBannerMsg", "seen");
+    sessionStorage.setItem("shabadavliBannerMessage", "seen");
   };
 
   if (!bannerData || lastSeen === 'seen') {
