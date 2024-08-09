@@ -5,6 +5,27 @@
   $visraam-yamki: $yamki;
   $visraam-sources: ('sttm', 'sttm2', 'igurbani');
 
+  %larivaar-visraam {
+    position: relative !important;
+
+    &::after {
+      align-items: center;
+      border-bottom: 6px solid transparent;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid;
+      content: '';
+      display: inline-flex;
+      font-weight: bold;
+      height: 0;
+      justify-content: center;
+      padding: 0;
+      position: absolute;
+      transform: translate(-5px, -90%);
+      width: 0;
+    }
+  }
+
   @each $source in $visraam-sources {
     &.display-visraams.vishraam-vishraam-options-colored-words.vishraam-vishraam-source-#{$source} {
       .gurlipi,
@@ -16,6 +37,22 @@
 
         .visraam-#{$source}-yamki {
           color: $sttm-orange !important;
+        }
+
+        .larivaar-visraam-#{$source} {
+          @extend %larivaar-visraam;
+
+          &-main {
+            &::after {
+              border-top-color: $visraam-main;
+            }
+          }
+
+          &-yamki {
+            &::after {
+              border-top-color: $visraam-yamki;
+            }
+          }
         }
       }
     }
@@ -49,6 +86,22 @@
               rgba(229, 229, 229, 0) 20%,
               rgba($visraam-yamki, 0.7) 100%
             ) !important;
+        }
+
+        .larivaar-visraam-#{$source} {
+          @extend %larivaar-visraam;
+
+          &-main {
+            &::after {
+              background-color: $visraam-main;
+            }
+          }
+
+          &-yamki {
+            &::after {
+              background-color: $visraam-yamki;
+            }
+          }
         }
       }
     }

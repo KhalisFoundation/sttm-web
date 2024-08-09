@@ -5,7 +5,7 @@ import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import Accordion from '../Accordion';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, KEYBOARD_SHORTCUTS, QUICK_SETTINGS, RESET_SETTING } from './ControlSettings';
-import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, SolidArrowRight, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, CartoonIcon, AudioPlayerIcon } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, CartoonIcon, AudioPlayerIcon } from "../Icons/CustomIcons";
 import {
   FONT_OPTIONS,
   VISRAAM,
@@ -42,8 +42,8 @@ const ControlsSettings = (props: any) => {
     clearVisraamClass();
     document.body.classList[visraams ? 'add' : 'remove'](
       VISRAAM.CLASS_NAME,
-      VISRAAM.SOURCE_CLASS(visraamSource),
-      VISRAAM.TYPE_CLASS(visraamStyle)
+      VISRAAM.getSourceClass(visraamSource),
+      VISRAAM.getTypeClass(visraamStyle)
     );
     wrapperRef.current.focus();
   }, [visraams, visraamSource, visraamStyle])

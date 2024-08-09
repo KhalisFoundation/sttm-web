@@ -5,6 +5,12 @@
   justify-content: space-between;
   width: 100%;
 
+  .notification-shabad {
+    margin-bottom: 8px;
+    max-width: 75vw;
+    width: 100% !important;
+  }
+
   .notification {
     align-items: center;
     display: flex;

@@ -10,9 +10,9 @@ export interface Props {
   larivaarAssist?: boolean;
   larivaarAssistColor: string;
   index: number;
-  highlightIndex?: Array<number>;
+  highlightIndex?: number[];
   visraam: Object;
-  visraams: boolean;
+  isVisraam: boolean;
   visraamClass: string;
   highlight?: boolean;
 }
@@ -25,12 +25,13 @@ const LarivaarWord = ({
   larivaarAssistColor,
   index,
   highlight,
-  visraams,
+  isVisraam,
   visraamClass,
 }: Props) => {
   
   const isOddIdx = index % 2 === 1;
   const isColoredLarivaarAssist = larivaarAssist && isOddIdx;
+  
   const segments = unicode
     ? fixLarivaarUnicode(word)
     : fixLarivaarGurmukhiFont(word);
@@ -47,7 +48,7 @@ const LarivaarWord = ({
 
   return (
     <span
-      className={visraams ? visraamClass : '' + ' gurbani-word'}
+      className={isVisraam ? visraamClass : '' + ' gurbani-word'}
     >
       {segments.map((item, i) => {
         const key = `${index}.${i}`;

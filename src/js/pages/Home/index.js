@@ -59,6 +59,13 @@ class Home extends React.PureComponent {
   onSubmit = ({ handleSubmit, ...data }) => e => {
     e.preventDefault();
     handleSubmit();
+
+    // Remove the last space in from the searched query.
+    const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
+    if(isNotAngSearch) {
+      data.query = data.query.trim();
+    }
+    
     this.props.history.push(toSearchURL(data));
   };
 
@@ -98,7 +105,7 @@ class Home extends React.PureComponent {
           handleSearchWriterChange,
           handleReset,
         }) => (
-          <React.Fragment>
+          <>
             <div className="row" id="content-root">
               <div className={showDoodle ?
                 "search-page doodle-logo-page" : "search-page"}>
@@ -266,7 +273,7 @@ class Home extends React.PureComponent {
                 </a>
               )}
             </div>
-          </React.Fragment >
+          </ >
         )
         }
       </SearchForm>
@@ -279,7 +286,7 @@ class Home extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ }) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
   setModalOpen

@@ -6,9 +6,9 @@ export const VISRAAM = {
     sttm2: 'STTM (Legacy)',
   },
   TYPES: {
-    'colored-words': 'Colored Words',
-    'gradient-bg': 'Gradient Background',
+    'colored-words': 'colored-words',
+    'gradient-bg': 'gradient-bg',
   },
-  SOURCE_CLASS: (source: string) => `vishraam-vishraam-source-${source}`,
-  TYPE_CLASS: (type: string) => `vishraam-vishraam-options-${type}`
+  getSourceClass: (source: string) => `vishraam-vishraam-source-${source}`,
+  getTypeClass: (type: string) => `vishraam-vishraam-options-${type}`
 }
