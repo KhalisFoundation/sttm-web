@@ -9,6 +9,10 @@ const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const commonPlugins = [new ManifestPlugin()];
+const crypto = require("crypto");
+const crypto_orig_createHash = crypto.createHash;
+crypto.createHash = algorithm => crypto_orig_createHash(algorithm == "md4" ? "sha256" : algorithm);
+
 
 const plugins = PRODUCTION
   ? commonPlugins.concat([
@@ -55,6 +59,9 @@ const plugins = PRODUCTION
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');
 
 module.exports = {
+  output: {
+    hashFunction: "sha256"
+  },
   mode: PRODUCTION ? 'production' : 'development',
   entry: {
     app,
@@ -111,3 +118,4 @@ module.exports = {
     ],
   },
 };
+

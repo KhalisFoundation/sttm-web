@@ -4,7 +4,7 @@
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "engines": {
-    "node": "14.x"
+    "node": "20.x"
   },
   "scripts": {
     "pre-push-message": "echo \"Before your push gets submitted to remote, we'll like to run some tests to avoid wasting your, reviewers' and CI's time. Thank you for being patient!\"",
