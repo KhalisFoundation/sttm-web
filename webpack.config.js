@@ -59,9 +59,6 @@ const plugins = PRODUCTION
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');
 
 module.exports = {
-  output: {
-    hashFunction: "sha256"
-  },
   mode: PRODUCTION ? 'production' : 'development',
   entry: {
     app,
@@ -101,10 +98,6 @@ module.exports = {
       {
         test: /\.(tsx?)|(js)$/,
         loader: 'babel-loader',
-      },
-      {
-        test: /\.less$/,
-        loader: 'less-loader', // compiles Less to CSS
       },
       {
         test: /\.css$/i,
