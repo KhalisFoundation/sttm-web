@@ -15,7 +15,7 @@ const ShabadavaliBanner = () => {
     sessionStorage.setItem("shabadavliBannerMessage", "seen");
   };
 
-  if (!bannerData || lastSeen === 'seen') {
+  if (lastSeen === 'seen') {
     return null
   }
 
