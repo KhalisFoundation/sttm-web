@@ -160,7 +160,7 @@ class Sync extends React.PureComponent {
             if (d && typedChar !== 'Backspace') {
               e.currentTarget.value = typedValue + '-';
             } else if (typedChar === '-' && hasHyphen) {
-              e.currentTarget.value = typedValue.replace(/-+/g, '-');
+              e.currentTarget.value = typedValue.replace(/[-]+/g, '-');
             }
           }}
         />

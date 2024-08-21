@@ -282,7 +282,7 @@ export default class WebControllerPage extends React.PureComponent {
                     if (isParsedValueExist && typedChar !== 'Backspace') {
                       e.currentTarget.value = typedValue + '-';
                     } else if (typedChar === '-' && hasHyphen) {
-                      e.currentTarget.value = typedValue.replace(/-+/g, '-');
+                      e.currentTarget.value = typedValue.replace(/[-]+/g, '-');
                     }
 
                   }}
