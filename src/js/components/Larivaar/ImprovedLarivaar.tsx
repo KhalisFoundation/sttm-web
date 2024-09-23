@@ -40,16 +40,19 @@ export const Larivaar = ({
     currentLine,
     setMahankoshInformation
   } = useContext(MahankoshContext);
-  const larivaarAssistColor = useSelector(state => getLarivaarAssistColor(state));
-  const isDarkMode = useSelector(state => state.darkMode);
+  const larivaarAssistColor = useSelector((state) =>
+    getLarivaarAssistColor(state)
+  );
+  const isDarkMode = useSelector((state) => state.darkMode);
+  const isMahaanKoshTooltipEnabled = false;
 
   // closure implementation
   const handleMahankoshMouseEnter = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
 
       //Clear any existing instance of the active tooltip before setting new word
-      dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
-      
+      dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false });
+
       setMahankoshInformation({
         selectedLine: currentLine,
         selectedWord,
@@ -71,6 +74,17 @@ export const Larivaar = ({
 
   // If larivaar is disabled
   if (!enable) {
+    if (!isMahaanKoshTooltipEnabled) {
+      return (
+        <HighlightedSearchResult
+          highlightIndex={highlightIndex}
+          query={query}
+          visraams={visraam}
+        >
+          {children}
+        </HighlightedSearchResult>
+      );
+    }
     return (
       <HighlightedSearchResult
         isShowMahankoshTooltip={isShowMahankoshTooltip}
@@ -95,25 +109,38 @@ export const Larivaar = ({
         }
 
         const isBothLarivaarAssistAndVisraam = isVisraam && larivaarAssist;
-       
+
         const visraamClass = getVisraamClass({akharIndex: index, visraams: visraam, isBothLarivaarAssistAndVisraam});
         let akharClass = '';
-        
-        if (isShowMahankoshTooltip) {
+
+        if (isShowMahankoshTooltip && isMahaanKoshTooltipEnabled) {
           akharClass += ' mahankoshSelectedGurbaniWord';
         }
 
-        const mahankoshTooltipAttributes = isShowMahankoshTooltip ? getMahankoshTooltipAttributes({isDarkMode, content: word}) : {};
-        
+        const mahankoshTooltipAttributes =
+          isShowMahankoshTooltip && isMahaanKoshTooltipEnabled
+            ? getMahankoshTooltipAttributes({ isDarkMode, content: word })
+            : {};
+
         return (
           <span
             key={index}
             {...mahankoshTooltipAttributes}
-            onMouseEnter={() => {
-              handleMahankoshWordStore(word, index)
-            }}
-            onClick={handleGurbaniShabadClick}
-            onMouseLeave={handleClearMahankoshTooltip}
+            onMouseEnter={
+              isMahaanKoshTooltipEnabled
+                ? () => {
+                    handleMahankoshWordStore(word, index);
+                  }
+                : undefined
+            }
+            onClick={
+              isMahaanKoshTooltipEnabled ? handleGurbaniShabadClick : undefined
+            }
+            onMouseLeave={
+              isMahaanKoshTooltipEnabled
+                ? handleClearMahankoshTooltip
+                : undefined
+            }
             className={akharClass}
           >
             <LarivaarWord
