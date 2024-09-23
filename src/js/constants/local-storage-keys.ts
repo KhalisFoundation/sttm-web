@@ -22,6 +22,7 @@ export const LOCAL_STORAGE_KEY_FOR_TRANSLITERATION_FONT_SIZE = 'transliterationF
 export const LOCAL_STORAGE_KEY_FOR_LINE_HEIGHT = 'lineHeight';
 export const LOCAL_STORAGE_KEY_FOR_FONT_FAMILY = 'fontFamily';
 export const LOCAL_STORAGE_KEY_FOR_DARK_MODE = 'darkMode';
+export const LOCAL_STORAGE_KEY_FOR_MAHAAN_KOSH_TOOLTIP = 'mahaanKoshTooltip';
 export const LOCAL_STORAGE_KEY_FOR_AUTO_SCROLL_MODE = 'autoScrollMode';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAMS = 'visraams';
 export const LOCAL_STORAGE_KEY_FOR_VISRAAM_SOURCE = 'visraamSource';

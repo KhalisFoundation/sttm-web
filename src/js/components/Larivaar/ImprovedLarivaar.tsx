@@ -44,7 +44,9 @@ export const Larivaar = ({
     getLarivaarAssistColor(state)
   );
   const isDarkMode = useSelector((state) => state.darkMode);
-  const isMahaanKoshTooltipEnabled = false;
+  const isMahaanKoshTooltipEnabled = useSelector(
+    (state) => state.mahaanKoshTooltip
+  );
 
   // closure implementation
   const handleMahankoshMouseEnter = (currentLine: number) => {

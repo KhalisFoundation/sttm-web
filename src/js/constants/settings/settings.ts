@@ -48,6 +48,7 @@ export interface SETTING_ACTIONS {
   toggleCenterAlignOption: Function,
   toggleSplitViewOption: Function,
   toggleDarkMode: Function,
+  toggleMahaanKoshTooltip: Function,
   toggleParagraphMode: Function,
   toggleReadingMode: Function,
   toggleSehajPaathMode: Function,
@@ -81,6 +82,7 @@ export interface SETTING_ACTIONS {
   centerAlignGurbani: boolean,
   splitView: boolean,
   darkMode: boolean,
+  mahaanKoshTooltip: boolean,
   sgBaaniLength: string,
   fontFamily: string,
   showAdvancedOptions: boolean,
@@ -101,6 +103,7 @@ export const QUICK_SETTINGS = ({
   toggleParagraphMode,
   toggleReadingMode,
   toggleDarkMode,
+  toggleMahaanKoshTooltip,
   setSteekLanguages,
   translationLanguages,
   transliterationLanguages,
@@ -114,6 +117,7 @@ export const QUICK_SETTINGS = ({
   splitView,
   showAdvancedOptions,
   darkMode,
+  mahaanKoshTooltip,
   location,
   steekLanguages,
 }: SETTING_ACTIONS) => {
@@ -259,6 +263,13 @@ export const QUICK_SETTINGS = ({
       label: 'Dark Mode',
       checked: darkMode,
       action: toggleDarkMode,
+    },
+    {
+      type: 'toggle-option',
+      icon: DarkModeIcon, //need to change icon
+      label: 'Mahaan Kosh Tooltip',
+      checked: mahaanKoshTooltip,
+      action: toggleMahaanKoshTooltip,
     },
     {
       type: 'toggle-option',
