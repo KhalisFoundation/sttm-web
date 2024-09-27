@@ -230,6 +230,7 @@ class Baani extends React.PureComponent {
       highlight,
       showFullScreen,
       visraams,
+      isReadingMode,
     } = this.props;
 
     return (
@@ -248,6 +249,8 @@ class Baani extends React.PureComponent {
         fontFamily={fontFamily}
         isVisraam={visraams}
         visraam={shabad.visraam}
+        isReadingMode={isReadingMode}
+        key={shabad.verseId}
       />
     );
   };
