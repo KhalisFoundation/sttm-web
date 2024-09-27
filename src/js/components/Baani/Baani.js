@@ -887,31 +887,31 @@ class Baani extends React.PureComponent {
     const hindiTranslationLanguages = this.getHindiTranslationLanguages();
     const spanishTranslationLanguage = translationLanguages.includes('spanish')
     const shabads = Object.entries(normalizedGurbani).map(([idx, shabads]) => shabads.map(shabad => shabad)).flat();
+    let lineIndex = 0;
+    const { selectedWord, selectedWordIndex, selectedLine } = this.state;
     return (
       <div>
-        {shabads.map(shabad => {
-          return(
-            <div key={shabad.verseId} className={`${unicode ? 'unicode' : 'gurlipi-reading-mode'}`}>
-              <BaaniLine
-                text={shabad.verse}
-                unicode={unicode}
-                shouldHighlight={
-                  showFullScreen
-                    ? false
-                    : highlight === parseInt(getVerseId(shabad), 10)
-                }
-                larivaar={larivaar}
-                larivaarAssist={larivaarAssist}
-                fontSize={fontSize}
-                lineHeight={lineHeight}
-                fontFamily={fontFamily}
-                visraams={visraams}
-                visraam={shabad.visraam}
-                isReadingMode={isReadingMode}
-                key={shabad.verseId}
-                />
-              </div>
-          )
+        {shabads.map((shabad) => {
+          lineIndex++;
+          return (
+            <div
+              key={shabad.verseId}
+              className={`${unicode ? 'unicode' : 'gurlipi-reading-mode'}`}
+            >
+              <MahankoshContext.Provider
+                key={lineIndex}
+                value={{
+                  currentLine: lineIndex,
+                  selectedLine,
+                  selectedWord,
+                  selectedWordIndex,
+                  setMahankoshInformation: this.setMahankoshInformation,
+                }}
+              >
+                {this.getBaniLine(shabad)}
+              </MahankoshContext.Provider>
+            </div>
+          );
         })}
       {transliterationLanguages.map((language) => {
           return (
