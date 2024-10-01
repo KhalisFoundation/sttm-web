@@ -198,8 +198,8 @@ exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
       class="hukamnama-audio hukamnama-audio--shown "
     >
       <div
-        aria-label="Audio Player"
-        class="rhap_container "
+        aria-label="Audio player"
+        class="rhap_container rhap_loop--off rhap_play-status--paused "
         role="group"
         tabindex="0"
       >
@@ -244,7 +244,7 @@ exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
               --:--
             </div>
             <div
-              aria-label="Audio Progress Control"
+              aria-label="Audio progress control"
               aria-valuemax="100"
               aria-valuemin="0"
               aria-valuenow="0"
@@ -285,60 +285,21 @@ exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
                 class="rhap_button-clear rhap_main-controls-button rhap_rewind-button"
                 type="button"
               >
-                <svg
-                  focusable="false"
-                  height="1em"
-                  preserveAspectRatio="xMidYMid meet"
-                  style="transform: rotate(360deg);"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.5 12l8.5 6V6m-9 12V6l-8.5 6l8.5 6z"
-                    fill="currentColor"
-                  />
-                </svg>
+                <span />
               </button>
               <button
                 aria-label="Play"
                 class="rhap_button-clear rhap_main-controls-button rhap_play-pause-button"
                 type="button"
               >
-                <svg
-                  focusable="false"
-                  height="1em"
-                  preserveAspectRatio="xMidYMid meet"
-                  style="transform: rotate(360deg);"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10 16.5v-9l6 4.5M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2z"
-                    fill="currentColor"
-                  />
-                </svg>
+                <span />
               </button>
               <button
                 aria-label="Forward"
                 class="rhap_button-clear rhap_main-controls-button rhap_forward-button"
                 type="button"
               >
-                <svg
-                  focusable="false"
-                  height="1em"
-                  preserveAspectRatio="xMidYMid meet"
-                  style="transform: rotate(360deg);"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13 6v12l8.5-6M4 18l8.5-6L4 6v12z"
-                    fill="currentColor"
-                  />
-                </svg>
+                <span />
               </button>
             </div>
             <div
