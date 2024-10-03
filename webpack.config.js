@@ -9,6 +9,10 @@ const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const commonPlugins = [new ManifestPlugin()];
+const crypto = require("crypto");
+const crypto_orig_createHash = crypto.createHash;
+crypto.createHash = algorithm => crypto_orig_createHash(algorithm == "md4" ? "sha256" : algorithm);
+
 
 const plugins = PRODUCTION
   ? commonPlugins.concat([
@@ -96,10 +100,6 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.less$/,
-        loader: 'less-loader', // compiles Less to CSS
-      },
-      {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
@@ -111,3 +111,4 @@ module.exports = {
     ],
   },
 };
+
