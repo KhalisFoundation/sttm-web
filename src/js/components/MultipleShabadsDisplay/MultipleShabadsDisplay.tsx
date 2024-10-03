@@ -51,7 +51,7 @@ const MultipleShabadsDisplay = ({
   }
 
   const handleDisplayShabads = () => {
-    const shabadData = sortableState.map(state => [state.shabadId, state.id])
+    const shabadData = sortableState.map(shabad => [shabad.shabadId, shabad.id])
     urlHistory.push(toMultipleShabadsURL({ shabadData }));
   }
 

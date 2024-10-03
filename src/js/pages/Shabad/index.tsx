@@ -18,7 +18,7 @@ interface Props {
   random: boolean;
   highlight: string | number;
   id: string,
-  isVisraam: boolean;  
+  isVisraam: boolean;
   isLarivaarAssist: boolean;
 }
 
@@ -28,9 +28,9 @@ interface StoreSliceState {
 
 const Shabad = (props: Props) => {
   const state = useSelector<StoreSliceState>((state) => ({
-    isVisraam: state.visraams, isLarivaarAssist: state.larivaarAssist 
-  })); 
-  
+    isVisraam: state.visraams, isLarivaarAssist: state.larivaarAssist
+  }));
+
   const [isHideBanner, setIsHideBanner] = useState<boolean>(false);
 
   useEffect(() => {
@@ -42,51 +42,51 @@ const Shabad = (props: Props) => {
   }, [props.random])
 
   const url = buildApiUrl(
-    props.random ? { random: props.random, API_URL } : { random: props.random, id: Number(props.id), API_URL }
+    props.random ? { random: props.random, API_URL } : { random: props.random, id: props.id as unknown as number, API_URL }
   );
-  
+
   return (
     <PageLoader url={url}>
-    {({ data, loading }) =>
-      loading ? (
-        <Spinner />
-      ) : (
-        <div className="row" id="content-root">
-          {state.isVisraam && state.isLarivaarAssist && !isHideBanner && (
-            <Banner 
-              banner={{
-                classes: {
-                  notification: 'notification-shabad',
-                },
-                type: "2",
-                message: `Larivaar Assist & Vishraams: Larivaar Assist will be displayed using different colors for words and the vishraams will be
+      {({ data, loading }) =>
+        loading ? (
+          <Spinner />
+        ) : (
+          <div className="row" id="content-root">
+            {state.isVisraam && state.isLarivaarAssist && !isHideBanner && (
+              <Banner
+                banner={{
+                  classes: {
+                    notification: 'notification-shabad',
+                  },
+                  type: "2",
+                  message: `Larivaar Assist & Vishraams: Larivaar Assist will be displayed using different colors for words and the vishraams will be
                 shown by orange and red flashing icons between words to guide you when to pause.`
-              }}
-              onCrossIconClick={() => setIsHideBanner(true)}
-            />
-          )}
-          <BreadCrumb links={[{ title: TEXTS.URIS.SHABAD }]} />
-          {isKeyExists(data, 'shabadIds') ? (
-            <ListOfShabads
-              type="shabad"
-              shabads={data.shabads}
-              highlights={props.highlight}
-            />
-          ) : (
-            <ShabadContent
-              random={props.random}
-              type="shabad"
-              highlight={props.highlight}
-              info={data.shabadInfo}
-              gurbani={data.verses}
-              nav={data.navigation}
-              hideAddButton={false}
-            />
-          )}
-        </div>
-      )
-    }
-  </PageLoader>
+                }}
+                onCrossIconClick={() => setIsHideBanner(true)}
+              />
+            )}
+            <BreadCrumb links={[{ title: TEXTS.URIS.SHABAD }]} />
+            {isKeyExists(data, 'shabadIds') ? (
+              <ListOfShabads
+                type="shabad"
+                shabads={data.shabads}
+                highlights={props.highlight}
+              />
+            ) : (
+              <ShabadContent
+                random={props.random}
+                type="shabad"
+                highlight={props.highlight}
+                info={data.shabadInfo}
+                gurbani={data.verses}
+                nav={data.navigation}
+                hideAddButton={false}
+              />
+            )}
+          </div>
+        )
+      }
+    </PageLoader>
   )
 }
 

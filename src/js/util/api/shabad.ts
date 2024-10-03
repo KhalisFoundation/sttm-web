@@ -5,19 +5,20 @@ interface ITransProps {
   [name: string]: (shabad: IShabad) => string | {}
 }
 
-export const getAng = shabad => shabad.pageNo;
+export const getAng = (shabad: IShabad) => shabad.pageNo;
 
-export const getSource = shabad => SOURCES[shabad.source.sourceId];
+export const getSource = (shabad: IShabad) => SOURCES[shabad.source.sourceId];
 
-export const getSourceId = shabad => shabad.source.sourceId;
+export const getSourceId = (shabad: IShabad) => shabad.source.sourceId;
 
-export const getUnicodeVerse = shabad => shabad.verse.unicode;
+export const getUnicodeVerse = (shabad: IShabad) => shabad.verse.unicode;
 
-export const getGurmukhiVerse = shabad => shabad.verse.gurmukhi;
+export const getGurmukhiVerse = (shabad: IShabad) => shabad.verse.gurmukhi;
 
-export const getVerseId = shabad => shabad.verseId;
+export const getVerseId = (shabad: IShabad) => shabad.verseId;
 
-export const getShabadId = shabad => {
+export const getShabadId = (shabad: IShabad) => {
+  if (!shabad) return;
   return shabad.shabadId || shabad.ceremonyID || shabad.baniID;
 }
 
@@ -39,12 +40,12 @@ export const translationMap: ITransProps = {
 };
 
 export const hindiTranslationMap: ITransProps = {
-  'sahib singh': shabad => shabad.translation.hi.ss,  
+  'sahib singh': shabad => shabad.translation.hi.ss,
   'sant singh': shabad => shabad.translation.hi.sts,
 };
 
 export const englishTranslationMap: ITransProps = {
-  'BaniDB': shabad => shabad.translation.en.bdb,  
+  'BaniDB': shabad => shabad.translation.en.bdb,
   'manmohan singh': shabad => shabad.translation.en.ms,
   'sant singh khalsa': shabad => shabad.translation.en.ssk,
 };
@@ -56,16 +57,16 @@ export const steekMap: ITransProps = {
   'manmohan singh': shabad => shabad.translation.pu.ms,
 };
 
-export const getRaag = (shabad) => ({
+export const getRaag = (shabad: IShabad) => ({
   english: shabad.raag ? shabad.raag.english : '',
   gurmukhi: shabad.raag ? shabad.raag.gurmukhi : '',
   unicode: shabad.raag ? shabad.raag.unicode : '',
 });
 
-export const getWriter = (shabad) => ({
+export const getWriter = (shabad: IShabad) => ({
   english: shabad.writer ? shabad.writer.english : '',
   gurmukhi: shabad.writer ? shabad.writer.gurmukhi : '',
   unicode: shabad.writer ? shabad.writer.unicode : '',
 });
 
-export const getWriterId = (shabad) => shabad.writer && shabad.writer.writerId;
+export const getWriterId = (shabad: IShabad) => shabad.writer && shabad.writer.writerId;

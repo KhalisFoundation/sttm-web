@@ -38,11 +38,11 @@ export function NotFound() {
           pending ? null : NotFoundLayout ? (
             <NotFoundLayout />
           ) : (
-              throwError(
-                `We are having trouble in rendering this route.`,
-                rejected
-              )
+            throwError(
+              `We are having trouble in rendering this route.`,
+              rejected
             )
+          )
         }
       </RenderPromise>
     </Layout>
@@ -81,11 +81,11 @@ export default [
               pending ? null : TermsOfService ? (
                 <TermsOfService {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -106,11 +106,11 @@ export default [
               pending ? null : About ? (
                 <About {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -131,11 +131,11 @@ export default [
               pending ? null : Maryada ? (
                 <Maryada {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -152,8 +152,7 @@ export default [
       return (
         <Layout
           defaultQuery={ang}
-          title={`Ang ${ang} of ${
-            SOURCES[source] || SOURCES.G
+          title={`Ang ${ang} of ${SOURCES[source] || SOURCES.G
             } Ang/Page Viewer - SikhiToTheMax`}
           isAng={true}
           {...props}
@@ -174,11 +173,11 @@ export default [
                   {...props}
                 />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -187,7 +186,7 @@ export default [
   },
   {
     path: '/index/sri-guru-granth-sahib',
-    render(props) {      
+    render(props) {
 
       return (
         <Layout title="Index - Sri Guru Granth Sahib Ji - SikhiToTheMax" {...props}>
@@ -202,11 +201,11 @@ export default [
               pending ? null : Index ? (
                 <Index {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -215,7 +214,7 @@ export default [
   },
   {
     path: '/index/sri-dasam-granth-sahib',
-    render(props) {      
+    render(props) {
 
       return (
         <Layout title="Index - Sri Dasam Granth Sahib Ji - SikhiToTheMax" {...props}>
@@ -230,11 +229,11 @@ export default [
               pending ? null : Index ? (
                 <Index {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -243,7 +242,7 @@ export default [
   },
   {
     path: '/index/bhai-nand-lal-vaaran',
-    render(props) {      
+    render(props) {
 
       return (
         <Layout title="Index - Bhai Nand Lal Ji Vaaran - SikhiToTheMax" {...props}>
@@ -258,11 +257,11 @@ export default [
               pending ? null : Index ? (
                 <Index {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -271,7 +270,7 @@ export default [
   },
   {
     path: '/index/amrit-keertan',
-    render(props) {      
+    render(props) {
 
       return (
         <Layout title="Index - Amrit Keertan - SikhiToTheMax" {...props}>
@@ -286,11 +285,11 @@ export default [
               pending ? null : Index ? (
                 <Index {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -320,18 +319,18 @@ export default [
               pending ? null : Index ? (
                 <Index {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
       );
     },
   },
-   
+
   {
     path: '/sundar-gutka',
     render(props) {
@@ -355,11 +354,11 @@ export default [
               pending ? null : SundarGutka ? (
                 <SundarGutka {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -382,11 +381,11 @@ export default [
               pending ? null : AmritKeertanShabads ? (
                 <AmritKeertanShabads {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -407,11 +406,11 @@ export default [
               pending ? null : Help ? (
                 <Help {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -433,11 +432,11 @@ export default [
               pending ? null : Hukamnama ? (
                 <Hukamnama date={date} {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -458,11 +457,11 @@ export default [
               pending ? null : Sync ? (
                 <Sync {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -511,11 +510,11 @@ export default [
                   {...props}
                 />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -561,11 +560,11 @@ export default [
               pending ? null : Shabad ? (
                 <Shabad {...otherProps} {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>
@@ -661,11 +660,11 @@ export default [
               pending ? null : FavouriteShabads ? (
                 <FavouriteShabads {...props} />
               ) : (
-                  throwError(
-                    `We are having trouble in rendering this route.`,
-                    rejected
-                  )
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
                 )
+              )
             }
           </RenderPromise>
         </Layout>

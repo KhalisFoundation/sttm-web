@@ -166,16 +166,16 @@ class Shabad extends React.PureComponent {
             <Controls
               media={
                 hideAddButton ? supportedMedia.filter(m => (m !== 'addShabad' && m !== 'random'))
-                : ['shabad', 'hukamnama', 'ang'].includes(type)
-                  ? supportedMedia
-                  : supportedMedia.filter(
-                    (m) => [
-                      'embed',
-                      'copyAll',
-                      'copy',
-                      'whatsapp',
-                      'print',].includes(m) === false
-                  )
+                  : ['shabad', 'hukamnama', 'ang'].includes(type)
+                    ? supportedMedia
+                    : supportedMedia.filter(
+                      (m) => [
+                        'embed',
+                        'copyAll',
+                        'copy',
+                        'whatsapp',
+                        'print',].includes(m) === false
+                    )
               }
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
@@ -210,14 +210,14 @@ class Shabad extends React.PureComponent {
                   {this.getContinueButton()}
                 </>
               ) : (
-                  <Baani
-                    {...baniProps}
-                    sgBaaniLength={sgBaaniLength}
-                    isSundarGutkaRoute={isSundarGutkaRoute}
-                    isParagraphMode={isParagraphMode}
-                    isReadingMode={readingMode}
-                  />
-                )}
+                <Baani
+                  {...baniProps}
+                  sgBaaniLength={sgBaaniLength}
+                  isSundarGutkaRoute={isSundarGutkaRoute}
+                  isParagraphMode={isParagraphMode}
+                  isReadingMode={readingMode}
+                />
+              )}
               {isLoadingContent && <div className="spinner" />}
 
               {isShowFooterNav && <FootNav info={info} type={type} nav={nav} />}
@@ -278,7 +278,7 @@ class Shabad extends React.PureComponent {
       .catch(({ message: label = '' } = {}) =>
         errorEvent({ action: 'copy-all-failure', label })
       );
-    
+
   handleEmbed = () => {
     const { info, type } = this.props;
 
