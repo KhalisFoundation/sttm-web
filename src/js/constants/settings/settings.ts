@@ -29,6 +29,7 @@ import {
   DarkModeIcon,
   VishraamIcon,
   AkhandPaathIcon,
+  MahaanKoshTooltipIcon,
 } from '@/components/Icons/CustomIcons';
 
 export interface SETTING_ACTIONS {
@@ -48,6 +49,7 @@ export interface SETTING_ACTIONS {
   toggleCenterAlignOption: Function,
   toggleSplitViewOption: Function,
   toggleDarkMode: Function,
+  toggleMahaanKoshTooltip: Function,
   toggleParagraphMode: Function,
   toggleReadingMode: Function,
   toggleSehajPaathMode: Function,
@@ -81,6 +83,7 @@ export interface SETTING_ACTIONS {
   centerAlignGurbani: boolean,
   splitView: boolean,
   darkMode: boolean,
+  mahaanKoshTooltip: boolean,
   sgBaaniLength: string,
   fontFamily: string,
   showAdvancedOptions: boolean,
@@ -101,6 +104,7 @@ export const QUICK_SETTINGS = ({
   toggleParagraphMode,
   toggleReadingMode,
   toggleDarkMode,
+  toggleMahaanKoshTooltip,
   setSteekLanguages,
   translationLanguages,
   transliterationLanguages,
@@ -114,6 +118,7 @@ export const QUICK_SETTINGS = ({
   splitView,
   showAdvancedOptions,
   darkMode,
+  mahaanKoshTooltip,
   location,
   steekLanguages,
 }: SETTING_ACTIONS) => {
@@ -124,30 +129,30 @@ export const QUICK_SETTINGS = ({
       type: 'multiselect_checkbox',
       label: 'Display',
       collections: [{
-        label: 'Transliteration',
-        options: TRANSLITERATION_LANGUAGES,
-        checked: transliterationLanguages,
-        action: (lang: string) => {
-          setTransliterationLanguages(
-            selectItemInArray(lang, transliterationLanguages)
+          label: 'Transliteration',
+          options: TRANSLITERATION_LANGUAGES,
+          checked: transliterationLanguages,
+          action: (lang: string) => {
+            setTransliterationLanguages(
+              selectItemInArray(lang, transliterationLanguages)
           )
         }
-      },
-      {
-        label: 'Translation',
-        options: TRANSLATION_LANGUAGES,
-        checked: translationLanguages,
-        action: (lang: string) => {
-          setTranslationLanguages(
-            selectItemInArray(lang, translationLanguages)
+        },
+        {
+          label: 'Translation',
+          options: TRANSLATION_LANGUAGES,
+          checked: translationLanguages,
+          action: (lang: string) => {
+            setTranslationLanguages(
+              selectItemInArray(lang, translationLanguages)
           )
         }
-      },
-      {
-        label: 'Steek',
-        options: STEEK_LANGUAGES,
-        checked: steekLanguages,
-        action: (lang: string) => {
+        },
+        {
+          label: 'Steek',
+          options: STEEK_LANGUAGES,
+          checked: steekLanguages,
+          action: (lang: string) => {
           setSteekLanguages(
             selectItemInArray(lang, steekLanguages)
           )
@@ -222,13 +227,13 @@ export const QUICK_SETTINGS = ({
       ],
     },
     isSundarGutkaRoute ? {
-      type: 'icon-toggle',
-      label: "Paragraph",
-      controlsList: [
-        {
-          icon: ParagraphIcon,
-          action: toggleParagraphMode,
-          value: paragraphMode,
+          type: 'icon-toggle',
+          label: "Paragraph",
+          controlsList: [
+            {
+              icon: ParagraphIcon,
+              action: toggleParagraphMode,
+              value: paragraphMode,
         }
       ]
     } : {},
@@ -259,6 +264,17 @@ export const QUICK_SETTINGS = ({
       label: 'Dark Mode',
       checked: darkMode,
       action: toggleDarkMode,
+    },
+    {
+      type: 'icon-toggle',
+      label: 'Mahaan Kosh Tooltip',
+      controlsList: [
+        {
+          icon: MahaanKoshTooltipIcon,
+          action: toggleMahaanKoshTooltip,
+          value: mahaanKoshTooltip,
+        },
+      ],
     },
     {
       type: 'toggle-option',

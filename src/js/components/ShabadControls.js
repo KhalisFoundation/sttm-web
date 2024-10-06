@@ -13,6 +13,7 @@ class ShabadControls extends React.PureComponent {
     resetDisplayOptions: PropTypes.func,
     resetFontOptions: PropTypes.func,
     toggleVisraams: PropTypes.func,
+    toggleMahaanKoshTooltip: PropTypes.func,
     toggleLarivaarOption: PropTypes.func,
     toggleSehajPaathMode: PropTypes.func,
     toggleLarivaarAssistOption: PropTypes.func,

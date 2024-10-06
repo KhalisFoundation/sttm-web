@@ -5,6 +5,7 @@ import {
   TOGGLE_LARIVAAR_ASSIST_OPTION,
   TOGGLE_LARIVAAR_OPTION,
   TOGGLE_DARK_MODE,
+  TOGGLE_MAHAAN_KOSH_TOOLTIP,
   TOGGLE_AUTO_SCROLL_MODE,
   TOGGLE_PARAGRAPH_MODE,
   TOGGLE_READING_MODE,
@@ -90,7 +91,8 @@ import {
   HINDI_LANGUAGE,
   ENGLISH_LANGUAGE,
   LOCAL_STORAGE_KEY_FOR_CARTOONIFIED_PAGES,
-  LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER
+  LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER,
+  LOCAL_STORAGE_KEY_FOR_MAHAAN_KOSH_TOOLTIP,
 } from '@/constants';
 import {
   saveToLocalStorage,
@@ -221,6 +223,24 @@ export default function reducer(state, action) {
       };
     }
 
+    case TOGGLE_MAHAAN_KOSH_TOOLTIP: {
+      const mahaanKoshTooltip = !state.mahaanKoshTooltip;
+      clickEvent({
+        action: TOGGLE_MAHAAN_KOSH_TOOLTIP,
+        label: mahaanKoshTooltip ? 1 : 0,
+      });
+
+      saveToLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_MAHAAN_KOSH_TOOLTIP,
+        mahaanKoshTooltip
+      );
+      //document.cookie = `${DARK_MODE_COOKIE}=${darkMode ? 1 : 0};`;
+      return {
+        ...state,
+        mahaanKoshTooltip,
+      };
+    }
+
     case TOGGLE_CARTOONIFIED_PAGES: {
       const showCartoonifiedPages = !state.showCartoonifiedPages;
       clickEvent({
@@ -339,9 +359,9 @@ export default function reducer(state, action) {
         action: TOGGLE_VISRAAMS,
         label: visraams ? 1 : 0,
       });
-    
+
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_VISRAAMS, visraams);
-      
+
       return {
         ...state,
         visraams,
@@ -402,9 +422,9 @@ export default function reducer(state, action) {
         action: TOGGLE_LARIVAAR_ASSIST_OPTION,
         label: larivaarAssist ? 1 : 0,
       });
-      
+
       saveToLocalStorage(LOCAL_STORAGE_KEY_FOR_LARIVAAR_ASSIST, larivaarAssist);
-    
+
       return {
         ...state,
         larivaarAssist,
@@ -938,7 +958,7 @@ export default function reducer(state, action) {
         readingMode,
       };
     }
-    
+
     default:
       return state;
   }

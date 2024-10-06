@@ -5,7 +5,7 @@ import ClickableListItem from './ClickableListItem';
 import Times from '../Icons/Times';
 import Accordion from '../Accordion';
 import { ADVANCED_SETTINGS, HEADER_SETTINGS, KEYBOARD_SHORTCUTS, QUICK_SETTINGS, RESET_SETTING } from './ControlSettings';
-import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, CartoonIcon, AudioPlayerIcon } from "../Icons/CustomIcons";
+import { AlignLeftIcon, MinusIcon, PlusIcon, SplitViewIcon, GlobeIcon, LarivaarIcon, MicrophoneIcon, DarkModeIcon, VishraamIcon, SteekIcon, AkhandPaathIcon, AutoPlayIcon, LarivaarAssistIcon, AlignCenterIcon, ParagraphIcon, VishraamStyleIcon, CartoonIcon, AudioPlayerIcon, MahaanKoshTooltipIcon } from "../Icons/CustomIcons";
 import {
   FONT_OPTIONS,
   VISRAAM,
@@ -77,6 +77,11 @@ const ControlsSettings = (props: any) => {
       case 'Dark Mode':
         return (
           <DarkModeIcon />
+        )
+
+      case 'Mahaan Kosh Tooltip':
+        return (
+          <MahaanKoshTooltipIcon />
         )
       case 'Vishraams':
         return (
