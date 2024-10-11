@@ -58,6 +58,9 @@ export const setKeyboardShortcutsPanel = createAction(
 export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE';
 export const toggleDarkMode = createAction(TOGGLE_DARK_MODE);
 
+export const TOGGLE_MAHAAN_KOSH_TOOLTIP = 'TOGGLE_MAHAAN_KOSH_TOOLTIP';
+export const toggleMahaanKoshTooltip = createAction(TOGGLE_MAHAAN_KOSH_TOOLTIP);
+
 export const TOGGLE_VISRAAMS = 'TOGGLE_VISRAAMS';
 export const toggleVisraams = createAction(TOGGLE_VISRAAMS);
 

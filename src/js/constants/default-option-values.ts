@@ -24,6 +24,7 @@ export const DEFAULT_LARIVAAR_ASSIST_STRENGTH = MAX_LARIVAAR_ASSIST_STRENGTH;
 export const DEFAULT_FONT_FAMILY = 'gurmukhi_heavy';
 export const DEFAULT_PAGE_TITLE = 'SikhiToTheMax';
 export const DEFAULT_DARK_MODE = false;
+export const DEFAULT_MAHAAN_KOSH_TOOLTIP = true;
 export const DEFAULT_AUTO_SCROLL_MODE = false;
 export const DEFAULT_IS_AUTOSCROLLING = false;
 export const DEFAULT_PARAGRAPH_MODE = false;
