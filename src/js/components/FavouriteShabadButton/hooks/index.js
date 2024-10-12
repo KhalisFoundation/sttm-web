@@ -26,11 +26,13 @@ function useClient() {
 
 function useFavouriteShabads() {
   const { data: favouriteShabads } = useQuery({
-    queryKey: 'favourite-shabads',
-    queryFn: () =>
-      apiClient(`/favourite-shabads`, { token: getToken() }).then((data) => 
-        data.favouriteShabads
-      ),
+    queryKey: ['favourite-shabads', getToken()],
+    queryFn: () => {
+      return apiClient(`/favourite-shabads`, { token: getToken() }).then((data) => {
+        return data.favouriteShabads
+      })
+    }
+
   });
 
   return favouriteShabads ?? [];

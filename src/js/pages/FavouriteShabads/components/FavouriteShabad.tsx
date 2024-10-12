@@ -37,7 +37,7 @@ const FavouriteShabads = () => {
     if (favouriteShabads.length) {
       const id = favouriteShabadIds.join(',')
       const url = encodeURI(buildApiUrl({ API_URL, id }));
-      
+
       apiClient(url)
         .then(data => {
           const formattedShabads = getFormattedShabads(data.shabads, favouriteShabads)
@@ -62,7 +62,7 @@ const FavouriteShabads = () => {
     if (shabadsListing.length) {
       setShabadsLoading(false)
     }
-  }, [shabadsListing , setShabadsLoading])
+  }, [shabadsListing, setShabadsLoading])
 
 
   if (isUserLoading) {
