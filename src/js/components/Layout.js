@@ -1,8 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import MainPageBanner from './Banner/MainPageBanner';
-import ShabadavaliBanner from './Banner/ShabadavaliBanner';
+import Banner from './Banner/Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import { DEFAULT_PAGE_TITLE, LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, TEXTS } from '../constants';
@@ -33,7 +32,7 @@ class Layout extends React.PureComponent {
     children: PropTypes.node.isRequired,
     darkMode: PropTypes.bool.isRequired,
     autoScrollMode: PropTypes.bool.isRequired,
-    location: PropTypes.shape({ pathname: PropTypes.string.isRequired})
+    location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
       .isRequired,
     defaultQuery: PropTypes.string,
     isHome: PropTypes.bool,
@@ -45,7 +44,7 @@ class Layout extends React.PureComponent {
     isModalOpen: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
     closeSettingsPanel: PropTypes.func,
-    history: PropTypes.object 
+    history: PropTypes.object
   };
 
   state = {
@@ -91,10 +90,10 @@ class Layout extends React.PureComponent {
       autoScrollMode,
       showMultiViewPanel,
       showPinSettings,
-      location: { pathname = '/' } = {},      
+      location: { pathname = '/' } = {},
       ...props
     } = this.props;
-    
+
     const isShowFullScreen = isShowFullscreenRoute(pathname);
     const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
     const isShowSettings = isShowSettingsRoute(location.pathname)
@@ -114,8 +113,14 @@ class Layout extends React.PureComponent {
 
     return online || pathname !== '/' ? (
       <React.Fragment>
-        <MainPageBanner />
-        <ShabadavaliBanner />
+        <Banner
+          banner={{
+            message: 'Help Us Build the Future of SikhiToTheMax! Every donation doubled - dvnetwork.org/sikhitothemax',
+            link: "dvnetwork.org/learnpunjabi",
+            label: "Donate now",
+            type: "3"
+          }}
+        />
         {isAddFavoriteShabadModalOpen && <AddFavouriteShabadModal open={isAddFavoriteShabadModalOpen} />}
         <div className={`pusher ${showMultiViewPanel ? 'enable' : ''} pin-settings ${showPinSettings ? 'active' : ''}`}>
           <Header
@@ -129,31 +134,31 @@ class Layout extends React.PureComponent {
           {this.state.error ? (
             <GenericError {...this.state.errorProps} />
           ) : (
-              children
+            children
           )}
         </div>
-        <MultipleShabadsDisplay />  
+        <MultipleShabadsDisplay />
 
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
           isShowFullScreen={isShowFullScreen}
           isShowScrollToTop={this.state.showScrollToTop}
-          showPinSettings={showPinSettings} 
+          showPinSettings={showPinSettings}
           isShowSettings={isShowSettings} />
 
-        <Footer showPinSettings={showPinSettings}/>
+        <Footer showPinSettings={showPinSettings} />
       </React.Fragment>
     ) : (
-        <>
-          <div className="content-root">
-            <GenericError
-              title={TEXTS.OFFLINE}
-              description={TEXTS.OFFLINE_DESCRIPTION}
-              image={SachKaur} />
-          </div>
-          <Footer showPinSettings={showPinSettings} />
-        </>  
-      )
+      <>
+        <div className="content-root">
+          <GenericError
+            title={TEXTS.OFFLINE}
+            description={TEXTS.OFFLINE_DESCRIPTION}
+            image={SachKaur} />
+        </div>
+        <Footer showPinSettings={showPinSettings} />
+      </>
+    )
   }
 
   updateTheme() {
@@ -163,17 +168,17 @@ class Layout extends React.PureComponent {
   }
 
   processAuth() {
-    const {location, history} = this.props
+    const { location, history } = this.props
     const {
       token, logout
     } = getQueryParams(location.search);
     // @TODO: use redux to control state of session user
-    if(!isFalsy(token)) {
+    if (!isFalsy(token)) {
       window.localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, token)
       history.push('/')
     }
     // @TODO: use redux to remove user sesssion
-    if(logout === 'success') {
+    if (logout === 'success') {
       window.localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
       history.push('/')
     }
@@ -181,7 +186,7 @@ class Layout extends React.PureComponent {
   }
 
   componentDidMount() {
-    if(location.pathname!=="/hukamnama" && location.pathname!=="/shabad" && location.pathname!=="/search"){
+    if (location.pathname !== "/hukamnama" && location.pathname !== "/shabad" && location.pathname !== "/search") {
       this.props.closeSettingsPanel();
     }
     this.processAuth();

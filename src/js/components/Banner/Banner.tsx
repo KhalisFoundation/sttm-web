@@ -2,6 +2,11 @@ import React from 'react';
 import CrossIcon from '../Icons/Times';
 import { Link } from 'react-router-dom';
 
+export const updateLastSeen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  e.currentTarget.parentElement?.remove();
+  sessionStorage.setItem("bannerMessage", "seen");
+};
+
 type Props = {
   banner: {
     type: string;
@@ -16,6 +21,7 @@ type Props = {
 }
 
 const Banner = (props: Props) => {
+  const handleBannerCrossClick = props.onCrossIconClick ?? updateLastSeen;
   return (
     <div className="banner-container">
       <div className={`notification type-${props.banner.type} ${props.banner.classes?.notification}`}>
@@ -35,7 +41,7 @@ const Banner = (props: Props) => {
               </Link>
             </button>}
         </div>
-        <button className="banner-cross-bg" onClick={(e) => props.onCrossIconClick?.(e)}>
+        <button className="banner-cross-bg" onClick={(e) => handleBannerCrossClick(e)}>
           <CrossIcon className="banner-cross" />
         </button>
       </div>
