@@ -115,7 +115,7 @@ class Layout extends React.PureComponent {
       <React.Fragment>
         <Banner
           banner={{
-            message: 'Help Us Build the Future of SikhiToTheMax! Every donation doubled !',
+            message: 'Help Us Build the Future of SikhiToTheMax! Every donation doubled - dvnetwork.org/sikhitothemax',
             link: "dvnetwork.org/sikhitothemax",
             label: "Donate now",
             type: "3"
