@@ -22,20 +22,17 @@ deploy:
   # deploy to dev
   - provider: script
     script: bash scripts/deploy.sh dev
-    edge:
-      branch: v2.0.5-beta
     on:
       branch: dev
   # deploy to production
   - provider: script
     script: bash scripts/deploy.sh prod
-    edge:
-      branch: v2.0.5-beta
     on:
       branch: master
 
 before_install:
   - npm i -g npm@6.14.8
+  - rvm install 2.7.0
   - bash scripts/decrypt.sh
 before_script:
   - bash scripts/set-up.sh
