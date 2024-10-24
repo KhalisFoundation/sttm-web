@@ -22,15 +22,11 @@ deploy:
   # deploy to dev
   - provider: script
     script: bash scripts/deploy.sh dev
-    edge:
-      branch: v2.0.5-beta
     on:
       branch: dev
   # deploy to production
   - provider: script
     script: bash scripts/deploy.sh prod
-    edge:
-      branch: v2.0.5-beta
     on:
       branch: master
 
