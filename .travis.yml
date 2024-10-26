@@ -34,7 +34,7 @@ before_install:
   - npm i -g npm@6.14.8
   - rvm install 2.7.0
   - rvm use 2.7.0 --default 
-  - gem update --system OLD_VERSION
+  - gem update --system 3.0.0
   - bash scripts/decrypt.sh
 before_script:
   - bash scripts/set-up.sh
