@@ -32,8 +32,8 @@ deploy:
 
 before_install:
   - npm i -g npm@6.14.8
-  - rvm install 2.7.0
-  - rvm use 2.7.0 --default 
+  - rvm install 3.3.5
+  - rvm use 3.3.5 --default 
   - gem install dpl -v 2.0.5.1
   - bash scripts/decrypt.sh
 before_script:
