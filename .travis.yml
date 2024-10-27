@@ -34,7 +34,7 @@ before_install:
   - npm i -g npm@6.14.8
   - rvm install 2.7.0
   - rvm use 2.7.0 --default 
-  - gem update --system 3.0.0
+  - rvm use $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl -v 1.10.16
   - bash scripts/decrypt.sh
 before_script:
   - bash scripts/set-up.sh
