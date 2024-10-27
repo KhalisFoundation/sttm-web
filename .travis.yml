@@ -22,11 +22,15 @@ deploy:
   # deploy to dev
   - provider: script
     script: bash scripts/deploy.sh dev
+    edge:
+      branch: v1.10.16
     on:
       branch: dev
   # deploy to production
   - provider: script
     script: bash scripts/deploy.sh prod
+    edge:
+      branch: v1.10.16
     on:
       branch: master
 
@@ -34,7 +38,6 @@ before_install:
   - npm i -g npm@6.14.8
   - rvm install 2.7.0
   - rvm use 2.7.0 --default 
-  - rvm use $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl -v 1.10.16
   - bash scripts/decrypt.sh
 before_script:
   - bash scripts/set-up.sh
