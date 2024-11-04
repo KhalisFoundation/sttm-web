@@ -205,7 +205,7 @@ exports[`<Meta /> <Meta type="hukamnama" /> renders correctly 1`] = `
       >
         <audio
           preload="auto"
-          src="//old.sgpc.net/hukumnama/jpeg%20hukamnama/hukamnama.mp3"
+          src="//hs.sgpc.net/uploadhukamnama/hukamnama.mp3"
         />
         <div
           class="rhap_header"
