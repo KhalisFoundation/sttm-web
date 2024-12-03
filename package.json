@@ -23,7 +23,7 @@
     "test:lint:js": "run-p test:lint:js:*",
     "test:lint:js:eslint": "eslint server/ common/",
     "test:lint:js:ignore:tslint": "tslint --project . -t stylish",
-    "test:unit": "NODE_ENV=test jest --env=jest-environment-jsdom-sixteen --no-cache --config jest.config.js --watch",
+    "test:unit": "NODE_ENV=test jest --env=jest-environment-jsdom-sixteen --no-cache --config jest.config.js",
     "updatetest": "NODE_ENV=test jest --env=jest-environment-jsdom-sixteen --no-cache --config jest.config.js --updateSnapshot",
     "webpack-stats": "webpack --json > stats.json && open https://chrisbateman.github.io/webpack-visualizer/",
     "build": "run-p build:*",
