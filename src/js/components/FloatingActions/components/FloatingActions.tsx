@@ -30,9 +30,8 @@ export const FloatingActions = (props: Props) => {
     .filter(isShowEntry => isShowEntry).length === 1;
   const lastIconStyles = isLastIcon ? { margin: 0 } : {};
   if (isShowNothing) return null;
-
   return (
-    <div className={`floatingActions${props.iconPosition ?? 'Bottom'} ${showPinSettings ? 'pin-settings-floating-icons' : ''}`}>
+    <div className={`floatingActions floatingActions${props.iconPosition ?? 'Bottom'} ${showPinSettings ? 'pin-settings-floating-icons' : ''}`}>
       {props.CustomIcon ?
         <div className='floatingActionsIcons'>
           <div role="button" className="fab">

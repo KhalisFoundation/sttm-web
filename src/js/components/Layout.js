@@ -112,7 +112,7 @@ class Layout extends React.PureComponent {
     }
 
     const isAddFavoriteShabadModalOpen = props.modalOpened === 'addFavoriteShabad';
-    console.log(props.toggleDarkMode, '======= TOGGLE DARK MODE =========')
+
     return online || pathname !== '/' ? (
       <React.Fragment>
         <Banner
