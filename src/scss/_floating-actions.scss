@@ -1,4 +1,4 @@
-.floatingActions {
+.floatingActionsBottom {
   align-items: center;
   background-color: $sttm-blue;
   border-radius: 40px;
@@ -19,12 +19,50 @@
     opacity: 1;
   }
 
+  .dark-mode & {
+    box-shadow: 0 2px 4px 0 $sttm-grey;
+  }
+
   &:hover {
     opacity: 1;
   }
 
+  &Control {
+    margin: 0 9px;
+  }
+
+  &Icons {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.floatingActionsTop {
+  align-items: center;
+  background-color: $sttm-blue;
+  border-radius: 40px;
+  bottom: auto;
+  box-shadow: 0 4px 8px 0 $sttm-grey;
+  display: flex;
+  height: 50px;
+  left: 30px;
+  max-width: 480px;
+  opacity: 0.5;
+  padding: 8px 16px;
+  position: fixed;
+  right: 24px;
+  top: 10px;
+  transition: all 0.2s ease-in;
+  width: 50px;
+  z-index: 99;
+
   .dark-mode & {
     box-shadow: 0 2px 4px 0 $sttm-grey;
+  }
+
+  &:hover {
+    opacity: 1;
   }
 
   &Control {
