@@ -33,7 +33,6 @@ export const FloatingActions = (props: Props) => {
   const isLastIcon = [isShowScrollToTop, isShowFullScreen, isShowAutoScroll]
     .filter(isShowEntry => isShowEntry).length === 1;
   const lastIconStyles = isLastIcon ? { margin: 0 } : {};
-
   if (isShowNothing) return null;
   return (
     <div className={`floatingActions floatingActions${props.iconPosition ?? 'Bottom'} ${showPinSettings ? 'pin-settings-floating-icons' : ''} ${props.iconShadow === 'hide' ? 'no-shadow' : ''} ${props.customization?.iconClassName ?? ''}`}>
