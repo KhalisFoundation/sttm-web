@@ -19,7 +19,8 @@ import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
 import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
 import { AddFavouriteShabadModal } from './Modals';
-import { DarkModeIcon } from './Icons/CustomIcons';
+import { SunIcon } from './Icons/SunIcon';
+import { NightIcon } from './Icons/NightIcon';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -143,7 +144,7 @@ class Layout extends React.PureComponent {
 
         <FloatingActions
           iconPosition='Top'
-          CustomIcon={DarkModeIcon}
+          CustomIcon={this.props.darkMode ? SunIcon : NightIcon}
           customIconProps={{
             onClick: props.toggleDarkMode
           }}
