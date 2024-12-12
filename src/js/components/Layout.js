@@ -17,7 +17,7 @@ import { setOnlineMode, closeSettingsPanel, toggleDarkMode } from '../features/a
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
-import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy, isShowSearchBarRoute } from '../util';
 import { AddFavouriteShabadModal } from './Modals';
 import { SunIcon } from './Icons/SunIcon';
 import { NightIcon } from './Icons/NightIcon';
@@ -115,7 +115,7 @@ class Layout extends React.PureComponent {
     const isAddFavoriteShabadModalOpen = props.modalOpened === 'addFavoriteShabad';
 
     return online || pathname !== '/' ? (
-      <React.Fragment>
+      <div className="layout">
         <Banner
           banner={{
             message: 'Help Us Build the Future of SikhiToTheMax! Every donation doubled - dvnetwork.org/sikhitothemax',
@@ -139,16 +139,20 @@ class Layout extends React.PureComponent {
           ) : (
             children
           )}
+
+          <FloatingActions
+            iconPosition='Top'
+            iconShadow='hide'
+            customization={{
+              iconClassName: isShowSearchBarRoute(pathname) ? 'below-top-search' : ''
+            }}
+            CustomIcon={this.props.darkMode ? SunIcon : NightIcon}
+            customIconProps={{
+              onClick: props.toggleDarkMode
+            }}
+          />
         </div>
         <MultipleShabadsDisplay />
-
-        <FloatingActions
-          iconPosition='Top'
-          CustomIcon={this.props.darkMode ? SunIcon : NightIcon}
-          customIconProps={{
-            onClick: props.toggleDarkMode
-          }}
-        />
 
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
@@ -158,7 +162,7 @@ class Layout extends React.PureComponent {
           isShowSettings={isShowSettings} />
 
         <Footer showPinSettings={showPinSettings} />
-      </React.Fragment>
+      </div>
     ) : (
       <>
         <div className="content-root">

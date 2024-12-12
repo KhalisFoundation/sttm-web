@@ -11,6 +11,10 @@ interface Props {
   isShowFullScreen?: boolean;
   isShowSettings: boolean;
   iconPosition?: 'Top' | 'Bottom';
+  iconShadow?: 'show' | 'hide';
+  customization?: {
+    iconClassName?: string;
+  }
   CustomIcon?: React.FC;
   customIconProps?: React.ComponentProps<any>;
   showPinSettings: boolean;
@@ -31,7 +35,7 @@ export const FloatingActions = (props: Props) => {
   const lastIconStyles = isLastIcon ? { margin: 0 } : {};
   if (isShowNothing) return null;
   return (
-    <div className={`floatingActions floatingActions${props.iconPosition ?? 'Bottom'} ${showPinSettings ? 'pin-settings-floating-icons' : ''}`}>
+    <div className={`floatingActions floatingActions${props.iconPosition ?? 'Bottom'} ${showPinSettings ? 'pin-settings-floating-icons' : ''} ${props.iconShadow === 'hide' ? 'no-shadow' : ''} ${props.customization?.iconClassName ?? ''}`}>
       {props.CustomIcon ?
         <div className='floatingActionsIcons'>
           <div role="button" className="fab">
