@@ -65,6 +65,22 @@
   }
 }
 
+.no-shadow {
+  box-shadow: none;
+}
+
+.below-top-search {
+  left: 12px;
+  top: 66px;
+}
+
 .display-settings-icon {
   display: flex;
+}
+
+@media screen and (max-width: 69.99em) {
+  .below-top-search {
+    left: 48px;
+    top: 10px;
+  }
 }

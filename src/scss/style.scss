@@ -490,6 +490,7 @@ body:not(.dark-mode) a {
 .pusher {
   left: 0;
   min-height: 85vh;
+  position: relative;
   top: 0;
   transition: transform 0.5s;
 
