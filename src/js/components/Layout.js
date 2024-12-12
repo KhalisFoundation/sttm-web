@@ -155,14 +155,6 @@ class Layout extends React.PureComponent {
         <MultipleShabadsDisplay />
 
         <FloatingActions
-          iconPosition='Top'
-          CustomIcon={this.props.darkMode ? SunIcon : NightIcon}
-          customIconProps={{
-            onClick: props.toggleDarkMode
-          }}
-        />
-
-        <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
           isShowFullScreen={isShowFullScreen}
           isShowScrollToTop={this.state.showScrollToTop}
