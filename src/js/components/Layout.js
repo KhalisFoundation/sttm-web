@@ -13,12 +13,14 @@ import {
   OFFLINE_COLOR,
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
-import { setOnlineMode, closeSettingsPanel } from '../features/actions';
+import { setOnlineMode, closeSettingsPanel, toggleDarkMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
 import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
 import { AddFavouriteShabadModal } from './Modals';
+import { SunIcon } from './Icons/SunIcon';
+import { NightIcon } from './Icons/NightIcon';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -43,6 +45,7 @@ class Layout extends React.PureComponent {
     showPinSettings: PropTypes.bool,
     isModalOpen: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     closeSettingsPanel: PropTypes.func,
     history: PropTypes.object
   };
@@ -138,6 +141,14 @@ class Layout extends React.PureComponent {
           )}
         </div>
         <MultipleShabadsDisplay />
+
+        <FloatingActions
+          iconPosition='Top'
+          CustomIcon={this.props.darkMode ? SunIcon : NightIcon}
+          customIconProps={{
+            onClick: props.toggleDarkMode
+          }}
+        />
 
         <FloatingActions
           isShowAutoScroll={isShowAutoScroll}
@@ -238,6 +249,7 @@ class Layout extends React.PureComponent {
 export default connect(
   ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, modalOpened }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, modalOpened }),
   {
+    toggleDarkMode,
     setOnlineMode,
     closeSettingsPanel,
   }

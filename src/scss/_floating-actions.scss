@@ -19,12 +19,17 @@
     opacity: 1;
   }
 
+  .dark-mode & {
+    box-shadow: 0 2px 4px 0 $sttm-grey;
+  }
+
   &:hover {
     opacity: 1;
   }
 
-  .dark-mode & {
-    box-shadow: 0 2px 4px 0 $sttm-grey;
+  &Bottom {
+    bottom: 30px;
+    right: 24px;
   }
 
   &Control {
@@ -35,6 +40,15 @@
     align-items: center;
     display: flex;
     justify-content: center;
+  }
+
+  &Top {
+    bottom: auto;
+    left: 24px;
+    position: absolute;
+    right: 24px;
+    top: 10px;
+    width: 50px;
   }
 }
 
