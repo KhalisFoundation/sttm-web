@@ -141,6 +141,7 @@ class Layout extends React.PureComponent {
           )}
 
           <FloatingActions
+            onIconButtonClick={props.toggleDarkMode}
             iconPosition='Top'
             iconShadow='hide'
             customization={{
@@ -148,7 +149,8 @@ class Layout extends React.PureComponent {
             }}
             CustomIcon={this.props.darkMode ? SunIcon : NightIcon}
             customIconProps={{
-              onClick: props.toggleDarkMode
+              width: '30px',
+              height: '30px',
             }}
           />
         </div>

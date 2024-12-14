@@ -6,6 +6,7 @@ import FullScreen from './FullScreen';
 import DisplaySettingsButton from '@/components/DisplaySettingsButton';
 
 interface Props {
+  onIconButtonClick?: () => {},
   isShowAutoScroll?: boolean;
   isShowScrollToTop?: boolean;
   isShowFullScreen?: boolean;
@@ -37,11 +38,9 @@ export const FloatingActions = (props: Props) => {
   return (
     <div className={`floatingActions floatingActions${props.iconPosition ?? 'Bottom'} ${showPinSettings ? 'pin-settings-floating-icons' : ''} ${props.iconShadow === 'hide' ? 'no-shadow' : ''} ${props.customization?.iconClassName ?? ''}`}>
       {props.CustomIcon ?
-        <div className='floatingActionsIcons'>
-          <div role="button" className="fab">
-            <props.CustomIcon {...props.customIconProps} />
-          </div>
-        </div>
+        <button className='floatingActionsTopIcon' onClick={props.onIconButtonClick}>
+          <props.CustomIcon {...props.customIconProps} />
+        </button>
         :
         <>
           {isShowAutoScroll &&
