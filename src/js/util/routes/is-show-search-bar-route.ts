@@ -5,4 +5,5 @@ export const isShowSearchBarRoute = (pathname: string) => {
         || pathname.includes('sundar-gutka')
         || pathname.includes('sync')
         || pathname.includes('index')
+        || pathname.includes('rehat-maryadha')
 }
