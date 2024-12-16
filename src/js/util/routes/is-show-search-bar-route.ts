@@ -1,9 +1,1 @@
-export const isShowSearchBarRoute = (pathname: string) => {
-    return pathname.includes('shabad')
-        || pathname.includes('hukamnama')
-        || pathname.includes('ang')
-        || pathname.includes('sundar-gutka')
-        || pathname.includes('sync')
-        || pathname.includes('index')
-        || pathname.includes('rehat-maryadha')
-}
+export const isShowSearchBarRoute = (pathname: string) => pathname !== '/'
