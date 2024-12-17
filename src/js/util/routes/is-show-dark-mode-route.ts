@@ -1,0 +1,1 @@
+export const isShowDarkModeRoute = (pathname: string) => !pathname.includes('control');

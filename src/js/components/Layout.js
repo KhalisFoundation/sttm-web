@@ -21,6 +21,7 @@ import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSe
 import { AddFavouriteShabadModal } from './Modals';
 import { SunIcon } from './Icons/SunIcon';
 import { NightIcon } from './Icons/NightIcon';
+import { isShowDarkModeRoute } from '@/util/routes/is-show-dark-mode-route';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -99,7 +100,8 @@ class Layout extends React.PureComponent {
 
     const isShowFullScreen = isShowFullscreenRoute(pathname);
     const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
-    const isShowSettings = isShowSettingsRoute(location.pathname)
+    const isShowSettings = isShowSettingsRoute(location.pathname);
+    const isShowDarkModeIcon = isShowDarkModeRoute(location.pathname);
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
@@ -140,19 +142,21 @@ class Layout extends React.PureComponent {
             children
           )}
 
-          <FloatingActions
-            onIconButtonClick={props.toggleDarkMode}
-            iconPosition='Top'
-            iconShadow='hide'
-            customization={{
-              iconClassName: isShowSearchBarRoute(pathname) ? 'below-top-search' : ''
-            }}
-            CustomIcon={this.props.darkMode ? SunIcon : NightIcon}
-            customIconProps={{
-              width: '30px',
-              height: '30px',
-            }}
-          />
+          {isShowDarkModeIcon &&
+            <FloatingActions
+              onIconButtonClick={props.toggleDarkMode}
+              iconPosition='Top'
+              iconShadow='hide'
+              customization={{
+                iconClassName: isShowSearchBarRoute(pathname) ? 'below-top-search' : ''
+              }}
+              CustomIcon={this.props.darkMode ? SunIcon : NightIcon}
+              customIconProps={{
+                width: '30px',
+                height: '30px',
+              }}
+            />
+          }
         </div>
         <MultipleShabadsDisplay />
 
