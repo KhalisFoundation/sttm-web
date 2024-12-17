@@ -50,6 +50,16 @@
     right: 24px;
     top: 10px;
     width: 50px;
+
+    @media screen and (max-width: 600px) {
+      height: 35px;
+      width: 35px;
+
+      svg {
+        height: 20px;
+        width: 20px;
+      }
+    }
   }
 
   &TopIcon {
@@ -95,5 +105,11 @@
   .below-top-search {
     left: 48px;
     top: 10px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .below-top-search {
+    top: 16px;
   }
 }
