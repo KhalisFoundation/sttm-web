@@ -10,15 +10,16 @@ interface Props {
   isShowAutoScroll?: boolean;
   isShowScrollToTop?: boolean;
   isShowFullScreen?: boolean;
-  isShowSettings: boolean;
+  isShowSettings?: boolean;
+  isNoFloat?: boolean;
   iconPosition?: 'Top' | 'Bottom';
   iconShadow?: 'show' | 'hide';
   customization?: {
     iconClassName?: string;
   }
-  CustomIcon?: React.FC;
+  CustomIcon?: React.FC | React.ReactNode;
   customIconProps?: React.ComponentProps<any>;
-  showPinSettings: boolean;
+  showPinSettings?: boolean;
 }
 
 export const FloatingActions = (props: Props) => {
@@ -36,7 +37,7 @@ export const FloatingActions = (props: Props) => {
   const lastIconStyles = isLastIcon ? { margin: 0 } : {};
   if (isShowNothing) return null;
   return (
-    <div className={`floatingActions floatingActions${props.iconPosition ?? 'Bottom'} ${showPinSettings ? 'pin-settings-floating-icons' : ''} ${props.iconShadow === 'hide' ? 'no-shadow' : ''} ${props.customization?.iconClassName ?? ''}`}>
+    <div className={`floatingActions floatingActions${props.iconPosition ?? 'Bottom'} ${showPinSettings ? 'pin-settings-floating-icons' : ''} ${props.iconShadow === 'hide' ? 'no-shadow' : ''} ${props.customization?.iconClassName ?? ''} ${props.isNoFloat ? 'no-float' : ''}`}>
       {props.CustomIcon ?
         <button className='floatingActionsTopIcon' onClick={props.onIconButtonClick}>
           <props.CustomIcon {...props.customIconProps} />

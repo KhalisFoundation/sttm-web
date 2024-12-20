@@ -23,7 +23,8 @@ interface Props {
 }
 
 interface StoreSliceState {
-  visraams: boolean, larivaarAssist: boolean
+  visraams: boolean;
+  larivaarAssist: boolean;
 }
 
 const Shabad = (props: Props) => {
