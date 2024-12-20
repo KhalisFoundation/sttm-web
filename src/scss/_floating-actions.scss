@@ -45,19 +45,20 @@
   &Top {
     bottom: auto;
     left: 24px;
+    height: 36px;
     padding: 0;
     position: absolute;
     right: 24px;
     top: 10px;
-    width: 50px;
+    width: 36px;
 
-    @media screen and (max-width: 600px) {
-      height: 35px;
-      width: 35px;
+    @media screen and (max-width: 70em) {
+      height: 24px;
+      width: 24px;
 
       svg {
-        height: 20px;
-        width: 20px;
+        height: 18px;
+        width: 18px;
       }
     }
   }
@@ -92,10 +93,14 @@
   }
 }
 
-.below-top-search {
-  left: 12px;
-  top: 66px;
+.no-float {
+  bottom: auto;
+  left: auto;
+  position: static;
+  right: auto;
+  top: auto;
 }
+
 
 .display-settings-icon {
   display: flex;

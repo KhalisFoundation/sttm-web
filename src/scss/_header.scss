@@ -93,6 +93,7 @@
 }
 
 .hide-search-bar {
+
   .top-bar-left,
   #search-options {
     display: none;
@@ -108,7 +109,7 @@
   }
 }
 
-.top-bar-right .menu > li {
+.top-bar-right .menu>li {
   border-radius: 4px;
   display: inline-block;
   font-weight: 400;
@@ -193,13 +194,13 @@
     height: inherit;
   }
 
-  .menu > li > &.kb-active {
+  .menu>li>&.kb-active {
     @media screen and (min-width: 55.99em) {
       height: 44px;
     }
   }
 
-  > #suggestions {
+  >#suggestions {
     width: 100%;
   }
 
@@ -208,7 +209,7 @@
     box-shadow: 0 2px 2px 0 $sttm-black, 0 0 0 1px $sttm-black;
   }
 
-  > button {
+  >button {
     color: $sttm-pure-white;
     display: inline-block;
     height: 44px;
@@ -279,22 +280,22 @@
   .dark-mode & {
     background-color: $sttm-lighter-black;
 
-    > .suggestion-active {
+    >.suggestion-active {
       background-color: $sttm-transparent-black;
     }
   }
 
-  > li {
+  >li {
     display: flex;
 
-    > a {
+    >a {
       display: block;
       padding: 10px;
       width: 100%;
     }
   }
 
-  > .suggestion-active {
+  >.suggestion-active {
     background-color: $sttm-lighter-grey;
   }
 }
@@ -314,7 +315,7 @@
   margin: 0;
   position: relative;
 
-  &[value=''] + .clear-search-toggle {
+  &[value='']+.clear-search-toggle {
     pointer-events: none;
     visibility: hidden;
   }
@@ -437,24 +438,30 @@
   }
 }
 
+.open-mobile-menu-wrapper {
+  align-items: baseline;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  z-index: 4;
+
+  .top-bar-left>& {
+    display: initial;
+    left: 0.5rem;
+  }
+}
+
 #open-mobile-menu {
   background-color: transparent;
   border-radius: 2px;
   font-size: 1rem;
-  height: 48px;
   line-height: 18px;
-  position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
-  width: 48px;
-  z-index: 4;
+  padding: 0;
 
   svg {
     fill: $sttm-blue;
-  }
-
-  .top-bar-left > & {
-    left: 0.5rem;
   }
 }
 
@@ -575,6 +582,7 @@
 }
 
 @media screen and (min-width: 40em) {
+
   .top-bar .top-bar-left,
   .top-bar .top-bar-right {
     width: 100%;
@@ -613,7 +621,7 @@
   }
 
   .menu {
-    .submenu > .submenu-items {
+    .submenu>.submenu-items {
       background-color: $sttm-white;
       border: 1px solid $sttm-lighter-grey;
       left: 0;
@@ -634,7 +642,7 @@
     flex-grow: 1;
     width: calc(100% - 10px);
 
-    > .top-bar-right {
+    >.top-bar-right {
       // min-width: 470px;
       flex: auto;
       float: right;
@@ -642,7 +650,7 @@
     }
   }
 
-  #open-mobile-menu,
+  .open-mobile-menu-wrapper,
   .top-bar-right .menu .close {
     display: none;
   }
