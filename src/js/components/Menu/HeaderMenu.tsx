@@ -1,21 +1,30 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import BarsIcon from '../Icons/Bars';
 import BackIcon from '../Icons/Back';
 import UserLoginMenu from './UserLoginMenu';
+import { SunIcon } from '../Icons/SunIcon';
+import { NightIcon } from '../Icons/NightIcon';
+import store from '@/features/store';
+import { toggleDarkMode } from '@/features/actions';
+import { FloatingActions } from '../FloatingActions';
 
-interface MenuProps {
-  isHome: boolean,
+interface Props {
+  isHome: boolean;
+  pathname: string;
 }
 
-const Menu: React.FC<MenuProps> = ({ isHome }) => {
+const Menu = (props: Props) => {
   const displayAreaRefInfo = useRef(null);
   const dropTogglerRefInfo = useRef(null);
   const displayAreaRefIndex = useRef(null);
   const dropTogglerRefIndex = useRef(null);
   const displayAreaRefSync = useRef(null);
   const dropTogglerRefSync = useRef(null);
+  const isDarkMode = useSelector<typeof store>(state => state.darkMode);
+  const dispatch = useDispatch();
 
   const [toggleDropdownInfo, setToggleDropdownInfo] = useState(false);
   const [toggleDropdownSync, setToggleDropdownSync] = useState(false);
@@ -81,29 +90,46 @@ const Menu: React.FC<MenuProps> = ({ isHome }) => {
 
   return (
     <React.Fragment>
-      {!isHome && (
+      {!props.isHome && (
         <div className="top-bar-left">
-          <span
-            role="button"
-            aria-label="Open menu"
-            className="button"
-            id="open-mobile-menu"
-            onClick={goBack}
-          >
-            <BackIcon />
-          </span>
+          <div className="open-mobile-menu-wrapper">
+            <span
+              role="button"
+              aria-label="Go back"
+              className="button"
+              id="open-mobile-menu"
+              onClick={goBack}
+            >
+              <BackIcon />
+            </span>
+          </div>
         </div>
       )}
       <div className="top-bar-right">
-        <span
-          role="button"
-          aria-label="Open menu"
-          className="button"
-          id="open-mobile-menu"
-          onClick={toggleMenu}
-        >
-          <BarsIcon />
-        </span>
+        <div className='open-mobile-menu-wrapper'>
+          <button
+            aria-label="Open menu"
+            className="button"
+            id="open-mobile-menu"
+            onClick={toggleMenu}
+          >
+            <BarsIcon />
+          </button>
+          <button style={{ marginLeft: 8 }}>
+            <FloatingActions
+              isNoFloat
+              onIconButtonClick={() => dispatch(toggleDarkMode())}
+              iconPosition='Top'
+              iconShadow='hide'
+              CustomIcon={isDarkMode ? SunIcon : NightIcon}
+              customIconProps={{
+                width: '18px',
+                height: '18px',
+              }}
+            />
+          </button>
+        </div>
+
         <ul className="menu header-menu">
           <li>
             <Link to="/hukamnama" onClick={toggleMenu}>
@@ -201,6 +227,20 @@ const Menu: React.FC<MenuProps> = ({ isHome }) => {
             </Link>
           </li>
           <UserLoginMenu toggleMenu={toggleMenu} />
+
+          <li>
+            <FloatingActions
+              isNoFloat
+              onIconButtonClick={() => dispatch(toggleDarkMode())}
+              iconPosition='Top'
+              iconShadow='hide'
+              CustomIcon={isDarkMode ? SunIcon : NightIcon}
+              customIconProps={{
+                width: '24px',
+                height: '24px',
+              }}
+            />
+          </li>
         </ul>
       </div>
     </React.Fragment>

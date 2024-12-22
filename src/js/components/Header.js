@@ -88,10 +88,10 @@ class Header extends React.PureComponent {
         handleSubmit();
         // Remove the last space in from the searched query.
         const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
-        if(isNotAngSearch) {
+        if (isNotAngSearch) {
           data.query = data.query.trim();
         }
-        
+
         this.handleFormSubmit(data);
       };
 
@@ -101,7 +101,7 @@ class Header extends React.PureComponent {
 
   render() {
     const {
-      props: { defaultQuery, isHome, isAng, fullScreenMode, isController },
+      props: { defaultQuery, isHome, isAng, fullScreenMode, isController, darkMode },
       state: { showDoodle, doodleData },
       onFormSubmit,
       handleFormSubmit,
@@ -116,9 +116,9 @@ class Header extends React.PureComponent {
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
     } = getQueryParams(location.search);
-    
+
     const isAskGurbaniBotSearchType = Number(defaultType) === SEARCH_TYPES['ASK_A_QUESTION'];
-    
+
     const isSearchPageRoute = location.pathname.includes('search');
     const key = `${defaultQuery}${defaultSource}${defaultType}${defaultWriter}`;
 
@@ -158,7 +158,7 @@ class Header extends React.PureComponent {
             defaultType={isAskGurbaniBotSearchType ? getNumberFromLocalStorage(
               LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
               DEFAULT_SEARCH_TYPE
-            ) :  Number(defaultType)}
+            ) : Number(defaultType)}
             defaultWriter={isAskGurbaniBotSearchType ? (localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
               DEFAULT_SEARCH_WRITER) : Number(defaultWriter)}
             submitOnChangeOf={['type', 'source', 'writer']}
@@ -349,7 +349,7 @@ class Header extends React.PureComponent {
                           </>
                         )}
                       </div>
-                      <Menu isHome={isHome} />
+                      <Menu isHome={isHome} pathname={location.pathname} isDarkMode={darkMode} />
                     </div>
                     {!isHome && (
                       <div id="search-options">
@@ -449,7 +449,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ darkMode }) => ({ darkMode });
 
 const mapDispatchToProps = {
   toggleSettingsPanel,
