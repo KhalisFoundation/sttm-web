@@ -615,6 +615,10 @@
   .top-bar .top-bar-right {
     margin-left: 1rem;
     width: auto;
+
+    &>.open-mobile-menu-wrapper {
+      display: none;
+    }
   }
 
   .top-bar #search-container {
@@ -651,7 +655,6 @@
     }
   }
 
-  .open-mobile-menu-wrapper,
   .top-bar-right .menu .close {
     display: none;
   }
