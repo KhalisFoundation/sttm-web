@@ -13,12 +13,13 @@ import {
   OFFLINE_COLOR,
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
-import { setOnlineMode, closeSettingsPanel } from '../features/actions';
+import { setOnlineMode, closeSettingsPanel, toggleDarkMode } from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
-import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy, isShowSearchBarRoute } from '../util';
 import { AddFavouriteShabadModal } from './Modals';
+import { isShowDarkModeRoute } from '@/util/routes/is-show-dark-mode-route';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -43,6 +44,7 @@ class Layout extends React.PureComponent {
     showPinSettings: PropTypes.bool,
     isModalOpen: PropTypes.bool,
     setOnlineMode: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     closeSettingsPanel: PropTypes.func,
     history: PropTypes.object
   };
@@ -96,7 +98,7 @@ class Layout extends React.PureComponent {
 
     const isShowFullScreen = isShowFullscreenRoute(pathname);
     const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
-    const isShowSettings = isShowSettingsRoute(location.pathname)
+    const isShowSettings = isShowSettingsRoute(location.pathname);
 
     if (window !== undefined) {
       const $metaColor = document.querySelector('meta[name="theme-color"]');
@@ -112,7 +114,7 @@ class Layout extends React.PureComponent {
     const isAddFavoriteShabadModalOpen = props.modalOpened === 'addFavoriteShabad';
 
     return online || pathname !== '/' ? (
-      <React.Fragment>
+      <div className="layout">
         <Banner
           banner={{
             message: 'Help Us Build the Future of SikhiToTheMax! Every donation doubled - dvnetwork.org/sikhitothemax',
@@ -147,7 +149,7 @@ class Layout extends React.PureComponent {
           isShowSettings={isShowSettings} />
 
         <Footer showPinSettings={showPinSettings} />
-      </React.Fragment>
+      </div>
     ) : (
       <>
         <div className="content-root">
@@ -238,6 +240,7 @@ class Layout extends React.PureComponent {
 export default connect(
   ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, modalOpened }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, modalOpened }),
   {
+    toggleDarkMode,
     setOnlineMode,
     closeSettingsPanel,
   }

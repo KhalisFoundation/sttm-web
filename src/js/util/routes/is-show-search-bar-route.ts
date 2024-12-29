@@ -1,0 +1,1 @@
+export const isShowSearchBarRoute = (pathname: string) => pathname !== '/'
