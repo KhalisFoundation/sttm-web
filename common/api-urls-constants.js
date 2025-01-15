@@ -2,12 +2,12 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
   BANIS: isProduction
-    ? '//api.banidb.com/v2/banis'
+    ? '//banidb.khalis.dev/v2/banis'
     : '//api.khajana.org/v2/banis',
   PRODUCTION: '//banidb.khalis.dev/v2/',
   DEVELOPMENT: '//api.khajana.org/v2/',
-  AMRIT_KEERTAN: '//api.banidb.com/v2/amritkeertan',
-  AMRIT_KEERTAN_SHABADS: '//api.banidb.com/v2/shabads',
+  AMRIT_KEERTAN: '//banidb.khalis.dev/v2/amritkeertan',
+  AMRIT_KEERTAN_SHABADS: '//banidb.khalis.dev/v2/shabads',
   BANNERS: '//api.sikhitothemax.org/messages/web',
   SYNC: {
     PRODUCTION: '//api.sikhitothemax.org/',
@@ -15,6 +15,6 @@ module.exports = {
   },
   CEREMONIES: '//api.sikhitothemax.org/ceremonies/',
   DOODLE: '//api.sikhitothemax.org/doodle/',
-  WRITERS: '//api.banidb.com/v2/writers/',
+  WRITERS: '//banidb.khalis.dev/v2/writers/',
   GURBANIBOT: '//gurbanichatbot.sikhitothemax.org/',
 };
