@@ -16,7 +16,8 @@ const plugins = PRODUCTION
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
         npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS)
+        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
+        SP_API: JSON.stringify(process.env.SP_API)
       },
       PRODUCTION: JSON.stringify(true),
       API_URL: JSON.stringify(API_URLS.PRODUCTION),

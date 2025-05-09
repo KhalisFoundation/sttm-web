@@ -12,7 +12,7 @@ export const useGetUser = <D>() => {
   const { data: user, isLoading } = useQuery<D>({
     queryKey: 'favourite-shabads',
     queryFn: () =>
-      apiClient('https://serviceprovider.khalis.net/user', {
+      apiClient(`${process.env.SP_API}/user`, {
         token: window.localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN),
       }),
     onError: (e) => {

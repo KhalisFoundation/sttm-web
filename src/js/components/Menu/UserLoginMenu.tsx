@@ -34,7 +34,7 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
 
   const onLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    window.location.href = `https://serviceprovider.khalis.net/login/sso?redirect_url=http://localhost:8080`;
+    window.location.href = `${process.env.SP_API}/login/sso?redirect_url=${process.env.SSO_CALLBACK_URL}`;
   };
 
   return user ? (
