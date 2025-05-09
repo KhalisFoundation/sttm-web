@@ -56,7 +56,7 @@ function useCreateFavouriteShabad() {
       onMutate: (newShabad) => {
         // Snapshot the previous values
         const oldShabads = queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
-        if (queryClient.getQueryData(['favourite-shabads', getToken()])) {
+        if (oldShabads.length > 0) {
           queryClient.setQueryData(['favourite-shabads', getToken()], (currentShabads) => [
             ...(currentShabads || []),
             newShabad,
