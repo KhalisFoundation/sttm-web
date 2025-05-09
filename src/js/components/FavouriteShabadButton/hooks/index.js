@@ -50,15 +50,15 @@ function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (data) => {
-      apiClient(`${process.env.SP_API}/favourite-shabads`, { token: getToken(), data })
+      return apiClient(`${process.env.SP_API}/favourite-shabads`, { token: getToken(), data })
     },
     {
       onMutate: (newShabad) => {
         // Snapshot the previous values
-        const oldShabads = queryClient.getQueryData('favourite-shabads');
-        if (queryClient.getQueryData('favourite-shabads')) {
-          queryClient.setQueryData('favourite-shabads', (old) => [
-            ...old,
+        const oldShabads = queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
+        if (queryClient.getQueryData(['favourite-shabads', getToken()])) {
+          queryClient.setQueryData(['favourite-shabads', getToken()], (currentShabads) => [
+            ...(currentShabads || []),
             newShabad,
           ]);
         }
