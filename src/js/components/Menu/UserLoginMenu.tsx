@@ -23,12 +23,17 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
     setToggleDropdownProfile(!toggleDropdownProfile);
   };
 
-  const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
+  const handleLogout = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (user) {
-      window.location.href = `/logout?nameID=${
-        user?.nameID
-      }&nameIDFormat=${encodeURIComponent(user.nameIDFormat)}`;
+      try {
+        await fetch(`${process.env.SP_API}/logout/sso?nameID=${user?.nameID}&nameIDFormat=${encodeURIComponent(user.nameIDFormat)}`);
+        window.location.href = '/?logout=success';
+      } catch (error) {
+        console.error('Logout failed:', error);
+        // Still redirect to root even if logout fails
+        window.location.href = '/?logout=error';
+      }
     }
   };
 
