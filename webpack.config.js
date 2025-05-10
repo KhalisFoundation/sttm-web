@@ -16,7 +16,9 @@ const plugins = PRODUCTION
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
         npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS)
+        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
+        SP_API: JSON.stringify(process.env.SP_API),
+        SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL)
       },
       PRODUCTION: JSON.stringify(true),
       API_URL: JSON.stringify(API_URLS.PRODUCTION),
@@ -35,7 +37,9 @@ const plugins = PRODUCTION
     new webpack.DefinePlugin({
       'process.env': {
         npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS)
+        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
+        SP_API: JSON.stringify(process.env.SP_API),
+        SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL)
       },
       PRODUCTION: JSON.stringify(false),
       API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
