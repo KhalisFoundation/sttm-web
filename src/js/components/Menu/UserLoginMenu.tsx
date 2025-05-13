@@ -27,20 +27,13 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
   const handleLogout = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (user) {
-      try {
-        await fetch(`${SP_API}/logout/sso?nameID=${user?.nameID}&nameIDFormat=${encodeURIComponent(user.nameIDFormat)}`);
-        window.location.href = '/?logout=success';
-      } catch (error) {
-        console.error('Logout failed:', error);
-        // Still redirect to root even if logout fails
-        window.location.href = '/?logout=error';
-      }
+      window.location.href = '/?logout=success';
     }
   };
 
   const onLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    window.location.href = `${SP_API}/login/sso?redirect_url=${process.env.SSO_CALLBACK_URL}`;
+    window.location.href = `${SP_API}/login/sso?redirect_url=${encodeURIComponent(window.location.href)}`;
   };
 
   return user ? (
