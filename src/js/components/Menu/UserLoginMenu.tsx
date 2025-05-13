@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+/* globals SP_API */
+
 import React from 'react';
 import { useGetUser, useOnClickOutside } from '@/hooks';
 import BackIcon from '../Icons/Back';
@@ -27,7 +28,7 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
     e.preventDefault();
     if (user) {
       try {
-        await fetch(`${process.env.SP_API}/logout/sso?nameID=${user?.nameID}&nameIDFormat=${encodeURIComponent(user.nameIDFormat)}`);
+        await fetch(`${SP_API}/logout/sso?nameID=${user?.nameID}&nameIDFormat=${encodeURIComponent(user.nameIDFormat)}`);
         window.location.href = '/?logout=success';
       } catch (error) {
         console.error('Logout failed:', error);
@@ -39,7 +40,7 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
 
   const onLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    window.location.href = `${process.env.SP_API}/login/sso?redirect_url=${process.env.SSO_CALLBACK_URL}`;
+    window.location.href = `${SP_API}/login/sso?redirect_url=${process.env.SSO_CALLBACK_URL}`;
   };
 
   return user ? (

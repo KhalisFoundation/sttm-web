@@ -19,8 +19,7 @@ COPY . .
 RUN npm install --legacy-peer-deps
 
 # Set the environment to production and expose your app port
-ENV NODE_ENV=production
-EXPOSE 8080
+EXPOSE 8080 8081
 
 RUN npm run build
 

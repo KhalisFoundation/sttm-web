@@ -1,3 +1,5 @@
+/* globals SP_API */
+
 import React from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { apiClient } from '../utils/api-client';
@@ -28,7 +30,7 @@ function useFavouriteShabads() {
   const { data: favouriteShabads } = useQuery({
     queryKey: ['favourite-shabads', getToken()],
     queryFn: () => {
-      return apiClient(`${process.env.SP_API}/favourite-shabads`, { token: getToken() }).then((data) => {
+      return apiClient(`${SP_API}/favourite-shabads`, { token: getToken() }).then((data) => {
         return data.favouriteShabads
       })
     }
@@ -50,7 +52,7 @@ function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (data) => {
-      return apiClient(`${process.env.SP_API}/favourite-shabads`, { token: getToken(), data })
+      return apiClient(`${SP_API}/favourite-shabads`, { token: getToken(), data })
     },
     {
       onMutate: (newShabad) => {
@@ -81,7 +83,7 @@ function useRemoveFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (shabadId) =>
-      apiClient(`${process.env.SP_API}/favourite-shabads/${shabadId}`, {
+      apiClient(`${SP_API}/favourite-shabads/${shabadId}`, {
         token: getToken(),
         method: 'DELETE',
       }),
