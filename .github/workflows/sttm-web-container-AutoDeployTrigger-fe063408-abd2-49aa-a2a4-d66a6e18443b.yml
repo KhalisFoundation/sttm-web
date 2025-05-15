@@ -43,6 +43,6 @@ jobs:
           resourceGroup: devops
           imageToBuild: khalis.azurecr.io/sttm-web-container:${{ github.sha }}
           _buildArgumentsKey_: |
-            _buildArgumentsValues_
+            NODE_ENV=production
 
 

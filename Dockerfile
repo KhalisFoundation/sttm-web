@@ -3,6 +3,12 @@ FROM node:14.21.3
 # Set working directory
 WORKDIR /app
 
+# Add build argument for NODE_ENV
+ARG NODE_ENV=development
+ENV NODE_ENV=$NODE_ENV
+
+RUN echo "NODE_ENV is $NODE_ENV"
+
 # Install required packages for keyring
 RUN apt-get update && apt-get install -y gnupg2 curl lsb-release
 

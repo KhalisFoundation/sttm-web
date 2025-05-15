@@ -43,6 +43,4 @@ jobs:
           resourceGroup: devops
           imageToBuild: khalis.azurecr.io/dev-sttm-web:${{ github.sha }}
           _buildArgumentsKey_: |
-            _buildArgumentsValues_
-
-
+            NODE_ENV=development
