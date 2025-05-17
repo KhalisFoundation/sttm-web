@@ -13,6 +13,9 @@ on:
   # Allow manual trigger 
   workflow_dispatch:      
 
+env:
+  NODE_ENV: production
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
