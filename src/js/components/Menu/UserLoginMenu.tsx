@@ -33,7 +33,7 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
 
   const onLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    window.location.href = `${SP_API}/login/sso?redirect_url=${encodeURIComponent(window.location.href)}`;
+    window.location.href = `${SP_API}/login/sso?redirect_url=${encodeURIComponent(window.location.origin)}`;
   };
 
   return user ? (
