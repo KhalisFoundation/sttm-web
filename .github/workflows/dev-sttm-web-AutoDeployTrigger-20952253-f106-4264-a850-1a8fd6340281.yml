@@ -1,20 +1,20 @@
-name: Trigger auto deployment for sttm-web-container
+name: Trigger auto deployment for dev-sttm-web
 
 # When this action will be executed
 on:
   # Automatically trigger it when detected changes in repo
   push:
     branches: 
-      [ master ]
+      [ dev ]
     paths:
     - '**'
-    - '.github/workflows/sttm-web-container-AutoDeployTrigger-fe063408-abd2-49aa-a2a4-d66a6e18443b.yml'
+    - '.github/workflows/dev-sttm-web-AutoDeployTrigger-20952253-f106-4264-a850-1a8fd6340281.yml'
 
   # Allow manual trigger 
   workflow_dispatch:      
 
 env:
-  NODE_ENV: production
+  NODE_ENV: development
 
 jobs:
   build-and-deploy:
@@ -30,9 +30,9 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.STTMWEBCONTAINER_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.STTMWEBCONTAINER_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.STTMWEBCONTAINER_AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.DEVSTTMWEB_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.DEVSTTMWEB_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.DEVSTTMWEB_AZURE_SUBSCRIPTION_ID }}
 
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
@@ -40,12 +40,10 @@ jobs:
           appSourcePath: ${{ github.workspace }}
           _dockerfilePathKey_: _dockerfilePath_
           registryUrl: khalis.azurecr.io
-          registryUsername: ${{ secrets.STTMWEBCONTAINER_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.STTMWEBCONTAINER_REGISTRY_PASSWORD }}
-          containerAppName: sttm-web-container
+          registryUsername: ${{ secrets.DEVSTTMWEB_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.DEVSTTMWEB_REGISTRY_PASSWORD }}
+          containerAppName: dev-sttm-web
           resourceGroup: devops
-          imageToBuild: khalis.azurecr.io/sttm-web-container:${{ github.sha }}
+          imageToBuild: khalis.azurecr.io/dev-sttm-web:${{ github.sha }}
           _buildArgumentsKey_: |
-            NODE_ENV=production
-
-
+            NODE_ENV=development

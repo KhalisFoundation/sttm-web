@@ -14,5 +14,6 @@ module.exports = {
   CEREMONIES: '//api.sikhitothemax.org/ceremonies/',
   DOODLE: '//api.sikhitothemax.org/doodle/',
   WRITERS: '//api.banidb.com/v2/writers/',
-  GURBANIBOT: '//gurbanichatbot.sikhitothemax.org/'
+  GURBANIBOT: '//gurbanichatbot.sikhitothemax.org/',
+  SP_API: '//serviceprovider.khalis.net',
 };

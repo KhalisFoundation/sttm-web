@@ -10,8 +10,6 @@ import seo from '../common/seo';
 import { DARK_MODE_COOKIE, DARK_MODE_CLASS_NAME, LANGUAGE_COOKIE, DEFAULT_LANGUAGE } from '../common/constants';
 import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 
-const passport = require("./config/passport-auth");
-
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
 const ON_HEROKU = 'ON_HEROKU' in process.env;
@@ -34,15 +32,8 @@ app.use((req, res, next) => {
     return next();
   })
 
-  // passport middleware
-app.use(passport.initialize())
-
   // Use client for static files
 app.use(express.static(`${__dirname}/../public`))
-
-// Define routes here
-require("./routes/ssoRoutes")(app);
-require("./routes/favouriteShabadsRoutes")(app);
 
   // Direct all calls to index template
 app.get('*', async (req, res) => {

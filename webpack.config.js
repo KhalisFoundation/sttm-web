@@ -16,7 +16,8 @@ const plugins = PRODUCTION
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
         npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS)
+        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
+        SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL)
       },
       PRODUCTION: JSON.stringify(true),
       API_URL: JSON.stringify(API_URLS.PRODUCTION),
@@ -28,14 +29,16 @@ const plugins = PRODUCTION
       CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
       DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
       WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
-      GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT)
+      GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT),
+      SP_API: JSON.stringify(API_URLS.SP_API)
     })
   ])
   : commonPlugins.concat([
     new webpack.DefinePlugin({
       'process.env': {
         npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS)
+        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
+        SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL)
       },
       PRODUCTION: JSON.stringify(false),
       API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
@@ -47,7 +50,8 @@ const plugins = PRODUCTION
       CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
       DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
       WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
-      GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT)
+      GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT),
+      SP_API: JSON.stringify(API_URLS.SP_API)
     }),
     new CleanWebpackPlugin(),
   ]);
