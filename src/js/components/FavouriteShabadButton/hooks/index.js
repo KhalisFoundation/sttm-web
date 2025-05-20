@@ -1,3 +1,5 @@
+/* globals SP_API */
+
 import React from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { apiClient } from '../utils/api-client';
@@ -28,7 +30,7 @@ function useFavouriteShabads() {
   const { data: favouriteShabads } = useQuery({
     queryKey: ['favourite-shabads', getToken()],
     queryFn: () => {
-      return apiClient(`/favourite-shabads`, { token: getToken() }).then((data) => {
+      return apiClient(`${SP_API}/favourite-shabads`, { token: getToken() }).then((data) => {
         return data.favouriteShabads
       })
     }
@@ -50,15 +52,15 @@ function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (data) => {
-      apiClient(`/favourite-shabads`, { token: getToken(), data })
+      return apiClient(`${SP_API}/favourite-shabads`, { token: getToken(), data })
     },
     {
       onMutate: (newShabad) => {
         // Snapshot the previous values
-        const oldShabads = queryClient.getQueryData('favourite-shabads');
-        if (queryClient.getQueryData('favourite-shabads')) {
-          queryClient.setQueryData('favourite-shabads', (old) => [
-            ...old,
+        const oldShabads = queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
+        if (oldShabads.length > 0) {
+          queryClient.setQueryData(['favourite-shabads', getToken()], (currentShabads) => [
+            ...(currentShabads || []),
             newShabad,
           ]);
         }
@@ -81,7 +83,7 @@ function useRemoveFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (shabadId) =>
-      apiClient(`/favourite-shabads/${shabadId}`, {
+      apiClient(`${SP_API}/favourite-shabads/${shabadId}`, {
         token: getToken(),
         method: 'DELETE',
       }),
