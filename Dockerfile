@@ -19,7 +19,7 @@ COPY . .
 RUN npm install --legacy-peer-deps
 
 # Set the environment and expose your app port
-ARG NODE_ENV
+ARG NODE_ENV=production
 RUN echo "Build argument NODE_ENV value: $NODE_ENV"
 ENV NODE_ENV=$NODE_ENV
 RUN echo "Environment variable NODE_ENV value: $NODE_ENV"
