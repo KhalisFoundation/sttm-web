@@ -172,9 +172,11 @@ class AutoScrollControl extends React.PureComponent<
         2
       );
 
-      // Update next position and scroll
-      this._nextScrollPosition = scrollY + movement;
-      window.scrollTo(0, Math.round(this._nextScrollPosition));
+      if (scrollY >= Math.round(this._nextScrollPosition)) {
+        // Update next position and scroll
+        this._nextScrollPosition = scrollY + movement;
+        window.scrollTo(0, Math.round(this._nextScrollPosition));
+      }
 
       this._interval = requestAnimationFrame(this.handleAutoScroll);
     }
