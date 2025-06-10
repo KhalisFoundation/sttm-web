@@ -278,3 +278,18 @@ li.search-result {
     padding: 1rem 1rem 1rem 0;
   }
 }
+
+.answer-box {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border-left: 4px solid #007bff;
+
+  .answer {
+    margin: 0;
+    font-size: 1.1em;
+    line-height: 1.5;
+    color: #333;
+  }
+}

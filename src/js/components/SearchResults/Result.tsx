@@ -56,6 +56,7 @@ interface IShabadResultProps {
   unicode: boolean,
   fontSize: number,
   fontFamily: string,
+  answer?: string,
 };
 
 const SearchResult: React.FC<IShabadResultProps> = ({
@@ -70,6 +71,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   unicode,
   larivaar,
   larivaarAssist,
+  answer,
 }) => {
   const { user } = useGetUser<IUser>()
   const location = useLocation();
@@ -85,8 +87,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const comment = shabad.comment;
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   const shabadEnglishTranslation = translationMap['english'](shabad);
-  // english-word search type we needs to highlight index for english translations.
-  // romanized first letters we needs to highlight index for english transliterations
+  const isFirstResult = shabad.id === verses[0]?.id;
 
   const highlightIndex = getHighlightIndices(
     getHighlightString(type, shabad),
@@ -142,6 +143,12 @@ const SearchResult: React.FC<IShabadResultProps> = ({
       <li
         className="search-result">
         <div className="shabad-detail">
+
+        {answer && isFirstResult && (
+            <div className='answer-box'>
+              <p className='answer'>{answer}</p>
+            </div>
+          )}
           <Link
             style={{
               fontSize: `${fontSize}em`,

@@ -24,6 +24,7 @@ export default class Search extends React.PureComponent {
     super();
     this.state = {
       searchURL: '',
+      answer: '',
     };
     this.verseIdList = [];
   }
@@ -34,10 +35,16 @@ export default class Search extends React.PureComponent {
 
     if (isChatBot) {
       const processedQuery = [...q.matchAll(/[a-zA-Z0-9 ]/g)].join('');
-      const semanticApi = encodeURI(`${GURBANIBOT_URL}search/?query=${processedQuery}&count=100`);
+      const semanticApi = encodeURI(
+        `${GURBANIBOT_URL}rephrase/?query=${processedQuery}&count=100`
+      );
       try {
-        const semanticReq = fetch(semanticApi).then((response) => response.json());
+        const semanticReq = fetch(semanticApi).then((response) =>
+          response.json()
+        );
         semanticReq.then((semanticData) => {
+          // Get the answer from the first result
+          const answer = semanticData.results[0]?.Payload?.rephrased_translation || '';
           this.verseIdList = semanticData.results.flatMap((dataObj) => {
             const { VerseID, SourceID } = dataObj.Payload;
             if (SourceID === source || source === 'all') {
@@ -46,12 +53,21 @@ export default class Search extends React.PureComponent {
               return [];
             }
           });
-          this.setState({ searchURL: `${API_URL}search-results/${this.verseIdList.toString()}?page=${offset}` });
+
+          this.setState({
+            searchURL: `${API_URL}search-results/${this.verseIdList.toString()}?page=${offset}`,
+            answer,
+          });
         });
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('err.message', err.message);
       }
+    } else {
+      this.setState({
+        searchURL: '',
+        answer: '',
+      });
     }
   }
 
@@ -60,20 +76,23 @@ export default class Search extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.q !== this.props.q ||
+    if (
+      prevProps.q !== this.props.q ||
       prevProps.source !== this.props.source ||
       prevState.searchURL !== this.state.searchURL ||
-      prevProps.offset !== this.props.offset) {
+      prevProps.offset !== this.props.offset
+    ) {
       this.setSearchUrl();
     }
   }
 
   render() {
     const { q, type, source, offset, writer } = this.props;
+    const { answer } = this.state;
     const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
-    const url = isChatBot ? this.state.searchURL : encodeURI(
-      buildApiUrl({ q, type, source, offset, writer, API_URL })
-    );
+    const url = isChatBot
+      ? this.state.searchURL
+      : encodeURI(buildApiUrl({ q, type, source, offset, writer, API_URL }));
 
     if (q === '') {
       return (
@@ -103,6 +122,7 @@ export default class Search extends React.PureComponent {
               offset={offset}
               //nextPageOffset={resultsInfo.pages.page}
               shabads={verses}
+              answer={answer}
               q={q}
               type={type}
               source={source}
