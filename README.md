@@ -102,39 +102,6 @@ npm start
 
 This will run a bunch of build tools and a `nodejs` server to deploy the code locally.
 
-- **Step 6**: Setup ngrok 
-   
-  To avoid the API cors error, we can use ngrok to get a https url of project output.
-  
-  - Install ngrok
-  ```bash
-  # On mac OS X
-  brew install ngrok 
-  ```
-  ```bash
-  # On Linux
-  sudo snap install ngrok
-  ```
-
-  - Sign up & Get Auth Token
-    - Go to https://ngrok.com and sign up/log in.
-    - Find your Auth Token here: https://dashboard.ngrok.com/get-started/setup
-
-  - Add your auth token
-  ```bash
-  ngrok config add-authtoken <your-token>
-  ```
-
-  - Since this app runs on port 8080, expose it to ngrok
-  ```bash
-  ngrok http 8080
-  ```
-  - Get the forwarding URL from the command output
-  ```bash
-  Forwarding    https://1234abcd.ngrok.io -> http://localhost:8000
-  ```
-  - Open `https://1234abcd.ngrok.io` to see project output
-
 ## Contributing
 
 [Slack](https://khalis.slack.com/) channel.
