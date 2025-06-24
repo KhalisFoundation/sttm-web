@@ -108,6 +108,8 @@ class Shabad extends React.PureComponent {
     fullScreenMode: PropTypes.bool,
     showPinSettings: PropTypes.bool,
     readingMode: PropTypes.bool,
+    rephrasedTranslation: PropTypes.object,
+    isAskQuestion: PropTypes.bool,
   };
 
   constructor(props) {
@@ -180,7 +182,7 @@ class Shabad extends React.PureComponent {
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
               shabad={info}
-              highlight={highlight}
+              highlight={this.props.isAskQuestion ? undefined : highlight}
               gurbani={gurbani}
               {...this.props.controlProps}
             />
@@ -197,6 +199,14 @@ class Shabad extends React.PureComponent {
               showPinSettings={showPinSettings}
             />
           )}
+
+          {this.props.rephrasedTranslation.answer && (
+            <div className='answer-box'>
+              <p className='question'>{this.props.rephrasedTranslation.question}</p>
+              <p className='answer'>{this.props.rephrasedTranslation.answer}</p>
+            </div>
+          )}
+
           <div id="shabad" className={`shabad display display-${type}`}>
             <div className="shabad-container">
               {isMultiPage ? (

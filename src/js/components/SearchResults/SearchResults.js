@@ -20,11 +20,10 @@ export default class SearchResults extends React.PureComponent {
     unicode: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
     fontFamily: PropTypes.string.isRequired,
-    answer: PropTypes.string,
   };
 
   render() {
-    const { shabads, type, answer, ...props } = this.props;
+    const { shabads, type, ...props } = this.props;
     const searchResultsClassName = cx({
       'search-results-display': true,
       'english-translation-search': type === SEARCH_TYPES.ENGLISH_WORD,
@@ -47,13 +46,12 @@ export default class SearchResults extends React.PureComponent {
         {warning}
         <ul className={searchResultsClassName}>
           {
-            shabads.map((shabad, index) => {
+            shabads.map((shabad) => {
               return (
                 <SearchResult
                   key={getVerseId(shabad)}
                   type={type}
                   shabad={shabad}
-                  answer={index === 0 ? answer : ''}
                   {...props} />
               );
             })

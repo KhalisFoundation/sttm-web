@@ -37,7 +37,6 @@ class Layout extends React.PureComponent {
       source,
       resultsCount,
       shabads,
-      answer,
       ...props
     } = this.props;
 
@@ -94,7 +93,6 @@ class Layout extends React.PureComponent {
           type={type}
           source={source}
           shabads={shabads}
-          answer={answer}
           {...props}
         />
 

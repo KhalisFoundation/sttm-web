@@ -24,7 +24,6 @@ export default class Search extends React.PureComponent {
     super();
     this.state = {
       searchURL: '',
-      answer: '',
     };
     this.verseIdList = [];
   }
@@ -36,15 +35,13 @@ export default class Search extends React.PureComponent {
     if (isChatBot) {
       const processedQuery = [...q.matchAll(/[a-zA-Z0-9 ]/g)].join('');
       const semanticApi = encodeURI(
-        `${GURBANIBOT_URL}rephrase/?query=${processedQuery}&count=100`
+        `${GURBANIBOT_URL}search/?query=${processedQuery}&count=100`
       );
       try {
         const semanticReq = fetch(semanticApi).then((response) =>
           response.json()
         );
         semanticReq.then((semanticData) => {
-          // Get the answer from the first result
-          const answer = semanticData.results[0]?.Payload?.rephrased_translation || '';
           this.verseIdList = semanticData.results.flatMap((dataObj) => {
             const { VerseID, SourceID } = dataObj.Payload;
             if (SourceID === source || source === 'all') {
@@ -56,7 +53,6 @@ export default class Search extends React.PureComponent {
 
           this.setState({
             searchURL: `${API_URL}search-results/${this.verseIdList.toString()}?page=${offset}`,
-            answer,
           });
         });
       } catch (err) {
@@ -66,7 +62,6 @@ export default class Search extends React.PureComponent {
     } else {
       this.setState({
         searchURL: '',
-        answer: '',
       });
     }
   }
@@ -88,7 +83,6 @@ export default class Search extends React.PureComponent {
 
   render() {
     const { q, type, source, offset, writer } = this.props;
-    const { answer } = this.state;
     const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
     const url = isChatBot
       ? this.state.searchURL
@@ -122,7 +116,6 @@ export default class Search extends React.PureComponent {
               offset={offset}
               //nextPageOffset={resultsInfo.pages.page}
               shabads={verses}
-              answer={answer}
               q={q}
               type={type}
               source={source}
