@@ -35,7 +35,6 @@ const Shabad = (props: Props) => {
   }));
 
   const [isHideBanner, setIsHideBanner] = useState<boolean>(false);
-  const [rephrasedTranslation, setRephrasedTranslation] = useState<string>('');
 
   useEffect(() => {
     if (props.random) {
@@ -50,20 +49,31 @@ const Shabad = (props: Props) => {
     }
   }, [props.random])
 
-  // Check if this shabad was opened from "Ask a question" search and fetch rephrased translation
   useEffect(() => {
     const isFromAskQuestion = props.type && parseInt(props.type, 10) === SEARCH_TYPES.ASK_A_QUESTION;
     const hasQuery = props.q && props.q.trim() !== '';
 
-    if (isFromAskQuestion && hasQuery) {
-      const processedQuery = props.q?.replace(/[^a-zA-Z0-9 ]/g, '') || '';
-      const semanticApi = `${GURBANIBOT_URL}rephrase/?query=${processedQuery}&shabad_id=${props.id}`;
+    console.log('Shabad useEffect - isFromAskQuestion:', isFromAskQuestion, 'hasQuery:', hasQuery, 'type:', props.type, 'q:', props.q);
 
+    if (isFromAskQuestion && hasQuery) {
+      const processedQuery = (props.q as string).replace(/[^a-zA-Z0-9 ]/g, '');
+      const semanticApi = `${GURBANIBOT_URL}rephrase/?query=${processedQuery}&shabad_id=${props.id}`;
+      
+      console.log('Making API call to:', semanticApi);
+      
       fetch(semanticApi)
         .then((response) => response.json())
         .then((semanticData: any) => {
+          console.log('API response:', semanticData);
+          // Get the answer from the first result
           const answer = semanticData.rephrased_translation || '';
-          setRephrasedTranslation(answer);
+          if (answer && (window as any).setRephrasedTranslation) {
+            console.log('Calling setRephrasedTranslation with:', { question: props.q as string, answer: answer });
+            (window as any).setRephrasedTranslation({
+              question: props.q as string,
+              answer: answer
+            });
+          }
         })
         .catch((err) => {
           // Silently fail - don't show any error, just don't display translation
@@ -112,8 +122,6 @@ const Shabad = (props: Props) => {
                 gurbani={data.verses}
                 nav={data.navigation}
                 hideAddButton={false}
-                rephrasedTranslation={{question: props.q, answer: rephrasedTranslation}}
-                isAskQuestion={props.type && parseInt(props.type, 10) === SEARCH_TYPES.ASK_A_QUESTION}
               />
             )}
           </div>

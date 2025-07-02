@@ -36,11 +36,13 @@ class Shabad extends React.PureComponent {
   /**
    * @typedef {object} ShabadState
    * @property {number} progress of vertical scroll
+   * @property {boolean} isDialogOpen whether the dialog is open
    *
    * @memberof Shabad
    */
   state = {
     progress: 0,
+    isDialogOpen: true, // Default to open when response is fetched
   };
 
   static defaultProps = {
@@ -114,7 +116,18 @@ class Shabad extends React.PureComponent {
 
   constructor(props) {
     super(props);
+    this.state = {
+      progress: 0,
+      isDialogOpen: true, // Default to open when response is fetched
+    };
   }
+
+  toggleDialog = () => {
+    this.setState(prevState => ({
+      isDialogOpen: !prevState.isDialogOpen
+    }));
+  }
+
   render() {
     const {
       props: {
@@ -198,13 +211,6 @@ class Shabad extends React.PureComponent {
               transliterationLanguages={transliterationLanguages}
               showPinSettings={showPinSettings}
             />
-          )}
-
-          {this.props.rephrasedTranslation.answer && (
-            <div className='answer-box'>
-              <p className='question'>{this.props.rephrasedTranslation.question}</p>
-              <p className='answer'>{this.props.rephrasedTranslation.answer}</p>
-            </div>
           )}
 
           <div id="shabad" className={`shabad display display-${type}`}>

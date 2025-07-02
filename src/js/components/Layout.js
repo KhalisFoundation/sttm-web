@@ -17,9 +17,9 @@ import { setOnlineMode, closeSettingsPanel, toggleDarkMode } from '../features/a
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
-import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy, isShowSearchBarRoute } from '../util';
+import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
 import { AddFavouriteShabadModal } from './Modals';
-import { isShowDarkModeRoute } from '@/util/routes/is-show-dark-mode-route';
+import { SEARCH_TYPES } from '../constants';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
@@ -52,6 +52,8 @@ class Layout extends React.PureComponent {
   state = {
     error: null,
     showScrollToTop: false,
+    isAIActive: false,
+    rephrasedTranslation: null,
   };
 
   componentDidCatch(error) {
@@ -95,6 +97,9 @@ class Layout extends React.PureComponent {
       location: { pathname = '/' } = {},
       ...props
     } = this.props;
+
+    const queryParams = getQueryParams(this.props.location.search);
+    const isShowAI = queryParams.type && parseInt(queryParams.type, 10) === SEARCH_TYPES.ASK_A_QUESTION && pathname.includes('/shabad');
 
     const isShowFullScreen = isShowFullscreenRoute(pathname);
     const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
@@ -146,7 +151,33 @@ class Layout extends React.PureComponent {
           isShowFullScreen={isShowFullScreen}
           isShowScrollToTop={this.state.showScrollToTop}
           showPinSettings={showPinSettings}
-          isShowSettings={isShowSettings} />
+          isShowSettings={isShowSettings}
+          isShowAI={isShowAI}
+          onAIClick={this.handleAIClick}
+          isAIActive={this.state.isAIActive} />
+
+        {/* AI Dialog */}
+        {this.state.isAIActive && (
+          <div className="floating-dialog-container">
+            <div className="floating-dialog open">
+              <div className="floating-dialog-header">
+                <h4>AI Response</h4>
+                <button 
+                  className="floating-dialog-toggle"
+                  onClick={this.handleAIClick}
+                >
+                  ×
+                </button>
+              </div>
+              {this.state.rephrasedTranslation && (
+                <div className="floating-dialog-content">
+                  <p className="question">{this.state.rephrasedTranslation.question}</p>
+                  <p className="answer">{this.state.rephrasedTranslation.answer}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         <Footer showPinSettings={showPinSettings} />
       </div>
@@ -199,6 +230,9 @@ class Layout extends React.PureComponent {
     document.title = this.props.title;
     this.updateTheme();
     addVisraamClass();
+    
+    // Expose setRephrasedTranslation globally for Shabad component
+    window.setRephrasedTranslation = this.setRephrasedTranslation;
   }
 
   componentWillUnmount() {
@@ -235,6 +269,22 @@ class Layout extends React.PureComponent {
       this.setState({ error: null });
     }
   }
+
+  handleAIClick = () => {
+    console.log('handleAIClick');
+    this.setState((prevState) => ({
+      isAIActive: !prevState.isAIActive,
+    }));
+  };
+
+  setRephrasedTranslation = (translation) => {
+    console.log("setRephrasedTranslation", translation);
+    console.log("this.state.isAIActive", this.state.isAIActive);
+    this.setState({
+      rephrasedTranslation: translation,
+      isAIActive: true, // Auto-open when translation is set
+    });
+  };
 }
 
 export default connect(
