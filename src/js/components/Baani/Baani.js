@@ -1069,7 +1069,7 @@ class Baani extends React.PureComponent {
   };
   render() {
     const { centerAlignGurbani, showFullScreen, isMahankoshTooltipActive } = this.props;
-    const { selectedWord } = this.state;
+    const { selectedWord, selectedWordIndex, selectedLine } = this.state;
     
     return (
       <div
@@ -1082,6 +1082,8 @@ class Baani extends React.PureComponent {
           clearMahankoshInformation={this.clearMahankoshInformation}
           tooltipId="mahankoshTooltipHighlightSearchResult"
           gurbaniWord={selectedWord}
+          gurbaniLineInfo={this.normalizeGurbani()[selectedLine - 1]}
+          wordIndex={selectedWordIndex}
         />
       </div>
     );
