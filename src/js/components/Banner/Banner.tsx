@@ -1,6 +1,7 @@
 import React from 'react';
-import CrossIcon from '../Icons/Times';
 import { Link } from 'react-router-dom';
+
+import CrossIcon from '../Icons/Times';
 
 export const updateLastSeen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
   e.currentTarget.parentElement?.remove();
@@ -15,13 +16,15 @@ type Props = {
     link?: string;
     classes?: {
       notification?: string;
-    }
+    };
+    disabled?: boolean;
   },
   onCrossIconClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const Banner = (props: Props) => {
   const handleBannerCrossClick = props.onCrossIconClick ?? updateLastSeen;
+  if (props.banner.disabled) return null;
   return (
     <div className="banner-container">
       <div className={`notification type-${props.banner.type} ${props.banner.classes?.notification}`}>
