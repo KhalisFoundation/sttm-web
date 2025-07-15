@@ -2,59 +2,63 @@ const webpack = require('webpack');
 require('dotenv').config();
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 const path = require('path');
 const API_URLS = require('./common/api-urls-constants.js');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
-const commonPlugins = [new ManifestPlugin()];
+const commonPlugins = [new WebpackManifestPlugin()];
 
 const plugins = PRODUCTION
   ? commonPlugins.concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-        npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
-        SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL)
-      },
-      PRODUCTION: JSON.stringify(true),
-      API_URL: JSON.stringify(API_URLS.PRODUCTION),
-      AMRIT_KEERTAN_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN),
-      AMRIT_KEERTAN_SHABADS_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN_SHABADS),
-      SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
-      BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
-      BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
-      CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
-      DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
-      WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
-      GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT),
-      SP_API: JSON.stringify(API_URLS.SP_API)
-    })
-  ])
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('production'),
+          npm_package_version: JSON.stringify(process.env.npm_package_version),
+          AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
+          SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL),
+        },
+        PRODUCTION: JSON.stringify(true),
+        API_URL: JSON.stringify(API_URLS.PRODUCTION),
+        AMRIT_KEERTAN_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN),
+        AMRIT_KEERTAN_SHABADS_API_URL: JSON.stringify(
+          API_URLS.AMRIT_KEERTAN_SHABADS
+        ),
+        SYNC_API_URL: JSON.stringify(API_URLS.SYNC.PRODUCTION),
+        BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
+        BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
+        CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
+        DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
+        WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
+        GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT),
+        SP_API: JSON.stringify(API_URLS.SP_API),
+      }),
+    ])
   : commonPlugins.concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        npm_package_version: JSON.stringify(process.env.npm_package_version),
-        AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
-        SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL)
-      },
-      PRODUCTION: JSON.stringify(false),
-      API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
-      SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
-      AMRIT_KEERTAN_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN),
-      AMRIT_KEERTAN_SHABADS_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN_SHABADS),
-      BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
-      BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
-      CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
-      DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
-      WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
-      GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT),
-      SP_API: JSON.stringify(API_URLS.SP_API)
-    }),
-    new CleanWebpackPlugin(),
-  ]);
+      new webpack.DefinePlugin({
+        'process.env': {
+          npm_package_version: JSON.stringify(process.env.npm_package_version),
+          AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
+          SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL),
+        },
+        PRODUCTION: JSON.stringify(false),
+        API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
+        SYNC_API_URL: JSON.stringify(API_URLS.SYNC.LOCAL),
+        AMRIT_KEERTAN_API_URL: JSON.stringify(API_URLS.AMRIT_KEERTAN),
+        AMRIT_KEERTAN_SHABADS_API_URL: JSON.stringify(
+          API_URLS.AMRIT_KEERTAN_SHABADS
+        ),
+        BANIS_API_URL: JSON.stringify(API_URLS.BANIS),
+        BANNERS_URL: JSON.stringify(API_URLS.BANNERS),
+        CEREMONIES_URL: JSON.stringify(API_URLS.CEREMONIES),
+        DOODLE_URL: JSON.stringify(API_URLS.DOODLE),
+        WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
+        GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT),
+        SP_API: JSON.stringify(API_URLS.SP_API),
+      }),
+      new CleanWebpackPlugin(),
+    ]);
 
 const app = path.resolve(__dirname, 'src', 'js', 'index.js');
 
@@ -65,8 +69,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'public/assets', 'js'),
-    chunkFilename: PRODUCTION ? 'chunks/[name]-[hash].js' : 'chunks/[name].js',
-    filename: PRODUCTION ? '[name]-[hash].js' : '[name].js',
+    chunkFilename: PRODUCTION
+      ? 'chunks/[name]-[contenthash].js'
+      : 'chunks/[name].js',
+    filename: PRODUCTION ? '[name]-[contenthash].js' : '[name].js',
     publicPath: '/assets/js/',
   },
   devtool: PRODUCTION ? undefined : 'inline-source-map',
@@ -79,7 +85,7 @@ module.exports = {
     },
   },
   optimization: {
-    noEmitOnErrors: true,
+    emitOnErrors: false,
     minimizer: [new TerserPlugin()],
     concatenateModules: true,
     splitChunks: {
@@ -110,8 +116,8 @@ module.exports = {
       {
         test: /\.mjs$/,
         include: /node_modules/,
-        type: 'javascript/auto'
-      }
+        type: 'javascript/auto',
+      },
     ],
   },
 };

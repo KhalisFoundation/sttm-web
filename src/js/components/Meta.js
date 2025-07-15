@@ -1,16 +1,17 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import { connect,  } from 'react-redux';
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import DatePicker from 'react-date-picker';
 import AudioPlayer from 'react-h5-audio-player';
+
 import { compose } from 'redux';
 
 import CalendarIcon from './Icons/CalendarIcon';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';
 import ForwardIcon from './Icons/ForwardIcon';
-import HeadphonesIcon from './Icons/HeadphonesIcon'
+import HeadphonesIcon from './Icons/HeadphonesIcon';
 import TimesIcon from './Icons/Times';
 
 import {
@@ -22,9 +23,14 @@ import {
   getWriter,
   getRaag,
   checkAPIHealth,
-  getShabadAudioUrl
+  getShabadAudioUrl,
 } from '@/util';
-import { TEXTS, PAGE_NAME, FIRST_HUKAMNAMA_DATE, HUKAMNAMA_AUDIO_URL } from '@/constants';
+import {
+  TEXTS,
+  PAGE_NAME,
+  FIRST_HUKAMNAMA_DATE,
+  HUKAMNAMA_AUDIO_URL,
+} from '@/constants';
 import PlayerViewButton from './PlayerViewButton';
 import PlayerCloseButton from './PlayerCloseButton';
 
@@ -36,15 +42,14 @@ import PlayerCloseButton from './PlayerCloseButton';
  * @augments {React.PureComponent<MetaProps>}
  */
 class Meta extends React.PureComponent {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       audioPlayer: null,
       isHukamnamaAudioPlayerVisible: true,
       shabadURL: '',
       isShabadPlayable: false,
-    }
+    };
     this.audioPlayerRef = createRef();
     this.audioPlayerIconRef = createRef();
     this.wrapperRef = createRef();
@@ -84,11 +89,7 @@ class Meta extends React.PureComponent {
   };
 
   renderLeftArrow() {
-    const {
-      type,
-      nav = {},
-      isArrowsHidden,
-    } = this.props;
+    const { type, nav = {}, isArrowsHidden } = this.props;
 
     const link = toNavURL(this.props);
     const isShowPreviousArrow = isFalsy(nav.previous) === false;
@@ -101,8 +102,8 @@ class Meta extends React.PureComponent {
           <div className="shabad-nav left">
             <Link to={link + nav.previous}>
               {isHukamnama ? (
-                <div className='hukamnama-nav-icon'>
-                  <Hour24 direction='previous' />
+                <div className="hukamnama-nav-icon">
+                  <Hour24 direction="previous" />
                   <span>{dateMath.expand(nav.previous, false)}</span>
                 </div>
               ) : (
@@ -110,47 +111,41 @@ class Meta extends React.PureComponent {
               )}
             </Link>
           </div>
-        )
+        );
       }
       if (!isSync) {
         return (
           <div className="shabad-nav left disabled-nav">
             <a>
               {isHukamnama ? (
-                <Hour24 direction='previous' />
+                <Hour24 direction="previous" />
               ) : (
                 <Chevron direction={Chevron.DIRECTIONS.LEFT} />
               )}
             </a>
           </div>
-        )
+        );
       }
     }
 
     return '';
   }
 
-
   renderRightArrow() {
-    const {
-      type,
-      nav = {},
-      isArrowsHidden,
-    } = this.props;
+    const { type, nav = {}, isArrowsHidden } = this.props;
 
-    const isShowNextArrow = isFalsy(nav.next) === false
+    const isShowNextArrow = isFalsy(nav.next) === false;
     const isSync = type === 'sync';
     const isHukamnama = type === 'hukamnama';
 
     if (!isArrowsHidden) {
-
       if (isShowNextArrow) {
         return (
           <div className="shabad-nav right">
             <a role="button" aria-label="next" onClick={this.goToNextAng}>
               {isHukamnama ? (
-                <div className='hukamnama-nav-icon'>
-                  <Hour24 direction='next' />
+                <div className="hukamnama-nav-icon">
+                  <Hour24 direction="next" />
                   <span>{dateMath.expand(nav.next, false)}</span>
                 </div>
               ) : (
@@ -158,7 +153,7 @@ class Meta extends React.PureComponent {
               )}
             </a>
           </div>
-        )
+        );
       }
 
       if (!isSync) {
@@ -166,13 +161,13 @@ class Meta extends React.PureComponent {
           <div className="shabad-nav right disabled-nav">
             <a>
               {isHukamnama ? (
-                <Hour24 direction='next' />
+                <Hour24 direction="next" />
               ) : (
                 <Chevron direction={Chevron.DIRECTIONS.RIGHT} />
               )}
             </a>
           </div>
-        )
+        );
       }
     }
 
@@ -180,37 +175,38 @@ class Meta extends React.PureComponent {
   }
 
   setShabadURL = (url) => {
-    this.setState(previousState => {
-      return ({
+    this.setState((previousState) => {
+      return {
         ...previousState,
-        shabadURL: url
-      })
-    })
-  }
+        shabadURL: url,
+      };
+    });
+  };
 
   setHukamnamaAudioPlayerVisibility = (e) => {
     e.preventDefault();
     const audioPlayer = this.audioPlayerRef.current.audio.current;
 
-    this.setState(previousState => {
+    this.setState((previousState) => {
       const isAudioPlayerState = !previousState.isHukamnamaAudioPlayerVisible;
 
       !isAudioPlayerState && audioPlayer.pause();
 
-      return ({
+      return {
         ...previousState,
-        isHukamnamaAudioPlayerVisible: !previousState.isHukamnamaAudioPlayerVisible
-      })
-    })
-  }
+        isHukamnamaAudioPlayerVisible:
+          !previousState.isHukamnamaAudioPlayerVisible,
+      };
+    });
+  };
 
   removeAudioPlayer = (e) => {
     return this.setHukamnamaAudioPlayerVisibility(e);
-  }
+  };
 
   async componentDidMount() {
-    if (this.props.type === 'shabad' ) {
-      const healthy = await checkAPIHealth()
+    if (this.props.type === 'shabad') {
+      const healthy = await checkAPIHealth();
       if (healthy) {
         const audioUrl = await getShabadAudioUrl(this.props.info);
         this.setShabadURL(audioUrl);
@@ -227,7 +223,7 @@ class Meta extends React.PureComponent {
       translationLanguages,
       transliterationLanguages,
       showPinSettings,
-      showShabadAudioPlayer
+      showShabadAudioPlayer,
     } = this.props;
     const Item = ({ children, last = false }) =>
       children ? (
@@ -263,10 +259,10 @@ class Meta extends React.PureComponent {
                       isOpen={this.state.isCalendarOpen}
                       clearIcon={null}
                       onCalendarClose={() => {
-                        this.setState(() => ({ isCalendarOpen: false }))
+                        this.setState(() => ({ isCalendarOpen: false }));
                       }}
                       onCalendarOpen={() => {
-                        this.setState(() => ({ isCalendarOpen: true }))
+                        this.setState(() => ({ isCalendarOpen: true }));
                       }}
                       onChange={this.goToParticularHukamnama}
                       value={hukamnamaDate}
@@ -275,25 +271,45 @@ class Meta extends React.PureComponent {
                       calendarIcon={<CalendarIcon width={20} />}
                       calendarAriaLabel="date picker"
                     />
-                    <a className="hukam-text-link" onClick={this.state.isCalendarOpen ? undefined : (e) => {
-                      e.preventDefault();
-                      return this.setState(() => ({ isCalendarOpen: true }))
-                    }}>
+                    <a
+                      className="hukam-text-link"
+                      onClick={
+                        this.state.isCalendarOpen
+                          ? undefined
+                          : (e) => {
+                              e.preventDefault();
+                              return this.setState(() => ({
+                                isCalendarOpen: true,
+                              }));
+                            }
+                      }
+                    >
                       <span title="Past Hukamnamas">Archive</span>
                     </a>
                   </div>
                   <div className="meta-hukamnama-left-gotoshabad">
-
-                    <Link className="hukamnama-right-link" to={`/shabad?id=${info.shabadId}`}>
-                      <ForwardIcon />{TEXTS.GO_TO_SHABAD}
+                    <Link
+                      className="hukamnama-right-link"
+                      to={`/shabad?id=${info.shabadId}`}
+                    >
+                      <ForwardIcon />
+                      {TEXTS.GO_TO_SHABAD}
                     </Link>
                   </div>
                 </div>
                 <h4>
                   {TEXTS.HUKAMNAMA_HEADING}, <span>{nav.current}</span>
                 </h4>
-                <div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right" onClick={this.setHukamnamaAudioPlayerVisibility}>
-                  <span className="hukamnama-right-headphonesIcon"><HeadphonesIcon /><a title="Listen to Today's Hukamnama">{`Today's Hukamnama`}</a></span>
+                <div
+                  ref={this.audioPlayerIconRef}
+                  role="button"
+                  className="meta-hukamnama-right"
+                  onClick={this.setHukamnamaAudioPlayerVisibility}
+                >
+                  <span className="hukamnama-right-headphonesIcon">
+                    <HeadphonesIcon />
+                    <a title="Listen to Today's Hukamnama">{`Today's Hukamnama`}</a>
+                  </span>
                 </div>
               </div>
             </>
@@ -315,7 +331,9 @@ class Meta extends React.PureComponent {
                     source: getSourceId(info),
                   })}
                 >
-                  {getSourceId(info) == 'G' ? PAGE_NAME.ANG[contentType] : PAGE_NAME.PANNA[contentType]}{' '}
+                  {getSourceId(info) == 'G'
+                    ? PAGE_NAME.ANG[contentType]
+                    : PAGE_NAME.PANNA[contentType]}{' '}
                   {info.source.pageNo}
                 </Link>
               </Item>
@@ -347,58 +365,75 @@ class Meta extends React.PureComponent {
               )}
             </h4>
           )}
-          {isShabadPlayable && 
-            (<div ref={this.audioPlayerIconRef} role='button' className="meta-hukamnama-right">
-              <PlayerViewButton/>
-            </div>)
-          }
+          {isShabadPlayable && (
+            <div
+              ref={this.audioPlayerIconRef}
+              role="button"
+              className="meta-hukamnama-right"
+            >
+              <PlayerViewButton />
+            </div>
+          )}
         </div>
 
         {hasAudioPlayer && (
-          <div className={`hukamnama-audio ${this.state.isHukamnamaAudioPlayerVisible ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
+          <div
+            className={`hukamnama-audio ${
+              this.state.isHukamnamaAudioPlayerVisible
+                ? 'hukamnama-audio--shown'
+                : 'hukamnama-audio--hidden'
+            } ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}
+          >
             <AudioPlayer
               ref={this.audioPlayerRef}
               src={HUKAMNAMA_AUDIO_URL}
               customAdditionalControls={[]}
               customVolumeControls={[]}
-              header={(
+              header={
                 <div>
                   <h3 className="hukamnama-player-title">{`Listen to Today's Hukamnama`}</h3>
                   <span className="hukamnama-player-close-icon">
                     <TimesIcon onClick={this.removeAudioPlayer} />
                   </span>
                 </div>
-              )}
-              />
-          </div>)}
+              }
+            />
+          </div>
+        )}
 
         {!isHukamnama && this.renderRightArrow()}
-          
+
         {isShabadPlayable && showShabadAudioPlayer && (
-          <div className={`hukamnama-audio ${(this.state.isHukamnamaAudioPlayerVisible && isShabadPlayable) ? 'hukamnama-audio--shown' : 'hukamnama-audio--hidden'} ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}>
-          <AudioPlayer
+          <div
+            className={`hukamnama-audio ${
+              this.state.isHukamnamaAudioPlayerVisible && isShabadPlayable
+                ? 'hukamnama-audio--shown'
+                : 'hukamnama-audio--hidden'
+            } ${showPinSettings ? 'hukamnama-audio--pin-settings' : ''}`}
+          >
+            <AudioPlayer
               ref={this.audioPlayerRef}
               src={this.state.shabadURL}
               customAdditionalControls={[]}
               customVolumeControls={[]}
-              header={(
+              header={
                 <div>
                   <h3 className="shabad-player-title">Shabad player</h3>
                   <PlayerCloseButton />
                 </div>
-              )}
-              footer={(
+              }
+              footer={
                 <div>
-                  <h4 className='shabad-player-footer'>Courtesy: Baru Sahib</h4>
+                  <h4 className="shabad-player-footer">Courtesy: Baru Sahib</h4>
                 </div>
-              )}
+              }
             />
           </div>
         )}
-      </div >
+      </div>
     );
   }
-  
+
   /**
    * Handle SaveAng
    * @memberof Meta
@@ -410,18 +445,16 @@ class Meta extends React.PureComponent {
     const day = date.getDate();
 
     const hukamnamaDate = `${year}/${month}/${day}`;
-    const link = toNavURL(this.props)
+    const link = toNavURL(this.props);
     this.props.history.push(link + hukamnamaDate);
-  }
+  };
   goToNextAng = () => {
     const link = toNavURL(this.props);
     this.props.history.push(link + this.props.nav.next);
   };
-  
 }
 
-const mapStateToProps = state => ({ showShabadAudioPlayer: state.showShabadAudioPlayer })
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(Meta);
+const mapStateToProps = (state) => ({
+  showShabadAudioPlayer: state.showShabadAudioPlayer,
+});
+export default compose(withRouter, connect(mapStateToProps))(Meta);

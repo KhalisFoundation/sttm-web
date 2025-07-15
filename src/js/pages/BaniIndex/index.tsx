@@ -10,7 +10,7 @@ import { TEXTS } from '../../constants';
 export const BaniIndex: React.FC = () => {
   useEffect(() => {
     pageView('/index');
-  }, [])
+  }, []);
 
   return (
     <div className="row" id="content-root">
@@ -49,7 +49,7 @@ export const BaniIndex: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default BaniIndex;
