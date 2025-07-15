@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y default-mysql-client
 COPY . .
 
 # Install dependencies
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 # Set the environment and expose your app port
-ARG NODE_ENV=production
+ARG NODE_ENV
 RUN echo "Build argument NODE_ENV value: $NODE_ENV"
 ENV NODE_ENV=$NODE_ENV
 RUN echo "Environment variable NODE_ENV value: $NODE_ENV"
