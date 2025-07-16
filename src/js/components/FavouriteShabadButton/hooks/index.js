@@ -30,11 +30,12 @@ function useFavouriteShabads() {
   const { data: favouriteShabads } = useQuery({
     queryKey: ['favourite-shabads', getToken()],
     queryFn: () => {
-      return apiClient(`${SP_API}/favourite-shabads`, { token: getToken() }).then((data) => {
-        return data.favouriteShabads
-      })
-    }
-
+      return apiClient(`${SP_API}/favourite-shabads`, {
+        token: getToken(),
+      }).then((data) => {
+        return data.favouriteShabads;
+      });
+    },
   });
 
   return favouriteShabads ?? [];
@@ -42,7 +43,7 @@ function useFavouriteShabads() {
 
 function useFavouriteShabad(shabadId) {
   const favouriteShabads = useFavouriteShabads();
-  const favouriteShabadIds = favouriteShabads.map(shabad => shabad.shabad_id)
+  const favouriteShabadIds = favouriteShabads.map((shabad) => shabad.shabad_id);
   return (
     !!favouriteShabadIds.find((shabad_id) => shabad_id === shabadId) ?? false
   );
@@ -52,17 +53,21 @@ function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (data) => {
-      return apiClient(`${SP_API}/favourite-shabads`, { token: getToken(), data })
+      return apiClient(`${SP_API}/favourite-shabads`, {
+        token: getToken(),
+        data,
+      });
     },
     {
       onMutate: (newShabad) => {
         // Snapshot the previous values
-        const oldShabads = queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
+        const oldShabads =
+          queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
         if (oldShabads.length > 0) {
-          queryClient.setQueryData(['favourite-shabads', getToken()], (currentShabads) => [
-            ...(currentShabads || []),
-            newShabad,
-          ]);
+          queryClient.setQueryData(
+            ['favourite-shabads', getToken()],
+            (currentShabads) => [...(currentShabads || []), newShabad]
+          );
         }
 
         // Return a context object with the snapshotted value
@@ -89,22 +94,29 @@ function useRemoveFavouriteShabad() {
       }),
     {
       onMutate: (shabadId) => {
-        const oldShabads = queryClient.getQueryData('favourite-shabads');
+        // Snapshot the previous values
+        const oldShabads =
+          queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
 
-        if (queryClient.getQueryData('favourite-shabads')) {
-          queryClient.setQueryData('favourite-shabads', (old) =>
-            old.filter((e) => e !== Number(shabadId))
+        if (oldShabads.length > 0) {
+          queryClient.setQueryData(
+            ['favourite-shabads', getToken()],
+            (currentShabads) =>
+              (currentShabads || []).filter(
+                (shabad) => shabad.shabad_id !== Number(shabadId)
+              )
           );
         }
 
-        return () => queryClient.setQueryData('favourite-shabads', oldShabads);
+        // Return a context object with the snapshotted value
+        return { oldShabads };
       },
       // If the mutation fails, use the context returned from onMutate to roll back
       onError: (_err, _variables, recover) =>
         typeof recover === 'function' ? recover() : null,
       // Always refetch after error or success:
       onSettled: () => {
-        queryClient.invalidateQueries('favourite-shabads');
+        queryClient.invalidateQueries(['favourite-shabads', getToken()]);
       },
     }
   );
