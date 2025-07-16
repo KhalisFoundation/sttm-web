@@ -52,7 +52,9 @@ class SundarGutka extends React.PureComponent {
 
     //eg /sundar-gutka/japji-sahib, get japji-sahib from this
     const baaniIdOrName = pathname.split('/')[2];
-    const baaniId = baanies ? baaniNameToIdMapper(baanies, baaniIdOrName) : baaniIdOrName;
+    const baaniId = baanies
+      ? baaniNameToIdMapper(baanies, baaniIdOrName)
+      : baaniIdOrName;
 
     return (
       <div className="row" id="content-root">
@@ -83,10 +85,13 @@ class SundarGutka extends React.PureComponent {
                 {baanies
                   .filter(SundarGutka.filter(q))
                   .map(({ ID, transliteration, gurmukhi }, i) => {
-                    const isMultipleVersionExists = SG_MULTIPLE_VERSION_BAANIS.some(bId => bId == ID)
+                    const isMultipleVersionExists =
+                      SG_MULTIPLE_VERSION_BAANIS.some((bId) => bId == ID);
                     return (
                       <Link
-                        to={`/sundar-gutka/${sanitizeBaani(transliteration).split(' ').join('-')}`}
+                        to={`/sundar-gutka/${sanitizeBaani(transliteration)
+                          .split(' ')
+                          .join('-')}`}
                         key={ID}
                       >
                         <div
@@ -95,50 +100,56 @@ class SundarGutka extends React.PureComponent {
                             animationDelay: i < 15 ? `${20 * i}ms` : 0,
                           }}
                         >
-                          <h2
-                            className="sgCardGurmukhi"
-                          >{gurmukhi}{' '}</h2>
+                          <h2 className="sgCardGurmukhi">{gurmukhi} </h2>
 
-                          <div
-                            className="sgCardEnglish"
-                          >
-                            {isMultipleVersionExists &&
+                          <div className="sgCardEnglish">
+                            {isMultipleVersionExists && (
                               <div className="sgBaanisVersions">
                                 {SG_BAANIS.map(({ length }) => {
                                   if (length == sgBaaniLength)
-                                    return <div key={length} className='sgBaanisVersion sgBaanisVersionSelected'>{length}</div>
+                                    return (
+                                      <div
+                                        key={length}
+                                        className="sgBaanisVersion sgBaanisVersionSelected"
+                                      >
+                                        {length}
+                                      </div>
+                                    );
                                   return null;
                                 })}
-                              </div>}
+                              </div>
+                            )}
                             {transliterationLanguages.includes('english') &&
                               `${sanitizeBaani(transliteration)}`}
                           </div>
                         </div>
                       </Link>
-                    )
+                    );
                   })}
               </div>
             </>
           ) : (
             <Route
               path={this.props.match.url + '/:baaniIdOrName'}
-              render={routeProps => <RenderShabads sundarGutkaBaaniId={baaniId} {...routeProps} />}
+              render={(routeProps) => (
+                <RenderShabads sundarGutkaBaaniId={baaniId} {...routeProps} />
+              )}
             />
           )}
         </div>
-      </div >
+      </div>
     );
   }
 
-  static filter = q => i =>
+  static filter = (q) => (i) =>
     q === '' ||
     SundarGutka.sanitize(i.transliteration)
       .toLowerCase()
       .includes(q.toLocaleLowerCase());
 
-  static sanitize = t => t.replace(/\(n\)/gi, 'n');
+  static sanitize = (t) => t.replace(/\(n\)/gi, 'n');
 
-  handleSearch = e => this.setState({ q: e.currentTarget.value });
+  handleSearch = (e) => this.setState({ q: e.currentTarget.value });
 
   componentDidUpdate({
     match: { isExact: wasExact },
@@ -158,8 +169,8 @@ class SundarGutka extends React.PureComponent {
     }
 
     fetch(BANIS_API_URL)
-      .then(r => r.json())
-      .then(baanies =>
+      .then((r) => r.json())
+      .then((baanies) =>
         this.setState({
           baanies,
           currentBaaniId: baanies[0].ID,
@@ -170,14 +181,11 @@ class SundarGutka extends React.PureComponent {
 
 const mapStateToProps = ({ transliterationLanguages, sgBaaniLength }) => ({
   transliterationLanguages,
-  sgBaaniLength
-})
+  sgBaaniLength,
+});
 
 const mapDispatchToProps = {
-  setSgBaaniLength
-}
+  setSgBaaniLength,
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SundarGutka);
+export default connect(mapStateToProps, mapDispatchToProps)(SundarGutka);
