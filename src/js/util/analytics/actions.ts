@@ -14,5 +14,6 @@ export const ACTIONS = {
   RELATED_SHABAD: 'related-shabad',
   JAPJI_SAHIB_LINK: 'japji-sahib-link',
   REHRAAS_SAHIB_LINK: 'rehraas-sahib-link',
-  SOHILAA_SAHIB_LINK: 'sohilaa-sahib-link'
+  SOHILAA_SAHIB_LINK: 'sohilaa-sahib-link',
+  SMART_BANNER_INSTALL: 'smart-banner-install',
 };

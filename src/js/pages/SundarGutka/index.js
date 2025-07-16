@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import SmartBanner from 'react-smartbanner';
+import SmartBanner from '@/components/SmartBanner';
 
 import { RenderShabads } from '@/components/RenderShabads';
 import BreadCrumb from '@/components/Breadcrumb';
