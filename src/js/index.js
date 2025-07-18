@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { CookiesProvider } from 'react-cookie';
 
 import 'regenerator-runtime/runtime';
 import store from './features/store';
@@ -14,14 +15,16 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     },
   },
-})
+});
 
 render(
   <>
     <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <Root />
-      </Provider>    
+      <CookiesProvider>
+        <Provider store={store}>
+          <Root />
+        </Provider>
+      </CookiesProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </>,

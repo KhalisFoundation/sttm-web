@@ -201,7 +201,7 @@ export const initialState = {
   showShabadAudioPlayer: getBooleanFromLocalStorage(
     LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER,
     DEFAULT_SHABAD_AUDIO_PLAYER
-  )
+  ),
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

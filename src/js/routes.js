@@ -152,8 +152,9 @@ export default [
       return (
         <Layout
           defaultQuery={ang}
-          title={`Ang ${ang} of ${SOURCES[source] || SOURCES.G
-            } Ang/Page Viewer - SikhiToTheMax`}
+          title={`Ang ${ang} of ${
+            SOURCES[source] || SOURCES.G
+          } Ang/Page Viewer - SikhiToTheMax`}
           isAng={true}
           {...props}
         >
@@ -187,9 +188,11 @@ export default [
   {
     path: '/index/sri-guru-granth-sahib',
     render(props) {
-
       return (
-        <Layout title="Index - Sri Guru Granth Sahib Ji - SikhiToTheMax" {...props}>
+        <Layout
+          title="Index - Sri Guru Granth Sahib Ji - SikhiToTheMax"
+          {...props}
+        >
           <RenderPromise
             promise={() =>
               import(
@@ -215,9 +218,11 @@ export default [
   {
     path: '/index/sri-dasam-granth-sahib',
     render(props) {
-
       return (
-        <Layout title="Index - Sri Dasam Granth Sahib Ji - SikhiToTheMax" {...props}>
+        <Layout
+          title="Index - Sri Dasam Granth Sahib Ji - SikhiToTheMax"
+          {...props}
+        >
           <RenderPromise
             promise={() =>
               import(
@@ -243,9 +248,11 @@ export default [
   {
     path: '/index/bhai-nand-lal-vaaran',
     render(props) {
-
       return (
-        <Layout title="Index - Bhai Nand Lal Ji Vaaran - SikhiToTheMax" {...props}>
+        <Layout
+          title="Index - Bhai Nand Lal Ji Vaaran - SikhiToTheMax"
+          {...props}
+        >
           <RenderPromise
             promise={() =>
               import(
@@ -271,7 +278,6 @@ export default [
   {
     path: '/index/amrit-keertan',
     render(props) {
-
       return (
         <Layout title="Index - Amrit Keertan - SikhiToTheMax" {...props}>
           <RenderPromise
@@ -302,17 +308,15 @@ export default [
       // update the meta tags to display banner for amrit-keertan
       updateSmartAppBannerMetaTags({
         appIdApple: 1393849213,
-        appIdGoogle: "com.KhalisFoundation.AmritKeertan",
+        appIdGoogle: 'com.KhalisFoundation.AmritKeertan',
         appIconPath: '/assets/images/amrit-keertan-icon.png',
-      })
+      });
 
       return (
         <Layout title="Index - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
-              import(
-                /* webpackChunkName: "BaniIndex" */ './pages/BaniIndex'
-              )
+              import(/* webpackChunkName: "BaniIndex" */ './pages/BaniIndex')
             }
           >
             {({ pending, resolved: { default: Index } = {}, rejected }) =>
@@ -337,9 +341,9 @@ export default [
       // update the meta tags to display banner for sundar-gutka
       updateSmartAppBannerMetaTags({
         appIdApple: 431446112,
-        appIdGoogle: "com.WahegurooNetwork.SundarGutka",
-        appIconPath: '/assets/images/sundar-gutka-icon.png',
-      })
+        appIdGoogle: 'com.WahegurooNetwork.SundarGutka',
+        appIconPath: '/assets/images/sundar-gutka-flat-icon.png',
+      });
 
       return (
         <Layout title="Sundar Gutka - SikhiToTheMax" {...props}>
@@ -481,7 +485,7 @@ export default [
         source = DEFAULT_SEARCH_SOURCE,
         q = '',
         offset = 1,
-        writer = DEFAULT_SEARCH_WRITER
+        writer = DEFAULT_SEARCH_WRITER,
       ] = params.map((v) => getParameterByName(v, search));
 
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
@@ -546,7 +550,11 @@ export default [
         type,
         random: random !== undefined && random === '' ? true : false,
         highlight:
-          highlight === undefined ? undefined : highlight.includes(',') ? highlight : parseInt(highlight, 10)
+          highlight === undefined
+            ? undefined
+            : highlight.includes(',')
+            ? highlight
+            : parseInt(highlight, 10),
       };
 
       return (
@@ -653,10 +661,16 @@ export default [
         <Layout title="Favourite Shabads - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
-              import(/* webpackChunkName: "FavouriteShabads" */ './pages/FavouriteShabads')
+              import(
+                /* webpackChunkName: "FavouriteShabads" */ './pages/FavouriteShabads'
+              )
             }
           >
-            {({ pending, resolved: { default: FavouriteShabads } = {}, rejected }) =>
+            {({
+              pending,
+              resolved: { default: FavouriteShabads } = {},
+              rejected,
+            }) =>
               pending ? null : FavouriteShabads ? (
                 <FavouriteShabads {...props} />
               ) : (
@@ -668,7 +682,7 @@ export default [
             }
           </RenderPromise>
         </Layout>
-      )
-    }
-  }
+      );
+    },
+  },
 ];

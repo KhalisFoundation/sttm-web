@@ -64,13 +64,13 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="STTM">
-  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png">
+  <link rel="apple-touch-icon" href="/assets/images/sundar-gutka-flat-icon.png">
 
   <!-- Windows Tile -->
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
-  <link rel="android-touch-icon" href="/assets/images/apple-touch-icon-precomposed.png">
+  <link rel="android-touch-icon" href="/assets/images/sundar-gutka-flat-icon.png">
   ${stylesheetsHTML}
 
   <script type="application/ld+json">
@@ -120,10 +120,11 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
   <!-- ServiceWorker -->
   <script>
     if ("serviceWorker" in navigator) {
-      ${process.env.kill_service_worker
-    ? unregisterServiceWorker
-    : registerServiceWorker
-  }
+      ${
+        process.env.kill_service_worker
+          ? unregisterServiceWorker
+          : registerServiceWorker
+      }
     }
   </script>
   <script>
@@ -146,7 +147,7 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
 const preconnect = ['//api.banidb.com'];
 const preconnectHTML = preconnect
   .map(
-    d =>
+    (d) =>
       `<link rel="preconnect" href="${d}" crossorigin /><link rel="dns-prefetch" href="${d}" />`
   )
   .join('');
@@ -156,7 +157,7 @@ const prefetchImages = [
   '/assets/images/logo-192x192.png',
 ];
 const prefetchImagesHTML = prefetchImages
-  .map(i => `<link async rel="prefetch" href="${i}" as="image" />`)
+  .map((i) => `<link async rel="prefetch" href="${i}" as="image" />`)
   .join('');
 
 const preloadFonts = [
@@ -164,7 +165,7 @@ const preloadFonts = [
   '/assets/fonts/GurbaniAkharHeavyTrue.ttf?v=1',
 ];
 const preloadFontsHTML = preloadFonts
-  .map(f => `<link async rel="preload" href="${f}" as="font" crossorigin />`)
+  .map((f) => `<link async rel="preload" href="${f}" as="font" crossorigin />`)
   .join('');
 
 const stylesheets = [
@@ -174,13 +175,13 @@ const stylesheets = [
   'https://fonts.googleapis.com/css?family=Lato&display=swap',
 ];
 const stylesheetsHTML = stylesheets
-  .map(s => `<link href="${s}" rel="stylesheet" />`)
+  .map((s) => `<link href="${s}" rel="stylesheet" />`)
   .join('');
 
 const scripts = manifest ? [manifest['vendor.js'], manifest['app.js']] : [];
-const scriptsHTML = scripts.map(s => `<script src="${s}"></script>`).join('');
+const scriptsHTML = scripts.map((s) => `<script src="${s}"></script>`).join('');
 const preloadScriptsHTML = scripts
-  .map(s => `<link async rel="preload" href="${s}" as="script" />`)
+  .map((s) => `<link async rel="preload" href="${s}" as="script" />`)
   .join('');
 
 const registerServiceWorker = `

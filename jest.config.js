@@ -1,5 +1,10 @@
 module.exports = {
-  testURL: 'http://localhost:8080',
+  testEnvironmentOptions: {
+    url: 'http://localhost:8080',
+    environment: 'jest-environment-jsdom-sixteen',
+  },
+  verbose: true,
+  setupFiles: ['<rootDir>/jest/setupTest.js'],
   collectCoverage: true,
   // since we moved config to a deeper folder, we are specifying what <rootDir> should now point to.
   rootDir: './',
@@ -11,7 +16,5 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/cypress/*'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  setupFiles: [
-    "<rootDir>/jest/setupTest.js"
-  ]
+  setupFiles: ['<rootDir>/jest/setupTest.js'],
 };

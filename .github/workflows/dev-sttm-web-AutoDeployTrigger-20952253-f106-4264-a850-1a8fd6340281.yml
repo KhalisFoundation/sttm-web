@@ -4,14 +4,13 @@ name: Trigger auto deployment for dev-sttm-web
 on:
   # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ dev ]
+    branches: [dev]
     paths:
-    - '**'
-    - '.github/workflows/dev-sttm-web-AutoDeployTrigger-20952253-f106-4264-a850-1a8fd6340281.yml'
+      - '**'
+      - '.github/workflows/dev-sttm-web-AutoDeployTrigger-20952253-f106-4264-a850-1a8fd6340281.yml'
 
-  # Allow manual trigger 
-  workflow_dispatch:      
+  # Allow manual trigger
+  workflow_dispatch:
 
 env:
   NODE_ENV: development
@@ -19,7 +18,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions: 
+    permissions:
       id-token: write #This is required for requesting the OIDC JWT Token
       contents: read #Required when GH token is used to authenticate with private repo
 
@@ -45,5 +44,5 @@ jobs:
           containerAppName: dev-sttm-web
           resourceGroup: devops
           imageToBuild: khalis.azurecr.io/dev-sttm-web:${{ github.sha }}
-          _buildArgumentsKey_: |
+          buildArguments: |
             NODE_ENV=development

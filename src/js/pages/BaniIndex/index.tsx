@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import SmartBanner from 'react-smartbanner';
+import SmartBanner from '@/components/SmartBanner';
 
 import BreadCrumb from '@/components/Breadcrumb';
 import { raagIndices } from './constants/raag-indices';
@@ -10,11 +10,11 @@ import { TEXTS } from '../../constants';
 export const BaniIndex: React.FC = () => {
   useEffect(() => {
     pageView('/index');
-  }, [])
+  }, []);
 
   return (
     <div className="row" id="content-root">
-      <SmartBanner key="amritKeertan" position="top" title={'Amrit Keertan'} />
+      <SmartBanner key="amritKeertan" title={'Amrit Keertan'} />
       <BreadCrumb links={[{ title: TEXTS.URIS.INDEX }]} />
       <div id="help">
         <div id="sidebar">
@@ -49,7 +49,7 @@ export const BaniIndex: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default BaniIndex;
