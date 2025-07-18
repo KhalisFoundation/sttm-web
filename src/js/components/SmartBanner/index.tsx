@@ -131,9 +131,7 @@ const SmartBanner: React.FC<SmartBannerProps> = ({
 
   const icon = isAndroid ? googleIcon : appleIcon;
   const buttonUrl = isAndroid ? googleUrl : appleUrl;
-  const buttonLabel = isAndroid
-    ? 'Get it on Google Play'
-    : 'Download on the App Store';
+  const buttonLabel = 'Download now';
 
   return (
     <div className={`smartbanner smartbanner--${platform}`}>

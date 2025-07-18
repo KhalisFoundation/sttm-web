@@ -92,7 +92,7 @@ describe('SmartBanner', () => {
     renderWithCookies(<SmartBanner title="Test App" />);
 
     expect(screen.getByText('Test App')).toBeInTheDocument();
-    expect(screen.getByText('Get it on Google Play')).toBeInTheDocument();
+    expect(screen.getByText('Download now')).toBeInTheDocument();
   });
 
   it('shows app icon from meta tags when provided', () => {
