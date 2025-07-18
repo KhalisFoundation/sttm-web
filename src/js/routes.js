@@ -342,7 +342,7 @@ export default [
       updateSmartAppBannerMetaTags({
         appIdApple: 431446112,
         appIdGoogle: 'com.WahegurooNetwork.SundarGutka',
-        appIconPath: '/assets/images/sundar-gutka-icon.png',
+        appIconPath: '/assets/images/sundar-gutka-flat-icon.png',
       });
 
       return (

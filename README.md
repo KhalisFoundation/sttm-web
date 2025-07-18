@@ -33,48 +33,32 @@ You should now see a `sttm-web` folder in your present working directory. Let's 
 cd sttm-web/
 ```
 
-- **Step 2**: Setup python version 3.12.
-  - Install Python 3.12 (if not already installed)
-  - On mac:
-  ```bash
-  brew install python@3.12
-  ```
-  - On Linux
-  ```bash
-  sudo add-apt-repository ppa:deadsnakes/ppa
-  sudo apt update
-  sudo apt install python3.12 python3.12-venv
-  ```
+- **Step 3**: Setup node version 18
 
-  - Create an isolated virtual environment
-  ```bash
-  /path/to/python3.12 -m venv myenv
-  ```
-
-  - Activate it
-  ```bash
-  source myenv/bin/activate
-  ```
-
-- **Step 3**: Setup node version 16
   - Install nvm (if not already installed)
+
   ```bash
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
   ```
+
   - Restart the terminal or run the following to activate
+
   ```bash
   export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
   ```
 
-  - Install node 16.20 using nvm
+  - Install node 18.18 using nvm
+
   ```bash
-  nvm install 16.20
-  ``` 
-  - Switch to node 16
+  nvm install 18.18
+  ```
+
+  - Switch to node 18
+
   ```bash
-  nvm use 16.20
-  ``` 
+  nvm use 18.18
+  ```
 
 - **Step 4**: Install dependencies.
 
