@@ -1,6 +1,6 @@
 {
   "name": "@sttm/web",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "description": "Sevadaars are currently working hard to build a newer version of SikhiToTheMax website using modern web technologies.",
   "main": "index.js",
   "engines": {
