@@ -36,11 +36,13 @@ class Shabad extends React.PureComponent {
   /**
    * @typedef {object} ShabadState
    * @property {number} progress of vertical scroll
+   * @property {boolean} isDialogOpen whether the dialog is open
    *
    * @memberof Shabad
    */
   state = {
     progress: 0,
+    isDialogOpen: true, // Default to open when response is fetched
   };
 
   static defaultProps = {
@@ -108,11 +110,24 @@ class Shabad extends React.PureComponent {
     fullScreenMode: PropTypes.bool,
     showPinSettings: PropTypes.bool,
     readingMode: PropTypes.bool,
+    rephrasedTranslation: PropTypes.object,
+    isAskQuestion: PropTypes.bool,
   };
 
   constructor(props) {
     super(props);
+    this.state = {
+      progress: 0,
+      isDialogOpen: true, // Default to open when response is fetched
+    };
   }
+
+  toggleDialog = () => {
+    this.setState(prevState => ({
+      isDialogOpen: !prevState.isDialogOpen
+    }));
+  }
+
   render() {
     const {
       props: {
@@ -180,7 +195,7 @@ class Shabad extends React.PureComponent {
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
               shabad={info}
-              highlight={highlight}
+              highlight={this.props.isAskQuestion ? undefined : highlight}
               gurbani={gurbani}
               {...this.props.controlProps}
             />
@@ -197,6 +212,7 @@ class Shabad extends React.PureComponent {
               showPinSettings={showPinSettings}
             />
           )}
+
           <div id="shabad" className={`shabad display display-${type}`}>
             <div className="shabad-container">
               {isMultiPage ? (

@@ -24,7 +24,6 @@ export default class SearchResults extends React.PureComponent {
 
   render() {
     const { shabads, type, ...props } = this.props;
-
     const searchResultsClassName = cx({
       'search-results-display': true,
       'english-translation-search': type === SEARCH_TYPES.ENGLISH_WORD,
@@ -47,7 +46,7 @@ export default class SearchResults extends React.PureComponent {
         {warning}
         <ul className={searchResultsClassName}>
           {
-            shabads.map(shabad => {
+            shabads.map((shabad) => {
               return (
                 <SearchResult
                   key={getVerseId(shabad)}

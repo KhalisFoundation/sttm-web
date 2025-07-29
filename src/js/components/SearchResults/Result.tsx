@@ -85,8 +85,6 @@ const SearchResult: React.FC<IShabadResultProps> = ({
   const comment = shabad.comment;
   const isSearchTypeEnglishWord = type === SEARCH_TYPES.ENGLISH_WORD;
   const shabadEnglishTranslation = translationMap['english'](shabad);
-  // english-word search type we needs to highlight index for english translations.
-  // romanized first letters we needs to highlight index for english transliterations
 
   const highlightIndex = getHighlightIndices(
     getHighlightString(type, shabad),

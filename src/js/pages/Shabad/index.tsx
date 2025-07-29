@@ -1,4 +1,4 @@
-/* globals API_URL */
+/* globals API_URL, GURBANIBOT_URL */
 import React, { useEffect, useState } from 'react';
 import { buildApiUrl } from '@sttm/banidb';
 import { useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import Banner from '../../components/Banner/Banner';
 import ListOfShabads from '../../components/ShabadContent/ListOfShabads';
 import { toShabadURL, isKeyExists } from '../../util';
 import BreadCrumb from '../../components/Breadcrumb';
-import { TEXTS } from '../../constants';
+import { TEXTS, SEARCH_TYPES } from '../../constants';
 const Spinner = () => <div className="spinner" />;
 
 
@@ -20,6 +20,8 @@ interface Props {
   id: string,
   isVisraam: boolean;
   isLarivaarAssist: boolean;
+  q?: string;
+  type?: string;
 }
 
 interface StoreSliceState {
@@ -28,7 +30,7 @@ interface StoreSliceState {
 }
 
 const Shabad = (props: Props) => {
-  const state = useSelector<StoreSliceState>((state) => ({
+  const state = useSelector<StoreSliceState>((state: any) => ({
     isVisraam: state.visraams, isLarivaarAssist: state.larivaarAssist
   }));
 
@@ -38,9 +40,47 @@ const Shabad = (props: Props) => {
     if (props.random) {
       pageView('/shabad?random');
     } else {
-      pageView(toShabadURL({ shabad: { shabadid: `${props.id}`, id: props.highlight } }));
+      pageView(toShabadURL({
+        shabad: { shabadId: `${props.id}`, verseId: props.highlight.toString() },
+        q: props.q || '',
+        type: props.type,
+        source: undefined
+      }));
     }
   }, [props.random])
+
+  useEffect(() => {
+    const isFromAskQuestion = props.type && parseInt(props.type, 10) === SEARCH_TYPES.ASK_A_QUESTION;
+    const hasQuery = props.q && props.q.trim() !== '';
+
+    console.log('Shabad useEffect - isFromAskQuestion:', isFromAskQuestion, 'hasQuery:', hasQuery, 'type:', props.type, 'q:', props.q);
+
+    if (isFromAskQuestion && hasQuery) {
+      const processedQuery = (props.q as string).replace(/[^a-zA-Z0-9 ]/g, '');
+      const semanticApi = `${GURBANIBOT_URL}rephrase/?query=${processedQuery}&shabad_id=${props.id}`;
+      
+      console.log('Making API call to:', semanticApi);
+      
+      fetch(semanticApi)
+        .then((response) => response.json())
+        .then((semanticData: any) => {
+          console.log('API response:', semanticData);
+          // Get the answer from the first result
+          const answer = semanticData.rephrased_translation || '';
+          if (answer && (window as any).setRephrasedTranslation) {
+            console.log('Calling setRephrasedTranslation with:', { question: props.q as string, answer: answer });
+            (window as any).setRephrasedTranslation({
+              question: props.q as string,
+              answer: answer
+            });
+          }
+        })
+        .catch((err) => {
+          // Silently fail - don't show any error, just don't display translation
+          console.error('Failed to fetch rephrased translation:', err.message);
+        });
+    }
+  }, [props.type, props.q, props.id]);
 
   const url = buildApiUrl(
     props.random ? { random: props.random, API_URL } : { random: props.random, id: props.id as unknown as number, API_URL }
@@ -48,7 +88,7 @@ const Shabad = (props: Props) => {
 
   return (
     <PageLoader url={url}>
-      {({ data, loading }) =>
+      {({ data, loading }: { data: any; loading: boolean }) =>
         loading ? (
           <Spinner />
         ) : (
