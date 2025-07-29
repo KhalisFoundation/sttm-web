@@ -1,42 +1,42 @@
 /* stylelint-disable at-rule-no-unknown */
 @import "mixin",
-  "colours",
-  "ask-gurbani-bot-question",
-  "auto-scroll-control",
-  "display-controls",
-  "error-page",
-  "floating-actions",
-  "footer",
-  "fonts",
-  "header",
-  "helpers",
-  "maryada",
-  "panktee",
-  "printer",
-  "results",
-  "search-page",
-  "shabad-page",
-  "sharing",
-  "sync",
-  "spinner",
-  "sundar-gutka",
-  "help",
-  "controller",
-  "banner",
-  "baani-link",
-  "granth-index",
-  "vishraam",
-  "mahankosh",
-  "ui-controls",
-  "accordion",
-  "settings",
-  "multiple-shabads",
-  "preview-shabad",
-  "favourite-shabads",
-  "modals";
-@import 'node_modules/react-smartbanner/dist/main';
-@import 'node_modules/react-toastify/dist/ReactToastify.min';
-@import 'node_modules/react-h5-audio-player/src/styles.scss';
+"colours",
+"ask-gurbani-bot-question",
+"auto-scroll-control",
+"display-controls",
+"error-page",
+"floating-actions",
+"footer",
+"fonts",
+"header",
+"helpers",
+"maryada",
+"panktee",
+"printer",
+"results",
+"search-page",
+"shabad-page",
+"sharing",
+"sync",
+"spinner",
+"sundar-gutka",
+"help",
+"controller",
+"banner",
+"baani-link",
+"granth-index",
+"vishraam",
+"mahankosh",
+"ui-controls",
+"accordion",
+"settings",
+"multiple-shabads",
+"preview-shabad",
+"favourite-shabads",
+"modals";
+@import 'smartbanner';
+@import 'node_modules/react-toastify/dist/ReactToastify.css';
+@import 'react-h5-audio-player';
 @import 'overrides/react-date-picker';
 @import 'overrides/react-h5-audio-player';
 @import 'overrides/react-tooltip';
@@ -114,7 +114,7 @@ select {
     display: none;
   }
 
-  + #controls-menu {
+  +#controls-menu {
     margin-top: -27px;
 
     @media screen and (max-width: 950px) {
@@ -206,7 +206,7 @@ select {
 .fullscreen {
   height: 22px;
 
-  & > svg {
+  &>svg {
     transition: all 0.2s ease-in;
   }
 

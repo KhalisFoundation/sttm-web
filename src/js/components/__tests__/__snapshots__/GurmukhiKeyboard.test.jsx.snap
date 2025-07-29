@@ -112,7 +112,7 @@ exports[`<GurmukhiKeyboard /> renders correctly 1`] = `
             J
           </button>
           <button
-            data-value="\\\\"
+            data-value="\\"
             type="button"
           >
             \\

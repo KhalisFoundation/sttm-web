@@ -21,19 +21,46 @@ Make sure you've [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installi
 
 Open terminal and follow these steps;
 
-- Step 1: Clone the repo.
+- **Step 1**: Clone the repo.
 
 ```bash
 git clone https://github.com/KhalisFoundation/sttm-web/
 ```
 
-You should now see a `SikhiToTheMax-Web` folder in your present working directory. Let's change directory to it.
+You should now see a `sttm-web` folder in your present working directory. Let's change directory to it.
 
 ```bash
 cd sttm-web/
 ```
 
-- Step 2: Install dependencies.
+- **Step 3**: Setup node version 18
+
+  - Install nvm (if not already installed)
+
+  ```bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  ```
+
+  - Restart the terminal or run the following to activate
+
+  ```bash
+  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+  ```
+
+  - Install node 18.18 using nvm
+
+  ```bash
+  nvm install 18.18
+  ```
+
+  - Switch to node 18
+
+  ```bash
+  nvm use 18.18
+  ```
+
+- **Step 4**: Install dependencies.
 
 ```bash
 # `ci` doesn't update package.json, and uses package-lock.json to install intended deps.
@@ -43,7 +70,7 @@ npm ci
 
 This will use `npm` that is included with `nodejs` to install project dependencies.
 
-- Step 3: Start the project.
+- **Step 5**: Start the project.
 
 If you are running this project for the first time or did some change, run the following command to create a build and run it:
 
@@ -58,18 +85,6 @@ npm start
 ```
 
 This will run a bunch of build tools and a `nodejs` server to deploy the code locally.
-
-- Step 4: Access your local dev environment of the SikhiToTheMax website
-
-```bash
-# On mac OS X
-open http://localhost:8080
-# On Linux
-google-chrome http://localhost:8080
-# On windows
-start chrome http://localhost:8080
-# Or just open chrome and enter the URL manually.
-```
 
 ## Contributing
 

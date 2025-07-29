@@ -125,7 +125,8 @@ class Layout extends React.PureComponent {
             message: 'Help Us Build the Future of SikhiToTheMax! Every donation doubled - dvnetwork.org/sikhitothemax',
             link: "dvnetwork.org/sikhitothemax",
             label: "Donate now",
-            type: "3"
+            type: "3",
+            disabled: true,
           }}
         />
         {isAddFavoriteShabadModalOpen && <AddFavouriteShabadModal open={isAddFavoriteShabadModalOpen} />}

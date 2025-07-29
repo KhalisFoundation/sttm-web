@@ -7,19 +7,21 @@ import { getAng, getSource } from './angs';
  **/
 export const createMetadataFromResponse = (req, apiResponse) => {
   const { path, query } = req;
-  
+
   switch (path) {
     case '/shabad': {
-      const { shabadInfo, verses } = isKeyExists(apiResponse.data, 'shabadIds') ? apiResponse.data.shabads[0] : apiResponse.data;     
+      const { shabadInfo, verses } = isKeyExists(apiResponse.data, 'shabadIds')
+        ? apiResponse.data.shabads[0]
+        : apiResponse.data;
 
       const { shabadName } = shabadInfo;
 
       // getting shabad object from highlight/verses.
-      let shabad 
-      if(query.highlight) {
-        shabad = verses.find(v => v.verseId == query.highlight);
-      }else {
-        shabad = verses.find(v => v.verseId === shabadName);
+      let shabad;
+      if (query.highlight) {
+        shabad = verses.find((v) => v.verseId == query.highlight);
+      } else {
+        shabad = verses.find((v) => v.verseId === shabadName);
       }
 
       const title = createShabadTitle(shabad);
@@ -27,24 +29,27 @@ export const createMetadataFromResponse = (req, apiResponse) => {
 
       return {
         title,
-        description
-      }
+        description,
+      };
     }
 
     case '/ang': {
       const title = `Ang ${getAng(req)} of ${getSource(req)}`;
-      const description = `Read page number ${getAng(req)} of ${getSource(req)} now.`
+      const description = `Read page number ${getAng(req)} of ${getSource(
+        req
+      )} now.`;
 
       return {
         title,
-        description
-      }
+        description,
+      };
     }
 
-    default: return { title: '', description: '' }
+    default:
+      return { title: '', description: '' };
   }
-}
+};
 
 export const isKeyExists = (object, key) => {
-  return object.hasOwnProperty(key)
-}
+  return Object.prototype.hasOwnProperty.call(object, key);
+};
