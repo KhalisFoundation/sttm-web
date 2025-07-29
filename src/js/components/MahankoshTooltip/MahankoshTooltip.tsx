@@ -14,6 +14,8 @@ interface Props {
   gurbaniWord: string;
   clearMahankoshInformation: () => {};
   isMahankoshTooltipActive: boolean;
+  gurbaniLineInfo: any;
+  wordIndex: number;
 }
 
 const MAHANKOSH_CONFIG = {
@@ -37,7 +39,9 @@ const MAHANKOSH_CONFIG = {
 export const MahankoshTooltip = (props: Props) => {
   const dispatch = useDispatch();
   
-  const url = props.gurbaniWord ? `${API_URL}kosh/word/${props.gurbaniWord}` : '';
+  const gurbaniLine: string = props.gurbaniWord ? props.gurbaniLineInfo[0].verse.unicode : '';
+  const gurbaniQuery: string = props.gurbaniWord ? gurbaniLine.split(' ')[props.wordIndex] : '';
+  const url = props.gurbaniWord ? `${API_URL}kosh/word/${gurbaniQuery}` : '';
 
   const { data: mahankoshExplaination, isLoading: isFetchingMahankoshExplaination, isSuccess } = useQuery({
     queryKey: ['mahakosh-shabad', props.gurbaniWord ],
