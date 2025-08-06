@@ -13,11 +13,10 @@ import BreadCrumb from '../../components/Breadcrumb';
 import { TEXTS, SEARCH_TYPES } from '../../constants';
 const Spinner = () => <div className="spinner" />;
 
-
 interface Props {
   random: boolean;
   highlight: string | number;
-  id: string,
+  id: string;
   isVisraam: boolean;
   isLarivaarAssist: boolean;
   q?: string;
@@ -31,7 +30,8 @@ interface StoreSliceState {
 
 const Shabad = (props: Props) => {
   const state = useSelector<StoreSliceState>((state: any) => ({
-    isVisraam: state.visraams, isLarivaarAssist: state.larivaarAssist
+    isVisraam: state.visraams,
+    isLarivaarAssist: state.larivaarAssist,
   }));
 
   const [isHideBanner, setIsHideBanner] = useState<boolean>(false);
@@ -40,38 +40,39 @@ const Shabad = (props: Props) => {
     if (props.random) {
       pageView('/shabad?random');
     } else {
-      pageView(toShabadURL({
-        shabad: { shabadId: `${props.id}`, verseId: props.highlight.toString() },
-        q: props.q || '',
-        type: props.type,
-        source: undefined
-      }));
+      pageView(
+        toShabadURL({
+          shabad: {
+            shabadId: `${props.id}`,
+            verseId: props?.highlight?.toString(),
+          },
+          q: props.q || '',
+          type: props.type,
+          source: undefined,
+        })
+      );
     }
-  }, [props.random])
+  }, [props.random]);
 
   useEffect(() => {
-    const isFromAskQuestion = props.type && parseInt(props.type, 10) === SEARCH_TYPES.ASK_A_QUESTION;
+    const isFromAskQuestion =
+      props.type && parseInt(props.type, 10) === SEARCH_TYPES.ASK_A_QUESTION;
     const hasQuery = props.q && props.q.trim() !== '';
-
-    console.log('Shabad useEffect - isFromAskQuestion:', isFromAskQuestion, 'hasQuery:', hasQuery, 'type:', props.type, 'q:', props.q);
 
     if (isFromAskQuestion && hasQuery) {
       const processedQuery = (props.q as string).replace(/[^a-zA-Z0-9 ]/g, '');
-      const semanticApi = `${GURBANIBOT_URL}rephrase/?query=${processedQuery}&shabad_id=${props.id}`;
-      
-      console.log('Making API call to:', semanticApi);
-      
+      const semanticApi = `${GURBANIBOT_URL}rephrase/?query=${processedQuery}&shabad_id=${props.id}&verse_id=${props.highlight}`;
+
       fetch(semanticApi)
         .then((response) => response.json())
         .then((semanticData: any) => {
-          console.log('API response:', semanticData);
           // Get the answer from the first result
           const answer = semanticData.rephrased_translation || '';
           if (answer && (window as any).setRephrasedTranslation) {
-            console.log('Calling setRephrasedTranslation with:', { question: props.q as string, answer: answer });
             (window as any).setRephrasedTranslation({
               question: props.q as string,
-              answer: answer
+              answer: answer,
+              verse: semanticData.verse,
             });
           }
         })
@@ -83,7 +84,9 @@ const Shabad = (props: Props) => {
   }, [props.type, props.q, props.id]);
 
   const url = buildApiUrl(
-    props.random ? { random: props.random, API_URL } : { random: props.random, id: props.id as unknown as number, API_URL }
+    props.random
+      ? { random: props.random, API_URL }
+      : { random: props.random, id: props.id as unknown as number, API_URL }
   );
 
   return (
@@ -99,9 +102,9 @@ const Shabad = (props: Props) => {
                   classes: {
                     notification: 'notification-shabad',
                   },
-                  type: "2",
+                  type: '2',
                   message: `Larivaar Assist & Vishraams: Larivaar Assist will be displayed using different colors for words and the vishraams will be
-                shown by orange and red flashing icons between words to guide you when to pause.`
+                shown by orange and red flashing icons between words to guide you when to pause.`,
                 }}
                 onCrossIconClick={() => setIsHideBanner(true)}
               />
@@ -128,8 +131,7 @@ const Shabad = (props: Props) => {
         )
       }
     </PageLoader>
-  )
-}
+  );
+};
 
 export default Shabad;
-

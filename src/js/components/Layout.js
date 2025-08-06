@@ -4,7 +4,11 @@ import Footer from './Footer';
 import Banner from './Banner/Banner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
-import { DEFAULT_PAGE_TITLE, LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, TEXTS } from '../constants';
+import {
+  DEFAULT_PAGE_TITLE,
+  LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN,
+  TEXTS,
+} from '../constants';
 import { connect } from 'react-redux';
 import throttle from 'lodash.throttle';
 import {
@@ -13,18 +17,29 @@ import {
   OFFLINE_COLOR,
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
-import { setOnlineMode, closeSettingsPanel, toggleDarkMode } from '../features/actions';
+import {
+  setOnlineMode,
+  closeSettingsPanel,
+  toggleDarkMode,
+} from '../features/actions';
 import { FloatingActions } from './FloatingActions';
 import MultipleShabadsDisplay from './MultipleShabadsDisplay';
 
-import { addVisraamClass, isShowFullscreenRoute, isShowAutoScrollRoute, isShowSettingsRoute, getQueryParams, isFalsy } from '../util';
+import {
+  addVisraamClass,
+  isShowFullscreenRoute,
+  isShowAutoScrollRoute,
+  isShowSettingsRoute,
+  getQueryParams,
+  isFalsy,
+} from '../util';
 import { AddFavouriteShabadModal } from './Modals';
 import { SEARCH_TYPES } from '../constants';
 
 class Layout extends React.PureComponent {
   static defaultProps = {
     isHome: false,
-    title: DEFAULT_PAGE_TITLE
+    title: DEFAULT_PAGE_TITLE,
   };
 
   static propTypes = {
@@ -46,7 +61,7 @@ class Layout extends React.PureComponent {
     setOnlineMode: PropTypes.func.isRequired,
     toggleDarkMode: PropTypes.func.isRequired,
     closeSettingsPanel: PropTypes.func,
-    history: PropTypes.object
+    history: PropTypes.object,
   };
 
   state = {
@@ -99,7 +114,10 @@ class Layout extends React.PureComponent {
     } = this.props;
 
     const queryParams = getQueryParams(this.props.location.search);
-    const isShowAI = queryParams.type && parseInt(queryParams.type, 10) === SEARCH_TYPES.ASK_A_QUESTION && pathname.includes('/shabad');
+    const isShowAI =
+      queryParams.type &&
+      parseInt(queryParams.type, 10) === SEARCH_TYPES.ASK_A_QUESTION &&
+      pathname.includes('/shabad');
 
     const isShowFullScreen = isShowFullscreenRoute(pathname);
     const isShowAutoScroll = isShowAutoScrollRoute(pathname) && autoScrollMode;
@@ -116,21 +134,29 @@ class Layout extends React.PureComponent {
       }
     }
 
-    const isAddFavoriteShabadModalOpen = props.modalOpened === 'addFavoriteShabad';
+    const isAddFavoriteShabadModalOpen =
+      props.modalOpened === 'addFavoriteShabad';
 
     return online || pathname !== '/' ? (
       <div className="layout">
         <Banner
           banner={{
-            message: 'Help Us Build the Future of SikhiToTheMax! Every donation doubled - dvnetwork.org/sikhitothemax',
-            link: "dvnetwork.org/sikhitothemax",
-            label: "Donate now",
-            type: "3",
+            message:
+              'Help Us Build the Future of SikhiToTheMax! Every donation doubled - dvnetwork.org/sikhitothemax',
+            link: 'dvnetwork.org/sikhitothemax',
+            label: 'Donate now',
+            type: '3',
             disabled: true,
           }}
         />
-        {isAddFavoriteShabadModalOpen && <AddFavouriteShabadModal open={isAddFavoriteShabadModalOpen} />}
-        <div className={`pusher ${showMultiViewPanel ? 'enable' : ''} pin-settings ${showPinSettings ? 'active' : ''}`}>
+        {isAddFavoriteShabadModalOpen && (
+          <AddFavouriteShabadModal open={isAddFavoriteShabadModalOpen} />
+        )}
+        <div
+          className={`pusher ${
+            showMultiViewPanel ? 'enable' : ''
+          } pin-settings ${showPinSettings ? 'active' : ''}`}
+        >
           <Header
             defaultQuery={this.props.defaultQuery}
             isHome={isHome}
@@ -155,15 +181,16 @@ class Layout extends React.PureComponent {
           isShowSettings={isShowSettings}
           isShowAI={isShowAI}
           onAIClick={this.handleAIClick}
-          isAIActive={this.state.isAIActive} />
+          isAIActive={this.state.isAIActive}
+        />
 
         {/* AI Dialog */}
         {this.state.isAIActive && (
           <div className="floating-dialog-container">
             <div className="floating-dialog open">
               <div className="floating-dialog-header">
-                <h4>AI Response</h4>
-                <button 
+                <h4>Gurbani Assistant</h4>
+                <button
                   className="floating-dialog-toggle"
                   onClick={this.handleAIClick}
                 >
@@ -172,8 +199,16 @@ class Layout extends React.PureComponent {
               </div>
               {this.state.rephrasedTranslation && (
                 <div className="floating-dialog-content">
-                  <p className="question">{this.state.rephrasedTranslation.question}</p>
-                  <p className="answer">{this.state.rephrasedTranslation.answer}</p>
+                  <p className="question">
+                    {this.state.rephrasedTranslation.question}
+                  </p>
+                  <p className="answer">
+                    <p className="gurmukhi gurbani-font">
+                      {this.state.rephrasedTranslation.verse.gurmukhi}
+                    </p>
+                    {this.state.rephrasedTranslation.answer}
+                  </p>
+                  <p className="footer">Response generated by GurbaniBot AI.</p>
                 </div>
               )}
             </div>
@@ -188,11 +223,12 @@ class Layout extends React.PureComponent {
           <GenericError
             title={TEXTS.OFFLINE}
             description={TEXTS.OFFLINE_DESCRIPTION}
-            image={SachKaur} />
+            image={SachKaur}
+          />
         </div>
         <Footer showPinSettings={showPinSettings} />
       </>
-    )
+    );
   }
 
   updateTheme() {
@@ -202,25 +238,27 @@ class Layout extends React.PureComponent {
   }
 
   processAuth() {
-    const { location, history } = this.props
-    const {
-      token, logout
-    } = getQueryParams(location.search);
+    const { location, history } = this.props;
+    const { token, logout } = getQueryParams(location.search);
     // @TODO: use redux to control state of session user
     if (!isFalsy(token)) {
-      window.localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, token)
-      history.push('/')
+      window.localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, token);
+      history.push('/');
     }
     // @TODO: use redux to remove user sesssion
     if (logout === 'success') {
-      window.localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN)
-      history.push('/')
+      window.localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN);
+      history.push('/');
     }
     return;
   }
 
   componentDidMount() {
-    if (location.pathname !== "/hukamnama" && location.pathname !== "/shabad" && location.pathname !== "/search") {
+    if (
+      location.pathname !== '/hukamnama' &&
+      location.pathname !== '/shabad' &&
+      location.pathname !== '/search'
+    ) {
       this.props.closeSettingsPanel();
     }
     this.processAuth();
@@ -231,7 +269,7 @@ class Layout extends React.PureComponent {
     document.title = this.props.title;
     this.updateTheme();
     addVisraamClass();
-    
+
     // Expose setRephrasedTranslation globally for Shabad component
     window.setRephrasedTranslation = this.setRephrasedTranslation;
   }
@@ -272,15 +310,12 @@ class Layout extends React.PureComponent {
   }
 
   handleAIClick = () => {
-    console.log('handleAIClick');
     this.setState((prevState) => ({
       isAIActive: !prevState.isAIActive,
     }));
   };
 
   setRephrasedTranslation = (translation) => {
-    console.log("setRephrasedTranslation", translation);
-    console.log("this.state.isAIActive", this.state.isAIActive);
     this.setState({
       rephrasedTranslation: translation,
       isAIActive: true, // Auto-open when translation is set
@@ -289,7 +324,21 @@ class Layout extends React.PureComponent {
 }
 
 export default connect(
-  ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, modalOpened }) => ({ online, darkMode, autoScrollMode, showMultiViewPanel, showPinSettings, modalOpened }),
+  ({
+    online,
+    darkMode,
+    autoScrollMode,
+    showMultiViewPanel,
+    showPinSettings,
+    modalOpened,
+  }) => ({
+    online,
+    darkMode,
+    autoScrollMode,
+    showMultiViewPanel,
+    showPinSettings,
+    modalOpened,
+  }),
   {
     toggleDarkMode,
     setOnlineMode,
