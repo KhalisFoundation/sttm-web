@@ -4,6 +4,7 @@ import AutoScrollControl from '../../AutoScrollControl';
 import ScrollToTop from './ScrollToTop';
 import FullScreen from './FullScreen';
 import DisplaySettingsButton from '@/components/DisplaySettingsButton';
+import AIButton from './AIButton';
 
 interface Props {
   onIconButtonClick?: () => {},
@@ -11,6 +12,7 @@ interface Props {
   isShowScrollToTop?: boolean;
   isShowFullScreen?: boolean;
   isShowSettings?: boolean;
+  isShowAI?: boolean;
   isNoFloat?: boolean;
   iconPosition?: 'Top' | 'Bottom';
   iconShadow?: 'show' | 'hide';
@@ -20,6 +22,8 @@ interface Props {
   CustomIcon?: React.FC | React.ReactNode;
   customIconProps?: React.ComponentProps<any>;
   showPinSettings?: boolean;
+  onAIClick?: () => void;
+  isAIActive?: boolean;
 }
 
 export const FloatingActions = (props: Props) => {
@@ -28,11 +32,14 @@ export const FloatingActions = (props: Props) => {
     isShowScrollToTop,
     isShowAutoScroll,
     isShowSettings,
+    isShowAI,
     showPinSettings,
+    onAIClick,
+    isAIActive,
   } = props;
-  const isShowIcons = isShowScrollToTop || isShowFullScreen
-  const isShowNothing = !isShowFullScreen && !isShowAutoScroll && !isShowScrollToTop && !Boolean(props.CustomIcon);
-  const isLastIcon = [isShowScrollToTop, isShowFullScreen, isShowAutoScroll]
+  const isShowIcons = isShowScrollToTop || isShowFullScreen || isShowAI
+  const isShowNothing = !isShowFullScreen && !isShowAutoScroll && !isShowScrollToTop && !isShowAI && !Boolean(props.CustomIcon);
+  const isLastIcon = [isShowScrollToTop, isShowFullScreen, isShowAI]
     .filter(isShowEntry => isShowEntry).length === 1;
   const lastIconStyles = isLastIcon ? { margin: 0 } : {};
   if (isShowNothing) return null;
@@ -62,6 +69,15 @@ export const FloatingActions = (props: Props) => {
                   style={lastIconStyles}
                   className="floatingActionsControl">
                   <FullScreen />
+                </div>}
+              {isShowAI &&
+                <div
+                  style={lastIconStyles}
+                  className="floatingActionsControl">
+                  <AIButton
+                    onClick={onAIClick || (() => {})}
+                    isActive={isAIActive || false}
+                  />
                 </div>}
               {isShowScrollToTop &&
                 <div style={lastIconStyles} className="floatingActionsControl">

@@ -558,7 +558,11 @@ export default [
       };
 
       return (
-        <Layout defaultQuery={q} title="Shabad - SikhiToTheMax" {...props}>
+        <Layout 
+          defaultQuery={q} 
+          title="Shabad - SikhiToTheMax" 
+          {...props}
+        >
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "Shabad" */ './pages/Shabad')

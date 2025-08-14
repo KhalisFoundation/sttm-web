@@ -85,6 +85,48 @@
   }
 }
 
+.ai-button {
+  align-items: center;
+  display: flex;
+  fill: $sttm-orange;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    svg {
+      fill: $sttm-orange;
+      transform: scale(1.1);
+    }
+  }
+
+  &.active {
+    svg {
+      fill: $sttm-white;
+      animation: none;
+    }
+  }
+
+  svg {
+    transition: all 0.3s ease;
+    animation: aiPulse 2s infinite;
+  }
+}
+
+@keyframes aiPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .no-shadow {
   box-shadow: none;
 
