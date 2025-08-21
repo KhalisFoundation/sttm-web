@@ -29,16 +29,8 @@ class Layout extends React.PureComponent {
   };
 
   render() {
-    const {
-      pages,
-      offset,
-      q,
-      type,
-      source,
-      resultsCount,
-      shabads,
-      ...props
-    } = this.props;
+    const { pages, offset, q, type, source, resultsCount, shabads, ...props } =
+      this.props;
 
     if (parseInt(resultsCount, 10) === 0) {
       const className = PLACEHOLDERS[type][1] === true ? '' : 'gurbani-font';
@@ -67,7 +59,7 @@ class Layout extends React.PureComponent {
                 {TEXTS.HELP_SECTION}
               </a>
               .
-            </ React.Fragment>
+            </React.Fragment>
           }
           image={SachKaur}
         />
@@ -85,9 +77,11 @@ class Layout extends React.PureComponent {
     return (
       <div className="row" id="content-root">
         <Breadcrumb links={[{ title: TEXTS.URIS.SEARCH_RESULTS }]} />
-        <Controls media={
-          supportedMedia.filter(m => (m === 'multiView' || m === 'settings' || m === 'random'))
-        } />
+        <Controls
+          media={supportedMedia.filter(
+            (m) => m === 'multiView' || m === 'settings' || m === 'random'
+          )}
+        />
         <SearchResults
           q={q}
           type={type}
@@ -106,7 +100,7 @@ class Layout extends React.PureComponent {
   }
 
   handlePageClick = (pageNumber) => {
-    const { q, type, source, offset } = this.props;
+    const { q, type, source, offset, isGurmukhi } = this.props;
 
     const currentPage = offset;
 
@@ -116,14 +110,20 @@ class Layout extends React.PureComponent {
 
     clickEvent({ action: TEXTS.OPEN_PAGE, label: pageNumber });
     window.scrollTo(0, 0);
-    this.props.history.push(
-      toSearchURL({
-        query: q,
-        type,
-        source,
-        offset: pageNumber,
-      })
-    );
+
+    const searchParams = {
+      query: q,
+      type,
+      source,
+      offset: pageNumber,
+    };
+
+    // Include isGurmukhi if it was provided
+    if (isGurmukhi === '1') {
+      searchParams.isGurmukhi = true;
+    }
+
+    this.props.history.push(toSearchURL(searchParams));
   };
 
   componentDidMount() {
