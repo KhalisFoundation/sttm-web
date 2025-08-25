@@ -95,11 +95,6 @@ export default class Search extends React.PureComponent {
 
     let url = isChatBot ? this.state.searchURL : buildApiUrl(apiParams);
 
-    // For testing: manually append isGurmukhi parameter if needed
-    if (!isChatBot && isGurmukhi === '1') {
-      url += url.includes('?') ? '&isGurmukhi=1' : '?isGurmukhi=1';
-    }
-
     url = encodeURI(url);
 
     if (q === '') {

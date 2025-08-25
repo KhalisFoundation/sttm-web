@@ -114,11 +114,6 @@ export default class ControllerSearch extends React.PureComponent {
       }
       url = buildApiUrl(apiParams);
 
-      // For testing: manually append isGurmukhi parameter if needed
-      if (type === SEARCH_TYPES.AUTO_DETECT && searchData.isGurmukhi) {
-        url += url.includes('?') ? '&isGurmukhi=1' : '?isGurmukhi=1';
-      }
-
       url = encodeURI(url);
     }
 

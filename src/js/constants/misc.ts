@@ -10,14 +10,7 @@ export const BANI_LENGTH_COLS = {
   extralong: 'existsBuddhaDal',
 };
 
-// Create a new array with all original types plus the new ones
-const ALL_TYPES = [
-  ..._TYPES,
-  'Auto Detect', // index 8 - matches AUTO_DETECT: 8
-  'Ask a Question (English)', // index 9 - matches ASK_A_QUESTION: 9
-];
-
-export const TYPES = ALL_TYPES.filter((value, index) =>
+export const TYPES = _TYPES.filter((value, index) =>
   Object.values(SEARCH_TYPES).includes(index)
 );
 

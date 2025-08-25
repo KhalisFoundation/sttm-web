@@ -93,7 +93,6 @@ class Header extends React.PureComponent {
         data.query = data.query.trim();
       }
 
-      // Add isGurmukhi parameter for Auto Detect with Gurmukhi enabled
       const searchParams = { ...data };
       if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
         searchParams.isGurmukhi = true;

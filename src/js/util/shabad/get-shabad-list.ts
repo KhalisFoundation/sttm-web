@@ -25,11 +25,6 @@ export const getShabadList = (q, { type, source, writer, isGurmukhi }) => {
 
   let url = buildApiUrl(apiParams);
 
-  // For testing: manually append isGurmukhi parameter if needed
-  if (isGurmukhi) {
-    url += url.includes('?') ? '&isGurmukhi=1' : '?isGurmukhi=1';
-  }
-
   url = encodeURI(url);
 
   return new Promise((resolve, reject) => {

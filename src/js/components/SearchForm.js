@@ -215,8 +215,6 @@ export default class SearchForm extends React.PureComponent {
     const typeInt = parseInt(type);
     const [, useEnglish = false] = PLACEHOLDERS[type];
 
-    // For Auto Detect, use gurbani-font when Gurmukhi is toggled on
-    // For other types, use the original logic
     let className = '';
     if (typeInt === SEARCH_TYPES.AUTO_DETECT) {
       className = autoDetectGurmukhi ? 'gurbani-font' : '';
