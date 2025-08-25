@@ -1,5 +1,5 @@
 interface SearchTypes {
-  [key: string]: number
+  [key: string]: number;
 }
 
 export const SEARCH_TYPES: SearchTypes = {
@@ -11,10 +11,26 @@ export const SEARCH_TYPES: SearchTypes = {
   ANG: 5,
   MAIN_LETTERS: 6,
   ROMANIZED_FIRST_LETTERS_ANYWHERE: 7,
-  ASK_A_QUESTION: 8
+  AUTO_DETECT: 8,
+  ASK_A_QUESTION: 9,
 };
 
 export const SEARCH_TYPES_NOT_ALLOWED_KEYS = {
-  [SEARCH_TYPES.MAIN_LETTERS]: ['W', 'y', 'Y', 'w', 'O', 'o', 'u', 'i', 'I', 'U', 'N', 'H', 'R', 'M'],
-  [SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE]: []
-}
+  [SEARCH_TYPES.MAIN_LETTERS]: [
+    'W',
+    'y',
+    'Y',
+    'w',
+    'O',
+    'o',
+    'u',
+    'i',
+    'I',
+    'U',
+    'N',
+    'H',
+    'R',
+    'M',
+  ],
+  [SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE]: [],
+};

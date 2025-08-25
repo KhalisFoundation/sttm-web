@@ -26,6 +26,7 @@ import Reset from './Icons/Reset';
 import Autocomplete from '@/components/Autocomplete';
 import ClearSearchButton from '@/components/ClearSearchButton';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
+import AutoDetectGurmukhiToggle from '@/components/AutoDetectGurmukhiToggle';
 import { toggleSettingsPanel } from '@/features/actions';
 
 import {
@@ -81,19 +82,24 @@ class Header extends React.PureComponent {
   }
 
   onFormSubmit =
-    ({ handleSubmit, ...data }) =>
-      (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        handleSubmit();
-        // Remove the last space in from the searched query.
-        const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
-        if (isNotAngSearch) {
-          data.query = data.query.trim();
-        }
+    ({ handleSubmit, autoDetectGurmukhi, ...data }) =>
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleSubmit();
+      // Remove the last space in from the searched query.
+      const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
+      if (isNotAngSearch) {
+        data.query = data.query.trim();
+      }
 
-        this.handleFormSubmit(data);
-      };
+      const searchParams = { ...data };
+      if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
+        searchParams.isGurmukhi = true;
+      }
+
+      this.handleFormSubmit(searchParams);
+    };
 
   handleFormSubmit = (data) => {
     this.props.history.push(toSearchURL(data));
@@ -101,7 +107,14 @@ class Header extends React.PureComponent {
 
   render() {
     const {
-      props: { defaultQuery, isHome, isAng, fullScreenMode, isController, darkMode },
+      props: {
+        defaultQuery,
+        isHome,
+        isAng,
+        fullScreenMode,
+        isController,
+        darkMode,
+      },
       state: { showDoodle, doodleData },
       onFormSubmit,
       handleFormSubmit,
@@ -117,7 +130,8 @@ class Header extends React.PureComponent {
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
     } = getQueryParams(location.search);
 
-    const isAskGurbaniBotSearchType = Number(defaultType) === SEARCH_TYPES['ASK_A_QUESTION'];
+    const isAskGurbaniBotSearchType =
+      Number(defaultType) === SEARCH_TYPES['ASK_A_QUESTION'];
 
     const isSearchPageRoute = location.pathname.includes('search');
     const key = `${defaultQuery}${defaultSource}${defaultType}${defaultWriter}`;
@@ -152,15 +166,31 @@ class Header extends React.PureComponent {
           {!isHome && <></>}
           <SearchForm
             key={key}
-            defaultQuery={isAskGurbaniBotSearchType ? '' : defaultQuery && decodeURIComponent(defaultQuery)}
-            defaultSource={isAskGurbaniBotSearchType ? (localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
-              DEFAULT_SEARCH_SOURCE) : defaultSource}
-            defaultType={isAskGurbaniBotSearchType ? getNumberFromLocalStorage(
-              LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-              DEFAULT_SEARCH_TYPE
-            ) : Number(defaultType)}
-            defaultWriter={isAskGurbaniBotSearchType ? (localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
-              DEFAULT_SEARCH_WRITER) : Number(defaultWriter)}
+            defaultQuery={
+              isAskGurbaniBotSearchType
+                ? ''
+                : defaultQuery && decodeURIComponent(defaultQuery)
+            }
+            defaultSource={
+              isAskGurbaniBotSearchType
+                ? localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
+                  DEFAULT_SEARCH_SOURCE
+                : defaultSource
+            }
+            defaultType={
+              isAskGurbaniBotSearchType
+                ? getNumberFromLocalStorage(
+                    LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+                    DEFAULT_SEARCH_TYPE
+                  )
+                : Number(defaultType)
+            }
+            defaultWriter={
+              isAskGurbaniBotSearchType
+                ? localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
+                  DEFAULT_SEARCH_WRITER
+                : Number(defaultWriter)
+            }
             submitOnChangeOf={['type', 'source', 'writer']}
             onSubmit={handleFormSubmit}
           >
@@ -191,6 +221,8 @@ class Header extends React.PureComponent {
               handleSearchWriterChange,
               handleSubmit,
               handleReset,
+              autoDetectGurmukhi,
+              handleAutoDetectGurmukhiToggle,
             }) => {
               return (
                 <React.Fragment>
@@ -296,6 +328,15 @@ class Header extends React.PureComponent {
                                     <ClearSearchButton
                                       clickHandler={setQueryAs}
                                     />
+                                    {parseInt(type) ===
+                                      SEARCH_TYPES.AUTO_DETECT && (
+                                      <AutoDetectGurmukhiToggle
+                                        isActive={autoDetectGurmukhi}
+                                        onToggle={
+                                          handleAutoDetectGurmukhiToggle
+                                        }
+                                      />
+                                    )}
                                     {isShowKeyboard && (
                                       <GurmukhiKeyboardToggleButton
                                         clickHandler={
@@ -338,6 +379,10 @@ class Header extends React.PureComponent {
                                         type: parseInt(type),
                                         source,
                                         writer,
+                                        isGurmukhi:
+                                          parseInt(type) ===
+                                            SEARCH_TYPES.AUTO_DETECT &&
+                                          autoDetectGurmukhi,
                                       }}
                                       value={query}
                                       isHome={isHome}
@@ -349,7 +394,11 @@ class Header extends React.PureComponent {
                           </>
                         )}
                       </div>
-                      <Menu isHome={isHome} pathname={location.pathname} isDarkMode={darkMode} />
+                      <Menu
+                        isHome={isHome}
+                        pathname={location.pathname}
+                        isDarkMode={darkMode}
+                      />
                     </div>
                     {!isHome && (
                       <div id="search-options">
@@ -411,13 +460,13 @@ class Header extends React.PureComponent {
                             ?.filter((e) =>
                               source === 'G' || source === 'A'
                                 ? !SOURCE_WRITER_FILTER[source].includes(
-                                  e.writerID
-                                )
-                                : source !== 'all'
-                                  ? SOURCE_WRITER_FILTER[source].includes(
                                     e.writerID
                                   )
-                                  : true
+                                : source !== 'all'
+                                ? SOURCE_WRITER_FILTER[source].includes(
+                                    e.writerID
+                                  )
+                                : true
                             )
                             .map((writer) => (
                               <option

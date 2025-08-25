@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SearchIcon from '../../components/Icons/Search';
 import { EnhancedGurmukhiKeyboard } from '../../components/EnhancedGurmukhiKeyboard';
 import GurmukhiKeyboardToggleButton from '../../components/GurmukhiKeyboardToggleButton';
+import AutoDetectGurmukhiToggle from '../../components/AutoDetectGurmukhiToggle';
 import SearchForm from '../../components/SearchForm';
 import ClearSearchButton from '../../components/ClearSearchButton';
 
@@ -28,11 +29,10 @@ export default class SearchInput extends React.PureComponent {
     super(props);
     this.state = {
       query: '',
-      type:
-        getNumberFromLocalStorage(
-          LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-          DEFAULT_SEARCH_TYPE
-        ),
+      type: getNumberFromLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+        DEFAULT_SEARCH_TYPE
+      ),
       source:
         localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
         DEFAULT_SEARCH_SOURCE,
@@ -40,11 +40,20 @@ export default class SearchInput extends React.PureComponent {
     };
   }
 
-  onSubmit = ({ handleSubmit, query, type, source }) => e => {
-    e.preventDefault();
-    handleSubmit();
-    this.props.onSearch({ query, type, source, offset: 0 });
-  };
+  onSubmit =
+    ({ handleSubmit, query, type, source, autoDetectGurmukhi }) =>
+    (e) => {
+      e.preventDefault();
+      handleSubmit();
+
+      const searchData = { query, type, source, offset: 0 };
+      // Add isGurmukhi if Auto Detect with Gurmukhi is enabled
+      if (type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
+        searchData.isGurmukhi = true;
+      }
+
+      this.props.onSearch(searchData);
+    };
 
   render() {
     return (
@@ -67,6 +76,8 @@ export default class SearchInput extends React.PureComponent {
           handleSearchSourceChange,
           handleSubmit,
           handleSearchTypeChange,
+          autoDetectGurmukhi,
+          handleAutoDetectGurmukhiToggle,
         }) => (
           <React.Fragment>
             <div className="row" id="content-root">
@@ -81,8 +92,10 @@ export default class SearchInput extends React.PureComponent {
                     source,
                   })}
                 >
-
-                  <div id="search-container" className={displayGurmukhiKeyboard ? "kb-active" : ''}>
+                  <div
+                    id="search-container"
+                    className={displayGurmukhiKeyboard ? 'kb-active' : ''}
+                  >
                     <input
                       autoFocus={true}
                       name={name}
@@ -101,7 +114,20 @@ export default class SearchInput extends React.PureComponent {
                       pattern={pattern}
                     />
                     <ClearSearchButton clickHandler={setQueryAs} />
-                    {type > 2 ? '' : (<GurmukhiKeyboardToggleButton clickHandler={setGurmukhiKeyboardVisibilityAs} isVisible={displayGurmukhiKeyboard} />)}
+                    {type === SEARCH_TYPES.AUTO_DETECT && (
+                      <AutoDetectGurmukhiToggle
+                        isActive={autoDetectGurmukhi}
+                        onToggle={handleAutoDetectGurmukhiToggle}
+                      />
+                    )}
+                    {type > 2 ? (
+                      ''
+                    ) : (
+                      <GurmukhiKeyboardToggleButton
+                        clickHandler={setGurmukhiKeyboardVisibilityAs}
+                        isVisible={displayGurmukhiKeyboard}
+                      />
+                    )}
 
                     <button type="submit">
                       <SearchIcon />
@@ -111,7 +137,7 @@ export default class SearchInput extends React.PureComponent {
                       value={query}
                       searchType={type}
                       active={displayGurmukhiKeyboard}
-                      onKeyClick={newValue => setQueryAs(newValue)()}
+                      onKeyClick={(newValue) => setQueryAs(newValue)()}
                       onClose={setGurmukhiKeyboardVisibilityAs(false)}
                     />
                   </div>
@@ -134,14 +160,20 @@ export default class SearchInput extends React.PureComponent {
                       {type === SEARCH_TYPES['ANG'] ? (
                         <select
                           name="source"
-                          value={Object.keys(SOURCES_WITH_ANG).includes(source) ? source : 'G'}
+                          value={
+                            Object.keys(SOURCES_WITH_ANG).includes(source)
+                              ? source
+                              : 'G'
+                          }
                           onChange={handleSearchSourceChange}
                         >
-                          {Object.entries(SOURCES_WITH_ANG).map(([value, children]) => (
-                            <option key={value} value={value}>
-                              {children}
-                            </option>
-                          ))}
+                          {Object.entries(SOURCES_WITH_ANG).map(
+                            ([value, children]) => (
+                              <option key={value} value={value}>
+                                {children}
+                              </option>
+                            )
+                          )}
                         </select>
                       ) : (
                         <select
@@ -155,8 +187,7 @@ export default class SearchInput extends React.PureComponent {
                             </option>
                           ))}
                         </select>
-                      )
-                      }
+                      )}
                     </div>
                   </div>
                 </form>
@@ -165,6 +196,6 @@ export default class SearchInput extends React.PureComponent {
           </React.Fragment>
         )}
       </SearchForm>
-    )
+    );
   }
 }

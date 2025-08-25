@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
-import { TEXTS } from '../../constants';
+import { TEXTS, SEARCH_TYPES } from '../../constants';
 import PageLoader from '../PageLoader';
 
 import GenericError, { SachKaur } from '../../components/GenericError';
@@ -28,7 +28,7 @@ export default class ControllerSearch extends React.PureComponent {
       verseId: null,
       homeId: null,
       openShabad: false,
-    }
+    };
   }
 
   static propTypes = {
@@ -37,24 +37,24 @@ export default class ControllerSearch extends React.PureComponent {
     controllerPin: PropTypes.number,
   };
 
-  handlePageClick = e => {
+  handlePageClick = (e) => {
     this.setState({ offset: e });
-  }
+  };
 
   onShabadClick = (shabadId, verseId, gurmukhi) => {
-    const prevSlide = document.querySelector(".active-slide");
-    prevSlide && prevSlide.classList.remove("active-slide");
+    const prevSlide = document.querySelector('.active-slide');
+    prevSlide && prevSlide.classList.remove('active-slide');
 
     this.props.socket.emit('data', {
-      host: "sttm-web",
-      type: "shabad",
+      host: 'sttm-web',
+      type: 'shabad',
       pin: this.props.controllerPin,
       shabadId,
       verseId,
       gurmukhi,
     });
     this.setState({ verseId, shabadId, openShabad: true });
-  }
+  };
 
   componentDidMount() {
     const { searchData } = this.props;
@@ -63,7 +63,7 @@ export default class ControllerSearch extends React.PureComponent {
         openShabad: true,
         shabadId: searchData.id,
         verseId: searchData.highlight,
-        homeId: searchData.homeId
+        homeId: searchData.homeId,
       });
     }
   }
@@ -76,10 +76,15 @@ export default class ControllerSearch extends React.PureComponent {
           openShabad: true,
           shabadId: searchData.id,
           verseId: searchData.highlight,
-          homeId: searchData.homeId
+          homeId: searchData.homeId,
         });
       } else {
-        this.setState({ openShabad: false, shabadId: null, verseId: null, homeId: null });
+        this.setState({
+          openShabad: false,
+          shabadId: null,
+          verseId: null,
+          homeId: null,
+        });
       }
     }
   }
@@ -102,7 +107,14 @@ export default class ControllerSearch extends React.PureComponent {
           />
         );
       }
-      url = encodeURI(buildApiUrl({ q: query, type, source, offset, API_URL }))
+      const apiParams = { q: query, type, source, offset, API_URL };
+      // Add isGurmukhi parameter if Auto Detect with Gurmukhi is enabled
+      if (type === SEARCH_TYPES.AUTO_DETECT && searchData.isGurmukhi) {
+        apiParams.isGurmukhi = 1;
+      }
+      url = buildApiUrl(apiParams);
+
+      url = encodeURI(url);
     }
 
     return (
@@ -116,7 +128,7 @@ export default class ControllerSearch extends React.PureComponent {
 
             const results = [];
 
-            verses.map(shabad => {
+            verses.map((shabad) => {
               const highlightIndex = getHighlightIndices(
                 shabad.verse.gurmukhi,
                 query,
@@ -124,8 +136,17 @@ export default class ControllerSearch extends React.PureComponent {
               );
 
               results.push(
-                <li className="search-result" key={shabad.verseId}
-                  onClick={() => { this.onShabadClick(getShabadId(shabad), getVerseId(shabad), getGurmukhiVerse(shabad)); }}>
+                <li
+                  className="search-result"
+                  key={shabad.verseId}
+                  onClick={() => {
+                    this.onShabadClick(
+                      getShabadId(shabad),
+                      getVerseId(shabad),
+                      getGurmukhiVerse(shabad)
+                    );
+                  }}
+                >
                   <Larivaar
                     key={shabad.id}
                     larivaarAssist={false}
@@ -145,11 +166,7 @@ export default class ControllerSearch extends React.PureComponent {
                 <Pagination
                   currentPage={this.state.offset || 1}
                   pages={Array.from(
-                    Array(
-                      parseInt(
-                        resultsInfo.pages.totalPages
-                      )
-                    ),
+                    Array(parseInt(resultsInfo.pages.totalPages)),
                     (_, i) => i + 1
                   )}
                   onPageClick={this.handlePageClick}
@@ -158,13 +175,15 @@ export default class ControllerSearch extends React.PureComponent {
             );
           } else {
             return (
-              <ControllerShabad data={data}
+              <ControllerShabad
+                data={data}
                 socket={this.props.socket}
                 highlight={this.state.verseId}
                 homeId={this.state.homeId || this.state.verseId}
                 controllerPin={this.props.controllerPin}
-                resultType='shabad' />
-            )
+                resultType="shabad"
+              />
+            );
           }
         }}
       </PageLoader>
