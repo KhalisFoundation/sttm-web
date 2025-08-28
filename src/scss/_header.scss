@@ -214,7 +214,6 @@
   >button {
     color: $sttm-pure-white;
     display: inline-block;
-    height: 44px;
     outline: none;
     width: 44px;
   }
@@ -266,17 +265,14 @@
   }
 
   .auto-detect-gurmukhi-toggle {
+    align-self: center;
     background-color: $sttm-pure-white;
     border: 1px solid $sttm-lighter-grey;
     border-radius: 4px;
     font-size: 1rem;
     height: 28px;
-    line-height: 1;
-    margin: 8px 4px;
+    margin-right: 8px;
     padding: 4px 8px;
-    position: absolute;
-    right: 70px;
-    top: 0;
     transition: all 0.2s ease;
     width: auto;
     z-index: 1;
@@ -295,11 +291,11 @@
     }
 
     &.active {
-      background-color: $sttm-light-blue;
-      border-color: $sttm-blue;
+      background-color: $sttm-blue;
+      border-color: $sttm-dark-blue;
 
       .toggle-text {
-        color: $sttm-blue;
+        color: $sttm-white;
       }
 
       .dark-mode & {

@@ -9,6 +9,19 @@ export const PLACEHOLDERS = {
   [SEARCH_TYPES.ANG]: ['123', true], // ang
   [SEARCH_TYPES.MAIN_LETTERS]: ['j mgh Tkr Apn q'], // main letters
   [SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE]: ['jmtatssd', true], //romanized first letter anywhere
-  [SEARCH_TYPES.AUTO_DETECT]: ['Enter your search query', true], // auto detect
+  [SEARCH_TYPES.AUTO_DETECT]: [
+    {
+      type: 'gurmukhi',
+      placeholders: ['jmTAq', 'jo mwgih Twkur Apuny qy', 'j mgh Tkr Apn q'],
+    },
+    {
+      type: 'english',
+      placeholders: [
+        'He has extended His power',
+        'jo mange thakur apne te soi',
+        'jmtastssd',
+      ],
+    },
+  ],
   [SEARCH_TYPES.ASK_A_QUESTION]: ['What is the best time to meditate?', true], // ask a question
 };
