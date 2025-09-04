@@ -18,6 +18,12 @@ const plugins = PRODUCTION
           npm_package_version: JSON.stringify(process.env.npm_package_version),
           AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
           SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL),
+          AUDIO_TRANSCRIPTION_URL: JSON.stringify(
+            process.env.AUDIO_TRANSCRIPTION_URL
+          ),
+          AUDIO_TRANSCRIPTION_KEY: JSON.stringify(
+            process.env.AUDIO_TRANSCRIPTION_KEY
+          ),
         },
         PRODUCTION: JSON.stringify(true),
         API_URL: JSON.stringify(API_URLS.PRODUCTION),
@@ -41,6 +47,12 @@ const plugins = PRODUCTION
           npm_package_version: JSON.stringify(process.env.npm_package_version),
           AUDIO_API_PASS: JSON.stringify(process.env.REACT_APP_AUDIO_API_PASS),
           SSO_CALLBACK_URL: JSON.stringify(process.env.SSO_CALLBACK_URL),
+          AUDIO_TRANSCRIPTION_URL: JSON.stringify(
+            process.env.AUDIO_TRANSCRIPTION_URL
+          ),
+          AUDIO_TRANSCRIPTION_KEY: JSON.stringify(
+            process.env.AUDIO_TRANSCRIPTION_KEY
+          ),
         },
         PRODUCTION: JSON.stringify(false),
         API_URL: JSON.stringify(API_URLS.DEVELOPMENT),
