@@ -27,6 +27,8 @@ import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
 import { setModalOpen } from '@/features/actions';
 import { connect } from 'react-redux';
+import MicIcon from '@/components/Icons/MicIcon';
+import Waveform from '@/components/Waveform';
 
 /**
  *
@@ -48,6 +50,8 @@ class Home extends React.PureComponent {
   state = {
     showDoodle: false,
     doodleData: null,
+    isRecording: false,
+    audioStream: null,
   };
 
   fetchDoodle = () => {
@@ -77,7 +81,6 @@ class Home extends React.PureComponent {
       if (isNotAngSearch) {
         data.query = data.query.trim();
       }
-
       // Add isGurmukhi parameter for Auto Detect with Gurmukhi enabled
       const searchParams = { ...data };
       if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
@@ -85,13 +88,18 @@ class Home extends React.PureComponent {
       }
 
       this.props.history.push(toSearchURL(searchParams));
+      this.props.history.push(toSearchURL(data));
     };
 
-  /**
-   * Functional component
-   */
+  handleRecordingStateChange = (isRecording, stream) => {
+    this.setState({
+      isRecording,
+      audioStream: stream,
+    });
+  };
+
   render() {
-    const { showDoodle, doodleData } = this.state;
+    const { showDoodle, doodleData, isRecording, audioStream } = this.state;
     const { isHome } = this.props;
     return (
       <SearchForm>
@@ -170,26 +178,38 @@ class Home extends React.PureComponent {
                       id="search-container"
                       className={displayGurmukhiKeyboard ? 'kb-active' : ''}
                     >
-                      <input
-                        autoFocus={true}
-                        name={name}
-                        id="search"
-                        type={inputType}
-                        autoCapitalize="none"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        spellCheck={false}
-                        required="required"
-                        value={query}
-                        onKeyDown={handleKeyDown}
-                        onChange={handleSearchChange}
-                        className={className}
-                        placeholder={placeholder}
-                        title={title}
-                        pattern={pattern}
-                        min={name === 'ang' ? 1 : undefined}
-                        max={name === 'ang' ? MAX_ANGS[source] : undefined}
-                      />
+                      {isRecording ? (
+                        <div className="waveform-container">
+                          <Waveform
+                            stream={audioStream}
+                            isRecording={isRecording}
+                            width={200}
+                            height={30}
+                            barColor="#007bff"
+                          />
+                        </div>
+                      ) : (
+                        <input
+                          autoFocus={true}
+                          name={name}
+                          id="search"
+                          type={inputType}
+                          autoCapitalize="none"
+                          autoComplete="off"
+                          autoCorrect="off"
+                          spellCheck={false}
+                          required="required"
+                          value={query}
+                          onKeyDown={handleKeyDown}
+                          onChange={handleSearchChange}
+                          className={className}
+                          placeholder={placeholder}
+                          title={title}
+                          pattern={pattern}
+                          min={name === 'ang' ? 1 : undefined}
+                          max={name === 'ang' ? MAX_ANGS[source] : undefined}
+                        />
+                      )}
                       <ClearSearchButton clickHandler={setQueryAs} />
                       {type === SEARCH_TYPES.AUTO_DETECT && (
                         <AutoDetectGurmukhiToggle
@@ -197,6 +217,32 @@ class Home extends React.PureComponent {
                           onToggle={handleAutoDetectGurmukhiToggle}
                         />
                       )}
+                      <MicIcon
+                        onTranscriptionResult={(result) => {
+                          if (type !== SEARCH_TYPES.FIRST_LETTERS_ANYWHERE) {
+                            handleSearchTypeChange({
+                              currentTarget: {
+                                value: SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
+                              },
+                            });
+                          }
+                          setQueryAs(result.unicode)();
+
+                          setTimeout(() => {
+                            this.onSubmit({
+                              handleSubmit,
+                              query: result.unicode,
+                              type: SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
+                              source,
+                              writer,
+                            })(new Event('submit'));
+                          }, 100);
+                        }}
+                        onError={(error) => {
+                          console.error('Transcription error:', error);
+                        }}
+                        onRecordingStateChange={this.handleRecordingStateChange}
+                      />
                       {isShowKeyboard && (
                         <GurmukhiKeyboardToggleButton
                           clickHandler={setGurmukhiKeyboardVisibilityAs}

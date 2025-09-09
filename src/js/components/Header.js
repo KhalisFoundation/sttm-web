@@ -1,3 +1,4 @@
+/* globals DOODLE_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -27,6 +28,8 @@ import Autocomplete from '@/components/Autocomplete';
 import ClearSearchButton from '@/components/ClearSearchButton';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
 import AutoDetectGurmukhiToggle from '@/components/AutoDetectGurmukhiToggle';
+import MicIcon from '@/components/Icons/MicIcon';
+import Waveform from '@/components/Waveform';
 import { toggleSettingsPanel } from '@/features/actions';
 
 import {
@@ -58,6 +61,8 @@ class Header extends React.PureComponent {
   state = {
     showDoodle: false,
     doodleData: null,
+    isRecording: false,
+    audioStream: null,
   };
 
   fetchDoodle = () => {
@@ -105,6 +110,13 @@ class Header extends React.PureComponent {
     this.props.history.push(toSearchURL(data));
   };
 
+  handleRecordingStateChange = (isRecording, stream) => {
+    this.setState({
+      isRecording,
+      audioStream: stream,
+    });
+  };
+
   render() {
     const {
       props: {
@@ -115,9 +127,10 @@ class Header extends React.PureComponent {
         isController,
         darkMode,
       },
-      state: { showDoodle, doodleData },
+      state: { showDoodle, doodleData, isRecording, audioStream },
       onFormSubmit,
       handleFormSubmit,
+      handleRecordingStateChange,
     } = this;
 
     if (fullScreenMode) {
@@ -302,29 +315,41 @@ class Header extends React.PureComponent {
                                       displayGurmukhiKeyboard ? 'kb-active' : ''
                                     }
                                   >
-                                    <input
-                                      type={inputType}
-                                      id="search"
-                                      autoComplete="off"
-                                      autoCapitalize="none"
-                                      autoCorrect="off"
-                                      spellCheck={false}
-                                      required="required"
-                                      name={name}
-                                      value={query}
-                                      onKeyDown={handleKeyDown}
-                                      onChange={handleSearchChange}
-                                      className={className}
-                                      placeholder={placeholder}
-                                      title={title}
-                                      pattern={pattern}
-                                      min={name === 'ang' ? 1 : undefined}
-                                      max={
-                                        name === 'ang'
-                                          ? MAX_ANGS[source]
-                                          : undefined
-                                      }
-                                    />
+                                    {isRecording ? (
+                                      <div className="waveform-container">
+                                        <Waveform
+                                          stream={audioStream}
+                                          isRecording={isRecording}
+                                          width={200}
+                                          height={30}
+                                          barColor="#007bff"
+                                        />
+                                      </div>
+                                    ) : (
+                                      <input
+                                        type={inputType}
+                                        id="search"
+                                        autoComplete="off"
+                                        autoCapitalize="none"
+                                        autoCorrect="off"
+                                        spellCheck={false}
+                                        required="required"
+                                        name={name}
+                                        value={query}
+                                        onKeyDown={handleKeyDown}
+                                        onChange={handleSearchChange}
+                                        className={className}
+                                        placeholder={placeholder}
+                                        title={title}
+                                        pattern={pattern}
+                                        min={name === 'ang' ? 1 : undefined}
+                                        max={
+                                          name === 'ang'
+                                            ? MAX_ANGS[source]
+                                            : undefined
+                                        }
+                                      />
+                                    )}
                                     <ClearSearchButton
                                       clickHandler={setQueryAs}
                                     />
@@ -337,6 +362,41 @@ class Header extends React.PureComponent {
                                         }
                                       />
                                     )}
+                                    <MicIcon
+                                      onTranscriptionResult={(result) => {
+                                        if (
+                                          type !==
+                                          SEARCH_TYPES.FIRST_LETTERS_ANYWHERE
+                                        ) {
+                                          handleSearchTypeChange({
+                                            currentTarget: {
+                                              value:
+                                                SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
+                                            },
+                                          });
+                                        }
+                                        setQueryAs(result.unicode)();
+
+                                        setTimeout(() => {
+                                          onFormSubmit({
+                                            handleSubmit,
+                                            query: result.unicode,
+                                            type: SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
+                                            source,
+                                            writer,
+                                          })(new Event('submit'));
+                                        }, 100);
+                                      }}
+                                      onError={(error) => {
+                                        console.error(
+                                          'Transcription error:',
+                                          error
+                                        );
+                                      }}
+                                      onRecordingStateChange={
+                                        handleRecordingStateChange
+                                      }
+                                    />
                                     {isShowKeyboard && (
                                       <GurmukhiKeyboardToggleButton
                                         clickHandler={
