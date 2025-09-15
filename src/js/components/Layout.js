@@ -67,7 +67,7 @@ class Layout extends React.PureComponent {
   state = {
     error: null,
     showScrollToTop: false,
-    isAIActive: false,
+    isAIActive: true,
     rephrasedTranslation: null,
   };
 
@@ -185,7 +185,7 @@ class Layout extends React.PureComponent {
         />
 
         {/* AI Dialog */}
-        {isShowAI && (
+        {this.state.isAIActive && (
           <div className="floating-dialog-container">
             <div className="floating-dialog open">
               <div className="floating-dialog-header">
