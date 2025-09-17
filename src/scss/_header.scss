@@ -188,6 +188,7 @@
   height: 44px;
   justify-content: flex-end;
   margin: 0;
+  position: relative;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
 
@@ -213,7 +214,6 @@
   >button {
     color: $sttm-pure-white;
     display: inline-block;
-    height: 44px;
     outline: none;
     width: 44px;
   }
@@ -262,6 +262,59 @@
 
   .clear-search-toggle {
     width: 22px;
+  }
+
+  .auto-detect-gurmukhi-toggle {
+    align-self: center;
+    background-color: $sttm-pure-white;
+    border: 1px solid $sttm-lighter-grey;
+    border-radius: 4px;
+    font-size: 1rem;
+    height: 28px;
+    margin: 0 8px 0 8px;
+    padding: 4px 8px;
+    transition: all 0.2s ease;
+    width: auto;
+    z-index: 1;
+
+    .toggle-text {
+      color: $sttm-grey;
+    }
+
+    .dark-mode & {
+      background-color: $sttm-lighter-black;
+      border-color: $sttm-grey;
+
+      .toggle-text {
+        color: $sttm-lighter-grey;
+      }
+    }
+
+    &.active {
+      background-color: $sttm-blue;
+      border-color: $sttm-dark-blue;
+
+      .toggle-text {
+        color: $sttm-white;
+      }
+
+      .dark-mode & {
+        background-color: $sttm-dark-blue;
+        border-color: $sttm-blue;
+
+        .toggle-text {
+          color: $sttm-pure-white;
+        }
+      }
+    }
+
+    &:hover {
+      border-color: $sttm-orange;
+
+      .toggle-text {
+        color: $sttm-orange;
+      }
+    }
   }
 }
 

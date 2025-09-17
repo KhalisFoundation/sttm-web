@@ -1,3 +1,4 @@
+/* globals DOODLE_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -26,6 +27,9 @@ import Reset from './Icons/Reset';
 import Autocomplete from '@/components/Autocomplete';
 import ClearSearchButton from '@/components/ClearSearchButton';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
+import AutoDetectGurmukhiToggle from '@/components/AutoDetectGurmukhiToggle';
+import MicIcon from '@/components/Icons/MicIcon';
+import Waveform from '@/components/Waveform';
 import { toggleSettingsPanel } from '@/features/actions';
 
 import {
@@ -57,6 +61,8 @@ class Header extends React.PureComponent {
   state = {
     showDoodle: false,
     doodleData: null,
+    isRecording: false,
+    audioStream: null,
   };
 
   fetchDoodle = () => {
@@ -76,33 +82,55 @@ class Header extends React.PureComponent {
         }
       );
   };
+
+  searchButtonRef = React.createRef();
+
   componentDidMount() {
     this.fetchDoodle();
   }
 
   onFormSubmit =
-    ({ handleSubmit, ...data }) =>
-      (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        handleSubmit();
-        // Remove the last space in from the searched query.
-        const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
-        if (isNotAngSearch) {
-          data.query = data.query.trim();
-        }
+    ({ handleSubmit, autoDetectGurmukhi, ...data }) =>
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleSubmit();
+      // Remove the last space in from the searched query.
+      const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
+      if (isNotAngSearch) {
+        data.query = data.query.trim();
+      }
 
-        this.handleFormSubmit(data);
-      };
+      const searchParams = { ...data, autoDetectGurmukhi };
+      if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
+        searchParams.isGurmukhi = true;
+      }
+
+      this.handleFormSubmit(searchParams);
+    };
 
   handleFormSubmit = (data) => {
     this.props.history.push(toSearchURL(data));
   };
 
+  handleRecordingStateChange = (isRecording, stream) => {
+    this.setState({
+      isRecording,
+      audioStream: stream,
+    });
+  };
+
   render() {
     const {
-      props: { defaultQuery, isHome, isAng, fullScreenMode, isController, darkMode },
-      state: { showDoodle, doodleData },
+      props: {
+        defaultQuery,
+        isHome,
+        isAng,
+        fullScreenMode,
+        isController,
+        darkMode,
+      },
+      state: { showDoodle, doodleData, isRecording, audioStream },
       onFormSubmit,
       handleFormSubmit,
     } = this;
@@ -115,9 +143,11 @@ class Header extends React.PureComponent {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
+      autoDetectGurmukhi: defaultAutoDetectGurmukhi = false,
     } = getQueryParams(location.search);
 
-    const isAskGurbaniBotSearchType = Number(defaultType) === SEARCH_TYPES['ASK_A_QUESTION'];
+    const isAskGurbaniBotSearchType =
+      Number(defaultType) === SEARCH_TYPES['ASK_A_QUESTION'];
 
     const isSearchPageRoute = location.pathname.includes('search');
     const key = `${defaultQuery}${defaultSource}${defaultType}${defaultWriter}`;
@@ -152,15 +182,32 @@ class Header extends React.PureComponent {
           {!isHome && <></>}
           <SearchForm
             key={key}
-            defaultQuery={isAskGurbaniBotSearchType ? '' : defaultQuery && decodeURIComponent(defaultQuery)}
-            defaultSource={isAskGurbaniBotSearchType ? (localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
-              DEFAULT_SEARCH_SOURCE) : defaultSource}
-            defaultType={isAskGurbaniBotSearchType ? getNumberFromLocalStorage(
-              LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-              DEFAULT_SEARCH_TYPE
-            ) : Number(defaultType)}
-            defaultWriter={isAskGurbaniBotSearchType ? (localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
-              DEFAULT_SEARCH_WRITER) : Number(defaultWriter)}
+            defaultQuery={
+              isAskGurbaniBotSearchType
+                ? ''
+                : defaultQuery && decodeURIComponent(defaultQuery)
+            }
+            defaultSource={
+              isAskGurbaniBotSearchType
+                ? localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
+                  DEFAULT_SEARCH_SOURCE
+                : defaultSource
+            }
+            defaultType={
+              isAskGurbaniBotSearchType
+                ? getNumberFromLocalStorage(
+                    LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+                    DEFAULT_SEARCH_TYPE
+                  )
+                : Number(defaultType)
+            }
+            defaultWriter={
+              isAskGurbaniBotSearchType
+                ? localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
+                  DEFAULT_SEARCH_WRITER
+                : Number(defaultWriter)
+            }
+            defaultAutoDetectGurmukhi={defaultAutoDetectGurmukhi}
             submitOnChangeOf={['type', 'source', 'writer']}
             onSubmit={handleFormSubmit}
           >
@@ -191,6 +238,8 @@ class Header extends React.PureComponent {
               handleSearchWriterChange,
               handleSubmit,
               handleReset,
+              autoDetectGurmukhi,
+              handleAutoDetectGurmukhiToggle,
             }) => {
               return (
                 <React.Fragment>
@@ -239,6 +288,7 @@ class Header extends React.PureComponent {
                                 source,
                                 query,
                                 writer,
+                                autoDetectGurmukhi,
                               })}
                               className="search-form"
                             >
@@ -270,31 +320,91 @@ class Header extends React.PureComponent {
                                       displayGurmukhiKeyboard ? 'kb-active' : ''
                                     }
                                   >
-                                    <input
-                                      type={inputType}
-                                      id="search"
-                                      autoComplete="off"
-                                      autoCapitalize="none"
-                                      autoCorrect="off"
-                                      spellCheck={false}
-                                      required="required"
-                                      name={name}
-                                      value={query}
-                                      onKeyDown={handleKeyDown}
-                                      onChange={handleSearchChange}
-                                      className={className}
-                                      placeholder={placeholder}
-                                      title={title}
-                                      pattern={pattern}
-                                      min={name === 'ang' ? 1 : undefined}
-                                      max={
-                                        name === 'ang'
-                                          ? MAX_ANGS[source]
-                                          : undefined
+                                    {isRecording ? (
+                                      <div className="waveform-container">
+                                        <Waveform
+                                          stream={audioStream}
+                                          isRecording={isRecording}
+                                          stopRecording={() => {
+                                            this.setState({
+                                              isRecording: false,
+                                              audioStream: null,
+                                            });
+                                          }}
+                                          width={200}
+                                          height={30}
+                                          barColor="#007bff"
+                                        />
+                                      </div>
+                                    ) : (
+                                      <input
+                                        type={inputType}
+                                        id="search"
+                                        autoComplete="off"
+                                        autoCapitalize="none"
+                                        autoCorrect="off"
+                                        spellCheck={false}
+                                        required="required"
+                                        name={name}
+                                        value={query}
+                                        onKeyDown={handleKeyDown}
+                                        onChange={handleSearchChange}
+                                        className={className}
+                                        placeholder={placeholder}
+                                        title={title}
+                                        pattern={pattern}
+                                        min={name === 'ang' ? 1 : undefined}
+                                        max={
+                                          name === 'ang'
+                                            ? MAX_ANGS[source]
+                                            : undefined
+                                        }
+                                      />
+                                    )}
+                                    {type === SEARCH_TYPES.AUTO_DETECT && (
+                                      <AutoDetectGurmukhiToggle
+                                        isActive={autoDetectGurmukhi}
+                                        onToggle={
+                                          handleAutoDetectGurmukhiToggle
+                                        }
+                                      />
+                                    )}
+                                    {!isRecording && query.length > 0 && (
+                                      <ClearSearchButton
+                                        clickHandler={setQueryAs}
+                                      />
+                                    )}
+                                    <MicIcon
+                                      isRecording={isRecording}
+                                      onTranscriptionResult={(result) => {
+                                        if (
+                                          type !==
+                                          SEARCH_TYPES.FIRST_LETTERS_ANYWHERE
+                                        ) {
+                                          handleSearchTypeChange({
+                                            currentTarget: {
+                                              value:
+                                                SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
+                                            },
+                                          });
+                                        }
+                                        setQueryAs(result.unicode)();
+
+                                        setTimeout(() => {
+                                          if (this.searchButtonRef.current) {
+                                            this.searchButtonRef.current.click();
+                                          }
+                                        }, 100);
+                                      }}
+                                      onError={(error) => {
+                                        console.error(
+                                          'Transcription error:',
+                                          error
+                                        );
+                                      }}
+                                      onRecordingStateChange={
+                                        this.handleRecordingStateChange
                                       }
-                                    />
-                                    <ClearSearchButton
-                                      clickHandler={setQueryAs}
                                     />
                                     {isShowKeyboard && (
                                       <GurmukhiKeyboardToggleButton
@@ -309,6 +419,7 @@ class Header extends React.PureComponent {
                                       type="submit"
                                       disabled={disabled}
                                       aria-label="search"
+                                      ref={this.searchButtonRef}
                                     >
                                       <SearchIcon />
                                     </button>
@@ -338,6 +449,10 @@ class Header extends React.PureComponent {
                                         type: parseInt(type),
                                         source,
                                         writer,
+                                        isGurmukhi:
+                                          parseInt(type) ===
+                                            SEARCH_TYPES.AUTO_DETECT &&
+                                          autoDetectGurmukhi,
                                       }}
                                       value={query}
                                       isHome={isHome}
@@ -349,7 +464,11 @@ class Header extends React.PureComponent {
                           </>
                         )}
                       </div>
-                      <Menu isHome={isHome} pathname={location.pathname} isDarkMode={darkMode} />
+                      <Menu
+                        isHome={isHome}
+                        pathname={location.pathname}
+                        isDarkMode={darkMode}
+                      />
                     </div>
                     {!isHome && (
                       <div id="search-options">
@@ -411,13 +530,13 @@ class Header extends React.PureComponent {
                             ?.filter((e) =>
                               source === 'G' || source === 'A'
                                 ? !SOURCE_WRITER_FILTER[source].includes(
-                                  e.writerID
-                                )
-                                : source !== 'all'
-                                  ? SOURCE_WRITER_FILTER[source].includes(
                                     e.writerID
                                   )
-                                  : true
+                                : source !== 'all'
+                                ? SOURCE_WRITER_FILTER[source].includes(
+                                    e.writerID
+                                  )
+                                : true
                             )
                             .map((writer) => (
                               <option
