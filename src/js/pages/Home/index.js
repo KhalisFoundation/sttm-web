@@ -53,6 +53,8 @@ class Home extends React.PureComponent {
     audioStream: null,
   };
 
+  searchButtonRef = React.createRef();
+
   fetchDoodle = () => {
     fetch(`${DOODLE_URL}`)
       .then((r) => r.json())
@@ -174,6 +176,12 @@ class Home extends React.PureComponent {
                           <Waveform
                             stream={audioStream}
                             isRecording={isRecording}
+                            stopRecording={() => {
+                              this.setState({
+                                isRecording: false,
+                                audioStream: null,
+                              });
+                            }}
                             width={200}
                             height={30}
                             barColor="#007bff"
@@ -201,8 +209,11 @@ class Home extends React.PureComponent {
                           max={name === 'ang' ? MAX_ANGS[source] : undefined}
                         />
                       )}
-                      <ClearSearchButton clickHandler={setQueryAs} />
+                      {!isRecording && (
+                        <ClearSearchButton clickHandler={setQueryAs} />
+                      )}
                       <MicIcon
+                       isRecording={isRecording}
                         onTranscriptionResult={(result) => {
                           if (type !== SEARCH_TYPES.FIRST_LETTERS_ANYWHERE) {
                             handleSearchTypeChange({
@@ -214,14 +225,10 @@ class Home extends React.PureComponent {
                           setQueryAs(result.unicode)();
 
                           setTimeout(() => {
-                            this.onSubmit({
-                              handleSubmit,
-                              query: result.unicode,
-                              type: SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
-                              source,
-                              writer,
-                            })(new Event('submit'));
-                          }, 100);
+                          if(this.searchButtonRef.current) {
+                            this.searchButtonRef.current.click();
+                          }
+                        }, 100);
                         }}
                         onError={(error) => {
                           console.error('Transcription error:', error);
@@ -234,7 +241,7 @@ class Home extends React.PureComponent {
                           isVisible={displayGurmukhiKeyboard}
                         />
                       )}
-                      <button type="submit" disabled={disabled}>
+                      <button type="submit" disabled={disabled} ref={this.searchButtonRef}>
                         <SearchIcon />
                       </button>
 

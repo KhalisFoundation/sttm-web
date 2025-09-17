@@ -648,6 +648,28 @@
   border-left: 5px double $sttm-lilac;
 }
 
+.mic-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.mic-icon-beta {
+  background-color: $sttm-white;
+  border: 1px solid $sttm-orange;
+  border-radius: 3px;
+  color: $sttm-orange;
+  font-size: 8px;
+  font-weight: bold;
+  padding: 1px 3px;
+  position: absolute;
+  right: -8px;
+  top: -8px;
+
+  .dark-mode & {
+    background-color: $sttm-lighter-black;
+  }
+}
+
 /* Remove Microsoft Edge X icon from search bar */
 input::-ms-clear,
 input::-ms-reveal {

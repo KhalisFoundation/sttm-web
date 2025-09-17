@@ -1,18 +1,20 @@
 import React, { useState, useRef } from 'react';
 
 interface MicIconProps {
+  isRecording: boolean;
   fill?: string;
   width?: string | number;
   height?: string | number;
   onTranscriptionResult?: (result: { ascii: string; unicode: string }) => void;
   onError?: (error: string) => void;
-  onRecordingStateChange?: (
+  onRecordingStateChange: (
     isRecording: boolean,
     stream: MediaStream | null
   ) => void;
 }
 
 const MicIcon: React.FC<MicIconProps> = ({
+  isRecording,
   fill = '#666',
   width = '1.2em',
   height = '1.2em',
@@ -21,7 +23,6 @@ const MicIcon: React.FC<MicIconProps> = ({
   onRecordingStateChange,
   ...props
 }) => {
-  const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -48,8 +49,7 @@ const MicIcon: React.FC<MicIconProps> = ({
       };
 
       mediaRecorder.start();
-      setIsRecording(true);
-      onRecordingStateChange?.(true, stream);
+      onRecordingStateChange(true, stream);
     } catch (error) {
       console.error('Error accessing microphone:', error);
       onError?.(
@@ -82,7 +82,7 @@ const MicIcon: React.FC<MicIconProps> = ({
         if (!base64Audio) {
           onError?.('Failed to process audio data');
           setIsProcessing(false);
-          setIsRecording(false);
+          onRecordingStateChange(false, null);
           return;
         }
 
@@ -115,7 +115,7 @@ const MicIcon: React.FC<MicIconProps> = ({
           );
         } finally {
           setIsProcessing(false);
-          setIsRecording(false);
+          onRecordingStateChange(false, null);
           onRecordingStateChange?.(false, null);
         }
       };
@@ -125,7 +125,7 @@ const MicIcon: React.FC<MicIconProps> = ({
       console.error('Error processing audio:', error);
       onError?.('Failed to process audio');
       setIsProcessing(false);
-      setIsRecording(false);
+      onRecordingStateChange(false, null);
       onRecordingStateChange?.(false, null);
     }
   };
@@ -144,6 +144,7 @@ const MicIcon: React.FC<MicIconProps> = ({
     return (
       <button
         type="button"
+        style={{ color: 'inherit' }}
         disabled
         onClick={handleClick}
         title="Processing audio..."
@@ -201,16 +202,21 @@ const MicIcon: React.FC<MicIconProps> = ({
 
   return (
     <button type="button" onClick={handleClick} title="Start voice recording">
-      <svg
-        fill={fill}
-        width={width}
-        height={height}
-        viewBox="0 0 24 24"
-        {...props}
-      >
-        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
-        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
-      </svg>
+      <div className="mic-icon-container">
+        <svg
+          fill={fill}
+          width={width}
+          height={height}
+          viewBox="0 0 24 24"
+          {...props}
+        >
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+        </svg>
+        <span className="mic-icon-beta">
+          BETA
+        </span>
+      </div>
     </button>
   );
 };
