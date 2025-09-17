@@ -12,6 +12,7 @@ import Autocomplete from '@/components/Autocomplete';
 import ClearSearchButton from '@/components/ClearSearchButton';
 import Reset from '@/components/Icons/Reset';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
+import AutoDetectGurmukhiToggle from '@/components/AutoDetectGurmukhiToggle';
 
 import HomePageIcons from './HomePageIcons';
 import {
@@ -72,7 +73,7 @@ class Home extends React.PureComponent {
   };
 
   onSubmit =
-    ({ handleSubmit, ...data }) =>
+    ({ handleSubmit, autoDetectGurmukhi, ...data }) =>
     (e) => {
       e.preventDefault();
       handleSubmit();
@@ -82,8 +83,12 @@ class Home extends React.PureComponent {
       if (isNotAngSearch) {
         data.query = data.query.trim();
       }
+      const searchParams = { ...data, autoDetectGurmukhi };
+      if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
+        searchParams.autoDetectGurmukhi = true;
+      }
 
-      this.props.history.push(toSearchURL(data));
+      this.props.history.push(toSearchURL(searchParams));
     };
 
   handleRecordingStateChange = (isRecording, stream) => {
@@ -125,6 +130,8 @@ class Home extends React.PureComponent {
           handleSearchTypeChange,
           handleSearchWriterChange,
           handleReset,
+          autoDetectGurmukhi,
+          handleAutoDetectGurmukhiToggle,
         }) => (
           <>
             <div className="row" id="content-root">
@@ -142,6 +149,7 @@ class Home extends React.PureComponent {
                     type,
                     source,
                     writer,
+                    autoDetectGurmukhi,
                   })}
                 >
                   <div className="flex justify-center align-center">
@@ -209,11 +217,17 @@ class Home extends React.PureComponent {
                           max={name === 'ang' ? MAX_ANGS[source] : undefined}
                         />
                       )}
-                      {!isRecording && (
+                      {!isRecording && query.length > 0 && (
                         <ClearSearchButton clickHandler={setQueryAs} />
                       )}
+                      {type === SEARCH_TYPES.AUTO_DETECT && (
+                        <AutoDetectGurmukhiToggle
+                          isActive={autoDetectGurmukhi}
+                          onToggle={handleAutoDetectGurmukhiToggle}
+                        />
+                      )}
                       <MicIcon
-                       isRecording={isRecording}
+                        isRecording={isRecording}
                         onTranscriptionResult={(result) => {
                           if (type !== SEARCH_TYPES.FIRST_LETTERS_ANYWHERE) {
                             handleSearchTypeChange({
@@ -225,10 +239,10 @@ class Home extends React.PureComponent {
                           setQueryAs(result.unicode)();
 
                           setTimeout(() => {
-                          if(this.searchButtonRef.current) {
-                            this.searchButtonRef.current.click();
-                          }
-                        }, 100);
+                            if (this.searchButtonRef.current) {
+                              this.searchButtonRef.current.click();
+                            }
+                          }, 100);
                         }}
                         onError={(error) => {
                           console.error('Transcription error:', error);
@@ -241,7 +255,11 @@ class Home extends React.PureComponent {
                           isVisible={displayGurmukhiKeyboard}
                         />
                       )}
-                      <button type="submit" disabled={disabled} ref={this.searchButtonRef}>
+                      <button
+                        type="submit"
+                        disabled={disabled}
+                        ref={this.searchButtonRef}
+                      >
                         <SearchIcon />
                       </button>
 
@@ -271,12 +289,20 @@ class Home extends React.PureComponent {
                   <Autocomplete
                     isShowFullResults
                     getSuggestions={getShabadList}
-                    searchOptions={{ type, source, writer }}
+                    searchOptions={{
+                      type,
+                      source,
+                      writer,
+                      isGurmukhi:
+                        type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi,
+                    }}
                     value={query}
                     isHome={isHome}
                   />
                   <div className="search-options">
-                    <div className="search-option">
+                    <div
+                      className="search-option"
+                    >
                       <select
                         name="type"
                         id="search-type"
@@ -289,6 +315,9 @@ class Home extends React.PureComponent {
                           </option>
                         ))}
                       </select>
+                      {type === SEARCH_TYPES.AUTO_DETECT && (
+                        <span className="mic-icon-beta">BETA</span>
+                      )}
                     </div>
                     <div className="search-option">
                       {type === SEARCH_TYPES['ANG'] ? (

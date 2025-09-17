@@ -73,6 +73,7 @@ export default class SearchForm extends React.PureComponent {
     ),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     defaultWriter: PropTypes.number,
+    defaultAutoDetectGurmukhi: PropTypes.string,
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'query', 'writer'])
     ),
@@ -111,10 +112,28 @@ export default class SearchForm extends React.PureComponent {
     isWriterChanged: false,
     placeholder: '',
     isAnimatingPlaceholder: false,
+    autoDetectGurmukhi: this.props.defaultAutoDetectGurmukhi || false,
   };
 
   animatePlaceholder = () => {
-    const [finalPlaceholder] = PLACEHOLDERS[this.state.type];
+    const { type, autoDetectGurmukhi } = this.state;
+    let placeholderData = PLACEHOLDERS[type];
+    let placeholderArray = [];
+
+    if (type === SEARCH_TYPES.AUTO_DETECT) {
+      const modeData = autoDetectGurmukhi
+        ? placeholderData.find((item) => item.type === 'gurmukhi')
+        : placeholderData.find((item) => item.type === 'english');
+      placeholderArray = modeData
+        ? modeData.placeholders
+        : ['Enter your search query'];
+    } else {
+      const [firstElement] = placeholderData;
+      placeholderArray = [firstElement];
+    }
+
+    this.currentPlaceholderIndex = this.currentPlaceholderIndex || 0;
+    const finalPlaceholder = placeholderArray[this.currentPlaceholderIndex];
 
     const millisecondPerLetter = 2000 / finalPlaceholder.length;
     const tick = () => {
@@ -125,7 +144,17 @@ export default class SearchForm extends React.PureComponent {
               if (!isAnimatingPlaceholder) return null;
 
               if (placeholder === finalPlaceholder) {
-                return { isAnimatingPlaceholder: false };
+                if (
+                  type === SEARCH_TYPES.AUTO_DETECT &&
+                  placeholderArray.length > 1
+                ) {
+                  this.currentPlaceholderIndex =
+                    (this.currentPlaceholderIndex + 1) %
+                    placeholderArray.length;
+                  return { placeholder: '', isAnimatingPlaceholder: true };
+                } else {
+                  return { isAnimatingPlaceholder: false };
+                }
               } else if (finalPlaceholder[placeholder.length]) {
                 return {
                   placeholder:
@@ -133,7 +162,15 @@ export default class SearchForm extends React.PureComponent {
                 };
               }
             },
-            () => this.state.isAnimatingPlaceholder && tick()
+            () => {
+              if (this.state.isAnimatingPlaceholder) {
+                if (this.state.placeholder === '') {
+                  setTimeout(() => this.animatePlaceholder(), 500);
+                } else {
+                  tick();
+                }
+              }
+            }
           ),
         millisecondPerLetter
       );
@@ -187,12 +224,14 @@ export default class SearchForm extends React.PureComponent {
 
   _isShowKeyboard(type) {
     const searchType = type || this.state.type;
+    const { autoDetectGurmukhi } = this.state;
 
     return (
       searchType === SEARCH_TYPES.MAIN_LETTERS ||
       searchType === SEARCH_TYPES.GURMUKHI_WORD ||
       searchType === SEARCH_TYPES.FIRST_LETTERS ||
-      searchType === SEARCH_TYPES.FIRST_LETTERS_ANYWHERE
+      searchType === SEARCH_TYPES.FIRST_LETTERS_ANYWHERE ||
+      (searchType === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi)
     );
   }
 
@@ -210,10 +249,23 @@ export default class SearchForm extends React.PureComponent {
       handleReset,
     } = this;
 
-    const { type, query } = this.state;
+    const { type, query, autoDetectGurmukhi } = this.state;
     const typeInt = parseInt(type);
-    const [, useEnglish = false] = PLACEHOLDERS[type];
-    const className = useEnglish ? '' : 'gurbani-font';
+
+    let useEnglish = false;
+    if (typeInt === SEARCH_TYPES.AUTO_DETECT) {
+      useEnglish = !autoDetectGurmukhi;
+    } else {
+      const [, englishFlag = false] = PLACEHOLDERS[type];
+      useEnglish = englishFlag;
+    }
+
+    let className = '';
+    if (typeInt === SEARCH_TYPES.AUTO_DETECT) {
+      className = autoDetectGurmukhi ? 'gurbani-font' : '';
+    } else {
+      className = useEnglish ? '' : 'gurbani-font';
+    }
     const isShowKeyboard = this._isShowKeyboard();
     const [title, pattern] =
       typeInt === SEARCH_TYPES.ROMANIZED
@@ -244,6 +296,7 @@ export default class SearchForm extends React.PureComponent {
       handleSubmit,
       handleKeyDown,
       handleReset,
+      handleAutoDetectGurmukhiToggle: this.handleAutoDetectGurmukhiToggle,
     });
   }
   componentDidUpdate() {
@@ -420,6 +473,8 @@ export default class SearchForm extends React.PureComponent {
           displayGurmukhiKeyboard: isShowKeyboard,
         },
         () => {
+          this.currentPlaceholderIndex = 0;
+
           clickEvent({ action: ACTIONS.SEARCH_TYPE, label: newSearchType });
           localStorage.setItem(
             LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
@@ -488,6 +543,25 @@ export default class SearchForm extends React.PureComponent {
       action: ACTIONS.SEARCH_QUERY,
       label: this.state.query,
     });
+  };
+
+  handleAutoDetectGurmukhiToggle = () => {
+    this.setState(
+      (prevState) => ({
+        autoDetectGurmukhi: !prevState.autoDetectGurmukhi,
+        displayGurmukhiKeyboard: !prevState.autoDetectGurmukhi
+          ? prevState.displayGurmukhiKeyboard
+          : false,
+      }),
+      () => {
+        this.currentPlaceholderIndex = 0;
+        if (this.state.query === '') {
+          this.stopPlaceholderAnimation().then(() => {
+            this.beginPlaceholderAnimation();
+          });
+        }
+      }
+    );
   };
 
   /**

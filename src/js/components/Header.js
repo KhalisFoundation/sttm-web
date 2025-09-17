@@ -27,6 +27,7 @@ import Reset from './Icons/Reset';
 import Autocomplete from '@/components/Autocomplete';
 import ClearSearchButton from '@/components/ClearSearchButton';
 import GurmukhiKeyboardToggleButton from '@/components/GurmukhiKeyboardToggleButton';
+import AutoDetectGurmukhiToggle from '@/components/AutoDetectGurmukhiToggle';
 import MicIcon from '@/components/Icons/MicIcon';
 import Waveform from '@/components/Waveform';
 import { toggleSettingsPanel } from '@/features/actions';
@@ -89,7 +90,7 @@ class Header extends React.PureComponent {
   }
 
   onFormSubmit =
-    ({ handleSubmit, ...data }) =>
+    ({ handleSubmit, autoDetectGurmukhi, ...data }) =>
     (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -100,7 +101,12 @@ class Header extends React.PureComponent {
         data.query = data.query.trim();
       }
 
-      this.handleFormSubmit(data);
+      const searchParams = { ...data, autoDetectGurmukhi };
+      if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
+        searchParams.isGurmukhi = true;
+      }
+
+      this.handleFormSubmit(searchParams);
     };
 
   handleFormSubmit = (data) => {
@@ -127,7 +133,6 @@ class Header extends React.PureComponent {
       state: { showDoodle, doodleData, isRecording, audioStream },
       onFormSubmit,
       handleFormSubmit,
-      handleRecordingStateChange,
     } = this;
 
     if (fullScreenMode) {
@@ -138,6 +143,7 @@ class Header extends React.PureComponent {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
+      autoDetectGurmukhi: defaultAutoDetectGurmukhi = false,
     } = getQueryParams(location.search);
 
     const isAskGurbaniBotSearchType =
@@ -201,6 +207,7 @@ class Header extends React.PureComponent {
                   DEFAULT_SEARCH_WRITER
                 : Number(defaultWriter)
             }
+            defaultAutoDetectGurmukhi={defaultAutoDetectGurmukhi}
             submitOnChangeOf={['type', 'source', 'writer']}
             onSubmit={handleFormSubmit}
           >
@@ -231,6 +238,8 @@ class Header extends React.PureComponent {
               handleSearchWriterChange,
               handleSubmit,
               handleReset,
+              autoDetectGurmukhi,
+              handleAutoDetectGurmukhiToggle,
             }) => {
               return (
                 <React.Fragment>
@@ -279,6 +288,7 @@ class Header extends React.PureComponent {
                                 source,
                                 query,
                                 writer,
+                                autoDetectGurmukhi,
                               })}
                               className="search-form"
                             >
@@ -351,7 +361,15 @@ class Header extends React.PureComponent {
                                         }
                                       />
                                     )}
-                                    {!isRecording && (
+                                    {type === SEARCH_TYPES.AUTO_DETECT && (
+                                      <AutoDetectGurmukhiToggle
+                                        isActive={autoDetectGurmukhi}
+                                        onToggle={
+                                          handleAutoDetectGurmukhiToggle
+                                        }
+                                      />
+                                    )}
+                                    {!isRecording && query.length > 0 && (
                                       <ClearSearchButton
                                         clickHandler={setQueryAs}
                                       />
@@ -373,7 +391,7 @@ class Header extends React.PureComponent {
                                         setQueryAs(result.unicode)();
 
                                         setTimeout(() => {
-                                          if(this.searchButtonRef.current) {
+                                          if (this.searchButtonRef.current) {
                                             this.searchButtonRef.current.click();
                                           }
                                         }, 100);
@@ -431,6 +449,10 @@ class Header extends React.PureComponent {
                                         type: parseInt(type),
                                         source,
                                         writer,
+                                        isGurmukhi:
+                                          parseInt(type) ===
+                                            SEARCH_TYPES.AUTO_DETECT &&
+                                          autoDetectGurmukhi,
                                       }}
                                       value={query}
                                       isHome={isHome}

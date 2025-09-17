@@ -30,8 +30,9 @@ export default class SearchResults extends React.PureComponent {
       'main-letter-search': type === SEARCH_TYPES.MAIN_LETTERS
     });
     const askGurbaniBotSearchType = type === SEARCH_TYPES['ASK_A_QUESTION'];
+    const omniSearchType = type === SEARCH_TYPES.AUTO_DETECT;
 
-    const warning = askGurbaniBotSearchType && (
+    const warning = (omniSearchType || askGurbaniBotSearchType) && (
       <div className='warning-box'>
         <h4>⚠ This is an experimental feature.</h4>
         <p>Please <a href="https://support.khalisfoundation.org/support/tickets/new" target="blank">
