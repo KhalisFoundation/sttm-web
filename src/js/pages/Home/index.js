@@ -54,6 +54,8 @@ class Home extends React.PureComponent {
     audioStream: null,
   };
 
+  searchButtonRef = React.createRef();
+
   fetchDoodle = () => {
     fetch(`${DOODLE_URL}`)
       .then((r) => r.json())
@@ -81,14 +83,12 @@ class Home extends React.PureComponent {
       if (isNotAngSearch) {
         data.query = data.query.trim();
       }
-      // Add isGurmukhi parameter for Auto Detect with Gurmukhi enabled
-      const searchParams = { ...data };
+      const searchParams = { ...data, autoDetectGurmukhi };
       if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
-        searchParams.isGurmukhi = true;
+        searchParams.autoDetectGurmukhi = true;
       }
 
       this.props.history.push(toSearchURL(searchParams));
-      this.props.history.push(toSearchURL(data));
     };
 
   handleRecordingStateChange = (isRecording, stream) => {
@@ -149,6 +149,7 @@ class Home extends React.PureComponent {
                     type,
                     source,
                     writer,
+                    autoDetectGurmukhi,
                   })}
                 >
                   <div className="flex justify-center align-center">
@@ -183,6 +184,12 @@ class Home extends React.PureComponent {
                           <Waveform
                             stream={audioStream}
                             isRecording={isRecording}
+                            stopRecording={() => {
+                              this.setState({
+                                isRecording: false,
+                                audioStream: null,
+                              });
+                            }}
                             width={200}
                             height={30}
                             barColor="#007bff"
@@ -210,7 +217,9 @@ class Home extends React.PureComponent {
                           max={name === 'ang' ? MAX_ANGS[source] : undefined}
                         />
                       )}
-                      <ClearSearchButton clickHandler={setQueryAs} />
+                      {!isRecording && query.length > 0 && (
+                        <ClearSearchButton clickHandler={setQueryAs} />
+                      )}
                       {type === SEARCH_TYPES.AUTO_DETECT && (
                         <AutoDetectGurmukhiToggle
                           isActive={autoDetectGurmukhi}
@@ -218,6 +227,7 @@ class Home extends React.PureComponent {
                         />
                       )}
                       <MicIcon
+                        isRecording={isRecording}
                         onTranscriptionResult={(result) => {
                           if (type !== SEARCH_TYPES.FIRST_LETTERS_ANYWHERE) {
                             handleSearchTypeChange({
@@ -229,13 +239,9 @@ class Home extends React.PureComponent {
                           setQueryAs(result.unicode)();
 
                           setTimeout(() => {
-                            this.onSubmit({
-                              handleSubmit,
-                              query: result.unicode,
-                              type: SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
-                              source,
-                              writer,
-                            })(new Event('submit'));
+                            if (this.searchButtonRef.current) {
+                              this.searchButtonRef.current.click();
+                            }
                           }, 100);
                         }}
                         onError={(error) => {
@@ -249,7 +255,11 @@ class Home extends React.PureComponent {
                           isVisible={displayGurmukhiKeyboard}
                         />
                       )}
-                      <button type="submit" disabled={disabled}>
+                      <button
+                        type="submit"
+                        disabled={disabled}
+                        ref={this.searchButtonRef}
+                      >
                         <SearchIcon />
                       </button>
 

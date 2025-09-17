@@ -82,6 +82,9 @@ class Header extends React.PureComponent {
         }
       );
   };
+
+  searchButtonRef = React.createRef();
+
   componentDidMount() {
     this.fetchDoodle();
   }
@@ -98,7 +101,7 @@ class Header extends React.PureComponent {
         data.query = data.query.trim();
       }
 
-      const searchParams = { ...data };
+      const searchParams = { ...data, autoDetectGurmukhi };
       if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
         searchParams.isGurmukhi = true;
       }
@@ -130,7 +133,6 @@ class Header extends React.PureComponent {
       state: { showDoodle, doodleData, isRecording, audioStream },
       onFormSubmit,
       handleFormSubmit,
-      handleRecordingStateChange,
     } = this;
 
     if (fullScreenMode) {
@@ -141,6 +143,7 @@ class Header extends React.PureComponent {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
+      autoDetectGurmukhi: defaultAutoDetectGurmukhi = false,
     } = getQueryParams(location.search);
 
     const isAskGurbaniBotSearchType =
@@ -204,6 +207,7 @@ class Header extends React.PureComponent {
                   DEFAULT_SEARCH_WRITER
                 : Number(defaultWriter)
             }
+            defaultAutoDetectGurmukhi={defaultAutoDetectGurmukhi}
             submitOnChangeOf={['type', 'source', 'writer']}
             onSubmit={handleFormSubmit}
           >
@@ -284,6 +288,7 @@ class Header extends React.PureComponent {
                                 source,
                                 query,
                                 writer,
+                                autoDetectGurmukhi,
                               })}
                               className="search-form"
                             >
@@ -320,6 +325,12 @@ class Header extends React.PureComponent {
                                         <Waveform
                                           stream={audioStream}
                                           isRecording={isRecording}
+                                          stopRecording={() => {
+                                            this.setState({
+                                              isRecording: false,
+                                              audioStream: null,
+                                            });
+                                          }}
                                           width={200}
                                           height={30}
                                           barColor="#007bff"
@@ -350,11 +361,7 @@ class Header extends React.PureComponent {
                                         }
                                       />
                                     )}
-                                    <ClearSearchButton
-                                      clickHandler={setQueryAs}
-                                    />
-                                    {parseInt(type) ===
-                                      SEARCH_TYPES.AUTO_DETECT && (
+                                    {type === SEARCH_TYPES.AUTO_DETECT && (
                                       <AutoDetectGurmukhiToggle
                                         isActive={autoDetectGurmukhi}
                                         onToggle={
@@ -362,7 +369,13 @@ class Header extends React.PureComponent {
                                         }
                                       />
                                     )}
+                                    {!isRecording && query.length > 0 && (
+                                      <ClearSearchButton
+                                        clickHandler={setQueryAs}
+                                      />
+                                    )}
                                     <MicIcon
+                                      isRecording={isRecording}
                                       onTranscriptionResult={(result) => {
                                         if (
                                           type !==
@@ -378,13 +391,9 @@ class Header extends React.PureComponent {
                                         setQueryAs(result.unicode)();
 
                                         setTimeout(() => {
-                                          onFormSubmit({
-                                            handleSubmit,
-                                            query: result.unicode,
-                                            type: SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
-                                            source,
-                                            writer,
-                                          })(new Event('submit'));
+                                          if (this.searchButtonRef.current) {
+                                            this.searchButtonRef.current.click();
+                                          }
                                         }, 100);
                                       }}
                                       onError={(error) => {
@@ -394,7 +403,7 @@ class Header extends React.PureComponent {
                                         );
                                       }}
                                       onRecordingStateChange={
-                                        handleRecordingStateChange
+                                        this.handleRecordingStateChange
                                       }
                                     />
                                     {isShowKeyboard && (
@@ -410,6 +419,7 @@ class Header extends React.PureComponent {
                                       type="submit"
                                       disabled={disabled}
                                       aria-label="search"
+                                      ref={this.searchButtonRef}
                                     >
                                       <SearchIcon />
                                     </button>

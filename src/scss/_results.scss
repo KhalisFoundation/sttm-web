@@ -312,7 +312,7 @@ li.search-result {
   position: fixed;
   bottom: 80px;
   right: 44px;
-  z-index: 1000;
+  z-index: 99;
   pointer-events: none;
 }
 
@@ -370,6 +370,23 @@ li.search-result {
   .floating-dialog-content {
     padding: 16px;
     border-radius: 0 0 12px 12px;
+    transition: all 0.3s ease;
+
+    &.loading {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+      min-height: 150px;
+      opacity: 0.4;
+
+      img {
+        animation: spin 3.5s linear infinite;
+        height: auto;
+        width: 80px;
+      }
+    }
 
     .question {
       font-weight: 600;
@@ -435,5 +452,14 @@ li.search-result {
         color: #ccc;
       }
     }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

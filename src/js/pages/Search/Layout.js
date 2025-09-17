@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Pagination from '../../components/Pagination';
@@ -100,7 +100,7 @@ class Layout extends React.PureComponent {
   }
 
   handlePageClick = (pageNumber) => {
-    const { q, type, source, offset, isGurmukhi } = this.props;
+    const { q, type, source, offset, autoDetectGurmukhi } = this.props;
 
     const currentPage = offset;
 
@@ -116,19 +116,15 @@ class Layout extends React.PureComponent {
       type,
       source,
       offset: pageNumber,
+      autoDetectGurmukhi,
     };
-
-    // Include isGurmukhi if it was provided
-    if (isGurmukhi === '1') {
-      searchParams.isGurmukhi = true;
-    }
 
     this.props.history.push(toSearchURL(searchParams));
   };
 
   componentDidMount() {
-    const { q, type, offset, source } = this.props;
-    pageView(toSearchURL({ q, type, source, offset }));
+    const { q, type, offset, source, autoDetectGurmukhi } = this.props;
+    pageView(toSearchURL({ q, type, source, offset, autoDetectGurmukhi }));
   }
 }
 

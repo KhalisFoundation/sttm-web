@@ -478,7 +478,14 @@ export default [
       const {
         location: { search },
       } = props;
-      const params = ['type', 'source', 'q', 'offset', 'writer'];
+      const params = [
+        'type',
+        'source',
+        'q',
+        'offset',
+        'writer',
+        'autoDetectGurmukhi',
+      ];
 
       const [
         type = DEFAULT_SEARCH_TYPE,
@@ -486,6 +493,7 @@ export default [
         q = '',
         offset = 1,
         writer = DEFAULT_SEARCH_WRITER,
+        autoDetectGurmukhi = false,
       ] = params.map((v) => getParameterByName(v, search));
 
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
@@ -511,6 +519,7 @@ export default [
                   source={source}
                   offset={parseInt(offset)}
                   writer={writer}
+                  autoDetectGurmukhi={autoDetectGurmukhi}
                   {...props}
                 />
               ) : (
@@ -558,11 +567,7 @@ export default [
       };
 
       return (
-        <Layout 
-          defaultQuery={q} 
-          title="Shabad - SikhiToTheMax" 
-          {...props}
-        >
+        <Layout defaultQuery={q} title="Shabad - SikhiToTheMax" {...props}>
           <RenderPromise
             promise={() =>
               import(/* webpackChunkName: "Shabad" */ './pages/Shabad')

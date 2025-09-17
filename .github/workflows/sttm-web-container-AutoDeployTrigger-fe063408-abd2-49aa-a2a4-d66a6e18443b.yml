@@ -46,3 +46,5 @@ jobs:
           imageToBuild: khalis.azurecr.io/sttm-web-container:${{ github.sha }}
           buildArguments: |
             NODE_ENV=production
+            AUDIO_TRANSCRIPTION_URL=${{ secrets.AUDIO_TRANSCRIPTION_URL }}
+            AUDIO_TRANSCRIPTION_KEY=${{ secrets.AUDIO_TRANSCRIPTION_KEY }}

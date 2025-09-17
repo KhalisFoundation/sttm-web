@@ -73,6 +73,7 @@ export default class SearchForm extends React.PureComponent {
     ),
     defaultSource: PropTypes.oneOf(Object.keys(SOURCES)),
     defaultWriter: PropTypes.number,
+    defaultAutoDetectGurmukhi: PropTypes.string,
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'query', 'writer'])
     ),
@@ -111,7 +112,7 @@ export default class SearchForm extends React.PureComponent {
     isWriterChanged: false,
     placeholder: '',
     isAnimatingPlaceholder: false,
-    autoDetectGurmukhi: false,
+    autoDetectGurmukhi: this.props.defaultAutoDetectGurmukhi || false,
   };
 
   animatePlaceholder = () => {

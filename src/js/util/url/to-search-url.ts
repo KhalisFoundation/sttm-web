@@ -12,6 +12,7 @@ interface IToSearchURLArguments {
   writer: string;
   offset: string;
   isGurmukhi?: boolean;
+  autoDetectGurmukhi?: boolean;
 }
 
 export const toSearchURL = ({
@@ -20,7 +21,7 @@ export const toSearchURL = ({
   source = DEFAULT_SEARCH_SOURCE,
   writer = DEFAULT_SEARCH_WRITER,
   offset = '',
-  isGurmukhi,
+  autoDetectGurmukhi,
 }: IToSearchURLArguments) => {
   const params: Record<string, string | number> = {
     q: encodeURIComponent(q),
@@ -30,9 +31,9 @@ export const toSearchURL = ({
     offset,
   };
 
-  // Only add isGurmukhi parameter if it's defined and true
-  if (isGurmukhi) {
-    params.isGurmukhi = 1;
+  // Add autoDetectGurmukhi parameter if it's defined and true
+  if (autoDetectGurmukhi) {
+    params.autoDetectGurmukhi = 'true';
   }
 
   return `/search?${objectToQueryParams(params)}`;

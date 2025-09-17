@@ -18,7 +18,7 @@ export default class Search extends React.PureComponent {
     source: PropTypes.string,
     offset: PropTypes.number,
     writer: PropTypes.string,
-    isGurmukhi: PropTypes.string,
+    autoDetectGurmukhi: PropTypes.bool,
   };
 
   constructor() {
@@ -83,13 +83,13 @@ export default class Search extends React.PureComponent {
   }
 
   render() {
-    const { q, type, source, offset, writer, isGurmukhi } = this.props;
+    const { q, type, source, offset, writer, autoDetectGurmukhi } = this.props;
     const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
 
     // Prepare API parameters
     const apiParams = { q, type, source, offset, writer, API_URL };
     // Add isGurmukhi parameter if it's provided and equals "1"
-    if (isGurmukhi === '1') {
+    if (autoDetectGurmukhi) {
       apiParams.isGurmukhi = 1;
     }
 
@@ -129,7 +129,7 @@ export default class Search extends React.PureComponent {
               type={type}
               source={source}
               writer={writer}
-              isGurmukhi={isGurmukhi}
+              autoDetectGurmukhi={autoDetectGurmukhi}
             />
           );
         }}
