@@ -81,6 +81,9 @@ class Header extends React.PureComponent {
         }
       );
   };
+
+  searchButtonRef = React.createRef();
+
   componentDidMount() {
     this.fetchDoodle();
   }
@@ -312,6 +315,12 @@ class Header extends React.PureComponent {
                                         <Waveform
                                           stream={audioStream}
                                           isRecording={isRecording}
+                                          stopRecording={() => {
+                                            this.setState({
+                                              isRecording: false,
+                                              audioStream: null,
+                                            });
+                                          }}
                                           width={200}
                                           height={30}
                                           barColor="#007bff"
@@ -342,10 +351,13 @@ class Header extends React.PureComponent {
                                         }
                                       />
                                     )}
-                                    <ClearSearchButton
-                                      clickHandler={setQueryAs}
-                                    />
+                                    {!isRecording && (
+                                      <ClearSearchButton
+                                        clickHandler={setQueryAs}
+                                      />
+                                    )}
                                     <MicIcon
+                                      isRecording={isRecording}
                                       onTranscriptionResult={(result) => {
                                         if (
                                           type !==
@@ -361,13 +373,9 @@ class Header extends React.PureComponent {
                                         setQueryAs(result.unicode)();
 
                                         setTimeout(() => {
-                                          onFormSubmit({
-                                            handleSubmit,
-                                            query: result.unicode,
-                                            type: SEARCH_TYPES.FIRST_LETTERS_ANYWHERE,
-                                            source,
-                                            writer,
-                                          })(new Event('submit'));
+                                          if(this.searchButtonRef.current) {
+                                            this.searchButtonRef.current.click();
+                                          }
                                         }, 100);
                                       }}
                                       onError={(error) => {
@@ -377,7 +385,7 @@ class Header extends React.PureComponent {
                                         );
                                       }}
                                       onRecordingStateChange={
-                                        handleRecordingStateChange
+                                        this.handleRecordingStateChange
                                       }
                                     />
                                     {isShowKeyboard && (
@@ -393,6 +401,7 @@ class Header extends React.PureComponent {
                                       type="submit"
                                       disabled={disabled}
                                       aria-label="search"
+                                      ref={this.searchButtonRef}
                                     >
                                       <SearchIcon />
                                     </button>

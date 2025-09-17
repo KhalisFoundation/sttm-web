@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 interface WaveformProps {
   stream: MediaStream | null;
   isRecording: boolean;
+  stopRecording: () => void;
   width?: number;
   height?: number;
   barColor?: string;
@@ -13,6 +14,7 @@ interface WaveformProps {
 const Waveform: React.FC<WaveformProps> = ({
   stream,
   isRecording,
+  stopRecording,
   width = 200,
   height = 40,
   barColor = '#666',
@@ -80,6 +82,9 @@ const Waveform: React.FC<WaveformProps> = ({
             .toString()
             .padStart(2, '0')}`
         );
+        if (seconds === 15) {
+          stopRecording();
+        }
       }
 
       animationRef.current = requestAnimationFrame(draw);
