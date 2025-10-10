@@ -292,9 +292,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
               </div>
             )}
           </div>
-          {(comment !== null || comment !== undefined) && (
-            <p className="comments">{comment}</p>
-          )}
+          {comment?.trim() && <p className="comments">{comment}</p>}
         </div>
 
         <div
