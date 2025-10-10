@@ -15,6 +15,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
+  LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
 } from '../constants';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -38,6 +39,7 @@ import {
   getShabadList,
   reformatSearchTypes,
   getNumberFromLocalStorage,
+  getBooleanFromLocalStorage,
 } from '@/util';
 
 const { BACK_TO_HOME } = TEXTS;
@@ -143,7 +145,11 @@ class Header extends React.PureComponent {
       source: defaultSource = null,
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
-      autoDetectGurmukhi: defaultAutoDetectGurmukhi = false,
+      autoDetectGurmukhi:
+        defaultAutoDetectGurmukhi = getBooleanFromLocalStorage(
+          LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
+          false
+        ),
     } = getQueryParams(location.search);
 
     const isAskGurbaniBotSearchType =
