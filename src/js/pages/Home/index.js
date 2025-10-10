@@ -315,9 +315,6 @@ class Home extends React.PureComponent {
                           </option>
                         ))}
                       </select>
-                      {type === SEARCH_TYPES.AUTO_DETECT && (
-                        <span className="mic-icon-beta">BETA</span>
-                      )}
                     </div>
                     <div className="search-option">
                       {type === SEARCH_TYPES['ANG'] ? (

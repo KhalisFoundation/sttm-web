@@ -1,12 +1,13 @@
-import { objectToQueryParams } from "../misc";
+import { objectToQueryParams } from '../misc';
 interface IToShabadUrlArguments {
   shabad: {
-    shabadId: string | number,
-    verseId: string
-  },
-  q: string,
-  type?: string,
-  source?: string
+    shabadId: string | number;
+    verseId: string;
+  };
+  q: string;
+  type?: string;
+  source?: string;
+  autoDetectGurmukhi?: boolean;
 }
 
 export const toShabadURL = ({
@@ -14,6 +15,7 @@ export const toShabadURL = ({
   q,
   type = undefined,
   source = undefined,
+  autoDetectGurmukhi = false,
 }: IToShabadUrlArguments): string =>
   `/shabad?${objectToQueryParams({
     id,
@@ -21,4 +23,5 @@ export const toShabadURL = ({
     type,
     source,
     highlight,
+    autoDetectGurmukhi,
   })}`;

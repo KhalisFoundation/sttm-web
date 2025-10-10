@@ -7,6 +7,7 @@ import {
   LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
   LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
+  LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
   PLACEHOLDERS,
   DEFAULT_SEARCH_TYPE,
   DEFAULT_SEARCH_SOURCE,
@@ -18,6 +19,7 @@ import {
 } from '@/constants';
 import {
   getNumberFromLocalStorage,
+  getBooleanFromLocalStorage,
   clickEvent,
   ACTIONS,
   getWriterList,
@@ -112,7 +114,13 @@ export default class SearchForm extends React.PureComponent {
     isWriterChanged: false,
     placeholder: '',
     isAnimatingPlaceholder: false,
-    autoDetectGurmukhi: this.props.defaultAutoDetectGurmukhi || false,
+    autoDetectGurmukhi:
+      this.props.defaultAutoDetectGurmukhi !== undefined
+        ? this.props.defaultAutoDetectGurmukhi
+        : getBooleanFromLocalStorage(
+            LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
+            false
+          ),
   };
 
   animatePlaceholder = () => {
@@ -555,6 +563,11 @@ export default class SearchForm extends React.PureComponent {
       }),
       () => {
         this.currentPlaceholderIndex = 0;
+        // Save to localStorage
+        localStorage.setItem(
+          LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
+          this.state.autoDetectGurmukhi.toString()
+        );
         if (this.state.query === '') {
           this.stopPlaceholderAnimation().then(() => {
             this.beginPlaceholderAnimation();
