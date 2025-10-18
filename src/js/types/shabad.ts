@@ -38,6 +38,10 @@ export type IShabad = {
         gurmukhi: string,
         unicode: string
       },      
+      pss: {
+        gurmukhi: string,
+        unicode: string
+      },
     };
     hi: {
       ss: string,
