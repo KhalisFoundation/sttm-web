@@ -55,6 +55,7 @@ export const steekMap: ITransProps = {
   fareedkot: shabad => shabad.translation.pu.ft,
   'BaniDB': shabad => shabad.translation.pu.bdb,
   'manmohan singh': shabad => shabad.translation.pu.ms,
+  'prof sahib singh': shabad => shabad.translation.pu.pss,
 };
 
 export const getRaag = (shabad: IShabad) => ({
