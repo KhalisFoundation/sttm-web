@@ -47,6 +47,8 @@ app.post('/api/transcribe', async (req, res) => {
       'http://localhost:3000',
       'https://www.sikhitothemax.org',
       'https://sikhitothemax.org',
+      'https://dev.sikhitothemax.org',
+      'https://www.dev.sikhitothemax.org',
     ];
 
     if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
