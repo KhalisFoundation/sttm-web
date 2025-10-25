@@ -87,19 +87,15 @@ const MicIcon: React.FC<MicIconProps> = ({
         }
 
         try {
-          const response = await fetch(
-            process.env.AUDIO_TRANSCRIPTION_URL || '',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                audioData: base64Audio,
-                apiKey: process.env.AUDIO_TRANSCRIPTION_KEY || '',
-              }),
-            }
-          );
+          const response = await fetch('/api/transcribe', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              audioData: base64Audio,
+            }),
+          });
 
           const data = await response.json();
 
