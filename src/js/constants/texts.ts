@@ -99,4 +99,8 @@ export const TEXTS = {
   SHABAD_ADDED_MESSAGE: 'Shabad has been added to your selection.',
   SHABAD_REMOVED_MESSAGE: 'Shabad removed.',
   SHABAD_ALREADY_ADDED_MESSAGE: 'Shabad has already been added to multiview list.',
+  TRANSLATION_SOURCES: {
+    'sahib singh': 'Sahib Singh - Teeka',
+    'prof sahib singh': 'Sahib Singh - Pad Arth',
+  },
 };
