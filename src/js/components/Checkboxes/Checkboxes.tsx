@@ -1,4 +1,5 @@
 import React from 'react';
+import { TEXTS } from '@/constants';
 
 export interface Collection {
   options: any,
@@ -42,7 +43,7 @@ const Checkboxes = (props: CheckboxesProps) => {
                 <label
                   htmlFor={`checkbox-${label}-${option}`}
                   className="checkbox-item-label">
-                  {option}
+                  {TEXTS.TRANSLATION_SOURCES[option] || option}
                 </label>
               </li>
             )

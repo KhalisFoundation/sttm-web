@@ -48,6 +48,7 @@ export const englishTranslationMap: ITransProps = {
   'BaniDB': shabad => shabad.translation.en.bdb,
   'manmohan singh': shabad => shabad.translation.en.ms,
   'sant singh khalsa': shabad => shabad.translation.en.ssk,
+  'prof sahib singh': shabad => shabad.translation.en.pss,
 };
 
 export const steekMap: ITransProps = {
