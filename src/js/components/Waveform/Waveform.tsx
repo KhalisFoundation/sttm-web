@@ -82,7 +82,7 @@ const Waveform: React.FC<WaveformProps> = ({
             .toString()
             .padStart(2, '0')}`
         );
-        if (seconds === 15) {
+        if (seconds === 10) {
           stopRecording();
         }
       }
