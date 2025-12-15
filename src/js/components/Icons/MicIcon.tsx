@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { SilenceDetector, createAudioAnalyser } from './utils/silence';
 
 interface MicIconProps {
   isRecording: boolean;
@@ -24,23 +25,41 @@ const MicIcon: React.FC<MicIconProps> = ({
   ...props
 }) => {
   const [isProcessing, setIsProcessing] = useState(false);
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const silenceDetectorRef = useRef<SilenceDetector | null>(null);
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
 
+      const { audioContext, analyser } = createAudioAnalyser(stream);
+      audioContextRef.current = audioContext;
+
+      const silenceDetector = new SilenceDetector(
+        analyser,
+        {
+          onSilenceDetected: () => {
+            stopRecording();
+          },
+        },
+        {
+          threshold: 0.03,
+          durationMs: 1500,
+        }
+      );
+      silenceDetectorRef.current = silenceDetector;
+
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
 
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunksRef.current.push(event.data);
-        }
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) audioChunksRef.current.push(e.data);
       };
 
       mediaRecorder.onstop = async () => {
@@ -49,28 +68,44 @@ const MicIcon: React.FC<MicIconProps> = ({
       };
 
       mediaRecorder.start();
+      silenceDetector.start();
+
       onRecordingStateChange(true, stream);
-    } catch (error) {
-      console.error('Error accessing microphone:', error);
-      onError?.(
-        'Microphone access denied. Please allow microphone access and try again.'
-      );
+    } catch (err) {
+      console.error(err);
+      onError?.('Microphone access denied.');
     }
   };
 
   const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
+    const mediaRecorder = mediaRecorderRef.current;
 
-      // Stop all tracks to release microphone
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
-        onRecordingStateChange?.(false, null);
-        streamRef.current = null;
-      }
+    if (!mediaRecorder || mediaRecorder.state === 'inactive') return;
+
+    if (silenceDetectorRef.current) {
+      silenceDetectorRef.current.stop();
+      silenceDetectorRef.current.destroy();
+      silenceDetectorRef.current = null;
     }
-  };
 
+    try {
+      mediaRecorder.stop();
+    } catch (err) {
+      console.debug('Error stopping recorder:', err);
+    }
+
+    if (audioContextRef.current) {
+      audioContextRef.current.close().catch(console.error);
+      audioContextRef.current = null;
+    }
+
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((t) => t.stop());
+      streamRef.current = null;
+    }
+
+    onRecordingStateChange(false, null);
+  };
   const processAudio = async () => {
     try {
       const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
@@ -78,9 +113,8 @@ const MicIcon: React.FC<MicIconProps> = ({
 
       reader.onload = async () => {
         const base64Audio = reader.result?.toString().split(',')[1];
-
         if (!base64Audio) {
-          onError?.('Failed to process audio data');
+          onError?.('Failed to process audio');
           setIsProcessing(false);
           onRecordingStateChange(false, null);
           return;
@@ -89,51 +123,54 @@ const MicIcon: React.FC<MicIconProps> = ({
         try {
           const response = await fetch('/api/transcribe', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              audioData: base64Audio,
-            }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ audioData: base64Audio }),
           });
 
           const data = await response.json();
-
           if (data.status === 'success') {
             onTranscriptionResult?.(data.transcriptInitials);
           } else {
             onError?.(data.message || 'Transcription failed');
           }
-        } catch (error) {
-          console.error('Network Error:', error);
-          onError?.(
-            'Network error. Please check your connection and try again.'
-          );
+        } catch (err) {
+          onError?.('Network error');
         } finally {
           setIsProcessing(false);
           onRecordingStateChange(false, null);
-          onRecordingStateChange?.(false, null);
         }
       };
 
       reader.readAsDataURL(audioBlob);
-    } catch (error) {
-      console.error('Error processing audio:', error);
+    } catch (err) {
       onError?.('Failed to process audio');
       setIsProcessing(false);
       onRecordingStateChange(false, null);
-      onRecordingStateChange?.(false, null);
     }
   };
 
-  const handleClick = () => {
-    if (isProcessing) return; // Prevent clicks while processing
+  useEffect(() => {
+    if (!isRecording) stopRecording();
+  }, [isRecording]);
 
-    if (isRecording) {
-      stopRecording();
-    } else {
-      startRecording();
-    }
+  useEffect(() => {
+    return () => {
+      if (silenceDetectorRef.current) {
+        silenceDetectorRef.current.destroy();
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close().catch(() => {});
+      }
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((t) => t.stop());
+      }
+    };
+  }, []);
+
+  const handleClick = () => {
+    if (isProcessing) return;
+    if (isRecording) stopRecording();
+    else startRecording();
   };
 
   if (isProcessing) {
@@ -183,13 +220,7 @@ const MicIcon: React.FC<MicIconProps> = ({
   if (isRecording) {
     return (
       <button type="button" onClick={handleClick} title="Stop recording">
-        <svg
-          fill={fill}
-          width={width}
-          height={height}
-          viewBox="0 0 24 24"
-          {...props}
-        >
+        <svg fill={fill} width={width} height={height} viewBox="0 0 24 24" {...props}>
           <rect x="6" y="6" width="12" height="12" rx="2" />
         </svg>
       </button>

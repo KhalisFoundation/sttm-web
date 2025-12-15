@@ -3,7 +3,6 @@ import compression from 'compression';
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
@@ -24,7 +23,8 @@ port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
 
-app.use(bodyParser.json());
+// Parse JSON with increased limit for audio data
+app.use(express.json({ limit: '25mb' }));
 
 // Compress files
 app.use(compression());
@@ -64,6 +64,17 @@ app.post('/api/transcribe', async (req, res) => {
       return res.status(400).json({
         status: 'error',
         message: 'Audio data is required'
+      });
+    }
+
+    // Check audioData size limit (10MB)
+    const MAX_AUDIO_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+    const audioDataSize = Buffer.byteLength(audioData, 'utf8');
+
+    if (audioDataSize > MAX_AUDIO_SIZE) {
+      return res.status(400).json({
+        status: 'error',
+        message: `Audio data exceeds maximum size of 10MB. Received: ${(audioDataSize / (1024 * 1024)).toFixed(2)}MB`
       });
     }
 

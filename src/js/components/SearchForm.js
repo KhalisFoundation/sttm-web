@@ -280,6 +280,8 @@ export default class SearchForm extends React.PureComponent {
         ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
         : typeInt === SEARCH_TYPES.ANG
         ? ['Enter numbers only.', '\\d+']
+        : typeInt === SEARCH_TYPES.AUTO_DETECT
+        ? ['Enter 1 characters minimum.', '.{1,}']
         : ['Enter 2 characters minimum.', '.{2,}'];
 
     const [action, name, inputType] = SearchForm.getFormDetails(typeInt);
