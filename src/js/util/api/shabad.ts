@@ -72,3 +72,59 @@ export const getWriter = (shabad: IShabad) => ({
 });
 
 export const getWriterId = (shabad: IShabad) => shabad.writer && shabad.writer.writerId;
+
+type Lang = 'en' | 'pu' | 'hi';
+
+type SourceConfig = {
+  lang: Lang;
+  field: string;
+  hasValue: (value: any) => boolean;
+};
+
+const SOURCE_MAP: Record<string, SourceConfig> = {
+  'prof sahib singh': {
+    lang: 'en',
+    field: 'pss',
+    hasValue: Boolean,
+  },
+  'BaniDB': {
+    lang: 'en',
+    field: 'bdb',
+    hasValue: Boolean,
+  },
+  'manmohan singh': {
+    lang: 'en',
+    field: 'ms',
+    hasValue: Boolean,
+  },
+  'sant singh khalsa': {
+    lang: 'en',
+    field: 'ssk',
+    hasValue: Boolean,
+  },
+};
+
+export const hasTranslationSource = (
+  gurbani: Array<IShabad | { shabad: IShabad }> | undefined,
+  source: string
+): boolean => {
+  if (!gurbani?.length) {
+    return true;
+  }
+
+  const config = SOURCE_MAP[source];
+  if (!config) {
+    return true;
+  }
+
+  return gurbani.some(item => {
+    const shabad = 'shabad' in item ? item.shabad : item;
+    const translation = shabad.translation?.[config.lang];
+
+    if (!translation) return false;
+
+    const value = translation[config.field];
+
+    return config.hasValue(value);
+  });
+};
