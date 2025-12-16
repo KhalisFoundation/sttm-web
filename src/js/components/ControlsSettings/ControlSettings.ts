@@ -9,6 +9,8 @@ import {
   HINDI_TRANSLATION_LANGUAGES,
   ENGLISH_TRANSLATION_LANGUAGES,
 } from '@/constants';
+import { hasTranslationSource } from '@/util/api/shabad';
+import { IShabad } from '@/types/shabad';
 
 import {
   selectItemInArray,
@@ -94,6 +96,7 @@ export interface ISettingActions {
   showAdvancedOptions: boolean,
   showCartoonifiedPages: boolean,
   showShabadAudioPlayer: boolean,
+  gurbani?: Array<IShabad | { shabad: IShabad }>,
 }
 
 export const HEADER_SETTINGS = ({
@@ -265,10 +268,16 @@ export const QUICK_SETTINGS = ({
   sgBaaniLength,
   // eslint-disable-next-line no-unused-vars
   location: { pathname = '/' } = {},
+  gurbani,
 }: ISettingActions) => {
   const isShowSehajPaathMode = isShowSehajPaathModeRoute(location.pathname);
   const isShowAutoScroll = isShowAutoScrollRoute(location.pathname);
   const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
+
+  // Filter English translation languages based on available translations in gurbani
+  const availableEnglishTranslationLanguages = ENGLISH_TRANSLATION_LANGUAGES.filter(
+    (source) => hasTranslationSource(gurbani, source)
+  );
 
   return [
     {
@@ -467,7 +476,7 @@ export const QUICK_SETTINGS = ({
             },
             english: {
               label: TEXTS.ENGLISH_TRANSLATION,
-              options: ENGLISH_TRANSLATION_LANGUAGES,
+              options: availableEnglishTranslationLanguages,
               checked: englishTranslationLanguages,
               action: (lang: string) => {
                 setEnglishTranslationLanguages(

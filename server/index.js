@@ -3,7 +3,6 @@ import compression from 'compression';
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
@@ -24,7 +23,8 @@ port = ON_HEROKU ? process.env.PORT : port;
 
 const app = express();
 
-app.use(bodyParser.json());
+// Parse JSON with increased limit for audio data
+app.use(express.json({ limit: '25mb' }));
 
 // Compress files
 app.use(compression());
@@ -36,6 +36,78 @@ app.use(cookieParser());
 app.use((req, res, next) => {
   res.setHeader('origin-server', hostname);
   return next();
+});
+
+// API endpoint for voice transcription proxy
+app.post('/api/transcribe', async (req, res) => {
+  try {
+    const origin = req.get('Origin') || req.get('Referer');
+    const allowedOrigins = [
+      'http://localhost:8081',
+      'http://localhost:3000',
+      'https://www.sikhitothemax.org',
+      'https://sikhitothemax.org',
+      'https://dev.sikhitothemax.org',
+      'https://www.dev.sikhitothemax.org',
+    ];
+
+    if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      return res.status(403).json({
+        status: 'error',
+        message: 'Access denied'
+      });
+    }
+
+    const { audioData } = req.body;
+
+    if (!audioData) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Audio data is required'
+      });
+    }
+
+    // Check audioData size limit (10MB)
+    const MAX_AUDIO_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+    const audioDataSize = Buffer.byteLength(audioData, 'utf8');
+
+    if (audioDataSize > MAX_AUDIO_SIZE) {
+      return res.status(400).json({
+        status: 'error',
+        message: `Audio data exceeds maximum size of 10MB. Received: ${(audioDataSize / (1024 * 1024)).toFixed(2)}MB`
+      });
+    }
+
+    const transcriptionUrl = process.env.AUDIO_TRANSCRIPTION_URL;
+    const transcriptionKey = process.env.AUDIO_TRANSCRIPTION_KEY;
+
+    if (!transcriptionUrl || !transcriptionKey) {
+      return res.status(500).json({
+        status: 'error',
+        message: 'Transcription service not configured'
+      });
+    }
+
+    const response = await fetch(transcriptionUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        audioData,
+        apiKey: transcriptionKey,
+      }),
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Transcription proxy error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error'
+    });
+  }
 });
 
 // Use client for static files
