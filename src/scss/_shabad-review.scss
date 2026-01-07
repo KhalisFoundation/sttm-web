@@ -1,0 +1,289 @@
+.review-heading {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.review-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;
+
+    > div {
+        width: 50%;
+        min-width: 400px;
+    }
+}
+
+.verse-review {
+    background-color: rgba($sttm-lighter-grey, 0.3);
+    display: grid;
+    grid-template-columns: 75% 25%;
+    margin-bottom: 16px;
+    border-radius: 8px;
+
+    &.approved {
+        background-image: linear-gradient(
+            45deg,
+            rgba($sttm-green, 0.04) 0%,
+            rgba($sttm-green, 0.015) 40%,
+            rgba($sttm-green, 0) 70%
+        );
+    }
+
+    &.rejected {
+        background-image: linear-gradient(
+            45deg,
+            rgba($sttm-orange, 0.04) 0%,
+            rgba($sttm-orange, 0.015) 40%,
+            rgba($sttm-orange, 0) 70%
+        );
+    }
+
+    .dark-mode & {
+        background-color: $sttm-black;
+    }
+
+    .modal {
+        max-width: 500px;
+
+        textarea {
+            .dark-mode & {
+                background-color: $sttm-black;
+                color: $sttm-dark-white;
+                border-color: $sttm-lighter-black;
+                &:focus {
+                    box-shadow: 0 0 5px $sttm-black;
+                }
+            }
+        }
+
+        .gurbani-verse {
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .modal-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .verse-translation {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            border: 1px solid rgba($sttm-grey, 0.5);
+            border-radius: 4px;
+            padding: 12px;
+
+            &.translation-diff {
+                cursor: pointer;
+
+                .new-word {
+                    color: $sttm-green;
+                    background-color: rgba($sttm-green, 0.05);
+                    font-weight: 700;
+                }
+
+                .deleted-word {
+                    color: $sttm-red;
+                    text-decoration: line-through;
+                    background-color: rgba($sttm-red, 0.05);
+                }
+            }
+
+            &.translation-input {
+                resize: none;
+            }
+        }
+
+        .btn-primary {
+            display: block;
+            margin-left: auto;
+            background-color: $sttm-blue;
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+    }
+
+    .verse-content {
+        padding: 12px;
+        > p {
+            margin: 0;
+            font-size: 1.1rem;
+
+            .dark-mode & {
+                color: $sttm-white;
+            }
+
+            &.translation {
+                font-size: 0.8rem;
+                color: $sttm-black;
+
+                .dark-mode & {
+                    color: $sttm-dark-white;
+                }
+            }
+        }
+    }
+    .review-options {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-wrap: wrap;
+        padding-right: 8px;
+
+        button {
+            margin: 0 6px;
+            color: $sttm-darker-grey;
+
+            .dark-mode & {
+                color: $sttm-dark-grey;
+            }
+
+            &.add-details-button {
+                width: 100%;
+                font-size: 0.9rem;
+                text-align: right;
+
+                .dark-mode & {
+                    color: $sttm-dark-grey;
+                }
+
+                svg {
+                    vertical-align: middle;
+                    fill: $sttm-blue;
+
+                    .dark-mode & {
+                        fill: $sttm-light-blue-60;
+                    }
+                }
+            }
+
+            &.verse-approve-button {
+                svg.active-icon, svg:hover {
+                    stroke: $sttm-green;
+                }
+            }
+
+            &.verse-reject-button {
+                svg.active-icon, svg:hover {
+                    fill: $sttm-orange;
+                }
+            }
+
+            svg {
+                transition: 0.2s all linear;
+            }
+        }
+    }
+}
+
+.shabad-review {
+    max-width: 420px;
+    margin: 24px auto;
+    text-align: center;
+
+    .feedback-question {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: $sttm-black;
+
+        .dark-mode & {
+            color: $sttm-white;
+        }
+    }
+
+    textarea {
+        border-radius: 8px;
+        min-height: 80px;
+        max-height: 300px;
+        resize: none;
+
+        .dark-mode & {
+            background-color: $sttm-black;
+            color: $sttm-dark-white;
+            border-color: $sttm-lighter-black;
+            &:focus {
+                box-shadow: 0 0 5px $sttm-black;
+            }
+        }
+    }
+
+    .btn-primary {
+        width: 250px;
+        margin: auto;
+        height: 48px;
+        background-color: $sttm-blue;
+        font-weight: 700;
+        border-radius: 12px;
+
+        span {
+            font-size: 1.2rem;
+        }
+
+        svg {
+            vertical-align: middle;
+            margin-right: 16px;
+        }
+    }
+}
+
+.shabad-rating {
+    margin-bottom: 24px;
+    .rating-item {
+        p {
+            margin: 0;
+            color: $sttm-black;
+            font-size: 1rem;
+            font-weight: 500;
+
+            .dark-mode & {
+                color: $sttm-white;
+            }
+        }
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        transition: 0.3s all linear;
+
+        &:hover {
+            background-color: $sttm-white;
+            border-radius: 4px;
+
+            .dark-mode & {
+                background-color: $sttm-black;
+            }
+        }
+    }
+}
+
+
+
+.star-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 2px;
+    padding: 0;
+    width: 20px;
+}
+
+.star-icon {
+    transition: 0.3s all linear;
+
+    &.disabled {
+        fill: $sttm-light-grey;
+
+        .dark-mode & {
+            fill: $sttm-darkest-grey;
+        }
+    }
+    &.low, &.medium, &.high {
+        fill: $sttm-blue;
+
+        .dark-mode & {
+            fill: $sttm-orange;
+        }
+    }
+}

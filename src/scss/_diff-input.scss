@@ -1,0 +1,66 @@
+.diff-input {
+  line-height: 1.5;
+  word-wrap: break-word;
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid $sttm-lighter-grey;
+  border-radius: 4px;
+  outline: none;
+  background-color: $sttm-white;
+  cursor: text;
+
+  &:focus {
+    border-color: $sttm-blue;
+    box-shadow: 0 0 0 2px rgba($sttm-blue, 0.1);
+  }
+
+  &:empty:before {
+    content: attr(data-placeholder);
+    color: $sttm-grey;
+    pointer-events: none;
+  }
+
+  .diff-added {
+    color: $sttm-green;
+    background-color: rgba($sttm-green, 0.1);
+  }
+
+  .diff-deleted {
+    color: $sttm-red;
+    text-decoration: line-through;
+    background-color: rgba($sttm-red, 0.1);
+  }
+
+  .diff-unchanged {
+    color: inherit;
+  }
+
+  .dark-mode & {
+    background-color: $sttm-black;
+    border-color: $sttm-lighter-black;
+
+    &:focus {
+      border-color: $sttm-blue;
+      box-shadow: 0 0 0 2px rgba($sttm-blue, 0.2);
+    }
+
+    &:empty:before {
+      color: $sttm-dark-grey;
+    }
+
+    .diff-added {
+      color: $sttm-green;
+      background-color: rgba($sttm-green, 0.15);
+    }
+
+    .diff-deleted {
+      color: $sttm-red;
+      background-color: rgba($sttm-red, 0.15);
+    }
+
+    .diff-unchanged {
+      color: $sttm-white;
+    }
+  }
+}
+

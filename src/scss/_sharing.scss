@@ -31,6 +31,14 @@
   min-width: 30px;
   padding: 5px;
 
+  &.orange {
+    fill: $sttm-orange;
+  }
+
+  &.grey {
+    fill: $sttm-darker-grey;
+  }
+
   @media screen and (max-width: 45.999999em) {
     font-size: 2em !important;
   }

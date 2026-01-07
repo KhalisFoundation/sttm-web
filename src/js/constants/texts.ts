@@ -103,4 +103,17 @@ export const TEXTS = {
     'sahib singh': 'Sahib Singh - Teeka',
     'prof sahib singh': 'Sahib Singh - Pad Arth',
   },
+  SHABAD_REVIEW: {
+    NEW_SUBMISSION: 'You are invited to review the new english translations by Khalis Foundation.',
+    NEW_VERSION: 'A new translation has been added, since your last review of this shabad.',
+    EDIT_SUBMISSION: 'You already reviewed this shabad, edit your review.',
+  },
+  SHABAD_RATING: {
+    ACCURACY: 'Accuracy (meaning preserved)',
+    READABILITY: 'Readability (clarity in english)',
+    TONE: 'Tone/Feel (conveys correct emotion)',
+    APPROPRIATENESS: 'Spirtual/Interpretive Appropriateness',
+    FEEDBACK: 'What is your overall feedback on translations for this shabad?',
+    SUBMIT_FEEDBACK: 'Submit Feedback',
+  },
 };
