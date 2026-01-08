@@ -1,25 +1,75 @@
-import React, { useState } from 'react';
-import { TickIcon } from './tickIcon';
-import { ExclamationIcon } from './exclamationIcon';
+import React, { useEffect, useState } from 'react';
+import { TickIcon } from '../Icons/tickIcon';
+import { ExclamationIcon } from '../Icons/exclamationIcon';
 import { Verse } from './interfaces';
-import { CommentIcon } from './commentIcon';
+import { CommentIcon } from '../Icons/commentIcon';
 import Dialog from '../Modals/Dialog';
 import { DiffInput } from '../DiffInput';
+import { VerseFeedback } from '@/types/shabad-review';
 
 interface VerseReviewProps {
   verse: Verse;
+  updateFeedback: (feedback: VerseFeedback) => void;
 }
 
-const VerseReview: React.FC<VerseReviewProps> = ({ verse }) => {
+const VerseReview: React.FC<VerseReviewProps> = ({ verse, updateFeedback }) => {
   const [status, setStatus] = useState<'approved' | 'rejected' | ''>('');
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const [suggested, setSuggested] = useState('');
+  const [comment, setComment] = useState('');
+
+  useEffect(() => {
+    if (status === '' || comment === '') return;
+    updateFeedback({
+      verseId: verse.verseId,
+      status: status,
+      details: {
+        suggested,
+        comment,
+      },
+    });
+  }, [suggested, comment]);
 
   const approveVerse = () => {
+    if (status === 'approved') return;
+  
     setStatus('approved');
+    updateFeedback({
+      verseId: verse.verseId,
+      status: 'approved',
+      details: {
+        suggested: '',
+        comment: '',
+      },
+    });
   }
 
   const rejectVerse = () => {
+    if (status === 'rejected') return;
+  
     setStatus('rejected');
+    updateFeedback({
+      verseId: verse.verseId,
+      status: 'rejected',
+      details: {
+        suggested: '',
+        comment: '',
+      },
+    });
+  }
+
+  const addVerseDetails = () => {
+    if (status === '') return;
+
+    updateFeedback({
+      verseId: verse.verseId,
+      status: status,
+      details: {
+        suggested,
+        comment,
+      },
+    });
+    closePopup();
   }
 
   const openPopup = () => {
@@ -54,10 +104,12 @@ const VerseReview: React.FC<VerseReviewProps> = ({ verse }) => {
         <Dialog isModalOpen={isPopupOpen} title='Feedback on this verse:' onClose={closePopup}>
           <h4 className='gurbani-verse'>{verse.verse.unicode}</h4>
           <p className='modal-label'>Suggest Edits (optional)</p>
-          <DiffInput value={verse.translation?.en?.bdb || ''} />
+          <DiffInput value={verse.translation?.en?.bdb || ''} updateText={setSuggested} />
           <p className='modal-label'>What is wrong with translation?</p>
-          <textarea placeholder='Enter your feedback here' />
-          <button className='btn btn-primary'>Submit</button>
+          <textarea placeholder='Enter your feedback here' onChange={(e) => {
+            setComment(e.target.value);
+          }}/>
+          <button className='btn btn-primary' onClick={addVerseDetails}>Submit</button>
         </Dialog>
       )}
     </div>

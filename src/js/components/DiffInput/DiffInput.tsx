@@ -4,9 +4,10 @@ import { diffWords, renderDiffHTML } from './utils/diffWords';
 
 interface DiffInputProps {
   value: string;
+  updateText: (text: string) => void;
 }
 
-const DiffInput: React.FC<DiffInputProps> = ({ value }) => {
+const DiffInput: React.FC<DiffInputProps> = ({ value, updateText }) => {
   const [text, setText] = useState(value);
   const [isEditing, setIsEditing] = useState(false);
   const diffElementRef = useRef<HTMLDivElement>(null);
@@ -17,6 +18,7 @@ const DiffInput: React.FC<DiffInputProps> = ({ value }) => {
       const diff = diffWords(value, text);
       const html = renderDiffHTML(diff);
       diffElementRef.current.innerHTML = html;
+      updateText(text);
     }
   }, [text, value, isEditing]);
 

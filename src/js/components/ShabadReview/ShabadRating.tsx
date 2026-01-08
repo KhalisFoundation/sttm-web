@@ -1,6 +1,7 @@
 import React from 'react';
 import { TEXTS } from '@/constants';
 import { StarsRating } from '../StarsRating';
+import { RatingType } from '@/types/shabad-review';
 
 const { SHABAD_RATING } = TEXTS;
 
@@ -23,15 +24,22 @@ const ratingOptions = [
     },
 ]
 
-const ShabadRating = () => {
+const ShabadRating = ({
+  updateRating,
+}: {
+  updateRating: (
+    rating: number,
+    type: RatingType
+  ) => void;
+}) => {
   return (
     <div className="shabad-rating">
-     {ratingOptions.map((option) => (
-        <div className='rating-item' key={option.value}>
-            <p>{option.label}: </p>
-            <StarsRating count={5} />
+      {ratingOptions.map((option) => (
+        <div className="rating-item" key={option.value}>
+          <p>{option.label}: </p>
+          <StarsRating count={5} updateRating={updateRating} type={option.value as RatingType}/>
         </div>
-     ))}
+      ))}
     </div>
   );
 };
