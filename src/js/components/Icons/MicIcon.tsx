@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SilenceDetector, createAudioAnalyser } from './utils/silence';
+import { clickEvent, errorEvent } from '@/util';
 
 interface MicIconProps {
   isRecording: boolean;
@@ -34,6 +35,7 @@ const MicIcon: React.FC<MicIconProps> = ({
 
   const startRecording = async () => {
     try {
+      clickEvent({action: 'start_recording', label: 'mic_icon'});
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
 
@@ -78,6 +80,7 @@ const MicIcon: React.FC<MicIconProps> = ({
   };
 
   const stopRecording = () => {
+    clickEvent({action: 'stop_recording', label: 'mic_icon'});
     const mediaRecorder = mediaRecorderRef.current;
 
     if (!mediaRecorder || mediaRecorder.state === 'inactive') return;
@@ -129,11 +132,14 @@ const MicIcon: React.FC<MicIconProps> = ({
 
           const data = await response.json();
           if (data.status === 'success') {
+            clickEvent({action: 'voice-search-success', label: JSON.stringify(data.transcriptInitials)});
             onTranscriptionResult?.(data.transcriptInitials);
           } else {
+            errorEvent({action: 'voice-search-failed', label: data.message || 'Transcription failed' });
             onError?.(data.message || 'Transcription failed');
           }
         } catch (err) {
+          errorEvent({action: 'voice-search-failed', label: 'Network error' });
           onError?.('Network error');
         } finally {
           setIsProcessing(false);
