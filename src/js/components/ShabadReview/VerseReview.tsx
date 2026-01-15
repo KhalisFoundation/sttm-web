@@ -9,14 +9,16 @@ import { VerseFeedback } from '@/types/shabad-review';
 
 interface VerseReviewProps {
   verse: Verse;
+  currentFeedback: VerseFeedback | null;
   updateFeedback: (feedback: VerseFeedback) => void;
 }
 
-const VerseReview: React.FC<VerseReviewProps> = ({ verse, updateFeedback }) => {
+const VerseReview: React.FC<VerseReviewProps> = ({ verse, currentFeedback, updateFeedback }) => {
   const [status, setStatus] = useState<'approved' | 'rejected' | ''>('');
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [suggested, setSuggested] = useState('');
-  const [comment, setComment] = useState('');
+  const [suggested, setSuggested] = useState(currentFeedback?.details.suggested || verse.translation?.en?.bdb || '');
+  const [comment, setComment] = useState(currentFeedback?.details.comment || '');
+  console.log('currentFeedback', currentFeedback);
 
   useEffect(() => {
     if (status === '' || comment === '') return;
@@ -95,7 +97,7 @@ const VerseReview: React.FC<VerseReviewProps> = ({ verse, updateFeedback }) => {
         </button>
         {status === 'rejected' && (
           <button className='add-details-button' onClick={openPopup}>
-            <span>Add details</span>
+            <span>{currentFeedback?.details.suggested || currentFeedback?.details.comment ? 'Edit' : 'Add'} details</span>
             <CommentIcon width={22} />
           </button>
         )}
@@ -104,9 +106,9 @@ const VerseReview: React.FC<VerseReviewProps> = ({ verse, updateFeedback }) => {
         <Dialog isModalOpen={isPopupOpen} title='Feedback on this verse:' onClose={closePopup}>
           <h4 className='gurbani-verse'>{verse.verse.unicode}</h4>
           <p className='modal-label'>Suggest Edits (optional)</p>
-          <DiffInput value={verse.translation?.en?.bdb || ''} updateText={setSuggested} />
+          <DiffInput actualText={verse.translation?.en?.bdb || ''} editedText={suggested} updateText={setSuggested} />
           <p className='modal-label'>What is wrong with translation?</p>
-          <textarea placeholder='Enter your feedback here' onChange={(e) => {
+          <textarea placeholder='Enter your feedback here' value={comment} onChange={(e) => {
             setComment(e.target.value);
           }}/>
           <button className='btn btn-primary' onClick={addVerseDetails}>Submit</button>

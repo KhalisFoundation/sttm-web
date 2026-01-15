@@ -210,13 +210,23 @@
         }
     }
 
-    .btn-primary {
-        width: 250px;
+    .btn {
         margin: auto;
         height: 48px;
-        background-color: $sttm-blue;
         font-weight: 700;
         border-radius: 12px;
+
+        &.btn-primary {
+            width: 250px;
+            background-color: $sttm-blue;
+        }
+
+        &.btn-secondary {
+            margin-left: 24px;
+            background-color: transparent;
+            border: 1px solid $sttm-blue;
+            color: $sttm-blue;
+        }
 
         span {
             font-size: 1.2rem;

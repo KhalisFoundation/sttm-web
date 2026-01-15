@@ -3,24 +3,29 @@ import React, { useState, useRef, useEffect } from 'react';
 import { diffWords, renderDiffHTML } from './utils/diffWords';
 
 interface DiffInputProps {
-  value: string;
+  actualText: string;
+  editedText: string;
   updateText: (text: string) => void;
 }
 
-const DiffInput: React.FC<DiffInputProps> = ({ value, updateText }) => {
-  const [text, setText] = useState(value);
+const DiffInput: React.FC<DiffInputProps> = ({ actualText, editedText, updateText }) => {
+  const [text, setText] = useState(editedText);
   const [isEditing, setIsEditing] = useState(false);
   const diffElementRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (!isEditing && diffElementRef.current) {
-      const diff = diffWords(value, text);
+      const diff = diffWords(actualText, text);
       const html = renderDiffHTML(diff);
       diffElementRef.current.innerHTML = html;
-      updateText(text);
+      if (text !== actualText) {
+        updateText(text);
+      } else {
+        updateText('');
+      }
     }
-  }, [text, value, isEditing]);
+  }, [text, actualText, isEditing]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {

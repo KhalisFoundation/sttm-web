@@ -114,6 +114,7 @@ export const TEXTS = {
     TONE: 'Tone/Feel (conveys correct emotion)',
     APPROPRIATENESS: 'Spirtual/Interpretive Appropriateness',
     FEEDBACK: 'What is your overall feedback on translations for this shabad?',
+    MISSING_RATING_ERROR: 'Please rate all categories before submitting.',
     SUBMIT_FEEDBACK: 'Submit Feedback',
   },
 };

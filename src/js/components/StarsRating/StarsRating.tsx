@@ -6,12 +6,14 @@ const StarsRating = ({
   count = 5,
   updateRating,
   type,
+  currentRating,
 }: {
   count: number;
   updateRating: (rating: number, type: RatingType) => void;
   type: RatingType;
+  currentRating: number | null;
 }) => {
-  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [selectedRating, setSelectedRating] = useState<number | null>(currentRating || null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const handleStarClick = (index: number) => {

@@ -16,6 +16,8 @@ export interface FeedbackData {
   };
   overallFeedback: string;
   verses: VerseFeedback[];
+  userId: number;
+  shabadId: number;
 }
 
 export type RatingType = 'accuracy' | 'readability' | 'tone' | 'appropriateness';
