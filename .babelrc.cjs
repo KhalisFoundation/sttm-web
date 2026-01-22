@@ -1,4 +1,4 @@
-const alias = require('./webpack.config').resolve.alias;
+const alias = require('./webpack.config.cjs').resolve.alias;
 
 const plugins = [
   '@babel/plugin-syntax-dynamic-import',
