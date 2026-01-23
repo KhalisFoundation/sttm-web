@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { IBAANI_LINK, TIMED_BAANI_LINKS } from '../../constants';
 import { clickEvent } from '../../util/analytics';
@@ -7,7 +7,7 @@ import { timeMath } from '../../util';
 import { Clock } from '../Icons/Clock';
 
 export const BaaniLinks: React.FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleBaaniLinkClick =
     (baani: IBAANI_LINK) => (e: MouseEvent<HTMLButtonElement>) => {
@@ -18,7 +18,7 @@ export const BaaniLinks: React.FC = () => {
         label: `timed baani - ${baani.name}`,
       });
 
-      history.push(baani.link);
+      navigate(baani.link);
     };
 
   return (

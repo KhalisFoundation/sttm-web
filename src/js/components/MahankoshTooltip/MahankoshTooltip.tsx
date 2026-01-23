@@ -6,7 +6,7 @@ import { getMahankoshTooltipContent } from './util/';
 import {
   SET_MAHANKOSH_TOOLTIP_ACTIVE,
 } from '@/features/actions';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../FavouriteShabadButton/utils/api-client';
 
 interface Props {

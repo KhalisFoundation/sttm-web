@@ -7,7 +7,7 @@ import {
   getParameterByName,
   throwError,
 } from './util';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import RenderPromise from './components/RenderPromise';
 import Layout from './components/Layout';
@@ -497,7 +497,7 @@ export default [
       ] = params.map((v) => getParameterByName(v, search));
 
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
-        return <Redirect to={toAngURL({ ang: q, source })} />;
+        return <Navigate to={toAngURL({ ang: q, source })} />;
       }
 
       return (
@@ -542,7 +542,7 @@ export default [
       } = props;
 
       if (location.search === '') {
-        return <Redirect to="/random" />;
+        return <Navigate to="/random" />;
       }
 
       const [random, id, q, type, highlight] = [
@@ -591,7 +591,7 @@ export default [
   {
     path: '/random',
     render() {
-      return <Redirect to="/shabad?random" />;
+      return <Navigate to="/shabad?random" />;
     },
   },
   {
@@ -621,7 +621,7 @@ export default [
   {
     path: '/search.asp',
     render() {
-      return <Redirect to="/" />;
+      return <Navigate to="/" />;
     },
   },
   {
@@ -637,7 +637,7 @@ export default [
       } else if (query.random) {
         url = '/shabad?random';
       }
-      return <Redirect to={url} />;
+      return <Navigate to={url} />;
     },
   },
   {

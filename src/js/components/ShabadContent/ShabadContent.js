@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { withRouter } from '@/util/router-compat';
 import { connect } from 'react-redux';
 import { GlobalHotKeys } from 'react-hotkeys';
 
@@ -159,7 +160,7 @@ class Shabad extends React.PureComponent {
       hideAddButton = true,
     } = baniProps;
     if (random) {
-      return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
+      return <Navigate to={`/shabad?id=${getShabadId(info)}`} replace />;
     }
 
     const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');

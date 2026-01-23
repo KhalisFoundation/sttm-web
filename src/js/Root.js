@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import { GlobalHotKeys, configure } from 'react-hotkeys';
 import { Notifier } from '@/components/Notifier';
 import routes, { NotFound } from './routes';
@@ -10,6 +10,17 @@ import {
   showToast,
   saveToLocalStorage,
 } from './util';
+
+// Wrapper component to provide v5-style props to route components
+function RouteWrapper({ render }) {
+  const location = useLocation();
+  const params = useParams();
+  const props = {
+    location,
+    match: { params },
+  };
+  return render(props);
+}
 
 export default class Root extends React.PureComponent {
   constructor() {
@@ -27,12 +38,19 @@ export default class Root extends React.PureComponent {
     return (
       <Router>
         <GlobalHotKeys keyMap={GlobalShortcuts} handlers={GlobalHandlers}>
-          <Switch>
-            {routes.map((props, key) => (
-              <Route key={key} {...props} />
-            ))}
-            <Route render={() => <NotFound />} />
-          </Switch>
+          <Routes>
+            {routes.map(({ path, exact, render }, key) => {
+              const paths = Array.isArray(path) ? path : [path];
+              return paths.map((p, idx) => (
+                <Route
+                  key={`${key}-${idx}`}
+                  path={p}
+                  element={<RouteWrapper render={render} />}
+                />
+              ));
+            })}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
           <Notifier />
         </GlobalHotKeys>
       </Router>

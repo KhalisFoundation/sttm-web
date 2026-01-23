@@ -1,8 +1,8 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { CookiesProvider } from 'react-cookie';
 
 import 'regenerator-runtime/runtime';
@@ -17,7 +17,8 @@ const queryClient = new QueryClient({
   },
 });
 
-render(
+const root = createRoot(document.getElementById('app-root'));
+root.render(
   <>
     <QueryClientProvider client={queryClient}>
       <CookiesProvider>
@@ -27,6 +28,5 @@ render(
       </CookiesProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  </>,
-  document.getElementById('app-root')
+  </>
 );

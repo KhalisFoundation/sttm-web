@@ -1,6 +1,7 @@
 /* global describe, it, expect, jest */
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom';
 import { shabad, mockStore } from '../__mocks__';
@@ -28,7 +29,9 @@ describe('Multiple Shabads Display', () => {
 
     renderedComponent = render(
       <Provider store={store}>
-        <MultipleShabadsDisplay />
+        <MemoryRouter>
+          <MultipleShabadsDisplay />
+        </MemoryRouter>
       </Provider>
     );
   });

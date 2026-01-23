@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs'
 import { toMultipleShabadsURL } from '@/util/url/to-multiple-shabad-url';
 import BarsIcon from '../Icons/Bars';
@@ -29,7 +29,7 @@ const MultipleShabadsDisplay = ({
 }: Props) => {
   const [sortableState, setSortableState] = useState<IMultipleShabadsProps[]>(multipleShabads);
   const [history, setHistory] = useState<IMultipleShabadsProps[]>(multipleShabads);
-  const urlHistory = useHistory();
+  const navigate = useNavigate();
   const wrapperRef = React.useRef(null);
 
   useEscapeKeyEventHandler(() => setMultiViewPanel(false))
@@ -52,7 +52,7 @@ const MultipleShabadsDisplay = ({
 
   const handleDisplayShabads = () => {
     const shabadData = sortableState.map(shabad => [shabad.shabadId, shabad.id])
-    urlHistory.push(toMultipleShabadsURL({ shabadData }));
+    navigate(toMultipleShabadsURL({ shabadData }));
   }
 
   // Update Local State {sortableState} after shabads get Updated

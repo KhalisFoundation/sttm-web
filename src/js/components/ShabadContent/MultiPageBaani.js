@@ -1,12 +1,12 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toAngURL } from '../../util';
 import Baani from '../Baani';
 
 export const MultiPageBaani = React.memo((props) => {
   const { pages, isReadingMode,...baaniProps } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const sehajPaathMode = useSelector(state => state.sehajPaathMode);
 
   return (
@@ -19,7 +19,7 @@ export const MultiPageBaani = React.memo((props) => {
               source={source.sourceId}
               ang={source.pageNo}
               gurbani={gurbani}
-              history={history}
+              navigate={navigate}
               isParagraphMode={false}
               isSehajPaathMode={sehajPaathMode}
               isSundarGutkaRoute={false}
@@ -32,7 +32,7 @@ export const MultiPageBaani = React.memo((props) => {
                   highlight: highlightVerseId,
                 });
 
-                history.push(newUrl);
+                navigate(newUrl);
               }}
             />
           </div>

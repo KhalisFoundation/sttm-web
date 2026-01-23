@@ -1,7 +1,8 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { withRouter } from '@/util/router-compat';
 import DatePicker from 'react-date-picker';
 import AudioPlayer from 'react-h5-audio-player';
 
