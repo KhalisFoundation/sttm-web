@@ -100,7 +100,12 @@ export const TEXTS = {
   SHABAD_REMOVED_MESSAGE: 'Shabad removed.',
   SHABAD_ALREADY_ADDED_MESSAGE: 'Shabad has already been added to multiview list.',
   TRANSLATION_SOURCES: {
-    'sahib singh': 'Sahib Singh - Teeka',
-    'prof sahib singh': 'Sahib Singh - Pad Arth',
+    'sahib singh': 'Prof Sahib Singh',
+    'prof sahib singh': 'Prof Sahib Singh - Pad Arth (Word Meanings)',
+    'sahib singh english': 'Prof Sahib Singh',
+    'manmohan singh': 'Dr. Manmohan Singh',
+    'sant singh khalsa': 'Dr. Sant Singh Khalsa',
+    'sant singh': 'Bhai Sant Singh',
+    'fareedkot': 'Fareedkot Teeka',
   },
 };

@@ -17,6 +17,17 @@ import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
+const allowedOrigins = process.env.NODE_ENV === 'development' ? [
+  'http://localhost:8081',
+  'http://localhost:3000',
+  'https://www.sikhitothemax.org',
+  'https://sikhitothemax.org',
+  'https://dev.sikhitothemax.org',
+  'https://www.dev.sikhitothemax.org',
+] : [
+  'https://www.sikhitothemax.org',
+  'https://sikhitothemax.org',
+];
 const ON_HEROKU = 'ON_HEROKU' in process.env;
 
 port = ON_HEROKU ? process.env.PORT : port;
@@ -38,18 +49,47 @@ app.use((req, res, next) => {
   return next();
 });
 
+app.post('/api/ai-translations', async (req, res) => {
+  try {
+    const origin = req.get('Origin') || req.get('Referer');
+
+    if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      return res.status(403).json({
+        status: 'error',
+        message: 'Access denied'
+      });
+    }
+
+    const { verse_id } = req.body;
+    if (!verse_id) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Verse ids list is required'
+      });
+    }
+    const response = await fetch(process.env.AI_TRANSLATION_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({verse_ids: verse_id}),
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('AI translation error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error'
+    });
+  }
+});
+
 // API endpoint for voice transcription proxy
 app.post('/api/transcribe', async (req, res) => {
   try {
     const origin = req.get('Origin') || req.get('Referer');
-    const allowedOrigins = [
-      'http://localhost:8081',
-      'http://localhost:3000',
-      'https://www.sikhitothemax.org',
-      'https://sikhitothemax.org',
-      'https://dev.sikhitothemax.org',
-      'https://www.dev.sikhitothemax.org',
-    ];
 
     if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
       return res.status(403).json({

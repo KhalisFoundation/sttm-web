@@ -119,8 +119,73 @@ class Shabad extends React.PureComponent {
     this.state = {
       progress: 0,
       isDialogOpen: true, // Default to open when response is fetched
+      processedGurbani: props.gurbani || [],
     };
   }
+
+  componentDidMount() {
+    if (this.props.gurbani) {
+      this.processGurbani(this.props.gurbani);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.gurbani !== this.props.gurbani) {
+      this.processGurbani(this.props.gurbani);
+    }
+  }
+
+  processGurbani = async (gurbani) => {
+    if (!gurbani) return;
+
+    // Initialize state with input gurbani first
+    this.setState({ processedGurbani: gurbani });
+
+    const verseIds = gurbani.map((verse) => verse.verseId);
+    try {
+      const response = await fetch('/api/ai-translations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ verse_id: verseIds })
+      });
+      const data = await response.json();
+
+      const processedGurbani = gurbani.map((verse) => {
+        const updatedVerse = { ...verse };
+        if (updatedVerse.translation) {
+          updatedVerse.translation = { ...updatedVerse.translation };
+        }
+
+        const aiTranslation = data.verses[verse.verseId];
+
+        if (aiTranslation) {
+          let padArth = '';
+          let text = '';
+          const padArthArray = aiTranslation.padArth ? aiTranslation.padArth.sort((a, b) => a.translation_id - b.translation_id) : [];
+          padArthArray.forEach((item) => {
+            const parsed = JSON.parse(item.translation_text);
+            padArth += `${parsed.word.unicode} - ${parsed.english_meaning},  `;
+          });
+          aiTranslation.text.forEach((item) => {
+            text += item.translation_text + ' ';
+          });
+
+          updatedVerse.translation.ai = {
+            pss: padArth || '',
+            ss: text || '',
+          };
+        }
+        return updatedVerse;
+      });
+      this.setState({ processedGurbani: processedGurbani });
+    } catch (error) {
+      console.error('Error fetching AI translations:', error);
+      // Fallback to original gurbani if fetch fails
+      this.setState({ processedGurbani: gurbani });
+    }
+  };
 
   toggleDialog = () => {
     this.setState(prevState => ({
@@ -151,13 +216,15 @@ class Shabad extends React.PureComponent {
     const {
       info,
       highlight,
-      gurbani,
       type,
       translationLanguages,
       transliterationLanguages,
       unicode,
       hideAddButton = true,
     } = baniProps;
+
+    const { processedGurbani: gurbani } = this.state;
+
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
@@ -232,6 +299,7 @@ class Shabad extends React.PureComponent {
                   isSundarGutkaRoute={isSundarGutkaRoute}
                   isParagraphMode={isParagraphMode}
                   isReadingMode={readingMode}
+                  gurbani={gurbani}
                 />
               )}
               {isLoadingContent && <div className="spinner" />}
