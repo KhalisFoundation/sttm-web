@@ -213,6 +213,14 @@ li.search-result {
       svg {
         height: 1.5em;
         width: 1.5em;
+
+        &.orange {
+          fill: $sttm-orange;
+        }
+
+        &.grey {
+          fill: $sttm-darker-grey;
+        }
       }
     }
 

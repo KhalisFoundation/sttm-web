@@ -25,6 +25,7 @@ import {
 } from '@/util';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME, MAX_ANGS } from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
+import { reviewEligibility } from '../dummyData';
 
 /**
  *
@@ -236,6 +237,16 @@ class Shabad extends React.PureComponent {
     const isShowMetaData = this.props.hideMeta === false && !fullScreenMode;
     const isShowControls = this.props.hideControls === false;
     const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute && !fullScreenMode;
+    
+    const reviewMessage = (reviewEligibility) => {
+      if (reviewEligibility.alreadyReviewed) {
+        return TEXTS.SHABAD_REVIEW.EDIT_SUBMISSION;
+      }
+      if (reviewEligibility.newVersionAvailable) {
+        return TEXTS.SHABAD_REVIEW.NEW_VERSION;
+      }
+      return TEXTS.SHABAD_REVIEW.NEW_SUBMISSION;
+    }
 
     return (
       <GlobalHotKeys
@@ -279,7 +290,14 @@ class Shabad extends React.PureComponent {
               showPinSettings={showPinSettings}
             />
           )}
-
+          {reviewEligibility.isEligible && (
+            <div className="review-translations-banner flex justify-center align-center">
+              <span>{reviewMessage(reviewEligibility)}</span>
+              <a className="btn" href={`/review-shabad/${info.shabadId}`}>
+                {reviewEligibility.alreadyReviewed ? 'Edit response' : 'Review translations'}
+              </a>
+            </div>
+          )}
           <div id="shabad" className={`shabad display display-${type}`}>
             <div className="shabad-container">
               {isMultiPage ? (

@@ -42,14 +42,14 @@ export const FavouriteShabadButton = ({ shabad: { shabadId }, gurbani }: Props) 
               data-cy="favourite-shabad"
               onClick={handleRemoveClick}
             >
-              <StarIcon />
+              <StarIcon className="orange"/>
             </button>
             :
             <button
               data-cy="favourite-shabad"
               onClick={handleAddClick}
             >
-              <StarIcon fill="#868383" />
+              <StarIcon className="grey" />
             </button>
         }
       </>
