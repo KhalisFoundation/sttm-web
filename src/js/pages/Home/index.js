@@ -167,7 +167,7 @@ class Home extends React.PureComponent {
                             this.props.setModalOpen('AskGurbaniBotQuestion');
                           }}
                         >
-                          Get your questions answered by our AI Gurbani bot!{' '}
+                          Get your questions answered by Khalis AI!{' '}
                           <u>Try it now.</u>
                         </span>
                       </span>
