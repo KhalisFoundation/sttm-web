@@ -1,5 +1,5 @@
-/* globals API_URL */
-import React, { useEffect, useRef, useState } from 'react';
+/* globals API_URL, SP_API */
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { buildApiUrl } from '@sttm/banidb';
 
@@ -8,10 +8,12 @@ import { pageView } from '../../util/analytics';
 import { toShabadURL } from '../../util';
 import VerseReview from './VerseReview';
 import ShabadRating from './ShabadRating';
-import { TEXTS } from '@/constants';
+import { TEXTS, LOCAL_STORAGE_KEY_FOR_PENDING_SHABAD_REVIEW } from '@/constants';
 import { FeedbackData, VerseFeedback, RatingType } from '@/types/shabad-review';
 import { CalloutIcon } from '../Icons/calloutIcon';
 import { showToast } from '@/util';
+import { useGetUser } from '@/hooks';
+import { IUser } from '@/types/user';
 
 const Spinner = () => <div className="spinner" />;
 
@@ -23,8 +25,9 @@ interface ShabadReviewProps extends RouteComponentProps<MatchParams> {}
 
 const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
   const { shabadId } = match.params;
-  const shabadFeedbackRef = useRef<HTMLTextAreaElement>(null);
+  const shabadFeedbackRef = useRef<HTMLTextAreaElement | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const { user } = useGetUser<IUser>();
 
   const [feedbackData, setFeedbackData] = useState<FeedbackData>({
     rating: {
@@ -35,7 +38,7 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
     },
     overallFeedback: '',
     verses: [],
-    userId: 0, // TOOD: Update with actual user id
+    email: '', // TOOD: Update with actual user id
     shabadId: parseInt(shabadId, 10),
   });
 
@@ -71,26 +74,91 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
     }));
   };
 
-  const submitFeedback = () => {
-    const hasMissingRating = Object.values(feedbackData.rating).some(value => value === 0);
+  const postFeedback = async (data: FeedbackData) => {
+    try {
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }).then(res => res.json());
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+    }
+  };
+
+  const submitFeedback = async () => {
+    const comment = shabadFeedbackRef.current?.value || '';
+    const dataToSubmit = {
+      ...feedbackData,
+      overallFeedback: comment,
+    };
+
+    const hasMissingRating = Object.values(dataToSubmit.rating).some(value => value === 0);
     if (hasMissingRating) {
       showToast(TEXTS.SHABAD_RATING.MISSING_RATING_ERROR);
       return;
     }
-    const comment = shabadFeedbackRef.current?.value;
-    if (comment) {
-      setFeedbackData((prev) => {
-        const updated = {
-          ...prev,
-          overallFeedback: comment,
-        };
-        return updated;
-      });
-    } else {
-      console.log('feedback data', feedbackData);
+
+    if (!user) {
+      localStorage.setItem(LOCAL_STORAGE_KEY_FOR_PENDING_SHABAD_REVIEW, JSON.stringify(dataToSubmit));
+      window.location.href = `${SP_API}/login/sso?redirect_url=${encodeURIComponent(window.location.href)}`;
+      return;
     }
-    setSubmitted(true);
+    
+    setFeedbackData(dataToSubmit);
+    postFeedback(dataToSubmit);
   };
+
+  useEffect(() => {
+    if (user && user.email) {
+      const fetchUserFeedback = async () => {
+        try {
+          const response = await fetch(`/api/feedback/${shabadId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: user.email }),
+          });
+          const data = await response.json();
+          setFeedbackData(data.feedback);
+        } catch (error) {
+          console.error('Error fetching feedback:', error);
+        }
+      };
+      fetchUserFeedback();
+      setFeedbackData((prev) => ({
+        ...prev,
+        email: user.email
+      }));
+    }
+  }, [user, shabadId]);
+
+  useEffect(() => {
+    if (user) {
+      const pendingDataStr = localStorage.getItem(LOCAL_STORAGE_KEY_FOR_PENDING_SHABAD_REVIEW);
+      if (pendingDataStr) {
+        try {
+          const pendingData: FeedbackData = JSON.parse(pendingDataStr);
+          if (pendingData.shabadId === parseInt(shabadId, 10)) {
+            setFeedbackData(pendingData);
+            postFeedback(pendingData);
+            localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_PENDING_SHABAD_REVIEW);
+            if (shabadFeedbackRef.current) {
+              shabadFeedbackRef.current.value = pendingData.overallFeedback;
+            }
+          }
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error('Error parsing pending feedback:', e);
+          localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_PENDING_SHABAD_REVIEW);
+        }
+      }
+    }
+  }, [user, shabadId]);
 
   useEffect(() => {
     pageView(
@@ -111,6 +179,17 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
     id: parseInt(shabadId, 10),
     API_URL,
   });
+
+  const setTextAreaRef = useCallback((node) => {
+    shabadFeedbackRef.current = node;
+    if (node && feedbackData.overallFeedback) {
+      if (node.value !== feedbackData.overallFeedback) {
+        node.value = feedbackData.overallFeedback;
+        node.style.height = 'auto';
+        node.style.height = node.scrollHeight + 'px';
+      }
+    }
+  }, [feedbackData.overallFeedback]);
 
   const resizeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.target.style.height = 'auto';
@@ -165,7 +244,7 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
                     </h5>
                     <textarea
                       name="shabadFeedback"
-                      ref={shabadFeedbackRef}
+                      ref={setTextAreaRef}
                       onInput={resizeTextarea}
                       className="feedback-textarea"
                       placeholder="Enter your feedback here"

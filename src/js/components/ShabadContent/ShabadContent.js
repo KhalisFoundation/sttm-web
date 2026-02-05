@@ -25,7 +25,6 @@ import {
 } from '@/util';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME, MAX_ANGS } from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
-import { reviewEligibility } from '../dummyData';
 
 /**
  *
@@ -121,6 +120,11 @@ class Shabad extends React.PureComponent {
       progress: 0,
       isDialogOpen: true, // Default to open when response is fetched
       processedGurbani: props.gurbani || [],
+      reviewEligibility: {
+        isEligible: true,
+        alreadyReviewed: false,
+        newVersionAvailable: false,
+      },
     };
   }
 
@@ -237,7 +241,7 @@ class Shabad extends React.PureComponent {
     const isShowMetaData = this.props.hideMeta === false && !fullScreenMode;
     const isShowControls = this.props.hideControls === false;
     const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute && !fullScreenMode;
-    
+
     const reviewMessage = (reviewEligibility) => {
       if (reviewEligibility.alreadyReviewed) {
         return TEXTS.SHABAD_REVIEW.EDIT_SUBMISSION;
@@ -290,11 +294,11 @@ class Shabad extends React.PureComponent {
               showPinSettings={showPinSettings}
             />
           )}
-          {reviewEligibility.isEligible && (
+          {this.state.reviewEligibility.isEligible && (
             <div className="review-translations-banner flex justify-center align-center">
-              <span>{reviewMessage(reviewEligibility)}</span>
+              <span>{reviewMessage(this.state.reviewEligibility)}</span>
               <a className="btn" href={`/review-shabad/${info.shabadId}`}>
-                {reviewEligibility.alreadyReviewed ? 'Edit response' : 'Review translations'}
+                {this.state.reviewEligibility.alreadyReviewed ? 'Edit response' : 'Review translations'}
               </a>
             </div>
           )}

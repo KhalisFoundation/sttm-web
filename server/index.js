@@ -49,6 +49,62 @@ app.use((req, res, next) => {
   return next();
 });
 
+app.post('/api/feedback', async (req, res) => {
+  try {
+    const origin = req.get('Origin') || req.get('Referer');
+
+    if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      return res.status(403).json({
+        status: 'error',
+        message: 'Access denied'
+      });
+    }
+    const { email, shabadId, rating, overallFeedback, verses } = req.body;
+    if (!shabadId || !rating) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Missing required fields'
+      });
+    }
+
+    const response = await fetch(`${process.env.SODH_API}/api/sttm-shabad-feedback`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, shabadId, starRatings: rating, feedbackText: overallFeedback, verses }),
+    });
+    const data = await response.json();
+    res.json(data);
+
+
+  } catch (error) {
+    console.error('Feedback error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error'
+    });
+  }
+});
+
+app.post('/api/feedback/:shabadId', async (req, res) => {
+  try {
+    const { shabadId } = req.params;
+    const { email } = req.body;
+    const response = await fetch(`${process.env.SODH_API}/api/sttm-shabad-feedback/${shabadId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Feedback error:', error);
+  }
+});
+
 app.post('/api/ai-translations', async (req, res) => {
   try {
     const origin = req.get('Origin') || req.get('Referer');
@@ -72,7 +128,7 @@ app.post('/api/ai-translations', async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({verse_ids: verse_id}),
+      body: JSON.stringify({ verse_ids: verse_id }),
     });
 
     const data = await response.json();
@@ -167,7 +223,7 @@ app.get('*', async (req, res) => {
   // get the title/description from API call if needed.
   const bodyClass =
     DARK_MODE_COOKIE in req.cookies &&
-    parseInt(req.cookies[DARK_MODE_COOKIE], 10) === 1
+      parseInt(req.cookies[DARK_MODE_COOKIE], 10) === 1
       ? DARK_MODE_CLASS_NAME
       : '';
 

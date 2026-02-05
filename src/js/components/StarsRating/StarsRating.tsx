@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StarIcon } from '../Icons/StarIcon';
 import { RatingType } from '@/types/shabad-review';
 
@@ -15,6 +15,10 @@ const StarsRating = ({
 }) => {
   const [selectedRating, setSelectedRating] = useState<number | null>(currentRating || null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    setSelectedRating(currentRating);
+  }, [currentRating]);
 
   const handleStarClick = (index: number) => {
     setSelectedRating(index + 1);

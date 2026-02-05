@@ -153,9 +153,8 @@ class Layout extends React.PureComponent {
           <AddFavouriteShabadModal open={isAddFavoriteShabadModalOpen} />
         )}
         <div
-          className={`pusher ${
-            showMultiViewPanel ? 'enable' : ''
-          } pin-settings ${showPinSettings ? 'active' : ''}`}
+          className={`pusher ${showMultiViewPanel ? 'enable' : ''
+            } pin-settings ${showPinSettings ? 'active' : ''}`}
         >
           <Header
             defaultQuery={this.props.defaultQuery}
@@ -248,7 +247,10 @@ class Layout extends React.PureComponent {
     // @TODO: use redux to control state of session user
     if (!isFalsy(token)) {
       window.localStorage.setItem(LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN, token);
-      history.push('/');
+      const queryParams = new URLSearchParams(location.search);
+      queryParams.delete('token');
+      const search = queryParams.toString();
+      history.push(`${location.pathname}${search ? '?' + search : ''}`);
     }
     // @TODO: use redux to remove user sesssion
     if (logout === 'success') {
