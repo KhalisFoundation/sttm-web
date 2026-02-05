@@ -75,7 +75,7 @@ export default class Search extends React.PureComponent {
     if (
       prevProps.q !== this.props.q ||
       prevProps.source !== this.props.source ||
-      prevState.searchURL !== this.state.searchURL ||
+      prevProps.type !== this.props.type ||
       prevProps.offset !== this.props.offset
     ) {
       this.setSearchUrl();
