@@ -56,21 +56,21 @@ const DiffInput: React.FC<DiffInputProps> = ({ actualText, editedText, updateTex
 
   return (
     <>
-    <textarea
+      <textarea
         ref={inputRef}
         value={text}
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}
         className="verse-translation translation-input"
-        style= {{display: isEditing ? 'block' : 'none'}}
+        style={{ display: isEditing ? 'block' : 'none' }}
       />
-    <div
-      ref={diffElementRef}
-      onClick={handleDiffClick}
-      style= {{display: isEditing ? 'none' : 'block'}}
-      className="verse-translation translation-diff"
-    />
+      <div
+        ref={diffElementRef}
+        onClick={handleDiffClick}
+        style={{ display: isEditing ? 'none' : 'block' }}
+        className="verse-translation translation-diff"
+      />
     </>
   );
 };

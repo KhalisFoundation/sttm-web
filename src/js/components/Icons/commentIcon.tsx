@@ -11,7 +11,6 @@ export const CommentIcon: React.FC<CommentIconProps> = ({
 }) => {
   return (
     <svg
-      id="fi_8315914"
       height={width}
       viewBox="0 0 24 24"
       width={width}

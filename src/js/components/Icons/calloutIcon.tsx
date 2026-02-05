@@ -11,7 +11,6 @@ export const CalloutIcon: React.FC<CalloutIconProps> = ({
 }) => {
   return (
     <svg
-      id="fi_8316217"
       height={width}
       viewBox="0 0 24 24"
       width={width}
