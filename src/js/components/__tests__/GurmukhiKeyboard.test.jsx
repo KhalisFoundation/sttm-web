@@ -2,14 +2,14 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import GurmukhiKeyboard from '../GurmukhiKeyboard';
-import { StaticRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('<GurmukhiKeyboard />', () => {
   it('renders correctly', () => {
     const { container } = render(
-      <StaticRouter context={{}}>
+      <MemoryRouter>
         <GurmukhiKeyboard active value={'mere'} onKeyClick={jest.fn()} />
-      </StaticRouter>
+      </MemoryRouter>
     );
 
     expect(container).toMatchSnapshot();
@@ -18,9 +18,9 @@ describe('<GurmukhiKeyboard />', () => {
     const onKeyClick = jest.fn();
 
     const { getByText, container } = render(
-      <StaticRouter context={{}}>
+      <MemoryRouter>
         <GurmukhiKeyboard active onKeyClick={onKeyClick} value={'mere'} />
-      </StaticRouter>
+      </MemoryRouter>
     );
 
     fireEvent.click(getByText('A'));

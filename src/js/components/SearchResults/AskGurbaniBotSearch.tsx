@@ -1,7 +1,7 @@
-import React, { FormEvent, FormEventHandler } from 'react';
+import React, { FormEvent } from 'react';
 import SearchForm from "@/components/SearchForm"
 import SearchIcon from '@/components/Icons/Search';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toSearchURL } from '@/util';
 import { SEARCH_TYPES } from '@/constants';
 
@@ -11,12 +11,12 @@ interface Props {
 
 function AskGurbaniBotSearch(props: Props) {
   const { query } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const handleSubmit = ({ handleFormSubmit, query }: { handleFormSubmit: FormEventHandler, query: string }) => (e: FormEvent) => {
+  const handleSubmit = ({ handleFormSubmit, query }: { handleFormSubmit?: () => void, query: string }) => (e: FormEvent) => {
     e.preventDefault();
     typeof handleFormSubmit === 'function' && handleFormSubmit();
-    history.push(toSearchURL({
+    navigate(toSearchURL({
       query,
       type: SEARCH_TYPES.ASK_A_QUESTION,
       writer: 'all',

@@ -5,7 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 const path = require('path');
-const API_URLS = require('./common/api-urls-constants.js');
+const API_URLS = require('./common/api-urls-constants.cjs');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const commonPlugins = [new WebpackManifestPlugin()];
@@ -101,6 +101,12 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
       {
         test: /\.(tsx?)|(js)$/,
         loader: 'babel-loader',

@@ -1,6 +1,8 @@
 import { compose, createStore, applyMiddleware } from 'redux';
-import createDebounce from 'redux-debounced';
-import thunk from 'redux-thunk';
+import reduxDebounced from 'redux-debounced';
+import { thunk } from 'redux-thunk';
+
+const createDebounce = reduxDebounced.default || reduxDebounced;
 
 import reducer from '../reducers';
 import {

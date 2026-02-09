@@ -1,6 +1,6 @@
 import React, { FormEvent, FormEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import SearchForm from '@/components/SearchForm';
 import { setModalOpen } from '@/features/actions';
@@ -16,7 +16,7 @@ interface Props {
 
 const AskGurbaniBotQuestionModal = (props: Props) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit =
     ({
@@ -29,7 +29,7 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
     (e: FormEvent) => {
       e.preventDefault();
       typeof handleFormSubmit === 'function' && handleFormSubmit();
-      history.push(
+      navigate(
         toSearchURL({
           query,
           type: SEARCH_TYPES.ASK_A_QUESTION,

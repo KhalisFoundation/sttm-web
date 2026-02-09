@@ -1,4 +1,5 @@
-import { SOURCES } from '@sttm/banidb';
+import banidb from '@sttm/banidb';
+const { SOURCES } = banidb;
 
 /**
  *

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TEXTS } from '../constants';
 import { ACTIONS, clickEvent } from '../util/analytics';
 import { toAngURL, readAng } from '../util';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from '@/util/router-compat';
 import History from './Icons/History';
 
 /**

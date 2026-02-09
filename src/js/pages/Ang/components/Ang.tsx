@@ -1,7 +1,7 @@
 /* globals API_URL */
 import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import GenericError, { BalpreetSingh } from '@/components/GenericError';
 import ShabadContent from '@/components/ShabadContent';
@@ -28,10 +28,10 @@ const Ang: React.FC<IAngProps> = ({
   source,
   highlight,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const sehajPaathMode = useSelector(state => state.sehajPaathMode);
-  const isLoadingAng = useSelector(state => state.isLoadingAng);
+  const sehajPaathMode = useSelector((state: any) => state.sehajPaathMode);
+  const isLoadingAng = useSelector((state: any) => state.isLoadingAng);
 
   // We keep track whether at this particular url/route can we make sehaj paath functional even if the global state for it is true
   const isSehajPaathModeRoute = isShowSehajPaathModeRoute(location.pathname);
@@ -52,9 +52,9 @@ const Ang: React.FC<IAngProps> = ({
     source,
     highlight,
     angData,
-    history
+    navigate
   }),
-    [ang, source, highlight, angData, history]) as unknown as EventListener;
+    [ang, source, highlight, angData, navigate]) as unknown as EventListener;
   useKeydownEventHandler(changeHighlightedPanktiHandler)
 
   // There is not an error, neither loading for ang going on nor there is ang data then it's first time render

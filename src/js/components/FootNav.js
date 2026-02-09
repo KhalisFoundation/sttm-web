@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { withRouter } from '@/util/router-compat';
 import { toNavURL, dateMath } from '../util';
 import Chevron from './Icons/Chevron';
 import Hour24 from './Icons/Hour24';

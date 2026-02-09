@@ -1,7 +1,6 @@
 module.exports = {
   testEnvironmentOptions: {
     url: 'http://localhost:8080',
-    environment: 'jest-environment-jsdom-sixteen',
   },
   verbose: true,
   setupFiles: ['<rootDir>/jest/setupTest.js'],
@@ -11,7 +10,7 @@ module.exports = {
   coverageDirectory: '<rootDir>/jest/coverage',
   coverageReporters: ['html'],
   transform: {
-    '^.+\\.js|jsx|ts|tsx$': '<rootDir>/jest/transform.js',
+    '^.+\\.js|jsx|ts|tsx$': '<rootDir>/jest/transform.cjs',
   },
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/cypress/*'],
   preset: 'ts-jest',

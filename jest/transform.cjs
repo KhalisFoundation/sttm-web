@@ -1,5 +1,5 @@
-const { alias } = require('../webpack.config').resolve;
-const { presets, plugins } = require('../.babelrc');
+const { alias } = require('../webpack.config.cjs').resolve;
+const { presets, plugins } = require('../.babelrc.cjs');
 
 module.exports = require('babel-jest').createTransformer({
   // we don't need any config for `@babel/preset-env`

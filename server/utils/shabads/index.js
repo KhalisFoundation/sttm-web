@@ -1,2 +1,2 @@
-export * from './create-shabad-description';
-export * from './create-shabad-title';
+export * from './create-shabad-description.js';
+export * from './create-shabad-title.js';

@@ -1,3 +1,3 @@
-export * from './get-metadata-from-request';
-export * from './create-metadata-from-response';
-export * from './suffix-app-name';
+export * from './get-metadata-from-request.js';
+export * from './create-metadata-from-response.js';
+export * from './suffix-app-name.js';

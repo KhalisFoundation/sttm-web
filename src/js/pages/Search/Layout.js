@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { withRouter } from '@/util/router-compat';
 import { connect } from 'react-redux';
 
 import Pagination from '../../components/Pagination';
@@ -69,7 +70,7 @@ class Layout extends React.PureComponent {
     // I'm feeling lucky
     if (parseInt(resultsCount, 10) === 1) {
       const [shabad] = shabads;
-      return <Redirect to={toShabadURL({ shabad, q, type, source })} />;
+      return <Navigate to={toShabadURL({ shabad, q, type, source })} replace />;
     }
 
     const currentPage = offset;

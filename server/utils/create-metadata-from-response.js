@@ -1,5 +1,5 @@
-import { createShabadTitle, createShabadDescription } from './shabads';
-import { getAng, getSource } from './angs';
+import { createShabadTitle, createShabadDescription } from './shabads/index.js';
+import { getAng, getSource } from './angs/index.js';
 
 /**
  * @param {object} req - The request obj

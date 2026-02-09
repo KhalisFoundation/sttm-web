@@ -17,7 +17,7 @@ Powered by [<img height="30" src="http://www.banidb.com/wp-content/uploads/2018/
 
 ## Build Instructions
 
-Make sure you've [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) & [`nodejs`](https://nodejs.org/en/) installed in your system. We advise using Node version 8 or above, and npm version 5.7 or above.
+Make sure you've [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) & [`nodejs`](https://nodejs.org/en/) installed in your system. We advise using Node version 24 (LTS) or above.
 
 Open terminal and follow these steps;
 
@@ -33,7 +33,7 @@ You should now see a `sttm-web` folder in your present working directory. Let's 
 cd sttm-web/
 ```
 
-- **Step 3**: Setup node version 18
+- **Step 3**: Setup Node.js version 24
 
   - Install nvm (if not already installed)
 
@@ -48,16 +48,16 @@ cd sttm-web/
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
   ```
 
-  - Install node 18.18 using nvm
+  - Install Node.js 24 using nvm
 
   ```bash
-  nvm install 18.18
+  nvm install 24
   ```
 
-  - Switch to node 18
+  - Switch to Node.js 24
 
   ```bash
-  nvm use 18.18
+  nvm use 24
   ```
 
 - **Step 4**: Install dependencies.

@@ -1,7 +1,11 @@
 import marinate from 'marinate';
 import fs from 'fs';
-import { resolve } from 'path';
-import { ONLINE_COLOR } from '../common/constants';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { ONLINE_COLOR } from '../common/constants.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 let manifest;
 try {

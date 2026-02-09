@@ -1,5 +1,5 @@
-import { suffixAppName } from '../server/utils/';
-import { BASIC_META_DESCRIPTION } from './constants';
+import { suffixAppName } from '../server/utils/index.js';
+import { BASIC_META_DESCRIPTION } from './constants.js';
 
 export default {
   '/': {

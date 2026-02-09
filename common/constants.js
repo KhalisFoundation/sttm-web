@@ -1,4 +1,4 @@
-import API_URLS_CONSTANTS from './api-urls-constants';
+import API_URLS_CONSTANTS from './api-urls-constants.cjs';
 const isProduction = process.env.NODE_ENV === 'production';
 export const DARK_MODE_COOKIE = 'darkmode';
 export const DARK_MODE_CLASS_NAME = 'dark-mode';

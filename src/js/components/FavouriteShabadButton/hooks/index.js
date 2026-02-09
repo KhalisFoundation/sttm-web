@@ -1,7 +1,7 @@
 /* globals SP_API */
 
 import React from 'react';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../utils/api-client';
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants';
 
@@ -51,75 +51,71 @@ function useFavouriteShabad(shabadId) {
 
 function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
-  return useMutation(
-    (data) => {
+  return useMutation({
+    mutationFn: (data) => {
       return apiClient(`${SP_API}/favourite-shabads`, {
         token: getToken(),
         data,
       });
     },
-    {
-      onMutate: (newShabad) => {
-        // Snapshot the previous values
-        const oldShabads =
-          queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
-        if (oldShabads.length > 0) {
-          queryClient.setQueryData(
-            ['favourite-shabads', getToken()],
-            (currentShabads) => [...(currentShabads || []), newShabad]
-          );
-        }
+    onMutate: (newShabad) => {
+      // Snapshot the previous values
+      const oldShabads =
+        queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
+      if (oldShabads.length > 0) {
+        queryClient.setQueryData(
+          ['favourite-shabads', getToken()],
+          (currentShabads) => [...(currentShabads || []), newShabad]
+        );
+      }
 
-        // Return a context object with the snapshotted value
-        return { oldShabads };
-      },
-      // If the mutation fails, use the context returned from onMutate to roll back
-      onError: (err, variables, recover) =>
-        typeof recover === 'function' ? recover() : null,
-      // Always refetch after error or success:
-      onSettled: () => {
-        queryClient.invalidateQueries('favourite-shabads');
-      },
-    }
-  );
+      // Return a context object with the snapshotted value
+      return { oldShabads };
+    },
+    // If the mutation fails, use the context returned from onMutate to roll back
+    onError: (err, variables, recover) =>
+      typeof recover === 'function' ? recover() : null,
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['favourite-shabads'] });
+    },
+  });
 }
 
 function useRemoveFavouriteShabad() {
   const queryClient = useQueryClient();
-  return useMutation(
-    (shabadId) =>
+  return useMutation({
+    mutationFn: (shabadId) =>
       apiClient(`${SP_API}/favourite-shabads/${shabadId}`, {
         token: getToken(),
         method: 'DELETE',
       }),
-    {
-      onMutate: (shabadId) => {
-        // Snapshot the previous values
-        const oldShabads =
-          queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
+    onMutate: (shabadId) => {
+      // Snapshot the previous values
+      const oldShabads =
+        queryClient.getQueryData(['favourite-shabads', getToken()]) || [];
 
-        if (oldShabads.length > 0) {
-          queryClient.setQueryData(
-            ['favourite-shabads', getToken()],
-            (currentShabads) =>
-              (currentShabads || []).filter(
-                (shabad) => shabad.shabad_id !== Number(shabadId)
-              )
-          );
-        }
+      if (oldShabads.length > 0) {
+        queryClient.setQueryData(
+          ['favourite-shabads', getToken()],
+          (currentShabads) =>
+            (currentShabads || []).filter(
+              (shabad) => shabad.shabad_id !== Number(shabadId)
+            )
+        );
+      }
 
-        // Return a context object with the snapshotted value
-        return { oldShabads };
-      },
-      // If the mutation fails, use the context returned from onMutate to roll back
-      onError: (_err, _variables, recover) =>
-        typeof recover === 'function' ? recover() : null,
-      // Always refetch after error or success:
-      onSettled: () => {
-        queryClient.invalidateQueries(['favourite-shabads', getToken()]);
-      },
-    }
-  );
+      // Return a context object with the snapshotted value
+      return { oldShabads };
+    },
+    // If the mutation fails, use the context returned from onMutate to roll back
+    onError: (_err, _variables, recover) =>
+      typeof recover === 'function' ? recover() : null,
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['favourite-shabads', getToken()] });
+    },
+  });
 }
 
 export {

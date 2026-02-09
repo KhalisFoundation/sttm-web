@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import GurmukhiKeyboardToggleButton from '../GurmukhiKeyboardToggleButton';
-import { StaticRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('<GurmukhiKeyboardToggleButton />', () => {
   const clickFn = jest.fn();
@@ -15,12 +15,12 @@ describe('<GurmukhiKeyboardToggleButton />', () => {
 
   it('should have active class isVisible is true', () => {
     const { container } = render(
-      <StaticRouter context={{}}>
+      <MemoryRouter>
         <GurmukhiKeyboardToggleButton
           clickHandler={clickFn}
           isVisible
         />
-      </StaticRouter>
+      </MemoryRouter>
     );
 
     expect(container.querySelector('.gurmukhi-keyboard-toggle.active')).toBeInTheDocument();
@@ -28,11 +28,11 @@ describe('<GurmukhiKeyboardToggleButton />', () => {
 
   it('shouldn\'t have active class isVisible is false', () => {
     const { container } = render(
-      <StaticRouter context={{}}>
+      <MemoryRouter>
         <GurmukhiKeyboardToggleButton
           clickHandler={clickFn}
         />
-      </StaticRouter>
+      </MemoryRouter>
     );
 
     expect(container.querySelector('.gurmukhi-keyboard-toggle.active')).not.toBeInTheDocument();
@@ -40,12 +40,12 @@ describe('<GurmukhiKeyboardToggleButton />', () => {
 
   it('should trigger click handler', () => {
     const { container } = render(
-      <StaticRouter context={{}}>
+      <MemoryRouter>
         <GurmukhiKeyboardToggleButton
           clickHandler={clickFn}
           isVisible
         />
-      </StaticRouter>
+      </MemoryRouter>
     );
 
     const element = container.querySelector('.gurmukhi-keyboard-toggle');

@@ -1,6 +1,6 @@
-import { buildApiUrl } from '@sttm/banidb';
-
-import { API_URL } from '../../common/constants';
+import banidb from '@sttm/banidb';
+const { buildApiUrl } = banidb;
+import { API_URL } from '../../common/constants.js';
 
 /**
  * @param {object} req - The request obj

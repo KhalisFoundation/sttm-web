@@ -1,19 +1,24 @@
 /* eslint-disable no-console */
 import compression from 'compression';
-import dotenv from 'dotenv';
-dotenv.config();
+import 'dotenv/config';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
-import createTemplate from './template';
-import seo from '../common/seo';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+import createTemplate from './template.js';
+import seo from '../common/seo.js';
 import {
   DARK_MODE_COOKIE,
   DARK_MODE_CLASS_NAME,
   LANGUAGE_COOKIE,
   DEFAULT_LANGUAGE,
-} from '../common/constants';
-import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
+} from '../common/constants.js';
+import { getMetadataFromRequest, createMetadataFromResponse } from './utils/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';

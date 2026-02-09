@@ -1,4 +1,4 @@
-import { History } from 'history';
+import { NavigateFunction } from 'react-router-dom';
 import { SOURCES } from '@/constants';
 import { toAngURL } from '@/util';
 interface IChangeHighlighedPanktiArguments {
@@ -6,7 +6,7 @@ interface IChangeHighlighedPanktiArguments {
   source: keyof typeof SOURCES
   highlight: number
   angData: any
-  history: History
+  navigate: NavigateFunction
 }
 
 export const changeHighlightedPankti = ({
@@ -14,8 +14,8 @@ export const changeHighlightedPankti = ({
   source,
   highlight,
   angData,
-  history
-}: IChangeHighlighedPanktiArguments) => (e: React.KeyboardEventHandler) => {
+  navigate
+}: IChangeHighlighedPanktiArguments) => (e: React.KeyboardEvent) => {
   if (highlight) {
     if (e.key === 'ArrowDown') {
       const nextHighlightVerse = highlight + 1;
@@ -28,7 +28,7 @@ export const changeHighlightedPankti = ({
         highlight: isLastVerseOfCurrentPage ? highlight : nextHighlightVerse
       });
 
-      history.push(newUrl);
+      navigate(newUrl);
     }
 
     if (e.key === 'ArrowUp') {
@@ -42,7 +42,7 @@ export const changeHighlightedPankti = ({
         highlight: isFirstVerseOfCurrentPage ? highlight : nextHighlightVerse
       });
 
-      history.push(newUrl);
+      navigate(newUrl);
     }
   }
 }

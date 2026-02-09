@@ -1,2 +1,2 @@
-export * from './get-ang';
-export * from './get-source';
+export * from './get-ang.js';
+export * from './get-source.js';
