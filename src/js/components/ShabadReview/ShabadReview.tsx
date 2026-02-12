@@ -21,11 +21,13 @@ interface MatchParams {
   shabadId: string;
 }
 
-interface ShabadReviewProps extends RouteComponentProps<MatchParams> {}
+interface ShabadReviewProps extends RouteComponentProps<MatchParams> { }
 
 const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
   const { shabadId } = match.params;
   const shabadFeedbackRef = useRef<HTMLTextAreaElement | null>(null);
+  const teekaFeedbackRef = useRef<HTMLTextAreaElement | null>(null);
+  const sourceRef = useRef<HTMLInputElement | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const { user } = useGetUser<IUser>();
 
@@ -37,8 +39,10 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
       appropriateness: 0,
     },
     overallFeedback: '',
+    teekaFeedback: '',
+    source: '',
     verses: [],
-    email: '', // TOOD: Update with actual user id
+    email: '',
     shabadId: parseInt(shabadId, 10),
   });
 
@@ -46,17 +50,17 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
     setFeedbackData((prev) => {
       const existingIndex = prev.verses.findIndex(verse => verse.verseId === feedbackObj.verseId);
       let updatedVerses;
-      
+
       if (existingIndex >= 0) {
         // Update existing verse feedback
-        updatedVerses = prev.verses.map((verse, index) => 
+        updatedVerses = prev.verses.map((verse, index) =>
           index === existingIndex ? feedbackObj : verse
         );
       } else {
         // Add new verse feedback
         updatedVerses = [...prev.verses, feedbackObj];
       }
-      
+
       return {
         ...prev,
         verses: updatedVerses,
@@ -91,9 +95,13 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
 
   const submitFeedback = async () => {
     const comment = shabadFeedbackRef.current?.value || '';
+    const teekaFeedback = teekaFeedbackRef.current?.value || '';
+    const source = sourceRef.current?.value || '';
     const dataToSubmit = {
       ...feedbackData,
       overallFeedback: comment,
+      teekaFeedback: teekaFeedback,
+      source,
     };
 
     const hasMissingRating = Object.values(dataToSubmit.rating).some(value => value === 0);
@@ -107,7 +115,7 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
       window.location.href = `${SP_API}/login/sso?redirect_url=${encodeURIComponent(window.location.href)}`;
       return;
     }
-    
+
     setFeedbackData(dataToSubmit);
     postFeedback(dataToSubmit);
   };
@@ -124,7 +132,9 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
             body: JSON.stringify({ email: user.email }),
           });
           const data = await response.json();
-          setFeedbackData(data.feedback);
+          if (data.feedback) {
+            setFeedbackData(data.feedback);
+          }
         } catch (error) {
           console.error('Error fetching feedback:', error);
         }
@@ -147,8 +157,10 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
             setFeedbackData(pendingData);
             postFeedback(pendingData);
             localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_PENDING_SHABAD_REVIEW);
-            if (shabadFeedbackRef.current) {
+            if (shabadFeedbackRef.current && teekaFeedbackRef.current && sourceRef.current) {
               shabadFeedbackRef.current.value = pendingData.overallFeedback;
+              teekaFeedbackRef.current.value = pendingData.teekaFeedback;
+              sourceRef.current.value = pendingData.source;
             }
           }
         } catch (e) {
@@ -180,16 +192,16 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
     API_URL,
   });
 
-  const setTextAreaRef = useCallback((node) => {
-    shabadFeedbackRef.current = node;
-    if (node && feedbackData.overallFeedback) {
-      if (node.value !== feedbackData.overallFeedback) {
-        node.value = feedbackData.overallFeedback;
+  const setTextAreaRef = useCallback((node, nodeRef, savedValue) => {
+    nodeRef.current = node;
+    if (node && savedValue) {
+      if (node.value !== savedValue) {
+        node.value = savedValue;
         node.style.height = 'auto';
         node.style.height = node.scrollHeight + 'px';
       }
     }
-  }, [feedbackData.overallFeedback]);
+  }, [feedbackData.overallFeedback, feedbackData.teekaFeedback, feedbackData.source]);
 
   const resizeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.target.style.height = 'auto';
@@ -205,7 +217,6 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
           ) : (
             <div className="review-container">
               <div className="verse-review-container">
-                <h3 className="review-heading">Review each verse</h3>
                 {data.verses.map((verse: any) => (
                   <VerseReview
                     key={'verse' + verse.verseId}
@@ -236,18 +247,39 @@ const ShabadReview: React.FC<ShabadReviewProps> = ({ match }) => {
                 ) : (
                   <>
                     <h3 className="review-heading">
-                      Feedback on translations for whole shabad
+                      {TEXTS.SHABAD_RATING.HEADING}
                     </h3>
-                    <ShabadRating updateRating={addStarRating} currentRating={feedbackData.rating}/>
+                    <p className="review-tagline">{TEXTS.SHABAD_RATING.TAGLINE}</p>
+                    <ShabadRating updateRating={addStarRating} currentRating={feedbackData.rating} />
                     <h5 className="feedback-question">
                       {TEXTS.SHABAD_RATING.FEEDBACK}
                     </h5>
                     <textarea
                       name="shabadFeedback"
-                      ref={setTextAreaRef}
+                      ref={(node) => setTextAreaRef(node, shabadFeedbackRef, feedbackData.overallFeedback)}
                       onInput={resizeTextarea}
                       className="feedback-textarea"
                       placeholder="Enter your feedback here"
+                    />
+                    <hr />
+                    <h5 className="review-heading">{TEXTS.SHABAD_RATING.TEEKA_REVIEW_HEADING}</h5>
+                    <p className="review-tagline">{TEXTS.SHABAD_RATING.TEEKA_REVIEW_TAGLINE}</p>
+                    <textarea
+                      name="teekaFeedback"
+                      ref={(node) => setTextAreaRef(node, teekaFeedbackRef, feedbackData.teekaFeedback)}
+                      onInput={resizeTextarea}
+                      className="feedback-textarea"
+                      placeholder={TEXTS.SHABAD_RATING.TEEKA_REVIEW_PLACEHOLDER}
+                    />
+                    <hr />
+                    <h5 className="review-heading">{TEXTS.SHABAD_RATING.SOURCE_HEADING}</h5>
+                    <p className="review-tagline">{TEXTS.SHABAD_RATING.SOURCE_TAGLINE}</p>
+                    <input
+                      type="text"
+                      name="source"
+                      ref={(node) => setTextAreaRef(node, sourceRef, feedbackData.source)}
+                      className="feedback-textarea"
+                      placeholder="Enter the source URL"
                     />
                     <button
                       className="btn btn-primary"

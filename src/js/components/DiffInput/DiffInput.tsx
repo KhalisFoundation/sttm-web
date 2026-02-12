@@ -19,10 +19,8 @@ const DiffInput: React.FC<DiffInputProps> = ({ actualText, editedText, updateTex
       const diff = diffWords(actualText, text);
       const html = renderDiffHTML(diff);
       diffElementRef.current.innerHTML = html;
-      if (text !== actualText) {
+      if (text !== actualText && text !== '') {
         updateText(text);
-      } else {
-        updateText('');
       }
     }
   }, [text, actualText, isEditing]);

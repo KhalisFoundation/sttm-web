@@ -3,6 +3,7 @@ export interface VerseFeedback {
   status: 'approved' | 'rejected' | '';
   translationId: number;
   details: {
+    category: string;
     suggested: string;
     comment: string;
   };
@@ -16,6 +17,8 @@ export interface FeedbackData {
     appropriateness: number;
   };
   overallFeedback: string;
+  teekaFeedback: string;
+  source: string;
   verses: VerseFeedback[];
   email: string;
   shabadId: number;

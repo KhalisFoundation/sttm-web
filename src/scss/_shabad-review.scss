@@ -1,7 +1,20 @@
 .review-heading {
-  text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
+  text-align: left;
+
+  .dark-mode & {
+    color: $sttm-orange;
+  }
+}
+
+.review-tagline {
+  font-size: 0.9rem;
+  text-align: left;
+
+  .dark-mode & {
+    color: rgba($sttm-orange, 0.8);
+  }
 }
 
 .review-container {
@@ -12,6 +25,31 @@
   >div {
     width: 50%;
     min-width: 400px;
+
+    @media screen and (max-width: 820px) {
+      width: 80%;
+      min-width: 80%;
+
+      &.verse-review-container {
+        margin: auto;
+      }
+    }
+  }
+
+  hr {
+    border-color: $sttm-lighter-grey;
+
+    .dark-mode & {
+      border-color: $sttm-lighter-black;
+    }
+  }
+
+  label {
+    color: $sttm-black;
+
+    .dark-mode & {
+      color: $sttm-white;
+    }
   }
 }
 
@@ -106,7 +144,20 @@
   .verse-content {
     padding: 12px;
 
-    >p {
+    span {
+      font-size: 0.9rem;
+      color: $sttm-black;
+      border-top: 1px solid $sttm-lighter-grey;
+      display: block;
+      padding: 12px 0;
+
+      .dark-mode & {
+        color: $sttm-white;
+        border-color: $sttm-lighter-black;
+      }
+    }
+
+    p {
       margin: 0;
       font-size: 1.1rem;
 
@@ -187,7 +238,12 @@
   margin: 24px auto;
   text-align: center;
 
+  .feedback-options {
+    text-align: left;
+  }
+
   .feedback-question {
+    text-align: left;
     font-size: 0.9rem;
     font-weight: 700;
     color: $sttm-black;
@@ -198,10 +254,14 @@
   }
 
   textarea {
-    border-radius: 8px;
-    min-height: 80px;
+    min-height: 100px;
     max-height: 300px;
     resize: none;
+  }
+
+  textarea,
+  .feedback-textarea {
+    border-radius: 8px;
 
     .dark-mode & {
       background-color: $sttm-black;

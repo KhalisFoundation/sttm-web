@@ -15,6 +15,16 @@ interface Verse {
         ms?: string;
         ssk?: string;
       };
+      pu?: {
+        pss?: {
+          gurmukhi?: string;
+          unicode?: string;
+        };
+        ss?: {
+          gurmukhi?: string;
+          unicode?: string;
+        };
+      };
       [key: string]: any;
     };
     transliteration?: {

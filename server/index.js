@@ -59,7 +59,7 @@ app.post('/api/feedback', async (req, res) => {
         message: 'Access denied'
       });
     }
-    const { email, shabadId, rating, overallFeedback, verses } = req.body;
+    const { email, shabadId, rating, overallFeedback, verses, teekaFeedback, source } = req.body;
     if (!shabadId || !rating) {
       return res.status(400).json({
         status: 'error',
@@ -72,7 +72,7 @@ app.post('/api/feedback', async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, shabadId, starRatings: rating, feedbackText: overallFeedback, verses }),
+      body: JSON.stringify({ email, shabadId, starRatings: rating, feedbackText: overallFeedback, verses, teekaFeedback, source }),
     });
     const data = await response.json();
     res.json(data);
