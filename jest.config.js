@@ -13,7 +13,7 @@ module.exports = {
   transform: {
     '^.+\\.js|jsx|ts|tsx$': '<rootDir>/jest/transform.js',
   },
-  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/cypress/*'],
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/cypress/*', '<rootDir>/tests/e2e/*'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFiles: ['<rootDir>/jest/setupTest.js'],

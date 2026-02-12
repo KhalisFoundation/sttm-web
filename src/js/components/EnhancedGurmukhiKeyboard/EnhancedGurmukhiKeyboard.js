@@ -132,6 +132,7 @@ export class EnhancedGurmukhiKeyboard extends React.PureComponent {
 
     return (
       <div
+        id="gurmukhi-keyboard"
         className={`gurmukhi-keyboard gurbani-font ${active ? 'active' : ''}`}
         onClick={this.click}
       >

@@ -16,3 +16,10 @@ cypress/videos/**/*.*
 .env
 .env.develop
 venv-gyp/*
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
