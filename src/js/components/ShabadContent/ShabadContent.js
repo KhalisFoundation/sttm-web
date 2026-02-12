@@ -157,6 +157,12 @@ class Shabad extends React.PureComponent {
       });
       const data = await response.json();
 
+      const fullTranslation = Object.values(data.verses).filter(obj => obj.text.length > 0);
+
+      if (fullTranslation.length === 0) {
+        this.setState({ reviewEligibility: { isEligible: false, alreadyReviewed: false, newVersionAvailable: false } });
+      }
+
       const processedGurbani = gurbani.map((verse) => {
         const updatedVerse = { ...verse };
         if (updatedVerse.translation) {
