@@ -86,6 +86,17 @@ npm start
 
 This will run a bunch of build tools and a `nodejs` server to deploy the code locally.
 
+## Testing
+
+Run the e2e tests using:
+
+```bash
+npx playwright test
+```
+
+Read the [docs](https://playwright.dev/docs/running-tests) for more.
+
+
 ## Contributing
 
 [Slack](https://khalis.slack.com/) channel.

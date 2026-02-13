@@ -6,6 +6,7 @@ const GurmukhiKeyboardToggleButton = ({clickHandler, isVisible}) => {
   return <button
     type="button"
     aria-label={TEXTS.TOGGLE_GURMUKHI_KEYBOARD}
+    id="gurmukhi-keyboard-toggle"
     className={`gurmukhi-keyboard-toggle ${
       isVisible ? 'active' : ''
       }`}
