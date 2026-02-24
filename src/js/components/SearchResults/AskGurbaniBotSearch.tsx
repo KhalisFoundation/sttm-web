@@ -27,7 +27,7 @@ function AskGurbaniBotSearch(props: Props) {
 
   return (
     <div className='ask-gurbani-bot-question-search'>
-      <SearchForm defaultQuery={query && decodeURIComponent(query)} defaultType={8} defaultSource='all' defaultWriter={0}>
+      <SearchForm defaultQuery={query && decodeURIComponent(query)} defaultType={SEARCH_TYPES.ASK_A_QUESTION} defaultSource='all' defaultWriter={0}>
         {({
           pattern,
           disabled,
