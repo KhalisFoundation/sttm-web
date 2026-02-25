@@ -53,8 +53,9 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
           defaultType={SEARCH_TYPES.ASK_A_QUESTION}
           defaultSource="all"
           defaultWriter={0}
+          isolateFromLocalStorage // helps to keep the bot search form state isolated from the main/normal search form
         >
-          {({
+          {(({
             pattern,
             disabled,
             title,
@@ -125,8 +126,7 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
                 </div>
               </div>
             </form>
-          )
-          }
+          ))}
         </SearchForm>
       </div>
     </Dialog>

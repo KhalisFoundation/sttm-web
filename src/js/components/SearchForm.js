@@ -79,6 +79,7 @@ export default class SearchForm extends React.PureComponent {
     submitOnChangeOf: PropTypes.arrayOf(
       PropTypes.oneOf(['type', 'source', 'query', 'writer'])
     ),
+    isolateFromLocalStorage: PropTypes.bool,
     onSubmit: (props) => {
       if (
         props.submitOnChangeOf.length !== 0 &&
@@ -97,17 +98,21 @@ export default class SearchForm extends React.PureComponent {
     shouldSubmit: false,
     type:
       this.props.defaultType ||
-      getNumberFromLocalStorage(
-        LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-        DEFAULT_SEARCH_TYPE
-      ),
+      (!this.props.isolateFromLocalStorage &&
+        getNumberFromLocalStorage(
+          LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+          DEFAULT_SEARCH_TYPE
+        )) ||
+      DEFAULT_SEARCH_TYPE,
     source:
       this.props.defaultSource ||
-      localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
+      (!this.props.isolateFromLocalStorage &&
+        localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE)) ||
       DEFAULT_SEARCH_SOURCE,
     writer:
       this.props.defaultWriter ||
-      localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
+      (!this.props.isolateFromLocalStorage &&
+        localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER)) ||
       DEFAULT_SEARCH_WRITER,
     writers: DEFAULT_SEARCH_WRITERS,
     isSourceChanged: false,
@@ -118,9 +123,9 @@ export default class SearchForm extends React.PureComponent {
       this.props.defaultAutoDetectGurmukhi !== undefined
         ? this.props.defaultAutoDetectGurmukhi
         : getBooleanFromLocalStorage(
-            LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
-            false
-          ),
+          LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
+          false
+        ),
   };
 
   animatePlaceholder = () => {
@@ -279,10 +284,10 @@ export default class SearchForm extends React.PureComponent {
       typeInt === SEARCH_TYPES.ROMANIZED
         ? ['Enter 4 words minimum.', '(\\w+\\W+){3,}\\w+\\W*']
         : typeInt === SEARCH_TYPES.ANG
-        ? ['Enter numbers only.', '\\d+']
-        : typeInt === SEARCH_TYPES.AUTO_DETECT
-        ? ['Enter 1 characters minimum.', '.{1,}']
-        : ['Enter 2 characters minimum.', '.{2,}'];
+          ? ['Enter numbers only.', '\\d+']
+          : typeInt === SEARCH_TYPES.AUTO_DETECT
+            ? ['Enter 1 characters minimum.', '.{1,}']
+            : ['Enter 2 characters minimum.', '.{2,}'];
 
     const [action, name, inputType] = SearchForm.getFormDetails(typeInt);
     const disabled = !new RegExp(pattern).test(query);
@@ -415,6 +420,19 @@ export default class SearchForm extends React.PureComponent {
     }
   };
 
+  // Centralized localStorage helpers — skips persistence when isolateFromLocalStorage is true 
+  saveToLocalStorage = (key, value) => {
+    if (!this.props.isolateFromLocalStorage) {
+      localStorage.setItem(key, value);
+    }
+  };
+
+  removeFromLocalStorage = (key) => {
+    if (!this.props.isolateFromLocalStorage) {
+      localStorage.removeItem(key);
+    }
+  };
+
   handleSearchSourceChange = ({ target }) => {
     const source = target.value;
     this.setState(
@@ -430,7 +448,7 @@ export default class SearchForm extends React.PureComponent {
           action: ACTIONS.SEARCH_SOURCE,
           label: this.state.source,
         });
-        localStorage.setItem(
+        this.saveToLocalStorage(
           LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
           this.state.source
         );
@@ -479,18 +497,18 @@ export default class SearchForm extends React.PureComponent {
           shouldSubmit: isSearchTypeToAngSearchType
             ? false
             : this.props.submitOnChangeOf.includes('type') &&
-              this.state.query !== '',
+            this.state.query !== '',
           displayGurmukhiKeyboard: isShowKeyboard,
         },
         () => {
           this.currentPlaceholderIndex = 0;
 
           clickEvent({ action: ACTIONS.SEARCH_TYPE, label: newSearchType });
-          localStorage.setItem(
+          this.saveToLocalStorage(
             LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
             newSearchType
           );
-          localStorage.setItem(
+          this.saveToLocalStorage(
             LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
             newSourceType
           );
@@ -515,7 +533,7 @@ export default class SearchForm extends React.PureComponent {
           action: ACTIONS.SEARCH_WRITER,
           label: this.state.writer,
         });
-        localStorage.setItem(
+        this.saveToLocalStorage(
           LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER,
           this.state.writer
         );
@@ -538,11 +556,11 @@ export default class SearchForm extends React.PureComponent {
           this.state.query !== '',
       },
       () => {
-        localStorage.setItem(
+        this.saveToLocalStorage(
           LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE,
           this.state.source
         );
-        localStorage.removeItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER);
+        this.removeFromLocalStorage(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER);
       }
     );
   };
@@ -566,7 +584,7 @@ export default class SearchForm extends React.PureComponent {
       () => {
         this.currentPlaceholderIndex = 0;
         // Save to localStorage
-        localStorage.setItem(
+        this.saveToLocalStorage(
           LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
           this.state.autoDetectGurmukhi.toString()
         );

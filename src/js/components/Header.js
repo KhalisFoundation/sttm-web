@@ -93,23 +93,23 @@ class Header extends React.PureComponent {
 
   onFormSubmit =
     ({ handleSubmit, autoDetectGurmukhi, ...data }) =>
-    (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      handleSubmit();
-      // Remove the last space in from the searched query.
-      const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
-      if (isNotAngSearch) {
-        data.query = data.query.trim();
-      }
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit();
+        // Remove the last space in from the searched query.
+        const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
+        if (isNotAngSearch) {
+          data.query = data.query.trim();
+        }
 
-      const searchParams = { ...data, autoDetectGurmukhi };
-      if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
-        searchParams.isGurmukhi = true;
-      }
+        const searchParams = { ...data, autoDetectGurmukhi };
+        if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
+          searchParams.isGurmukhi = true;
+        }
 
-      this.handleFormSubmit(searchParams);
-    };
+        this.handleFormSubmit(searchParams);
+      };
 
   handleFormSubmit = (data) => {
     this.props.history.push(toSearchURL(data));
@@ -146,10 +146,10 @@ class Header extends React.PureComponent {
       type: defaultType = isAng ? SEARCH_TYPES.ANG.toString() : null,
       writer: defaultWriter = DEFAULT_SEARCH_WRITER,
       autoDetectGurmukhi:
-        defaultAutoDetectGurmukhi = getBooleanFromLocalStorage(
-          LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
-          false
-        ),
+      defaultAutoDetectGurmukhi = getBooleanFromLocalStorage(
+        LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI,
+        false
+      ),
     } = getQueryParams(location.search);
 
     const isAskGurbaniBotSearchType =
@@ -195,22 +195,21 @@ class Header extends React.PureComponent {
             }
             defaultSource={
               isAskGurbaniBotSearchType
-                ? localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_SOURCE) ||
-                  DEFAULT_SEARCH_SOURCE
+                ? DEFAULT_SEARCH_SOURCE
                 : defaultSource
             }
             defaultType={
               isAskGurbaniBotSearchType
                 ? getNumberFromLocalStorage(
-                    LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
-                    DEFAULT_SEARCH_TYPE
-                  )
+                  LOCAL_STORAGE_KEY_FOR_SEARCH_TYPE,
+                  DEFAULT_SEARCH_TYPE
+                )
                 : Number(defaultType)
             }
             defaultWriter={
               isAskGurbaniBotSearchType
                 ? localStorage.getItem(LOCAL_STORAGE_KEY_FOR_SEARCH_WRITER) ||
-                  DEFAULT_SEARCH_WRITER
+                DEFAULT_SEARCH_WRITER
                 : Number(defaultWriter)
             }
             defaultAutoDetectGurmukhi={defaultAutoDetectGurmukhi}
@@ -457,7 +456,7 @@ class Header extends React.PureComponent {
                                         writer,
                                         isGurmukhi:
                                           parseInt(type) ===
-                                            SEARCH_TYPES.AUTO_DETECT &&
+                                          SEARCH_TYPES.AUTO_DETECT &&
                                           autoDetectGurmukhi,
                                       }}
                                       value={query}
@@ -536,13 +535,13 @@ class Header extends React.PureComponent {
                             ?.filter((e) =>
                               source === 'G' || source === 'A'
                                 ? !SOURCE_WRITER_FILTER[source].includes(
-                                    e.writerID
-                                  )
+                                  e.writerID
+                                )
                                 : source !== 'all'
-                                ? SOURCE_WRITER_FILTER[source].includes(
+                                  ? SOURCE_WRITER_FILTER[source].includes(
                                     e.writerID
                                   )
-                                : true
+                                  : true
                             )
                             .map((writer) => (
                               <option
