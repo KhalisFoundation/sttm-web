@@ -3,6 +3,7 @@ import SearchForm from "@/components/SearchForm"
 import SearchIcon from '@/components/Icons/Search';
 import { useHistory } from 'react-router-dom';
 import { toSearchURL } from '@/util';
+import { SEARCH_TYPES } from '@/constants';
 
 interface Props {
   query: string;
@@ -17,7 +18,7 @@ function AskGurbaniBotSearch(props: Props) {
     typeof handleFormSubmit === 'function' && handleFormSubmit();
     history.push(toSearchURL({
       query,
-      type: 8,
+      type: SEARCH_TYPES.ASK_A_QUESTION,
       writer: 'all',
       source: 'all',
       offset: ''
@@ -26,7 +27,7 @@ function AskGurbaniBotSearch(props: Props) {
 
   return (
     <div className='ask-gurbani-bot-question-search'>
-      <SearchForm defaultQuery={query && decodeURIComponent(query)} defaultType={8} defaultSource='all' defaultWriter={0}>
+      <SearchForm defaultQuery={query && decodeURIComponent(query)} defaultType={SEARCH_TYPES.ASK_A_QUESTION} defaultSource='all' defaultWriter={0}>
         {({
           pattern,
           disabled,
