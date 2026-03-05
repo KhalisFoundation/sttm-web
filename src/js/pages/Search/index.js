@@ -112,10 +112,10 @@ export default class Search extends React.PureComponent {
       );
     }
 
-    if (this.state.searchURL === '') {
+    if (this.state.searchURL === '' && isChatBot) {
       return (
         <div className="row" id="content-root">
-        <BreadCrumb links={[{ title: TEXTS.URIS.SEARCH_RESULTS }]} />
+          <BreadCrumb links={[{ title: TEXTS.URIS.SEARCH_RESULTS }]} />
           <AskGurbaniBotSearch query={this.props.q || ''} />
           <Layout
             pages={0}
