@@ -51,7 +51,7 @@ export default class SearchResults extends React.PureComponent {
     return (
       <>
         {askGurbaniBotSearchType && (
-          <AskGurbaniBotSearch query={this.props.q || ''} />
+          <AskGurbaniBotSearch query={this.props.q || ''} source={this.props.source} />
         )}
         {warning}
         <ul className={searchResultsClassName}>
