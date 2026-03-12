@@ -482,6 +482,7 @@ class Header extends React.PureComponent {
                           id="search-type"
                           value={type.toString()}
                           onChange={handleSearchTypeChange}
+                          aria-label="Search Type"
                         >
                           {reformatSearchTypes(TYPES).map(({ type, value }) => (
                             <option key={value} value={value}>
