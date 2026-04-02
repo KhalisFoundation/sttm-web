@@ -74,22 +74,22 @@ class Home extends React.PureComponent {
 
   onSubmit =
     ({ handleSubmit, autoDetectGurmukhi, ...data }) =>
-    (e) => {
-      e.preventDefault();
-      handleSubmit();
+      (e) => {
+        e.preventDefault();
+        handleSubmit();
 
-      // Remove the last space in from the searched query.
-      const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
-      if (isNotAngSearch) {
-        data.query = data.query.trim();
-      }
-      const searchParams = { ...data, autoDetectGurmukhi };
-      if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
-        searchParams.autoDetectGurmukhi = true;
-      }
+        // Remove the last space in from the searched query.
+        const isNotAngSearch = SEARCH_TYPES[data.type] !== SEARCH_TYPES.ANG;
+        if (isNotAngSearch) {
+          data.query = data.query.trim();
+        }
+        const searchParams = { ...data, autoDetectGurmukhi };
+        if (data.type === SEARCH_TYPES.AUTO_DETECT && autoDetectGurmukhi) {
+          searchParams.autoDetectGurmukhi = true;
+        }
 
-      this.props.history.push(toSearchURL(searchParams));
-    };
+        this.props.history.push(toSearchURL(searchParams));
+      };
 
   handleRecordingStateChange = (isRecording, stream) => {
     this.setState({
@@ -197,6 +197,7 @@ class Home extends React.PureComponent {
                         </div>
                       ) : (
                         <input
+                          aria-label="Gurbani Search"
                           autoFocus={true}
                           name={name}
                           id="search"
@@ -308,6 +309,7 @@ class Home extends React.PureComponent {
                         id="search-type"
                         value={type}
                         onChange={handleSearchTypeChange}
+                        aria-label="Search Type"
                       >
                         {reformatSearchTypes(TYPES).map(({ type, value }) => (
                           <option key={value} value={value}>
@@ -364,13 +366,13 @@ class Home extends React.PureComponent {
                           ?.filter((e) =>
                             source === 'G' || source === 'A'
                               ? !SOURCE_WRITER_FILTER[source].includes(
-                                  e.writerID
-                                )
+                                e.writerID
+                              )
                               : source !== 'all'
-                              ? SOURCE_WRITER_FILTER[source].includes(
+                                ? SOURCE_WRITER_FILTER[source].includes(
                                   e.writerID
                                 )
-                              : true
+                                : true
                           )
                           .map((writer) => (
                             <option

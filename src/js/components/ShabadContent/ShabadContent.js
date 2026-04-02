@@ -213,7 +213,7 @@ class Shabad extends React.PureComponent {
             />
           )}
 
-          <div id="shabad" className={`shabad display display-${type}`}>
+          <div id="shabad" className={`shabad display display-${type}`} aria-label="Shabad Container">
             <div className="shabad-container">
               {isMultiPage ? (
                 <>
