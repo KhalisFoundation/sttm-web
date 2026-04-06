@@ -64,13 +64,13 @@ export default ({ url, bodyClass, title, description, language }) => marinate`
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="STTM">
-  <link rel="apple-touch-icon" href="/assets/images/sundar-gutka-flat-icon.png">
+  <link rel="apple-touch-icon" href="/assets/images/logo-192x192.png">
 
   <!-- Windows Tile -->
   <meta name="msapplication-config" content="ieconfig.xml">
   <meta name="application-name" content="STTM">
 
-  <link rel="android-touch-icon" href="/assets/images/sundar-gutka-flat-icon.png">
+  <link rel="android-touch-icon" href="/assets/images/logo-192x192.png">
   ${stylesheetsHTML}
 
   <script type="application/ld+json">
