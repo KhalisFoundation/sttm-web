@@ -2,10 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildApiUrl } from '@sttm/banidb';
-import { SEARCH_TYPES, TEXTS } from '../../constants';
+import { SEARCH_TYPES, TEXTS, GURBANIBOT_THRESHOLD } from '../../constants';
 import PageLoader from '../PageLoader';
 import GenericError, { SachKaur } from '../../components/GenericError';
 import Layout, { Stub } from './Layout';
+import AskGurbaniBotSearch from '@/components/SearchResults/AskGurbaniBotSearch';
+import BreadCrumb from '@/components/Breadcrumb';
 
 export default class Search extends React.PureComponent {
   static defaultProps = {
@@ -36,7 +38,7 @@ export default class Search extends React.PureComponent {
     if (isChatBot) {
       const processedQuery = [...q.matchAll(/[a-zA-Z0-9 ]/g)].join('');
       const semanticApi = encodeURI(
-        `${GURBANIBOT_URL}search/?query=${processedQuery}&count=100`
+        `${GURBANIBOT_URL}search/?query=${processedQuery}&count=20`
       );
       try {
         const semanticReq = fetch(semanticApi).then((response) =>
@@ -44,6 +46,9 @@ export default class Search extends React.PureComponent {
         );
         semanticReq.then((semanticData) => {
           this.verseIdList = semanticData.results.flatMap((dataObj) => {
+            if (dataObj.Score >= GURBANIBOT_THRESHOLD) {
+              return []
+            }
             const { VerseID, SourceID } = dataObj.Payload;
             if (SourceID === source || source === 'all') {
               return VerseID;
@@ -52,9 +57,9 @@ export default class Search extends React.PureComponent {
             }
           });
 
-          this.setState({
+          this.verseIdList.length > 0 ? this.setState({
             searchURL: `${API_URL}search-results/${this.verseIdList.toString()}?page=${offset}`,
-          });
+          }) : this.setState({ searchURL: '' });
         });
       } catch (err) {
         // eslint-disable-next-line no-console
@@ -104,6 +109,27 @@ export default class Search extends React.PureComponent {
           description={TEXTS.EMPTY_QUERY_DESCRIPTION}
           image={SachKaur}
         />
+      );
+    }
+
+    if (this.state.searchURL === '' && isChatBot) {
+      return (
+        <div className="row" id="content-root">
+          <BreadCrumb links={[{ title: TEXTS.URIS.SEARCH_RESULTS }]} />
+          <AskGurbaniBotSearch query={this.props.q || ''} />
+          <Layout
+            pages={0}
+            totalResults={0}
+            resultsCount={0}
+            offset={1}
+            shabads={[]}
+            q={q}
+            type={type}
+            source={source}
+            writer={writer}
+            autoDetectGurmukhi={autoDetectGurmukhi}
+          />
+        </div>
       );
     }
 
