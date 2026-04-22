@@ -492,7 +492,7 @@ body:not(.dark-mode) a {
 
 .pusher {
   left: 0;
-  min-height: 85vh;
+  // min-height: 85vh;
   position: relative;
   top: 0;
   transition: transform 0.5s;
@@ -504,7 +504,7 @@ body:not(.dark-mode) a {
 }
 
 .pin-settings {
-  min-height: 85vh;
+  // min-height: 85vh;
   right: 0;
   top: 0;
   transition: transform 0.5s;

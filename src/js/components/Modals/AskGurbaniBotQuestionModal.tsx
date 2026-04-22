@@ -8,7 +8,7 @@ import SearchIcon from '@/components/Icons/Search';
 import { toSearchURL } from '@/util';
 
 import Dialog from './Dialog';
-import { SEARCH_TYPES } from '@/constants';
+import { SEARCH_TYPES, SOURCES } from '@/constants';
 
 interface Props {
   isModalOpen: boolean;
@@ -22,24 +22,26 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
     ({
       handleFormSubmit,
       query,
+      source,
     }: {
       handleFormSubmit: FormEventHandler;
       query: string;
+      source: string;
     }) =>
-    (e: FormEvent) => {
-      e.preventDefault();
-      typeof handleFormSubmit === 'function' && handleFormSubmit();
-      history.push(
-        toSearchURL({
-          query,
-          type: SEARCH_TYPES.ASK_A_QUESTION,
-          writer: 'all',
-          source: 'all',
-          offset: '',
-        })
-      );
-      dispatch(setModalOpen(''));
-    };
+      (e: FormEvent) => {
+        e.preventDefault();
+        typeof handleFormSubmit === 'function' && handleFormSubmit();
+        history.push(
+          toSearchURL({
+            query,
+            type: SEARCH_TYPES.ASK_A_QUESTION,
+            writer: 'all',
+            source,
+            offset: '',
+          })
+        );
+        dispatch(setModalOpen(''));
+      };
 
   return (
     <Dialog
@@ -51,8 +53,9 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
           defaultType={SEARCH_TYPES.ASK_A_QUESTION}
           defaultSource="all"
           defaultWriter={0}
+          isolateFromLocalStorage // helps to keep the bot search form state isolated from the main/normal search form
         >
-          {({
+          {(({
             pattern,
             disabled,
             title,
@@ -65,6 +68,9 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
             handleKeyDown,
             handleSearchChange,
             handleSubmit: handleFormSubmit,
+            source,
+            handleSearchSourceChange,
+            isSourceChanged,
           }) => (
             <form
               className="search-form"
@@ -72,6 +78,7 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
               onSubmit={handleSubmit({
                 handleFormSubmit: handleFormSubmit,
                 query,
+                source,
               })}
             >
               <div className="search-container-wrapper">
@@ -102,8 +109,24 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
                   </button>
                 </div>
               </div>
+              <div className="search-options">
+                <div className="search-option">
+                  <select
+                    name="source"
+                    value={source}
+                    className={[isSourceChanged ? 'selected' : null]}
+                    onChange={handleSearchSourceChange}
+                  >
+                    {Object.entries(SOURCES).map(([value, children]) => (
+                      <option key={value} value={value}>
+                        {children}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </form>
-          )}
+          ))}
         </SearchForm>
       </div>
     </Dialog>

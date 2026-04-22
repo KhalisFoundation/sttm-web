@@ -177,6 +177,7 @@ class Autocomplete extends Component {
           <ul
             className={`search-result ${isHome ? 'search-result-home' : ''}`}
             id="suggestions"
+            aria-label="Search Suggestions"
             ref={this.wrapperRef}
             onKeyDown={this.onKeyDown} >
             {filteredSuggestions.map((suggestion, index) => {
