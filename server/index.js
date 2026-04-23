@@ -123,7 +123,7 @@ app.post('/api/ai-translations', async (req, res) => {
         message: 'Verse ids list is required'
       });
     }
-    const response = await fetch(process.env.AI_TRANSLATION_URL, {
+    const response = await fetch(`${process.env.SODH_API}/api/verse`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
