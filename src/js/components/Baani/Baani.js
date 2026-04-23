@@ -137,9 +137,14 @@ class Baani extends React.PureComponent {
     ].join('\n');
   };
 
-  onCopyClick = (shabad) => () =>
+  onCopyClick = (shabad) => () => {
+    const { englishTranslationLanguages } = this.props;
+    const isAiTranslation = englishTranslationLanguages.includes('sahib singh english');
+    const copyMessage = isAiTranslation
+      ? `${TEXTS.GURBAANI_COPIED} ${TEXTS.SHABAD_REVIEW.AI_TRANSLATION_COPY_WARNING}`
+      : TEXTS.GURBAANI_COPIED;
     copyToClipboard(this.getShareLine(shabad))
-      .then(() => showToast(TEXTS.GURBAANI_COPIED))
+      .then(() => showToast(copyMessage))
       .then(() =>
         clickEvent({
           action: ACTIONS.LINE_SHARER,
@@ -147,6 +152,7 @@ class Baani extends React.PureComponent {
         })
       )
       .catch(() => showToast(TEXTS.COPY_FAILURE));
+  };
 
   onFacebookClick = (shabad) => () => {
     clickEvent({
@@ -195,6 +201,10 @@ class Baani extends React.PureComponent {
 
     // Show the active selection panel for current div.
     if (window.getSelection().toString()) {
+      const { englishTranslationLanguages } = this.props;
+      if (englishTranslationLanguages.includes('sahib singh english')) {
+        showToast(TEXTS.SHABAD_REVIEW.AI_TRANSLATION_COPY_WARNING, 2500, 'toast-top-right');
+      }
       const shareDiv = selectedDiv.querySelector('.share');
       shareDiv.classList.add('showShare');
     }

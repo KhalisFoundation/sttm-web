@@ -119,8 +119,92 @@ class Shabad extends React.PureComponent {
     this.state = {
       progress: 0,
       isDialogOpen: true, // Default to open when response is fetched
+      processedGurbani: props.gurbani || [],
+      reviewEligibility: {
+        isEligible: true,
+        alreadyReviewed: false,
+        newVersionAvailable: false,
+        scholarReviewed: false,
+      },
     };
   }
+
+  componentDidMount() {
+    if (this.props.gurbani) {
+      this.processGurbani(this.props.gurbani);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.gurbani !== this.props.gurbani) {
+      this.processGurbani(this.props.gurbani);
+    }
+  }
+
+  processGurbani = async (gurbani) => {
+    if (!gurbani) return;
+
+    // Initialize state with input gurbani first
+    this.setState({ processedGurbani: gurbani });
+
+    const verseIds = gurbani.map((verse) => verse.verseId);
+    try {
+      const response = await fetch('/api/ai-translations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ verse_id: verseIds })
+      });
+      const data = await response.json();
+
+      const fullTranslation = Object.values(data.verses).filter(obj => obj.text.length > 0);
+
+      if (fullTranslation.length === 0) {
+        this.setState({ reviewEligibility: { isEligible: false, alreadyReviewed: false, newVersionAvailable: false } });
+      }
+
+      let scholarStatus = false;
+      const processedGurbani = gurbani.map((verse) => {
+        const updatedVerse = { ...verse };
+        if (updatedVerse.translation) {
+          updatedVerse.translation = { ...updatedVerse.translation };
+        }
+
+        const aiTranslation = data.verses[verse.verseId];
+
+        if (aiTranslation) {
+          if (aiTranslation.text && aiTranslation.text.length > 0) {
+            scholarStatus = aiTranslation.text[0].is_scholar_reviewed;
+          }
+          let padArth = '';
+          let text = '';
+          const padArthArray = aiTranslation.padArth ? aiTranslation.padArth.sort((a, b) => a.translation_id - b.translation_id) : [];
+          padArthArray.forEach((item) => {
+            const parsed = JSON.parse(item.translation_text);
+            padArth += `${parsed.word.unicode} - ${parsed.english_meaning},  `;
+          });
+          aiTranslation.text.forEach((item) => {
+            text += item.translation_text + ' ';
+          });
+
+          updatedVerse.translation.ai = {
+            pss: padArth || '',
+            ss: text || '',
+          };
+        }
+        return updatedVerse;
+      });
+      this.setState({
+        processedGurbani: processedGurbani,
+        reviewEligibility: { ...this.state.reviewEligibility, scholarReviewed: scholarStatus },
+      });
+    } catch (error) {
+      console.error('Error fetching AI translations:', error);
+      // Fallback to original gurbani if fetch fails
+      this.setState({ processedGurbani: gurbani });
+    }
+  };
 
   toggleDialog = () => {
     this.setState(prevState => ({
@@ -151,13 +235,16 @@ class Shabad extends React.PureComponent {
     const {
       info,
       highlight,
-      gurbani,
       type,
       translationLanguages,
       transliterationLanguages,
+      englishTranslationLanguages,
       unicode,
       hideAddButton = true,
     } = baniProps;
+
+    const { processedGurbani: gurbani } = this.state;
+
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
@@ -169,6 +256,13 @@ class Shabad extends React.PureComponent {
     const isShowMetaData = this.props.hideMeta === false && !fullScreenMode;
     const isShowControls = this.props.hideControls === false;
     const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute && !fullScreenMode;
+
+    const reviewMessage = (reviewEligibility) => {
+      if (reviewEligibility.scholarReviewed) {
+        return TEXTS.SHABAD_REVIEW.SCHOLAR_REVIEWED_SUBMISSION;
+      }
+      return TEXTS.SHABAD_REVIEW.NOT_SCHOLAR_REVIEWED;
+    }
 
     return (
       <GlobalHotKeys
@@ -212,7 +306,15 @@ class Shabad extends React.PureComponent {
               showPinSettings={showPinSettings}
             />
           )}
-
+          {console.log(translationLanguages)}
+          {this.state.reviewEligibility.isEligible && englishTranslationLanguages.includes('sahib singh english') && (
+            <div className="review-translations-banner flex justify-center align-center">
+              <span>{reviewMessage(this.state.reviewEligibility)}</span>
+              <a className="review-translations-link" href={`/review-shabad/${info.shabadId}`}>
+                {this.state.reviewEligibility.alreadyReviewed ? 'Edit response' : 'Review translations'}
+              </a>
+            </div>
+          )}
           <div id="shabad" className={`shabad display display-${type}`} aria-label="Shabad Container">
             <div className="shabad-container">
               {isMultiPage ? (
@@ -232,6 +334,7 @@ class Shabad extends React.PureComponent {
                   isSundarGutkaRoute={isSundarGutkaRoute}
                   isParagraphMode={isParagraphMode}
                   isReadingMode={readingMode}
+                  gurbani={gurbani}
                 />
               )}
               {isLoadingContent && <div className="spinner" />}

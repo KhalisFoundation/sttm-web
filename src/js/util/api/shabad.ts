@@ -48,7 +48,8 @@ export const englishTranslationMap: ITransProps = {
   'BaniDB': shabad => shabad.translation.en.bdb,
   'manmohan singh': shabad => shabad.translation.en.ms,
   'sant singh khalsa': shabad => shabad.translation.en.ssk,
-  'prof sahib singh': shabad => shabad.translation.en.pss,
+  'prof sahib singh': shabad => shabad.translation?.ai?.pss,
+  'sahib singh english': shabad => shabad.translation?.ai?.ss,
 };
 
 export const steekMap: ITransProps = {
@@ -73,7 +74,7 @@ export const getWriter = (shabad: IShabad) => ({
 
 export const getWriterId = (shabad: IShabad) => shabad.writer && shabad.writer.writerId;
 
-type Lang = 'en' | 'pu' | 'hi';
+type Lang = 'en' | 'pu' | 'hi' | 'ai';
 
 type SourceConfig = {
   lang: Lang;
@@ -83,8 +84,13 @@ type SourceConfig = {
 
 const SOURCE_MAP: Record<string, SourceConfig> = {
   'prof sahib singh': {
-    lang: 'en',
+    lang: 'ai',
     field: 'pss',
+    hasValue: Boolean,
+  },
+  'sahib singh english': {
+    lang: 'ai',
+    field: 'ss',
     hasValue: Boolean,
   },
   'BaniDB': {

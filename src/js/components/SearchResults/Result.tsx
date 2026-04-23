@@ -311,7 +311,7 @@ const SearchResult: React.FC<IShabadResultProps> = ({
                 onClick={handleRemoveClick}
                 className="remove-fav-button"
               >
-                <StarIcon />
+                <StarIcon className="orange"/>
               </button>
               <ShabadButtonWrapper shabad={formattedShabad} />
               <DateAndTimeIcon className="date-time-icon" />
