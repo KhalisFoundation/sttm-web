@@ -124,6 +124,7 @@ class Shabad extends React.PureComponent {
         isEligible: true,
         alreadyReviewed: false,
         newVersionAvailable: false,
+        scholarReviewed: false,
       },
     };
   }
@@ -163,6 +164,7 @@ class Shabad extends React.PureComponent {
         this.setState({ reviewEligibility: { isEligible: false, alreadyReviewed: false, newVersionAvailable: false } });
       }
 
+      let scholarStatus = false;
       const processedGurbani = gurbani.map((verse) => {
         const updatedVerse = { ...verse };
         if (updatedVerse.translation) {
@@ -172,6 +174,9 @@ class Shabad extends React.PureComponent {
         const aiTranslation = data.verses[verse.verseId];
 
         if (aiTranslation) {
+          if (aiTranslation.text && aiTranslation.text.length > 0) {
+            scholarStatus = aiTranslation.text[0].is_scholar_reviewed;
+          }
           let padArth = '';
           let text = '';
           const padArthArray = aiTranslation.padArth ? aiTranslation.padArth.sort((a, b) => a.translation_id - b.translation_id) : [];
@@ -190,7 +195,10 @@ class Shabad extends React.PureComponent {
         }
         return updatedVerse;
       });
-      this.setState({ processedGurbani: processedGurbani });
+      this.setState({
+        processedGurbani: processedGurbani,
+        reviewEligibility: { ...this.state.reviewEligibility, scholarReviewed: scholarStatus },
+      });
     } catch (error) {
       console.error('Error fetching AI translations:', error);
       // Fallback to original gurbani if fetch fails
@@ -230,6 +238,7 @@ class Shabad extends React.PureComponent {
       type,
       translationLanguages,
       transliterationLanguages,
+      englishTranslationLanguages,
       unicode,
       hideAddButton = true,
     } = baniProps;
@@ -249,13 +258,10 @@ class Shabad extends React.PureComponent {
     const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute && !fullScreenMode;
 
     const reviewMessage = (reviewEligibility) => {
-      if (reviewEligibility.alreadyReviewed) {
-        return TEXTS.SHABAD_REVIEW.EDIT_SUBMISSION;
+      if (reviewEligibility.scholarReviewed) {
+        return TEXTS.SHABAD_REVIEW.SCHOLAR_REVIEWED_SUBMISSION;
       }
-      if (reviewEligibility.newVersionAvailable) {
-        return TEXTS.SHABAD_REVIEW.NEW_VERSION;
-      }
-      return TEXTS.SHABAD_REVIEW.NEW_SUBMISSION;
+      return TEXTS.SHABAD_REVIEW.NOT_SCHOLAR_REVIEWED;
     }
 
     return (
@@ -300,7 +306,8 @@ class Shabad extends React.PureComponent {
               showPinSettings={showPinSettings}
             />
           )}
-          {this.state.reviewEligibility.isEligible && (
+          {console.log(translationLanguages)}
+          {this.state.reviewEligibility.isEligible && englishTranslationLanguages.includes('sahib singh english') && (
             <div className="review-translations-banner flex justify-center align-center">
               <span>{reviewMessage(this.state.reviewEligibility)}</span>
               <a className="btn" href={`/review-shabad/${info.shabadId}`}>

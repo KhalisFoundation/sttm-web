@@ -112,6 +112,9 @@ export const TEXTS = {
     NEW_SUBMISSION: 'You are invited to review the new english translations by Khalis Foundation.',
     NEW_VERSION: 'A new translation has been added, since your last review of this shabad.',
     EDIT_SUBMISSION: 'You already reviewed this shabad, edit your review.',
+    SCHOLAR_REVIEWED_SUBMISSION: 'These translations are verified and reviewed by a Gurmat Scholar, if you have any feedback, let us know.',
+    NOT_SCHOLAR_REVIEWED: 'These translations are currently being reviewed by Gurmat Scholars, let us know if you find any mistake.',
+    AI_TRANSLATION_COPY_WARNING: "These translations are built upon Prof Sahib Singh's teeka. Please do a full review before copying.",
   },
   SHABAD_RATING: {
     HEADING: 'Review the English Translation of Teeka',
