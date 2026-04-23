@@ -1,3 +1,22 @@
+.review-translations-link {
+  color: $sttm-blue;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 6px;
+
+  &:hover {
+    color: darken($sttm-blue, 10%);
+  }
+
+  .dark-mode & {
+    color: $sttm-orange;
+
+    &:hover {
+      color: lighten($sttm-orange, 10%);
+    }
+  }
+}
+
 .review-heading {
   font-size: 1rem;
   font-weight: bold;

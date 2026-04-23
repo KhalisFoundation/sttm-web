@@ -310,7 +310,7 @@ class Shabad extends React.PureComponent {
           {this.state.reviewEligibility.isEligible && englishTranslationLanguages.includes('sahib singh english') && (
             <div className="review-translations-banner flex justify-center align-center">
               <span>{reviewMessage(this.state.reviewEligibility)}</span>
-              <a className="btn" href={`/review-shabad/${info.shabadId}`}>
+              <a className="review-translations-link" href={`/review-shabad/${info.shabadId}`}>
                 {this.state.reviewEligibility.alreadyReviewed ? 'Edit response' : 'Review translations'}
               </a>
             </div>
