@@ -27,6 +27,8 @@ const allowedOrigins = process.env.NODE_ENV === 'development' ? [
 ] : [
   'https://www.sikhitothemax.org',
   'https://sikhitothemax.org',
+  'https://dev.sikhitothemax.org',
+  'https://www.dev.sikhitothemax.org',
 ];
 const ON_HEROKU = 'ON_HEROKU' in process.env;
 
@@ -56,7 +58,7 @@ app.post('/api/feedback', async (req, res) => {
     if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
       return res.status(403).json({
         status: 'error',
-        message: 'Access denied'
+        message: `Access denied from ${origin}`
       });
     }
     const { email, shabadId, rating, overallFeedback, verses, teekaFeedback, source } = req.body;
@@ -112,7 +114,7 @@ app.post('/api/ai-translations', async (req, res) => {
     if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
       return res.status(403).json({
         status: 'error',
-        message: 'Access denied'
+        message: `Access denied from ${origin}`
       });
     }
 
@@ -150,7 +152,7 @@ app.post('/api/transcribe', async (req, res) => {
     if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
       return res.status(403).json({
         status: 'error',
-        message: 'Access denied'
+        message: `Access denied from ${origin}`
       });
     }
 
