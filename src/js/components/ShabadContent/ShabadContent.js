@@ -257,13 +257,6 @@ class Shabad extends React.PureComponent {
     const isShowControls = this.props.hideControls === false;
     const isShowRelatedShabads = !isAmritKeertanRoute && !isSundarGutkaRoute && !fullScreenMode;
 
-    const reviewMessage = (reviewEligibility) => {
-      if (reviewEligibility.scholarReviewed) {
-        return TEXTS.SHABAD_REVIEW.SCHOLAR_REVIEWED_SUBMISSION;
-      }
-      return TEXTS.SHABAD_REVIEW.NOT_SCHOLAR_REVIEWED;
-    }
-
     return (
       <GlobalHotKeys
         keyMap={ViewerShortcuts}
@@ -306,13 +299,17 @@ class Shabad extends React.PureComponent {
               showPinSettings={showPinSettings}
             />
           )}
-          {console.log(translationLanguages)}
           {this.state.reviewEligibility.isEligible && englishTranslationLanguages.includes('sahib singh english') && (
-            <div className="review-translations-banner flex justify-center align-center">
-              <span>{reviewMessage(this.state.reviewEligibility)}</span>
-              <a className="review-translations-link" href={`/review-shabad/${info.shabadId}`}>
-                {this.state.reviewEligibility.alreadyReviewed ? 'Edit response' : 'Review translations'}
-              </a>
+            <div className="review-translations-banner">
+              <h4><a className="review-translations-link" href={`/review-shabad/${info.shabadId}`}>
+                {TEXTS.SHABAD_REVIEW.BANNER_HEADING}
+              </a></h4>
+              <p className="review-translations-description">
+                {this.state.reviewEligibility.scholarReviewed
+                  ? TEXTS.SHABAD_REVIEW.BANNER_BODY_REVIEWED
+                  : TEXTS.SHABAD_REVIEW.BANNER_BODY_NOT_REVIEWED}
+                  <a className="review-translations-process-text review-translations-link" href={TEXTS.SHABAD_REVIEW.LEARN_ABOUT_PROCESS_URL}>{TEXTS.SHABAD_REVIEW.LEARN_ABOUT_PROCESS}</a>
+              </p>
             </div>
           )}
           <div id="shabad" className={`shabad display display-${type}`} aria-label="Shabad Container">
