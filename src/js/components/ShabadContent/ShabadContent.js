@@ -120,6 +120,7 @@ class Shabad extends React.PureComponent {
       progress: 0,
       isDialogOpen: true, // Default to open when response is fetched
       processedGurbani: props.gurbani || [],
+      processedPages: props.pages || [],
       reviewEligibility: {
         isEligible: true,
         alreadyReviewed: false,
@@ -130,16 +131,70 @@ class Shabad extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.gurbani) {
+    if (this.props.isMultiPage) {
+      if (this.props.pages && this.props.pages.length > 0) {
+        this.processPages(this.props.pages);
+      }
+    } else if (this.props.gurbani) {
       this.processGurbani(this.props.gurbani);
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.gurbani !== this.props.gurbani) {
+    if (this.props.isMultiPage) {
+      if (prevProps.pages !== this.props.pages && this.props.pages && this.props.pages.length > 0) {
+        this.processPages(this.props.pages);
+      }
+    } else if (prevProps.gurbani !== this.props.gurbani) {
       this.processGurbani(this.props.gurbani);
     }
   }
+
+  fetchAiTranslations = async (verseIds) => {
+    const response = await fetch('/api/ai-translations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ verse_id: verseIds })
+    });
+    return response.json();
+  };
+
+  mergeAiTranslations = (gurbani, data) => {
+    let scholarStatus = false;
+    const processed = gurbani.map((verse) => {
+      const updatedVerse = { ...verse };
+      if (updatedVerse.translation) {
+        updatedVerse.translation = { ...updatedVerse.translation };
+      }
+
+      const aiTranslation = data.verses[verse.verseId];
+
+      if (aiTranslation) {
+        if (aiTranslation.text && aiTranslation.text.length > 0) {
+          scholarStatus = aiTranslation.text[0].is_scholar_reviewed;
+        }
+        let padArth = '';
+        let text = '';
+        const padArthArray = aiTranslation.padArth ? aiTranslation.padArth.sort((a, b) => a.translation_id - b.translation_id) : [];
+        padArthArray.forEach((item) => {
+          const parsed = JSON.parse(item.translation_text);
+          padArth += `${parsed.word.unicode} - ${parsed.english_meaning},  `;
+        });
+        aiTranslation.text.forEach((item) => {
+          text += item.translation_text + ' ';
+        });
+
+        updatedVerse.translation.ai = {
+          pss: padArth || '',
+          ss: text || '',
+        };
+      }
+      return updatedVerse;
+    });
+    return { processed, scholarStatus };
+  };
 
   processGurbani = async (gurbani) => {
     if (!gurbani) return;
@@ -149,14 +204,35 @@ class Shabad extends React.PureComponent {
 
     const verseIds = gurbani.map((verse) => verse.verseId);
     try {
-      const response = await fetch('/api/ai-translations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ verse_id: verseIds })
+      const data = await this.fetchAiTranslations(verseIds);
+
+      const fullTranslation = Object.values(data.verses).filter(obj => obj.text.length > 0);
+
+      if (fullTranslation.length === 0) {
+        this.setState({ reviewEligibility: { isEligible: false, alreadyReviewed: false, newVersionAvailable: false } });
+      }
+
+      const { processed, scholarStatus } = this.mergeAiTranslations(gurbani, data);
+      this.setState({
+        processedGurbani: processed,
+        reviewEligibility: { ...this.state.reviewEligibility, scholarReviewed: scholarStatus },
       });
-      const data = await response.json();
+    } catch (error) {
+      console.error('Error fetching AI translations:', error);
+      // Fallback to original gurbani if fetch fails
+      this.setState({ processedGurbani: gurbani });
+    }
+  };
+
+  processPages = async (pages) => {
+    if (!pages || pages.length === 0) return;
+
+    // Initialize state with input pages first
+    this.setState({ processedPages: pages });
+
+    const verseIds = pages.flatMap(({ page }) => page.map((verse) => verse.verseId));
+    try {
+      const data = await this.fetchAiTranslations(verseIds);
 
       const fullTranslation = Object.values(data.verses).filter(obj => obj.text.length > 0);
 
@@ -165,44 +241,19 @@ class Shabad extends React.PureComponent {
       }
 
       let scholarStatus = false;
-      const processedGurbani = gurbani.map((verse) => {
-        const updatedVerse = { ...verse };
-        if (updatedVerse.translation) {
-          updatedVerse.translation = { ...updatedVerse.translation };
-        }
-
-        const aiTranslation = data.verses[verse.verseId];
-
-        if (aiTranslation) {
-          if (aiTranslation.text && aiTranslation.text.length > 0) {
-            scholarStatus = aiTranslation.text[0].is_scholar_reviewed;
-          }
-          let padArth = '';
-          let text = '';
-          const padArthArray = aiTranslation.padArth ? aiTranslation.padArth.sort((a, b) => a.translation_id - b.translation_id) : [];
-          padArthArray.forEach((item) => {
-            const parsed = JSON.parse(item.translation_text);
-            padArth += `${parsed.word.unicode} - ${parsed.english_meaning},  `;
-          });
-          aiTranslation.text.forEach((item) => {
-            text += item.translation_text + ' ';
-          });
-
-          updatedVerse.translation.ai = {
-            pss: padArth || '',
-            ss: text || '',
-          };
-        }
-        return updatedVerse;
+      const processedPages = pages.map((pageData) => {
+        const { processed, scholarStatus: pageScholarStatus } = this.mergeAiTranslations(pageData.page, data);
+        scholarStatus = pageScholarStatus;
+        return { ...pageData, page: processed };
       });
       this.setState({
-        processedGurbani: processedGurbani,
+        processedPages,
         reviewEligibility: { ...this.state.reviewEligibility, scholarReviewed: scholarStatus },
       });
     } catch (error) {
       console.error('Error fetching AI translations:', error);
-      // Fallback to original gurbani if fetch fails
-      this.setState({ processedGurbani: gurbani });
+      // Fallback to original pages if fetch fails
+      this.setState({ processedPages: pages });
     }
   };
 
@@ -243,7 +294,7 @@ class Shabad extends React.PureComponent {
       hideAddButton = true,
     } = baniProps;
 
-    const { processedGurbani: gurbani } = this.state;
+    const { processedGurbani: gurbani, processedPages } = this.state;
 
     if (random) {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
@@ -318,7 +369,7 @@ class Shabad extends React.PureComponent {
                 <>
                   <MultiPageBaani
                     {...baniProps}
-                    pages={pages}
+                    pages={processedPages.length > 0 ? processedPages : pages}
                     isParagraphMode={isParagraphMode}
                     isReadingMode={readingMode}
                   />
