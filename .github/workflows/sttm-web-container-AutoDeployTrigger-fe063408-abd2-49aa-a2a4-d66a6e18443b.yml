@@ -48,3 +48,5 @@ jobs:
             NODE_ENV=production
             AUDIO_TRANSCRIPTION_URL=${{ secrets.AUDIO_TRANSCRIPTION_URL }}
             AUDIO_TRANSCRIPTION_KEY=${{ secrets.AUDIO_TRANSCRIPTION_KEY }}
+            SODH_API=${{ secrets.SODH_API }}
+

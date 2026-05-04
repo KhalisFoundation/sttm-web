@@ -1,3 +1,5 @@
+let activeToastClassName = '';
+
 /**
  * Shows a toast
  *
@@ -10,6 +12,11 @@ export const showToast = (text: string, delay: number = 2500, className: string 
     const $notification = document.getElementById('toast-notification');
     $notification.innerHTML = `${text} <button role="button" aria-label="close" class="toast-notification-close-button">&times;</button>`.trim();
 
+    if (activeToastClassName) {
+      $notification.classList.remove(activeToastClassName);
+    }
+    activeToastClassName = className;
+
     if (className !== '') {
       $notification.classList.add(className);
     }
@@ -21,6 +28,7 @@ export const showToast = (text: string, delay: number = 2500, className: string 
 
       if (className !== '') {
         $notification.classList.remove(className);
+        activeToastClassName = '';
       }
       resolve();
     };

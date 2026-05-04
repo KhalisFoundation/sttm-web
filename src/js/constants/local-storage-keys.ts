@@ -43,3 +43,4 @@ export const LOCAL_STORAGE_KEY_FOR_SHABAD_AUDIO_PLAYER = 'shabadAudioPlayer';
 export const LOCAL_STORAGE_KEY_FOR_MULTIPLE_SHABADS = 'multipleShabads';
 export const LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN = '__khalis_auth_token__';
 export const LOCAL_STORAGE_KEY_FOR_AUTO_DETECT_GURMUKHI = 'autoDetectGurmukhi';
+export const LOCAL_STORAGE_KEY_FOR_PENDING_SHABAD_REVIEW = 'pendingShabadReview';

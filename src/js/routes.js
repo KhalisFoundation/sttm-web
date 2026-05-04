@@ -589,6 +589,37 @@ export default [
     },
   },
   {
+    path: '/review-shabad/:shabadId',
+    render(props) {
+      return (
+        <Layout title="SikhiToTheMax" {...props}>
+          <RenderPromise
+            promise={() =>
+              import(
+                /* webpackChunkName: "ShabadReview" */ './components/ShabadReview'
+              )
+            }
+          >
+            {({
+              pending,
+              resolved: { default: ShabadReview } = {},
+              rejected,
+            }) =>
+              pending ? null : ShabadReview ? (
+                <ShabadReview {...props} />
+              ) : (
+                throwError(
+                  `We are having trouble in rendering this route.`,
+                  rejected
+                )
+              )
+            }
+          </RenderPromise>
+        </Layout>
+      );
+    },
+  },
+  {
     path: '/random',
     render() {
       return <Redirect to="/shabad?random" />;

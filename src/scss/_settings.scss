@@ -19,6 +19,7 @@ $panel-width-560: 65vw;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    min-width: 300px;
     opacity: 0;
     position: fixed;
     right: 0;

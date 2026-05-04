@@ -17,7 +17,8 @@ export type IShabad = {
       ssk: string,
       bdb: string,
       ms: string,
-      pss: string
+      pss: string,
+      ss: string
     };
     es: {
       sn: string
@@ -47,6 +48,6 @@ export type IShabad = {
     hi: {
       ss: string,
       sts: string,
-    }
+    },
   };
 };

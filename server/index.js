@@ -17,6 +17,19 @@ import { getMetadataFromRequest, createMetadataFromResponse } from './utils/';
 
 const hostname = _hostname().substr(0, 3);
 let port = process.env.NODE_ENV === 'development' ? '8081' : '8080';
+const allowedOrigins = process.env.NODE_ENV === 'development' ? [
+  'http://localhost:8081',
+  'http://localhost:3000',
+  'https://www.sikhitothemax.org',
+  'https://sikhitothemax.org',
+  'https://dev.sikhitothemax.org',
+  'https://www.dev.sikhitothemax.org',
+] : [
+  'https://www.sikhitothemax.org',
+  'https://sikhitothemax.org',
+  'https://dev.sikhitothemax.org',
+  'https://www.dev.sikhitothemax.org',
+];
 const ON_HEROKU = 'ON_HEROKU' in process.env;
 
 port = ON_HEROKU ? process.env.PORT : port;
@@ -38,23 +51,108 @@ app.use((req, res, next) => {
   return next();
 });
 
-// API endpoint for voice transcription proxy
-app.post('/api/transcribe', async (req, res) => {
+app.post('/api/feedback', async (req, res) => {
   try {
     const origin = req.get('Origin') || req.get('Referer');
-    const allowedOrigins = [
-      'http://localhost:8081',
-      'http://localhost:3000',
-      'https://www.sikhitothemax.org',
-      'https://sikhitothemax.org',
-      'https://dev.sikhitothemax.org',
-      'https://www.dev.sikhitothemax.org',
-    ];
 
     if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
       return res.status(403).json({
         status: 'error',
-        message: 'Access denied'
+        message: `Access denied from ${origin}`
+      });
+    }
+    const { email, shabadId, rating, overallFeedback, verses, teekaFeedback, source } = req.body;
+    if (!shabadId || !rating) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Missing required fields'
+      });
+    }
+
+    const response = await fetch(`${process.env.SODH_API}/api/sttm-shabad-feedback`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, shabadId, starRatings: rating, feedbackText: overallFeedback, verses, teekaFeedback, source }),
+    });
+    const data = await response.json();
+    res.json(data);
+
+
+  } catch (error) {
+    console.error('Feedback error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error'
+    });
+  }
+});
+
+app.post('/api/feedback/:shabadId', async (req, res) => {
+  try {
+    const { shabadId } = req.params;
+    const { email } = req.body;
+    const response = await fetch(`${process.env.SODH_API}/api/sttm-shabad-feedback/${shabadId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Feedback error:', error);
+  }
+});
+
+app.post('/api/ai-translations', async (req, res) => {
+  try {
+    const origin = req.get('Origin') || req.get('Referer');
+
+    if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      return res.status(403).json({
+        status: 'error',
+        message: `Access denied from ${origin}`
+      });
+    }
+
+    const { verse_id } = req.body;
+    if (!verse_id) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Verse ids list is required'
+      });
+    }
+    const response = await fetch(`${process.env.SODH_API}/api/verse`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ verse_ids: verse_id }),
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('AI translation error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error'
+    });
+  }
+});
+
+// API endpoint for voice transcription proxy
+app.post('/api/transcribe', async (req, res) => {
+  try {
+    const origin = req.get('Origin') || req.get('Referer');
+
+    if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      return res.status(403).json({
+        status: 'error',
+        message: `Access denied from ${origin}`
       });
     }
 
@@ -127,7 +225,7 @@ app.get('*', async (req, res) => {
   // get the title/description from API call if needed.
   const bodyClass =
     DARK_MODE_COOKIE in req.cookies &&
-    parseInt(req.cookies[DARK_MODE_COOKIE], 10) === 1
+      parseInt(req.cookies[DARK_MODE_COOKIE], 10) === 1
       ? DARK_MODE_CLASS_NAME
       : '';
 

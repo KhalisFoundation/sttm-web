@@ -31,6 +31,14 @@
   min-width: 30px;
   padding: 5px;
 
+  &.orange {
+    fill: $sttm-orange;
+  }
+
+  &.grey {
+    fill: $sttm-darker-grey;
+  }
+
   @media screen and (max-width: 45.999999em) {
     font-size: 2em !important;
   }
@@ -179,7 +187,7 @@
   right: 0;
   text-align: center;
   width: 80vw;
-  z-index: 6;
+  z-index: 60;
 
   .toast-notification-close-button {
     float: right;
@@ -206,6 +214,17 @@
     text-align: left;
     top: 0;
     width: 100vw;
+  }
+
+  &.toast-top-right {
+    bottom: auto;
+    left: auto;
+    margin: 0;
+    top: 1em;
+    right: 1em;
+    width: auto;
+    max-width: 30vw;
+    text-align: left;
   }
 
   .dark-mode & {
