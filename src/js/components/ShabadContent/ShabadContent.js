@@ -150,13 +150,15 @@ class Shabad extends React.PureComponent {
     }
   }
 
-  fetchAiTranslations = async (verseIds) => {
+  isSundarGutkaRoute = () => this.props.location.pathname.includes('sundar-gutka');
+
+  fetchAiTranslations = async (verseIds, bani_type='shabad') => {
     const response = await fetch('/api/ai-translations', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ verse_id: verseIds })
+      body: JSON.stringify({ verse_id: verseIds, bani_type })
     });
     return response.json();
   };
@@ -203,8 +205,9 @@ class Shabad extends React.PureComponent {
     this.setState({ processedGurbani: gurbani });
 
     const verseIds = gurbani.map((verse) => verse.verseId);
+    const baniType = this.isSundarGutkaRoute() ? 'bani' : 'shabad';
     try {
-      const data = await this.fetchAiTranslations(verseIds);
+      const data = await this.fetchAiTranslations(verseIds, baniType);
 
       const fullTranslation = Object.values(data.verses).filter(obj => obj.text.length > 0);
 
@@ -231,8 +234,9 @@ class Shabad extends React.PureComponent {
     this.setState({ processedPages: pages });
 
     const verseIds = pages.flatMap(({ page }) => page.map((verse) => verse.verseId));
+    const baniType = this.isSundarGutkaRoute() ? 'bani' : 'shabad';
     try {
-      const data = await this.fetchAiTranslations(verseIds);
+      const data = await this.fetchAiTranslations(verseIds, baniType);
 
       const fullTranslation = Object.values(data.verses).filter(obj => obj.text.length > 0);
 
@@ -300,7 +304,7 @@ class Shabad extends React.PureComponent {
       return <Redirect to={`/shabad?id=${getShabadId(info)}`} />;
     }
 
-    const isSundarGutkaRoute = location.pathname.includes('sundar-gutka');
+    const isSundarGutkaRoute = this.isSundarGutkaRoute();
     const isAmritKeertanRoute = location.pathname.includes('amrit-keertan');
     const isParagraphMode = paragraphMode && isSundarGutkaRoute;
     const isShowFooterNav = this.props.hideMeta === false && !isMultiPage;
@@ -359,7 +363,6 @@ class Shabad extends React.PureComponent {
                 {this.state.reviewEligibility.scholarReviewed
                   ? TEXTS.SHABAD_REVIEW.BANNER_BODY_REVIEWED
                   : TEXTS.SHABAD_REVIEW.BANNER_BODY_NOT_REVIEWED}
-                  <a className="review-translations-process-text review-translations-link" href={TEXTS.SHABAD_REVIEW.LEARN_ABOUT_PROCESS_URL}>{TEXTS.SHABAD_REVIEW.LEARN_ABOUT_PROCESS}</a>
               </p>
             </div>
           )}

@@ -118,7 +118,7 @@ app.post('/api/ai-translations', async (req, res) => {
       });
     }
 
-    const { verse_id } = req.body;
+    const { verse_id, bani_type = 'shabad' } = req.body;
     if (!verse_id) {
       return res.status(400).json({
         status: 'error',
@@ -130,7 +130,7 @@ app.post('/api/ai-translations', async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ verse_ids: verse_id }),
+      body: JSON.stringify({ verse_ids: verse_id, bani_type }),
     });
 
     const data = await response.json();

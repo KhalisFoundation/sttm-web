@@ -116,8 +116,6 @@ export const TEXTS = {
     BANNER_HEADING: 'Help improve the new English Translations.',
     BANNER_BODY_NOT_REVIEWED: "These english translations are based on Professor Sahib Singh ji's teeka and translated through a careful AI-assisted process. Your feedback helps us improve clarity, accuracy, and faithfulness to the source.",
     BANNER_BODY_REVIEWED: "These english translations are based on Professor Sahib Singh ji's teeka and are being actively reviewed by Sikh scholars as part of our translation process. You can share feedback to help us improve clarity and accuracy.",
-    LEARN_ABOUT_PROCESS: 'Learn about our process',
-    LEARN_ABOUT_PROCESS_URL: '#',
   },
   SHABAD_RATING: {
     HEADING: 'Review the English Translation of Teeka',
