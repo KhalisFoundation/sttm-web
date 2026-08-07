@@ -70,7 +70,7 @@ import {
 } from '../../util';
 
 export const initialState = {
-  online: window !== undefined ? window.navigator.onLine : true,
+  online: true,
   showAdvancedOptions: false,
   showTransliterationOptions: false,
   showTranslationOptions: false,
