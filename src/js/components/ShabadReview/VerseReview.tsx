@@ -5,7 +5,8 @@ import { Verse } from './interfaces';
 import { CommentIcon } from '../Icons/commentIcon';
 import Dialog from '../Modals/Dialog';
 import { DiffInput } from '../DiffInput';
-import { VerseFeedback, AI_Translation_Text } from '@/types/shabad-review';
+import { VerseFeedback, AI_Translation_Response } from '@/types/shabad-review';
+import { getPssText, getPssTranslationId } from '@/util/ai-translations';
 import { TEXTS } from '@/constants/texts';
 
 interface VerseReviewProps {
@@ -48,17 +49,13 @@ const VerseReview: React.FC<VerseReviewProps> = ({ verse, currentFeedback, updat
         },
         body: JSON.stringify({ verse_id: verseIds })
       }).then(response => {
-        response.json().then(data => {
-          const aiTranslation = data.verses[verse.verseId];
+        response.json().then((data: AI_Translation_Response) => {
+          const aiTranslation = data.verses && data.verses[verse.verseId];
           if (aiTranslation) {
-            let text = '';
-
-            aiTranslation.text.forEach((item: AI_Translation_Text) => {
-              text += item.translation_text + ' ';
-              setTranslationId(item.translation_id);
-            });
-            setTranslationText(`${text}`.trim());
-            setSuggested(`${text}`.trim());
+            const text = getPssText(aiTranslation);
+            setTranslationId(getPssTranslationId(aiTranslation));
+            setTranslationText(text);
+            setSuggested(text);
           }
         });
       });

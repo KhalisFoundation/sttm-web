@@ -130,7 +130,11 @@ app.post('/api/ai-translations', async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ verse_ids: verse_id, bani_type }),
+      body: JSON.stringify({
+        verse_ids: verse_id,
+        bani_type,
+        translation_types: ['pss', 'pss-padarth', 'pss_simple'],
+      }),
     });
 
     const data = await response.json();

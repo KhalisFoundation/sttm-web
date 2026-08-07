@@ -23,6 +23,13 @@ import {
   ACTIONS,
   errorEvent,
 } from '@/util';
+import {
+  getPadarthText,
+  getPssEntries,
+  getPssSimpleText,
+  getPssText,
+  isScholarReviewed,
+} from '@/util/ai-translations';
 import { TEXTS, SHABAD_CONTENT_CLASSNAME, MAX_ANGS } from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
 
@@ -165,32 +172,22 @@ class Shabad extends React.PureComponent {
 
   mergeAiTranslations = (gurbani, data) => {
     let scholarStatus = false;
+    const verses = (data && data.verses) || {};
     const processed = gurbani.map((verse) => {
       const updatedVerse = { ...verse };
-      if (updatedVerse.translation) {
-        updatedVerse.translation = { ...updatedVerse.translation };
-      }
-
-      const aiTranslation = data.verses[verse.verseId];
+      const aiTranslation = verses[verse.verseId];
 
       if (aiTranslation) {
-        if (aiTranslation.text && aiTranslation.text.length > 0) {
-          scholarStatus = aiTranslation.text[0].is_scholar_reviewed;
+        updatedVerse.translation = { ...updatedVerse.translation };
+
+        if (getPssEntries(aiTranslation).length > 0) {
+          scholarStatus = isScholarReviewed(aiTranslation);
         }
-        let padArth = '';
-        let text = '';
-        const padArthArray = aiTranslation.padArth ? aiTranslation.padArth.sort((a, b) => a.translation_id - b.translation_id) : [];
-        padArthArray.forEach((item) => {
-          const parsed = JSON.parse(item.translation_text);
-          padArth += `${parsed.word.unicode} - ${parsed.english_meaning},  `;
-        });
-        aiTranslation.text.forEach((item) => {
-          text += item.translation_text + ' ';
-        });
 
         updatedVerse.translation.ai = {
-          pss: padArth || '',
-          ss: text || '',
+          pss: getPadarthText(aiTranslation),
+          ss: getPssText(aiTranslation),
+          simple: getPssSimpleText(aiTranslation),
         };
       }
       return updatedVerse;
@@ -209,7 +206,7 @@ class Shabad extends React.PureComponent {
     try {
       const data = await this.fetchAiTranslations(verseIds, baniType);
 
-      const fullTranslation = Object.values(data.verses).filter(obj => obj.text.length > 0);
+      const fullTranslation = Object.values(data.verses || {}).filter(entries => getPssEntries(entries).length > 0);
 
       if (fullTranslation.length === 0) {
         this.setState({ reviewEligibility: { isEligible: false, alreadyReviewed: false, newVersionAvailable: false } });
@@ -238,7 +235,7 @@ class Shabad extends React.PureComponent {
     try {
       const data = await this.fetchAiTranslations(verseIds, baniType);
 
-      const fullTranslation = Object.values(data.verses).filter(obj => obj.text.length > 0);
+      const fullTranslation = Object.values(data.verses || {}).filter(entries => getPssEntries(entries).length > 0);
 
       if (fullTranslation.length === 0) {
         this.setState({ reviewEligibility: { isEligible: false, alreadyReviewed: false, newVersionAvailable: false } });

@@ -16,6 +16,7 @@ import {
   SPANISH_LANGUAGE,
   HINDI_LANGUAGE,
   ENGLISH_LANGUAGE,
+  AI_TRANSLATION_SOURCES,
 } from '@/constants';
 import { MahankoshTooltip } from '@/components/MahankoshTooltip';
 
@@ -139,7 +140,9 @@ class Baani extends React.PureComponent {
 
   onCopyClick = (shabad) => () => {
     const { englishTranslationLanguages } = this.props;
-    const isAiTranslation = englishTranslationLanguages.includes('sahib singh english');
+    const isAiTranslation = AI_TRANSLATION_SOURCES.some((source) =>
+      englishTranslationLanguages.includes(source)
+    );
     const copyMessage = isAiTranslation
       ? `${TEXTS.GURBAANI_COPIED} ${TEXTS.SHABAD_REVIEW.AI_TRANSLATION_COPY_WARNING}`
       : TEXTS.GURBAANI_COPIED;
@@ -202,7 +205,7 @@ class Baani extends React.PureComponent {
     // Show the active selection panel for current div.
     if (window.getSelection().toString()) {
       const { englishTranslationLanguages } = this.props;
-      if (englishTranslationLanguages.includes('sahib singh english')) {
+      if (AI_TRANSLATION_SOURCES.some((source) => englishTranslationLanguages.includes(source))) {
         showToast(TEXTS.SHABAD_REVIEW.AI_TRANSLATION_COPY_WARNING, 2500, 'toast-top-right');
       }
       const shareDiv = selectedDiv.querySelector('.share');

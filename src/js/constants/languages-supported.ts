@@ -1,5 +1,7 @@
 export const TRANSLATION_LANGUAGES = ['punjabi', 'english', 'spanish', 'hindi'];
-export const ENGLISH_TRANSLATION_LANGUAGES = ['BaniDB', 'manmohan singh', 'sant singh khalsa', 'sahib singh english', 'prof sahib singh'];
+export const ENGLISH_TRANSLATION_LANGUAGES = ['BaniDB', 'manmohan singh', 'sant singh khalsa', 'sahib singh english', 'prof sahib singh short', 'prof sahib singh'];
+// English sources rendered from the AI teeka translations, which carry a copy warning
+export const AI_TRANSLATION_SOURCES = ['sahib singh english', 'prof sahib singh short'];
 export const HINDI_TRANSLATION_LANGUAGES = ['sahib singh', 'sant singh'];
 export const STEEK_LANGUAGES = ['BaniDB', 'sahib singh', 'fareedkot', 'manmohan singh', 'prof sahib singh'];
 export const TRANSLITERATION_LANGUAGES = ['english', 'hindi', 'shahmukhi', 'IPA'];
