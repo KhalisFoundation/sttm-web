@@ -103,6 +103,7 @@ export const TEXTS = {
     'sahib singh': 'Prof Sahib Singh',
     'prof sahib singh': 'Prof Sahib Singh - Pad Arth (Word Meanings)',
     'sahib singh english': 'Prof Sahib Singh',
+    'prof sahib singh short': 'Prof Sahib Singh - Short',
     'manmohan singh': 'Dr. Manmohan Singh',
     'sant singh khalsa': 'Dr. Sant Singh Khalsa',
     'sant singh': 'Bhai Sant Singh',

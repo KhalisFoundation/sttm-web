@@ -50,6 +50,7 @@ export const englishTranslationMap: ITransProps = {
   'sant singh khalsa': shabad => shabad.translation.en.ssk,
   'prof sahib singh': shabad => shabad.translation?.ai?.pss,
   'sahib singh english': shabad => shabad.translation?.ai?.ss,
+  'prof sahib singh short': shabad => shabad.translation?.ai?.simple,
 };
 
 export const steekMap: ITransProps = {
@@ -91,6 +92,11 @@ const SOURCE_MAP: Record<string, SourceConfig> = {
   'sahib singh english': {
     lang: 'ai',
     field: 'ss',
+    hasValue: Boolean,
+  },
+  'prof sahib singh short': {
+    lang: 'ai',
+    field: 'simple',
     hasValue: Boolean,
   },
   'BaniDB': {

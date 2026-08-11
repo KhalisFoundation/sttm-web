@@ -49,5 +49,11 @@ export type IShabad = {
       ss: string,
       sts: string,
     },
+    // Merged client-side from /api/ai-translations, so absent until that resolves
+    ai?: {
+      pss: string,
+      ss: string,
+      simple: string,
+    },
   };
 };
