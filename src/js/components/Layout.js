@@ -17,6 +17,7 @@ import {
   OFFLINE_COLOR,
 } from '../../../common/constants';
 import { ACTIONS, errorEvent } from '../util/analytics';
+import { verifyOnline } from '../util/verify-online';
 import {
   setOnlineMode,
   closeSettingsPanel,
@@ -273,6 +274,10 @@ class Layout extends React.PureComponent {
     window.addEventListener('offline', this.onOffline);
     window.addEventListener('scroll', this.onScroll, { passive: true });
 
+    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+      verifyOnline().then((reachable) => this.props.setOnlineMode(reachable));
+    }
+
     document.title = this.props.title;
     this.updateTheme();
     addVisraamClass();
@@ -304,7 +309,9 @@ class Layout extends React.PureComponent {
 
   onOnline = () => this.props.setOnlineMode(true);
 
-  onOffline = () => this.props.setOnlineMode(false);
+  onOffline = () => {
+    verifyOnline().then((reachable) => this.props.setOnlineMode(reachable));
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.darkMode !== this.props.darkMode) {
