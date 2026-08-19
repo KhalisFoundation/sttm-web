@@ -113,9 +113,9 @@ class ListOfShabads extends React.PureComponent {
               media={supportedMedia.filter(m => m !== 'addShabad')}
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
+              {...this.props.controlProps}
               gurbani={allVerses}
               highlight={Number.isNaN(firstHighlight) ? undefined : firstHighlight}
-              {...this.props.controlProps}
             />
           )}
 
