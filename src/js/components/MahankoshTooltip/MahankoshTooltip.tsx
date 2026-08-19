@@ -1,19 +1,21 @@
 /* globals API_URL */
 import React from 'react';
 import {Tooltip as ReactTooltip} from 'react-tooltip';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getMahankoshTooltipContent } from './util/';
 import {
   SET_MAHANKOSH_TOOLTIP_ACTIVE,
 } from '@/features/actions';
 import { useQuery } from 'react-query';
 import { apiClient } from '../FavouriteShabadButton/utils/api-client';
+import { getMahankoshTooltipEvents } from './get-mahankosh-tooltip-events';
 
 interface Props {
   tooltipId: string;
   gurbaniWord: string;
   clearMahankoshInformation: () => {};
-  isMahankoshTooltipActive: boolean;
+  isMahankoshTooltipActive?: boolean;
+  isTooltipOpen?: boolean;
   gurbaniLineInfo: any;
   wordIndex: number;
 }
@@ -25,19 +27,13 @@ const MAHANKOSH_CONFIG = {
     mouseenter: false,
     click: true
   },
-  closeEvents: {
-    mouseleave: true,
-    click: true
-  },
-  globalCloseEvents: {
-    clickOutsideAnchor: true,
-    escape: true,
-    scroll: true
-  }
 }
 
 export const MahankoshTooltip = (props: Props) => {
   const dispatch = useDispatch();
+  const isAutoScrolling = useSelector((state: { isAutoScrolling?: boolean }) => !!state.isAutoScrolling);
+  const isOpen = Boolean(props.isMahankoshTooltipActive ?? props.isTooltipOpen);
+  const tooltipEvents = getMahankoshTooltipEvents(isAutoScrolling || isOpen);
   
   const gurbaniLine: string = props.gurbaniWord ? props.gurbaniLineInfo[0].verse.unicode : '';
   const gurbaniQuery: string = props.gurbaniWord ? gurbaniLine.split(' ')[props.wordIndex] : '';
@@ -56,8 +52,9 @@ export const MahankoshTooltip = (props: Props) => {
   return (
     <ReactTooltip
       {...MAHANKOSH_CONFIG}
+      {...tooltipEvents}
       id={props.tooltipId}
-      isOpen={props.isMahankoshTooltipActive}
+      isOpen={isOpen}
       afterHide={() => {
         dispatch({type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false})
       }}
