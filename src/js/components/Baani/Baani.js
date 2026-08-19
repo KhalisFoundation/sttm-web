@@ -223,14 +223,26 @@ class Baani extends React.PureComponent {
     const unicodeText = getUnicodeCopyText({
       unicodeMode: this.props.unicode,
       selectionAnchorNode: selection && selection.anchorNode,
+      selectionFocusNode: selection && selection.focusNode,
     });
 
-    if (!unicodeText || !e.clipboardData) {
+    if (!unicodeText) {
       return;
     }
 
-    e.preventDefault();
-    e.clipboardData.setData('text/plain', unicodeText);
+    const clipboard =
+      e.clipboardData || (e.nativeEvent && e.nativeEvent.clipboardData);
+
+    if (clipboard) {
+      e.preventDefault();
+      clipboard.setData('text/plain', unicodeText);
+      return;
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      e.preventDefault();
+      navigator.clipboard.writeText(unicodeText);
+    }
   };
 
   componentDidMount() {

@@ -1,24 +1,14 @@
 const GURLIPI_SELECTOR = '.gurlipi, .gurlipi-reading-mode';
 
-/**
- * When Gurbani is shown in ASCII/GurbaniLipi, native copy grabs those
- * glyphs. Return the pankti's unicode instead (#1802).
- */
-export const getUnicodeCopyText = ({
-  unicodeMode,
-  selectionAnchorNode,
-}: {
-  unicodeMode: boolean;
-  selectionAnchorNode: Node | null;
-}): string | null => {
-  if (unicodeMode || !selectionAnchorNode) {
+const unicodeFromNode = (node: Node | null): string | null => {
+  if (!node) {
     return null;
   }
 
   const element =
-    selectionAnchorNode.nodeType === Node.TEXT_NODE
-      ? selectionAnchorNode.parentElement
-      : (selectionAnchorNode as Element);
+    node.nodeType === Node.TEXT_NODE
+      ? node.parentElement
+      : (node as Element);
 
   if (!element || typeof element.closest !== 'function') {
     return null;
@@ -32,4 +22,27 @@ export const getUnicodeCopyText = ({
   const unicode = line && line.getAttribute('data-unicode-verse');
 
   return unicode || null;
+};
+
+/**
+ * When Gurbani is shown in ASCII/GurbaniLipi, native copy grabs those
+ * glyphs. Return the pankti's unicode instead (#1802).
+ */
+export const getUnicodeCopyText = ({
+  unicodeMode,
+  selectionAnchorNode,
+  selectionFocusNode = null,
+}: {
+  unicodeMode: boolean;
+  selectionAnchorNode: Node | null;
+  selectionFocusNode?: Node | null;
+}): string | null => {
+  if (unicodeMode) {
+    return null;
+  }
+
+  return (
+    unicodeFromNode(selectionAnchorNode) ||
+    unicodeFromNode(selectionFocusNode)
+  );
 };

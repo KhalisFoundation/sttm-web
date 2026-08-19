@@ -34,4 +34,19 @@ describe('getUnicodeCopyText()', () => {
       getUnicodeCopyText({ unicodeMode: false, selectionAnchorNode: node })
     ).toBeNull();
   });
+
+  it('uses the focus node when the anchor is outside GurbaniLipi', () => {
+    document.body.innerHTML =
+      '<div data-unicode-verse="ਸਾਰਗ"><div class="gurlipi">swrg</div></div><div class="translation">Saarang</div>';
+    const gurbani = document.querySelector('.gurlipi').firstChild;
+    const translation = document.querySelector('.translation').firstChild;
+
+    expect(
+      getUnicodeCopyText({
+        unicodeMode: false,
+        selectionAnchorNode: translation,
+        selectionFocusNode: gurbani,
+      })
+    ).toBe('ਸਾਰਗ');
+  });
 });
