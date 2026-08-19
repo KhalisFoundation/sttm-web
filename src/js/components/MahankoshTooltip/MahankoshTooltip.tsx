@@ -14,7 +14,8 @@ interface Props {
   tooltipId: string;
   gurbaniWord: string;
   clearMahankoshInformation: () => {};
-  isMahankoshTooltipActive: boolean;
+  isMahankoshTooltipActive?: boolean;
+  isTooltipOpen?: boolean;
   gurbaniLineInfo: any;
   wordIndex: number;
 }
@@ -31,7 +32,8 @@ const MAHANKOSH_CONFIG = {
 export const MahankoshTooltip = (props: Props) => {
   const dispatch = useDispatch();
   const isAutoScrolling = useSelector((state: { isAutoScrolling?: boolean }) => !!state.isAutoScrolling);
-  const tooltipEvents = getMahankoshTooltipEvents(isAutoScrolling);
+  const isOpen = Boolean(props.isMahankoshTooltipActive ?? props.isTooltipOpen);
+  const tooltipEvents = getMahankoshTooltipEvents(isAutoScrolling || isOpen);
   
   const gurbaniLine: string = props.gurbaniWord ? props.gurbaniLineInfo[0].verse.unicode : '';
   const gurbaniQuery: string = props.gurbaniWord ? gurbaniLine.split(' ')[props.wordIndex] : '';
@@ -52,7 +54,7 @@ export const MahankoshTooltip = (props: Props) => {
       {...MAHANKOSH_CONFIG}
       {...tooltipEvents}
       id={props.tooltipId}
-      isOpen={props.isMahankoshTooltipActive}
+      isOpen={isOpen}
       afterHide={() => {
         dispatch({type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false})
       }}

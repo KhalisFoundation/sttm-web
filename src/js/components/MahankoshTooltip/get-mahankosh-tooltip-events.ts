@@ -1,11 +1,11 @@
-export const getMahankoshTooltipEvents = (isAutoScrolling: boolean) => ({
+export const getMahankoshTooltipEvents = (lockHoverClose: boolean) => ({
   closeEvents: {
-    mouseleave: !isAutoScrolling,
+    mouseleave: !lockHoverClose,
     click: true,
   },
   globalCloseEvents: {
     clickOutsideAnchor: true,
     escape: true,
-    scroll: !isAutoScrolling,
+    scroll: !lockHoverClose,
   },
 });
