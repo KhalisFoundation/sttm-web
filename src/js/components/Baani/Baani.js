@@ -125,17 +125,20 @@ class Baani extends React.PureComponent {
       translationLanguages,
       transliterationLanguages,
       steekLanguages,
+      englishTranslationLanguages = [],
+      hindiTranslationLanguages = [],
     } = this.props;
+
+    const mapped = (map, languages = []) =>
+      languages.map((language) => (map[language] ? map[language](shabad) : ''));
 
     return [
       shabad.verse.unicode,
-      ...transliterationLanguages.map((language) =>
-        transliterationMap[language](shabad)
-      ),
-      ...translationLanguages.map((language) =>
-        translationMap[language](shabad)
-      ),
-      ...steekLanguages.map((language) => steekMap[language](shabad)),
+      ...mapped(transliterationMap, transliterationLanguages),
+      ...mapped(translationMap, translationLanguages),
+      ...mapped(englishTranslationMap, englishTranslationLanguages),
+      ...mapped(hindiTranslationMap, hindiTranslationLanguages),
+      ...mapped(steekMap, steekLanguages),
     ]
       .map(toPlainShareText)
       .filter(Boolean)
