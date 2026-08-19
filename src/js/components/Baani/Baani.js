@@ -33,6 +33,7 @@ import {
   steekMap,
   hindiTranslationMap,
   isShowSehajPaathModeRoute,
+  toPlainShareText,
 } from '@/util';
 import { MahankoshContext } from '@/context';
 import { changeAng, prefetchAng } from './utils';
@@ -135,7 +136,10 @@ class Baani extends React.PureComponent {
         translationMap[language](shabad)
       ),
       ...steekLanguages.map((language) => steekMap[language](shabad)),
-    ].join('\n');
+    ]
+      .map(toPlainShareText)
+      .filter(Boolean)
+      .join('\n');
   };
 
   onCopyClick = (shabad) => () => {
