@@ -13,7 +13,8 @@ type Props = {
   gurbani: [];
 }
 
-export const FavouriteShabadButton = ({ shabad: { shabadId }, gurbani }: Props) => {
+export const FavouriteShabadButton = ({ shabad, gurbani }: Props) => {
+  const shabadId = shabad && shabad.shabadId
   const { user } = useGetUser<IUser>()
 
   // If user is valid then check for favourite shabads
@@ -24,6 +25,9 @@ export const FavouriteShabadButton = ({ shabad: { shabadId }, gurbani }: Props) 
 
   const handleAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (!Array.isArray(gurbani) || gurbani.length === 0) {
+      return;
+    }
     dispatch(setGurbaniVerses(gurbani))
     dispatch(setModalOpen('addFavoriteShabad'));
   }
