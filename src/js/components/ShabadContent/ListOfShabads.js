@@ -94,7 +94,12 @@ class ListOfShabads extends React.PureComponent {
     
     const isShowMetaData = this.props.hideMeta === false;
     const isShowControls = this.props.hideControls === false;
-    const highlightsArray = highlights.split(',')
+    const highlightsArray = (highlights || '').split(',')
+    const allVerses = shabads.reduce(
+      (verses, shabad) => verses.concat(shabad.verses || []),
+      []
+    );
+    const firstHighlight = parseInt(highlightsArray[0], 10);
 
     return (
       <GlobalHotKeys
@@ -108,6 +113,8 @@ class ListOfShabads extends React.PureComponent {
               media={supportedMedia.filter(m => m !== 'addShabad')}
               onCopyAllClick={handleCopyAll}
               onEmbedClick={handleEmbed}
+              gurbani={allVerses}
+              highlight={Number.isNaN(firstHighlight) ? undefined : firstHighlight}
               {...this.props.controlProps}
             />
           )}
