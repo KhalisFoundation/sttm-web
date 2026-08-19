@@ -33,6 +33,7 @@ import {
   steekMap,
   hindiTranslationMap,
   isShowSehajPaathModeRoute,
+  getUnicodeCopyText,
 } from '@/util';
 import { MahankoshContext } from '@/context';
 import { changeAng, prefetchAng } from './utils';
@@ -215,6 +216,21 @@ class Baani extends React.PureComponent {
 
   removeSelection = () => {
     window.getSelection().removeAllRanges();
+  };
+
+  handleNativeCopy = (e) => {
+    const selection = window.getSelection();
+    const unicodeText = getUnicodeCopyText({
+      unicodeMode: this.props.unicode,
+      selectionAnchorNode: selection && selection.anchorNode,
+    });
+
+    if (!unicodeText || !e.clipboardData) {
+      return;
+    }
+
+    e.preventDefault();
+    e.clipboardData.setData('text/plain', unicodeText);
   };
 
   componentDidMount() {
@@ -1090,6 +1106,7 @@ class Baani extends React.PureComponent {
       <div
         className={`${SHABAD_CONTENT_CLASSNAME} ${centerAlignGurbani || showFullScreen ? ' center-align' : ''
           }`}
+        onCopy={this.handleNativeCopy}
       >
         {this.getMarkup()}
         {selectedWord && gurbaniLineInfo && selectedWordIndex > -1 && (
