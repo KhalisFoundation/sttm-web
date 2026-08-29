@@ -42,14 +42,17 @@ export const supportedMedia = ['favouriteShabad', 'addShabad', 'multiView', 'ran
 
 class ShareButtons extends React.PureComponent {
   constructor(props) {
-    super()
-    this.formattedShabad = {}
+    super(props)
     this.onClickSettings = this.onClickSettings.bind(this);
-    const { highlight, gurbani } = props;
+  }
+
+  getFormattedShabad() {
+    const { highlight, gurbani } = this.props;
     if (!isFalsy(gurbani) && gurbani.length) {
-      const selectedShabad = highlight ? (gurbani?.find(({ verseId }) => verseId === highlight) ?? gurbani[0]) : gurbani[0]
-      this.formattedShabad = multiviewFormattedShabad(selectedShabad)
+      const selectedShabad = highlight ? (gurbani.find(({ verseId }) => verseId === highlight) ?? gurbani[0]) : gurbani[0]
+      return multiviewFormattedShabad(selectedShabad)
     }
+    return {}
   }
   static defaultProps = {
     media: ['whatsapp', 'copy'],
@@ -98,12 +101,9 @@ class ShareButtons extends React.PureComponent {
     toggleSettingsPanel()
   }
 
-  componentWillUnmount() {
-    this.formattedShabad = {}
-  }
-
   render() {
     const { media, onEmbedClick, onCopyAllClick, gurbani } = this.props;
+    const formattedShabad = this.getFormattedShabad();
 
     if (media.length === 0) {
       return null;
@@ -172,8 +172,8 @@ class ShareButtons extends React.PureComponent {
       addShabad: (
         <li key={7}>
           {
-            isKeyExists(this.formattedShabad, 'shabadId')
-            && (<ShabadButtonWrapper shabad={this.formattedShabad} />)
+            isKeyExists(formattedShabad, 'shabadId')
+            && (<ShabadButtonWrapper shabad={formattedShabad} />)
           }
         </li>
       ),
@@ -188,7 +188,7 @@ class ShareButtons extends React.PureComponent {
        favouriteShabad: (
         <li key={9}>
           {
-            <FavouriteShabadButton shabad={this.formattedShabad} gurbani={gurbani} />
+            <FavouriteShabadButton shabad={formattedShabad} gurbani={gurbani} />
           }
         </li>
       ),
