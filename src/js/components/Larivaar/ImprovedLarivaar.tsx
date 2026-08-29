@@ -9,6 +9,7 @@ import { getLarivaarAssistColor } from '@/features/selectors';
 import { SET_MAHANKOSH_TOOLTIP_ACTIVE } from '@/features/actions';
 import { MahankoshContext } from '@/context';
 import { getMahankoshTooltipAttributes } from '../MahankoshTooltip/util';
+import { shouldIgnoreMahankoshHover } from '../MahankoshTooltip/should-ignore-mahankosh-hover';
 
 export interface Props {
   larivaarAssist?: boolean;
@@ -47,10 +48,23 @@ export const Larivaar = ({
   const isMahaanKoshTooltipEnabled = useSelector(
     (state) => state.mahaanKoshTooltip
   );
+  const isAutoScrolling = useSelector(
+    (state: { isAutoScrolling?: boolean }) => !!state.isAutoScrolling
+  );
+  const isMahankoshTooltipActive = useSelector(
+    (state: { isMahankoshTooltipActive?: boolean }) => !!state.isMahankoshTooltipActive
+  );
+  const ignoreHover = shouldIgnoreMahankoshHover({
+    isAutoScrolling,
+    isMahankoshTooltipActive,
+  });
 
   // closure implementation
   const handleMahankoshMouseEnter = (currentLine: number) => {
     return (selectedWord: string, selectedWordIndex: number) => {
+      if (ignoreHover) {
+        return;
+      }
 
       //Clear any existing instance of the active tooltip before setting new word
       dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false });
@@ -63,11 +77,19 @@ export const Larivaar = ({
     }
   }
 
-  const handleGurbaniShabadClick = () => {
+  const handleGurbaniShabadClick = (word: string, index: number) => {
+    setMahankoshInformation({
+      selectedLine: currentLine,
+      selectedWord: word,
+      selectedWordIndex: index,
+    });
     dispatch({type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: true})
   }
 
   const handleClearMahankoshTooltip = () => {
+    if (ignoreHover) {
+      return;
+    }
     dispatch({ type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false })
   }
 
@@ -136,7 +158,9 @@ export const Larivaar = ({
                 : undefined
             }
             onClick={
-              isMahaanKoshTooltipEnabled ? handleGurbaniShabadClick : undefined
+              isMahaanKoshTooltipEnabled
+                ? () => handleGurbaniShabadClick(word, index)
+                : undefined
             }
             onMouseLeave={
               isMahaanKoshTooltipEnabled
