@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import SearchForm from '@/components/SearchForm';
 import { setModalOpen } from '@/features/actions';
 import SearchIcon from '@/components/Icons/Search';
-import { toSearchURL } from '@/util';
 
 import Dialog from './Dialog';
 import { SEARCH_TYPES, SOURCES } from '@/constants';
@@ -31,14 +30,13 @@ const AskGurbaniBotQuestionModal = (props: Props) => {
       (e: FormEvent) => {
         e.preventDefault();
         typeof handleFormSubmit === 'function' && handleFormSubmit();
+        // Ask Khalis AI goes straight to the Shabad page (no search-results
+        // step): the AI picks the shabad and the answer shows in the floating
+        // dialog. Encode the question once (the router decodes it back).
         history.push(
-          toSearchURL({
-            query,
-            type: SEARCH_TYPES.ASK_A_QUESTION,
-            writer: 'all',
-            source,
-            offset: '',
-          })
+          `/shabad?type=${SEARCH_TYPES.ASK_A_QUESTION}&q=${encodeURIComponent(
+            query
+          )}&source=${source}`
         );
         dispatch(setModalOpen(''));
       };

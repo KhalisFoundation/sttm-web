@@ -6,6 +6,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import { hostname as _hostname } from 'os';
 import createTemplate from './template';
+import { mountKhalisAiProxy } from './khalis-ai-proxy';
 import seo from '../common/seo';
 import {
   DARK_MODE_COOKIE,
@@ -211,6 +212,9 @@ app.post('/api/transcribe', async (req, res) => {
     });
   }
 });
+
+// Same-origin proxy to the new Khalis AI backend (session/csrf/turn).
+mountKhalisAiProxy(app, allowedOrigins);
 
 // Use client for static files
 app.use(express.static(`${__dirname}/../public`));

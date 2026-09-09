@@ -16,7 +16,13 @@ module.exports = {
   CEREMONIES: '//api.sikhitothemax.org/ceremonies/',
   DOODLE: '//api.sikhitothemax.org/doodle/',
   WRITERS: '//api.banidb.com/v2/writers/',
-  GURBANIBOT: '//gurbanichatbot.sikhitothemax.org/',
   SP_API: '//serviceprovider.khalis.net',
-  SHABAD_REVIEW_API:'//sodh-api.banidb.com/',
+  SHABAD_REVIEW_API: '//sodh-api.banidb.com/',
+  // New Khalis AI backend. Used server-side by the same-origin proxy
+  // (server/khalis-ai-proxy.js) as both the target and the forwarded Origin
+  // (the backend enforces Origin === its own WEB_ORIGIN). Absolute URL because
+  // the Node server fetches it. Override with KHALIS_AI_API / KHALIS_AI_ORIGIN.
+  KHALIS_AI: isProduction
+    ? 'https://khalis-ai.salmonriver-80392db4.eastus.azurecontainerapps.io'
+    : 'http://127.0.0.1:4310',
 };
