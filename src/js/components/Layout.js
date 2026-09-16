@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Banner from './Banner/Banner';
+import NewDesignBanner from './Banner/NewDesignBanner';
 import GenericError, { SachKaur, BalpreetSingh } from './GenericError';
 import PropTypes from 'prop-types';
 import {
@@ -140,16 +140,7 @@ class Layout extends React.PureComponent {
 
     return online || pathname !== '/' ? (
       <div className="layout">
-        <Banner
-          banner={{
-            message:
-              'Help Us Build the Future of SikhiToTheMax! Every donation doubled - dvnetwork.org/sikhitothemax',
-            link: 'dvnetwork.org/sikhitothemax',
-            label: 'Donate now',
-            type: '3',
-            disabled: true,
-          }}
-        />
+        <NewDesignBanner />
         {isAddFavoriteShabadModalOpen && (
           <AddFavouriteShabadModal open={isAddFavoriteShabadModalOpen} />
         )}

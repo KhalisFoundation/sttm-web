@@ -11,9 +11,6 @@ import { DesktopSync } from '@/components/Icons/DesktopSync';
 import AskGurbaniBotQuestion from '@/components/AskGurbaniBotQuestion/AskGurbaniBotQuestion';
 
 const appRoutes = [{
-    icon: <AskGurbaniBotQuestion />,
-    title: 'Ask a Question'
-}, {
     icon: <Sundar />,
     title: 'Sundar Gutka',
     name: 'Sundar Gutka',
@@ -51,6 +48,9 @@ const appRoutes = [{
     title: "Bani Controller",
     name: "Bani Controller",
     to: '/control',
+}, {
+    icon: <AskGurbaniBotQuestion />,
+    title: 'Khalis AI'
 }];
 
 const HomePageIcons = () => {
