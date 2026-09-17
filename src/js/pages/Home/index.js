@@ -159,17 +159,18 @@ class Home extends React.PureComponent {
                         doodle={showDoodle ? doodleData : null}
                       />
 
-                      <span className="new-text">
-                        <b className="new-text-blue">NEW </b>
-                        <span
+                      <span className="new-text new-text-blue">
+                        <b>NEW </b>
+                        <a
+                          href="https://next.sikhitothemax.org"
+                          target="_blank"
+                          className='new-text'
+                          rel="noopener noreferrer"
                           style={{ cursor: 'pointer' }}
-                          onClick={() => {
-                            this.props.setModalOpen('AskGurbaniBotQuestion');
-                          }}
                         >
-                          Get your questions answered by Khalis AI!{' '}
+                          Check out the new SikhiToTheMax Design!{' '}
                           <u>Try it now.</u>
-                        </span>
+                        </a>
                       </span>
                     </div>
                   </div>

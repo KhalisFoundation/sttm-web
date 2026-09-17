@@ -92,6 +92,36 @@
     &.type-3 {
       background-color: $sttm-blue;
     }
+
+    &.notification-new-design {
+      padding: 6px 10px;
+
+      .banner-text-container {
+        flex-grow: 1;
+        justify-content: center;
+        // offset the close button on the right so the text sits at true center
+        padding-left: calc(30px + 1.2em);
+      }
+
+      .banner-text {
+        font-size: 0.9rem;
+        font-weight: normal;
+        width: auto;
+
+        @media screen and (max-width: 45.999999em) {
+          font-size: 0.85rem;
+        }
+      }
+
+      .banner-title {
+        font-weight: normal;
+      }
+
+      .banner-link-button {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+      }
+    }
   }
 }
 
