@@ -25,6 +25,7 @@ import {
 } from '../../constants';
 import { toSearchURL, getShabadList, reformatSearchTypes } from '../../util';
 import { pageView } from '../../util/analytics';
+import { rememberNewDesign } from '../../util/design-preference';
 import { setModalOpen } from '@/features/actions';
 import { connect } from 'react-redux';
 import MicIcon from '@/components/Icons/MicIcon';
@@ -163,10 +164,12 @@ class Home extends React.PureComponent {
                         <b>NEW </b>
                         <a
                           href="https://next.sikhitothemax.org"
-                          target="_blank"
                           className='new-text'
-                          rel="noopener noreferrer"
                           style={{ cursor: 'pointer' }}
+                          // Remember the choice so future visits to the old site
+                          // redirect straight to the new design (#151). Same tab
+                          // so the preference takes effect where they land.
+                          onClick={rememberNewDesign}
                         >
                           Check out the new SikhiToTheMax Design!{' '}
                           <u>Try it now.</u>
