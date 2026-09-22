@@ -1,3 +1,6 @@
+// First import: redirect opted-in users to the new design before the rest of
+// the app loads (see ./redirect-check).
+import './redirect-check';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
