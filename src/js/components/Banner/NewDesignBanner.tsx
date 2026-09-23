@@ -37,8 +37,9 @@ const NewDesignBanner = () => {
       }}
       onCrossIconClick={handleDismiss}
       // Opting in here must remember the choice too, or the old site never
-      // redirects (same as the home page's "Try it now" link, #151).
+      // redirects. Same tab, like the home page's "Try it now" link (#151).
       onLinkClick={rememberNewDesign}
+      sameTab
     />
   );
 };
