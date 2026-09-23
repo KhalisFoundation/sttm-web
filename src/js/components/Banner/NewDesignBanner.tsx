@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Banner from './Banner';
+import { rememberNewDesign } from '../../util/design-preference';
 
 const SESSION_STORAGE_KEY = 'newDesignBannerDismissed';
 
@@ -35,6 +36,9 @@ const NewDesignBanner = () => {
         classes: { notification: 'notification-new-design' },
       }}
       onCrossIconClick={handleDismiss}
+      // Opting in here must remember the choice too, or the old site never
+      // redirects (same as the home page's "Try it now" link, #151).
+      onLinkClick={rememberNewDesign}
     />
   );
 };

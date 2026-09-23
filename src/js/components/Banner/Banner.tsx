@@ -20,6 +20,7 @@ type Props = {
     disabled?: boolean;
   },
   onCrossIconClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onLinkClick?: () => void;
 }
 
 const Banner = (props: Props) => {
@@ -39,6 +40,7 @@ const Banner = (props: Props) => {
                 to={{ pathname: `https://${props.banner.link}` }}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={props.onLinkClick}
               >
                 {props.banner.label}
               </Link>
