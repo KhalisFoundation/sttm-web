@@ -22,6 +22,7 @@ export const toSearchURL = ({
   writer = DEFAULT_SEARCH_WRITER,
   offset = '',
   autoDetectGurmukhi,
+  isGurmukhi,
 }: IToSearchURLArguments) => {
   const params: Record<string, string | number> = {
     q: encodeURIComponent(q),
@@ -31,8 +32,11 @@ export const toSearchURL = ({
     offset,
   };
 
-  // Add autoDetectGurmukhi parameter if it's defined and true
-  if (autoDetectGurmukhi) {
+  // Convert boolean autoDetectGurmukhi to string 'true'/'false' for URL params
+  // (URL query parameters are always strings, not booleans)
+  if (isGurmukhi !== undefined) {
+    params.autoDetectGurmukhi = isGurmukhi ? 'true' : 'false';
+  } else if (autoDetectGurmukhi) {
     params.autoDetectGurmukhi = 'true';
   }
 

@@ -13,11 +13,19 @@ import { getHighlightIndices } from '../gurbani';
 
 export const getShabadList = (q, { type, source, writer, isGurmukhi }) => {
   const offset = 1;
+  const typeNum = parseInt(type);
   const isSearchTypeRomanizedFirstLetters =
-    type === SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE;
+    typeNum === SEARCH_TYPES.ROMANIZED_FIRST_LETTERS_ANYWHERE;
   const livesearch = !isSearchTypeRomanizedFirstLetters;
 
-  const apiParams = { q, type, source, writer, offset, API_URL, livesearch };
+  // Resolve AUTO_DETECT type to Gurmukhi or English based on isGurmukhi flag
+  let apiType = typeNum;
+  if (typeNum === SEARCH_TYPES.AUTO_DETECT) {
+    apiType = isGurmukhi ? SEARCH_TYPES.GURMUKHI_WORD : SEARCH_TYPES.ENGLISH_WORD;
+  }
+
+  // Prepare API parameters with converted type and livesearch flag
+  const apiParams = { q, type: apiType, source, writer, offset, API_URL, livesearch };
   // Add isGurmukhi parameter if provided
   if (isGurmukhi) {
     apiParams.isGurmukhi = 1;
@@ -43,13 +51,13 @@ export const getShabadList = (q, { type, source, writer, isGurmukhi }) => {
             highlightPankti = transliterationMap['english'](shabad);
           }
 
-          const highlightIndex = getHighlightIndices(highlightPankti, q, type);
+          const highlightIndex = getHighlightIndices(highlightPankti, q, typeNum);
 
           panktiList.push({
             pankti: getGurmukhiVerse(shabad),
             translation: translationMap['english'](shabad),
             query: q,
-            url: toShabadURL({ shabad, q, type, source }),
+            url: toShabadURL({ shabad, q, type: typeNum, source }),
             highlightIndex,
             verseId: getVerseId(shabad),
             shabadId: getShabadId(shabad),
@@ -57,10 +65,10 @@ export const getShabadList = (q, { type, source, writer, isGurmukhi }) => {
           });
         }
         resolve(panktiList);
-      },
-      (error) => {
+      })
+      .catch((error) => {
+        console.error('Error fetching suggestions:', error, 'URL:', url);
         reject(error);
-      }
-    );
+      });
   });
 };
