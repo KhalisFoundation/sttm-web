@@ -20,7 +20,7 @@ import getFormattedShabads from '@/pages/FavouriteShabads/utils/getFormattedFavS
 const FavouriteShabads = () => {
   const { isLoading: isUserLoading } = useGetUser<IUser>()
   const favouriteShabads = useFavouriteShabads();
-  const favouriteShabadIds = favouriteShabads.length > 0 && favouriteShabads.map(f => f.shabad_id)
+  const favouriteShabadIds = favouriteShabads.length > 0 && favouriteShabads.map(f => f.shabadId)
   const [shabadsLoading, setShabadsLoading] = useState(true)
   const [shabadsListing, setShabadsListing] = useState<any[]>([])
   const userSettingsState = useSelector<typeof store>(state => ({
@@ -40,14 +40,11 @@ const FavouriteShabads = () => {
 
       apiClient(url)
         .then(data => {
-          const formattedShabads = getFormattedShabads(data.shabads, favouriteShabads)
-          let shabadsArray: any[] = []
-          if (isKeyExists(data, 'shabadIds')) {
-            shabadsArray = formattedShabads.map(convertApiDataToFavoriteShabad)
-          } else {
-            shabadsArray.push(convertApiDataToFavoriteShabad(formattedShabads))
-          }
-          setShabadsListing(shabadsArray)
+          // Several ids come back as a `shabads` array; a single id returns the
+          // shabad itself at the top level.
+          const shabads = isKeyExists(data, 'shabadIds') ? data.shabads : [data]
+          const formattedShabads = getFormattedShabads(shabads, favouriteShabads)
+          setShabadsListing(formattedShabads.map(convertApiDataToFavoriteShabad))
           setShabadsLoading(false);
         }).finally(() => {
           setShabadsLoading(false);
