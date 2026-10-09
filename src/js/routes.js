@@ -496,6 +496,10 @@ export default [
         autoDetectGurmukhi = false,
       ] = params.map((v) => getParameterByName(v, search));
 
+      // Convert autoDetectGurmukhi string to boolean to fix this warning coming in the browser console during "Show Full Results" operation
+      // Failed prop type: Invalid prop `autoDetectGurmukhi` of type `string` supplied to `Search`, expected `boolean`.
+      const autoDetectGurmukkhiBoolean = autoDetectGurmukhi === 'true';
+
       if (parseInt(type, 10) === SEARCH_TYPES.ANG) {
         return <Redirect to={toAngURL({ ang: q, source })} />;
       }
@@ -519,7 +523,7 @@ export default [
                   source={source}
                   offset={parseInt(offset)}
                   writer={writer}
-                  autoDetectGurmukhi={autoDetectGurmukhi}
+                  autoDetectGurmukhi={autoDetectGurmukkhiBoolean}
                   {...props}
                 />
               ) : (
