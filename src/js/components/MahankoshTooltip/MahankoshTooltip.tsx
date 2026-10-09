@@ -8,6 +8,7 @@ import {
 } from '@/features/actions';
 import { useQuery } from 'react-query';
 import { apiClient } from '../FavouriteShabadButton/utils/api-client';
+import { getMahankoshWordUrl } from './get-mahankosh-word-url';
 
 interface Props {
   tooltipId: string;
@@ -41,7 +42,9 @@ export const MahankoshTooltip = (props: Props) => {
   
   const gurbaniLine: string = props.gurbaniWord ? props.gurbaniLineInfo[0].verse.unicode : '';
   const gurbaniQuery: string = props.gurbaniWord ? gurbaniLine.split(' ')[props.wordIndex] : '';
-  const url = props.gurbaniWord ? `${API_URL}kosh/word/${gurbaniQuery}` : '';
+  const url = props.gurbaniWord
+    ? getMahankoshWordUrl(API_URL, gurbaniQuery)
+    : '';
 
   const { data: mahankoshExplaination, isLoading: isFetchingMahankoshExplaination, isSuccess } = useQuery({
     queryKey: ['mahakosh-shabad', props.gurbaniWord ],
