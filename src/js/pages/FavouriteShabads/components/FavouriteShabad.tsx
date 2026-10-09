@@ -20,7 +20,7 @@ import getFormattedShabads from '@/pages/FavouriteShabads/utils/getFormattedFavS
 const FavouriteShabads = () => {
   const { isLoading: isUserLoading } = useGetUser<IUser>()
   const favouriteShabads = useFavouriteShabads();
-  const favouriteShabadIds = favouriteShabads.length > 0 && favouriteShabads.map(f => f.shabad_id)
+  const favouriteShabadIds = favouriteShabads.length > 0 && favouriteShabads.map(f => f.shabadId)
   const [shabadsLoading, setShabadsLoading] = useState(true)
   const [shabadsListing, setShabadsListing] = useState<any[]>([])
   const userSettingsState = useSelector<typeof store>(state => ({

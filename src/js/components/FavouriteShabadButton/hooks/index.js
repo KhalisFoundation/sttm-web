@@ -1,8 +1,7 @@
-/* globals SP_API */
-
 import React from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { apiClient } from '../utils/api-client';
+import { userStoreClient } from '../utils/user-store-client';
 import { LOCAL_STORAGE_KEY_FOR_SESSION_TOKEN } from '@/constants';
 
 export async function getUser() {
@@ -27,15 +26,15 @@ function useClient() {
 }
 
 function useFavouriteShabads() {
+  const token = getToken();
   const { data: favouriteShabads } = useQuery({
-    queryKey: ['favourite-shabads', getToken()],
-    queryFn: () => {
-      return apiClient(`${SP_API}/favourite-shabads`, {
-        token: getToken(),
-      }).then((data) => {
-        return data.favouriteShabads;
-      });
-    },
+    queryKey: ['favourite-shabads', token],
+    queryFn: () =>
+      userStoreClient('/favorite-shabads').then((rows) =>
+        // Banis favourited in the new app have no shabadId; this app only lists shabads.
+        (rows ?? []).filter((row) => row.shabadId != null)
+      ),
+    enabled: !!token,
   });
 
   return favouriteShabads ?? [];
@@ -43,21 +42,20 @@ function useFavouriteShabads() {
 
 function useFavouriteShabad(shabadId) {
   const favouriteShabads = useFavouriteShabads();
-  const favouriteShabadIds = favouriteShabads.map((shabad) => shabad.shabad_id);
-  return (
-    !!favouriteShabadIds.find((shabad_id) => shabad_id === shabadId) ?? false
-  );
+  return favouriteShabads.some((shabad) => shabad.shabadId === Number(shabadId));
 }
 
 function useCreateFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
-    (data) => {
-      return apiClient(`${SP_API}/favourite-shabads`, {
-        token: getToken(),
-        data,
-      });
-    },
+    ({ shabadId, verseId, comment }) =>
+      userStoreClient('/favorite-shabads', {
+        data: {
+          shabadId: Number(shabadId),
+          ...(verseId ? { verseId: Number(verseId) } : {}),
+          ...(comment ? { comment } : {}),
+        },
+      }),
     {
       onMutate: (newShabad) => {
         // Snapshot the previous values
@@ -88,8 +86,7 @@ function useRemoveFavouriteShabad() {
   const queryClient = useQueryClient();
   return useMutation(
     (shabadId) =>
-      apiClient(`${SP_API}/favourite-shabads/${shabadId}`, {
-        token: getToken(),
+      userStoreClient(`/favorite-shabads/${Number(shabadId)}`, {
         method: 'DELETE',
       }),
     {
@@ -103,7 +100,7 @@ function useRemoveFavouriteShabad() {
             ['favourite-shabads', getToken()],
             (currentShabads) =>
               (currentShabads || []).filter(
-                (shabad) => shabad.shabad_id !== Number(shabadId)
+                (shabad) => shabad.shabadId !== Number(shabadId)
               )
           );
         }
