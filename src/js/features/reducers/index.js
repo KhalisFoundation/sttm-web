@@ -939,7 +939,7 @@ export default function reducer(state, action) {
     }
 
     case SET_GURBANI_VERSES: {
-      const gurbaniVerses = action.payload;
+      const gurbaniVerses = Array.isArray(action.payload) ? action.payload : [];
       return {
         ...state,
         gurbaniVerses
