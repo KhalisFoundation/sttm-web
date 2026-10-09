@@ -1094,7 +1094,7 @@ class Baani extends React.PureComponent {
         {this.getMarkup()}
         {selectedWord && gurbaniLineInfo && selectedWordIndex > -1 && (
         <MahankoshTooltip
-          isTooltipOpen={isMahankoshTooltipActive}
+          isMahankoshTooltipActive={isMahankoshTooltipActive}
           clearMahankoshInformation={this.clearMahankoshInformation}
           tooltipId="mahankoshTooltipHighlightSearchResult"
           gurbaniWord={selectedWord}
