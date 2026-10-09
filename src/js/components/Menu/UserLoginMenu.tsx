@@ -11,11 +11,11 @@ interface UserLoginMenuProps {
 }
 
 const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
-  const dropTogglerRefProfile = React.useRef(null);
-  const displayAreaRefProfile = React.useRef(null);
+  // Wraps both the profile button and its dropdown, so clicks on either stay inside.
+  const profileMenuRef = React.useRef(null);
   const [toggleDropdownProfile, setToggleDropdownProfile] =
     React.useState(false);
-  useOnClickOutside(dropTogglerRefProfile, displayAreaRefProfile, () =>
+  useOnClickOutside(profileMenuRef, () =>
     setToggleDropdownProfile(false)
   );
   const { user } = useGetUser<IUser>();
@@ -37,19 +37,18 @@ const UserLoginMenu: React.FC<UserLoginMenuProps> = ({ toggleMenu }) => {
   };
 
   return user ? (
-    <li className={`${toggleDropdownProfile ? 'opened' : ''} submenu`}>
+    <li className={`${toggleDropdownProfile ? 'opened' : ''} submenu`} ref={profileMenuRef}>
       <button
         name="profile-btn"
         className="profile-btn"
         onClick={toggleDropdownHandlerProfile}
-        ref={dropTogglerRefProfile}
       >
         <span>
           {user.firstname + ' ' + user.lastname}
           <BackIcon />
         </span>
       </button>
-      <div className="submenu-items" ref={displayAreaRefProfile}>
+      <div className="submenu-items">
         <Link to="/user/favourite-shabads" onClick={toggleMenu}>
           Favourite Shabads
         </Link>

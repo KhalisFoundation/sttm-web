@@ -40,14 +40,11 @@ const FavouriteShabads = () => {
 
       apiClient(url)
         .then(data => {
-          const formattedShabads = getFormattedShabads(data.shabads, favouriteShabads)
-          let shabadsArray: any[] = []
-          if (isKeyExists(data, 'shabadIds')) {
-            shabadsArray = formattedShabads.map(convertApiDataToFavoriteShabad)
-          } else {
-            shabadsArray.push(convertApiDataToFavoriteShabad(formattedShabads))
-          }
-          setShabadsListing(shabadsArray)
+          // Several ids come back as a `shabads` array; a single id returns the
+          // shabad itself at the top level.
+          const shabads = isKeyExists(data, 'shabadIds') ? data.shabads : [data]
+          const formattedShabads = getFormattedShabads(shabads, favouriteShabads)
+          setShabadsListing(formattedShabads.map(convertApiDataToFavoriteShabad))
           setShabadsLoading(false);
         }).finally(() => {
           setShabadsLoading(false);
