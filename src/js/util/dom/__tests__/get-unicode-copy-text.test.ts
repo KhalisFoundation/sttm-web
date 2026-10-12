@@ -1,26 +1,51 @@
 import { getUnicodeCopyText } from '../get-unicode-copy-text';
 
-const textLength = (element: Element): number =>
-  (element.textContent || '').length;
+// One verse as the shabad page renders it with Unicode display off: the
+// GurbaniLipi words in their own spans, then transliteration and translation.
+const verse = (gurlipi: string, unicode: string, english: string) =>
+  `<div class="verse">` +
+  `<div data-unicode-verse="${unicode}">\n<div class="gurlipi">` +
+  gurlipi
+    .split(' ')
+    .map((word) => `<span>${word} </span>`)
+    .join('') +
+  `</div></div>` +
+  `<div class="transliteration">${english.toLowerCase()}</div>` +
+  `<blockquote class="translation">${english}</blockquote>` +
+  `</div>`;
 
-const rangeBetween = (from: Element, to: Element): Range => {
-  const range = document.createRange();
-  range.setStart(from.firstChild as Node, 0);
-  range.setEnd(to.lastChild as Node, textLength(to));
-  return range;
+const render = (...verses: string[]) => {
+  document.body.innerHTML = `<div id="shabad">${verses.join('')}</div>`;
 };
 
-const selectionLike = (
-  range: Range,
-  overrides: Record<string, unknown> = {}
-) => ({
-  anchorNode: range.startContainer,
-  focusNode: range.endContainer,
-  isCollapsed: false,
-  rangeCount: 1,
-  getRangeAt: () => range,
-  ...overrides,
-});
+const textNodes = (element: Element): Text[] => {
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+  const nodes: Text[] = [];
+  let node = walker.nextNode();
+  while (node) {
+    if ((node.textContent || '').trim()) {
+      nodes.push(node as Text);
+    }
+    node = walker.nextNode();
+  }
+  return nodes;
+};
+
+// A selection from the start of `from` to the end of `to`.
+const select = (from: Element, to: Element = from) => {
+  const first = textNodes(from)[0];
+  const last = textNodes(to).slice(-1)[0];
+  const range = document.createRange();
+  range.setStart(first, 0);
+  range.setEnd(last, (last.textContent || '').length);
+  return { isCollapsed: false, rangeCount: 1, getRangeAt: () => range };
+};
+
+const copy = (selection: ReturnType<typeof select>) =>
+  getUnicodeCopyText({ unicodeMode: false, selection });
+
+const FIRST = verse('Awid scu jugwid scu ]', 'ਆਦਿ ਸਚੁ ਜੁਗਾਦਿ ਸਚੁ ॥', 'True In The Beginning');
+const SECOND = verse('hY BI scu ]1]', 'ਹੈ ਭੀ ਸਚੁ ॥੧॥', 'True Here And Now');
 
 describe('getUnicodeCopyText()', () => {
   afterEach(() => {
@@ -28,114 +53,109 @@ describe('getUnicodeCopyText()', () => {
   });
 
   it('returns null when unicode display mode is on', () => {
-    document.body.innerHTML =
-      '<div data-unicode-verse="ਸਾਰਗ ਮਹਲਾ ੫ ॥"><div class="gurlipi">swrg mhlw 5 ]</div></div>';
-    const pankti = document.querySelector('.gurlipi') as Element;
-    const selection = selectionLike(rangeBetween(pankti, pankti));
+    render(FIRST);
+    const selection = select(document.querySelector('.gurlipi') as Element);
 
     expect(getUnicodeCopyText({ unicodeMode: true, selection })).toBeNull();
   });
 
   it('returns null for a collapsed or empty selection', () => {
-    document.body.innerHTML =
-      '<div data-unicode-verse="ਸਾਰਗ"><div class="gurlipi">swrg</div></div>';
-    const pankti = document.querySelector('.gurlipi') as Element;
-    const range = rangeBetween(pankti, pankti);
+    render(FIRST);
+    const selection = select(document.querySelector('.gurlipi') as Element);
 
-    expect(
-      getUnicodeCopyText({
-        unicodeMode: false,
-        selection: selectionLike(range, { isCollapsed: true }),
-      })
-    ).toBeNull();
-    expect(
-      getUnicodeCopyText({
-        unicodeMode: false,
-        selection: selectionLike(range, { rangeCount: 0 }),
-      })
-    ).toBeNull();
-    expect(
-      getUnicodeCopyText({ unicodeMode: false, selection: null })
-    ).toBeNull();
+    expect(copy({ ...selection, isCollapsed: true })).toBeNull();
+    expect(copy({ ...selection, rangeCount: 0 })).toBeNull();
+    expect(getUnicodeCopyText({ unicodeMode: false, selection: null })).toBeNull();
   });
 
   it('returns the unicode of a selected GurbaniLipi pankti', () => {
-    document.body.innerHTML =
-      '<div data-unicode-verse="ਸਾਰਗ ਮਹਲਾ ੫ ॥"><div class="gurlipi">swrg mhlw 5 ]</div></div>';
-    const pankti = document.querySelector('.gurlipi') as Element;
+    render(FIRST);
+
+    expect(copy(select(document.querySelector('.gurlipi') as Element))).toBe(
+      'ਆਦਿ ਸਚੁ ਜੁਗਾਦਿ ਸਚੁ ॥'
+    );
+  });
+
+  it('returns only the selected words of a pankti', () => {
+    render(FIRST);
+    const words = document.querySelectorAll('.gurlipi span');
+
+    expect(copy(select(words[1], words[2]))).toBe('ਸਚੁ ਜੁਗਾਦਿ');
+  });
+
+  it('counts a half-selected word as selected', () => {
+    render(FIRST);
+    const words = document.querySelectorAll('.gurlipi span');
+    const range = document.createRange();
+    range.setStart(textNodes(words[0])[0], 2); // "id " of "Awid "
+    range.setEnd(textNodes(words[1])[0], 1); // "s" of "scu "
 
     expect(
-      getUnicodeCopyText({
-        unicodeMode: false,
-        selection: selectionLike(rangeBetween(pankti, pankti)),
-      })
-    ).toBe('ਸਾਰਗ ਮਹਲਾ ੫ ॥');
+      copy({ isCollapsed: false, rangeCount: 1, getRangeAt: () => range })
+    ).toBe('ਆਦਿ ਸਚੁ');
+  });
+
+  it('keeps the transliteration and translation selected with a pankti', () => {
+    render(FIRST);
+
+    expect(
+      copy(
+        select(
+          document.querySelector('.gurlipi') as Element,
+          document.querySelector('.translation') as Element
+        )
+      )
+    ).toBe(
+      ['ਆਦਿ ਸਚੁ ਜੁਗਾਦਿ ਸਚੁ ॥', 'true in the beginning', 'True In The Beginning'].join('\n')
+    );
+  });
+
+  it('keeps everything selected between two panktis', () => {
+    render(FIRST, SECOND);
+    const gurlipiLines = document.querySelectorAll('.gurlipi');
+
+    expect(copy(select(gurlipiLines[0], gurlipiLines[1]))).toBe(
+      [
+        'ਆਦਿ ਸਚੁ ਜੁਗਾਦਿ ਸਚੁ ॥',
+        'true in the beginning',
+        'True In The Beginning',
+        'ਹੈ ਭੀ ਸਚੁ ॥੧॥',
+      ].join('\n')
+    );
+  });
+
+  it('keeps a pankti that repeats', () => {
+    render(FIRST, SECOND, FIRST);
+    const gurlipiLines = document.querySelectorAll('.gurlipi');
+
+    const copied = copy(select(gurlipiLines[0], gurlipiLines[2])) as string;
+
+    expect(copied.split('\n').filter((line) => line === 'ਆਦਿ ਸਚੁ ਜੁਗਾਦਿ ਸਚੁ ॥')).toHaveLength(2);
+  });
+
+  it('does not rewrite copies made entirely outside GurbaniLipi', () => {
+    render(FIRST);
+
+    expect(copy(select(document.querySelector('.translation') as Element))).toBeNull();
   });
 
   it('supports reading-mode lines', () => {
     document.body.innerHTML =
-      '<div data-unicode-verse="ਸਾਰਗ"><div class="gurlipi-reading-mode">swrg</div></div>';
-    const pankti = document.querySelector(
-      '.gurlipi-reading-mode'
-    ) as Element;
+      '<div data-unicode-verse="ਸਾਰਗ ਮਹਲਾ ੫ ॥" class="gurlipi-reading-mode"><span>swrg </span><span>mhlw </span><span>5 </span><span>]</span></div>';
+    const words = document.querySelectorAll('span');
 
-    expect(
-      getUnicodeCopyText({
-        unicodeMode: false,
-        selection: selectionLike(rangeBetween(pankti, pankti)),
-      })
-    ).toBe('ਸਾਰਗ');
+    expect(copy(select(document.querySelector('.gurlipi-reading-mode') as Element))).toBe(
+      'ਸਾਰਗ ਮਹਲਾ ੫ ॥'
+    );
+    expect(copy(select(words[0], words[1]))).toBe('ਸਾਰਗ ਮਹਲਾ');
   });
 
-  it('joins every selected pankti in order', () => {
+  it('copies the whole pankti when its words cannot be matched up', () => {
+    // Larivaar: no spaces between the words.
     document.body.innerHTML =
-      '<div id="shabad">' +
-      '<div data-unicode-verse="ਪੰਕਤੀ ਇੱਕ"><div class="gurlipi">pNqI ikk</div></div>' +
-      '<div data-unicode-verse="ਪੰਕਤੀ ਦੋ"><div class="gurlipi">pNqI do</div></div>' +
-      '<div data-unicode-verse="ਪੰਕਤੀ ਤਿੰਨ"><div class="gurlipi">pNqI qinn</div></div>' +
-      '</div>';
-    const gurlipiLines = document.querySelectorAll('.gurlipi');
-    const first = gurlipiLines[0];
-    const third = gurlipiLines[2];
+      '<div data-unicode-verse="ਆਦਿ ਸਚੁ ॥"><div class="gurlipi larivaar"><span>Awid</span><span>scu</span><span>]</span></div></div>';
+    const words = document.querySelectorAll('span');
 
-    expect(
-      getUnicodeCopyText({
-        unicodeMode: false,
-        selection: selectionLike(rangeBetween(first, third)),
-      })
-    ).toBe('ਪੰਕਤੀ ਇੱਕ\nਪੰਕਤੀ ਦੋ\nਪੰਕਤੀ ਤਿੰਨ');
-  });
-
-  it('does not rewrite copies made entirely outside GurbaniLipi', () => {
-    document.body.innerHTML =
-      '<div data-unicode-verse="ਸਾਰਗ"><div class="translation">Saarang</div></div>';
-    const translation = document.querySelector('.translation') as Element;
-
-    expect(
-      getUnicodeCopyText({
-        unicodeMode: false,
-        selection: selectionLike(rangeBetween(translation, translation)),
-      })
-    ).toBeNull();
-  });
-
-  it('falls back to the focus line when the anchor is outside GurbaniLipi', () => {
-    document.body.innerHTML =
-      '<div id="shabad">' +
-      '<div data-unicode-verse="ਸਾਰਗ"><div class="gurlipi">swrg</div></div>' +
-      '<div class="translation">Saarang</div>' +
-      '</div>';
-    const gurbani = document.querySelector('.gurlipi') as Element;
-    const translation = document.querySelector('.translation') as Element;
-    const range = document.createRange();
-    range.setStart(translation.firstChild as Node, 0);
-    range.setEnd(gurbani.firstChild as Node, textLength(gurbani));
-
-    expect(
-      getUnicodeCopyText({
-        unicodeMode: false,
-        selection: selectionLike(range),
-      })
-    ).toBe('ਸਾਰਗ');
+    expect(copy(select(words[0]))).toBe('ਆਦਿ ਸਚੁ ॥');
   });
 });
