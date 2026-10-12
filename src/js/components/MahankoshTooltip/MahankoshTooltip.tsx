@@ -31,8 +31,7 @@ const MAHANKOSH_CONFIG = {
 export const MahankoshTooltip = (props: Props) => {
   const dispatch = useDispatch();
   const isAutoScrolling = useSelector((state: { isAutoScrolling?: boolean }) => !!state.isAutoScrolling);
-  const isOpen = props.isMahankoshTooltipActive;
-  const tooltipEvents = getMahankoshTooltipEvents(isAutoScrolling || isOpen);
+  const tooltipEvents = getMahankoshTooltipEvents(isAutoScrolling);
   
   const gurbaniLine: string = props.gurbaniWord ? props.gurbaniLineInfo[0].verse.unicode : '';
   const gurbaniQuery: string = props.gurbaniWord ? gurbaniLine.split(' ')[props.wordIndex] : '';
@@ -53,7 +52,12 @@ export const MahankoshTooltip = (props: Props) => {
       {...MAHANKOSH_CONFIG}
       {...tooltipEvents}
       id={props.tooltipId}
-      isOpen={isOpen}
+      isOpen={props.isMahankoshTooltipActive}
+      // The tooltip is controlled, so its own close events (Escape, click
+      // outside, mouseleave, scroll) only take effect through this setter.
+      setIsOpen={(isOpen: boolean) => {
+        dispatch({type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: isOpen})
+      }}
       afterHide={() => {
         dispatch({type: SET_MAHANKOSH_TOOLTIP_ACTIVE, payload: false})
       }}

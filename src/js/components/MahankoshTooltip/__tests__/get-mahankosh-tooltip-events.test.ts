@@ -15,7 +15,7 @@ describe('getMahankoshTooltipEvents()', () => {
     });
   });
 
-  it('keeps the tooltip open through autoscroll or a pinned click', () => {
+  it('keeps the tooltip open through scroll and mouseleave while autoscrolling', () => {
     expect(getMahankoshTooltipEvents(true)).toEqual({
       closeEvents: {
         mouseleave: false,
