@@ -3,3 +3,4 @@ export * from './multview-formatted-shabad';
 export * from './is-shabad-exist-multiview';
 export * from './get-audio-url';
 export * from './to-plain-share-text';
+export * from './get-share-line';
