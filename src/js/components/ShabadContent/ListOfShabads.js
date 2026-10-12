@@ -9,6 +9,15 @@ import Meta from '@/components/Meta';
 import ProgressBar from '@/components/ProgressBar';
 import Baani from '@/components/Baani';
 
+import {
+  ACTIONS,
+  clickEvent,
+  copyToClipboard,
+  errorEvent,
+  getShareText,
+  showToast,
+} from '@/util';
+import { SPANISH_LANGUAGE, TEXTS } from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
 
 /**
@@ -72,6 +81,38 @@ class ListOfShabads extends React.PureComponent {
   constructor(props) {
     super(props);
   }
+
+  handleCopyAll = () => {
+    const {
+      shabads,
+      translationLanguages,
+      transliterationLanguages,
+      englishTranslationLanguages,
+      hindiTranslationLanguages,
+      steekLanguages,
+    } = this.props;
+    const verses = shabads.reduce(
+      (all, shabad) => all.concat(shabad.verses || []),
+      []
+    );
+
+    return Promise.resolve(
+      getShareText(verses, {
+        transliterationLanguages,
+        englishTranslationLanguages,
+        hindiTranslationLanguages,
+        steekLanguages,
+        showSpanish: translationLanguages.includes(SPANISH_LANGUAGE),
+      })
+    )
+      .then(copyToClipboard)
+      .then(() => showToast(TEXTS.GURBAANI_COPIED))
+      .then(() => clickEvent({ action: ACTIONS.SHARE, label: 'copy-all' }))
+      .catch(({ message: label = '' } = {}) =>
+        errorEvent({ action: 'copy-all-failure', label })
+      );
+  };
+
   render() {
     const {
       props: {        

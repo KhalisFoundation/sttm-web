@@ -30,9 +30,9 @@ import {
   copyToClipboard,
   showToast,
   shortenURL,
-  steekMap,
   hindiTranslationMap,
   isShowSehajPaathModeRoute,
+  getShareLine,
 } from '@/util';
 import { MahankoshContext } from '@/context';
 import { changeAng, prefetchAng } from './utils';
@@ -123,19 +123,18 @@ class Baani extends React.PureComponent {
     const {
       translationLanguages,
       transliterationLanguages,
+      englishTranslationLanguages,
+      hindiTranslationLanguages,
       steekLanguages,
     } = this.props;
 
-    return [
-      shabad.verse.unicode,
-      ...transliterationLanguages.map((language) =>
-        transliterationMap[language](shabad)
-      ),
-      ...translationLanguages.map((language) =>
-        translationMap[language](shabad)
-      ),
-      ...steekLanguages.map((language) => steekMap[language](shabad)),
-    ].join('\n');
+    return getShareLine(shabad, {
+      transliterationLanguages,
+      englishTranslationLanguages,
+      hindiTranslationLanguages,
+      steekLanguages,
+      showSpanish: translationLanguages.includes(SPANISH_LANGUAGE),
+    });
   };
 
   onCopyClick = (shabad) => () => {
