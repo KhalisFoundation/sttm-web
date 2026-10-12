@@ -35,6 +35,7 @@ const BaaniLine = ({
   if (isReadingMode) {
     return (
       <div
+        data-unicode-verse={text.unicode}
         className={`gurmukhi gurbani-display gurbani-font ${shouldHighlight ? 'highlight' : ''
           } ${larivaar ? 'larivaar' : ''} ${unicode ? 'unicode' : 'gurlipi-reading-mode'}`}
         style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}`, lineHeight: lineHeight + 0.2 }}
@@ -55,6 +56,7 @@ const BaaniLine = ({
 
   return (
     <div
+      data-unicode-verse={text.unicode}
       className={`gurmukhi gurbani-display gurbani-font ${shouldHighlight ? 'highlight' : ''
         }`}
       style={{ fontSize: `${fontSize}em`, fontFamily: `${fontFamily}`, lineHeight: lineHeight }}
