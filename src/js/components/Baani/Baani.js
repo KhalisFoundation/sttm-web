@@ -120,13 +120,19 @@ class Baani extends React.PureComponent {
   };
 
   getShareLine = (shabad) => {
-    const { translationLanguages, transliterationLanguages } = this.props;
+    const {
+      translationLanguages,
+      transliterationLanguages,
+      englishTranslationLanguages,
+      hindiTranslationLanguages,
+      steekLanguages,
+    } = this.props;
 
     return getShareLine(shabad, {
       transliterationLanguages,
-      englishTranslationLanguages: this.getEngLishTranslationLanguages(),
-      hindiTranslationLanguages: this.getHindiTranslationLanguages(),
-      steekLanguages: this.getSteekLanguages(),
+      englishTranslationLanguages,
+      hindiTranslationLanguages,
+      steekLanguages,
       showSpanish: translationLanguages.includes(SPANISH_LANGUAGE),
     });
   };

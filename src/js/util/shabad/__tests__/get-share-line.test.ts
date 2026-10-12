@@ -1,4 +1,4 @@
-import { getShareLine } from '../get-share-line';
+import { getShareLine, getShareText } from '../get-share-line';
 
 const verse = {
   verse: { unicode: 'ਗੁਰਮੁਖੀ', gurmukhi: 'gurmuKI' },
@@ -42,9 +42,10 @@ describe('getShareLine()', () => {
   it('copies only the selected sources, in the order the page shows them', () => {
     expect(
       getShareLine(verse, {
-        englishTranslationLanguages: ['manmohan singh', 'sant singh khalsa'],
-        hindiTranslationLanguages: ['sahib singh'],
-        steekLanguages: ['fareedkot'],
+        // Stored in the order they were ticked; the page sorts them.
+        englishTranslationLanguages: ['sant singh khalsa', 'manmohan singh'],
+        hindiTranslationLanguages: ['sant singh', 'sahib singh'],
+        steekLanguages: ['fareedkot', 'sahib singh'],
         showSpanish: true,
       })
     ).toBe(
@@ -53,8 +54,10 @@ describe('getShareLine()', () => {
         'English Manmohan Singh',
         'English Sant Singh Khalsa',
         'Spanish',
+        'Punjabi Sahib Singh',
         'Punjabi Fareedkot',
         'Hindi Sahib Singh',
+        'Hindi Sant Singh',
       ].join('\n')
     );
   });
@@ -65,5 +68,26 @@ describe('getShareLine()', () => {
         englishTranslationLanguages: ['BaniDB', 'prof sahib singh', 'not a source'],
       })
     ).toBe(['ਗੁਰਮੁਖੀ', 'English BaniDB'].join('\n'));
+  });
+
+  it('does not reorder the selections it is given', () => {
+    const englishTranslationLanguages = ['sant singh khalsa', 'BaniDB'];
+    getShareLine(verse, { englishTranslationLanguages });
+    expect(englishTranslationLanguages).toEqual(['sant singh khalsa', 'BaniDB']);
+  });
+});
+
+describe('getShareText()', () => {
+  const second = { ...verse, verse: { unicode: 'ਦੂਜੀ', gurmukhi: 'dUjI' } };
+
+  it('joins every verse with a blank line between them', () => {
+    expect(
+      getShareText([verse, second], { englishTranslationLanguages: ['BaniDB'] })
+    ).toBe('ਗੁਰਮੁਖੀ\nEnglish BaniDB\n\nਦੂਜੀ\nEnglish BaniDB');
+  });
+
+  it('returns an empty string when there are no verses', () => {
+    expect(getShareText([])).toBe('');
+    expect(getShareText()).toBe('');
   });
 });

@@ -22,6 +22,7 @@ import {
   clickEvent,
   ACTIONS,
   errorEvent,
+  getShareText,
 } from '@/util';
 import {
   getPadarthText,
@@ -30,7 +31,12 @@ import {
   getPssText,
   isScholarReviewed,
 } from '@/util/ai-translations';
-import { TEXTS, SHABAD_CONTENT_CLASSNAME, MAX_ANGS } from '@/constants';
+import {
+  TEXTS,
+  MAX_ANGS,
+  SG_BAANIS_LENGTH_TO_EXISTS_MAP,
+  SPANISH_LANGUAGE,
+} from '@/constants';
 import { ViewerShortcuts, ViewerShortcutHanders } from '../../Shortcuts';
 
 /**
@@ -435,9 +441,41 @@ class Shabad extends React.PureComponent {
     }
   };
 
-  handleCopyAll = () =>
-    Promise.resolve(
-      document.querySelector(`.${SHABAD_CONTENT_CLASSNAME}`).children[0].textContent
+  // The verses on the page, as <Baani /> / <MultiPageBaani /> show them.
+  getDisplayedVerses = () => {
+    const { isMultiPage, pages, sgBaaniLength } = this.props;
+    const { processedGurbani, processedPages } = this.state;
+
+    if (isMultiPage) {
+      const shownPages = processedPages.length > 0 ? processedPages : pages;
+      return shownPages.reduce((verses, { page }) => verses.concat(page || []), []);
+    }
+
+    if (this.isSundarGutkaRoute()) {
+      const existsKey = SG_BAANIS_LENGTH_TO_EXISTS_MAP[sgBaaniLength];
+      return processedGurbani.filter((content) => !!content[existsKey]);
+    }
+
+    return processedGurbani;
+  };
+
+  handleCopyAll = () => {
+    const {
+      translationLanguages,
+      transliterationLanguages,
+      englishTranslationLanguages,
+      hindiTranslationLanguages,
+      steekLanguages,
+    } = this.props;
+
+    return Promise.resolve(
+      getShareText(this.getDisplayedVerses(), {
+        transliterationLanguages,
+        englishTranslationLanguages,
+        hindiTranslationLanguages,
+        steekLanguages,
+        showSpanish: translationLanguages.includes(SPANISH_LANGUAGE),
+      })
     )
       .then(copyToClipboard)
       .then(() => showToast(TEXTS.GURBAANI_COPIED))
@@ -445,6 +483,7 @@ class Shabad extends React.PureComponent {
       .catch(({ message: label = '' } = {}) =>
         errorEvent({ action: 'copy-all-failure', label })
       );
+  };
 
   handleEmbed = () => {
     const { info, type } = this.props;
