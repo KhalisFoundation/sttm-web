@@ -99,8 +99,11 @@ class Autocomplete extends Component {
 
     if (this.props.value !== prevInput) {
       const { isShowFullResults, getSuggestions, searchOptions, value: userInput } = this.props;
-      const isSearchTypeAng = searchOptions.type === 5;
-      const isSearchTypeRomanized = searchOptions.type === 4;
+
+      // Validate query length based on search type (Romanized: 4+ words, others: 2+ chars)
+      const typeNum = parseInt(searchOptions.type, 10);
+      const isSearchTypeAng = typeNum === SEARCH_TYPES.ANG;
+      const isSearchTypeRomanized = typeNum === SEARCH_TYPES.ROMANIZED;
       let isQueryValid = false;
       if (userInput.trim().split(' ').length >= 4 && isSearchTypeRomanized) {
         isQueryValid = true;

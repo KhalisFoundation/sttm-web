@@ -89,10 +89,17 @@ export default class Search extends React.PureComponent {
 
   render() {
     const { q, type, source, offset, writer, autoDetectGurmukhi } = this.props;
-    const isChatBot = type === SEARCH_TYPES.ASK_A_QUESTION;
+    const typeNum = parseInt(type);
+    const isChatBot = typeNum === SEARCH_TYPES.ASK_A_QUESTION;
 
-    // Prepare API parameters
-    const apiParams = { q, type, source, offset, writer, API_URL };
+    // Resolve AUTO_DETECT type to Gurmukhi or English based on autoDetectGurmukhi flag
+    let apiType = typeNum;
+    if (typeNum === SEARCH_TYPES.AUTO_DETECT) {
+      apiType = autoDetectGurmukhi ? SEARCH_TYPES.GURMUKHI_WORD : SEARCH_TYPES.ENGLISH_WORD;
+    }
+
+    // Prepare API parameters with converted type
+    const apiParams = { q, type: apiType, source, offset, writer, API_URL };
     // Add isGurmukhi parameter if it's provided and equals "1"
     if (autoDetectGurmukhi) {
       apiParams.isGurmukhi = 1;
