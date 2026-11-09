@@ -33,6 +33,7 @@ const plugins = PRODUCTION
         WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
         GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT),
         SP_API: JSON.stringify(API_URLS.SP_API),
+        KHALIS_USER_STORE_API: JSON.stringify(API_URLS.KHALIS_USER_STORE),
       }),
     ])
   : commonPlugins.concat([
@@ -56,6 +57,7 @@ const plugins = PRODUCTION
         WRITERS_API_URL: JSON.stringify(API_URLS.WRITERS),
         GURBANIBOT_URL: JSON.stringify(API_URLS.GURBANIBOT),
         SP_API: JSON.stringify(API_URLS.SP_API),
+        KHALIS_USER_STORE_API: JSON.stringify(API_URLS.KHALIS_USER_STORE),
       }),
       new CleanWebpackPlugin(),
     ]);

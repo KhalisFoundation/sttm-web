@@ -1,5 +1,5 @@
 const getFormattedShabads = (shabads, favShabads) => {
-  const getFavShabad = (shabadId) => favShabads.find(shabad => shabad.shabad_id === shabadId)
+  const getFavShabad = (shabadId) => favShabads.find(shabad => shabad.shabadId === shabadId)
   const formattedShabads = shabads.map(shabad => {
     return {...shabad, ...getFavShabad(shabad.shabadInfo.shabadId)}
   })

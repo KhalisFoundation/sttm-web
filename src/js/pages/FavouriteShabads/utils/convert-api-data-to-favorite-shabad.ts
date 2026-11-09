@@ -1,10 +1,10 @@
 const convertApiDataToFavoriteShabad = (apiShabadData: any) => {
-  const verseId = apiShabadData.verses.find(v=> v.verseId === apiShabadData.verse_id)
+  const verseId = apiShabadData.verses.find(v=> v.verseId === apiShabadData.verseId)
   const favouriteShabad = {
     ...apiShabadData.shabadInfo,
     ...(verseId ?? apiShabadData.verses[0]),
       comment: apiShabadData.comment,
-      createdAt: apiShabadData.created_at,
+      createdAt: apiShabadData.createdAt,
   };
   return favouriteShabad;
 };

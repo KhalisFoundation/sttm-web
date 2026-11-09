@@ -18,5 +18,6 @@ module.exports = {
   WRITERS: '//api.banidb.com/v2/writers/',
   GURBANIBOT: '//gurbanichatbot.sikhitothemax.org/',
   SP_API: '//serviceprovider.khalis.net',
+  KHALIS_USER_STORE: 'https://users.khalis.net',
   SHABAD_REVIEW_API:'//sodh-api.banidb.com/',
 };

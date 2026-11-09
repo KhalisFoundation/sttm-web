@@ -21,6 +21,8 @@ type Props = {
   },
   onCrossIconClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onLinkClick?: () => void;
+  /** Open the link in this tab instead of a new one. */
+  sameTab?: boolean;
 }
 
 const Banner = (props: Props) => {
@@ -35,15 +37,27 @@ const Banner = (props: Props) => {
           </div>
           {props.banner.label &&
             <button className={`banner-link-button type-${props.banner.type}`}>
-              <Link
-                className="banner-link-button-text"
-                to={{ pathname: `https://${props.banner.link}` }}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={props.onLinkClick}
-              >
-                {props.banner.label}
-              </Link>
+              {props.sameTab ? (
+                // A plain <a>: react-router's <Link> would treat an external URL
+                // opened in the same tab as an in-app route.
+                <a
+                  className="banner-link-button-text"
+                  href={`https://${props.banner.link}`}
+                  onClick={props.onLinkClick}
+                >
+                  {props.banner.label}
+                </a>
+              ) : (
+                <Link
+                  className="banner-link-button-text"
+                  to={{ pathname: `https://${props.banner.link}` }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={props.onLinkClick}
+                >
+                  {props.banner.label}
+                </Link>
+              )}
             </button>}
         </div>
         <button className="banner-cross-bg" onClick={(e) => handleBannerCrossClick(e)}>

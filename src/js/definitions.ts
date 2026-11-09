@@ -12,4 +12,5 @@ declare var BANIS_API_URL: string;
 declare var SYNC_API_URL: string;
 declare var API_URL: string;
 declare var SP_API: string;
+declare var KHALIS_USER_STORE_API: string;
 declare var window: Window;
