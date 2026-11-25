@@ -448,8 +448,14 @@ export default [
     },
   },
   {
-    path: '/sync',
+    path: ['/sync/:code', '/sync'],
     render(props) {
+      const {
+        match: {
+          params: { code },
+        },
+      } = props;
+      const codeRegex = /^[A-Za-z]{3}-[A-Za-z]{3}$/;
       return (
         <Layout title="Sync - SikhiToTheMax" {...props}>
           <RenderPromise
@@ -459,7 +465,12 @@ export default [
           >
             {({ pending, resolved: { default: Sync } = {}, rejected }) =>
               pending ? null : Sync ? (
-                <Sync {...props} />
+                <Sync
+                  {...props}
+                  code={
+                    code && codeRegex.test(code) ? code.toUpperCase() : ''
+                  }
+                />
               ) : (
                 throwError(
                   `We are having trouble in rendering this route.`,
