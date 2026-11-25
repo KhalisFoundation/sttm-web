@@ -1,7 +1,7 @@
 /* globals SYNC_API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TEXTS, LOCAL_STORAGE_KEY_FOR_SYNC_CODE } from '../../constants';
+import { TEXTS, LOCAL_STORAGE_KEY_FOR_SYNC_CODE, SYNC_TYPES } from '../../constants';
 import Viewer from './Viewer';
 import BreadCrumb from '../../components/Breadcrumb';
 import { saveToLocalStorage, getStringFromLocalStorage } from '@/util'
@@ -237,7 +237,16 @@ class Sync extends React.PureComponent {
           if (window.io !== undefined) {
             this._socket = window.io(`${SYNC_API_URL}${namespaceString}`);
 
-            this._socket.on('data', data => this._setState({ data }));
+            // Only a shabad, bani or ceremony replaces what's shown. The
+            // desktop also sends other messages (eg: `settings` whenever a
+            // setting such as the translation source changes); taking those
+            // as the data left the viewer loading until the next verse.
+            const viewerTypes = Object.values(SYNC_TYPES);
+            this._socket.on('data', data => {
+              if (data && viewerTypes.includes(data.type)) {
+                this._setState({ data });
+              }
+            });
 
             this._socket.on('close', () =>
               this._setState({
