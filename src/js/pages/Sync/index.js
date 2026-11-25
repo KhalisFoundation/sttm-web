@@ -21,6 +21,8 @@ class Sync extends React.PureComponent {
   static propTypes = {
     fullScreenMode: PropTypes.bool.isRequired,
     setFullScreenMode: PropTypes.func.isRequired,
+    code: PropTypes.string,
+    history: PropTypes.object,
   }
 
   /**
@@ -95,19 +97,52 @@ class Sync extends React.PureComponent {
     const {setFullScreenMode} = this.props;
     this.setState({ connected: false });
     setFullScreenMode(false)
+
+    // Drop the code from the URL so a refresh doesn't reconnect automatically.
+    const { code, history } = this.props;
+    if (code && history) {
+      history.replace('/sync');
+    }
   }
 
   componentDidMount() {
     this._mounted = true;
-    const src = `${SYNC_API_URL}socket.io/socket.io.js`;
-    if (document.querySelector(`script[src="${src}"]`) === null) {
-      const script = document.createElement('script');
-      script.src = src;
-      document.body.appendChild(script);
-    }
+    this._socketIoReady = this._loadSocketIo();
 
     window.addEventListener('beforeunload', this._alertOnExit);
+
+    const { code } = this.props;
+    if (code) {
+      this.handleSubmit(code);
+    }
   }
+
+  componentDidUpdate(prevProps) {
+    const { code } = this.props;
+    if (code && code !== prevProps.code && !this.state.connected) {
+      this.handleSubmit(code);
+    }
+  }
+
+  /**
+   * Inject the socket.io client script (once) and resolve when `window.io` is available.
+   */
+  _loadSocketIo = () =>
+    new Promise(resolve => {
+      if (window.io !== undefined) {
+        resolve();
+        return;
+      }
+      const src = `${SYNC_API_URL}socket.io/socket.io.js`;
+      let script = document.querySelector(`script[src="${src}"]`);
+      if (script === null) {
+        script = document.createElement('script');
+        script.src = src;
+        document.body.appendChild(script);
+      }
+      script.addEventListener('load', () => resolve());
+      script.addEventListener('error', () => resolve());
+    });
 
   _alertOnExit = e => {
     if (this.state.connected) {
@@ -180,9 +215,11 @@ class Sync extends React.PureComponent {
    * @memberof ItemList
    */
   handleSubmit = code => {
-    fetch(`${SYNC_API_URL}sync/join/${code}`)
-      .then(r => r.json())
-      .then(({ data, error }) => {
+    Promise.all([
+      fetch(`${SYNC_API_URL}sync/join/${code}`).then(r => r.json()),
+      this._socketIoReady,
+    ])
+      .then(([{ data, error }]) => {
         if (error || data === undefined) {
           this._setState({ error, data, connected: false });
         } else {
