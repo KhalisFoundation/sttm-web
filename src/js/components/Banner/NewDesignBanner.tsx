@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Banner from './Banner';
-import { rememberNewDesign } from '../../util/design-preference';
+import {
+  NEW_DESIGN_HOST,
+  newDesignPath,
+  rememberNewDesign,
+} from '../../util/design-preference';
 
 const SESSION_STORAGE_KEY = 'newDesignBannerDismissed';
 
@@ -14,6 +19,8 @@ const getIsDismissed = () => {
 
 const NewDesignBanner = () => {
   const [isDismissed, setIsDismissed] = useState(getIsDismissed);
+  // Open the page being viewed in the new design, not its home page.
+  const location = useLocation();
 
   if (isDismissed) return null;
 
@@ -30,7 +37,7 @@ const NewDesignBanner = () => {
     <Banner
       banner={{
         message: 'A new SikhiToTheMax experience is here — faster, cleaner, and powered by Khalis AI.',
-        link: 'next.sikhitothemax.org',
+        link: `${NEW_DESIGN_HOST}${newDesignPath(location)}`,
         label: 'Try the new design',
         type: '3',
         classes: { notification: 'notification-new-design' },
